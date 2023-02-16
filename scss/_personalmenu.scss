@@ -407,6 +407,13 @@ body.snap-pm-open {
                     filter: brightness(0) invert(1);
                 }
             }
+            &.activity-feed[activity-type="External tool"] {
+                background-color: $color-book;
+                padding: 0.4rem;
+                & > img {
+                    filter: brightness(0) invert(1);
+                }
+            }
             &.activity-feed[activity-type="Assignment"],
             &.activity-feed[activity-type="Assign"],
             &.activity-feed[activity-type="Workshop"],
@@ -489,8 +496,7 @@ body.snap-pm-open {
             &.activity-feed[activity-type="Book"],
             &.activity-feed[activity-type="Page"],
             &.activity-feed[activity-type="Label"],
-            &.activity-feed[activity-type="File"],
-            &.activity-feed[activity-type="External tool"], {
+            &.activity-feed[activity-type="File"] {
                 background-color: transparent;
                 padding: 0.4rem;
                 img {

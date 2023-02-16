@@ -2358,6 +2358,16 @@ SQL;
                     $modimage = $modimageurl->out();
                 }
 
+                if ($cm->modname == 'lti') {
+                    $r = new \ReflectionObject($cm);
+                    $p = $r->getProperty('iconurl');
+                    $p->setAccessible(true);
+                    $iconurl = $p->getValue($cm);
+                    if (!empty($iconurl)) {
+                        $modimage = $iconurl->out();
+                    }
+                }
+
                 if (!empty($event->extensionduedate)) {
                     // If we have an extension then always show this as the due date.
                     $deadline = $event->extensionduedate + $event->timeduration;
