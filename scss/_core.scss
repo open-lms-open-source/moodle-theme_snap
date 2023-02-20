@@ -292,22 +292,38 @@ table.boxwidthwide {
 
 }
 // Information notice in the sign up and forgot password pages.
-#page-login-signup,
-#page-login-forgot_password {
+#page-login-forgot_password,
+#page-login-signup {
     #notice {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
-        border-radius: 5px;
         background-color: #fff;
-        width: 70%;
         Font-size: 1em;
         color: $body-color;
     }
 }
+#page-login-signup #notice {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+    border-radius: 0.5rem;
+    width: 40%;
+    padding-top: 2em    !important;
+}
 
 // Styles for page-login-forgot_password page.
 #page-login-forgot_password {
-    #page-header {
-        padding-top: 3em;
+    #region-main {
+        max-width: 800px;
+        border-radius: 0.5rem;
+        background-color: #fff;
+        padding: 1em 3em;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+        .mform .fcontainer > .fitem {
+            padding-left: 0;
+        }
+    }
+    #page {
+        padding-bottom: 2em;
+    }
+    #moodle-footer {
+        margin-top: 0;
     }
     #id_searchbyemail,
     #id_searchbyusername {
@@ -323,6 +339,35 @@ table.boxwidthwide {
     #id_searchbyusername {
         > div > div:nth-child(2) {
             display: none;
+        }
+    }
+    #id_searchbyusernamecontainer,
+    #id_searchbyemailcontainer {
+        & > div:nth-child(1) {
+            display: flex;
+            & > div:nth-child(1) {
+                display: inline-block;
+                flex: 0 0 25%;
+                max-width: 25%;
+            }
+            & > div.form-inline.felement {
+                display: flex;
+                flex-flow: row wrap;
+                align-items: flex-start;
+                flex: 0 0 75%;
+                max-width: 75%;
+            }
+        }
+    }
+}
+@media (max-width: 767px) {
+    #region-main {
+        margin: 0 4% !important;
+    }
+    #id_searchbyusernamecontainer,
+    #id_searchbyemailcontainer {
+        & > div:nth-child(1) {
+            display: block !important;
         }
     }
 }
