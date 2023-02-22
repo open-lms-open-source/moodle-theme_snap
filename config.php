@@ -79,6 +79,12 @@ if ($themeissnap && $notajaxscript) {
         }
     }
 
+    // Keep Dashboard enabled for Snap.
+    $disablesnapmycourses = isset($CFG->theme_snap_disable_my_courses) ? $CFG->theme_snap_disable_my_courses : true;
+    if ($disablesnapmycourses) {
+        $CFG->enabledashboard = 1;
+    }
+
     if (isset($SESSION->wantsurl)) {
         // We are taking a backup of this because it can get unset later by core.
         $SESSION->snapwantsurl = $SESSION->wantsurl;
