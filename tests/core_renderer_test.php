@@ -103,4 +103,85 @@ class core_renderer_test extends \advanced_testcase {
         $url = new \moodle_url('/course/view.php', ['id' => $COURSE->id]);
         $this->assertStringContainsString($url->out(), $heading);
     }
+
+    /**
+     * Provider for test_remove_duplicated_breadcrumbs.
+     *
+     * @return array
+     */
+    public function remove_duplicated_breadcrumbs_provider(): array {
+
+        return [
+            'Breadcrumb items based on user preferences view.' => [
+                [
+                    [
+                        'text' => 'Home',
+                        'key' => 'home'
+                    ],
+                    [
+                        'text' => 'Home',
+                        'key' => 'home'
+                    ],
+                    [
+                        'text' => 'Preferences',
+                        'key' => 'preferences'
+                    ],
+                ],
+                ['Home', 'Preferences']
+            ],
+            'Breadcrumb items based on course view.' => [
+                [
+                    [
+                        'text' => 'Home',
+                        'key' => 'home'
+                    ],
+                    [
+                        'text' => 'My Courses',
+                        'key' => 'my_courses'
+                    ],
+                    [
+                        'text' => 'Course 1',
+                        'key' => 'course1'
+                    ],
+                ],
+                ['Home', 'My Courses', 'Course 1']
+            ],
+            'Page with empty breadcrumbs' => [
+                [],
+                ['Home']
+            ],
+        ];
+    }
+
+
+    /**
+     * Test filter duplicated breadcrumbs.
+     * @dataProvider remove_duplicated_breadcrumbs_provider
+     * @param array $breadcrumbs
+     * @param array $expected
+     */
+    public function test_remove_duplicated_breadcrumbs(array $breadcrumbs, array $expected) {
+        global $PAGE;
+
+        $this->resetAfterTest();
+
+        $PAGE = new \moodle_page();
+        $PAGE->set_url('/');
+        foreach ($breadcrumbs as $item) {
+            $PAGE->navbar->add($item['text'], null, null, null, $item['key']);
+        }
+        // Get breadcrumbs objects from page.
+        $pagebreadcrumbs = $PAGE->navbar->get_items();
+
+        // Call method.
+        $corerenderer = new \theme_snap\output\core_renderer($PAGE, null);
+        $pagebreadcrumbs = $corerenderer->remove_duplicated_breadcrumbs($pagebreadcrumbs);
+
+        // Get text value from object array.
+        $pagebreadcrumbsarray = array();
+        foreach ($pagebreadcrumbs as $item) {
+            array_push($pagebreadcrumbsarray, $item->text);
+        }
+        $this->assertEquals($expected, $pagebreadcrumbsarray);
+    }
 }
