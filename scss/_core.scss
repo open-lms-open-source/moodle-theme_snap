@@ -4476,12 +4476,13 @@ section#region-main {
 header#mr-nav {
     #snap-custom-menu-header nav.navbar {
         width: 100%;
+        padding: 0 1rem;
         ul.snap-navbar-content {
             margin: 0;
             padding: 0;
             li.nav-item {
                 list-style: none;
-                max-width: 11em;
+                max-width: 20em;
                 &:hover {
                     outline: 0;
                 }
@@ -4496,7 +4497,7 @@ header#mr-nav {
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
-                    max-width: 11em;
+                    max-width: 20em;
                 }
                 a.nav-link {
                     height: 50px;
@@ -4507,8 +4508,7 @@ header#mr-nav {
                     &::after {
                         position: absolute;
                         right: 0.9em;
-                        top: 50%;
-                        margin-top: -0.1em;
+                        top: 38%;
                     }
                 }
                 // Animation and rotation of caret dropdown for custom menu.
