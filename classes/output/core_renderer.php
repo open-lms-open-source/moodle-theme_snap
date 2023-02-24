@@ -45,6 +45,7 @@ use theme_snap\renderables\genius_dashboard_link;
 use theme_snap\renderables\course_card;
 use theme_snap\renderables\course_toc;
 use theme_snap\renderables\featured_courses;
+use lang_string;
 
 // We have to force include this class as it's on login and the auto loader may not have been updated via a cache dump.
 require_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
@@ -2021,8 +2022,8 @@ HTML;
             $attrs['class'] .= ' mast-breadcrumb';
         }
         $snapmycourses = html_writer::link('#', get_string('menu', 'theme_snap'), $attr);
-
-        foreach ($this->page->navbar->get_items() as $item) {
+        $filteredbreadcrumbs = $this->remove_duplicated_breadcrumbs($this->page->navbar->get_items());
+        foreach ($filteredbreadcrumbs as $item) {
             $item->hideicon = true;
 
             // Add Breadcrumb links to all users types.
@@ -2167,5 +2168,23 @@ HTML;
             }
         }
         return $path;
+    }
+
+    /**
+     * When there are two or more breadcrumbs with the same name, remove the others and just leave one.
+     * @param $breadcrumbs array.
+     * @return array
+     */
+    public function remove_duplicated_breadcrumbs($breadcrumbs): array {
+        $breadcrumbskeys = array();
+        $filtereditems = array_filter($breadcrumbs, function($item) use (&$breadcrumbskeys) {
+            $text = $item->text instanceof lang_string ? $item->text->out() : $item->text;
+            if (array_key_exists($text, $breadcrumbskeys)) {
+                return false;
+            }
+            $breadcrumbskeys[$text] = $item->key;
+            return true;
+        });
+        return $filtereditems;
     }
 }
