@@ -633,13 +633,10 @@ body#page-mod-resource-view.path-mod-resource.pagelayout-frametop {
     header#mr-nav,
     .snap-custom-menu-spacer,
     #page-mast,
-    footer#moodle-footer {
+    footer#moodle-footer,
+    #page-header,
+    .activity-header{
         display:none;
-    }
-
-    #page-header {
-        padding-top: 1em;
-        padding-bottom: 0;
     }
 
     section#region-main {
@@ -649,6 +646,17 @@ body#page-mod-resource-view.path-mod-resource.pagelayout-frametop {
     .snap-page-heading-button {
         display: none;
     }
+    #region-main-box {
+        margin-top: 0.8rem;
+    }
+    .activity-navigation {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        .row .col-md-4 {
+            min-height: 3rem;
+        }
+    }
+    height: 80%;
 }
 
 .mediaplugin_videojs > div {
