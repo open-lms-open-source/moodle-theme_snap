@@ -1443,6 +1443,7 @@ body.snap-resource-card {
 
     //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
     &.modtype_questionnaire,
+    &.modtype_checklist,
     &.modtype_certificate,
     &.modtype_customcert,
     &.modtype_hotpot,

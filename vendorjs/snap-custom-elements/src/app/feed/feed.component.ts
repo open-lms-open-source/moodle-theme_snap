@@ -15,9 +15,7 @@ import {MoodleRes} from "../moodle.res";
       <h2>{{ title }}</h2>
       <div id="{{ elemId }}" [@growIn]="feedItemTotal">
           <div class="snap-media-object feeditem {{feedItem.extraClasses}}" *ngFor="let feedItem of feedItems" [attr.data-from-cache]="feedItem.fromCache">
-            <div class="activityiconcontainer activity-feed" [attr.activity-type]="feedItem.iconDesc">
               <img *ngIf="feedItem.iconUrl !== ''" src="{{feedItem.iconUrl}}" alt="{{feedItem.iconDesc}}" [className]="feedItem.iconClass">
-            </div>
               <div class="snap-media-body">
                   <a href="{{feedItem.actionUrl}}">
                       <h3>
