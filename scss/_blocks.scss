@@ -387,12 +387,6 @@ body.path-site .block.block_settings {
         &.align-self-center[activityname="Chat"],
         &.align-self-center[activityname="Open Forum"] {
             background-color: $color-communication;
-            padding: 0.5rem;
-            img.icon {
-                filter: brightness(0) invert(1);
-                height: 24px;
-                width: 24px;
-            }
         }
         &.align-self-center[activityname="Assignment"],
         &.align-self-center[activityname="Assign"],
@@ -401,12 +395,6 @@ body.path-site .block.block_settings {
         &.align-self-center[activityname="H5P"],
         &.align-self-center[activityname="Attendance"] {
             background-color: $color-assignment;
-            padding: 0.5rem;
-            img.icon {
-                filter: brightness(0) invert(1);
-                height: 24px;
-                width: 24px;
-            }
         }
         &.align-self-center[activityname="Choice"],
         &.align-self-center[activityname="Feedback"],
@@ -415,33 +403,15 @@ body.path-site .block.block_settings {
         &.align-self-center[activityname="Questionnaire"],
         &.align-self-center[activityname="Lesson"] {
             background-color: $color-quiz;
-            padding: 0.5rem;
-            img.icon {
-                filter: brightness(0) invert(1);
-                height: 24px;
-                width: 24px;
-            }
         }
         &.align-self-center[activityname="Database"],
         &.align-self-center[activityname="Glossary"],
         &.align-self-center[activityname="Wiki"],
         &.align-self-center[activityname="Group choice"] {
             background-color: $color-wiki;
-            padding: 0.5rem;
-            img.icon {
-                filter: brightness(0) invert(1);
-                height: 24px;
-                width: 24px;
-            }
         }
         &.align-self-center[activityname="Collaborate Ultra"] {
             background-color: $color-collab;
-            padding: 0.5rem;
-            img.icon {
-                filter: brightness(0) invert(1);
-                height: 24px;
-                width: 24px;
-            }
         }
 
         &.align-self-center[activityname="Quizventure"],
@@ -482,6 +452,8 @@ body.path-site .block.block_settings {
         img.icon {
             height: 45px;
             width: 45px;
+            filter: brightness(0) invert(1);
+
         }
     }
 }
