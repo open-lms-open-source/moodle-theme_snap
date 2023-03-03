@@ -1257,6 +1257,10 @@ body.snap-resource-card {
 body.snap-resource-card {
     li.snap-resource.snap-resource-long {
         height: 21em;
+        .snap-asset-actions {
+            bottom: 0
+        }
+
     }
     // Hide multimedia content on resource cards description.
     li.snap-resource.snap-resource-long.modtype_url,
@@ -2216,7 +2220,7 @@ form.togglecompletion {
 // All the editing options in one region.
 .snap-asset-actions {
     position: absolute;
-    bottom: 0;
+    bottom: auto;
     left: 0;
     width: 250px;
 
