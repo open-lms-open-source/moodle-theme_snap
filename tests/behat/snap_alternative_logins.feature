@@ -33,52 +33,67 @@ Feature: When the moodle theme is set to Snap, the login options should be shown
 
   @javascript
   Scenario Outline: Login screen when alternative login options are enabled
-    Given I skip because "Login template will change"
     Given the following config values are set as admin:
-      |  config      |   value   | plugin     |
-      | enabledlogin | <enabled> | theme_snap |
+      |  config           |   value   | plugin     |
+      | enabledlogin      | <enabled> | theme_snap |
+      | loginpagetemplate | <template> | theme_snap |
     Given I am on login page
     And I wait until the page is ready
     And I wait until ".snap-log-in-loading-spinner" "css_element" is not visible
-    And "#base-login" "css_element" <option1> be visible
-    And "#alt-login" "css_element" <option2> be visible
+    And "#base-login form#login" "css_element" <option1> be visible
+    And "#snap-alt-login" "css_element" <option2> be visible
     Then I am on site homepage
     And I click on "#mr-nav .snap-login-button" "css_element"
-    And ".snap-login-option form#login" "css_element" <option1> exist
-    And ".snap-login-option .potentialidplist" "css_element" <option1> exist
+    And ".snap-login-option form#login" "css_element" <option1> be visible
+    # Potential idplist is always there. We might need to revisit this.
+    And ".snap-login-option .potentialidplist" "css_element" should exist
     Examples:
-      | enabled |   option1    | option2    |
-      |   0     |   should     | should     |
-      |   1     |   should     | should not |
-      |   2     |   should not | should     |
+      | enabled |   option1    | option2    | template|
+      |   0     |   should     | should     | stylish |
+      |   1     |   should     | should not | stylish |
+      |   2     |   should not | should     | stylish |
+      |   0     |   should     | should     | classic |
+      |   1     |   should     | should not | classic |
+      |   2     |   should not | should     | classic |
 
   @javascript
   Scenario Outline: Login screen when both login options are enabled but the order change
-    Given I skip because "Login template will change"
     Given the following config values are set as admin:
       |  config           |   value   | plugin     |
       | enabledlogin      |   0       | theme_snap |
       | enabledloginorder |  <order>  | theme_snap |
+      | loginpagetemplate | <template>| theme_snap |
+
     Given I am on login page
     And I wait until ".snap-log-in-loading-spinner" "css_element" is not visible
     And "<loginoption1>" "css_element" should appear before the "<loginoption2>" "css_element"
     And I am on site homepage
     Then I click on "#mr-nav .snap-login-button" "css_element"
-    And ".snap-login <pmoption1>" "css_element" should appear before the ".snap-login-options <pmoption2>" "css_element"
+    And ".snap-login <pmoption1>" "css_element" should appear before the ".snap-login <pmoption2>" "css_element"
     Examples:
-      | order |   loginoption1    | loginoption2    |   pmoption1    | pmoption2      |
-      |   0     |   #base-login     | #alt-login      |   form         | .potentialidps |
-      |   1     |   #alt-login      | #base-login     | .potentialidps | form           |
+      | order |   loginoption1    | loginoption2         |   pmoption1      | pmoption2         | template|
+      |   0   |   form#login      | #snap-alt-login      |  form#login      | .potentialidplist | stylish |
+      |   1   |   #snap-alt-login | form#login           | .potentialidplist|  form#login       | stylish |
+      |   0   |   form#login      | #snap-alt-login      |  form#login      | .potentialidplist | classic |
+      |   1   |   #snap-alt-login | form#login           | .potentialidplist|  form#login       | classic |
 
   @javascript
-  Scenario: Help button should redirect to login page
-    Given I skip because "Login template will change"
+  Scenario Outline: Help button should redirect to login page
     Given the following config values are set as admin:
       |  config           |   value   | plugin     |
       | enabledlogin      |   0       | theme_snap |
       | enabledloginorder |   1       | theme_snap |
+      | loginpagetemplate | <template>| theme_snap |
+
+    And the following config values are set as admin:
+    | registerauth    | email |
+    | passwordpolicy  | 0     |
     And I am on site homepage
     And I click on "#mr-nav .snap-login-button" "css_element"
-    And "#snap-pm-login-help" "css_element" should exist
-    And I click on "#snap-pm-login-help" "css_element"
-    And "#page-login-index" "css_element" should exist
+    And ".snap-login-instructions" "css_element" should exist
+    And I click on ".snap-login-instructions" "css_element"
+    And "#login-help-modal" "css_element" should exist
+    Examples:
+      |template|
+      |stylish|
+      |classic|
