@@ -479,16 +479,68 @@ li.section:focus {
 // ---------------------------------------
 // Mod chooser for Snap - Icon colors.
 // ---------------------------------------
-.theme-snap .modchoosercontainer {
+.activityiconcontainer.administration {
+    background-color: transparent; }
+.activityiconcontainer.administration .activityicon,
+.activityiconcontainer.administration .icon {
+    height: 45px;
+    width: 45px;
+    filter: none; }
 
+.activityiconcontainer.assessment {
+    background-color: transparent; }
+.activityiconcontainer.assessment .activityicon,
+.activityiconcontainer.assessment .icon {
+    height: 45px;
+    width: 45px;
+    filter: none; }
+
+.activityiconcontainer.collaboration {
+    background-color: transparent; }
+.activityiconcontainer.collaboration .activityicon,
+.activityiconcontainer.collaboration .icon {
+    height: 45px;
+    width: 45px;
+    filter: none; }
+
+.activityiconcontainer.communication {
+    background-color: transparent; }
+.activityiconcontainer.communication .activityicon,
+.activityiconcontainer.communication .icon {
+    height: 45px;
+    width: 45px;
+    filter: none; }
+
+.activityiconcontainer.content {
+    background-color: transparent; }
+.activityiconcontainer.content .activityicon,
+.activityiconcontainer.content .icon {
+    height: 45px;
+    width: 45px;
+    filter: none; }
+
+.activityiconcontainer.interface {
+    background-color: transparent; }
+.activityiconcontainer.interface .activityicon,
+.activityiconcontainer.interface .icon {
+    height: 45px;
+    width: 45px;
+    filter: none; }
+
+
+.theme-snap .modchoosercontainer {
+    .activityiconcontainer {
+        padding: unset;
+    }
     div[data-internal="forum"] .modicon_forum,
     div[data-internal="chat"] .modicon_chat,
     div[data-internal="hsuforum"] .modicon_hsuforum {
-        background-color: $color-communication;
-        padding: 0.7rem;
+        background-color: transparent;
+        padding: unset;
         .activityicon {
-            height: 24px;
-            width: 24px;
+            filter: none;
+            height: 45px;
+            width: 45px;
         }
     }
 
@@ -498,11 +550,12 @@ li.section:focus {
     div[data-internal="journal"] .modicon_journal,
     div[data-internal="hvp"] .modicon_hvp,
     div[data-internal="attendance"] .modicon_attendance {
-        background-color: $color-assignment;
-        padding: 0.7rem;
+        background-color: transparent;
+        padding: unset;
         .activityicon {
-            height: 24px;
-            width: 24px;
+            filter: none;
+            height: 45px;
+            width: 45px;
         }
     }
 
@@ -512,11 +565,12 @@ li.section:focus {
     div[data-internal="survey"] .modicon_survey,
     div[data-internal="questionnaire"] .modicon_questionnaire,
     div[data-internal="lesson"] .modicon_lesson {
-        background-color: $color-quiz;
-        padding: 0.7rem;
+        background-color: transparent;
+        padding: unset;
         .activityicon {
-            height: 24px;
-            width: 24px;
+            filter: none;
+            height: 45px;
+            width: 45px;
         }
     }
 
@@ -524,17 +578,27 @@ li.section:focus {
     div[data-internal="glossary"] .modicon_glossary,
     div[data-internal="wiki"] .modicon_wiki,
     div[data-internal="choicegroup"] .modicon_choicegroup {
-        background-color: $color-wiki;
-        padding: 0.7rem;
+        background-color: transparent;
+        padding: unset;
         .activityicon {
-            height: 24px;
-            width: 24px;
+            filter: none;
+            height: 45px;
+            width: 45px;
         }
     }
 
-    div[data-internal="hvp"] .modicon_hvp img.activityicon {
-        filter: brightness(0) invert(1);
+    div[data-internal="hvp"] .modicon_hvp,
+    div[data-internal="collaborate"] .modicon_collaborate,
+    div[data-internal="goone"] .modicon_goone,
+    div[data-internal="hsuforum"] .modicon_hsuforum {
+        background-color: transparent;
+        img.activityicon {
+            filter: none;
+            height: 45px;
+            width: 45px;
+        }
     }
+
 
     .activityiconcontainer:not(
     .modicon_book,
@@ -556,8 +620,9 @@ li.section:focus {
     .modicon_scorm,
     .modicon_quizgame)
     {
-        padding: 0.3rem;
+        padding: unset;
         .activityicon {
+            filter: none;
             height: 45px;
             width: 45px;
         }
@@ -1042,6 +1107,12 @@ body.snap-resource-card li.snap-resource {
         padding-top: 0.5em;
     }
 
+    &.modtype_resource {
+        .activityiconcontainer {
+            display: none !important;
+        }
+    }
+
     .activityiconcontainer {
         display: none;
     }
@@ -1100,19 +1171,19 @@ body.snap-resource-card li.snap-resource {
 
     &.modtype_lightboxgallery,
     &.snap-mime-bmp {
-        border-top-color: #4abc96;
+        border-top-color: $color-lightbox;
         background-image: url([[pix:core|/f/image]]);
     }
 
     // MOODLE MODS //
     &.modtype_url {
-        border-top-color: #999;
+        border-top-color: $color-url;
         background-image: url([[pix:core|/f/url]]);
     }
 
     &.modtype_imscp,
     &.modtype_scorm {
-        border-top-color: #f7981d;
+        border-top-color: $color-questionnaire;
     }
 
     &.modtype_scorm {
@@ -1124,7 +1195,7 @@ body.snap-resource-card li.snap-resource {
     }
 
     &.modtype_folder {
-        border-top-color: #fed859;
+        border-top-color: $color-folder;
         background-image: url([[pix:core|/f/folder]]);
     }
 
@@ -1406,7 +1477,7 @@ body.snap-resource-card {
     margin: 1em 1%;
     padding-bottom: 2em;
     img.activityicon {
-        filter: brightness(0) invert(1);
+        filter: none;
     }
 
     .activityiconcontainer,
@@ -1417,6 +1488,19 @@ body.snap-resource-card {
 
     .activityicon {
         display: inline-block;
+    }
+
+    //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
+    &.modtype_questionnaire,
+    &.modtype_checklist,
+    &.modtype_certificate,
+    &.modtype_customcert,
+    &.modtype_hotpot,
+    &.modtype_ouwiki,
+    &.modtype_bigbluebuttonbn {
+        .activityiconcontainer img.activityicon {
+            filter: none;
+        }
     }
 
     &.modtype_forum,
@@ -1441,28 +1525,20 @@ body.snap-resource-card {
         }
     }
 
-    //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
-    &.modtype_questionnaire,
-    &.modtype_checklist,
-    &.modtype_certificate,
-    &.modtype_customcert,
-    &.modtype_hotpot,
-    &.modtype_ouwiki,
-    &.modtype_bigbluebuttonbn {
-        .activityiconcontainer img.activityicon {
-            filter: none;
-        }
-    }
-
     &.modtype_choice,
     &.modtype_feedback,
-    &.modtype_quiz,
+    &.modtype_quiz {
+        border-top-color: $color-content;
+        .activityiconcontainer {
+            background-color: $color-content;
+        }
+    }
     &.modtype_survey,
     &.modtype_questionnaire,
     &.modtype_lesson {
-        border-top-color: $color-quiz;
+        border-top-color: $color-questionnaire;
         .activityiconcontainer {
-            background-color: $color-quiz;
+            background-color: $color-questionnaire;
         }
     }
 
@@ -1470,9 +1546,9 @@ body.snap-resource-card {
     &.modtype_glossary,
     &.modtype_wiki,
     &.modtype_choicegroup {
-        border-top-color: $color-wiki;
+        border-top-color: $color-information;
         .activityiconcontainer {
-            background-color: $color-wiki;
+            background-color: $color-information;
         }
     }
 
@@ -1484,7 +1560,31 @@ body.snap-resource-card {
     }
 
     &.modtype_folder {
-        border-top-color: #fed859;
+        border-top-color: $color-folder;
+        .activityiconcontainer {
+            background-color: $color-folder;
+        }
+    }
+
+    &.modtype_livepoll {
+        border-top-color: $color-livepoll;
+        .activityiconcontainer {
+            background-color: $color-livepoll;
+        }
+    }
+
+    &.modtype_checklist {
+        border-top-color: $color-checklist;
+        .activityiconcontainer {
+            background-color: $color-checklist;
+        }
+    }
+
+    &.modtype_resource {
+        border-top-color: $color-livepoll;
+        .activityiconcontainer {
+            background-color: $color-livepoll;
+        }
     }
 }
 
@@ -1506,6 +1606,49 @@ body.snap-resource-card {
         }
     }
 
+}
+
+// --------------------------------------------------------------------
+// Color for Snap icons in the admin modules, plugins and restore course view.
+// --------------------------------------------------------------------
+
+.path-admin,
+.path-backup {
+    tr img.icon {
+        margin-right: 1rem;
+        padding: 0.3rem;
+        height: 40px;
+        width: 40px;
+        float: left;
+    }
+}
+
+// -----------------------------------------------------------
+// Icons in activities and upcoming events block.
+// -----------------------------------------------------------
+
+.path-course,
+.path-my {
+    .block_calendar_upcoming,
+    .block-timeline {
+        .activityiconcontainer {
+            margin-right: 0.5rem;
+            padding: 0.2rem;
+            height: 45px;
+            width: 45px;
+            img.icon {
+                height: 45px;
+                width: 45px;
+            }
+        }
+    }
+    .block_activity_modules {
+        img.icon {
+            padding: 0.2rem;
+            height: 30px;
+            width: 30px;
+        }
+    }
 }
 
 // -------------------------
@@ -1577,22 +1720,22 @@ body.snap-resource-card {
 
     &.modtype_lightboxgallery,
     &.snap-mime-bmp {
-        border-top-color: #4abc96;
+        border-top-color: $color-lightbox;
     }
 
     // MOODLE MODS //
     &.modtype_url {
-        border-top-color: #999;
+        border-top-color: $color-url;
     }
 
     &.modtype_imscp,
     &.modtype_scorm {
-        border-top-color: #f7981d;
+        border-top-color: $color-questionnaire;
         background-image: url([[pix:core|/f/book]]);
     }
 
     &.modtype_folder {
-        border-top-color: #fed859;
+        border-top-color: $color-folder;
     }
 
     // CODE & SYSTEM //
@@ -2233,6 +2376,15 @@ span.editinstructions {
 
         .fcheckbox input {
             margin: 0;
+        }
+    }
+}
+
+#page-course-editdefaultcompletion {
+    .container-fluid {
+        img {
+            // Fix icons oversize (INT-18719).
+            max-width: inherit;
         }
     }
 }

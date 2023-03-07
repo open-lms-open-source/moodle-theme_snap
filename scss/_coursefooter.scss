@@ -108,16 +108,19 @@
         }
         &.choice,
         &.feedback,
-        &.quiz,
+        &.quiz {
+            border-color: $color-content;
+        }
         &.survey,
         &.questionnaire,
         &.lesson {
-            border-color: $color-quiz;
+            border-color: $color-questionnaire;
         }
+        &.choicegroup,
         &.data,
         &.glossary,
         &.wiki {
-            border-color: $color-wiki;
+            border-color: $color-information;
         }
     }
 
