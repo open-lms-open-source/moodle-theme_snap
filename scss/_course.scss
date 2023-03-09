@@ -653,6 +653,28 @@ li.section:focus {
 .snap-dropzone {
     margin-top: 1em;
 }
+// Overwrite css for new OpenLMS icons.
+body.theme-snap li.activity.modtype_livepoll .activityiconcontainer img.activityicon,
+body.theme-snap .modchoosercontainer div[data-internal="livepoll"] .modicon_livepoll img.activityicon,
+body.theme-snap li.activity.modtype_hsuforum .activityiconcontainer img.activityicon,
+body.theme-snap .modchoosercontainer div[data-internal="hsuforum"] .modicon_hsuforum img.activityicon,
+body.theme-snap li.activity.modtype_collaborate .activityiconcontainer img.activityicon,
+body.theme-snap .modchoosercontainer div[data-internal="collaborate"] .modicon_collaborate img.activityicon,
+body.theme-snap li.activity.modtype_goone .activityiconcontainer img.activityicon,
+body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone img.activityicon{
+    filter: none;
+}
+
+// External tool lti icon.
+li.activity.modtype_lti .activityiconcontainer,
+.modchoosercontainer div[data-internal="lti"] .modicon_lti {
+    background-color: $color-resource;
+    padding: 0.6rem;
+}
+li.activity.modtype_lti .activityiconcontainer img.activityicon,
+.modchoosercontainer div[data-internal="lti"] .modicon_lti img.activityicon {
+    filter: brightness(0) invert(1);
+}
 
 /* Landing page does not have renderer, so markup is different. */
 #page-site-index .section-modchooser-link {
@@ -1542,6 +1564,16 @@ body.snap-resource-card {
         }
     }
 
+    &.modtype_lti {
+        border-top-color: $color-resource;
+        .activityiconcontainer {
+            background-color: $color-resource;
+            img.activityicon {
+                filter: brightness(0) invert(1);
+            }
+        }
+    }
+
     &.modtype_data,
     &.modtype_glossary,
     &.modtype_wiki,
@@ -1611,7 +1643,16 @@ body.snap-resource-card {
 // --------------------------------------------------------------------
 // Color for Snap icons in the admin modules, plugins and restore course view.
 // --------------------------------------------------------------------
-
+.path-mod {
+    &.path-mod-lti {
+        .activityiconcontainer {
+            background-color: $color-resource;
+            img.icon {
+                filter: brightness(0) invert(1);
+            }
+        }
+    }
+}
 .path-admin,
 .path-backup {
     tr img.icon {
