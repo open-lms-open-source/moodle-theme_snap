@@ -618,6 +618,27 @@ li.section:focus {
     overflow: hidden;
 }
 
+#page-course-view-tiles .tiles[data-for="course_sectionlist"] {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+#page-course-view-tiles .tiles.state-visible[data-for="course_sectionlist"] {
+    visibility: visible;
+    height: auto;
+    width: 100%;
+    overflow: visible;
+}
+
+#page-course-view-tiles #snap-course-dashboard {
+    display: none;
+    &.state-visible {
+        display: block;
+    }
+}
+
 .course-content > ul li.section.state-visible, {
     overflow: visible;
 }
