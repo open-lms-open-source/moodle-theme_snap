@@ -1215,17 +1215,6 @@ nodeToChange = $(selectorToChange);
                         }
                     }
 
-                    // Add container div to show Snap icons when creating and editing activities.
-                    if ( $('.path-mod.theme-snap').length ) {
-                        $( "#region-main h2 img.icon" ).each(function() {
-                            if($( this ).parent().attr('class') != "activityiconcontainer") {
-                                const newIconContainer = document.createElement("div");
-                                newIconContainer.classList.add("activityiconcontainer");
-                                $( this ).wrap(newIconContainer);
-                            }
-                        });
-                    }
-
                     // Hide Blocks editing on button from the Intelliboard Dashboard page in Snap.
                     if ( $('#page-home.theme-snap .intelliboard-page').length && $('.snap-page-heading-button').length) {
                         const blocksEditingOnButton = document.getElementsByClassName('snap-page-heading-button')[0];

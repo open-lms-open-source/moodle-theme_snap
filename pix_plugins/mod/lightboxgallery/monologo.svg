@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <g id="Group_64" data-name="Group 64" transform="translate(-4869 -2065)">
+    <g id="Group_58" data-name="Group 58" transform="translate(128 180)">
+      <g id="Group_41" data-name="Group 41">
+        <rect id="Rectangle_67" data-name="Rectangle 67" width="50" height="50" rx="5" transform="translate(4741 1885)" fill="#4abc96"/>
+      </g>
+    </g>
+    <g id="monologo" transform="translate(4877.977 2074)">
+      <path id="path5175" d="M28.779,1.348l-.013,29.124-25.851-.01.007-28.52,26.018,0M30.719,0H1.024V32.356H30.716Z" transform="translate(0)" fill="#fff"/>
+      <path id="rect911" d="M5.134,3.869H23.811V21.932H5.134Z" transform="translate(1.431 1.347)" fill="none" stroke="#fff" stroke-width="1.299"/>
+      <path id="path931" d="M19.554,13.9A6.951,6.951,0,0,0,20.7,15.443v1.119h-5.91a6.512,6.512,0,0,0,.908-.922l.027-.031.026-.036c.722-.969.941-.971,1.429-.971a3.623,3.623,0,0,0,2.37-.7M9.743,15.035a5.414,5.414,0,0,0,1.073,1.525H8.132A5.9,5.9,0,0,1,9.658,15.1c.027-.019.056-.043.084-.067m10.33-4.376c-2.554,3.982-3.046.3-5.574,3.7a2.5,2.5,0,0,1-1.753,1.149c-1.022,0-1.768-1.39-2.264-3.368C7.668,14.529,7.41,14.162,6,16.837v1.6H22.351V14.552C20.59,13.1,20.663,11.934,20.073,10.659Z" transform="translate(1.732 3.711)" fill="#fff" stroke="#1f1f1f" stroke-miterlimit="20" stroke-dashoffset="9.585" stroke-width="0.959" stroke-dasharray="0 10.544"/>
+    </g>
+  </g>
+</svg>

@@ -106,20 +106,40 @@ $btn-border-radius-sm:       .2rem;
 // Colour variables for resources and activities.
 // -------------------------
 
-$color-word:                         #03a9f4; // Blue.
-$color-powerpoint:                   #ff7300; // Orange.
-$color-excel:                        #009e51; // Green.
-$color-pdf:                          #f44336; // Red.
-$color-audio:                        #8bc34a; // Green.
+$color-word:                         #51a1c1; // Blue.
+$color-powerpoint:                   #ea7f27; // Orange.
+$color-excel:                        #37cc84; // Green.
+$color-pdf:                          #d9544a; // Red.
+$color-audio:                        #a5be3d; // Green.
 $color-video:                        #55b5cc; // Blue.
-$color-code:                         #f0652a; // Orange.
+$color-code:                         #d5683b; // Orange.
 
-$color-communication:                #8bc34a; // Forums, Chat
-$color-assignment:                   #03a9f4; // Assignment, workshop
-$color-quiz:                         #ffa000; // Quiz, choice, feedback
-$color-wiki:                         #009688; // Wiki, glossary
-$color-collab:                       #c800a1; // Collaborate
-$color-book:                         #399be2; // Book, File, Folder
+// Activity icons
+$color-communication:                #8bc34a; // Forums, Chat, Open forum
+$color-assignment:                   #45a1cb; // Assignment, Workshop, Attendance, HVP, Journal
+$color-content:                      #e0a839; // Quiz, choice, feedback
+$color-information:                  #32b9ac; // Wiki, glossary, Database, Choice Group
+$color-collab:                       #ce46b3; // Collaborate
+
+// Resource icons
+$color-lightbox:                     #4abc96; // Lightbox gallery
+$color-resource:                     #399be2; // Resources lTI
+$color-book:                         #4a66c3; // Book
+$color-folder:                       #f5ce4d; // Folder
+$color-questionnaire:                #f7981d; // Questionnaire, IMSCP, SCORM, Survey, Lesson
+$color-url:                          #999999; // URL
+$color-label:                        #3956b5; // Label
+$color-page:                         #5746d3; // Page
+
+// Open LMS
+$color-certificate:                  #be46ce; // Course certificate
+$color-customquiz:                   #eb66a2; // Custom Quiz
+$color-livepoll:                     #c95151; // Livepoll
+$color-checklist:                    #3bb582; // Checklist Dialogue
+$color-quizlms:                      #e0a839; // Adaptive quiz, Quiz game
+$color-zoom:                         #82009e; // Zoom
+$color-go1:                          #4f9ec1; // GO1 content item
+
 
 // -------------------------
 // Colour variables for the customisable mr_nav.
