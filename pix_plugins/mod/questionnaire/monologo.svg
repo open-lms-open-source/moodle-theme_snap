@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <g id="Group_168" data-name="Group 168" transform="translate(-2166 -8715)">
+    <g id="Group_167" data-name="Group 167" transform="translate(-2639 6650)">
+      <g id="Group_57" data-name="Group 57" transform="translate(64 180)">
+        <g id="Group_41" data-name="Group 41">
+          <rect id="Rectangle_67" data-name="Rectangle 67" width="50" height="50" rx="5" transform="translate(4741 1885)" fill="#f7981d"/>
+        </g>
+      </g>
+    </g>
+    <g id="g4497" transform="translate(2145.053 8724.102)">
+      <path id="polygon13-7" d="M29.083,32.5V10.7L18.792,0H2V32.5H29.083Z" transform="translate(29.947 -0.102)" fill="#fff"/>
+      <path id="polygon20-6" d="M27.375,30.792V10.885L17.9,1H3V30.792H27.375Z" transform="translate(30.301 0.252)" fill="#fff"/>
+      <path id="polygon27-1" d="M25.667,29.083V11.073L17,2H4V29.083H25.667Z" transform="translate(30.655 0.607)" fill="#f3f3f3"/>
+      <path id="path36-8" d="M43.159,12.086s7.042-2.031,12.187.542V10.6L45.055-.1H42.347c3.656,5.01.813,12.187.813,12.187Z" transform="translate(3.683 0)" fill="#eceff1"/>
+      <path id="path51-9" d="M52.578,9.965a20.072,20.072,0,0,0-4.2-.406,18.762,18.762,0,0,0-4.062.406A14.707,14.707,0,0,0,44.047,1.3Z" transform="translate(4.285 0.496)" fill="#eceff1"/>
+      <g id="g4367" transform="translate(35.651 4.675)">
+        <path id="polygon60-7" d="M3.622,7.427,1.449,5.163,0,6.612,3.984,10.6,10.731.635Z" transform="translate(0 -0.635)" fill="#9191ff"/>
+        <path id="polygon69-5" d="M.468,5.771,1.283,5,3.411,7.265,7.848,3.009,3.773,9.076Z" transform="translate(0.166 0.205)" fill="#9191ff"/>
+      </g>
+      <g id="g4367-1" transform="translate(35.621 19.011)">
+        <path id="polygon60-7-6" d="M10.731.635,3.622,7.427,1.449,5.163,0,6.612,3.984,10.6Z" transform="translate(0 -0.635)" fill="#9090ff"/>
+        <path id="polygon69-5-5" d="M3.773,9.076.468,5.771,1.283,5,3.411,7.265,7.848,3.009Z" transform="translate(0.166 0.205)" fill="#9191ff"/>
+      </g>
+      <g id="g4483" transform="translate(35.635 16.16)">
+        <g id="g4433" transform="translate(0 0)">
+          <path id="rect4403" d="M34.563,11.5v3.637h1.1V11.5Z" transform="translate(-34.563 -11.5)" fill="#ff5f5f"/>
+          <path id="rect4403-7" d="M34.757,11.763v2.955h.516V11.763Z" transform="translate(-34.493 -11.407)" fill="#ff5f5f"/>
+        </g>
+        <g id="g4433-8" transform="translate(6.093 0)">
+          <path id="rect4403-3" d="M34.563,11.5v3.637h1.1V11.5Z" transform="translate(-34.563 -11.5)" fill="#ff5f5f"/>
+          <path id="rect4403-7-6" d="M34.757,11.763v2.955h.516V11.763Z" transform="translate(-34.493 -11.407)" fill="#ff5f5f"/>
+        </g>
+        <g id="g4433-4" transform="translate(12.186 0)">
+          <path id="rect4403-4" d="M34.563,11.5v3.637h1.1V11.5Z" transform="translate(-34.563 -11.5)" fill="#ff5f5f"/>
+          <path id="rect4403-7-1" d="M34.757,11.763v2.955h.516V11.763Z" transform="translate(-34.493 -11.407)" fill="#ff5f5f"/>
+        </g>
+        <g id="g4433-9" transform="translate(18.279 0)">
+          <path id="rect4403-5" d="M34.563,11.5v3.637h1.1V11.5Z" transform="translate(-34.563 -11.5)" fill="#ff5f5f"/>
+          <path id="rect4403-7-5" d="M34.757,11.763v2.955h.516V11.763Z" transform="translate(-34.493 -11.407)" fill="#ff5f5f"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

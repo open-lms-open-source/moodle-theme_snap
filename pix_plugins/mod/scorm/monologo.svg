@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <g id="Group_104" data-name="Group 104" transform="translate(-4741 -2245)">
+    <g id="Group_94" data-name="Group 94" transform="translate(0 180)">
+      <g id="Group_56" data-name="Group 56" transform="translate(0 180)">
+        <g id="Group_41" data-name="Group 41">
+          <rect id="Rectangle_67" data-name="Rectangle 67" width="50" height="50" rx="5" transform="translate(4741 1885)" fill="#f7981d"/>
+        </g>
+      </g>
+    </g>
+    <path id="monologo" d="M37.163,17.421,30.652,5.951a1.506,1.506,0,0,0-1.2-.751H7.913a1.358,1.358,0,0,0-1.2.751L.25,17.421h0a2.01,2.01,0,0,0-.15.751V35.8a1.436,1.436,0,0,0,1.352,1.452H35.961A1.4,1.4,0,0,0,37.313,35.8V18.172A1.672,1.672,0,0,0,37.163,17.421ZM3.506,16.87,8.615,7.7l8.715.1V16.97Zm16.578.1V7.855h8.765l4.808,9.166H20.084Zm14.625,2.655V34.65H2.7V19.625Z" transform="translate(4746.9 2248.8)" fill="#fff"/>
+  </g>
+</svg>

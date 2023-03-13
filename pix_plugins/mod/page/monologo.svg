@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <g id="Group_65" data-name="Group 65" transform="translate(-4933 -2065)">
+    <g id="Group_59" data-name="Group 59" transform="translate(192 180)">
+      <g id="Group_41" data-name="Group 41">
+        <rect id="Rectangle_67" data-name="Rectangle 67" width="50" height="50" rx="5" transform="translate(4741 1885)" fill="#5746d3"/>
+      </g>
+    </g>
+    <g id="monologo" transform="translate(4939.4 2075)">
+      <path id="Path_64" data-name="Path 64" d="M30.753,6.089,25.068.4A1.428,1.428,0,0,0,24.019,0H8.092A1.464,1.464,0,0,0,6.6,1.492h0V28.508A1.464,1.464,0,0,0,8.092,30H29.745a1.464,1.464,0,0,0,1.492-1.492h0V7.177A2.071,2.071,0,0,0,30.753,6.089ZM23.455,2.7l5.04,5.04h-5.04ZM8.737,27.9V2.016H21.2v6.29a1.506,1.506,0,0,0,1.532,1.532h6.29V27.863L8.737,27.9Z" transform="translate(0)" fill="#fff"/>
+      <path id="Path_65" data-name="Path 65" d="M32.1,43H18.148a1.048,1.048,0,1,0,0,2.1H32.1a1.068,1.068,0,0,0,1.048-1.048A1.017,1.017,0,0,0,32.1,43Z" transform="translate(-6.266 -25.661)" fill="#fff"/>
+      <path id="Path_66" data-name="Path 66" d="M32.1,53.5H18.148a1.048,1.048,0,1,0,0,2.1H32.1a1.068,1.068,0,0,0,1.048-1.048A1.041,1.041,0,0,0,32.1,53.5Z" transform="translate(-6.266 -31.927)" fill="#fff"/>
+      <path id="Path_67" data-name="Path 67" d="M18.248,34.7h8.427a1.048,1.048,0,1,0,0-2.1H18.248a1.048,1.048,0,1,0,0,2.1Z" transform="translate(-6.326 -19.455)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

@@ -102,50 +102,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
-    li.activity {
-        &.modtype_checklist,
-        &.modtype_goone,
-        &.modtype_coursecertificate,
-        &.modtype_adaptivequiz,
-        &.modtype_quizgame,
-        &.modtype_zoom,
-        &.modtype_dialogue {
-            .activityiconcontainer {
-                background-color: $brand-primary;
-                img.activityicon {
-                    filter: brightness(0) invert(1);
-                }
-            }
-        }
-    }
-
-    .modchoosercontainer {
-        div[data-internal="checklist"] .modicon_checklist,
-        div[data-internal="goone"] .modicon_goone,
-        div[data-internal="adaptivequiz"] .modicon_adaptivequiz,
-        div[data-internal="coursecertificate"] .modicon_coursecertificate,
-        div[data-internal="quizgame"] .modicon_quizgame,
-        div[data-internal="zoom"] .modicon_zoom,
-        div[data-internal="dialogue"] .modicon_dialogue {
-            background-color: $brand-primary;
-        }
-    }
-
-    // Color icons for core blocks that depends on the site color.
-    .block_recentlyaccesseditems {
-        .activityiconcontainer {
-            &.align-self-center[activityname="Checklist"],
-            &.align-self-center[activityname="GO1 content item"],
-            &.align-self-center[activityname="Course certificate"],
-            &.align-self-center[activityname="Adaptive Quiz"],
-            &.align-self-center[activityname="Quizventure"],
-            &.align-self-center[activityname="Zoom meeting"],
-            &.align-self-center[activityname="Dialogue"] {
-                background-color: $brand-primary;
-            }
-        }
-    }
-
     // Focus outline for keyboard tab users
     a,
     .dropdown-toggle {

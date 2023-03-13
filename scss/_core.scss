@@ -991,6 +991,17 @@ a.yui3-button,
         display: block;
     }
 
+    // media o media
+    > a > img,
+    > img {
+        float: left;
+        display: block;
+        width: 36px;
+        margin: .3em 1em 0 .3em;
+        height: auto;
+        vertical-align: baseline;
+    }
+
     // media o content
     .snap-media-body {
         overflow: hidden;
