@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap with course format tiles, a course tools section is available.
 
   Background:
-    Given I skip because "This wil lbe reviewed in INT-18407"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
@@ -113,3 +112,22 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I wait until the page is ready
     Then "Turn editing off" "link" should not be visible
     And "Edit content" "link" should be visible
+
+
+  @javascript
+  Scenario: Users can see blocks in Course Dashboard.
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    When I click on "Course Dashboard" "link"
+    And I wait until the page is ready
+    When I click on "Edit blocks" "link"
+    And I wait until the page is ready
+    And I should see "Add a block"
+    And I set the field with xpath "//select[@class = 'custom-select singleselect']" to "Calendar"
+    And I wait until the page is ready
+    And I should see "Calendar"
+    And I log out
+    Then I log in as "student1"
+    And I am on the course main page for "C1"
+    When I click on "Course Dashboard" "link"
+    And I should see "Calendar"
