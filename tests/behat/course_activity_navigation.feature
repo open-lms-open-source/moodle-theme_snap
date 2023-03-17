@@ -77,7 +77,7 @@ Feature: Activity navigation in Snap theme
     And I follow "Topic 2"
     And I follow "Edit \"Forum 1\""
     And I expand all fieldsets
-    And I set the field "Visibility" to "Make available but not shown on course page"
+    And I set the field "Visibility" to "Make available but don't show on course page"
     And I press "Save and return to course"
     # Hidden activity.
     And I click on ".snap-activity[data-type='Glossary'] button.snap-edit-asset-more" "css_element"
