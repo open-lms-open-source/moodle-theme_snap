@@ -408,10 +408,10 @@ body.snap-pm-open {
                 }
             }
             &.activity-feed[activity-type="External tool"] {
-                background-color: $color-resource;
+                background-color: transparent;
                 padding: 0.4rem;
                 & > img {
-                    filter: brightness(0) invert(1);
+                    filter: none;
                 }
             }
             &.activity-feed[activity-type="Assignment"],
