@@ -665,17 +665,6 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
     filter: none;
 }
 
-// External tool lti icon.
-li.activity.modtype_lti .activityiconcontainer,
-.modchoosercontainer div[data-internal="lti"] .modicon_lti {
-    background-color: $color-resource;
-    padding: 0.6rem;
-}
-li.activity.modtype_lti .activityiconcontainer img.activityicon,
-.modchoosercontainer div[data-internal="lti"] .modicon_lti img.activityicon {
-    filter: brightness(0) invert(1);
-}
-
 /* Landing page does not have renderer, so markup is different. */
 #page-site-index .section-modchooser-link {
     border-color: white;
@@ -881,8 +870,7 @@ li.activity.modtype_lti .activityiconcontainer img.activityicon,
 
             .activityicon {
                 width: 45px;
-                height: 45px;
-                margin-top: -5px; // magic number.
+                height: fit-content;
                 margin-right: 0.5em;
                 @include alakazam;
             }
@@ -1520,127 +1508,194 @@ body.snap-resource-card {
 // -----------------------------------------------------------
 // Color for Snap Activities borders and icons (no resources).
 // -----------------------------------------------------------
-.section li.snap-activity {
-    margin: 1em 1%;
-    padding-bottom: 2em;
-    img.activityicon {
-        filter: none;
-    }
+.section li {
+    &.snap-activity,
+    &.launch-tiles-standard,
+    &.launch-tiles-module-modal,
+    &.launch-tiles-resource-modal,
+    &.activity-wrapper {
+        margin: 1em 1%;
+        padding-bottom: 2em;
 
-    .activityiconcontainer,
-    .instancename {
-        display: inline-block;
-        margin-right: 1rem;
-    }
-
-    .activityicon {
-        display: inline-block;
-    }
-
-    //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
-    &.modtype_questionnaire,
-    &.modtype_checklist,
-    &.modtype_certificate,
-    &.modtype_customcert,
-    &.modtype_hotpot,
-    &.modtype_ouwiki,
-    &.modtype_bigbluebuttonbn {
-        .activityiconcontainer img.activityicon {
+        img.activityicon {
             filter: none;
         }
-    }
 
-    &.modtype_forum,
-    &.modtype_chat,
-    &.modtype_hsuforum {
-        border-top-color: $color-communication;
-        .activityiconcontainer {
-            background-color: $color-communication;
+        .activityiconcontainer,
+        .instancename {
+            display: inline-block;
+            margin-right: 1rem;
         }
-    }
 
-    &.modtype_assign,
-    &.modtype_assignment,
-    &.modtype_workshop,
-    &.modtype_journal,
-    &.modtype_attendance,
-    &.modtype_hvp,
-    &.modtype_h5pactivity {
-        border-top-color: $color-assignment;
-        .activityiconcontainer {
-            background-color: $color-assignment;
+        .activityicon {
+            display: inline-block;
         }
-    }
 
-    &.modtype_choice,
-    &.modtype_feedback,
-    &.modtype_quiz {
-        border-top-color: $color-content;
-        .activityiconcontainer {
-            background-color: $color-content;
-        }
-    }
-    &.modtype_survey,
-    &.modtype_questionnaire,
-    &.modtype_lesson {
-        border-top-color: $color-questionnaire;
-        .activityiconcontainer {
-            background-color: $color-questionnaire;
-        }
-    }
-
-    &.modtype_lti {
-        border-top-color: $color-resource;
-        .activityiconcontainer {
-            background-color: $color-resource;
-            img.activityicon {
-                filter: brightness(0) invert(1);
+        //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
+        &.modtype_questionnaire,
+        &.modtype_checklist,
+        &.modtype_certificate,
+        &.modtype_customcert,
+        &.modtype_hotpot,
+        &.modtype_ouwiki,
+        &.modtype_bigbluebuttonbn {
+            .activityiconcontainer img.activityicon {
+                filter: none;
             }
         }
-    }
 
-    &.modtype_data,
-    &.modtype_glossary,
-    &.modtype_wiki,
-    &.modtype_choicegroup {
-        border-top-color: $color-information;
-        .activityiconcontainer {
-            background-color: $color-information;
+        &.modtype_forum,
+        &.modtype_chat,
+        &.modtype_hsuforum {
+            border-top-color: $color-communication;
+            .activityiconcontainer {
+                background-color: $color-communication;
+            }
         }
-    }
 
-    &.modtype_collaborate {
-        border-top-color: $color-collab;
-        .activityiconcontainer {
-            background-color: $color-collab;
+        &.modtype_assign,
+        &.modtype_assignment,
+        &.modtype_workshop,
+        &.modtype_journal,
+        &.modtype_attendance,
+        &.modtype_hvp,
+        &.modtype_h5pactivity {
+            border-top-color: $color-assignment;
+            .activityiconcontainer {
+                background-color: $color-assignment;
+            }
         }
-    }
 
-    &.modtype_folder {
-        border-top-color: $color-folder;
-        .activityiconcontainer {
-            background-color: $color-folder;
+        &.modtype_choice,
+        &.modtype_feedback,
+        &.modtype_quiz {
+            border-top-color: $color-content;
+            .activityiconcontainer {
+                background-color: $color-content;
+            }
         }
-    }
 
-    &.modtype_livepoll {
-        border-top-color: $color-livepoll;
-        .activityiconcontainer {
-            background-color: $color-livepoll;
+        &.modtype_survey,
+        &.modtype_questionnaire,
+        &.modtype_lesson,
+        &.modtype_imscp,
+        &.modtype_scorm {
+            border-top-color: $color-questionnaire;
+            .activityiconcontainer {
+                background-color: $color-questionnaire;
+            }
         }
-    }
 
-    &.modtype_checklist {
-        border-top-color: $color-checklist;
-        .activityiconcontainer {
-            background-color: $color-checklist;
+        &.modtype_lti {
+            border-top-color: $color-resource;
+            .activityiconcontainer {
+                background-color: $color-resource;
+                img.activityicon {
+                    filter: none;
+                }
+            }
         }
-    }
 
-    &.modtype_resource {
-        border-top-color: $color-livepoll;
-        .activityiconcontainer {
-            background-color: $color-livepoll;
+        &.modtype_data,
+        &.modtype_glossary,
+        &.modtype_wiki,
+        &.modtype_choicegroup {
+            border-top-color: $color-information;
+            .activityiconcontainer {
+                background-color: $color-information;
+            }
+        }
+
+        &.modtype_collaborate {
+            border-top-color: $color-collab;
+            .activityiconcontainer {
+                background-color: $color-collab;
+            }
+        }
+
+        &.modtype_folder {
+            border-top-color: $color-folder;
+            .activityiconcontainer {
+                background-color: $color-folder;
+            }
+        }
+
+        &.modtype_livepoll {
+            border-top-color: $color-livepoll;
+            .activityiconcontainer {
+                background-color: $color-livepoll;
+            }
+        }
+
+        &.modtype_checklist,
+        &.modtype_dialogue {
+            border-top-color: $color-checklist;
+            .activityiconcontainer {
+                background-color: $color-checklist;
+            }
+        }
+
+        &.modtype_resource {
+            border-top-color: $color-livepoll;
+            .activityiconcontainer {
+                background-color: $color-resource; // For tiles format.
+            }
+        }
+
+        &.modtype_url {
+            border-top-color: $color-url;
+            .activityiconcontainer {
+                background-color: $color-url;
+            }
+        }
+
+        &.modtype_book {
+            .activityiconcontainer {
+                background-color: $color-book;
+            }
+        }
+
+        &.modtype_page {
+            .activityiconcontainer {
+                background-color: $color-page;
+            }
+        }
+
+        &.modtype_zoom {
+            .activityiconcontainer {
+                background-color: $color-zoom;
+            }
+        }
+
+        &.modtype_quizgame,
+        &.modtype_adaptivequiz {
+            .activityiconcontainer {
+                background-color: $color-quizlms;
+            }
+        }
+
+        &.modtype_lightboxgallery {
+            .activityiconcontainer {
+                background-color: $color-lightbox;
+            }
+        }
+
+        &.modtype_goone {
+            .activityiconcontainer {
+                background-color: $color-go1;
+            }
+        }
+
+        &.modtype_customquiz {
+            .activityiconcontainer {
+                background-color: $color-customquiz;
+            }
+        }
+
+        &.modtype_coursecertificate {
+            .activityiconcontainer {
+                background-color: $color-certificate;
+            }
         }
     }
 }
@@ -1659,6 +1714,8 @@ body.snap-resource-card {
             .activityicon {
                 margin-top: -2px !important;
                 margin-right: 0 !important;
+                height: fit-content;
+                width: 34px;
             }
         }
     }
@@ -1673,7 +1730,7 @@ body.snap-resource-card {
         .activityiconcontainer {
             background-color: $color-resource;
             img.icon {
-                filter: brightness(0) invert(1);
+                filter: none;
             }
         }
     }
@@ -1698,12 +1755,12 @@ body.snap-resource-card {
     .block_calendar_upcoming,
     .block-timeline {
         .activityiconcontainer {
-            margin-right: 0.5rem;
+            margin: 0;
             padding: 0.2rem;
             height: 45px;
             width: 45px;
             img.icon {
-                height: 45px;
+                height: fit-content;
                 width: 45px;
             }
         }
