@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2023 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -35,6 +35,7 @@ $string['advancedbrandingheading'] = '進階品牌塑造';
 $string['ago'] = '之前';
 $string['answered'] = '已回答';
 $string['appendices'] = '工具';
+$string['arialabelnewsarticle'] = '新聞文章';
 $string['assigndraft'] = '草稿需要確認';
 $string['assignreopened'] = '已重新開啟';
 $string['at'] = '於';
@@ -53,7 +54,8 @@ $string['categoryedit'] = '編輯類別';
 $string['category_color'] = '類別顏色';
 $string['category_color_description'] = '課程類別顏色。子課程會採用最接近的上層類別配置';
 $string['category_color_palette'] = '調色板';
-$string['category_color_palette_description'] = '查看所指顏色對應的十六進位值。這不會影響任何配置，僅做為範例來幫助使用者建立配置值。';
+$string['category_color_palette_description'] = '查看所指顏色對應的十六進位值。這不會
+影響任何配置，僅做為範例來幫助使用者建立配置值。';
 $string['changecoverimage'] = '變更封面影像';
 $string['changefullname'] = '變更網站名稱';
 $string['chapters'] = '章節';
@@ -67,19 +69,23 @@ $string['coursecontacts'] = '課程聯絡人';
 $string['coursedisplay'] = '課程顯示';
 $string['coursefootertoggle'] = '課程頁尾';
 $string['coursefootertoggledesc'] = '課程頁尾會在課程頁面中向使用者顯示實用資訊，包括課程聯絡人、課程描述和課程近期活動。';
-$string['courseformatnotification'] = 'Snap 主題無法完整支援您目前使用的課程格式。為了享有最佳使用體驗，Open LMS 建議您針對 Snap 主題使用「主題」或「每週」課程格式。您可以在「<a href="{$a}">課程設定</a>」中變更課程格式。';
-$string['coursefixydefaulttext'] = '您目前未註冊任何課程。<br>您註冊的課程會在這裡顯示。';
+$string['courseformatnotification'] = 'Snap 主題無法完整支援您目前使用的課程格式。為了享有最佳使用體驗，Open LMS 建議您針對 Snap 主題使用主題或每週課程格式。您可以在<a href="{$a}">課程設定</a>中變更課程格式。';
+$string['coursefixydefaulttext'] = '您目前沒有註冊任何課程。<br>您註冊的課程會顯示在這裡。';
 $string['coursegrade'] = '課程成績：';
 $string['coursepartialrender'] = '啟用延遲載入課程區段';
 $string['coursepartialrenderdesc'] = '若啟用，課程區段會在使用者選取時隨需載入。如此有助於加快載入有大量內容的課程。';
 $string['coursenavigation'] = '課程瀏覽';
 $string['coursesummaryfilesunsuitable'] = '請先清空您的課程摘要檔案，再嘗試變更封面影像';
+$string['courseactivitieslabel'] = '章節活動';
 $string['coursetools'] = '課程儀表板';
 $string['coverdisplay'] = '封面顯示';
 $string['covercarousel'] = '封面浮動切換';
 $string['covercarouselon'] = '使用封面浮動切換';
-$string['covercarouseldescription'] = '<p>浮動切換是一組輪流顯示的橫幅，或幻燈片，顯示於您網站的首頁，取代封面影像。</p>
-<p>最多新增 3 個影像，每一張幻燈片有一個標題，也可以選用副標題。1200 x 600 像素的影像效果最佳。</p>';
+$string['covercarouseldescription'] = '<p>浮動切換是一組旋轉顯示的橫幅或投影片，顯示於您網站的首頁，取代封面影像。</p>
+<p>最多新增 3 個影像，每一張投影片有一個標題，和一個可選副標題。1200 x 600 像素的影像效果最佳。</p>';
+$string['covercarouselsronly'] = '這是自動旋轉顯示投影片的浮動切換。啟動任何按鈕即可停用旋轉顯示。使用下一張和上一張按鈕即可瀏覽，或使用投影片圓點前往投影片。';
+$string['covercarouselplaybutton'] = '繼續浮動切換自動旋轉顯示投影片。';
+$string['covercarouselpausebutton'] = '暫停浮動切換自動旋轉顯示投影片。';
 $string['coverimage'] = '封面影像';
 $string['covervideo'] = '封面影片';
 $string['comingsoon'] = '即將推出！';
@@ -97,7 +103,7 @@ $string['deadlinestoggle'] = '截止時間';
 $string['deadlinestoggledesc'] = '對使用者顯示已註冊課程的任何近期活動截止日期。';
 $string['defaultsummary'] = '請利用此區域說明主題內容，可使用文字、影像、音訊和視訊。';
 $string['defaultintrosummary'] = '歡迎來到您的新課程 {$a}。
-<br>首先請描述您的課程內容，可使用文字、影像、音訊和視訊。';
+<br>首先請使用文字、影像、音訊和視訊描述您的課程內容。';
 $string['defaulttopictitle'] = '未命名的主題';
 $string['debugerrors'] = '除錯錯誤';
 $string['deleteassetconfirm'] = '刪除 {$a}';
@@ -106,7 +112,7 @@ $string['deletingassetname'] = '正在刪除「{$a->name}」{$a->type}';
 $string['deletesectionconfirm'] = '刪除章節';
 $string['deletingsection'] = '正在刪除「{$a}」章節';
 $string['draft'] = '未向學員發佈';
-$string['dropzonelabel'] = '拖曳檔案即可附加，或者<span class="fake-link">瀏覽</span>';
+$string['dropzonelabel'] = '拖放檔案以附加檔案或<span class="fake-link">瀏覽</span>';
 $string['due'] = '{$a} 到期';
 $string['edit'] = '編輯「{$a}」';
 $string['editcoursecontent'] = '編輯區塊';
@@ -138,7 +144,7 @@ $string['favorited'] = '已加入常用項目 {$a}';
 $string['featurespots'] = '重要特性';
 $string['featurespotsedit'] = '編輯重要特性';
 $string['featurespotshelp'] = '<p>最多可新增 3 個重要特性至您網站的首頁，以向目前和潛在使用者強調主要優勢。</p>
-<p>為每個特性新增標題、內容及選用的影像。影像應為正方形，且不可大於 200px x 200px。</p>';
+<p>為每個特性新增標題、內容及可選影像。影像應為正方形，且不可大於 200px x 200px。</p>';
 $string['featurespotsheading'] = '重要特性標題';
 $string['featureonetitle'] = '特性 1 標題';
 $string['featuretwotitle'] = '特性 2 標題';
@@ -158,7 +164,7 @@ $string['featureoneimage'] = '特性 1 影像';
 $string['featuretwoimage'] = '特性 2 影像';
 $string['featurethreeimage'] = '特性 3 影像';
 $string['featuredcourses'] = '精選課程';
-$string['featuredcourseshelp'] = '在您網站的首頁上突出強調最多 8 門精選課程。輸入課程編號即可將課程設為精選課程。';
+$string['featuredcourseshelp'] = '在您網站的首頁上強調最多 8 門精選課程。輸入課程編號即可將課程設為精選課程。';
 $string['featuredcoursesheading'] = '精選課程標題';
 $string['featuredcourseone'] = '精選課程 1';
 $string['featuredcoursetwo'] = '精選課程 2';
@@ -176,7 +182,7 @@ $string['feedbacktoggle'] = '意見回應和評分';
 $string['feedbacktoggledesc'] = '向學習者顯示其最近的意見回應，以及向講師顯示需要評分的最近送出項目。';
 $string['footnote'] = '網站頁尾';
 $string['footnotedesc'] = '頁尾會跨整個網站顯示。這裡最適合放置說明、支援和您組織擁有的任何其他網站連結，方便您與學習者和講師分享。例如，圖書館或電子郵件地址。';
-$string['forcepwdwarningpersonalmenu'] = '您必須先<a href="{$a}">變更您的密碼</a>，才能使用個人功能表。';
+$string['forcepwdwarningpersonalmenu'] = '您必須先<a href="{$a}">變更密碼</a>才能使用個人功能表。';
 $string['forumauthor'] = '作者';
 $string['forumlastpost'] = '最新文章';
 $string['forumpicturegroup'] = '群組';
@@ -192,7 +198,7 @@ $string['grading'] = '評分';
 $string['help'] = '說明';
 $string['helpguide'] = '說明指南';
 $string['headingfont'] = '標題字型';
-$string['headingfont_desc'] = '這個字型 (Sans-Serif) 已用於整個網站中的標題 (h1 - h6 元素)。如果您使用自訂的網頁字型，請記得將其加入至 Moodle 額外 HTML 表單中。若要修改其他元素的字型，請善用自訂 CSS 選項，如需該選項的使用範例，請參考這份<a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">文件</a>中的相關說明。';
+$string['headingfont_desc'] = '這個 sans-serif 字型用於整個網站中的標題 (h1 - h6 元素)。如果您使用自訂的網頁字型，請記得將其新增至 Moodle 額外 HTML 中。若要修改其他元素的字型，請善用自訂 CSS 選項，如需該選項的使用範例，請參考這份<a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">文件</a>中的相關說明。';
 $string['helpwithlogin'] = '登入說明';
 $string['helpwithloginandguest'] = '登入/訪客存取說明';
 $string['hiddencoursestoggle'] = '隱藏的課程';
@@ -204,19 +210,19 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = '您的 Instagram 帳戶 URL。';
 $string['introduction'] = '介紹';
 $string['jsontext'] = 'JSON 文字';
-$string['jsontextdescription'] = '文字區域會驗證所指的 JSON，因此只允許現有類別，
-只有數值才是有效的編號記錄 (類別記錄)，而且只接受十六進位值做為顏色。
+$string['jsontextdescription'] = '文字區域會驗證特定 JSON，因此僅允許現有類別，
+僅有作為編號紀錄 (類別紀錄) 的數值有效，且僅接受十六進位值作為顏色。
 範例如下：<br>
-{"1":"#FAAFFF",<br>
-"45":"#AFF",<br>
-"65":"#FFF228",<br>
-"12":"#CC0084",<br>
-"56":"#CC0087",<br>
+{"1":"#FAAFFF"、<br>
+"45":"#AFF"、<br>
+"65":"#FFF228"、<br>
+"12":"#CC0084"、<br>
+"56":"#CC0087"、<br>
 "89":"#CCF084"}';
 $string['knowledgebase'] = 'Open LMS 知識庫';
 $string['list'] = '清單';
 $string['linkedin'] = 'LinkedIn';
-$string['linkedindesc'] = '您組織的 LinkedIn URL。';
+$string['linkedindesc'] = '您組織的 LinkedIn url。';
 $string['leftnav'] = '目錄';
 $string['leftnavdesc'] = '選取要顯示目錄的位置。清單提供較多空間來顯示內容，對於有許多主題的課程來說最為理想。';
 $string['loading'] = '正在載入...';
@@ -265,7 +271,7 @@ $string['personalmenulogintoggledesc'] = '登入後立即開啟個人功能表';
 $string['personalmenuadvancedfeedsenable'] = '啟用進階摘要';
 $string['personalmenuadvancedfeedsenabledesc'] = '進階摘要會載入一些私人功能表項目，以便加快載入的時間，並隨需重新整理內容。';
 $string['personalmenuadvancedfeedsperpage'] = '進階摘要項目顯示計數';
-$string['personalmenuadvancedfeedsperpagedesc'] = '選擇摘要中要顯示的項目數。使用者可以選取<strong>觀看更多</strong>來顯示其他項目。';
+$string['personalmenuadvancedfeedsperpagedesc'] = '選擇摘要中要顯示的項目數。使用者可以選取<strong>檢視更多</strong>來顯示其他項目。';
 $string['personalmenuadvancedfeedslifetime'] = '進階摘要存留期';
 $string['personalmenuadvancedfeedslifetimedesc'] = '選擇登入後在瀏覽器中快取摘要的時間長度。將值設定為 0，就不會在瀏覽器中快取摘要。';
 $string['personalmenurefreshdeadlines'] = '使用已排程的工作重新整理截止時間。';
@@ -274,9 +280,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = '封面影像';
 $string['posterdesc'] = '用於網站首頁的大型標題影像。橫向影像 (1200 x 600 像素或更大) 效果最佳。';
-$string['poweredbyrunby'] = '採用 <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a> 建置，
-由 <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> 所提供。<br>
-版權所有 &#169; {$a->year} Open LMS，保留所有權利。';
+$string['poweredbyrunby'] = '採用 <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>，
+其為 <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> 產品。<br>
+版權所有 © {$a->year} Open LMS，保留所有權利。';
 $string['previoussection'] = '上一單元';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = '使用者已加入常用項目之課程的課程編號';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = '將課程加入常用項目之使用者的使用者編號';
@@ -284,7 +290,7 @@ $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = '使用�
 $string['privacy:metadata:theme_snap_course_favorites'] = '儲存使用者的 Snap 課程常用項目';
 $string['problemsfound'] = '找到的問題';
 $string['progress'] = '進度';
-$string['readmore'] = '閱讀更多&nbsp;»';
+$string['readmore'] = '閱讀更多資訊 »';
 $string['recentactivity'] = '近期活動';
 $string['recentfeedback'] = '意見回應';
 $string['region-main'] = '主區域';
@@ -306,6 +312,7 @@ $string['submitted'] = '已送出';
 $string['sitedescription'] = '網站描述';
 $string['subtitle'] = '副標題';
 $string['subtitle_desc'] = '對使用者簡單描述您的網站。';
+$string['summarylabel'] = '章節摘要';
 $string['themecolor'] = '網站顏色';
 $string['themecolordesc'] = '亮色系的效果最好，讓您的網站具有現代感。';
 $string['title'] = '頭銜';
@@ -342,17 +349,16 @@ $string['showallsectionsdisabled'] = '由於設計語言的關係，無法在 Sn
 $string['disabled'] = '已停用';
 $string['showappearancedisabled'] = 'Snap 的設計語言會防止變更「外觀」設定。';
 $string['pbb'] = '以資訊為基礎的品牌塑造';
-$string['pbb_description'] = '啟用<strong>以資訊為基礎的品牌塑造</strong>後，您將能夠根據選擇的使用者資訊欄位自訂特定使用者群組的品牌塑造體驗。
-<ul><li>使用者欄位值將被 <em>slugified</em>；將所有字元轉換為小寫形式並以橫線 (-) 加以分隔</li>
-<li>前面將會加上 <code>snap-pbb-</code> 字串</li>
-<li>此類別會新增至 <code>body</code> Html 標籤</li></ul>
-例如，使用者欄位值 <em>Blueberry Extravaganza</em> 將被 slugified 為 <code>snap-pbb-blueberry-extravaganza</code><br /><br />
-此功能與 <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">自訂 CSS</a> 搭配使用，
-您將需要使用<a class="snap-settings-tab-link" href="#themesnapbranding">基本資料</a>章節中的新類別，新增 CSS 選取器。';
+$string['pbb_description'] = '啟用<strong>以資訊為基礎的品牌塑造</strong>後，您可以根據所選的使用者資訊欄位，為特定小組的使用者自訂品牌塑造體驗。
+<ul><li>系統會將使用者欄位值<em>轉換為 slug 格式</em>；將所有字元轉換為小寫，並以連接符號 (-) 分隔</li>
+<li>將在前面加上字串 <code>snap-pbb-</code></li>
+<li>此類別將新增至 <code>body</code> Html 標籤</li></ul>
+例如，系統會將使用者欄位值 <em>Blueberry Extravaganza</em> 轉換為 slug 格式，改為 <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+此功能與自訂 CSS 一起使用，您將必須使用<a class="snap-settings-tab-link" href="#themesnapbranding">基本資料</a>章節中的新類別新增 CSS 選取器。';
 $string['pbb_enable'] = '啟用以資訊為基礎的品牌塑造';
 $string['pbb_enable_description'] = '僅將類別新增至 body 標籤 (如果使用)。';
 $string['pbb_field'] = '要使用的使用者欄位';
-$string['pbb_field_description'] = '此欄位的值將被 slugified，並在前面加上 <code>snap-pbb-</code> 作為 CSS 類別名稱。';
+$string['pbb_field_description'] = '系統會將此欄位值轉換為 slug 格式，並在前面加上 <code>snap-pbb-</code> 作為 CSS 類別名稱。';
 $string['cachedef_profile_based_branding'] = '以資訊為基礎的品牌塑造的快取。';
 $string['cachedef_course_card_bg_image'] = '課程背景影像的快取。';
 $string['cachedef_course_card_teacher_avatar'] = '教師頭像的快取。';
@@ -367,11 +373,11 @@ $string['quizattemptswarn'] = '排除已暫停使用者的嘗試';
 $string['quizfeedback'] = '意見回應';
 $string['validratio'] = '此顏色組合不符合 WCAG 2.0 最小比率值 4.5:1';
 $string['invalidratio'] = '此顏色組合不符合
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 最小比率值 4.5:1</a>。值：「{$a}」';
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 最小比率值 4.5:1</a>。值："{$a}"';
 $string['imageinvalidratio'] = '由於不符合 WCAG 2.0 最小比率值 4.5:1，此影像可能有對比度問題。平均像素值：「{$a}」';
-$string['catinvalidratio'] = '以下顏色類別不符合
+$string['catinvalidratio'] = '下列顏色類別不符合
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 最小比率值 4.5:1</a>：
-對照網站背景顏色 (白色)：「{$a->white}」。對照瀏覽列背景顏色：「{$a->custombar}」。對照「我的課程」按鈕背景顏色：「{$a->customnav}」';
+網站背景顏色 (白色)：「{$a->white}」。瀏覽列背景顏色：「{$a->custombar}」。「我的課程」按鈕背景顏色：「{$a->customnav}」';
 $string['imageinvalidratiocategory'] = '由於不符合 WCAG 2.0 最小比率值 4.5:1，此影像的主題顏色可能有對比度問題。平均像素值：「{$a}」';
 $string['lazyload_mod_page'] = '啟用頁面資源的預設延遲載入';
 $string['lazyload_mod_page_description'] = '若啟用，此設定可幫助有許多頁面的課程大幅縮短頁面載入時間。';
@@ -391,8 +397,6 @@ $string['alternativeloginoptions'] = '替代登入選項';
 $string['openmessagedrawer'] = '開啟隱藏式傳訊選單。';
 $string['design_mod_page'] = '針對頁面資源啟用先前的設計';
 $string['design_mod_page_description'] = '若啟用，頁面資源內容將會在相同頁面、課程或首頁內顯示。';
-$string['design_activity_chooser'] = '復原至活動選擇器的原始設計';
-$string['design_activity_chooser_description'] = '若啟用，將以原始設計顯示活動選擇器。這將影響課程和首頁。';
 $string['refreshdeadlinestask'] = '重新整理截止時間快取資料。這應該在所有使用者登入前執行。';
 $string['resetdeadlinesquerycounttask'] = '重設期限查詢次數';
 $string['refreshdeadlinestaskoff'] = '沒有尋找要填入的資料。請在 Snap 的個人功能表設定中開啟設定「使用排定任務重新整理截止日期」，以允許此任務填入截止日期快取資料。';
@@ -404,3 +408,14 @@ $string['hvpcustomcss'] = 'H5P 自訂 CSS';
 $string['hvpcustomcssdesc'] = '自訂 H5P 模組的 CSS (moodle.org/plugins/mod_hvp)，若已安裝該模組。';
 $string['courselimitstrdanger'] = '不會顯示已達課程限制的進度列。';
 $string['courselimitstrwarning'] = '如果已列出超過 {$a} 個課程，則不會顯示進度列';
+$string['tilesformatcoursehomealttext'] = '課程首頁';
+$string['editmodetiles'] = '編輯內容';
+$string['totop'] = '移至頂端';
+$string['loginsetting'] = '登入頁面';
+$string['loginbgimgheading'] = '登入頁面範本';
+$string['loginbgimgheadingdesc'] = 'Snap 允許在不同範本之間切換，選擇要顯示在登入頁面者。請在下列下拉式清單中的不同選項之間選取。';
+$string['loginpagetemplate'] = '選取要使用的登入頁面範本';
+$string['classic_template'] = '經典範本';
+$string['loginbgimg'] = '登入背景影像';
+$string['loginbgimgdesc'] = '選取將出現在登入頁面背景的影像。若要提升所顯示影像的體驗，請上傳長寬比為 16:9 的檔案 (解析度 720p 或畫質為 1280x720 像素)。上傳的影像必須具備相同尺寸，才能有正確的視覺效果。';
+$string['stylish_template'] = '風格範本';
