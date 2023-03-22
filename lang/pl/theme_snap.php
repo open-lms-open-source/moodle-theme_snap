@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2023 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -35,6 +35,7 @@ $string['advancedbrandingheading'] = 'Zaawansowane oznakowanie';
 $string['ago'] = 'temu';
 $string['answered'] = 'Udzielone odpowiedzi';
 $string['appendices'] = 'Narzędzia';
+$string['arialabelnewsarticle'] = 'artykuł z wiadomościami';
 $string['assigndraft'] = 'Wersja robocza wymaga potwierdzenia';
 $string['assignreopened'] = 'Ponownie otwarte';
 $string['at'] = 'o';
@@ -53,11 +54,12 @@ $string['categoryedit'] = 'Edytuj kategorię';
 $string['category_color'] = 'Kolor kategorii';
 $string['category_color_description'] = 'Kolor kategorii kursu. Kursy podrzędne korzystają z konfiguracji najbliższej kategorii nadrzędnej';
 $string['category_color_palette'] = 'Paleta kolorów';
-$string['category_color_palette_description'] = 'Zobacz wartość szesnastkową odpowiadającą danemu kolorowi. Nie wpłynie to na żadną konfigurację. Jest to tylko próbka ułatwiająca użytkownikom tworzenie wartości konfiguracji.';
+$string['category_color_palette_description'] = 'Zobacz wartość szesnastkową odpowiadającą danemu kolorowi. Nie wpłynie
+to na żadną konfigurację. Jest to tylko próbka ułatwiająca użytkownikom tworzenie wartości konfiguracji.';
 $string['changecoverimage'] = 'Zmień obraz na pierwszą stronę';
 $string['changefullname'] = 'Zmień nazwę witryny';
 $string['chapters'] = 'Rozdziały';
-$string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Wykonaj migawkę</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
 $string['close'] = 'Zamknij';
 $string['conditional'] = 'Warunkowo';
 $string['contents'] = 'Zawartość';
@@ -74,12 +76,16 @@ $string['coursepartialrender'] = 'Włącz ładowanie opóźnione dla sekcji kurs
 $string['coursepartialrenderdesc'] = 'Jeśli ta opcja jest włączona, sekcje kursu są ładowane na żądanie po wybraniu przez użytkownika. Pozwala to szybciej ładować kursy zawierające duże ilości danych.';
 $string['coursenavigation'] = 'Nawigacja kursu';
 $string['coursesummaryfilesunsuitable'] = 'Opróżnij pliki podsumowania kursu, zanim podejmiesz próbę zmiany obrazu na pierwszą stronę';
+$string['courseactivitieslabel'] = 'Działania w ramach sekcji';
 $string['coursetools'] = 'Pulpit kursu';
 $string['coverdisplay'] = 'Wyświetlanie pierwszej strony';
 $string['covercarousel'] = 'Obraz przewijany na pierwszą stronę';
 $string['covercarouselon'] = 'Użyj obrazu przewijanego na pierwszej stronie';
-$string['covercarouseldescription'] = '<p>Obraz przewijany to zestaw przewijanych transparentów albo pokaz slajdów, który jest wyświetlany na stronie głównej witryny zamiast obrazu tytułowego.</p>
-<p>Można dodać maksymalnie trzy obrazy, tytuł każdego slajdu oraz opcjonalny podtytuł. Najlepiej wyglądają obrazy o wielkości 1200 x 600 pikseli.</p>';
+$string['covercarouseldescription'] = '<p>Obraz przewijany to zestaw przewijanych banerów albo pokaz slajdów, który jest wyświetlany na stronie głównej witryny zamiast obrazu tytułowego.</p>
+<p>Można dodać maksymalnie trzy obrazy, tytuł każdego slajdu oraz opcjonalny podtytuł. Najlepiej wyglądają obrazy o wielkości 1200 × 600 pikseli.</p>';
+$string['covercarouselsronly'] = 'Jest to obraz przewijany z automatycznie przewijającymi się slajdami. Aktywuj dowolny z przycisków, aby wyłączyć przewijanie. Użyj przycisków Dalej i Wstecz, aby nawigować, lub przeskakuj do kolejnych slajdów za pomocą kropek.';
+$string['covercarouselplaybutton'] = 'Wznów automatyczne przewijanie slajdów dla tego obrazu przewijanego.';
+$string['covercarouselpausebutton'] = 'Wstrzymaj automatyczne przewijanie slajdów dla tego obrazu przewijanego.';
 $string['coverimage'] = 'Obraz na pierwszą stronę';
 $string['covervideo'] = 'Film tytułowy';
 $string['comingsoon'] = 'Już wkrótce!';
@@ -137,8 +143,8 @@ $string['favorite'] = 'Ulubione {$a}';
 $string['favorited'] = 'Dodano do ulubionych {$a}';
 $string['featurespots'] = 'Wyróżnione elementy';
 $string['featurespotsedit'] = 'Edytuj wyróżnione elementy';
-$string['featurespotshelp'] = '<p>Dodaj do strony głównej witryny&#8217;s maksymalnie trzy wyróżnione elementy, aby wypunktować najważniejsze korzyści dla bieżących i potencjalnych użytkowników.</p>
-<p>Dodaj tytuł, zawartość i opcjonalny obraz każdego elementu. Obrazy powinny być kwadratowe i nie większe niż 200px na 200px.</p>';
+$string['featurespotshelp'] = '<p>Dodaj do strony głównej witryny maksymalnie trzy wyróżnione elementy, aby wypunktować najważniejsze korzyści dla bieżących i potencjalnych użytkowników.</p>
+<p>Dodaj tytuł, zawartość i opcjonalny obraz każdego elementu. Obrazy powinny być kwadratowe i nie większe niż 200 × 200 px.</p>';
 $string['featurespotsheading'] = 'Nagłówek wyróżnionych elementów';
 $string['featureonetitle'] = 'Tytuł elementu nr 1';
 $string['featuretwotitle'] = 'Tytuł elementu nr 2';
@@ -158,7 +164,7 @@ $string['featureoneimage'] = 'Obraz elementu nr 1';
 $string['featuretwoimage'] = 'Obraz elementu nr 2';
 $string['featurethreeimage'] = 'Obraz elementu nr 3';
 $string['featuredcourses'] = 'Wyróżnione kursy';
-$string['featuredcourseshelp'] = 'Wyróżnij na stronie głównej witryny &#8217;s maksymalnie osiem kursów. Wpisz identyfikator kursu, który chcesz wyróżnić.';
+$string['featuredcourseshelp'] = 'Wyróżnij na stronie głównej witryny maksymalnie osiem kursów. Wpisz identyfikator kursu, który chcesz wyróżnić.';
 $string['featuredcoursesheading'] = 'Nagłówek wyróżnionych kursów';
 $string['featuredcourseone'] = 'Wyróżniony kurs nr 1';
 $string['featuredcoursetwo'] = 'Wyróżniony kurs nr 2';
@@ -192,7 +198,7 @@ $string['grading'] = 'Ocenianie';
 $string['help'] = 'Pomoc';
 $string['helpguide'] = 'Podręcznik pomocy';
 $string['headingfont'] = 'Czcionka nagłówka';
-$string['headingfont_desc'] = 'Ta czcionka (sans-serif) jest używana w nagłówkach (elementy h1–h6) w całej witrynie. Jeśli dołączasz niestandardową czcionkę internetową, pamiętaj, aby dodać ją do formularza Moodle additional HTML. Jeśli chcesz zmodyfikować czcionki innych elementów, skorzystaj z opcji Niestandardowe CSS. Przykłady znajdziesz w <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">dokumentacji</a>.';
+$string['headingfont_desc'] = 'Ta czcionka sans-serif jest używana w nagłówkach (elementy h1–h6) w całej witrynie. Jeśli dołączasz niestandardową czcionkę internetową, pamiętaj, aby dodać ją do dodatkowego Moodle HTML. Jeśli chcesz zmodyfikować czcionki innych elementów, skorzystaj z opcji Niestandardowe CSS. Przykłady znajdziesz w tej <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">dokumentacji</a>.';
 $string['helpwithlogin'] = 'Pomoc w logowaniu';
 $string['helpwithloginandguest'] = 'Pomoc w logowaniu / uzyskiwaniu dostępu gościa';
 $string['hiddencoursestoggle'] = 'Ukryte kursy';
@@ -206,7 +212,7 @@ $string['introduction'] = 'Wprowadzenie';
 $string['jsontext'] = 'Tekst JSON';
 $string['jsontextdescription'] = 'Obszar tekstowy weryfikuje dany kod JSON, dlatego dozwolone są tylko istniejące kategorie,
 prawidłowe są tylko liczbowe wartości identyfikatorów rekordów (rekordów kategorii), a jako kolory akceptowane są tylko wartości szesnastkowe.
-Przykład:<br>
+Oto przykład:<br>
 {"1":"#FAAFFF",<br>
 "45":"#AFF",<br>
 "65":"#FFF228",<br>
@@ -216,8 +222,8 @@ Przykład:<br>
 $string['knowledgebase'] = 'Baza wiedzy Open LMS';
 $string['list'] = 'Lista';
 $string['linkedin'] = 'LinkedIn';
-$string['linkedindesc'] = 'Adres URL Twojej organizacji &#8217;s w LinkedIn.';
-$string['leftnav'] = 'Tabela zawartości';
+$string['linkedindesc'] = 'Adres URL Twojej organizacji w LinkedIn.';
+$string['leftnav'] = 'Spis treści';
 $string['leftnavdesc'] = 'Wybierz miejsce wyświetlania spisu treści. Lista daje więcej miejsca na treść i sprawdza się w przypadku kursów z wieloma tematami.';
 $string['loading'] = 'Ładuję ...';
 $string['loggedinasguest'] = 'Jesteś zalogowany(a) jako gość';
@@ -274,9 +280,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Obraz na pierwszą stronę';
 $string['posterdesc'] = 'Duży obraz nagłówka wyświetlany na stronie głównej witryny. Najlepiej wyglądają obrazy w orientacji poziomej 1200 na 600 pikseli lub większe.';
-$string['poweredbyrunby'] = 'Utworzono za pomocą<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">produktu opartego na Open LMS</a>,
-a <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-.<br>
-Prawa autorskie &#169; {$a->year} Open LMS, Wszelkie prawa zastrzeżone.';
+$string['poweredbyrunby'] = 'Utworzono za pomocą <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+w oparciu o technologię <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+Copyright © {$a->year} Open LMS, Wszelkie prawa zastrzeżone.';
 $string['previoussection'] = 'Poprzednia sekcja';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Identyfikator kursu, który użytkownik oznaczył jako ulubiony';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Identyfikator użytkownika, który oznaczył kurs jako ulubiony';
@@ -284,7 +290,7 @@ $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'Znaczni
 $string['privacy:metadata:theme_snap_course_favorites'] = 'Przechowuje ulubione kursy użytkownika na potrzeby Snap';
 $string['problemsfound'] = 'Wykryto błędy';
 $string['progress'] = 'Progress';
-$string['readmore'] = 'Więcej informacji i nbsp;»';
+$string['readmore'] = 'Czytaj więcej »';
 $string['recentactivity'] = 'Bieżąca aktywność';
 $string['recentfeedback'] = 'Opinie zwrotne';
 $string['region-main'] = 'Główny';
@@ -306,6 +312,7 @@ $string['submitted'] = 'Przesłane';
 $string['sitedescription'] = 'Opis witryny';
 $string['subtitle'] = 'Podtytuł';
 $string['subtitle_desc'] = 'Opisz w skrócie swoją witrynę dla użytkowników.';
+$string['summarylabel'] = 'Podsumowanie sekcji';
 $string['themecolor'] = 'Kolor witryny';
 $string['themecolordesc'] = 'Jaskrawe kolory są najlepsze i nadają witrynie nowoczesny wygląd.';
 $string['title'] = 'Tytuł';
@@ -343,12 +350,11 @@ $string['disabled'] = 'Nieaktywny';
 $string['showappearancedisabled'] = 'Język projektu usługi Snap uniemożliwia wprowadzanie zmian w ustawieniach „Wygląd”.';
 $string['pbb'] = 'Oznakowanie na podstawie profilu';
 $string['pbb_description'] = 'Włączenie opcji <strong>Oznakowanie na podstawie profilu</strong> umożliwia dostosowanie oznakowania pod kątem określonej grupy użytkowników na podstawie wybranego pola profilu użytkownika.
-<ul><li>
-<ul><li>Wartość pola użytkownika stanie się <em>slugified</em>; przez zastąpienia wszystkich wielkich liter małymi, a znaków odstępu  myślnikami (-)</li>.
-<li>Ciąg <code>snap-pbb-</code> zostanie dopisany</li>.
-<li>Ta klasa zostanie dodana do znacznika <code>body</code> Html</li></ul>.
-Na przykład, wartość pola użytkownika <em>Blueberry Extravaganza</em> zostanie przekształcona na <code>snap-pbb-blueberry-extravaganza</code><br /><br />.
-a funkcja jest używana w połączeniu z <a href="https://help.blackboard.com/Blackboard_Open_LMS/Administrator/Manage_a_Site/Course_and_Site_Design/Themes/Snap#advanced-branding_OTP-3" target="_blank">niestandardowym arkuszem stylów CSS</a>,  selektory CSS należy dodać przy użyciu nowych klas w sekcji <a class="snap-settings-tab-link" href="#themesnapbranding">Basics</a>.';
+<ul><li>Wartość pola użytkownika stanie się <em>slugified</em>; przez zastąpienie wszystkich wielkich liter małymi, a znaków odstępu myślnikami (-)</li>
+<li>Na początku zostanie dopisany ciąg <code>snap-pbb-</code></li>
+<li>Ta klasa zostanie dodana do znacznika <code>body</code> html</li></ul>
+Przykładowo wartość pola użytkownika <em>Blueberry Extravaganza</em> zostanie przekształcona na <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+Ta funkcja jest używana w połączeniu z niestandardowym arkuszem stylów CSS. Selektory CSS należy dodać przy użyciu nowych klas w sekcji <a class="snap-settings-tab-link" href="#themesnapbranding">Basics</a>.';
 $string['pbb_enable'] = 'Włącz oznakowanie na podstawie profilu';
 $string['pbb_enable_description'] = 'Dodaje klasę do znacznika body tylko, jeśli aktywne.';
 $string['pbb_field'] = 'Pole użytkownika do użycia';
@@ -367,10 +373,10 @@ $string['quizattemptswarn'] = 'Wyklucza podejścia zawieszonych użytkowników';
 $string['quizfeedback'] = 'Opinie zwrotne';
 $string['validratio'] = 'Ta kombinacja kolorów jest zgodna z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1';
 $string['invalidratio'] = 'Ta kombinacja kolorów jest niezgodna z
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>. Wartość: „{$a}”';
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4.5:1</a>. Wartość: „{$a}”';
 $string['imageinvalidratio'] = 'Ten obraz może być przyczyną problemów z kontrastem ze względu na niezgodność z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1. Średnia wartość pikseli: „{$a}”';
 $string['catinvalidratio'] = 'Następujące kategorie kolorów są niezgodne z
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1</a>:
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">minimalną wartością współczynnika wg normy WCAG 2.0 równą 4.5:1</a>:
 W odniesieniu do koloru tła witryny (białego): „{$a->white}”. W odniesieniu do koloru tła paska nawigacyjnego: „{$a->custombar}”. W odniesieniu do koloru tła przycisku Moje kursy: „{$a->customnav}”';
 $string['imageinvalidratiocategory'] = 'Przy tym kolorze motywu ten obraz może być przyczyną problemów z kontrastem ze względu na niezgodność z minimalną wartością współczynnika wg normy WCAG 2.0 równą 4,5:1. Średnia wartość pikseli: „{$a}”';
 $string['lazyload_mod_page'] = 'Włącz domyślne ładowanie opóźnione zasobów stron';
@@ -391,8 +397,6 @@ $string['alternativeloginoptions'] = 'Alternatywne opcje logowania';
 $string['openmessagedrawer'] = 'Otwórz szufladę wiadomości.';
 $string['design_mod_page'] = 'Włącz poprzedni projekt zasobów strony';
 $string['design_mod_page_description'] = 'Jeśli zawartość zasobów strony jest włączona, będzie wyświetlana na tej samej stronie, kursie lub stronie głównej.';
-$string['design_activity_chooser'] = 'Cofnij do oryginalnego projektu dla selektora aktywności';
-$string['design_activity_chooser_description'] = 'Jeśli opcja ta jest włączona, selektor aktywności będzie wyświetlany w oryginalnym wyglądzie. Będzie to miało wpływ na stronę główną i stronę kursu.';
 $string['refreshdeadlinestask'] = 'Odśwież zbuforowane dane o terminach. To zadanie powinno być uruchamiane przed zalogowaniem się wszystkich użytkowników.';
 $string['resetdeadlinesquerycounttask'] = 'Resetuj licznik zapytań o terminy';
 $string['refreshdeadlinestaskoff'] = 'Nie szukano danych do wprowadzenia. Włącz funkcję „Odśwież terminy dla zaplanowanych zadań” w ustawieniach menu osobistego Snap, aby w ramach zadania móc wprowadzać scachowane dane dotyczące terminów.';
@@ -404,3 +408,14 @@ $string['hvpcustomcss'] = 'Niestandardowy CSS H5P';
 $string['hvpcustomcssdesc'] = 'Niestandardowy CSS do modułu H5P (moodle.org/plugins/mod_hvp), jeśli jest zainstalowany.';
 $string['courselimitstrdanger'] = 'Pasek postępu osiągnięcia limit kursu nie będzie wyświetlany.';
 $string['courselimitstrwarning'] = 'Jeśli lista zawiera więcej niż {$a} kursy/kursów, pasek postępu nie będzie wyświetlany';
+$string['tilesformatcoursehomealttext'] = 'Strona główna kursu';
+$string['editmodetiles'] = 'Edytuj treść';
+$string['totop'] = 'Przejdź na górę';
+$string['loginsetting'] = 'Strona logowania';
+$string['loginbgimgheading'] = 'Szablon strony logowania';
+$string['loginbgimgheadingdesc'] = 'Snap pozwala na wybór rozmaitych szablonów do wyświetlania na stronie logowania. Wybierz spośród różnych opcji w menu rozwijanym poniżej.';
+$string['loginpagetemplate'] = 'Wybierz szablon strony logowania, który ma zostać użyty';
+$string['classic_template'] = 'Klasyczny szablon';
+$string['loginbgimg'] = 'Obrazek tła strony logowania';
+$string['loginbgimgdesc'] = 'Wybierz obrazy, które mają pojawić się w tle strony logowania. Aby obrazy lepiej się wyświetlały, prześlij pliki w formacie obrazu 16:9 (rozdzielczość 720p lub wymiary 1280 × 720 pikseli). Przesłane obrazy muszą mieć te same wymiary, aby uzyskać prawidłową wizualizację.';
+$string['stylish_template'] = 'Stylowy szablon';
