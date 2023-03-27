@@ -142,6 +142,8 @@ class color_contrast {
             $ratio = self::compare_navbar_color();
         } else if ($identifier == 3) {
             $ratio = self::compare_navbarbutton_color();
+        } else if ($identifier == 4) {
+            $ratio = [self::compare_featurespot_title_color(), self::compare_featurespot_content_color()];
         }
         return $ratio;
     }
@@ -222,5 +224,27 @@ class color_contrast {
         $pixelhex = "#" . $redhex . $greenhex . $bluehex;
 
         return $pixelhex;
+    }
+
+    /**
+     * Compare feature spots background color and title text color
+     * @return array
+     */
+    public static function compare_featurespot_title_color() {
+        $text = get_config('theme_snap', 'feature_spot_title_color');
+        $background = get_config('theme_snap', 'feature_spot_background_color');
+        $contrast = self::evaluate_color_contrast($background, $text);
+        return $contrast;
+    }
+
+    /**
+     * Compare feature spots background color and description text color
+     * @return array
+     */
+    public static function compare_featurespot_content_color() {
+        $text = get_config('theme_snap', 'feature_spot_description_color');
+        $background = get_config('theme_snap', 'feature_spot_background_color');
+        $contrast = self::evaluate_color_contrast($background, $text);
+        return $contrast;
     }
 }

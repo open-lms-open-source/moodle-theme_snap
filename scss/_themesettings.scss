@@ -183,6 +183,12 @@
 // Tab - Feature spots.
 // -------------------------
 #themesnapfeaturespots.active {
+    #admin-feature_spot_title_color,
+    #admin-feature_spot_description_color {
+        display: inline-block;
+        max-width: 50%;
+        width: 50%;
+    }
     .formsettingheading {
         font-family: $font-family-sans-serif;
     }

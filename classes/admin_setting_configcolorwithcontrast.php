@@ -38,6 +38,8 @@ class admin_setting_configcolorwithcontrast extends \admin_setting_configcolourp
 
     const NAVIGATION_BAR_BUTTON = 3;
 
+    const FEATURESPOT_BACK = 4;
+
     /**
      *
      * @param string $name
@@ -53,12 +55,30 @@ class admin_setting_configcolorwithcontrast extends \admin_setting_configcolourp
     }
 
     public function output_html($data, $query='') {
-        global $OUTPUT;
+        $contrast = color_contrast::compare_colors($this->identifier);
         $html = parent::output_html($data, $query);
 
-        $contrast = color_contrast::compare_colors($this->identifier);
+        if ($this->identifier === self::FEATURESPOT_BACK) {
+            $html = $this->contrast_message($contrast[0], $html, get_string('feature_spot_title_color_lower', 'theme_snap'));
+            $html = $this->contrast_message($contrast[1], $html, get_string('feature_spot_description_color_lower', 'theme_snap'));
+        } else {
+            $html = $this->contrast_message($contrast, $html);
+        }
+        return $html;
+    }
+
+    public function contrast_message($contrast, $html, $additionalinfo = '') {
+        global $OUTPUT;
         if ($contrast < 4.5) {
-            $message = get_string('invalidratio', 'theme_snap', number_format((float)$contrast, 2));
+            if (!empty($additionalinfo)) {
+                $message = get_string('spotinvalidratio', 'theme_snap',
+                    [
+                        'name' => $additionalinfo,
+                        'value' => number_format((float)$contrast, 2)
+                    ]);
+            } else {
+                $message = get_string('invalidratio', 'theme_snap', number_format((float)$contrast, 2));
+            }
             $html .= $OUTPUT->notification($message, \core\output\notification::NOTIFY_WARNING);
         }
         return $html;
