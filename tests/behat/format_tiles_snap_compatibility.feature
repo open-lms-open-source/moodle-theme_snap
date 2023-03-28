@@ -131,3 +131,25 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I am on the course main page for "C1"
     When I click on "Course Dashboard" "link"
     And I should see "Calendar"
+
+  @javascript
+  Scenario: Users can use Tiles filters in Snap.
+    Given the following config values are set as admin:
+      | enableoutcomes | 1 |
+      | theme | snap |
+    Then I log in as "admin"
+    And I am on "Course Test" course homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Legacy outcomes" in current page administration
+    And I click on "//*[contains(text(),'Manage outcomes')]" "xpath_element"
+    And I press "Add a new outcome"
+    And I set the following fields to these values:
+      | Full name | Outcometest |
+      | Short name | Outcometest |
+    And I set the field with xpath "//select[@name='scaleid']" to "Separate and Connected ways of knowing"
+    And I press "Save changes"
+    And I am on "Course Test" course homepage
+    And I navigate to "Settings" in current page administration
+    And I expand all fieldsets
+    And I set the field with xpath "//select[@name='displayfilterbar']" to "Show buttons based on course outcomes"
+    And I press "Save and display"
