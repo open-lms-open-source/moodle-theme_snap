@@ -849,7 +849,7 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
 
             .activityicon {
                 width: 45px;
-                height: fit-content;
+                height: auto;
                 margin-right: 0.5em;
                 @include alakazam;
             }
@@ -1065,10 +1065,6 @@ body.snap-resource-list .section li.snap-resource {
 
     .snap-asset-link {
         font-size: 1em;
-    }
-
-    .activityiconcontainer {
-        background-color: transparent;
     }
 }
 
@@ -1479,7 +1475,7 @@ body.snap-resource-card {
     }
 
     // Override the black color of the icons from core.
-    .activityiconcontainer img.activityicon {
+    .activityiconcontainer {
         filter: opacity(0.5);
     }
 }
@@ -1492,7 +1488,8 @@ body.snap-resource-card {
     &.launch-tiles-standard,
     &.launch-tiles-module-modal,
     &.launch-tiles-resource-modal,
-    &.activity-wrapper {
+    &.activity-wrapper,
+    &.snap-asset {
         margin: 1em 1%;
         padding-bottom: 2em;
 
