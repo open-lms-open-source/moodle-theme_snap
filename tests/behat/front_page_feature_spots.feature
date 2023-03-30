@@ -46,6 +46,12 @@ Feature: Correct functionality of feature spots in the front page with every pos
     And I should see "Title for spot 1"
     And I should see "Title for spot 2"
     And I should see "Title for spot 3"
+    # No content text should be valid.
+    And the following config values are set as admin:
+      | fs_two_text          |       | theme_snap |
+    And I am on site homepage
+    And I should see "Title for spot 2"
+
   @javascript
   Scenario: Snap Feature spots have links as a title.
     Given I log in as "admin"

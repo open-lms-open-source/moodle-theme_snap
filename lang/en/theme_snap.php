@@ -148,7 +148,8 @@ $string['favorited'] = 'Favorited {$a}';
 $string['featurespots'] = 'Feature spots';
 $string['featurespotsedit'] = 'Edit feature spots';
 $string['featurespotshelp'] = '<p>Add up to 3 feature spots to your site&#8217;s front page to highlight the main benefits to current and potential users.</p>
-<p>Add a title, content, and an optional image for each feature. Images should to be square, and no larger than 200px by 200px.</p>';
+<p>You can add an image, a title, and a content description to each feature. In order to see the feature in the front page, you must enter a title. The image and the content description sections are optional.</p>
+<p>Recommended image size is a square and no larger than 200px by 200px.</p>';
 $string['featurespotsheading'] = 'Feature spots heading';
 $string['featureonetitle'] = 'Feature 1 title';
 $string['featuretwotitle'] = 'Feature 2 title';
@@ -181,6 +182,11 @@ $string['featuredcourseeight'] = 'Featured course 8';
 $string['featuredcoursesedit'] = 'Edit featured courses';
 $string['featuredcoursesbrowseall'] = 'Browse all courses';
 $string['featuredcoursesbrowsealldesc'] = 'Add a browse all courses link';
+$string['feature_spot_background_color'] = 'Background color';
+$string['feature_spot_title_color'] = 'Title text color';
+$string['feature_spot_description_color'] = 'Description text color';
+$string['feature_spot_title_color_lower'] = 'title text color';
+$string['feature_spot_description_color_lower'] = 'description text color';
 $string['feedbackavailable'] = 'Feedback available';
 $string['feedbacktoggle'] = 'Feedback and grading';
 $string['feedbacktoggledesc'] = 'Show learners their most recent feedback, and educators the most recent submissions that need grading.';
@@ -383,6 +389,9 @@ $string['imageinvalidratio'] = 'This image could have contrast problems due not 
 $string['catinvalidratio'] = 'The following color categories don\'t comply with the
 <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum ratio value 4.5:1</a> :
 Against site background color (white): "{$a->white}". Against navigation bar background color: "{$a->custombar}". Against My Courses button background color: "{$a->customnav}"';
+$string['spotinvalidratio'] = 'The background color doesn\'t comply with the
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum ratio value 4.5:1</a>.
+Current value against {$a->name}: {$a->value}.';
 $string['imageinvalidratiocategory'] = 'This image could have contrast problems with the theme color due not compliance with the WCAG 2.0 minimum ratio value 4.5:1. Average pixel value: "{$a}"';
 $string['browseallcourses'] = 'Browse all courses';
 $string['lazyload_mod_page'] = 'Enable default lazy loading for page resources';

@@ -3842,7 +3842,12 @@ table th img.iconhelp {
 #snap-feature-spots {
     padding: 2em 4%;
     text-align: center;
-
+    .snap-feature {
+        background-color: $feature-spot-background-color;
+    }
+    .snap-feature-text {
+        color: $feature-spot-description-color;
+    }
     .snap-feature-spots-heading {
         padding-top: 0;
         margin-top: 0;
@@ -3856,12 +3861,36 @@ table th img.iconhelp {
 
     a.snap-feature-link {
         display: block;
+        color: $feature-spot-title-color;
+        margin: 1rem 0 1rem 0;
+        line-height: 40px;
     }
 
     div.snap-feature-image-wrap {
         display: flex;
         height: 7.5em;
         margin: 0 auto;
+    }
+    h2.snap-feature-spots-heading {
+        margin-bottom: 1.5em;
+        color: $brand-primary;
+    }
+    .snap-feature {
+        border-radius: 10px;
+        padding: 1em;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+    }
+    h3.snap-feature-title {
+        margin: 1rem 0 1rem 0;
+        line-height: 40px;
+        color: $feature-spot-title-color;
+    }
+    #admin-feature_spot_title_color,
+    #admin-feature_spot_background_color,
+    #admin-feature_spot_description_color {
+        max-width: 50%;
+        margin: 0;
+        display: inline-block;
     }
 }
 

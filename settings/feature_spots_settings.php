@@ -33,6 +33,25 @@ $description = '';
 $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_RAW, 50);
 $snapsettings->add($setting);
 
+$name = 'theme_snap/feature_spot_title_color';
+$title = get_string('feature_spot_title_color', 'theme_snap');
+$setting = new admin_setting_configcolourpicker($name, $title, '', '#ff7f41');
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
+$name = 'theme_snap/feature_spot_description_color';
+$title = get_string('feature_spot_description_color', 'theme_snap');
+$setting = new admin_setting_configcolourpicker($name, $title, '', '#565656');
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
+$name = 'theme_snap/feature_spot_background_color';
+$title = get_string('feature_spot_background_color', 'theme_snap');
+$setting = new \theme_snap\admin_setting_configcolorwithcontrast(
+    \theme_snap\admin_setting_configcolorwithcontrast::FEATURESPOT_BACK, $name, $title, '', '#ffffff');
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
 // Feature spot images.
 $name = 'theme_snap/fs_one_image';
 $title = new lang_string('featureoneimage', 'theme_snap');
