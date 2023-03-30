@@ -2973,6 +2973,17 @@ body.path-course-index {
     margin-right: 0.3em;
 }
 
+// Fix mark as done button for Tiles
+@include media-breakpoint-up(sm) {
+    body.theme-snap.format-tiles {
+        .activity-item {
+            .activity-info {
+                margin-left: auto;
+            }
+        }
+    }
+}
+
 // Forum grading modal.
 #page-mod-forum-view {
     .layout.fullscreen {
