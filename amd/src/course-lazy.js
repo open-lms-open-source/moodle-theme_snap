@@ -137,7 +137,6 @@ define(
             }
 
             // Dashboard in Tiles should be hidden except in #coursetools section.
-            let editModeHeader = '#snap-editmode-header';
             let btnEditing = '.btn-editing';
             let courseTools = '#coursetools';
             let tilesEditing = $(courseTools).hasClass('editing-tiles');
@@ -164,23 +163,24 @@ define(
                     $('#tiles-section').removeClass('state-visible');
                     $(courseTools).addClass('state-visible');
                     $(courseTools).removeClass('d-none');
-                    let urlEditing = document.querySelector(btnEditing).href;
-                    let existToolParameter = urlEditing.includes('#coursetools');
-                    if (!existToolParameter) {
-                        str.get_strings([
-                            {key: 'editcoursecontent', component: 'theme_snap'},
-                            {key: 'editmodetiles', component: 'theme_snap'},
-                            {key: 'turneditingoff', component: 'moodle'},
-                        ]).done(function(stringsjs) {
-                            let btnEditText = document.querySelector(btnEditing).text;
-                            if (btnEditText == stringsjs[1]) {
-                                document.querySelector(btnEditing).innerHTML = stringsjs[0];
-                            } else {
-                                document.querySelector(btnEditing).innerHTML = stringsjs[2];
-                            }
-                        });
-                        document.querySelector(btnEditing).href = urlEditing + '#coursetools';
-                        $(editModeHeader).addClass('d-none');
+                    if ($(btnEditing).length) {
+                        let urlEditing = document.querySelector(btnEditing).href;
+                        let existToolParameter = urlEditing.includes('#coursetools');
+                        if (!existToolParameter) {
+                            str.get_strings([
+                                {key: 'editcoursecontent', component: 'theme_snap'},
+                                {key: 'editmodetiles', component: 'theme_snap'},
+                                {key: 'turneditingoff', component: 'moodle'},
+                            ]).done(function(stringsjs) {
+                                let btnEditText = document.querySelector(btnEditing).text;
+                                if (btnEditText == stringsjs[1]) {
+                                    document.querySelector(btnEditing).innerHTML = stringsjs[0];
+                                } else {
+                                    document.querySelector(btnEditing).innerHTML = stringsjs[2];
+                                }
+                            });
+                            document.querySelector(btnEditing).href = urlEditing + '#coursetools';
+                        }
                     }
                 }
                 // Remove class d-none to show Course Dashboard after clicking in a section first.
@@ -226,8 +226,18 @@ define(
             // When usejsnavforsinglesection is enabled, tiles-section will be shown instead of single-section.
             // We need to ensure that tiles-section is visible when course tools is not.
             if (self.courseConfig.format == 'tiles') {
-                if (!$(courseTools).hasClass('state-visible') && !$('#tiles-section').hasClass('state-visible')) {
+                if (!$(courseTools).hasClass('state-visible')
+                    && !$('#tiles-section').hasClass('state-visible')) {
                     $('#tiles-section').addClass('state-visible');
+                }
+                if ($('#page-course-view-tiles .tiles[data-for="course_sectionlist"]').length) {
+                    if (!$(courseTools).hasClass('state-visible')
+                        && !$('#page-course-view-tiles .tiles').hasClass('state-visible')) {
+                        $('#page-course-view-tiles .tiles').addClass('state-visible');
+                    }
+                }
+                if (!dashboardParameter) {
+                    $('#snap-course-dashboard').addClass('state-visible');
                 }
             }
 
