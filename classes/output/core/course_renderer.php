@@ -687,7 +687,8 @@ class course_renderer extends \core_course_renderer {
             $advancedactions = '<div class="dropdown snap-edit-more-dropdown">';
             $advancedactions .= '<button class="snap-edit-asset-more" ';
             $advancedactions .= 'data-toggle="dropdown" data-boundary="window" data-offset="-10,12"';
-            $advancedactions .= 'aria-expanded="false" aria-controls="#snap-asset-menu">'.$moreicon.'</button>';
+            $advancedactions .= 'aria-label="More Options" aria-expanded="false"';
+            $advancedactions .= 'aria-controls="#snap-asset-menu">'.$moreicon.'</button>';
             $advancedactions .= '<ul id="snap-asset-menu" class="dropdown-menu asset-edit-menu">';
             foreach ($actionsadvanced as $action) {
                 $advancedactions .= "$action";
