@@ -3519,6 +3519,9 @@ body:not(.pagelayout-course) #moodle-footer {
     clear: both;
     color: $gray-lighter;
     background-color: $body-color;
+    a {
+        font-weight: bold;
+    }
 }
 
 #snap-footer-content,
