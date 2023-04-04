@@ -1290,7 +1290,6 @@ body.snap-resource-card {
 
         .activityicon {
             display: inline-block;
-            filter: opacity(0.5);
         }
         // The file/image activity is a special case and needs to override the normal behavior of the card icons,
         // since it has the type of activity name in the card header.
@@ -1472,11 +1471,6 @@ body.snap-resource-card {
 
     .activityicon {
         display: inline-block;
-    }
-
-    // Override the black color of the icons from core.
-    .activityiconcontainer {
-        filter: opacity(0.5);
     }
 }
 
