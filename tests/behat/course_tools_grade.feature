@@ -275,7 +275,8 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "Turn editing off"
     And I click on "#admin-menu-trigger" "css_element"
     And I follow "Gradebook setup"
-    And I select "Grader report" from the "jump" singleselect
+    And I click on ".tertiary-navigation-selector" "css_element"
+    And I click on ".tertiary-navigation-selector .dropdown-menu li.dropdown-item" "css_element"
     And I should see "Turn editing on"
     And "Save changes" "button" should not exist
     And I click on "Turn editing on" "button"
