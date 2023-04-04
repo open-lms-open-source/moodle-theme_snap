@@ -499,6 +499,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                                 if (params.class === 'resource') {
                                     // Only stop moving for resources, sections handle this later once the TOC is reloaded.
                                     stopMoving();
+                                    $(movingObject).find('label.snap-asset-move > input.js-snap-asset-move').focus();
                                 }
                             }
                         }
@@ -1270,11 +1271,16 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
 
             /**
              * Show footer alert for moving.
+             *
+             * @param {domNode} focusEl The element to be focused after this callback.
              */
-            var footerAlertShowMove = function() {
+            var footerAlertShowMove = function(focusEl = null) {
                 footerAlert.show(function(e) {
                     e.preventDefault();
                     stopMoving();
+                    if (focusEl !== null) {
+                        focusEl.focus();
+                    }
                 });
             };
 
@@ -1397,7 +1403,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                             stopMoving();
                         }
                     }
-                    footerAlertShowMove();
+                    footerAlertShowMove($(this));
                     updateMovingMessage();
                 });
             };
