@@ -687,7 +687,7 @@ class course_renderer extends \core_course_renderer {
             $advancedactions = '<div class="dropdown snap-edit-more-dropdown">';
             $advancedactions .= '<button class="snap-edit-asset-more" ';
             $advancedactions .= 'data-toggle="dropdown" data-boundary="window" data-offset="-10,12"';
-            $advancedactions .= 'aria-label="More Options" aria-expanded="false"';
+            $advancedactions .= 'aria-label="' . get_string('moreoptionslabel', 'theme_snap') . '" aria-expanded="false"';
             $advancedactions .= 'aria-controls="#snap-asset-menu">'.$moreicon.'</button>';
             $advancedactions .= '<ul id="snap-asset-menu" class="dropdown-menu asset-edit-menu">';
             foreach ($actionsadvanced as $action) {
@@ -699,7 +699,8 @@ class course_renderer extends \core_course_renderer {
 
         // Add actions menu.
         if ($actions) {
-            $output .= "<div class='js-only snap-asset-actions' role='region' aria-label='actions'>";
+            $output .= "<div class='js-only snap-asset-actions' role='region' aria-label='" .
+                get_string('courseactionslabel', 'theme_snap') . "'>";
             $output .= $actions.$advancedactions;
             $output .= "</div>";
         }

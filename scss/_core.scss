@@ -1722,13 +1722,16 @@ header#page-header
         }
     }
 
-    #carousel-play-resume-buttons {
+    #carousel-play-resume-buttons,
+    .anim-play-resume-buttons {
         margin-left: 100px;
         position: absolute;
         bottom: 2em;
         z-index: 1;
         #play-button,
-        #pause-button {
+        #pause-button,
+        .anim-play-button,
+        .anim-pause-button {
             border-color: $brand-primary;
             background-color: white;
             color: $brand-primary;
@@ -1862,40 +1865,6 @@ header#page-header
 .news-article-message {
     display: none;
     padding: 2em 4%;
-}
-
-.paused-gif {
-    background-color: $nav-bg;
-    border-radius: 0.3em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .snap-logo-anim-pause {
-        text-indent: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        background-position: center center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        padding: 0.5em 1.4em;
-
-        display: inline-block;
-        background-color: transparent;
-        height: 40px;
-        width: 40px;
-    }
-    .snap-sitename-anim-pause {
-        color: $nav-color;
-        padding: 0.5em 1em;
-    }
-    .resume-anim {
-        color: $nav-color;
-        padding: 0.5em 0;
-        i.icon {
-            padding-left: 0.5em;
-            color: inherit;
-        }
-    }
 }
 
 .state-expanded {
@@ -5269,4 +5238,50 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
     padding: 7px;
     left: 0;
     top: 0;
+}
+
+// -------------------------
+// Animated images.
+// -------------------------
+.snap-animated-image {
+    display: flex;
+    position: relative;
+    width: fit-content;
+    padding: 0;
+    background-color: $brand-primary;
+
+    img {
+        margin: 0;
+        max-width: initial !important;
+    }
+
+    .anim-play-resume-buttons {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        z-index: 1;
+
+        .anim-play-button,
+        .anim-pause-button {
+            border-color: $brand-primary;
+            background-color: white;
+            color: $brand-primary;
+            width: 30px;
+            height: 30px;
+            font-size: 0.86rem;
+            border: 1.5px solid;
+            padding: 0;
+
+            &:active,
+            &:focus,
+            &:hover {
+                background-color: $brand-primary;
+                color: white;
+            }
+
+            span.icon {
+                margin: 0 auto;
+            }
+        }
+    }
 }

@@ -19,16 +19,16 @@
 
     Example context (json):
     {
-        "id": "html-id-1",
-        "haslogo": true,
-        "sitename": "My Site 1"
+        "pausegraphicsanim": "Pause Jif animation.",
+        "resumegraphicsanim": "Resume Jif animation."
     }
 }}
 
-<div id="{{id}}" class="paused-gif" role="button">
-    {{#haslogo}}<span class="snap-logo-anim-pause"></span>{{/haslogo}}
-    {{^haslogo}}<span class="snap-sitename-anim-pause">{{sitename}}</span>{{/haslogo}}
-    <span class="resume-anim">
-        {{resumemessage}}<i class="icon fa fa-fw fa-play-circle"></i>
-    </span>
+<div class="anim-play-resume-buttons">
+    <button class="anim-play-button btn btn-xs" role="button" aria-label="{{resumegraphicsanim}}">
+        <span class="icon fa fa-play fa-fw"></span>
+    </button>
+    <button class="anim-pause-button btn btn-xs" role="button" aria-label="{{pausegraphicsanim}}">
+        <span class="icon fa fa-pause fa-fw"></span>
+    </button>
 </div>

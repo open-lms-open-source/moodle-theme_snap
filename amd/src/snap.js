@@ -424,9 +424,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
          * Add listeners.
          *
          * just a wrapper for various snippets that add listeners
-         * @param {object} siteConfig
          */
-        var addListeners = function(siteConfig) {
+        var addListeners = function() {
             var selectors = [
                 '.chapters a',
                 '.section_footer a',
@@ -599,34 +598,12 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 e.preventDefault();
             });
 
-            // Add listeners for pausing GIFs.
-            let imageList = [];
-            $(document).on('click', 'img[src$=".gif"], .paused-gif', function() {
-                let imageID = $(this).attr('id');
-                if (!(imageID in imageList)) {
-                    imageList[imageID] = $(this);
-                }
-
-                if ($(this).hasClass('paused-gif')) {
-                    $(this).replaceWith(imageList[imageID]);
-                } else {
-                    (function() {
-                        return str.get_strings([
-                            {key: 'resumegraphicsanim', component: 'theme_snap'},
-                        ]);
-                    })()
-                        .then(function(resumemessage) {
-                            return templates.render('theme_snap/animated_graphics_pause', {
-                                id: imageID,
-                                haslogo: siteConfig.hasLogo,
-                                sitename: siteConfig.shortname,
-                                resumemessage: resumemessage[0],
-                            });
-                        })
-                        .then(function(html) {
-                            $('#' + imageID).replaceWith(html);
-                        });
-                }
+            // Add listeners for pausing animated images.
+            $(document).on('click', '.anim-play-button', function() {
+                $(this).parent().prev().css('visibility', 'visible');
+            });
+            $(document).on('click', '.anim-pause-button', function() {
+                $(this).parent().prev().css('visibility', 'hidden');
             });
 
             // Initialise the scroll event listener.
@@ -679,6 +656,30 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         }
 
         /**
+         * Process all animated images (GIFs) upon page load.
+         */
+        function processAnimatedImages() {
+            // Put animated images in a wrap.
+            $('img[src$=".gif"]').wrap('<div class="snap-animated-image"></div>');
+            let animImages = $('.snap-animated-image');
+            (function() {
+                return str.get_strings([
+                    {key: 'pausegraphicsanim', component: 'theme_snap'},
+                    {key: 'resumegraphicsanim', component: 'theme_snap'},
+                ]);
+            })()
+                .then(function(localizedstrings) {
+                    return templates.render('theme_snap/animated_graphics_pause', {
+                        pausegraphicsanim: localizedstrings[0],
+                        resumegraphicsanim: localizedstrings[1],
+                    });
+                })
+                .then(function(html) {
+                    animImages.append(html);
+                });
+        }
+
+        /**
          * AMD return object.
          */
         return {
@@ -694,12 +695,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {bool} inAlternativeRole
              * @param {string} brandColors
              * @param {int} gradingConstants
-             * @param {object} siteConfig
              * @param {bool} disableSnapMyCourses
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
                                messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole,
-                               brandColors, gradingConstants, siteConfig, disableSnapMyCourses) {
+                               brandColors, gradingConstants, disableSnapMyCourses) {
 
                 // Set up.
 
@@ -740,10 +740,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 $(document).ready(function() {
                     movePHPErrorsToHeader(); // Boring
                     setForumStrings(); // Whatever
-                    addListeners(siteConfig); // Essential
+                    addListeners(); // Essential
                     applyBlockHash(); // Change location hash if necessary
                     bodyClasses(); // Add body classes
                     mobileFormChecker();
+                    processAnimatedImages();
 
                     // Make sure that the blocks are always within page-content for assig view page.
                     $('#page-mod-assign-view #page-content').append($('#moodle-blocks'));
