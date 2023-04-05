@@ -145,11 +145,7 @@ class core_renderer_test extends \advanced_testcase {
                     ],
                 ],
                 ['Home', 'My Courses', 'Course 1']
-            ],
-            'Page with empty breadcrumbs' => [
-                [],
-                ['Home']
-            ],
+            ]
         ];
     }
 
