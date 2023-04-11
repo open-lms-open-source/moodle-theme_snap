@@ -997,8 +997,40 @@ body.format-tiles.editing {
         & > div:nth-child(1) {
             float: left;
         }
-        div.progress-indic {
-            float: right;
+        & > div:nth-child(2) {
+            .btn-group {
+                right: 0;
+                position: absolute;
+                margin-right: 3rem;
+            }
+            .tiles-top-button {
+                right: 0;
+                position: absolute;
+            }
+            div.progress-indic {
+                margin-right: 6rem;
+                right: 0;
+                position: absolute;
+            }
+        }
+        & > div:nth-child(3) {
+            .btn-group {
+                right: 0;
+                position: absolute;
+                margin-right: 3rem;
+            }
+            .tiles-top-button {
+                right: 0;
+                position: absolute;
+            }
+            div.progress-indic {
+                margin-right: 15rem;
+                right: 0;
+                position: absolute;
+            }
+        }
+        #edit-course-content-header {
+            margin-right: 6rem;
         }
         @media (max-width: 600px) and (min-width: 377px) {
             #snap-editmode-header {
@@ -1294,6 +1326,16 @@ body.format-tiles.editing {
         .activitytitle {
             border-bottom: none;
         }
+    }
+    #abovetiles {
+        display: block;
+    }
+    #snap-course-dashboard {
+        float: left;
+        margin-bottom: 1rem;
+    }
+    .tiles[data-for="course_sectionlist"] {
+        float: left;
     }
 
 }
