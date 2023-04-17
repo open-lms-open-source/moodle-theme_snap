@@ -1726,7 +1726,7 @@ body.snap-resource-card {
         }
     }
 }
-.path-admin,
+.path-admin:not(#page-admin-blocks),
 .path-backup {
     tr img.icon {
         margin-right: 1rem;
@@ -1744,7 +1744,8 @@ body.snap-resource-card {
 .path-course,
 .path-my {
     .block_calendar_upcoming,
-    .block-timeline {
+    .block-timeline,
+    .block_recentlyaccesseditems {
         .activityiconcontainer {
             margin: 0;
             padding: 0.2rem;
