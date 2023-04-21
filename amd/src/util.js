@@ -19,7 +19,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery'], function($) {
+define(['jquery', 'core/templates', 'core/str'], function($, templates, str) {
 
     var staticSupportsSessionStorage = null;
 
@@ -95,6 +95,35 @@ define(['jquery'], function($) {
                 }
             }
             return staticSupportsSessionStorage;
+        },
+
+        /**
+         * Process all animated images (GIFs).
+         */
+        processAnimatedImages: function() {
+            // Put animated images in a wrap if necessary.
+            var gifs = $('img[src$=".gif"]');
+            gifs.each(function() {
+                if (!$(this).parent().hasClass('snap-animated-image')) {
+                    $(this).wrap('<div class="snap-animated-image"></div>');
+                    let animImage = $(this).parent();
+                    (function() {
+                        return str.get_strings([
+                            {key: 'pausegraphicsanim', component: 'theme_snap'},
+                            {key: 'resumegraphicsanim', component: 'theme_snap'},
+                        ]);
+                    })()
+                        .then(function(localizedstrings) {
+                            return templates.render('theme_snap/animated_graphics_pause', {
+                                pausegraphicsanim: localizedstrings[0],
+                                resumegraphicsanim: localizedstrings[1],
+                            });
+                        })
+                        .then(function(html) {
+                            animImage.append(html);
+                        });
+                }
+            });
         }
     };
 });

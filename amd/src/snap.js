@@ -656,30 +656,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         }
 
         /**
-         * Process all animated images (GIFs) upon page load.
-         */
-        function processAnimatedImages() {
-            // Put animated images in a wrap.
-            $('img[src$=".gif"]').wrap('<div class="snap-animated-image"></div>');
-            let animImages = $('.snap-animated-image');
-            (function() {
-                return str.get_strings([
-                    {key: 'pausegraphicsanim', component: 'theme_snap'},
-                    {key: 'resumegraphicsanim', component: 'theme_snap'},
-                ]);
-            })()
-                .then(function(localizedstrings) {
-                    return templates.render('theme_snap/animated_graphics_pause', {
-                        pausegraphicsanim: localizedstrings[0],
-                        resumegraphicsanim: localizedstrings[1],
-                    });
-                })
-                .then(function(html) {
-                    animImages.append(html);
-                });
-        }
-
-        /**
          * AMD return object.
          */
         return {
@@ -744,7 +720,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     applyBlockHash(); // Change location hash if necessary
                     bodyClasses(); // Add body classes
                     mobileFormChecker();
-                    processAnimatedImages();
+                    util.processAnimatedImages();
 
                     // Make sure that the blocks are always within page-content for assig view page.
                     $('#page-mod-assign-view #page-content').append($('#moodle-blocks'));

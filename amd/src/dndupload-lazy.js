@@ -90,6 +90,13 @@ define(['jquery', 'core/yui', 'theme_snap/util'],
 
                 }
             });
+
+            var targetAnimImgs = document.querySelector('div.content');
+            var configAnimImgs = {childList: true, subtree: true};
+            var observerAnimImgs = new MutationObserver(function() {
+                util.processAnimatedImages();
+            });
+            observerAnimImgs.observe(targetAnimImgs, configAnimImgs);
         };
 
         return {
