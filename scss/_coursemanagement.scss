@@ -39,6 +39,9 @@
     #course-category-listings .listitem[data-visible="0"] > div > a {
         color: var(--gray);
     }
+    .list-group-item-action:hover {
+        z-index: inherit;
+    }
 }
 
 // Wrapper around the 3 colums of data.
