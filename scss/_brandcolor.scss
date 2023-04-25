@@ -1085,6 +1085,31 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             outline: transparent;
             box-shadow: -1px 3px 7px 2px rgb(223 223 223);
         }
+
+        ol.pld-edit-panels {
+            list-style-type: none;
+            margin-left: 0;
+
+            &:first-child {
+                counter-reset: edit-panel-counter;
+            }
+
+            & > li.pld-edit-step {
+                counter-increment: edit-panel-counter;
+                position: relative;
+                &:before {
+                    content: counter(edit-panel-counter);
+                    color: white;
+                    background-color: $brand-primary;
+                    border-radius: 50%;
+                    position: absolute;
+                    left: -1.9em;
+                    display: inline-block;
+                    width: 1.5em;
+                    padding-left: 0.5em;
+                }
+            }
+        }
     }
 
     .bordered-div {
