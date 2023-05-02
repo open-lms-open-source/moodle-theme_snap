@@ -1209,9 +1209,12 @@ class course_renderer extends \core_course_renderer {
 
         $target = '';
         $cmname = $mod->modname;
-
+        $iconurl = $mod->get_icon_url();
         $activityimg = "<div class='activityiconcontainer ".$cmname."'>";
-        $activityimg .= "<img class='iconlarge activityicon' alt='' role='presentation' src='".$mod->get_icon_url()."' />";
+        if (strpos($iconurl, $CFG->wwwroot) !== 0) { // For LTI activities with custom icon URLs.
+            $activityimg = "<div class='activityiconcontainer ".$cmname."' style='background-color:transparent;'>";
+        }
+        $activityimg .= "<img class='iconlarge activityicon' alt='' role='presentation' src='".$iconurl."' />";
         $activityimg .= "</div>";
 
         // Multimedia mods we want to open in the same window.
