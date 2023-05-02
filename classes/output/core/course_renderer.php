@@ -1054,6 +1054,13 @@ class course_renderer extends \core_course_renderer {
             }
             $contentloaded = !$lazyload ? 1 : 0;
         }
+        // With previous design, we allow displaying videos.
+        if (!empty(get_config('theme_snap', 'design_mod_page')) && $content == '') {
+            if (stripos($page->content, '<video') !== false) {
+                $content = $page->content;
+                $contentloaded = 1;
+            }
+        }
 
         $pagenewwindow = get_config('theme_snap', 'design_mod_page');
         // Check for mod page design setting to open the content inline on the same page or in another window.
