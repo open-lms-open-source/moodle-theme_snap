@@ -4399,15 +4399,6 @@ section#region-main {
     font-family: $font-family-system;
 }
 
-// Margin to fix the border cut out when PLD tabs are getting focused.
-#page-local-pld-view {
-    div#pld_main a.tabLink.yui3-tab-label.yui3-tab-content,
-    div#rule_edit_main div#rule_edit_tabs a.yui3-tab-label.yui3-tab-content,
-    div#actionEmailEditor div#actionEmailRecipientTabs ul li a.yui3-tab-label.yui3-tab-content {
-        margin-right: 0.17em;
-    }
-}
-
 // Fix width for tables when adding a new member to a group in a course.
 #page-group-members div#addmembersform form#assignform table {
     table-layout: fixed;
