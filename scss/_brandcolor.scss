@@ -1015,6 +1015,12 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .openlms-custom-elements {
         ul#pld_tab {
             border: none;
+            .nav-item .nav-link {
+                color: #405057;
+                &.active {
+                    color: $brand-primary;
+                }
+            }
         }
 
         i.icon-actions {

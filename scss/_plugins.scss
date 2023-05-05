@@ -759,8 +759,17 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     background-color: unset;
 }
 
-#page-local-pld-view #id_config_text_ifr {
-    height: 19em !important;
+// Margin to fix the border cut out when PLD tabs are getting focused.
+#page-local-pld-view {
+    div#pld_main a.tabLink.yui3-tab-label.yui3-tab-content,
+    div#rule_edit_main div#rule_edit_tabs a.yui3-tab-label.yui3-tab-content,
+    div#actionEmailEditor div#actionEmailRecipientTabs ul li a.yui3-tab-label.yui3-tab-content {
+        margin-right: 0.17em;
+    }
+    #id_config_text_ifr {
+        height: 19em !important;
+    }
+    overflow-x: hidden;
 }
 
 #page-mod-choice-report.theme-snap {
