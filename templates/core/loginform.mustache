@@ -129,11 +129,11 @@
             <input type="text" name="username" id="username"
                 class="form-control"
                 value="{{username}}"
-                placeholder={{^canloginbyemail}}{{#cleanstr}}username{{/cleanstr}}{{/canloginbyemail}}{{#canloginbyemail}}{{#cleanstr}}usernameemail{{/cleanstr}}{{/canloginbyemail}}>
+                placeholder="{{^canloginbyemail}}{{#cleanstr}}username{{/cleanstr}}{{/canloginbyemail}}{{#canloginbyemail}}{{#cleanstr}}usernameemail{{/cleanstr}}{{/canloginbyemail}}">
             <label for="password" class="sr-only">{{#str}} password {{/str}}</label>
             <input type="password" name="password" id="password" value=""
                 class="form-control"
-                placeholder={{#cleanstr}}password{{/cleanstr}}
+                placeholder="{{#cleanstr}}password{{/cleanstr}}"
                 {{^passwordautocomplete}}autocomplete="off"{{/passwordautocomplete}}>
             <br>
             <a class="small btn btn-link btn-block" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
