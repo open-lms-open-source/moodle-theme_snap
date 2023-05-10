@@ -141,7 +141,20 @@ class course_renderer extends \core_course_renderer {
             if ($mod->modname === 'resource') {
                 // Default for resources/attatchments e.g. pdf, doc, etc.
                 $modclasses = array('snap-resource', 'snap-mime-'.$mimetype, 'snap-resource-long');
-                if (in_array($mimetype, $this->snap_multimedia())) {
+                $resourcedisplayincourse = true;
+                $modresourceneoptions = array(
+                    RESOURCELIB_DISPLAY_EMBED,
+                    RESOURCELIB_DISPLAY_FRAME,
+                    RESOURCELIB_DISPLAY_NEW,
+                    RESOURCELIB_DISPLAY_DOWNLOAD,
+                    RESOURCELIB_DISPLAY_POPUP
+                );
+                if (!empty($mod->customdata['display'])) {
+                    if (in_array($mod->customdata['display'], $modresourceneoptions)) {
+                        $resourcedisplayincourse = false;
+                    }
+                }
+                if (in_array($mimetype, $this->snap_multimedia()) && $resourcedisplayincourse) {
                     $modclasses[] = 'js-snap-media';
                 }
                 // For images we overwrite with the native class.
@@ -1222,20 +1235,24 @@ class course_renderer extends \core_course_renderer {
 
         $resourcedisplay = get_config('theme_snap', 'resourcedisplay');
         $displaydescription = get_config('theme_snap', 'displaydescription');
+        $resourceonclick = "";
         if ($mod->modname === 'resource') {
             $extension = $this->get_mod_type($mod)[1];
             if (in_array($extension, $snapmultimedia)) {
                 // For multimedia we need to handle the popup setting.
                 // If popup add a redirect param to prevent the intermediate page.
                 if ($mod->onclick) {
-                    $url .= "&amp;redirect=1";
+                    $resourceonclick = "onclick=\"{$mod->onclick}\"";
+                    $url = '';
                 }
             } else {
                 if ($resourcedisplay == 'card' && $displaydescription) {
                     $url .= "&amp;forceview=1";
                 } else {
-                    $url .= "&amp;redirect=1";
-                    $target = "target='_blank'";
+                    if ($mod->onclick) {
+                        $resourceonclick = "onclick=\"{$mod->onclick}\"";
+                        $url = '';
+                    }
                 }
             }
         }
@@ -1271,7 +1288,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         if ($mod->uservisible) {
-            $output .= "<a $target $onclicklti class='mod-link' href='$url'>"
+            $output .= "<a $target $onclicklti $resourceonclick class='mod-link' href='$url'>"
                             .$activityimg.
                             "<p class='instancename'>$instancename</p>
                         </a>";
