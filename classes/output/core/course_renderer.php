@@ -1031,9 +1031,18 @@ class course_renderer extends \core_course_renderer {
         $imgarr = \theme_snap\local::extract_first_image($page->content);
 
         $thumbnail = '';
+
+        $preview = $page->summary;
+
         if ($imgarr) {
-            $img = html_writer::img($imgarr['src'], $imgarr['alt']);
-            $thumbnail = "<div class=summary-figure>$img</div>";
+            // Check that the image is not a tex equation.
+            if (strpos($imgarr['src'], "filter/tex/pix.php") == false) {
+                $img = html_writer::img($imgarr['src'], $imgarr['alt']);
+                $thumbnail = "<div class=summary-figure>$img</div>";
+            } else {
+                $preview = $page->content;
+                $preview = shorten_text($preview, 200);
+            }
         }
 
         $readmore = get_string('readmore', 'theme_snap');
@@ -1074,7 +1083,7 @@ class course_renderer extends \core_course_renderer {
         $o = "
         {$thumbnail}
         <div class='summary-text'>
-            {$page->summary}
+            {$preview}
             <p><a class='$pslinkclass' title='{$mod->name}' href='{$mod->url}' $pmcontextattribute>{$readmore}</a></p>
         </div>
 
