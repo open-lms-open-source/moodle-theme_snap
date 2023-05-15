@@ -24,7 +24,6 @@
 
 namespace theme_snap\output;
 
-defined('MOODLE_INTERNAL') || die();
 use format_weeks\output\renderer;
 
 class format_weeks_renderer extends renderer {
