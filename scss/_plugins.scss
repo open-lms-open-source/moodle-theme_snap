@@ -770,6 +770,43 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
         height: 19em !important;
     }
     overflow-x: hidden;
+
+    .modal-dialog .content.role-check {
+        .row .col:not(.modal-footer) {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .form-item {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        @media (min-width: 768px) {
+            #roleSelector {
+                max-width: 9rem;
+            }
+        }
+
+        @media (min-width: 576px) {
+            .row .col:not(.modal-footer) {
+                align-items: center;
+                flex-direction: row;
+            }
+
+            label {
+                flex-shrink: 0;
+            }
+
+            .form-item {
+                margin-top: 1em;
+                margin-bottom: 1em;
+            }
+        }
+
+    }
+
 }
 
 #page-mod-choice-report.theme-snap {
