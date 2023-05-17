@@ -24,7 +24,6 @@
 
 namespace theme_snap\output;
 
-defined('MOODLE_INTERNAL') || die();
 use format_topics\output\renderer;
 
 class format_topics_renderer extends renderer {
