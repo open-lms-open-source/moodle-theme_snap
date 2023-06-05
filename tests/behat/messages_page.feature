@@ -107,3 +107,16 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     And I wait until the page is ready
     And I check body for classes "theme-snap"
     And "body#page-message-index" "css_element" should exist
+
+  @javascript
+  Scenario: Accessing the messages from the user report in the grader redirects to the message index page.
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And I follow "Course Dashboard"
+    And I follow "Gradebook"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "User report" in current page administration
+    And I click on "div.search-widget" "css_element"
+    And I click on "div.searchresultscontainer a[role='menuitem']" "css_element"
+    And I click on "#message-user-button" "css_element"
+    Then "body#page-message-index" "css_element" should exist

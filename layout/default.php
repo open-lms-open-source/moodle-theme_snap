@@ -92,7 +92,11 @@ echo $OUTPUT->custom_menu_spacer();
 echo $OUTPUT->course_content_header();
 
 // Ensure edit blocks button is only shown for appropriate pages.
-$hasadminbutton = stripos($PAGE->button, '"adminedit"') || stripos($PAGE->button, '"edit"');
+if ($PAGE->button === null) {
+    $hasadminbutton = false;
+} else {
+    $hasadminbutton = stripos($PAGE->button, '"adminedit"') || stripos($PAGE->button, '"edit"');
+}
 
 if ($hasadminbutton) {
     // List paths to black list for 'turn editting on' button here.

@@ -24,6 +24,8 @@
 
 namespace theme_snap\output;
 
+use core\check\performance\debugging;
+
 trait general_section_trait {
 
     /**
@@ -36,8 +38,9 @@ trait general_section_trait {
      */
     protected function is_section_conditional(\section_info $section) {
         // Are there any conditional fields populated?
+        $sectionavailability = $section->availability === null ? '' : $section->availability;
         if (!empty($section->availableinfo)
-            || !empty(json_decode($section->availability)->c)) {
+            || !empty(json_decode($sectionavailability)->c)) {
             return true;
         }
         // OK - this isn't conditional.

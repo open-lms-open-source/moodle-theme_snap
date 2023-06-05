@@ -99,7 +99,9 @@ define(['jquery', 'core/pubsub'],
                         }
                     }).bind();
                 // Listener for the page user profile to load messages URL.
-                } else if ($('#page-user-profile').length != 0 || $('.userprofile #message-user-button').length != 0) {
+                } else if ($('#page-user-profile').length != 0 || $('.userprofile #message-user-button').length != 0
+                    || $('#page-grade-report-user-index').length != 0) {
+                    $('#page-grade-report-user-index [id^="drawer-"].drawer[role="region"]').css('display', 'none');
                     PubSub.subscribe("message-drawer-create-conversation-with-user", function (args) {
                         redirectToMessage(args);
                     });
