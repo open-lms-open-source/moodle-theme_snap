@@ -4909,7 +4909,7 @@ div[id^=snap-create-activity-] .section-modchooser-link {
 
 // Go to top button Snap Mobile
 @media (max-width: 991px) {
-    #goto-top-link {
+    .theme-snap #goto-top-link {
         bottom: 5em;
         right: 0.7em;
     }

@@ -89,7 +89,6 @@
     #region-main {
         padding-top: 1em;
         outline: none;
-        height: fit-content;
     }
 
     /* TOC heading. */
@@ -328,8 +327,8 @@ label[for="toc-search-input"]{
 }
 
 @include media-breakpoint-down(md) {
-    #toc-mobile-menu-toggle {
-        background: $gray-lighter url("[[pix:theme|burger]]") no-repeat 50% 50%;
+    .theme-snap  a#toc-mobile-menu-toggle {
+        background: $brand-primary url("[[pix:theme|burger]]") no-repeat 50% 50%;
         background-size: 1em;
         display: inline-block;
         bottom: 0.5em;
