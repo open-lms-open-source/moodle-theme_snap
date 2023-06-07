@@ -782,6 +782,25 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'title' => get_string('logout')
         ];
 
+        $coursecataloguelink = [
+            'id' => 'snap-pm-course-catalogue',
+            'link' => s($CFG->wwwroot) . '/local/catalogue/index.php',
+            'title' => get_string('pluginname', 'local_catalogue')
+        ];
+        $quicklinks[] = $coursecataloguelink;
+        $programcataloguelink = [
+            'id' => 'snap-pm-program-catalogue',
+            'link' => s($CFG->wwwroot) . '/enrol/programs/catalogue/index.php',
+            'title' => get_string('catalogue', 'enrol_programs')
+        ];
+        $quicklinks[] = $programcataloguelink;
+        $myprogramslink = [
+            'id' => 'snap-pm-my-programs',
+            'link' => s($CFG->wwwroot) . '/enrol/programs/my/index.php',
+            'title' => get_string('pluginname', 'block_myprograms')
+        ];
+        $quicklinks[] = $myprogramslink;
+
         $courseid = $this->page->course->id;
         $coursecontext = context_course::instance($courseid);
         if (has_capability('moodle/role:switchroles', $coursecontext) || is_role_switched($courseid)) {
