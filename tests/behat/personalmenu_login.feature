@@ -150,3 +150,18 @@ Feature: When the moodle theme is set to Snap,
     Then "#page-my-index" "css_element" should be visible
     And I click on "#snap-home" "css_element"
     Then "#page-my-index" "css_element" should be visible
+
+  @javascript
+  Scenario: After login, admin user sees the expected links in the personal menu.
+    Given I log in as "admin"
+    And I open the personal menu
+    Then I should see "Profile"
+    Then I should see "My Account"
+    Then I should see "Dashboard"
+    Then I should see "Grades"
+    Then I should see "Preferences"
+    Then I should see "Course catalogue"
+    Then I should see "Program catalogue"
+    Then I should see "My programs"
+    Then I should see "Switch role to..."
+    Then I should see "Log out"
