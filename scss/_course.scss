@@ -479,53 +479,55 @@ li.section:focus {
 // ---------------------------------------
 // Mod chooser for Snap - Icon colors.
 // ---------------------------------------
-.activityiconcontainer.administration {
-    background-color: transparent; }
-.activityiconcontainer.administration .activityicon,
-.activityiconcontainer.administration .icon {
-    height: 45px;
-    width: 45px;
-    filter: none; }
+.modchoosercontainer .activityiconcontainer {
+    &.administration {
+        background-color: transparent; }
+    &.administration .activityicon,
+    &.administration .icon {
+        height: 45px;
+        width: 45px;
+        filter: none; }
 
-.activityiconcontainer.assessment {
-    background-color: transparent; }
-.activityiconcontainer.assessment .activityicon,
-.activityiconcontainer.assessment .icon {
-    height: 45px;
-    width: 45px;
-    filter: none; }
+    &.assessment {
+        background-color: transparent; }
+    &.assessment .activityicon,
+    &.assessment .icon {
+        height: 45px;
+        width: 45px;
+        filter: none; }
 
-.activityiconcontainer.collaboration {
-    background-color: transparent; }
-.activityiconcontainer.collaboration .activityicon,
-.activityiconcontainer.collaboration .icon {
-    height: 45px;
-    width: 45px;
-    filter: none; }
+    &.collaboration {
+        background-color: transparent; }
+    &.collaboration .activityicon,
+    &.collaboration .icon {
+        height: 45px;
+        width: 45px;
+        filter: none; }
 
-.activityiconcontainer.communication {
-    background-color: transparent; }
-.activityiconcontainer.communication .activityicon,
-.activityiconcontainer.communication .icon {
-    height: 45px;
-    width: 45px;
-    filter: none; }
+    &.communication {
+        background-color: transparent; }
+    &.communication .activityicon,
+    &.communication .icon {
+        height: 45px;
+        width: 45px;
+        filter: none; }
 
-.activityiconcontainer.content {
-    background-color: transparent; }
-.activityiconcontainer.content .activityicon,
-.activityiconcontainer.content .icon {
-    height: 45px;
-    width: 45px;
-    filter: none; }
+    &.content {
+        background-color: transparent; }
+    &.content .activityicon,
+    &.content .icon {
+        height: 45px;
+        width: 45px;
+        filter: none; }
 
-.activityiconcontainer.interface {
-    background-color: transparent; }
-.activityiconcontainer.interface .activityicon,
-.activityiconcontainer.interface .icon {
-    height: 45px;
-    width: 45px;
-    filter: none; }
+    &.interface {
+        background-color: transparent; }
+    &.interface .activityicon,
+    &.interface .icon {
+        height: 45px;
+        width: 45px;
+        filter: none; }
+}
 
 
 .theme-snap .modchoosercontainer {
