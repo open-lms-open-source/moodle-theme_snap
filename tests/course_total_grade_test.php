@@ -334,7 +334,7 @@ class course_total_grade_Test extends \advanced_testcase {
                     'courseid' => $course->id,
                     'userid' => $USER->id)
             );
-            $report = new \grade_report_user($course->id, $gpr, $coursecontext, $USER->id);
+            $report = new \gradereport_user\report\user($course->id, $gpr, $coursecontext, $USER->id);
             $report->fill_table();
 
             $coursetotal = end($report->tabledata);
