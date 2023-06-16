@@ -773,17 +773,6 @@ EOF;
             }
         }
 
-        // Local catalogue if enabled.
-        if (array_key_exists('catalogue', $localplugins) && has_capability('local/catalogue:admingear', $coursecontext)) {
-            $iconurl = $OUTPUT->image_url('catalogue', 'theme');
-            $localcatalogueicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-            $localcataloguename = get_string('pluginname', 'local_catalogue');
-            $links[] = array(
-                'link' => 'local/catalogue/index.php',
-                'title' => $localcatalogueicon.$localcataloguename
-            );
-        }
-
         // Mediasite. (GT Mod - core component check needs to be first in evaluation or capability check error will
         // occur when the module is not installed).
         if ( \core_component::get_component_directory('mod_mediasite') !== null &&
