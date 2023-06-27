@@ -24,8 +24,6 @@
 
 namespace theme_snap\output;
 
-use core\check\performance\debugging;
-
 trait general_section_trait {
 
     /**
