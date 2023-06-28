@@ -1293,7 +1293,7 @@ class local {
                 'filename' => 'course-card-'.$id.'-'.$filename,
             );
             $coursecardimage = $fs->create_file_from_storedfile($filespec, $originalfile);
-            $coursecardimage = image::resize($coursecardimage, false, $coursecardwidth);
+            $coursecardimage = image::resize($coursecardimage, false, round($coursecardwidth));
             return $coursecardimage;
         }
         return false;

@@ -76,10 +76,10 @@ class image {
 
         if (!$newheight && (isset($imageinfo->height) && isset($imageinfo->width))) {
             $m = $imageinfo->height / $imageinfo->width; // Multiplier to work out $newheight.
-            $newheight = $newwidth * $m;
+            $newheight = round($newwidth * $m);
         } else if (!$newwidth && (isset($imageinfo->height) && isset($imageinfo->width))) {
             $m = $imageinfo->width / $imageinfo->height; // Multiplier to work out $newwidth.
-            $newwidth = $newheight * $m;
+            $newwidth = round($newheight * $m);
         }
         $t = null;
 
@@ -187,8 +187,14 @@ class image {
         );
 
         \ob_start();
-        if (!$imagefnc($newimage, null, $quality, $filters)) {
-            return false;
+        if ($imagefnc == 'imagejpeg') {
+            if (!$imagefnc($newimage, null, $quality)) {
+                return false;
+            }
+        } else {
+            if (!$imagefnc($newimage, null, $quality, $filters)) {
+                return false;
+            }
         }
 
         $data = \ob_get_clean();
