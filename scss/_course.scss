@@ -2950,6 +2950,24 @@ span.editinstructions {
     left: 71vw;
 }
 
+// ---------------------------------------
+// Fix icons size for grade report summary.
+// ---------------------------------------
+.path-grade-report .reportbuilder-table {
+    .page-header-image {
+        max-width: 50px;
+        max-height: 50px;
+    }
+    .activityiconcontainer {
+        background-color: transparent;
+        img.activityicon {
+            filter: none;
+            min-width: 50px;
+            min-height: 50px;
+        }
+    }
+}
+
 body.path-course-index {
     .add-course-btn-container {
         margin-top: 1em;
