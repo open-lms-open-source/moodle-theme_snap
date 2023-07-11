@@ -1087,6 +1087,16 @@ nodeToChange = $(selectorToChange);
                             $('#id_showdescription').parent().parent().parent().hide();
                         }
                     }
+                    // Remove disabled attribute for section name for topics format.
+                    if (onSectionSettings) {
+                        var sectionName = $("#page-course-editsection.format-topics .form-group #id_name_value");
+                        if (sectionName.length) {
+                            let sectionNameIsDiabled = document.getElementById('id_name_value').hasAttribute("disabled");
+                            if (sectionNameIsDiabled) {
+                                document.getElementById('id_name_value').removeAttribute("disabled");
+                            }
+                        }
+                    }
 
                     // Conversation counter for user badge.
                     if (messageBadgeCountEnabled) {
