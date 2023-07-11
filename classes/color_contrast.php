@@ -215,7 +215,7 @@ class color_contrast {
             }
         }
 
-        $average = $totalvalue / $pixelcount;
+        $average = intval($totalvalue / $pixelcount);
 
         $cols = imagecolorsforindex($resource, $average);
         $redhex = substr("00" . dechex($cols['red']), -2);

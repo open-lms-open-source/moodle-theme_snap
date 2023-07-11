@@ -44,7 +44,7 @@ Feature: When importing a course into another, the hidden content should be appl
     And I am on the course main page for "C2"
     And I click on "#admin-menu-trigger" "css_element"
     And I follow "Import"
-    And I click on "tbody tr:nth-child(3) input[name='importid']" "css_element"
+    And I click on "tbody tr .c0 input[name='importid']" "css_element"
     And I press "Continue"
     And I press "Next"
     And I press "Next"

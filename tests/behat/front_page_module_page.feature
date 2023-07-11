@@ -95,6 +95,7 @@ Feature: Open page (front page) module inline
     And I should see "Test page1"
     And I should not see "page content1"
     And I log out
+    And I am on site homepage
     And I should not see "page content1"
     Then I click on ".pagemod-readmore" "css_element"
     And I should not see an error dialog

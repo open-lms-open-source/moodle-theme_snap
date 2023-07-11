@@ -942,7 +942,8 @@ EOF;
             $progress = local::course_completion_progress($COURSE);
             $userboard .= '<div class="col-xs-3 text-center snap-student-dashboard-progress">';
             $userboard .= '<h4 class="h6">' .get_string('progress', 'theme_snap'). '</h6>';
-            $userboard .= '<div class="js-progressbar-circle snap-progress-circle" value="' .round($progress->progress). '"></div>';
+            $userboard .= '<div class="js-progressbar-circle snap-progress-circle" value="'
+                .round($progress->progress ?? 0). '"></div>';
             $userboard .= '</div>';
         }
 

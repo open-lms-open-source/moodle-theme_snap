@@ -517,7 +517,7 @@ class behat_theme_snap extends behat_base {
     public function i_restrict_course_section_by_date($section, $date) {
         $datetime = strtotime($date);
         $this->i_go_to_course_section($section);
-        $this->click_visible_link('Edit section');
+        $this->execute('behat_general::i_click_on', ['#section-'.$section.' .edit-summary', 'css_element']);
         $this->i_wait_until_is_visible('.editor_atto', 'css_element');
         $this->execute('behat_forms::i_set_the_field_to', ['name[customize]', '1']);
         $this->execute('behat_forms::i_set_the_field_to', ['name[value]', 'Topic '.$date.' '.$section]);

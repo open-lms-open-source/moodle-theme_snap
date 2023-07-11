@@ -80,7 +80,7 @@ class course_renderer extends \core_course_renderer {
             $context = context_course::instance(SITEID);
 
             // If the section name is set we show it.
-            if (trim($section->name) !== '') {
+            if (trim($section->name ?? '') !== '') {
                 $output .= $this->heading(
                     format_string($section->name, true, array('context' => $context)),
                     2,

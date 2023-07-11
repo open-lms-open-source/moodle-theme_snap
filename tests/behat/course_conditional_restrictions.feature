@@ -58,7 +58,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I am on the course main page for "C1"
     And I go to course section 1
     And I restrict course asset "S1 Restricted" by completion of "S2 Restricted"
-    And I click on "li.modtype_assign:nth-child(1) a.snap-conditional-tag" "css_element"
+    And I click on "li.modtype_assign a.snap-conditional-tag" "css_element"
     And I should see "Not available unless: The activity S2 Restricted is marked complete"
     And I restrict course section 1 by date to "yesterday"
     And I restrict course section 2 by date to "tomorrow"
@@ -89,7 +89,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I should not see "Conditional" in TOC item 3
     And I go to course section 1
     And I should not see available from date of "yesterday" in section 1
-    And I click on "li.modtype_assign:nth-child(1) a.snap-conditional-tag" "css_element"
+    And I click on "li.modtype_assign a.snap-conditional-tag" "css_element"
     And I should see "Not available unless: The activity S2 Restricted is marked complete"
     And I go to course section 2
     And I should see available from date of "tomorrow" in section 2

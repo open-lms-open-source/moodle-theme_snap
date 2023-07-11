@@ -52,7 +52,7 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And I expand "Appearance" node
     And I expand "Themes" node
     And I follow "Snap"
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(2)" "css_element"
+    And I follow "Cover display"
     And I click on "#themesnapcoverdisplay #admin-slide_one_image div[id^='filemanager-'] .filemanager-container .dndupload-message .dndupload-arrow" "css_element"
     And I click on "Private files" "link" in the ".fp-repo-area" "css_element"
     And I click on "//p[contains(text(),'gd-logo.png')]" "xpath_element"
@@ -69,7 +69,7 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And I expand "Appearance" node
     And I expand "Themes" node
     And I follow "Snap"
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(2)" "css_element"
+    And I follow "Cover display"
     And I click on "#themesnapcoverdisplay #admin-slide_two_image div[id^='filemanager-'] .filemanager-container .dndupload-message .dndupload-arrow" "css_element"
     And I click on "Private files" "link" in the ".fp-repo-area" "css_element"
     # Since this is for testing purposes only, it doesn't matter that the images are the same.

@@ -77,7 +77,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I expand "Appearance" node
     And I expand "Themes" node
     And I follow "Snap"
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(5)" "css_element"
+    And I follow "Featured courses"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_one']" to "1"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_two']" to "2"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_three']" to "3"
@@ -108,7 +108,7 @@ Feature: Elements for Snap should have the proper aria attributes.
   Scenario: Elements in course dashboard must comply with the accessibility standards.
     Given I log in as "admin"
     And I am on the course main page for "C1"
-    And I click on "#snap-course-wrapper .toc-footer a:nth-child(2)" "css_element"
+    And I follow "Course Dashboard"
     And the page should meet "cat.aria, wcag412" accessibility standards
     And the page should meet "cat.parsing, wcag411" accessibility standards
 
@@ -141,32 +141,32 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I follow "Snap"
     # We need to test it in each view or else it will fail.
     # Cover display.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(2)" "css_element"
+    And I follow "Cover display"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Personal menu.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(3)" "css_element"
+    And I follow "Personal menu"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Feature spots.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(4)" "css_element"
+    And I follow "Feature spots"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Featured courses.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(5)" "css_element"
+    And I follow "Featured courses"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Course display.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(6)" "css_element"
+    And I follow "Course display"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Social media.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(7)" "css_element"
+    And I follow "Social media"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Navigation bar.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(8)" "css_element"
+    And I follow "Navigation bar"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Category color.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(9)" "css_element"
+    And I follow "Category color"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Profile based branding.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(10)" "css_element"
+    And I follow "Profile based branding"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # H5P Custom CSS.
-    And I click on "form#adminsettings div.settingsform div.row ul#snap-admin-tabs li:nth-child(11)" "css_element"
+    And I follow "H5P Custom CSS"
     And the page should meet "cat.aria, wcag412" accessibility standards

@@ -104,7 +104,7 @@ Feature: Open page module inline
     # Make sure topic 1 show section availability info.
     Then I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow "Introduction"
-    And I click on ".section.img-text li:nth-child(1) .contentafterlink .summary-text a" "css_element"
+    And I follow "Read more"
     And I wait until "#section-0 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page module content to load up.
     Then I should see "Page completion content"
