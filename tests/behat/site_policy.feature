@@ -31,7 +31,6 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
       | username | firstname | lastname | email |
       | student1 | Student | 1 | student1@example.com |
 
-  @javascript
   Scenario: Login redirects to site policy page appropriately when personal menu set to show on login.
     Accepting the site policy prevents redirect on next login.
     Given I log in as "student1"
@@ -41,7 +40,6 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     When I log in as "student1"
     Then I am currently on the default site home page
 
-  @javascript
   Scenario: Login redirects to site policy page appropriately when personal menu set to not show on login.
     Accepting the site policy prevents redirect next time personal menu is opened.
     Given the following config values are set as admin:
@@ -52,7 +50,7 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     And I log out
     Then I log in as "student1"
     And I am currently on the default site home page
-    When I open the personal menu
+    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I wait until the page is ready
     Then I should not see "You must agree to this policy to continue using this site. Do you agree?"
 
