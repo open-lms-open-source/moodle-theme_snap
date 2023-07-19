@@ -1750,13 +1750,15 @@ body.snap-resource-card {
     .block-timeline,
     .block_recentlyaccesseditems {
         .activityiconcontainer {
+            background-color: transparent;
             margin: 0;
             padding: 0.2rem;
             height: 45px;
             width: 45px;
             img.icon {
                 height: fit-content;
-                width: 45px;
+                min-width: 45px;
+                filter: none;
             }
         }
     }
