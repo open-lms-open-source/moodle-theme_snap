@@ -3088,7 +3088,7 @@ table#user-grades tr.avg td.cell {
     }
 }
 
-.grader_report_edit_button {
+.grade_report_edit_button {
     display:none;
 }
 
@@ -3106,12 +3106,25 @@ table#user-grades tr.avg td.cell {
             left: 0;
         }
     }
-    &.path-grade-report-grader .grader_report_edit_button {
+    &.path-grade-report-grader .grade_report_edit_button {
         display: block;
         margin-bottom: 1.5rem;
     }
 }
 
+// Fix editing button in grade report single view.
+#page-grade-report-singleview-index.path-grade-report-singleview {
+    .grade_report_edit_button {
+        display: block;
+        margin-bottom: 1.5rem;
+    }
+    .grade_report_edit_button.hidden {
+        display: none;
+    }
+    .search-widget .user-info.d-block {
+        padding: 6px;
+    }
+}
 #page-local-joulegrader-view {
     #local-joulegrader-navigation {
         border-bottom: thin solid #e5e5e5;
