@@ -717,6 +717,19 @@ EOF;
             );
         }
 
+        // Personalised Learning Designer new design.
+        if (!empty($CFG->local_pld_experimental)) {
+            if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
+                $iconurl = $OUTPUT->image_url('pld', 'theme');
+                $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                $pldname = get_string('pldexperimental', 'local_pld');
+                $links[] = array(
+                    'link' => 'local/pld/view.php?pldexperimental=1&courseid='.$COURSE->id,
+                    'title' => $pldicon.$pldname
+                );
+            }
+        }
+
         // Competencies if enabled.
         if (get_config('core_competency', 'enabled') && has_capability('moodle/competency:competencyview', $coursecontext)) {
             $iconurl = $OUTPUT->image_url('competencies', 'theme');
