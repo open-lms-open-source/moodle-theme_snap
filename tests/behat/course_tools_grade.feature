@@ -267,16 +267,14 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I log out
 
   @javascript
-  Scenario: Course grade report should have an edit button.
+  Scenario: Course grader report should have an edit button.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
-    And I click on "Course Dashboard" "link"
-    And I click on "Edit blocks" "link"
-    And I should see "Turn editing off"
     And I click on "#admin-menu-trigger" "css_element"
     And I follow "Gradebook setup"
     And I click on ".tertiary-navigation-selector" "css_element"
-    And I click on ".tertiary-navigation-selector .dropdown-menu li.dropdown-item" "css_element"
+    # Check editing button works with Grader report.
+    And I navigate to "Grader report" in current page administration
     And I should see "Turn editing on"
     And "Save changes" "button" should not exist
     And I click on "Turn editing on" "button"
@@ -287,5 +285,35 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And "Save changes" "button" should not exist
     And I click on "Turn editing on" "button"
     And I am on "Course 1" course homepage
+    # Edit mode goes to default value when changing to other view.
+    And I should not see "Turn editing off"
+    And I log out
+
+  @javascript
+  Scenario: Grade report single view should have an edit button.
+    Given I log in as "admin"
+    When I am on "Course 1" course homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Gradebook setup"
+    And I click on ".tertiary-navigation-selector" "css_element"
+    # Check editing button works with Grade report single view.
+    And I navigate to "Single view" in current page administration
+    And I should not see "Turn editing on"
+    # Check grade items view.
+    And I click on "Grade items" "link"
+    Then I should see "Turn editing on"
+    And "Save" "button" should not exist
+    # Select an activity to grade.
+    And I click on ".search-widget" "css_element"
+    And I click on "div.searchresultscontainer a[role='menuitem']" "css_element"
+    When I click on "Turn editing on" "button"
+    And I should see "Turn editing off"
+    And "Save" "button" should exist
+    When I click on "Turn editing off" "button"
+    And I should see "Turn editing on"
+    Then the "Save" "button" should be disabled
+    And I click on "Turn editing on" "button"
+    And I am on "Course 1" course homepage
+    # Edit mode goes to default value when changing to other view.
     And I should not see "Turn editing off"
     And I log out

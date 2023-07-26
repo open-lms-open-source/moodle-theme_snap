@@ -1050,18 +1050,20 @@ EOF;
     /**
      * Grade reports edit button.
      */
-    public static function get_grader_reports_edit_button() {
+    public static function get_grade_report_edit_button() {
         global $COURSE, $USER, $OUTPUT, $PAGE;
         if ($COURSE->id === null || $USER->editing === null) {
             return "";
         }
-        $options = array (
-            'type' => 'report',
-            'plugin' => 'grader',
-            'id' => $COURSE->id,
-            'sesskey' => sesskey(),
 
-        );
+        $options['id'] = $COURSE->id;
+        $options['item'] = optional_param('item', '', PARAM_TEXT);
+        if ($options['item'] === 'user') {
+            $options['userid'] = optional_param('userid', '', PARAM_INT);
+        } else if ($options['item'] === 'grade') {
+            $options['itemid'] = optional_param('itemid', '', PARAM_INT);
+        }
+
         if ($USER->editing == 1) {
             $options['edit'] = 0;
             $string = get_string('turneditingoff');
@@ -1070,7 +1072,7 @@ EOF;
             $string = get_string('turneditingon');
         }
         $url = new moodle_url('index.php', $options);
-        $button = $OUTPUT->single_button($url, $string, 'get', ['class' => 'grader_report_edit_button']);
+        $button = $OUTPUT->single_button($url, $string, 'get', ['class' => 'grade_report_edit_button']);
         $PAGE->set_button($button);
     }
 }
