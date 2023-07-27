@@ -1051,7 +1051,7 @@ EOF;
      * Grade reports edit button.
      */
     public static function get_grade_report_edit_button() {
-        global $COURSE, $USER, $OUTPUT, $PAGE;
+        global $COURSE, $USER, $OUTPUT;
         if ($COURSE->id === null || $USER->editing === null) {
             return "";
         }
@@ -1072,7 +1072,28 @@ EOF;
             $string = get_string('turneditingon');
         }
         $url = new moodle_url('index.php', $options);
-        $button = $OUTPUT->single_button($url, $string, 'get', ['class' => 'grade_report_edit_button']);
-        $PAGE->set_button($button);
+        return $OUTPUT->single_button($url, $string, 'get', ['class' => 'grade_report_edit_button']);
+    }
+
+    /**
+     * Create a button for toggling editing mode.
+     *
+     * @return string Html containing the edit button
+     */
+    public static function snap_edit_button() {
+        global $PAGE, $OUTPUT;
+        if ($PAGE->user_allowed_editing()) {
+
+            $temp = (object) [
+                'legacyseturl' => (new moodle_url('/editmode.php'))->out(false),
+                'pagecontextid' => $PAGE->context->id,
+                'pageurl' => $PAGE->url,
+                'sesskey' => sesskey(),
+            ];
+            if ($PAGE->user_is_editing()) {
+                $temp->checked = true;
+            }
+            return $OUTPUT->render_from_template('theme_snap/editbutton', $temp);
+        }
     }
 }

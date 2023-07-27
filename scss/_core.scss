@@ -866,6 +866,19 @@ a.yui3-button,
     margin-left: 1em;
 }
 
+.path-grade-report,
+.path-mod-lightboxgallery {
+    .snap-page-heading-button {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+}
+
+.path-grade-report-grader #region-main div[role="main"] {
+    overflow: auto;
+}
+
 #page-site-index .section-modchooser-link {
     clear: both;
     margin: 0;
@@ -3116,7 +3129,6 @@ table#user-grades tr.avg td.cell {
 #page-grade-report-singleview-index.path-grade-report-singleview {
     .grade_report_edit_button {
         display: block;
-        margin-bottom: 1.5rem;
     }
     .grade_report_edit_button.hidden {
         display: none;
