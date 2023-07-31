@@ -61,12 +61,12 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
   Scenario: When admin review messages preferences of other users, message drawer should not appear
     Given I log in as "admin"
     And the following config values are set as admin:
-      | linkadmincategories | 0 |
+      | linkadmincategories | 1 |
     And I close the personal menu
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
-    And I expand "Users" node
-    And I expand "Accounts" node
+    And I follow "Users"
+    And I follow "Accounts"
     And I follow "Browse list of users"
     And I should see "Student 1"
     And I follow "Student 1"

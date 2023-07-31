@@ -136,8 +136,8 @@ Feature: Snap message send messages
     And I follow "View my messages"
     And I should see "2" in the ".section[data-region='view-overview-messages'] span[data-region='section-total-count']" "css_element"
     And I should see "2" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element"
-    And I should see "1" in the "a.list-group-item-action:nth-child(2) .badge-primary[data-region='unread-count'] span[aria-hidden=true]" "css_element"
-    And I should see "2" in the "a.list-group-item-action:nth-child(1) .badge-primary[data-region='unread-count'] span[aria-hidden=true]" "css_element"
+    And I should see "1" in the "Student 1" "core_message > Message"
+    And I should see "2" in the "Student 3" "core_message > Message"
     And I click on ".rounded-circle[alt='Student 3']" "css_element"
     And I should see "Hello!" in the ".d-flex[data-region='day-messages-container']" "css_element"
     And I should see "How are you?" in the ".d-flex[data-region='day-messages-container']" "css_element"
@@ -202,9 +202,9 @@ Feature: Snap message send messages
     And I should see "2" in the ".section[data-region='view-overview-messages'] span[data-region='section-total-count']" "css_element"
     And I should see "2" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element"
     # Now we need to see that the unread message notification disappears after the message are read.
-    And I click on ".message-app .panel-body-container .view-overview-body div[data-region='view-overview-messages'] .list-group[data-region='content-container'] a.list-group-item:nth-child(1)" "css_element"
+    And I select "Student 3" conversation in messaging
     Then I should see "Hello!" in the ".d-flex[data-region='day-messages-container']" "css_element"
-    And I click on ".message-app .panel-body-container .view-overview-body div[data-region='view-overview-messages'] .list-group[data-region='content-container'] a.list-group-item:nth-child(2)" "css_element"
+    And I select "Student 1" conversation in messaging
     Then I should see "Hi!" in the ".d-flex[data-region='day-messages-container']" "css_element"
     And I am on site homepage
     And the "title" attribute of "#mr-nav .badge-count-container a.snap-message-count" "css_element" should contain "Open messaging drawer. There are 0 unread conversations"

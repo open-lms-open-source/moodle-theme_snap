@@ -259,7 +259,7 @@ class behat_theme_snap extends behat_base {
         $fs->create_file_from_pathname($fileinfo, $CFG->dirroot . "/theme/snap/tests/fixtures/testpng.png");
 
         $this->i_am_on_course_page($shortname);
-        $this->execute('behat_general::click_link', ['Create a new section']);
+        $this->execute('behat_general::i_click_on', ['#snap-new-section', 'css_element']);
         $this->execute('behat_general::i_click_on', ['Insert or edit image', 'button']);
         $this->execute('behat_general::i_click_on', ['Browse repositories...', 'button']);
         $this->execute('behat_general::i_click_on', ['Private files', 'link', '.fp-repo-area', 'css_element']);

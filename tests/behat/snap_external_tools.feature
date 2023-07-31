@@ -28,14 +28,15 @@ Feature: Configure new external tool type to test it on a course.
       | fullname | shortname | category |
       | Course 1 | C1        | 0        |
     And the following config values are set as admin:
-      | linkadmincategories | 0 |
+      | linkadmincategories | 1 |
     And I log in as "admin"
     And I am on front page
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
-    And I expand "Plugins" node
-    And I expand "Activity modules" node
-    And I expand "External tool" node
+    And I follow "Plugins"
+    And I follow "Site administration"
+    And I follow "Plugins"
+    And I follow "External tool"
     And I follow "Manage tools"
     # Create tool type that opens in a new window.
     And I follow "configure a tool manually"

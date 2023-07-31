@@ -87,7 +87,10 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
 
   @javascript
   Scenario: In the different login pages (forgot password, sign up and login index) the custom menu should not be displayed.
-    Given I am on login page
+    Given the following config values are set as admin:
+      | linkadmincategories | 1 |
+    And I change window size to "large"
+    And I am on login page
     And I should not see "Moodle community"
     And I am on forgot password page
     And I should not see "Moodle community"
@@ -95,8 +98,8 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
-    And I expand "Plugins" node
-    And I expand "Authentication" node
+    And I follow "Plugins"
+    And I follow "Category: Authentication"
     And I follow "Manage authentication"
     And I set the field with xpath "//select[@id='id_s__registerauth']" to "Email-based self-registration"
     And I click on "Save changes" "button"
