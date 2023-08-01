@@ -437,3 +437,4 @@ $string['classic_template'] = 'Classic template';
 $string['loginbgimg'] = 'Login background image';
 $string['loginbgimgdesc'] = 'Select the images that will appear on the background of the login page. To have a better experience with the images displayed, please upload files with an aspect ratio of 16:9 (resolution of 720p or dimensions of 1280x720 pixels). Uploaded images need to have the same dimensions for a correct visualization.';
 $string['stylish_template'] = 'Stylish template';
+$string['activityedit'] = 'Edit activity';
