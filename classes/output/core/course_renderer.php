@@ -614,8 +614,9 @@ class course_renderer extends \core_course_renderer {
             $actions .= '<input id="snap-move-mod-'.$mod->id.'" aria-label="'.$movealt.'"
              class="js-snap-asset-move sr-only" role="button" type="checkbox">';
             $actions .= '<span class="sr-only">'.$movealt.'</span>'.$moveicon.'</label>';
-            $actions .= '<a class="snap-edit-asset" role="button" href="'.
-                new moodle_url($baseurl, array('update' => $mod->id)).'">';
+            $actions .= '<a class="snap-edit-asset" role="button" href="' .
+                new moodle_url($baseurl, array('update' => $mod->id)) . '"
+                aria-label="' . get_string('activityedit', 'theme_snap') . '">';
             $actions .= $editicon.'</a>';
             $actionsadvanced[] = '<li><a href="'.new moodle_url($baseurl, array('delete' => $mod->id)).
                 '" data-action="delete" role="button" class="js_snap_delete dropdown-item">'.$str->delete.'</a></li>';
