@@ -283,6 +283,11 @@ body.path-site .block.block_settings {
     display: none;
 }
 
+.block_myoverview div[role="search"] .row.no-gutters {
+    margin-left: inherit;
+    margin-right: inherit;
+}
+
 /* ADMIN BLOCK */
 #page-content .block_settings {
     width: 320px;
