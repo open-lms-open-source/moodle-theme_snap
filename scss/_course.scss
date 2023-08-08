@@ -1551,11 +1551,17 @@ body.snap-resource-card {
         &.modtype_workshop,
         &.modtype_journal,
         &.modtype_attendance,
-        &.modtype_hvp,
         &.modtype_h5pactivity {
             border-top-color: $color-assignment;
             .activityiconcontainer {
                 background-color: $color-assignment;
+            }
+        }
+
+        &.modtype_hvp {
+            border-top-color: $hvp-interactive-content;
+            .activityiconcontainer {
+                background-color: $hvp-interactive-content;
             }
         }
 
