@@ -103,27 +103,45 @@ define(['jquery', 'core/templates', 'core/str'], function($, templates, str) {
         processAnimatedImages: function() {
             // Put animated images in a wrap if necessary.
             var gifs = $('img[src$=".gif"]');
-            gifs.each(function() {
-                if (!$(this).parent().hasClass('snap-animated-image')) {
-                    $(this).wrap('<div class="snap-animated-image"></div>');
-                    let animImage = $(this).parent();
-                    (function() {
-                        return str.get_strings([
-                            {key: 'pausegraphicsanim', component: 'theme_snap'},
-                            {key: 'resumegraphicsanim', component: 'theme_snap'},
-                        ]);
-                    })()
-                        .then(function(localizedstrings) {
-                            return templates.render('theme_snap/animated_graphics_pause', {
-                                pausegraphicsanim: localizedstrings[0],
-                                resumegraphicsanim: localizedstrings[1],
+            // Use main page and course page.
+            const indexPage = $('#page-site-index');
+            const coursePage = $('.path-course-view');
+            if (indexPage.length || coursePage.length) {
+                gifs.each(function() {
+                    if (!$(this).parent().hasClass('snap-animated-image')) {
+                        $(this).wrap('<div class="snap-animated-image" tabindex="0"></div>');
+                        let animImage = $(this).parent();
+                        (function() {
+                            return str.get_strings([
+                                {key: 'pausegraphicsanim', component: 'theme_snap'},
+                                {key: 'resumegraphicsanim', component: 'theme_snap'},
+                            ]);
+                        })()
+                            .then(function(localizedstrings) {
+                                return templates.render('theme_snap/animated_graphics_pause', {
+                                    pausegraphicsanim: localizedstrings[0],
+                                    resumegraphicsanim: localizedstrings[1],
+                                });
+                            })
+                            .then(function(html) {
+                                animImage.append(html);
+                                // Add events to hide/show the buttons to control if is GIF paused or not.
+                                var playButtons = animImage.find('.anim-play-resume-buttons');
+                                // Buttons are hidden by default.
+                                playButtons.css('display', 'none');
+                                animImage.mouseover(function() {
+                                    playButtons.css('display', 'inline-block');
+                                });
+                                animImage.mouseout(function() {
+                                    playButtons.css('display', 'none');
+                                });
+                                animImage.focusin(function() {
+                                    playButtons.css('display', 'inline-block');
+                                });
                             });
-                        })
-                        .then(function(html) {
-                            animImage.append(html);
-                        });
-                }
-            });
-        }
+                    }
+                });
+            }
+        },
     };
 });
