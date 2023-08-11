@@ -741,10 +741,16 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
 }
 
 /**
- * Styling for atto_htmlplus.
+ * Styling for atto_htmlplus and atto_fullscreen.
  */
-.snap-form-required .editor_atto_wrap .CodeMirror.cm-s-default.CodeMirror-wrap {
-    z-index: 1;
+.snap-form-required .editor_atto_wrap {
+    .CodeMirror.cm-s-default.CodeMirror-wrap,
+    .editor_atto {
+        z-index: 2;
+        &[style*="position: fixed"] .editor_atto_toolbar {
+            background: #f2f2f2;
+        }
+    }
 }
 
 .theme-snap .editor_atto_wrap .CodeMirror.cm-s-default.CodeMirror-wrap {
