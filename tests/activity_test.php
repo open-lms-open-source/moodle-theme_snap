@@ -1303,11 +1303,9 @@ class activity_test extends snap_base_test {
         $expected = 1;
         $this->assertCount($expected, $actual);
 
-        // Teacher should see 2 deadlines as they can see hidden courses.
+        // Teacher should see 1 deadline as they cannot see hidden course activities in the Snap Feeds.
         $actual = activity::upcoming_deadlines($teacher->id)->events;
-        $expected = 2;
         $this->assertCount($expected, $actual);
-
     }
 
     /**
@@ -1830,7 +1828,7 @@ class activity_test extends snap_base_test {
         }
 
         $snapfeedsblockexists = (get_config('block_snapfeeds') !== false) ||
-            (is_callable('mr_on') and mr_on('snapfeeds', 'block'));
+            (is_callable('mr_on') && mr_on('snapfeeds', 'block'));
 
         if ($snapfeedsblockexists) {
             // Snap feeds block test for deadlines refresh. This works w.o the block b/c we use only DB data.

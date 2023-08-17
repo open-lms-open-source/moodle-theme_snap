@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace theme_snap;
 
@@ -30,7 +30,7 @@ require_once($CFG->dirroot.'/mod/assign/locallib.php');
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class activity {
 
@@ -1617,6 +1617,7 @@ class activity {
         $tomorrowts = $tomorrow->getTimestamp();
 
         $courses = enrol_get_users_courses($user->id, true);
+        $courses = local::remove_hidden_courses($courses);
         if ($courseorid !== 0) {
             $course = local::get_course($courseorid);
             if ($course !== false &&
@@ -1685,7 +1686,7 @@ class activity {
         $groupmode = groups_get_course_groupmode($course);
         $context = \context_course::instance($courseid);
 
-        if ($groupmode == SEPARATEGROUPS and !has_capability('moodle/site:accessallgroups', $context)) {
+        if ($groupmode == SEPARATEGROUPS && !has_capability('moodle/site:accessallgroups', $context)) {
             $groupparams['userid'] = $USER->id;
             $groupparams['courseid2'] = $courseid;
 

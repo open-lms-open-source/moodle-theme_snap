@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,25 +12,22 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Local Tests
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace theme_snap;
-use theme_snap\local;
 use theme_snap\renderables\course_card;
-use theme_snap\snap_base_test;
-use theme_snap\color_contrast;
 
 /**
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_test extends snap_base_test {
 
@@ -1487,5 +1484,44 @@ class local_test extends snap_base_test {
             $courseids[] = $course->id;
         }
         return $courseids;
+    }
+
+    /**
+     * Test the {@see local::remove_hidden_courses} method.
+     *
+     * This test function covers various input scenarios for the
+     * removal of hidden courses from an array of course objects.
+     */
+    public function test_remove_hidden_courses() {
+        global $DB;
+        $this->resetAfterTest();
+
+        // Test environment.
+        $this->getDataGenerator()->create_course(['visible' => 1]);
+        $this->getDataGenerator()->create_course(['visible' => 1]);
+        $this->getDataGenerator()->create_course(['visible' => 0]);
+        $this->getDataGenerator()->create_course(['visible' => 0]);
+        $this->getDataGenerator()->create_course(['visible' => 0]);
+        $this->getDataGenerator()->create_course(['visible' => 0]);
+        $courses = $DB->get_records_select('course', 'id <> ?', [1]); // Exclude Moodle site course.
+
+        // Input scenario 1: Only visible courses.
+        $visiblecourses = array_filter($courses, fn($course) => $course->visible);
+        $result = local::remove_hidden_courses($visiblecourses);
+        $this->assertCount(2, $result);
+
+        // Input scenario 2: Only hidden courses.
+        $hiddencourses = array_filter($courses, fn($course) => !$course->visible);
+        $result = local::remove_hidden_courses($hiddencourses);
+        $this->assertCount(0, $result);
+
+        // Input scenario 3: Mixed hidden and visible courses.
+        $result = local::remove_hidden_courses($courses);
+        $this->assertCount(2, $result);
+
+        // Input scenario 4: Empty array of courses.
+        $courses = [];
+        $result = local::remove_hidden_courses($courses);
+        $this->assertCount(0, $result);
     }
 }

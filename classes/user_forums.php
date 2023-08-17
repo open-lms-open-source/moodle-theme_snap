@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,19 +12,16 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace theme_snap;
-
-use theme_snap\local;
 
 /**
  * Provides information on all forums a user has access to.
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class user_forums {
 
@@ -270,6 +267,7 @@ class user_forums {
         // be increased in courses where learning takes place and the front page is unlikely to fit that model.
         // Currently we are using local::swap_global_user as a hack for the following function (MDL-51353).
         $this->courses = enrol_get_my_courses();
+        $this->courses = local::remove_hidden_courses($this->courses);
 
         $forums = [];
         $hsuforums = [];
