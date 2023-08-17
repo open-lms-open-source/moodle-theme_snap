@@ -1046,7 +1046,7 @@ class local {
      * @throws \coding_exception
      */
     public static function gradeable_courseids($userid) {
-        $courses = enrol_get_all_users_courses($userid);
+        $courses = enrol_get_all_users_courses($userid, true);
         $courseids = [];
         $capability = 'gradereport/grader:view';
         $capabilitygrade = 'mod/assign:grade';
