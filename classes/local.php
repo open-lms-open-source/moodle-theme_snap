@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,8 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace theme_snap;
 
@@ -23,10 +22,7 @@ use moodle_url;
 use stdClass;
 use stored_file;
 use theme_snap\output\core_renderer;
-use \theme_snap\user_forums,
-    \theme_snap\course_total_grade,
-    html_writer,
-    cm_info;
+use html_writer;
 use user_picture;
 
 global $CFG;
@@ -44,7 +40,7 @@ require_once($CFG->dirroot.'/lib/enrollib.php');
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local {
 
@@ -216,7 +212,7 @@ class local {
         }
 
         $mnetpeertheme = '';
-        if (isloggedin() and isset($CFG->mnet_localhost_id) and $USER->mnethostid != $CFG->mnet_localhost_id) {
+        if (isloggedin() && isset($CFG->mnet_localhost_id) && $USER->mnethostid != $CFG->mnet_localhost_id) {
             require_once($CFG->dirroot.'/mnet/peer.php');
             $mnetpeer = new \mnet_peer();
             $mnetpeer->set_id($USER->mnethostid);
@@ -609,7 +605,7 @@ class local {
         $course = get_course($context->instanceid);
         $groupmode = groups_get_course_groupmode($course);
 
-        if ($groupmode == SEPARATEGROUPS and !has_capability('moodle/site:accessallgroups', $context)) {
+        if ($groupmode == SEPARATEGROUPS && !has_capability('moodle/site:accessallgroups', $context)) {
             $params['userid'] = $USER->id;
             $params['courseid2'] = $course->id;
 
@@ -1046,7 +1042,8 @@ class local {
      * @throws \coding_exception
      */
     public static function gradeable_courseids($userid) {
-        $courses = enrol_get_all_users_courses($userid);
+        $courses = enrol_get_all_users_courses($userid, true);
+        $courses = self::remove_hidden_courses($courses);
         $courseids = [];
         $capability = 'gradereport/grader:view';
         $capabilitygrade = 'mod/assign:grade';
@@ -2502,5 +2499,18 @@ SQL;
         }
 
         return true;
+    }
+
+    /**
+     * Remove hidden courses from a list of courses.
+     *
+     * This function excludes courses that are marked as hidden from
+     * the provided array of courses (i.e. where $course->visible == 0).
+     *
+     * @param  array $courses Array of course objects
+     * @return array Array of non-hidden course objects
+     */
+    public static function remove_hidden_courses(array $courses) : array {
+        return array_filter($courses, fn($course) => $course->visible);
     }
 }
