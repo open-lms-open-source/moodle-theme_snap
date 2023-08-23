@@ -388,7 +388,7 @@ a[aria-controls="snap-collapse-help"] {
     }
 
     .form-inline[data-fieldtype="editor"] {
-        overflow: scroll;
+        overflow: visible;
     }
 }
 
@@ -410,8 +410,7 @@ a[aria-controls="snap-collapse-help"] {
     #id_modstandardelshdr,
     #id_overallfeedbackhdr {
         .form-inline[data-fieldtype="editor"] {
-            overflow-x: auto;
-            overflow-y: hidden;
+            overflow: visible;
 
             div {
                 max-width: 100%;
