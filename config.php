@@ -46,8 +46,12 @@ if ($themeissnap && $notajaxscript) {
 
     // SL - dec 2015 - Make sure editing sessions are not carried over between courses.
     if (empty($SESSION->theme_snap_last_course) || $SESSION->theme_snap_last_course != $COURSE->id) {
-        $USER->editing = 0;
-        $SESSION->theme_snap_last_course = $COURSE->id;
+        // Check if the request is coming from an iframe, that could be embedded in the course page.
+        // Only change editing mode and course if the request is not coming from an iframe.
+        if (!isset($_SERVER['HTTP_SEC_FETCH_DEST']) || $_SERVER['HTTP_SEC_FETCH_DEST'] != 'iframe') {
+            $USER->editing = 0;
+            $SESSION->theme_snap_last_course = $COURSE->id;
+        }
     }
 
     // Fix editing button in grade_report views.
