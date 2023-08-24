@@ -98,7 +98,6 @@ Feature: Activity navigation in Snap theme
 
   @javascript @accessibility
   Scenario: Step through activities in the course as a teacher.
-    And I skip because "Chrome has a zero size element bug. Eventually it will be solved, see INT-17484 from Open LMS"
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I click on "//h3/a/p[contains(text(),'Assignment 1')]" "xpath_element"
