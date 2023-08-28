@@ -5303,3 +5303,13 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
         }
     }
 }
+
+// Styles for My courses page in Snap.
+#page-my-index.page-mycourses {
+    .snap-page-my-courses-options  {
+        float: right;
+    }
+    .block_myoverview {
+        border: 0 !important;
+    }
+}
