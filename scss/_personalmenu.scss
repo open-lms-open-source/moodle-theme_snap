@@ -261,6 +261,7 @@ body.snap-pm-open {
         }
     }
 
+    min-width: 220px; // Smallest possible so that the contacts dont overlaps the course title.
     height: 150px;
     margin: .5em 3% .5em 0;
     border-radius: .3em;
@@ -310,13 +311,15 @@ body.snap-pm-open {
         .userpicture,
         .coursecard-contacts-more {
             margin: 0 1%;
-            width: 2rem;
-            height: 2rem;
+            width: 35px; // To get same size from "$userpicture->size = 35".
+            height: 35px;
             background-color: white;
             padding: 2px;
         }
         .coursecard-contacts-more {
-            display: inline-block;
+            display: inline-grid;
+            font-size: initial;
+            align-items: center;
             border-radius: 50%;
             padding: 0;
             border: 3px solid $gray-lighter;
