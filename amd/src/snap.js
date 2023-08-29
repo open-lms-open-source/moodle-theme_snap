@@ -99,6 +99,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
          */
         $(window).on('resize', function() {
             mobileFormChecker();
+            updateGraderHeadersTop();
         });
 
         var mobileFormChecker = function() {
@@ -111,6 +112,15 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 $('.snap-form-required fieldset#id_general').append(savebuttonsformadvanced);
             }
         };
+
+        const updateGraderHeadersTop = function() {
+            const graderHeader = $('.path-grade-report-grader .gradeparent tr.heading');
+            if (graderHeader.length) {
+                graderHeader.css('top', $('#mr-nav').height() + 'px');
+            }
+        };
+
+        updateGraderHeadersTop();
 
         /**
          * Move PHP errors into header
