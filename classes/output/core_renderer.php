@@ -46,6 +46,7 @@ use theme_snap\renderables\course_card;
 use theme_snap\renderables\course_toc;
 use theme_snap\renderables\featured_courses;
 use lang_string;
+use core_course_category;
 
 // We have to force include this class as it's on login and the auto loader may not have been updated via a cache dump.
 require_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
@@ -2156,6 +2157,42 @@ HTML;
         $header = new stdClass();
         $header->headeractions = $this->page->get_header_actions();
         return $this->render_from_template('core/full_header', $header);
+    }
+
+    /**
+     * Advanced course management options for My Courses page in Snap.
+     *
+     * @return string.
+     */
+    public function snap_my_courses_management_options() {
+
+        $coursecat = core_course_category::user_top();
+        $coursemanagemenu = [];
+        if ($coursecat && ($category = core_course_category::get_nearest_editable_subcategory($coursecat, ['create']))) {
+            // The user has the capability to create course.
+            $coursemanagemenu['newcourseurl'] = new moodle_url('/course/edit.php', ['category' => $category->id]);
+        }
+        if ($coursecat && ($category = core_course_category::get_nearest_editable_subcategory($coursecat, ['manage']))) {
+            // The user has the capability to manage the course category.
+            $coursemanagemenu['manageurl'] = new moodle_url('/course/management.php', ['categoryid' => $category->id]);
+        }
+        if ($coursecat) {
+            $category = core_course_category::get_nearest_editable_subcategory($coursecat, ['moodle/course:request']);
+            if ($category && $category->can_request_course()) {
+                $coursemanagemenu['courserequesturl'] = new moodle_url('/course/request.php', ['categoryid' => $category->id]);
+
+            }
+        }
+
+        if (!empty($coursemanagemenu)) {
+            // Render the course management menu.
+            $dropdown = $this->render_from_template('my/dropdown', $coursemanagemenu);
+            $coursemanageoptions = "<div class='snap-page-my-courses-options d-flex'>";
+            $coursemanageoptions .= $dropdown;
+            $coursemanageoptions .= "</div>";
+
+            return $coursemanageoptions;
+        }
     }
 
     /**
