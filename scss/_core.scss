@@ -879,6 +879,29 @@ a.yui3-button,
     overflow: auto;
 }
 
+.path-grade-report-grader #region-main div[role="main"]:has(.gradeparent) {
+    overflow: unset;
+
+    .user-grade td.evend2,
+    .user-grade th.evend2,
+    .user-grade td.oddd1,
+    .user-grade th.oddd1,
+    table#user-grades td.controls,
+    .path-grade-report-grader table tr.avg .cell,
+    .path-grade-report-grader table tr.range .cell,
+    table#user-grades tr.avg td.cell,
+    .user-grade td.oddd2,
+    .user-grade th.oddd2,
+    .user-grade td.oddd3,
+    .user-grade th.oddd3,
+    .user-grade td.evend3,
+    .user-grade th.evend3,
+    .user-grade td.oddd3,
+    .user-grade th.oddd3 {
+        background-color: #fff;
+    }
+}
+
 #page-site-index .section-modchooser-link {
     clear: both;
     margin: 0;
