@@ -1224,18 +1224,6 @@ nodeToChange = $(selectorToChange);
                         editingButton.addClass("hidden");
                     }
 
-                    // Change my courses link in the navigation block to open Snap personal menu.
-                    const myCoursesNavigationBlock = $('.theme-snap #moodle-blocks .block_navigation a');
-                    if (myCoursesNavigationBlock.length) {
-                        $('.theme-snap #moodle-blocks .block_navigation a').each(function( ) {
-                            if ($(this).attr('href') !== 'undefined' && $(this).attr('href') !== false) {
-                                if ($(this).attr('href').indexOf("my/courses.php") >= 0) {
-                                    $(this).addClass( "js-snap-pm-trigger" );
-                                }
-                            }
-                        });
-                    }
-
                     // Code for Tiles particular loading, needed before other scripts but after the document is ready.
                     var targetTilesSect = document.querySelector('section#tiles-section');
                     var configTilesSect = {childList: true, subtree: true};
