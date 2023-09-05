@@ -49,12 +49,6 @@ if ($PAGE->pagetype == "mod-lightboxgallery-view" && $PAGE->user_allowed_editing
     $editbutton = shared::snap_edit_button();
     $PAGE->set_button($editbutton);
 }
-// Keep Dashboard enabled for Snap.
-$disablesnapmycourses = isset($CFG->theme_snap_disable_my_courses) ? $CFG->theme_snap_disable_my_courses : true;
-if ($disablesnapmycourses) {
-    global $CFG;
-    $CFG->enabledashboard = 1;
-}
 ?>
 
 <!-- Moodle js hooks -->

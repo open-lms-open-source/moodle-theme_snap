@@ -80,22 +80,6 @@ This flag is set as an array of strings:
    `$CFG->theme_snap_disable_deadline_mods = ['label']`, without the prefix
    `mod_`.
 
-### The `theme_snap_disable_my_courses` flag
-
-By dafault, in the navigation settings, the My Courses option is hidden in
-the "Start page for users" option. This is because Snap does not have this
-page. Also the "Enable Dashboard" option is always enabled and blocked for 
-the user. This flag can be use to enable these options again for the user.
-If the flag is not setted, then the "My Courses" option  will be hidden 
-and the "Enable Dashboard" will be blocked.
-
-This flag is set as a boolean value:
-
-- `$CFG->theme_snap_disable_my_courses = true;` means that the "My Courses" option
-  will be hidden and the "Enable Dashboard" will be blocked. 
-- `$CFG->theme_snap_disable_my_courses = false;` means that the "My Courses" option
-  will be shown and the "Enable Dashboard" will be available to be modified.
-
 ### The `theme_snap_include_cm_checks_in_deadlines_task` flag
 
 This flag is an auxiliary flag that should only be used for testing. Its
