@@ -2042,13 +2042,11 @@ HTML;
 
         $breadcrumbs = '';
         $courseitem = null;
-        $attr['class'] = 'js-snap-pm-trigger';
         $attrs['class'] = '';
         if (!empty($coverimage)) {
-            $attr['class'] .= ' mast-breadcrumb';
             $attrs['class'] .= ' mast-breadcrumb';
         }
-        $snapmycourses = html_writer::link('#', get_string('menu', 'theme_snap'), $attr);
+        $snapmycourses = html_writer::link(new moodle_url('/my/courses.php'), get_string('menu', 'theme_snap'), $attrs);
         $filteredbreadcrumbs = $this->remove_duplicated_breadcrumbs($this->page->navbar->get_items());
         foreach ($filteredbreadcrumbs as $item) {
             $item->hideicon = true;
