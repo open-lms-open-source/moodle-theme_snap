@@ -58,6 +58,7 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
     And I should not see "Test resource description"
     And "resource1.txt" "link" should not exist
 
+  @javascript
   Scenario Outline: Add a URL and ensure it is displayed correctly.
     Given the following "activity" exists:
       | activity       | url                 |
@@ -74,14 +75,15 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
     And I am on "Course 1" course homepage
     And I wait until the page is ready
     And I click on ".modtype_url a.mod-link" "css_element"
+    And I switch to the <window> window
     And I should <expect1> "URL description"
-    And "https://moodle.org/" "link" should <expect2>
+    Then "Url 1" "link" should <expect2>
 
     Examples:
-      | display | description    | expect1  | expect2    |
-      | 0       | Automatic      | see      | exist      |
-      | 1       | Embed          | see      | exist      |
-      | 2       | In frame       | not see  | not exist  |
-      | 3       | New window     | not see  | not exist  |
-      | 5       | Open           | not see  | not exist  |
-      | 6       | In pop-up      | not see  | not exist  |
+      | display | description    | expect1  | expect2                                            | window |
+      | 0       | Automatic      | see      | exist in the "#region-main-box" "css_element"      | main   |
+      | 1       | Embed          | see      | not exist in the "#region-main-box" "css_element"  | main   |
+      | 2       | In frame       | not see  | not exist                                          | main   |
+      | 3       | New window     | not see  | not exist                                          | new    |
+      | 5       | Open           | not see  | not exist                                          | main   |
+      | 6       | In pop-up      | not see  | not exist                                          | new    |
