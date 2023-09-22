@@ -1072,7 +1072,9 @@ EOF;
         $options['id'] = $COURSE->id;
         $options['item'] = optional_param('item', '', PARAM_TEXT);
         if ($options['item'] === 'user') {
-            $options['userid'] = optional_param('userid', '', PARAM_INT);
+            $userid = optional_param('userid', '', PARAM_INT);
+            $itemid = optional_param('itemid', '', PARAM_INT);
+            $options['itemid'] = $userid ?: $itemid;
         } else if ($options['item'] === 'grade') {
             $options['itemid'] = optional_param('itemid', '', PARAM_INT);
         }

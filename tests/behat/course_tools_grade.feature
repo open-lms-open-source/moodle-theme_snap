@@ -317,3 +317,24 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     # Edit mode goes to default value when changing to other view.
     And I should not see "Turn editing off"
     And I log out
+
+  @javascript
+  Scenario: From Grader report button, single view should have an edit button.
+    Given I log in as "admin"
+    When I am on "Course 1" course homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Gradebook setup"
+    And I click on ".tertiary-navigation-selector" "css_element"
+    # Check editing button works with Grade report single view.
+    And I navigate to "Grader report" in current page administration
+    And I click on "[aria-label='Single view for Student 1']" "css_element"
+    # Check student grades view.
+    Then I should see "Turn editing on"
+    And I should see "Student 1"
+    Then the "Save" "button" should be disabled
+    # Check editing button works.
+    When I click on "Turn editing on" "button"
+    Then I should see "Student 1"
+    And I should see "Turn editing off"
+    And "Save" "button" should exist
+
