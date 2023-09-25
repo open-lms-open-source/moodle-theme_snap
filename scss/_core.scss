@@ -5259,6 +5259,17 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
             }
         }
     }
+
+    .reportbuilder-conditions-list .condition .fdate_selector {
+        flex-flow: wrap;
+
+        .fitem {
+            // Make it wrap so it looks less messy.
+            &:nth-child(3), &:nth-child(4) {
+                flex-basis: 95%;
+            }
+        }
+    }
 }
 
 // Fix for screen reader focusable element that skip to main content position.
