@@ -1243,6 +1243,15 @@ footer #moodle-footer
 // Styles for Snap user menu.
 #snap-header {
 
+    .pull-right.js-only.row {
+        margin-top: 1em;
+    }
+
+    #snap-home:not(.logo) {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
     .snap-my-courses-link {
         padding-bottom: 0.5rem;
         align-self: center;
@@ -1364,7 +1373,7 @@ footer #moodle-footer
     // If logo image.
     &.logo {
         display: inline-block;
-        height: 45px;
+        height: 76px;
         background-color: transparent;
         background-repeat: no-repeat;
         background-size: contain;
@@ -1460,8 +1469,13 @@ footer #moodle-footer
     }
 }
 
+#page-login-index #page {
+    margin-top: 0;
+}
+
 #page {
     margin: 0;
+    margin-top: 2em;
     padding: 0;
     position: relative;
     left: 0;
@@ -1469,6 +1483,9 @@ footer #moodle-footer
     // When admin block is open
     &.offcanvas {
         left: -200px;
+    }
+    @include media-breakpoint-down(md) {
+        margin-top: 0;
     }
 }
 
