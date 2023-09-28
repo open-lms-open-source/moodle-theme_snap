@@ -1409,3 +1409,54 @@ body.format-tiles.editing .section .snap-asset .actions {
         }
     }
 }
+
+// Course catalogue styles.
+#page-local-catalogue-index {
+    .mform > .form-group {
+        margin-left: 0;
+    }
+
+    .filters {
+        // Make buttons inline
+        + div, + div + div {
+            display: inline-block;
+        }
+
+        // Align vertically
+        + div div {
+            margin-bottom: 2px !important;
+            margin-left: 0 !important;
+        }
+
+        // Align filters form to te left
+        .form-group {
+            margin-left: 0 !important;
+        }
+    }
+
+    // Center sorting direction icon
+    .course-sorting .sort-direction .icon {
+        &.fa-sort-desc {
+            transform: translateY(-4px);
+        }
+
+        &.fa-sort-asc {
+            transform: translateY(4px);
+        }
+    }
+
+    // Fix course box height
+    .local-catalogue-courses {
+        .coursebox .content {
+            overflow: auto;
+        }
+
+        .pagination {
+            @extend .mt-2;
+        }
+    }
+
+    #page-header {
+        padding-top: 6em;
+    }
+}
