@@ -47,6 +47,7 @@ use theme_snap\renderables\course_toc;
 use theme_snap\renderables\featured_courses;
 use lang_string;
 use core_course_category;
+use core\navigation\output\primary;
 
 // We have to force include this class as it's on login and the auto loader may not have been updated via a cache dump.
 require_once($CFG->dirroot.'/theme/snap/classes/renderables/login_alternative_methods.php');
@@ -2247,5 +2248,123 @@ HTML;
             return true;
         });
         return $filtereditems;
+    }
+
+    /**
+     * My Courses navigation link.
+     *
+     */
+    public function my_courses_nav_link() {
+        $output = '';
+        if (!isloggedin() || isguestuser()) {
+            return $output;
+        }
+        $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
+        $attributes = array(
+            'aria-haspopup' => 'true',
+            'class' => 'js-snap-pm-trigger snap-my-courses-menu snap-my-courses-link',
+            'id' => 'snap-pm-trigger',
+            'aria-controls' => 'snap-pm',
+        );
+        $output .= html_writer::link('#', $menu, $attributes);
+        return $output;
+    }
+
+    /**
+     * User menu navigation dropdown.
+     *
+     */
+    public function user_menu_nav_dropdown() {
+        $output = '';
+        if (!isloggedin() || isguestuser()) {
+            if (local::current_url_path() != '/login/index.php') {
+                $output .= $this->login_button();
+            }
+        } else {
+            $primary = new primary($this->page);
+            $data = $primary->get_user_menu($this);
+            $preferencesposition = array_search('preferences,moodle', array_column($data['items'], 'titleidentifier'));
+
+            if ($preferencesposition) {
+                $additionallinks = array();
+
+                // My account link.
+                if ((has_capability('moodle/site:config', context_system::instance())) &&
+                    (\core_component::get_component_directory('local_myaccount') !== null) &&
+                    is_callable('mr_on') &&
+                    mr_on("myaccount", "_MR_LOCAL")) {
+                    $myaccount = new stdClass();
+                    $myaccount->itemtype = 'link';
+                    $myaccount->url = new moodle_url('/local/myaccount/view.php?controller=default&action=view', array(
+                        'id' => 'snap-pm-myaccount'
+                    ));
+                    $myaccount->link = $myaccount->itemtype == 'link';
+                    $myaccount->title = get_string('myaccount', 'local_myaccount');
+                    $myaccount->titleidentifier = 'myaccount,local_myaccount';
+                    $additionallinks[] = $myaccount;
+                }
+
+                // Dashboard link.
+                $dashboardlink = new stdClass();
+                $dashboardlink->itemtype = 'link';
+                $dashboardlink->url = new moodle_url('/my', array(
+                    'id' => 'snap-pm-dashboard'
+                ));
+                $dashboardlink->link = $dashboardlink->itemtype == 'link';
+                $dashboardlink->title = get_string('myhome');
+                $dashboardlink->titleidentifier = 'myhome,moodle';
+                $additionallinks[] = $dashboardlink;
+
+                // Course catalogue link.
+                if (is_callable('mr_on') && mr_on('catalogue', '_MR_LOCAL')) {
+                    $localcatalogue = new stdClass();
+                    $localcatalogue->itemtype = 'link';
+                    $localcatalogue->url = new moodle_url('/local/catalogue/index.php', array(
+                        'id' => 'snap-pm-course-catalogue'
+                    ));
+                    $localcatalogue->link = $localcatalogue->itemtype == 'link';
+                    $localcatalogue->title = get_string('pluginname', 'local_catalogue');
+                    $localcatalogue->titleidentifier = 'pluginname,local_catalogue';
+                    $additionallinks[] = $localcatalogue;
+                }
+                // Program catalogue link.
+                if (is_callable('mr_on') && mr_on('programs', '_MR_ENROL')) {
+                    $programs = new stdClass();
+                    $programs->itemtype = 'link';
+                    $programs->url = new moodle_url('/enrol/programs/catalogue/index.php', array(
+                        'id' => 'snap-pm-program-catalogue'
+                    ));
+                    $programs->link = $programs->itemtype == 'link';
+                    $programs->title = get_string('catalogue', 'enrol_programs');
+                    $programs->titleidentifier = 'catalogue,enrol_programs';
+                    $additionallinks[] = $programs;
+                }
+                // My programs link.
+                if (is_callable('mr_on') && mr_on('myprograms', '_MR_BLOCKS')) {
+                    $myprograms = new stdClass();
+                    $myprograms->itemtype = 'link';
+                    $myprograms->url = new moodle_url( '/enrol/programs/my/index.php', array(
+                        'id' => 'snap-pm-my-programs'
+                    ));
+                    $myprograms->link = $myprograms->itemtype == 'link';
+                    $myprograms->title = get_string('pluginname', 'block_myprograms');
+                    $myprograms->titleidentifier = 'pluginname,block_myprograms';
+                    $additionallinks[] = $myprograms;
+                }
+
+                if (count($additionallinks)) {
+                    $dividerstart = new stdClass();
+                    $dividerstart->divider = true;
+                    $dividerend = new stdClass();
+                    $dividerend->divider = true;
+                    $additionallinks[] = $dividerend;
+                    array_unshift( $additionallinks, $dividerstart );
+                    array_splice( $data['items'], $preferencesposition, 1, $additionallinks );
+                }
+            }
+
+            $output .= $this->render_from_template('core/user_menu', $data);
+        }
+        return $output;
     }
 }

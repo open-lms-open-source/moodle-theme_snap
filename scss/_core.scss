@@ -1240,6 +1240,59 @@ footer #moodle-footer
         color: darken($nav-button-color, 8%);
     }
 }
+// Styles for Snap user menu.
+#snap-header {
+
+    .snap-my-courses-link {
+        padding-bottom: 0.5rem;
+        align-self: center;
+        font-weight: bold;
+    }
+
+    .usermenu {
+        #user-menu-toggle {
+            padding-top: 0.15em;
+        }
+
+        .userpicture,
+        .userinitials {
+            width: 40px;
+            height: 40px;
+        }
+
+        &:hover {
+            .userpicture,
+            .userinitials {
+                @include alakazam;
+                transform: scale(1.1);
+            }
+        }
+
+        #user-action-menu {
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
+            min-width: 13rem;
+            border-radius: 5px;
+            .carousel-item {
+                min-width: 13rem;
+                .header {
+                    padding: 0.25rem 0.75rem;
+                    .dir-rtl-hide {
+                        pointer-events: none;
+                    }
+                }
+            }
+        }
+
+        .dropdown-item.carousel-navigation-link::after {
+            font-family: FontAwesome;
+            content: "\f0da";
+            font-size: 1rem;
+            right: 0.75rem;
+            position: absolute;
+        }
+    }
+}
 
 #mr-nav #snap-pm-trigger:hover {
     text-decoration: none;

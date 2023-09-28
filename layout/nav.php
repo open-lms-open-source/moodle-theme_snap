@@ -65,8 +65,8 @@ echo html_writer::link($defaulthomeurl, $sitefullname, $attrs);
         echo $OUTPUT->render($bblink);
         echo '</div>';
     }
-
-    echo $OUTPUT->personal_menu_trigger();
+    echo $OUTPUT->my_courses_nav_link();
+    echo $OUTPUT->user_menu_nav_dropdown();
     echo $OUTPUT->render_message_icon();
     echo $OUTPUT->render_notification_popups();
 
