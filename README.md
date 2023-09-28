@@ -155,3 +155,10 @@ This flag is set as an integer:
    - `$CFG->theme_snap_refresh_deadlines_max_duration = 10800` means that the
    refresh Deadlines cache task can take up to 3 hours to be executed. The task
    stops if this amount of time passes.
+
+## Tasks
+
+## `refresh_deadline_caches_task`  scheduled  task .
+## `reset_deadlines_query_count_task`  scheduled  task .
+## `refresh_deadline_caches_task`  ad hoc  task .
+## `reset_deadlines_query_count_task`  ad hoc  task .
