@@ -134,7 +134,7 @@ Feature: When the moodle theme is set to Snap,
     And the following config values are set as admin:
       | defaulthomepage | 2 |
     And I open the personal menu
-    And I follow "Preferences"
+    And I click on "#snap-pm-preferences" "css_element"
     And I follow "Start page"
     And I set the field with xpath "//select[@name='defaulthomepage']" to "Home"
     And I press "Save changes"
@@ -143,7 +143,7 @@ Feature: When the moodle theme is set to Snap,
     And I click on "#snap-home" "css_element"
     Then "#page-site-index" "css_element" should be visible
     And I open the personal menu
-    And I follow "Preferences"
+    And I click on "#snap-pm-preferences" "css_element"
     And I follow "Start page"
     And I set the field with xpath "//select[@name='defaulthomepage']" to "Dashboard"
     And I press "Save changes"
@@ -152,7 +152,7 @@ Feature: When the moodle theme is set to Snap,
     And I click on "#snap-home" "css_element"
     Then "#page-my-index" "css_element" should be visible
     And I open the personal menu
-    And I follow "Preferences"
+    And I click on "#snap-pm-preferences" "css_element"
     And I follow "Start page"
     And I set the field with xpath "//select[@name='defaulthomepage']" to "My courses"
     And I press "Save changes"

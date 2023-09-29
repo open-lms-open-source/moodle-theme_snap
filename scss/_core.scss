@@ -1240,6 +1240,68 @@ footer #moodle-footer
         color: darken($nav-button-color, 8%);
     }
 }
+// Styles for Snap user menu.
+#snap-header {
+
+    .pull-right.js-only.row {
+        margin-top: 1em;
+    }
+
+    #snap-home:not(.logo) {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    .snap-my-courses-link {
+        padding-bottom: 0.5rem;
+        align-self: center;
+        font-weight: bold;
+    }
+
+    .usermenu {
+        #user-menu-toggle {
+            padding-top: 0.15em;
+        }
+
+        .userpicture,
+        .userinitials {
+            width: 40px;
+            height: 40px;
+        }
+
+        &:hover {
+            .userpicture,
+            .userinitials {
+                @include alakazam;
+                transform: scale(1.1);
+            }
+        }
+
+        #user-action-menu {
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
+            min-width: 13rem;
+            border-radius: 5px;
+            .carousel-item {
+                min-width: 13rem;
+                .header {
+                    padding: 0.25rem 0.75rem;
+                    .dir-rtl-hide {
+                        pointer-events: none;
+                    }
+                }
+            }
+        }
+
+        .dropdown-item.carousel-navigation-link::after {
+            font-family: FontAwesome;
+            content: "\f0da";
+            font-size: 1rem;
+            right: 0.75rem;
+            position: absolute;
+        }
+    }
+}
 
 #mr-nav #snap-pm-trigger:hover {
     text-decoration: none;
@@ -1311,7 +1373,7 @@ footer #moodle-footer
     // If logo image.
     &.logo {
         display: inline-block;
-        height: 45px;
+        height: 76px;
         background-color: transparent;
         background-repeat: no-repeat;
         background-size: contain;
@@ -1407,8 +1469,13 @@ footer #moodle-footer
     }
 }
 
+#page-login-index #page {
+    margin-top: 0;
+}
+
 #page {
     margin: 0;
+    margin-top: 2em;
     padding: 0;
     position: relative;
     left: 0;
@@ -1416,6 +1483,9 @@ footer #moodle-footer
     // When admin block is open
     &.offcanvas {
         left: -200px;
+    }
+    @include media-breakpoint-down(md) {
+        margin-top: 0;
     }
 }
 

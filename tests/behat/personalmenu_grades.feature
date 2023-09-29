@@ -53,7 +53,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I <waitclause>
     And I open the personal menu
    Then I should see "You have no submissions to grade."
-    And I follow "Log out"
+    And I click on "#snap-pm-logout" "css_element"
     And I log in as "student1"
     And I <waitclause>
     And I open the personal menu
@@ -114,7 +114,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I wait until "#snap-personal-menu-<dataloadselectorstr>" "css_element" is visible
     # The above waits until the snap personal menu column is loaded.
    Then I should see "You have no submissions to grade."
-    And I follow "Log out"
+    And I click on "#snap-pm-logout" "css_element"
     And I log in as "student1"
     And I open the personal menu
     And I should see "Test assignment1" in the "#snap-personal-menu-<selectorstr>" "css_element"
