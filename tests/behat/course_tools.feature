@@ -37,7 +37,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | student1 | C1     | student        | manual |
       | teacher1 | C1     | editingteacher | manual |
 
-
   @javascript
   Scenario: Course tools link does not show for unsupported formats.
     Given the course format for "C1" is set to "social"

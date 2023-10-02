@@ -20,7 +20,6 @@
 # @copyright  Copyright (c) 2019 OpenLMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_message @javascript
 Feature: Snap message send messages
   As a user

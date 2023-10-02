@@ -165,5 +165,3 @@ Feature: Check functionality in activity cards.
     And I press "Continue"
     And I am on "Course 1" course homepage
     Then I should not see "Feedback available"
-
-

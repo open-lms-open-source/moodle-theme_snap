@@ -19,7 +19,6 @@
 # @copyright  Copyright (c) 2015 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @snap_page_resource
 Feature: Open page module inline
   As any user
@@ -56,11 +55,10 @@ Feature: Open page module inline
     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page content to load up.
     And I should see "page content1"
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
-
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: Page mod completion updates on read more and affects availability for other modules and sections.
@@ -125,10 +123,10 @@ Feature: Open page module inline
     And "span.autocompletion img[title='Completed: Page completion 2']" "css_element" should exist
     And "#chapters h3:nth-of-type(2) li.snap-visible-section" "css_element" should exist
     And I should not see "Conditional" in the "#chapters h3:nth-of-type(3)" "css_element"
-  Examples:
-  | Option     | Option 2 |
-  | 0          | list     |
-  | 1          | card     |
+    Examples:
+      | Option     | Option 2 |
+      | 0          | list     |
+      | 1          | card     |
 
   @javascript
   Scenario Outline: Page mod is opened in a new window by default.

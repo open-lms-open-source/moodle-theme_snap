@@ -19,7 +19,6 @@
 # @copyright  Copyright (c) 2016 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap, students and teachers can find in their personal menu a list of deadlines
   for activities and the submission / attempt status thereof.

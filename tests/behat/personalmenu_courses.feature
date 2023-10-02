@@ -134,4 +134,3 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I follow "Hidden courses"
     And I should not see "Course Hidden"
     And I should not see "Course Hidden 2"
-

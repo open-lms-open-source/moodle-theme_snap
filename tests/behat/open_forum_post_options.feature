@@ -39,8 +39,8 @@ Feature: In Open forums while using Snap, the student should see the options
       | activity | name            | intro      | course | idnumber | groupmode |
       | hsuforum | Test forum name | Test forum | C1     | hsuforum | 0         |
 
-    @javascript
-    Scenario: Check that the links for Open forums options exists and can be activated
+  @javascript
+  Scenario: Check that the links for Open forums options exists and can be activated
 
     And I log in as "student1"
     And I am on "Course 1" course homepage
@@ -62,8 +62,8 @@ Feature: In Open forums while using Snap, the student should see the options
     And I click on "li.viewposters-url a" "css_element"
     And I should see "View posters"
 
-    @javascript
-    Scenario: An user not enrolled to the course should not be able to subscribe to a post in a forum
+  @javascript
+  Scenario: An user not enrolled to the course should not be able to subscribe to a post in a forum
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
@@ -72,4 +72,3 @@ Feature: In Open forums while using Snap, the student should see the options
     And I click on "li.subscribeforum-url a" "css_element"
     And I should see "Subscribe to this forum"
     And I should see "Sorry, only enrolled users are allowed to subscribe to forum post notifications."
-

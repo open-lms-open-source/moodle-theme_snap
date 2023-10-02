@@ -69,5 +69,3 @@ Feature: Check that the correct tab order and focus exists for the page.
     And I am on "Course 1" course homepage
     And I follow "Edit \"assignment1\""
     Then "div[role=main] .mform div.snap-form-advanced > div.form-group.fitem [data-fieldtype='group']" "css_element" should appear after the "div[role=main] .mform div.snap-form-advanced div.collapsible-actions" "css_element"
-
-

@@ -19,7 +19,6 @@
 # @copyright  Copyright (c) 2018 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_color_check @theme_snap_course
 # Some scenarios will be testing AX through special steps depending on the needed rules.
 # https://github.com/dequelabs/axe-core/blob/v3.5.5/doc/rule-descriptions.md#best-practices-rules.

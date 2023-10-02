@@ -19,7 +19,6 @@
 # @copyright Copyright (c) 2015 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 Feature: When the moodle theme is set to Snap, the admin block will only be shown when appropriate.
 
@@ -66,11 +65,11 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
     And I follow "View your profile"
     Then "#admin-menu-trigger" "css_element" <existsprofile> exist
     Examples:
-    | user     | existssite | existsdashboard | existscourse | existsprofile |
-    | student1 | should not | should not      | should not   | should not    |
-    | teacher1 | should not | should not      | should       | should not    |
-    | teacher2 | should not | should not      | should       | should not    |
-    | admin    | should     | should          | should       | should not    |
+      | user     | existssite | existsdashboard | existscourse | existsprofile |
+      | student1 | should not | should not      | should not   | should not    |
+      | teacher1 | should not | should not      | should       | should not    |
+      | teacher2 | should not | should not      | should       | should not    |
+      | admin    | should     | should          | should       | should not    |
 
   @javascript
   Scenario: User with the moodle/site:configview capability should be able to see the snap gear icon.

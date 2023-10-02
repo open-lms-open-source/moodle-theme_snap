@@ -19,7 +19,6 @@
 # @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 Feature: When the moodle theme is set to Snap, and Profile based branding is used, a body CSS class should be present.
 

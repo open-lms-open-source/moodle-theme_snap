@@ -19,7 +19,6 @@
 # @copyright  2015 Guy Thomas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @_bug_phantomjs
 Feature: When the moodle theme is set to Snap, only teachers should see an admin settings link.
 
@@ -40,10 +39,10 @@ Feature: When the moodle theme is set to Snap, only teachers should see an admin
   Scenario: Teacher visits course.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-   Then "#admin-menu-trigger" "css_element" should exist
+    Then "#admin-menu-trigger" "css_element" should exist
 
   @javascript
   Scenario: Student visits course.
     Given I log in as "student1"
     And I am on the course main page for "C1"
-   Then "#admin-menu-trigger" "css_element" should not exist
+    Then "#admin-menu-trigger" "css_element" should not exist

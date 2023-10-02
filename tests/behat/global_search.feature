@@ -19,7 +19,6 @@
 # @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 Feature: When the moodle theme is set to Snap, and global search is enabled, users should see a global search interface.
 
@@ -52,4 +51,3 @@ Feature: When the moodle theme is set to Snap, and global search is enabled, use
     And I go to link "/admin/search.php"
     And ".nav-tabs" "css_element" should exist
     And ".simplesearchform" "css_element" should exist
-

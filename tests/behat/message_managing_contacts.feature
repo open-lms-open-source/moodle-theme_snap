@@ -20,7 +20,6 @@
 # @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_message @javascript
 Feature: Snap managing contacts
   In order to chat with fellow users

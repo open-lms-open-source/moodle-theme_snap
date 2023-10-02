@@ -19,7 +19,6 @@
 # @copyright Copyright (c) 2018 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 Feature: When the moodle theme is set to Snap, activity restriction tags are shown.
 
@@ -70,7 +69,6 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
       | 0          |
       | 1          |
 
-
   @javascript
   Scenario Outline: User sees all restrictions when matching all restrictions.
     Given I log in as "admin"
@@ -95,11 +93,10 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
-
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: User sees all restrictions when matching any restrictions.

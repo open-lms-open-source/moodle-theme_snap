@@ -24,11 +24,11 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
 
   Background:
     Given the following config values are set as admin:
-        | theme | snap |
-        | linkadmincategories | 0 |
-      And the following "users" exist:
-        | username | firstname | lastname | email |
-        | user1    | User1     | 1        | user1@example.com |
+      | theme | snap |
+      | linkadmincategories | 0 |
+    And the following "users" exist:
+      | username | firstname | lastname | email |
+      | user1    | User1     | 1        | user1@example.com |
     And the following "courses" exist:
       | fullname | shortname | format |
       | Course 1 | C1        | topics |
@@ -36,29 +36,29 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
   @javascript
   Scenario: Admin sets a footer and it should be visible in the platform for other users.
     Given I log in as "admin"
-      And I am on site homepage
-      And "iframe" "css_element" should not be visible
-      And I should not see "New footer"
-      And I click on "#admin-menu-trigger" "css_element"
-      And I expand "Site administration" node
-      And I expand "Appearance" node
-      And I expand "Themes" node
-      And I follow "Snap"
-     Then I should see "Site footer"
-      And I set the following fields to these values:
-        | Site footer | <iframe></iframe> <p>New footer</p>|
-      And I click on "Save changes" "button"
-      And I wait until the page is ready
-     Then I should see "New footer"
-      And "iframe" "css_element" should be visible
-      And I log out
-      And I should see "New footer"
-     Then "iframe" "css_element" should be visible
-      And I log in as "user1"
-      And I am on site homepage
-     Then I should see "New footer"
-      And "iframe" "css_element" should be visible
-      And I log out
+    And I am on site homepage
+    And "iframe" "css_element" should not be visible
+    And I should not see "New footer"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
+    Then I should see "Site footer"
+    And I set the following fields to these values:
+      | Site footer | <iframe></iframe> <p>New footer</p>|
+    And I click on "Save changes" "button"
+    And I wait until the page is ready
+    Then I should see "New footer"
+    And "iframe" "css_element" should be visible
+    And I log out
+    And I should see "New footer"
+    Then "iframe" "css_element" should be visible
+    And I log in as "user1"
+    And I am on site homepage
+    Then I should see "New footer"
+    And "iframe" "css_element" should be visible
+    And I log out
 
   @javascript
   Scenario: To top button renderer on the footer must appear when user scroll to the bottom.

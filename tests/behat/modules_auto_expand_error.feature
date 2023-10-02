@@ -19,7 +19,6 @@
 # @copyright Copyright (c) 2018 Open LMS.
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 Feature: When setting an erroneous field in settings, snap auto-expands area.
 
@@ -83,7 +82,3 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
     Then I press "Save and display"
     And I wait until the page is ready
     And I should see "Remind me to grade by date cannot be earlier than the due date"
-
-
-
-

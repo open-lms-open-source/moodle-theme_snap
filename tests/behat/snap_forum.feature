@@ -19,7 +19,6 @@
 # @copyright Copyright (c) 2020 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 
 Feature: When the moodle theme is set to Snap, core forums displays correctly.

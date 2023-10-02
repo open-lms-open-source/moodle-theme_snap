@@ -19,7 +19,6 @@
 # @copyright  2015 Guy Thomas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_course @theme_snap_course
 Feature: When the moodle theme is set to Snap, teachers can move course sections without using drag and drop and without
   having to enter edit mode.
@@ -73,11 +72,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     # This is done so activities are created in the correct section.
     When I follow "My & < > Topic"
     And "//button[contains(text(),'Create learning activity') and @data-sectionid=3]" "xpath" should be visible
-
     Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
@@ -118,7 +116,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | Option     |
       | 0          |
       | 1          |
-
 
   @javascript
   Scenario Outline: When entering the course, snap-footer-alert should not exist until the action of moving is done. And should disappear from the DOM after moving it.

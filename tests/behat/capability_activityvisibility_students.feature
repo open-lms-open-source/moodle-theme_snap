@@ -68,5 +68,3 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" should not exist
-
-

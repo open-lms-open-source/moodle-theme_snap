@@ -20,7 +20,6 @@
 # @copyright  Copyright (c) 2020 Open LMS
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_ax
 Feature: When the Moodle theme is set to Snap, on moving assets some links shouldn't be reached.
 

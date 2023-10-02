@@ -19,7 +19,6 @@
 # @author     2015 Guy Thomas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, conditional restrictions work as normal.
 
@@ -49,7 +48,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
 
   @javascript
   Scenario Outline: Conditionally restricted section notices show for students only when restrictions not met but always show for teachers.
-  Given I log in as "admin"
+    Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
       | resourcedisplay     | <Option> | theme_snap |
@@ -101,10 +100,10 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I am on the course main page for "C1"
     And I go to course section 4
     And I should not see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: Activities that has an apostrophe in the title should be displayed correctly in the restriction popup menu.

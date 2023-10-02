@@ -19,7 +19,6 @@
 # @copyright  Copyright (c) 2016 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_personalmenu
 Feature: When the moodle theme is set to Snap, students and teachers can open a personal menu which works responsively
   on mobile devices.
@@ -61,9 +60,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I wait until "#snap-pm-mobilemenu" "css_element" is visible
 
     Examples:
-    | user     | gradealt | gradenotice                       |
-    | teacher1 | Grading  | You have no submissions to grade. |
-    | student1 | Feedback | You have no recent feedback.      |
+      | user     | gradealt | gradenotice                       |
+      | teacher1 | Grading  | You have no submissions to grade. |
+      | student1 | Feedback | You have no recent feedback.      |
 
   @javascript
   Scenario Outline: Mobile menu icons only appear when enabled.
@@ -79,10 +78,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I open the personal menu
     Then "a[href='<href>']" "css_element" should exist
     Examples:
-    | toggle           | href                           |
-    | deadlinestoggle  | #snap-personal-menu-deadlines  |
-    | feedbacktoggle   | #snap-personal-menu-graded     |
-    | messagestoggle   | #snap-personal-menu-messages   |
-    | forumpoststoggle | #snap-personal-menu-forumposts |
-
-
+      | toggle           | href                           |
+      | deadlinestoggle  | #snap-personal-menu-deadlines  |
+      | feedbacktoggle   | #snap-personal-menu-graded     |
+      | messagestoggle   | #snap-personal-menu-messages   |
+      | forumpoststoggle | #snap-personal-menu-forumposts |

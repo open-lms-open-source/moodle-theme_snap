@@ -20,12 +20,11 @@
 # @copyright Copyright (c) 2016 Open LMS
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_course
 Feature: Manual completion updates page wihout reload.
 
   Background:
-  Given the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion |
       | Course 1 | C1        | topics | 0        | 1         | 1                |
     And the following "users" exist:

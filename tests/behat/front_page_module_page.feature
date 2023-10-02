@@ -38,17 +38,17 @@ Feature: Open page (front page) module inline
 
   @javascript
   Scenario: Page mod is created and opened inline at the front page.
-     Given the following "activities" exist:
-       | activity | course               | idnumber | name       | intro        | content       | completion | completionview | section |
-       | page     | Acceptance test site | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              | 1       |
-     And I log in as "admin"
-     And I am on site homepage
-     And I should not see "page content1"
-     And I click on ".contentafterlink .summary-text a" "css_element"
-     And I should not see an error dialog
-     And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
-     # The above step basically waits for the page content to load up.
-     And I should see "page content1"
+    Given the following "activities" exist:
+      | activity | course               | idnumber | name       | intro        | content       | completion | completionview | section |
+      | page     | Acceptance test site | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              | 1       |
+    And I log in as "admin"
+    And I am on site homepage
+    And I should not see "page content1"
+    And I click on ".contentafterlink .summary-text a" "css_element"
+    And I should not see an error dialog
+    And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
+    # The above step basically waits for the page content to load up.
+    And I should see "page content1"
 
   @javascript
   Scenario Outline: Page mod completion updates on read more and affects availability for other modules at the front page.

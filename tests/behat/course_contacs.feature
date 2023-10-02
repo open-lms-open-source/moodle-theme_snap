@@ -20,7 +20,6 @@
 # @copyright  Copyright (c) 2019 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_course
 Feature: A teacher should not see the link to message him/herself
 

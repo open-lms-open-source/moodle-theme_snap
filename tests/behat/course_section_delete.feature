@@ -71,10 +71,10 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     Then I should not see "Topic one" in the "li[id^='section-']" "css_element"
     And I cannot see "Test assignment1" in course asset search
     And I can see "Test assignment2" in course asset search
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: Student cannot delete section.
@@ -86,10 +86,10 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     And I am on the course main page for "C1"
     And I follow "Topic 1"
     Then "#section-1 .snap-section-editing.actions a.snap-delete" "css_element" should not exist
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: When deleting a section the section number should update

@@ -27,7 +27,7 @@ Feature: Use the Single Activity format in Snap
   I need to be able to create a course using Single Activity format without errors in Snap
 
   Background:
-  Given the following "categories" exist:
+    Given the following "categories" exist:
       | name     | category | idnumber |
       | Test Cat | 0        | TESTCAT  |
 

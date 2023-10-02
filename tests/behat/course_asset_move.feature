@@ -19,7 +19,6 @@
 # @copyright  2015 Guy Thomas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_course @theme_snap_course_asset
 Feature: When the moodle theme is set to Snap, teachers can move course resources and activities without using drag and drop.
 
@@ -85,7 +84,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
 
   @javascript
   Scenario Outline: In read mode, on course, teacher moves activity to a different section.
-  Given I log in as "admin"
+    Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
     And I log out
@@ -98,10 +97,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I follow "Topic 2"
     And I click on "li#section-2 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before the "li.snap-drop.asset-drop" "css_element"
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: In read mode, on course, teacher moves two activities to a different section.
@@ -121,10 +120,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I click on "li#section-2 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before the "li.snap-drop.asset-drop" "css_element"
     And "li#section-2 .snap-activity.modtype_assign .snap-asset-move i[title='Move \"Test assignment1\"']" "css_element" should appear before the "li#section-2 .snap-activity.modtype_assign .snap-asset-move i[title='Move \"Test assignment2\"']" "css_element"
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: Student cannot move activity.
@@ -137,6 +136,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I follow "Topic 1"
     Then ".snap-activity.modtype_assign .js-snap-asset-move" "css_element" should not exist
     Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+      | Option     |
+      | 0          |
+      | 1          |

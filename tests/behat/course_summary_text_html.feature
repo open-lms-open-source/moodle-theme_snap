@@ -20,7 +20,6 @@
 # @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_color_check @theme_snap_course
 Feature: When setting an html content on course sections (introduction, labels, pages),
   color and background color holds.
@@ -33,7 +32,6 @@ Feature: When setting an html content on course sections (introduction, labels, 
       | activity | name         | intro                         | course | idnumber    |
       | label    | Test label   | <div id="test_html_label"style="background: #f0f8ff;color: #1e90ff;">Test text <strong>New Changes</strong> | C1 | label1 |
       | page     | Test Page    | <div id="test_html_page"style="background: #f0f8ff;color: #1e90ff;">Test text <strong>New Changes</strong>  | C1 | page1  |
-
 
   @javascript
   Scenario: Set an html content to section description and check for color.

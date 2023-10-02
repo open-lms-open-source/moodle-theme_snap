@@ -21,8 +21,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_personalmenu
-Feature: When the moodle theme is set to Snap,
-  and can open the user menu from the header,
+Feature: When the moodle theme is set to Snap and can open the user menu from the header,
   and open the personal menu from the my courses link
 
   Background:

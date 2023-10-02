@@ -19,7 +19,6 @@
 # @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
 # @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_color_check
 Feature: When the moodle theme is set to Snap, a color contrast checker can be viewed.
 

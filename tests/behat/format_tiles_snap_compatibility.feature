@@ -113,7 +113,6 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     Then "Turn editing off" "link" should not be visible
     And "Edit content" "link" should be visible
 
-
   @javascript
   Scenario: Users can see blocks in Course Dashboard.
     Given I log in as "teacher1"

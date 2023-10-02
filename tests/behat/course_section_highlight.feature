@@ -69,10 +69,10 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log in as "student1"
     And I am on the course main page for "C1"
     Then I should not see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   # This scenario is necessary to make sure the correct error message comes back when an AJAX request fails but it is
@@ -108,7 +108,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I am on the course main page for "C1"
     And I follow "Topic 2"
     Then "#section-2 .snap-highlight" "css_element" should not exist
-  Examples:
-  | Option     |
-  | 0          |
-  | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |

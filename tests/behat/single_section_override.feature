@@ -19,7 +19,6 @@
 # @copyright  Copyright (c) 2015 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap
 Feature: When the moodle theme is set to Snap, courses in single section per page mode are forced to operate with all
   sections displayed at the same time.
@@ -46,7 +45,7 @@ Feature: When the moodle theme is set to Snap, courses in single section per pag
 
     # Test with admin user.
     Given I log in as "admin"
-   Then I can see course "C1" in all sections mode
+    Then I can see course "C1" in all sections mode
     And I log out
 
     # Test with editing teacher.

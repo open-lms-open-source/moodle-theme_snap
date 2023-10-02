@@ -20,7 +20,6 @@
 # @copyright  Copyright (c) 2019 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_ax
 Feature: When the Moodle theme is set to Snap, core notifications messages should have a specific aria attribute to
   screen readers functionality.
@@ -60,4 +59,3 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
       | Test discussion 1  | Test discussion 1 description |
     And I should see "Your post was successfully added."
     And the "aria-label" attribute of "div.alert-success button.close" "css_element" should contain "Close"
-

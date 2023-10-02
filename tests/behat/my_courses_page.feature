@@ -39,7 +39,6 @@ Feature: Users can access to the My Courses page in Snap.
       | capability            | permission | role  | contextlevel | reference |
       | moodle/course:request | Allow      | user  | System       |           |
 
-
   @javascript
   Scenario: User can access to course management options in Snap's My Courses page.
     Given I log in as "admin"

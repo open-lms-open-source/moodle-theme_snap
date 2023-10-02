@@ -19,12 +19,11 @@
 # @copyright  2016 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 @theme @theme_snap @theme_snap_course @theme_snap_course_section
 Feature: Entering a Snap course without specifying a section will take you to the current section
 
   Background:
-  Given the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category | format | hiddensections|
       | Course 1 | C1        | 0        | topics |     0         |
     And the following "users" exist:
@@ -46,10 +45,10 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: Once a topic is highlighted, that section is shown on entering the course
@@ -66,10 +65,10 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I am on the course main page for "C1"
     And I should see "Untitled Topic" in the ".section.state-visible" "css_element"
     And "#chapters h3:nth-of-type(2) li.snap-visible-section" "css_element" should exist
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: If the teacher highlights a hidden section, the default section 0 is displayed
@@ -90,14 +89,14 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And I should see "Not available" in TOC item 1
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: Conditionally restricted section will not be shown on load, default to section 0
-  Given I log in as "admin"
+    Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
     And I log out
@@ -114,7 +113,7 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And I should see "Conditional" in TOC item 1
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |

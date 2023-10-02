@@ -69,10 +69,10 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I press "Save changes"
     And I wait until the page is ready
     And "body#page-course-editsection" "css_element" should not exist
-  Examples:
-    | Option     |
-    | 0          |
-    | 1          |
+    Examples:
+      | Option     |
+      | 0          |
+      | 1          |
 
   @javascript
   Scenario Outline: When creating a section, the name should be at least one character.

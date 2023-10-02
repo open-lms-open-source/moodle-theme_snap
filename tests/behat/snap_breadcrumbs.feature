@@ -45,13 +45,13 @@ Feature: Check that the breadcrumbs are being shown correctly.
     And I should see "<homepage>" in the ".breadcrumb" "css_element"
     And I should see "My Courses" in the ".breadcrumb" "css_element"
     Examples:
-    | user     | defaulthomepage | homepage  |
-    | admin    | 0               | Home      |
-    | teacher1 | 0               | Home      |
-    | student1 | 0               | Home      |
-    | admin    | 1               | Dashboard |
-    | teacher1 | 1               | Dashboard |
-    | student1 | 1               | Dashboard |
-    | admin    | 2               | Dashboard |
-    | teacher1 | 2               | Dashboard |
-    | student1 | 2               | Dashboard |
+      | user     | defaulthomepage | homepage  |
+      | admin    | 0               | Home      |
+      | teacher1 | 0               | Home      |
+      | student1 | 0               | Home      |
+      | admin    | 1               | Dashboard |
+      | teacher1 | 1               | Dashboard |
+      | student1 | 1               | Dashboard |
+      | admin    | 2               | Dashboard |
+      | teacher1 | 2               | Dashboard |
+      | student1 | 2               | Dashboard |

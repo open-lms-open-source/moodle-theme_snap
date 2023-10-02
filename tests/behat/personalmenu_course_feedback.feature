@@ -53,6 +53,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     When I open the personal menu
     Then <finalstep>
     Examples:
-    | showgrades | finalstep                                                |
-    | 1          | I should see "70" in the "div.coursegrade" "css_element" |
-    | 0          | "div.coursegrade" "css_element" should not exist         |
+      | showgrades | finalstep                                                |
+      | 1          | I should see "70" in the "div.coursegrade" "css_element" |
+      | 0          | "div.coursegrade" "css_element" should not exist         |

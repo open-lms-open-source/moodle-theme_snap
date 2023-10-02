@@ -44,14 +44,14 @@ Feature: When the moodle theme is set to Snap, students do not see the course ad
     And I log in as "<user>"
     And I am on the course main page for "C1"
     Then "#admin-menu-trigger" "css_element" should <existornot>
-  Examples:
-    | user     | format         | existornot |
-    | student1 | topics         | not exist  |
-    | student1 | weeks          | not exist  |
-    | student1 | social         | exist      |
-    | teacher1 | topics         | exist      |
-    | teacher1 | weeks          | exist      |
-    | teacher1 | social         | exist      |
+    Examples:
+      | user     | format         | existornot |
+      | student1 | topics         | not exist  |
+      | student1 | weeks          | not exist  |
+      | student1 | social         | exist      |
+      | teacher1 | topics         | exist      |
+      | teacher1 | weeks          | exist      |
+      | teacher1 | social         | exist      |
 
   @javascript
   Scenario Outline: When on main course page, user can / cannot access course admin menu. Students can't access menu for
@@ -78,13 +78,13 @@ Feature: When the moodle theme is set to Snap, students do not see the course ad
     And I log in as "<user>"
     And I am on the course "resources" page for "C1"
     Then "#admin-menu-trigger" "css_element" should <existornot>
-  Examples:
-    | user     | format         | existornot |
-    | student1 | topics         | not exist  |
-    | student1 | weeks          | not exist  |
-    | student1 | singleactivity | not exist  |
-    | student1 | social         | not exist  |
-    | teacher1 | topics         | exist      |
-    | teacher1 | weeks          | exist      |
-    | teacher1 | singleactivity | exist      |
-    | teacher1 | social         | exist      |
+    Examples:
+      | user     | format         | existornot |
+      | student1 | topics         | not exist  |
+      | student1 | weeks          | not exist  |
+      | student1 | singleactivity | not exist  |
+      | student1 | social         | not exist  |
+      | teacher1 | topics         | exist      |
+      | teacher1 | weeks          | exist      |
+      | teacher1 | singleactivity | exist      |
+      | teacher1 | social         | exist      |

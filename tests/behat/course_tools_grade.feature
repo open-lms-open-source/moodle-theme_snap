@@ -44,15 +44,15 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   @javascript
   Scenario: Course tools should show a default symbol when the student does not have any grade.
     Given I log in as "student1"
-      And I open the personal menu
-      And I am on "Course 1" course homepage
-      And I follow "Course Dashboard"
-      And I should see "-" in the ".progressbar-text" "css_element"
-      And I log out
+    And I open the personal menu
+    And I am on "Course 1" course homepage
+    And I follow "Course Dashboard"
+    And I should see "-" in the ".progressbar-text" "css_element"
+    And I log out
 
   @javascript
   Scenario: Course tools should display the student grade with the same amount of decimals as Gradebook.
-  Given I log in as "student1"
+    Given I log in as "student1"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Introduction"
@@ -66,7 +66,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "//*[contains(text(),'Submit assignment')]" "xpath_element"
     And I press "Continue"
     And I log out
-   Then I log in as "student2"
+    Then I log in as "student2"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Introduction"
@@ -80,7 +80,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "//*[contains(text(),'Submit assignment')]" "xpath_element"
     And I press "Continue"
     And I log out
-   Then I log in as "teacher1"
+    Then I log in as "teacher1"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I grade the assignment "A1" in course "C1" as follows:
@@ -99,7 +99,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I set the field "Grade display type" to "Percentage"
     And I click on "Save changes" "button"
     And I log out
-   Then I log in as "student1"
+    Then I log in as "student1"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
@@ -107,7 +107,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I should see "50.33 %" in the "td.column-percentage" "css_element"
     And I log out
-   Then I log in as "student2"
+    Then I log in as "student2"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
@@ -115,7 +115,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I should see "50.76 %" in the "td.column-percentage" "css_element"
     And I log out
-   Then I log in as "admin"
+    Then I log in as "admin"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
@@ -125,7 +125,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I set the field "Overall decimal places" to "0"
     And I click on "Save changes" "button"
     And I log out
-   Then I log in as "student1"
+    Then I log in as "student1"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
@@ -133,7 +133,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I should see "50 %" in the "td.column-percentage" "css_element"
     And I log out
-   Then I log in as "student2"
+    Then I log in as "student2"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
@@ -141,7 +141,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I should see "51 %" in the "td.column-percentage" "css_element"
     And I log out
-   Then I log in as "admin"
+    Then I log in as "admin"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
@@ -167,7 +167,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I should see "50.756 %" in the "td.column-percentage" "css_element"
     And I log out
-   Then I log in as "admin"
+    Then I log in as "admin"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
@@ -177,7 +177,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I set the field "Overall decimal places" to "4"
     And I click on "Save changes" "button"
     And I log out
-   Then I log in as "student1"
+    Then I log in as "student1"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
@@ -185,7 +185,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I should see "50.3297 %" in the "td.column-percentage" "css_element"
     And I log out
-   Then I log in as "student2"
+    Then I log in as "student2"
     And I open the personal menu
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
@@ -337,4 +337,3 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Then I should see "Student 1"
     And I should see "Turn editing off"
     And "Save" "button" should exist
-

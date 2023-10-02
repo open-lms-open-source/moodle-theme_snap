@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
-Feature: Page displaying with secure layout
+Feature: Using the snap theme page displaying with secure layout
   Background:
     Given the following "courses" exist:
       | fullname | shortname | format |
