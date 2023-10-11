@@ -2367,4 +2367,48 @@ HTML;
         }
         return $output;
     }
+
+    /**
+     * Snap feeds in My Courses.
+     *
+     * @return string.
+     */
+    public function snap_my_courses_feeds() {
+
+        $data = (object) [
+            'updates' => $this->render_callstoaction(),
+        ];
+        $feeds = $this->render_from_template('theme_snap/snap_feeds', $data);
+        return $feeds;
+    }
+
+    /**
+     * My courses page content.
+     *
+     */
+    public function my_courses_snap_page_content() {
+
+        $browseallcourses = '';
+        if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
+            $url = new moodle_url('/course/');
+            $browseallcourses = $this->column_header_icon_link('browseallcourses', 'courses', $url);
+        }
+
+        $data = (object) [
+            'custommenuspacer' => $this->custom_menu_spacer(),
+            'snapnavbar' => $this->snapnavbar(''),
+            'pageheading' => $this->page_heading(),
+            'courseheader' => $this->course_header(),
+            'browseallcourses' => $browseallcourses,
+            'maincontent' => $this->main_content(),
+            'coursesoptions' => $this->snap_my_courses_management_options(),
+            'snapfeeds' => $this->snap_my_courses_feeds(),
+            'standaraftermainregion' => $this->standard_after_main_region_html(),
+            'snapblocks' => $this->snap_blocks(),
+        ];
+
+        $content = $this->render_from_template('theme_snap/my_courses', $data);
+
+        return $content;
+    }
 }

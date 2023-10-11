@@ -69,11 +69,34 @@ Feature: Users can access to the My Courses page in Snap.
     And I should see "Request a course"
     And I follow "Request a course"
     And I should see "Details of the course you are requesting"
-    And I log out
+    And I log in as "admin"
     And the following config values are set as admin:
       | enablecourserequests | 0 |
+    And I log out
     And I log in as "student1"
     And I close the personal menu
     And I should see "Course overview"
     Then ".block_myoverview" "css_element" should exist
     And ".snap-page-my-courses-options .btn-group" "css_element" should not exist
+
+  @javascript
+  Scenario: User can see the Snap feeds using the new layout in my courses.
+    Given the following config values are set as admin:
+      | personalmenulogintoggle | 0 | theme_snap |
+      | theme_snap_my_courses_new_layout | 1 | |
+    And I log in as "admin"
+    And I should see "Browse all courses"
+    And I should see "Course overview"
+    And I should see "Snap feeds"
+    And I click on ".snap-page-my-courses-options" "css_element"
+    And I should see "New course"
+    And I should see "Manage courses"
+    And the following config values are set as admin:
+      | theme_snap_my_courses_new_layout | 0 |
+    And I log in as "admin"
+    And I should not see "Browse all courses"
+    And I should see "Course overview"
+    And I should not see "Snap feeds"
+    And I click on ".snap-page-my-courses-options" "css_element"
+    And I should see "New course"
+    And I should see "Manage courses"
