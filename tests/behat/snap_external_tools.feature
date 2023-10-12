@@ -33,6 +33,7 @@ Feature: Configure new external tool type to test it on a course.
     And I am on front page
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
+    And I scroll to the bottom
     And I follow "Plugins"
     And I follow "Site administration"
     And I follow "Plugins"
