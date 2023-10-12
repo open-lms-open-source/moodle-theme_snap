@@ -162,11 +162,11 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                         $('#snap-pm-content').removeAttr('style');
 
                         if ($("#snap-pm-courses div#snap-personal-menu-intelliboard").length > 0) {
-                            var section = $('div#snap-personal-menu-intelliboard').closest('section');
+                            var section = $('#snap-pm div#snap-personal-menu-intelliboard').closest('section');
                             section.prependTo('#snap-pm-updates');
                         }
                         if ($("#snap-pm-courses div#snap-personal-menu-intellicart").length > 0) {
-                            var section = $('div#snap-personal-menu-intellicart').closest('section');
+                            var section = $('#snap-pm div#snap-personal-menu-intellicart').closest('section');
                             section.prependTo('#snap-pm-updates');
                         }
                         return;
@@ -177,11 +177,11 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                     }
 
                     if ($("#snap-pm-updates div#snap-personal-menu-intelliboard").length > 0) {
-                        var section = $('div#snap-personal-menu-intelliboard').closest('section');
+                        var section = $('#snap-pm div#snap-personal-menu-intelliboard').closest('section');
                         section.appendTo('section#snap-pm-courses');
                     }
                     if ($("#snap-pm-updates div#snap-personal-menu-intellicart").length > 0) {
-                        var section = $('div#snap-personal-menu-intellicart').closest('section');
+                        var section = $('#snap-pm div#snap-personal-menu-intellicart').closest('section');
                         section.appendTo('section#snap-pm-courses');
                     }
 
@@ -226,11 +226,11 @@ define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_s
                     // Intelliboard and intellicart should be displayed under the courses on a small screen.
                     if (window.innerWidth < 992) {
                         if ($("#snap-pm-updates div#snap-personal-menu-intelliboard").length > 0) {
-                            var section = $('div#snap-personal-menu-intelliboard').closest('section');
+                            var section = $('#snap-pm div#snap-personal-menu-intelliboard').closest('section');
                             section.appendTo('section#snap-pm-courses');
                         }
                         if ($("#snap-pm-updates div#snap-personal-menu-intellicart").length > 0) {
-                            var section = $('div#snap-personal-menu-intellicart').closest('section');
+                            var section = $('#snap-pm div#snap-personal-menu-intellicart').closest('section');
                             section.appendTo('section#snap-pm-courses');
                         }
                     }

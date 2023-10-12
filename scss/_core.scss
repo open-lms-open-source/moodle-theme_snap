@@ -5407,4 +5407,97 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
     .block_myoverview {
         border: 0 !important;
     }
+    .my_courses_page_content {
+
+        #region-main {
+            max-width: unset;
+            margin: 0;
+        }
+
+        .snap-feeds {
+            padding-top: 1rem;
+
+            hr {
+                margin-top: 1rem!important;
+            }
+
+            h5 {
+                font-weight: bold;
+            }
+
+            h2 {
+                clear: both;
+                font-size: 1rem;
+                font-weight: bold;
+                line-height: 1;
+                padding: 0.5em 0;
+                margin: 0.5em 0;
+            }
+
+            #snap-pm-updates {
+                section {
+                    border: 1px solid $gray-light;
+                    margin-bottom: 1rem;
+                    border-radius: 0.5rem;
+                    padding: 0.5rem;
+                }
+            }
+        }
+
+        .snap-page-my-courses-options {
+            margin-top: 1rem;
+        }
+
+        .block_myoverview_column {
+            margin-right: 3rem;
+            .snap-page-my-courses-options  {
+                float: right;
+            }
+            .block_myoverview {
+
+                border: 0 !important;
+
+                .card-title {
+                    font-weight: bold;
+                }
+
+                .card.dashboard-card {
+                    border-radius: 0.5rem;
+                    a:first-child[tabindex='-1']{
+                        margin: 0;
+                    }
+                    .dashboard-card-img {
+                        border-top-left-radius: 0.5rem;
+                        border-top-right-radius: 0.5rem;
+                    }
+                }
+
+                .page-item {
+                    .icon.fa-fw {
+                        color: $brand-primary;
+                    }
+                    &.disabled .icon.fa-fw{
+                        color: gray;
+                    }
+                    &:last-child .page-link {
+                        border-top-right-radius: 0.5rem;
+                        border-bottom-right-radius: 0.5rem;
+                    }
+                    &:first-child .page-link {
+                        border-top-left-radius: 0.5rem;
+                        border-bottom-left-radius: 0.5rem;
+                    }
+                }
+            }
+        }
+    }
+
+    #page-header #page-mast {
+        h1 {
+            float: left;
+        }
+        .snap-personal-menu-more {
+            float: right;
+        }
+    }
 }
