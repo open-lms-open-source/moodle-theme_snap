@@ -28,9 +28,9 @@ $snapsettings = new admin_settingpage('themesnapsocialmedia', get_string('social
     $setting = new admin_setting_configurl($name, $title, $description, $default);
     $snapsettings->add($setting);
 
-    $name = 'theme_snap/twitter';
-    $title = new lang_string('twitter', 'theme_snap');
-    $description = new lang_string('twitterdesc', 'theme_snap');
+    $name = 'theme_snap/x';
+    $title = new lang_string('xakatwitter', 'theme_snap');
+    $description = new lang_string('xakatwitterdesc', 'theme_snap');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
     $snapsettings->add($setting);
@@ -52,6 +52,13 @@ $snapsettings = new admin_settingpage('themesnapsocialmedia', get_string('social
     $name = 'theme_snap/instagram';
     $title = new lang_string('instagram', 'theme_snap');
     $description = new lang_string('instagramdesc', 'theme_snap');
+    $default = '';
+    $setting = new admin_setting_configurl($name, $title, $description, $default);
+    $snapsettings->add($setting);
+
+    $name = 'theme_snap/tiktok';
+    $title = new lang_string('tiktok', 'theme_snap');
+    $description = new lang_string('tiktokdesc', 'theme_snap');
     $default = '';
     $setting = new admin_setting_configurl($name, $title, $description, $default);
     $snapsettings->add($setting);
