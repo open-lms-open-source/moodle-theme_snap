@@ -71,7 +71,7 @@ class ce_render_helper {
      * @throws \moodle_exception
      */
     public function render_feed_web_component($feedkey, $title, $emptymessage, $virtualpaging = false, $showreload = true,
-        $waitforpm = true, $courseid = 0) {
+        $waitforpm = true, $courseid = 0, $location = '' ) {
         global $CFG;
         $pagesize = get_config('theme_snap', 'personalmenuadvancedfeedsperpage');
         $pagesize = !empty($pagesize) ? $pagesize : 3;
@@ -97,9 +97,14 @@ class ce_render_helper {
         if (!empty($courseid)) {
             $courseidatt = "course-id=\"{$courseid}\"";
         }
+        if ($location == 'mycourses') {
+            $locationid = 'my-courses';
+        } else {
+            $locationid = 'personal-menu';
+        }
 
         return <<<HTML
-<snap-feed elem-id="snap-personal-menu-feed-{$feedkey}"
+<snap-feed elem-id="snap-{$locationid}-feed-{$feedkey}"
            title="{$title}"
            feed-id="{$feedkey}"
            show-reload="{$showreload}"

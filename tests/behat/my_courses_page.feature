@@ -27,12 +27,17 @@ Feature: Users can access to the My Courses page in Snap.
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | student1  | Student    | 1         | student1@example.com  |
+      | teacher1 | Teacher     | 1         | teacher1@example.com  |
     And the following "courses" exist:
       | fullname | shortname | format |
       | Course 1 | C1        | topics |
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | student1  | C1      | student         |
+      | teacher1 | C1       | editingteacher  |
+    Given the following "activities" exist:
+      | activity | course | idnumber | name             | intro             | duedate   |
+      | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | ##today## |
     And the following config values are set as admin:
       | defaulthomepage | 3 |
     And the following "permission overrides" exist:
@@ -99,3 +104,52 @@ Feature: Users can access to the My Courses page in Snap.
     And I click on ".snap-page-my-courses-options" "css_element"
     And I should see "New course"
     And I should see "Manage courses"
+
+  @javascript
+  Scenario: User can see the Snap feeds data the new layout in my courses.
+    Given the following config values are set as admin:
+      | personalmenulogintoggle | 0 | theme_snap |
+      | theme_snap_my_courses_new_layout | 1 | |
+    And I log in as "teacher1"
+    And I should see "Course overview"
+    And I should see "Snap feeds"
+    And I should see "Today"
+    And I am on "Course 1" course homepage
+    Then I follow "Edit \"Test assignment1\""
+    And I expand all fieldsets
+    And I set the following fields to these values:
+      | Due date | ##tomorrow## |
+    And I press "Save and return to course"
+    And I log in as "teacher1"
+    And I should see "Tomorrow"
+
+  @javascript
+  Scenario: User can see the Snap feeds items based on the Snap settings.
+    Given the following config values are set as admin:
+      | personalmenulogintoggle | 0 | theme_snap |
+      | theme_snap_my_courses_new_layout | 1 | |
+    And I log in as "teacher1"
+    And I should see "Course overview"
+    And I should see "Snap feeds"
+    And I should see "Deadlines"
+    And I should see "Grading"
+    And I should see "Messages"
+    And I should see "Forum posts"
+    Then the following config values are set as admin:
+      | deadlinestoggle | 0 | theme_snap  |
+      | feedbacktoggle  | 0  | theme_snap |
+    And I log in as "teacher1"
+    And I should see "Snap feeds"
+    And I should not see "Deadlines"
+    And I should not see "Grading"
+    And I should see "Messages"
+    And I should see "Forum posts"
+    Then the following config values are set as admin:
+      | messagestoggle   | 0  | theme_snap  |
+      | forumpoststoggle | 0  | theme_snap  |
+    And I log in as "teacher1"
+    And I should not see "Snap feeds"
+    And I should not see "Deadlines"
+    And I should not see "Grading"
+    And I should not see "Messages"
+    And I should not see "Forum posts"

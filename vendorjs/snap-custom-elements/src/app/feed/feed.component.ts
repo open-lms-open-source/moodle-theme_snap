@@ -151,7 +151,8 @@ export class FeedComponent implements OnInit {
         this.nextPage = -1;
       }
     } else {
-      if (!this.waitForPersonalMenu || document.querySelectorAll('body.snap-pm-open').length > 0) {
+      if (!this.waitForPersonalMenu || document.querySelectorAll('body.snap-pm-open').length > 0
+        || document.querySelectorAll('.page-mycourses .snap-feeds').length > 0) {
         this.resetFeed();
       }
     }

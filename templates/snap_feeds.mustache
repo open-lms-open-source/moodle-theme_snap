@@ -22,14 +22,14 @@
  @copyright Copyright (c) 2023 Open LMS
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
+{{#updates}}
 <div class='snap-feeds'>
     <h5>{{#str}}snapfeedsblocktitle, theme_snap{{/str}}</h5>
     <hr class="mt-0">
-    <div id="snap-pm-updates">
-        {{#updates}}
+    <div id="snap-my-courses-updates">
             {{#update}}
                 <section>{{{.}}}</section>
             {{/update}}
-        {{/updates}}
     </div>
 </div>
+{{/updates}}

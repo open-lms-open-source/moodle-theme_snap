@@ -5461,12 +5461,16 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
                 margin: 0.5em 0;
             }
 
-            #snap-pm-updates {
+            #snap-my-courses-updates {
                 section {
                     border: 1px solid $gray-light;
                     margin-bottom: 1rem;
                     border-radius: 0.5rem;
                     padding: 0.5rem;
+                }
+                .snap-my-courses-more {
+                    display: block;
+                    text-align: right;
                 }
             }
         }
@@ -5523,7 +5527,7 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
         h1 {
             float: left;
         }
-        .snap-personal-menu-more {
+        .snap-my-courses-more {
             float: right;
         }
     }
