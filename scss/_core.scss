@@ -1502,13 +1502,8 @@ footer #moodle-footer
     }
 }
 
-#page-login-index #page {
-    margin-top: 0;
-}
-
 #page {
     margin: 0;
-    margin-top: 2em;
     padding: 0;
     position: relative;
     left: 0;
@@ -1517,8 +1512,14 @@ footer #moodle-footer
     &.offcanvas {
         left: -200px;
     }
-    @include media-breakpoint-down(md) {
-        margin-top: 0;
+}
+
+// Styles when the custom menu is enabled.
+body.contains-snap-custom_menu-spacer {
+    .breadcrumb-nav {
+        @include media-breakpoint-up(md) {
+            margin-top: -.75em;
+        }
     }
 }
 
@@ -1600,7 +1601,7 @@ header#page-header
     padding: .5em 0;
     float: none;
     @include media-breakpoint-up(md) {
-        margin-top: -.75em;
+        margin-top: 2.75em;
     }
     @media (max-width: 768px) {
         .breadcrumb:not(:empty) {
@@ -3486,6 +3487,10 @@ body.hascontinuecancel.path-site #page {
     z-index: 13;
 }
 
+#notice.snap-continue-cancel {
+    margin-top: 2em;
+}
+
 // Override for odd little notice when deleting questions.
 #page-user-policy #notice,
 #page-blocks-conduit-view #notice.snap-continue-cancel,
@@ -4698,7 +4703,7 @@ header#mr-nav {
     }
     // Spacer to be shown conditionally when custom menu has items to show.
     .snap-custom-menu-spacer {
-        padding-top: 3.25em;
+        padding-top: 5.25em;
     }
 }
 
@@ -5435,7 +5440,7 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
 // Styles for course index page with Snap header.
 #page-course-index-category{
     #page {
-        margin-top: 5em;
+        margin-top: 6em;
         @include media-breakpoint-down(md) {
             margin-top: 0;
         }
@@ -5444,6 +5449,11 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
         margin-top: 5rem;
         @include media-breakpoint-down(md) {
             margin-top: 1rem;
+        }
+    }
+    .breadcrumb-nav {
+        @include media-breakpoint-up(md) {
+            margin-top: -.75em;
         }
     }
 }

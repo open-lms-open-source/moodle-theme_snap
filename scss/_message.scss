@@ -227,6 +227,10 @@ body#page-user-profile .drawer .message-app {
     #page {
         height: 100%;
         overflow: hidden;
+        margin-top: 2em;
+    }
+    &.contains-snap-custom_menu-spacer #page {
+        margin-top: 0;
     }
     #page-content {
         height: 90%;
