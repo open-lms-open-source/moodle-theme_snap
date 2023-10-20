@@ -378,18 +378,12 @@ class local {
         $trackcount = 0;
         $compcount = 0;
         if ($completioninfo->is_enabled()) {
-            $modinfo = get_fast_modinfo($course);
-
-            foreach ($modinfo->cms as $thismod) {
-                if (!$thismod->uservisible) {
-                    // Skip when mod is not user visible.
-                    continue;
-                }
-                $completioninfo->get_data($thismod, true);
-
-                if ($completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
-                    $trackcount++;
-                    $completiondata = $completioninfo->get_data($thismod, true);
+            $modules = $completioninfo->get_activities();
+            $trackcount = count($modules);
+            foreach ($modules as $module) {
+                $completioninfo->get_data($module, true);
+                if ($completioninfo->is_enabled($module) != COMPLETION_TRACKING_NONE) {
+                    $completiondata = $completioninfo->get_data($module, true);
                     if ($completiondata->completionstate == COMPLETION_COMPLETE ||
                         $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
                         $compcount++;
@@ -399,7 +393,7 @@ class local {
         }
 
         if ($trackcount > 0) {
-            $progresspercent = ceil(($compcount / $trackcount) * 100);
+            $progresspercent = floor(($compcount / $trackcount) * 100);
             $compobj = (object) [
                 'complete' => $compcount,
                 'total' => $trackcount,

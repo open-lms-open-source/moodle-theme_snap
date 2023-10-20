@@ -68,21 +68,20 @@ class shared extends \renderer_base {
         $completioninfo = new \completion_info($course);
         foreach ($modinfo->sections[$section->section] as $cmid) {
             $thismod = $modinfo->cms[$cmid];
-            if ($thismod->uservisible) {
-                if (isset($sectionmods[$thismod->modname])) {
-                    $sectionmods[$thismod->modname]['name'] = $thismod->modplural;
-                    $sectionmods[$thismod->modname]['count']++;
-                } else {
-                    $sectionmods[$thismod->modname]['name'] = $thismod->modfullname;
-                    $sectionmods[$thismod->modname]['count'] = 1;
-                }
-                if ($cancomplete && $completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
-                    $total++;
-                    $completiondata = $completioninfo->get_data($thismod, true);
-                    if ($completiondata->completionstate == COMPLETION_COMPLETE ||
-                        $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
-                        $complete++;
-                    }
+            if (isset($sectionmods[$thismod->modname])) {
+                $sectionmods[$thismod->modname]['name'] = $thismod->modplural;
+                $sectionmods[$thismod->modname]['count']++;
+            } else {
+                $sectionmods[$thismod->modname]['name'] = $thismod->modfullname;
+                $sectionmods[$thismod->modname]['count'] = 1;
+            }
+            if ($cancomplete && $completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE &&
+                !$thismod->deletioninprogress) {
+                $total++;
+                $completiondata = $completioninfo->get_data($thismod, true);
+                if ($completiondata->completionstate == COMPLETION_COMPLETE ||
+                    $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
+                    $complete++;
                 }
             }
         }
