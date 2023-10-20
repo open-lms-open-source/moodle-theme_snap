@@ -1226,6 +1226,11 @@ footer #moodle-footer
     margin-right: 0.5em;
     color: $nav-button-color;
     background-color: $nav-button-bg;
+    &.snap-my-courses-link {
+        padding-right: 0.5em;
+        padding-left: 0.5em;
+        border-radius: 0.5em;
+    }
 
     .userpicture, .userinitials.size-40 {
         width: 40px;
@@ -1238,6 +1243,30 @@ footer #moodle-footer
             transform: scale(1.1);
         }
         color: darken($nav-button-color, 8%);
+    }
+}
+// Styles when user is logged in as another user.
+.userloggedinas {
+    #snap-header .usermenu .avatars {
+        .avatar.current {
+            width: 25px;
+            height: 25px;
+            .userpicture,
+            .userinitials {
+                width: 25px;
+                height: 25px;
+            }
+        }
+        .avatar.realuser {
+            width: 40px;
+            height: 40px;
+            .userpicture,
+            .userinitials {
+                width: 40px;
+                height: 40px;
+                transform: unset;
+            }
+        }
     }
 }
 // Styles for Snap user menu.
@@ -1256,6 +1285,10 @@ footer #moodle-footer
         padding-bottom: 0.5rem;
         align-self: center;
         font-weight: bold;
+        span {
+            position: relative;
+            top: 2px;
+        }
     }
 
     .usermenu {
@@ -5422,6 +5455,22 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
             span.icon {
                 margin: 0 auto;
             }
+        }
+    }
+}
+
+// Styles for course index page with Snap header.
+#page-course-index-category{
+    #page {
+        margin-top: 5em;
+        @include media-breakpoint-down(md) {
+            margin-top: 0;
+        }
+    }
+    #page-content .block_settings .block_tree.list {
+        margin-top: 5rem;
+        @include media-breakpoint-down(md) {
+            margin-top: 1rem;
         }
     }
 }

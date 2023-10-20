@@ -295,7 +295,7 @@ body.path-site .block.block_settings {
     visibility: hidden;
     position: fixed;
     background-color: #fff !important;
-    top: 1em;
+    top: 0em;
     right: -100%;
     padding: 0;
 
@@ -315,6 +315,13 @@ body.path-site .block.block_settings {
     // Hide a possible second gear menu
     .block-controls {
         visibility: hidden;
+    }
+
+    .block_tree.list {
+        margin-top: 2rem;
+        @include media-breakpoint-down(md) {
+            margin-top: 0;
+        }
     }
 }
 

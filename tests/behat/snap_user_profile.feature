@@ -31,6 +31,6 @@ Feature: When the Moodle theme is set to Snap, the user profile picture should n
   Scenario: User picture in the user profile page should not be a link
     And I log in as "user1"
     And I open the personal menu
-    And I follow "Profile"
+    And I click on "#snap-pm-profile" "css_element"
     And "#page-user-profile div.page-header-image > a" "css_element" should not exist
     And "Dashboard" "link" should exist in the "#page-user-profile #page-header > div.breadcrumb-nav" "css_element"

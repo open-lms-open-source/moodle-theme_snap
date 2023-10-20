@@ -34,6 +34,7 @@ Feature: The site displays only the language that user has selected for multilan
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
+    And I scroll to the bottom
     And I expand "Plugins" node
     And I expand "Filters" node
     And I follow "Manage filters"

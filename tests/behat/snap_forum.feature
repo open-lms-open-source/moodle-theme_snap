@@ -45,7 +45,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I log in as "student1"
     And I open the personal menu
     And I wait for the personal menu to be loaded
-    And I click on "Preference" "link"
+    And I click on "#snap-pm-preferences" "css_element"
     And I click on "Forum preference" "link"
     And I set the following fields to these values:
       | Use experimental nested discussion view             | 1 |
