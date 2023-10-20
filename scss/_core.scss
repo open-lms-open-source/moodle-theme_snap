@@ -3869,6 +3869,9 @@ div[data-rel=fatalerror] {
     a.btn-link.help-icon-btn.notifications {
         padding: 0.375rem 0.375rem;
     }
+    .popover {
+        z-index: auto;
+    }
 }
 
 table th img.iconhelp {
