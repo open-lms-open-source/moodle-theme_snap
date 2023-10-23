@@ -58,7 +58,7 @@ class custom_menu_spacing_test extends \advanced_testcase {
             $spacer = '<div class="snap-custom-menu-spacer"></div>';
 
             $css = '#page-content .block_settings.state-visible div.card-body {margin-top: 3em;}';
-            $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 1.2em;}';
+            $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 2.2em;}';
             $spacer .= "<style> {$css} </style>";
         }
 

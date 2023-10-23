@@ -1461,4 +1461,8 @@ body.format-tiles.editing .section .snap-asset .actions {
     #page-header {
         padding-top: 6em;
     }
+
+    &.contains-snap-custom_menu-spacer #page-header {
+        padding-top: 8em;
+    }
 }

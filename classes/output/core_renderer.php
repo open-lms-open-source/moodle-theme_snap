@@ -1474,6 +1474,11 @@ HTML;
             $classes[] = $pbbclass;
         }
 
+        // Check if the custom menu is not empty.
+        if (!empty($CFG->custommenuitems)) {
+            $classes[] = 'contains-snap-custom_menu-spacer';
+        }
+
         // Remove duplicates if necessary.
         $classes = array_unique($classes);
 
@@ -2178,7 +2183,7 @@ HTML;
 
             // Style to fix the block settings menu when custom menu is active.
             $css = '#page-content .block_settings.state-visible div.card-body {margin-top: 3em;}';
-            $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 1.2em;}';
+            $css .= '#page-admin-purgecaches #notice, #notice.snap-continue-cancel {margin-top: 2.2em;}';
 
             $spacer .= "<style> {$css} </style>";
         }
