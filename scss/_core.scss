@@ -3855,30 +3855,37 @@ div[data-rel=fatalerror] {
 
 
 // Manage help icon for Custom elements.
-.openlms-custom-elements {
-    .iconhelp {
-        & > svg {
-            vertical-align: sub;
-            color: #6c757d;
-            height: 24px;
-            width: 24px;
+.theme-snap {
+    .openlms-custom-elements {
+        .iconhelp {
+            & > svg {
+                vertical-align: sub;
+                color: #6c757d;
+                height: 24px;
+                width: 24px;
 
-            &:hover,
-            &:focus,
-            &:active,
-            &.active {
-                color: $brand-primary;
+                &:hover,
+                &:focus,
+                &:active,
+                &.active {
+                    color: $brand-primary;
+                }
             }
         }
-    }
-    a.help-icon-btn.notifications:focus .iconhelp svg {
-        color: $brand-primary;
-    }
-    a.btn-link.help-icon-btn.notifications {
-        padding: 0.375rem 0.375rem;
-    }
-    .popover {
-        z-index: auto;
+        a.help-icon-btn.notifications:focus .iconhelp svg {
+            color: $brand-primary;
+        }
+        a.btn-link.help-icon-btn.notifications {
+            padding: 0.375rem 0.375rem;
+        }
+        .popover {
+            .popover-body {
+                a:focus {
+                    outline: 3px solid #EF2A00;
+                    box-shadow: none;
+                }
+            }
+        }
     }
 }
 
