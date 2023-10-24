@@ -1601,7 +1601,7 @@ header#page-header
     padding: .5em 0;
     float: none;
     @include media-breakpoint-up(md) {
-        margin-top: 2.75em;
+        margin-top: 1.75em;
     }
     @media (max-width: 768px) {
         .breadcrumb:not(:empty) {
@@ -3488,7 +3488,10 @@ body.hascontinuecancel.path-site #page {
 }
 
 #notice.snap-continue-cancel {
-    margin-top: 2em;
+    margin-top: 1em;
+}
+#page-admin-purgecaches #notice {
+    margin-top: 1em;
 }
 
 // Override for odd little notice when deleting questions.
