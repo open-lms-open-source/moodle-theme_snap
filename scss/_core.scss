@@ -879,7 +879,7 @@ a.yui3-button,
     overflow: auto;
 }
 
-.path-grade-report-grader #region-main div[role="main"]:has(.gradeparent) {
+.path-grade-report-grader #region-main div[role="main"].snap-grade-reporter {
     overflow: unset;
 
     .user-grade td.evend2,

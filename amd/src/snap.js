@@ -120,6 +120,14 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
             }
         };
 
+        const regionMain = $('.path-grade-report-grader #region-main div[role="main"]');
+        if (regionMain.length > 0) {
+            const gradeParent = regionMain[0].querySelector('.gradeparent');
+            if (gradeParent) {
+                regionMain.addClass('snap-grade-reporter');
+            }
+        }
+
         updateGraderHeadersTop();
 
         /**
