@@ -1451,7 +1451,7 @@ footer #moodle-footer
 @include media-breakpoint-down(md) {
     #snap-header {
         .pull-right.js-only.row {
-            #snap-pm-trigger {
+            #snap-pm-trigger.js-snap-pm-trigger {
                 span.hidden-xs-down {
                     display: none;
                 }
@@ -5539,6 +5539,17 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
                     margin-bottom: 1rem;
                     border-radius: 0.5rem;
                     padding: 0.5rem;
+
+                    #snap-my-courses-messages,
+                    #snap-my-courses-forumposts {
+                        .userinitials {
+                            float: left;
+                            width: 40px;
+                            height: 40px;
+                            font-size: unset;
+                            margin: 0.3em 1em 0 0.3em;
+                        }
+                    }
                 }
                 .snap-my-courses-more {
                     display: block;
@@ -5553,6 +5564,12 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
 
         .block_myoverview_column {
             margin-right: 3rem;
+            &.single_column {
+                @include media-breakpoint-up(lg) {
+                    padding-left: 5em;
+                    padding-right: 5em;
+                }
+            }
             .snap-page-my-courses-options  {
                 float: right;
             }

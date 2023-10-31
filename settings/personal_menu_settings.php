@@ -16,7 +16,29 @@
 
 defined('MOODLE_INTERNAL') || die;// Main settings.
 
-$snapsettings = new admin_settingpage('themesnappersonalmenu', get_string('personalmenu', 'theme_snap'));
+$snapsettings = new admin_settingpage('themesnappersonalmenu', get_string('personalmenuandsnapfeeds', 'theme_snap'));
+
+// Personal menu enable settings.
+$name = 'theme_snap/personalmenuenablepersonalmenuheading';
+$title = new lang_string('personalmenuenablepersonalmenuheading', 'theme_snap');
+$description = '';
+$setting = new admin_setting_heading($name, $title, $description);
+$snapsettings->add($setting);
+
+$name = 'theme_snap/personalmenuenablepersonalmenu';
+$title = new lang_string('personalmenuenablepersonalmenu', 'theme_snap');
+$description = new lang_string('personalmenuenablepersonalmenudesc', 'theme_snap');
+$default = !$checked;
+$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+$snapsettings->add($setting);
+
+// Personal menu display on login on/off.
+$name = 'theme_snap/personalmenulogintoggle';
+$title = new lang_string('personalmenulogintoggle', 'theme_snap');
+$description = new lang_string('personalmenulogintoggledesc', 'theme_snap');
+$default = !$checked;
+$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+$snapsettings->add($setting);
 
 // Personal menu show course grade in cards.
 $name = 'theme_snap/showcoursegradepersonalmenu';
@@ -24,6 +46,20 @@ $title = new lang_string('showcoursegradepersonalmenu', 'theme_snap');
 $description = new lang_string('showcoursegradepersonalmenudesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+$snapsettings->add($setting);
+
+// Personal menu settings to hide when it is disabled.
+$dependency = 'theme_snap/personalmenuenablepersonalmenu';
+$tohide     = 'theme_snap/personalmenulogintoggle';
+$settings->hide_if($tohide, $dependency, 'notchecked', 0);
+$tohide     = 'theme_snap/showcoursegradepersonalmenu';
+$settings->hide_if($tohide, $dependency, 'notchecked', 0);
+
+// Snap feeds settings.
+$name = 'theme_snap/mycoursessnapfeedsheading';
+$title = new lang_string('mycoursessnapfeedsheading', 'theme_snap');
+$description = '';
+$setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
 // Personal menu deadlines on/off.
@@ -58,12 +94,11 @@ $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
-// Personal menu display on login on/off.
-$name = 'theme_snap/personalmenulogintoggle';
-$title = new lang_string('personalmenulogintoggle', 'theme_snap');
-$description = new lang_string('personalmenulogintoggledesc', 'theme_snap');
-$default = $checked;
-$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+// Advanced Snap feeds settings.
+$name = 'theme_snap/mycoursesadvancedsnapfeedsheading';
+$title = new lang_string('mycoursesadvancedsnapfeedsheading', 'theme_snap');
+$description = '';
+$setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
 // Enable advanced PM feeds.
@@ -92,6 +127,13 @@ $title = new lang_string('personalmenuadvancedfeedslifetime', 'theme_snap');
 $description = new lang_string('personalmenuadvancedfeedslifetimedesc', 'theme_snap');
 $default = 30 * MINSECS;
 $setting = new admin_setting_configduration($name, $title, $description, $default, MINSECS);
+$snapsettings->add($setting);
+
+// Refresh deadlines task settings.
+$name = 'theme_snap/refreshdeadlinestasksettingheading';
+$title = new lang_string('refreshdeadlinestasksettingheading', 'theme_snap');
+$description = '';
+$setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/personalmenurefreshdeadlines';

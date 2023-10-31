@@ -96,4 +96,7 @@ if (!empty($custommenu)) {
 </header>
 
 <?php
-echo $OUTPUT->personal_menu();
+if (!empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
+    echo $OUTPUT->personal_menu();
+}
+

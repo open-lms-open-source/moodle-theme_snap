@@ -1378,6 +1378,8 @@ HTML;
     public function body_css_classes(array $additionalclasses = array()) {
         global $COURSE, $SESSION, $CFG, $USER;
 
+        $openfixyafterlogin = false;
+
         $classes = parent::body_css_classes($additionalclasses);
         $classes = explode (' ', $classes);
 
@@ -1385,7 +1387,10 @@ HTML;
 
         $forcepasschange = get_user_preferences('auth_forcepasswordchange');
         if (isset($SESSION->justloggedin) && empty($forcepasschange)) {
-            $openfixyafterlogin = !empty($this->page->theme->settings->personalmenulogintoggle);
+            // We need to check first if the personal menu is enabled.
+            if (!empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
+                $openfixyafterlogin = !empty($this->page->theme->settings->personalmenulogintoggle);
+            }
             $onfrontpage = ($this->page->pagetype === 'site-index');
             $onuserdashboard = ($this->page->pagetype === 'my-index');
             if ($openfixyafterlogin && !isguestuser() && ($onfrontpage || $onuserdashboard)) {
@@ -2311,14 +2316,20 @@ HTML;
         if (!isloggedin() || isguestuser()) {
             return $output;
         }
+        if (empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
+            $classes = 'snap-my-courses-menu snap-my-courses-link';
+            $url = new \moodle_url('/my/courses.php');
+        } else {
+            $classes = 'js-snap-pm-trigger snap-my-courses-menu snap-my-courses-link';
+            $url = '#';
+        }
         $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
         $attributes = array(
             'aria-haspopup' => 'true',
-            'class' => 'js-snap-pm-trigger snap-my-courses-menu snap-my-courses-link',
+            'class' => $classes,
             'id' => 'snap-pm-trigger',
-            'aria-controls' => 'snap-pm',
         );
-        $output .= html_writer::link('#', $menu, $attributes);
+        $output .= html_writer::link($url, $menu, $attributes);
         return $output;
     }
 
@@ -2447,7 +2458,15 @@ HTML;
         }
         $manager = new \core_privacy\local\sitepolicy\manager();
         $policyurlexist = $manager->is_defined();
-        $sitepolicyacceptreqd = isloggedin() && $policyurlexist && empty($USER->policyagreed) && !is_siteadmin();
+        $sitepolicyacceptreqdmycourses = isloggedin() && $policyurlexist && empty($USER->policyagreed) && !is_siteadmin();
+
+        // When there are not Snap feeds enabled in the settings, the block overview will be centered in the page.
+        $feeds = $this->snap_my_courses_feeds();
+        if (empty($feeds)) {
+            $blockmyoverviewclasses = "block_myoverview_column col-12 single_column";
+        } else {
+            $blockmyoverviewclasses = "block_myoverview_column col-sm-12 col-xl-8";
+        }
 
         $data = (object) [
             'custommenuspacer' => $this->custom_menu_spacer(),
@@ -2457,10 +2476,11 @@ HTML;
             'browseallcourses' => $browseallcourses,
             'maincontent' => $this->main_content(),
             'coursesoptions' => $this->snap_my_courses_management_options(),
-            'snapfeeds' => $this->snap_my_courses_feeds(),
+            'snapfeeds' => $feeds,
             'standaraftermainregion' => $this->standard_after_main_region_html(),
             'snapblocks' => $this->snap_blocks(),
-            'sitepolicyacceptreqd' => $sitepolicyacceptreqd,
+            'sitepolicyacceptreqdmycourses' => $sitepolicyacceptreqdmycourses,
+            'blockmyoverviewclasses' => $blockmyoverviewclasses,
         ];
 
         $content = $this->render_from_template('theme_snap/my_courses', $data);

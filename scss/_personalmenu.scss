@@ -391,6 +391,16 @@ body.snap-pm-open {
         border-bottom: 1px solid $gray-light;
         padding-bottom: .5em;
         width: 100%;
+        #snap-personal-menu-messages,
+        #snap-personal-menu-forumposts {
+            .userinitials {
+                float: left;
+                width: 40px;
+                height: 40px;
+                font-size: unset;
+                margin: 0.3em 1em 0 0.3em;
+            }
+        }
     }
 
     #snap-personal-menu-feed-deadlines .snap-media-object,
