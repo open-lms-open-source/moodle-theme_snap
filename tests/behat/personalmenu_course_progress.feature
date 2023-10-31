@@ -65,7 +65,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | student3 | C11    | student         |
       | teacher1 | C1     | editingteacher  |
     And the following config values are set as admin:
-      | theme_snap_bar_limit | 10 |
+      | theme_snap_bar_limit           | 10|            |
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
 
   @javascript
   Scenario: Completion progress shows only when enabled and with tracked activities

@@ -106,7 +106,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I log out
     Given I log in as "student1"
     And I wait until the page is ready
-    And I open the personal menu
+    And I follow "My Courses"
     And I follow "Myfile should be completed"
     Then I <visible> "Mark as done"
     And I log out

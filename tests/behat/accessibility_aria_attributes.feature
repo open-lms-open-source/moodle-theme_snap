@@ -90,7 +90,9 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript @accessibility
   Scenario: Elements in personal menu must comply with the accessibility standards.
-    Given I log in as "admin"
+    Given the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
+    And I log in as "admin"
     And I am on site homepage
     And I open the personal menu
     # New ID's for personal menu elements are for the most used elements. This ID's are being established in accessibility.js AMD file.

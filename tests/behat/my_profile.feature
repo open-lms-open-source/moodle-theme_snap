@@ -12,7 +12,7 @@ Feature: A user can see a link to their settings in their profile page
   @javascript
   Scenario: a user sees the link in their profile page
     Given I log in as "student1"
-    And I open the personal menu
-    When I follow "Student 1"
+    And I open the user menu
+    And I follow "Profile"
     Then I should see "User details"
     And I should see "Preferences"

@@ -42,7 +42,9 @@ Feature: Animated images should be accessible.
     And I am on the course main page for "C1"
     And I upload file "testgif_small.gif" to section 1
     And I follow "Topic 1"
+    And I hover ".snap-animated-image" "css_element"
     Then I click on ".anim-pause-button" "css_element"
     And "img[src$='.gif']" "css_element" should not be visible
+    And I hover ".snap-animated-image" "css_element"
     And I click on ".anim-play-button" "css_element"
     And "img[src$='.gif']" "css_element" should be visible

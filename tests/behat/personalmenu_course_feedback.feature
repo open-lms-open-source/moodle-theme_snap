@@ -31,6 +31,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | username | firstname    | lastname | email                |
       | student1 | Student      | 1        | student1@example.com |
       | teacher1 | Teacher      | 1        | teacher1@example.com |
+    And the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
 
   @javascript
   Scenario Outline: Enrolled courses show grade in personal menu when enabled.

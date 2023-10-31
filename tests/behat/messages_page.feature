@@ -41,8 +41,8 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
   Scenario: In messages page, it must be possible to click the items.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
-    And I click on "//a[small[contains(@id, \"snap-pm-messages\")]]" "xpath_element"
+    And I follow "My Courses"
+    And I follow "View my messages"
     And ".message-app.main" "css_element" should be visible
     # A message drawer floating div gets renderer but outside of the window
     Then ".drawer .message-app" "css_element" should not be visible
@@ -61,7 +61,6 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 1 |
-    And I close the personal menu
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I follow "Users"
@@ -76,7 +75,9 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: In personal menu preferences page, it must be possible to click the items.
-    Given I log in as "admin"
+    Given the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
+    And I log in as "admin"
     And I am on site homepage
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
     And I click on "//a[@id='snap-pm-preferences']" "xpath_element"
@@ -99,8 +100,8 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
   @javascript
   Scenario: When selecting messages in profile, a new messages window opens.
     Given I log in as "admin"
-    And I open the personal menu
-    And I click on "//a[@id='snap-pm-profile']" "xpath_element"
+    And I open the user menu
+    And I follow "Profile"
     And I wait until the page is ready
     And I click on "//a[@id='message-user-button']" "xpath_element"
     And I wait until the page is ready

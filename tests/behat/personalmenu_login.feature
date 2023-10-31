@@ -28,6 +28,8 @@ Feature: When the moodle theme is set to Snap,
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
+    And the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
     And I am on site homepage
 
   @javascript
@@ -52,7 +54,9 @@ Feature: When the moodle theme is set to Snap,
 
   @javascript
   Scenario: User logs in and sees the personal menu, then closes it and re-opens without changing section
-    Given the following "courses" exist:
+    Given the following config values are set as admin:
+      | personalmenulogintoggle | 1 | theme_snap |
+    And the following "courses" exist:
       | fullname | shortname |
       | Course 1 | C1        |
     And the following "course enrolments" exist:
@@ -78,7 +82,8 @@ Feature: When the moodle theme is set to Snap,
   @javascript
   Scenario: User logs in and sees the personal menu on site homepage, if that setting used
     Given the following config values are set as admin:
-      | defaulthomepage | 0 |
+      | defaulthomepage         | 0 |            |
+      | personalmenulogintoggle | 1 | theme_snap |
     And I follow "Log in"
     And I set the field "username" to "teacher1"
     And I set the field "password" to "teacher1"

@@ -43,7 +43,8 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
   Scenario: Login redirects to site policy page appropriately when personal menu set to not show on login.
     Accepting the site policy prevents redirect next time personal menu is opened.
     Given the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
+      | personalmenulogintoggle        | 0 | theme_snap |
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
     And I log in as "student1"
     Then I have been redirected to the site policy page
     And I press "Yes"
@@ -51,6 +52,18 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     Then I log in as "student1"
     And I am currently on the default site home page
     And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
+    And I wait until the page is ready
+    Then I should not see "You must agree to this policy to continue using this site. Do you agree?"
+
+  Scenario: Login redirects to site policy page appropriately in my courses page.
+  Accepting the site policy prevents redirect next time my courses is opened.
+    Given I log in as "student1"
+    Then I have been redirected to the site policy page
+    And I press "Yes"
+    And I log out
+    Then I log in as "student1"
+    And I am currently on the default site home page
+    And I follow "My Courses"
     And I wait until the page is ready
     Then I should not see "You must agree to this policy to continue using this site. Do you agree?"
 

@@ -259,10 +259,10 @@ class behat_theme_snap extends behat_base {
         $fs->create_file_from_pathname($fileinfo, $CFG->dirroot . "/theme/snap/tests/fixtures/testpng.png");
 
         $this->i_am_on_course_page($shortname);
-        $this->execute('behat_general::i_click_on', ['#snap-new-section', 'css_element']);
+        $this->execute('behat_general::i_click_on', ['.col-lg-3 .toc-footer #snap-new-section', 'css_element']);
         $this->execute('behat_general::i_click_on', ['Insert or edit image', 'button']);
         $this->execute('behat_general::i_click_on', ['Browse repositories...', 'button']);
-        $this->execute('behat_general::i_click_on', ['Private files', 'link', '.fp-repo-area', 'css_element']);
+        $this->execute('behat_general::i_click_on_in_the', ['Private files', 'link', '.fp-repo-area', 'css_element']);
         $this->execute('behat_general::i_click_on', ['test.png', 'link']);
         $this->execute('behat_general::i_click_on', ['Select this file', 'button']);
         $this->execute('behat_forms::i_set_the_field_to', ['Describe this image', 'File test']);
@@ -2033,5 +2033,12 @@ JS;
 
         // Switch to the new window.
         $session->switchToWindow($windownames[1]);
+    }
+
+    /**
+     * @Given /^I open the user menu$/
+     */
+    public function i_open_the_user_menu() {
+        $this->execute('behat_general::i_click_on', ['.usermenu', 'css_element']);
     }
 }

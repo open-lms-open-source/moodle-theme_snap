@@ -24,7 +24,9 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   Background:
     Given the following config values are set as admin:
-      | defaulthomepage | 0 |
+      | defaulthomepage                | 0 |            |
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
+
 
   @javascript
   Scenario: Editing teachers can change and delete course cover image.
