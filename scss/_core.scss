@@ -5621,3 +5621,8 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
         }
     }
 }
+
+// Styles for global search bar.
+.simplesearchform #searchform-navbar.show {
+    height: 93px;
+}
