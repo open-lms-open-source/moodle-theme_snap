@@ -52,7 +52,7 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     # Check the existence of the first view in the page - General.
     And I should see "General"
     # Check for the existence of the main icons for this view.
-    And I should see "Open LMS Public roadmap"
+    And I should see "Open LMS Release Schedule"
     And I should see "Open LMS Community"
     And I should see "Open LMS Latest Releases"
     And I should see "Open bot"
