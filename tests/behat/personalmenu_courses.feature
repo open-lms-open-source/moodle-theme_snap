@@ -32,6 +32,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | username | firstname | lastname | email                |
       | user1    | User      | 1        | user1@example.com    |
       | student2 | Student   | 2        | student2@example.com |
+    And the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
 
   @javascript
   Scenario: Enrolled courses display and are navigable, hidden courses with teacher roles need expanding first

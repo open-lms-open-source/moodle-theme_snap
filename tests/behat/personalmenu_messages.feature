@@ -36,6 +36,8 @@ Feature: When the moodle theme is set to Snap, students and teachers have a conv
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
       | student2 | C1 | student |
+    And the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
 
   @javascript
   Scenario Outline: Snap user can see conversation count and messages.

@@ -30,7 +30,6 @@ Feature: When the Moodle theme is set to Snap, the content in the content bank c
       | blockname     | contextlevel | reference |
       | private_files | System       |   1       |
     And I log in as "admin"
-    And I close the personal menu
     And I follow "Manage private files..."
     And I upload "h5p/tests/fixtures/filltheblanks.h5p" file to "Files" filemanager
     And I click on "Save changes" "button"
@@ -63,7 +62,7 @@ Feature: When the Moodle theme is set to Snap, the content in the content bank c
     And I click on "a[data-action='deletecontent']" "css_element"
     And I click on "Delete" "button" in the "Delete content" "dialogue"
     And I wait until the page is ready
-    And I should see "The content has been deleted."
+    And I should see "Content deleted."
     And "//div[contains(@class, 'core_contentbank_viewcontent')]/h2[contains(text(), 'filltheblanks.h5p')]" "xpath_element" should not exist
 
   @javascript
@@ -79,5 +78,5 @@ Feature: When the Moodle theme is set to Snap, the content in the content bank c
     And I set the field "Content name" to "newfile.h5p"
     And I click on "Rename" "button" in the "Rename content" "dialogue"
     And I wait until the page is ready
-    And I should see "The content has been renamed."
+    And I should see "Content renamed."
     And I should see "newfile.h5p"

@@ -27,10 +27,10 @@ define(['jquery', 'core/log','theme_snap/util', 'theme_snap/ajax_notification'],
         /**
          * Load My courses feeds content when advanced feeds are disabled.
          *
-         * @param {Boolean} redirectToSitePolicy Boolean to redirect to site policy.
+         * @param {Boolean} redirectToSitePolicyMyCourses Boolean to redirect to site policy.
          */
-        var init = function(redirectToSitePolicy) {
-            if (redirectToSitePolicy) {
+        var init = function(redirectToSitePolicyMyCourses) {
+            if (redirectToSitePolicyMyCourses) {
                 var redirect = M.cfg.wwwroot + '/user/policy.php';
                 window.location = redirect;
                 return;

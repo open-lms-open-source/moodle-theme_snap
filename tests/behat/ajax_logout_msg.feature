@@ -34,7 +34,9 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
 
   @javascript
   Scenario: Logged in user get's login status warning when logged out if personal menu is opened.
-    Given I log in as "teacher"
+    Given the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
+    And I log in as "teacher"
     And I am on site homepage
     And I log out via a separate window
     And I open the personal menu
@@ -119,7 +121,9 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
   @javascript
   Scenario: User account is created with force password change on login enabled, personal menu shows a warning when
     opened with a link to change the users password.
-    Given force password change is assigned to user "teacher"
+    Given the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
+    And force password change is assigned to user "teacher"
     When I log in as "teacher"
     Then I should see "You must change your password to proceed."
     # Opening the personal menu should trigger an AJAX error which is displayed within the menu.

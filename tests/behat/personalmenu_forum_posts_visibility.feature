@@ -56,6 +56,8 @@ Feature: A student should not see any recent forum activity
       | activity      | name                   | intro                | course | idnumber     | groupmode |
       | forum         | Test forum name        | Test forum name      | C1     | forum        | 1         |
       | hsuforum      | Test hsuforum name     | Test hsuforum name   | C1     | hsuforum     | 1         |
+    And the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I wait until the page is ready

@@ -44,7 +44,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   @javascript
   Scenario: Course tools should show a default symbol when the student does not have any grade.
     Given I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "-" in the ".progressbar-text" "css_element"
@@ -53,7 +53,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   @javascript
   Scenario: Course tools should display the student grade with the same amount of decimals as Gradebook.
     Given I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Introduction"
     And I should see "A1"
@@ -67,7 +67,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I press "Continue"
     And I log out
     Then I log in as "student2"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Introduction"
     And I should see "A1"
@@ -81,7 +81,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I press "Continue"
     And I log out
     Then I log in as "teacher1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I grade the assignment "A1" in course "C1" as follows:
       | username | grade       | feedback                 |
@@ -90,7 +90,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I log out
         # By default, Gradebook displays grades with two decimals numbers.
     Then I log in as "admin"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
@@ -100,7 +100,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "Save changes" "button"
     And I log out
     Then I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.33%" in the ".progressbar-text" "css_element"
@@ -108,7 +108,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "50.33 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "student2"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.76%" in the ".progressbar-text" "css_element"
@@ -116,7 +116,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "50.76 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "admin"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
@@ -126,7 +126,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "Save changes" "button"
     And I log out
     Then I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50%" in the ".progressbar-text" "css_element"
@@ -134,7 +134,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "50 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "student2"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "51%" in the ".progressbar-text" "css_element"
@@ -142,7 +142,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "51 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "admin"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
@@ -152,7 +152,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "Save changes" "button"
     And I log out
     Then I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.330%" in the ".progressbar-text" "css_element"
@@ -160,7 +160,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "50.330 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "student2"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.756%" in the ".progressbar-text" "css_element"
@@ -168,7 +168,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "50.756 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "admin"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
@@ -178,7 +178,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "Save changes" "button"
     And I log out
     Then I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.3297%" in the ".progressbar-text" "css_element"
@@ -186,7 +186,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should see "50.3297 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "student2"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.7560%" in the ".progressbar-text" "css_element"
@@ -197,7 +197,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   @javascript
   Scenario: Course tools should display the student grade with a letter when the gradebook is set as a letter for grading.
     Given I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Introduction"
     And I should see "A1"
@@ -211,14 +211,14 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I press "Continue"
     And I log out
     Then I log in as "teacher1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I grade the assignment "A1" in course "C1" as follows:
       | username | grade       | feedback                 |
       | student1 | 50.32973    | I'm the teacher feedback |
     And I log out
     Then I log in as "admin"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
@@ -228,13 +228,13 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "Save changes" "button"
     And I log out
     Then I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "F" in the ".progressbar-text" "css_element"
     And I log out
     Then I log in as "admin"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
@@ -244,13 +244,13 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "Save changes" "button"
     And I log out
     Then I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "F" in the ".progressbar-text" "css_element"
     And I log out
     Then I log in as "admin"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I follow "Gradebook"
@@ -260,7 +260,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "Save changes" "button"
     And I log out
     Then I log in as "student1"
-    And I open the personal menu
+    And I follow "My Courses"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "F" in the ".progressbar-text" "css_element"

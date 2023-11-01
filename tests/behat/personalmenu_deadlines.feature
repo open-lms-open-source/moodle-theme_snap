@@ -43,6 +43,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | student1 | C1 | student |
       | student1 | C2 | student |
       | student2 | C2 | student |
+    And the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
 
   @javascript
   Scenario Outline: Student sees correct submission status against deadlines when 1 out of 2 assignments are submitted by student.

@@ -54,6 +54,8 @@ Feature: When the moodle theme is set to Snap, expired courses appear in an arch
       | teacher1 | PC3    | editingteacher |
       | teacher1 | CH     | editingteacher |
       | teacher1 | PCH    | editingteacher |
+    And the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
 
   @javascript
   Scenario: User can navigate to and from archived courses sections.

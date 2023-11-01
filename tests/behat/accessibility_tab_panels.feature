@@ -40,6 +40,8 @@ Feature: When the Moodle theme is set to Snap, personal menu and course mod choo
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
       | teacher1  | C2      | editingteacher  |
+    And the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap |
 
   @javascript
   Scenario: Personal menu tab should have a specific aria-controls attribute to be accessible.

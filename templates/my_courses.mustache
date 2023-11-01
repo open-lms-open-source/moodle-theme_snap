@@ -40,7 +40,7 @@
             <div id="region-main-box" class="my_courses_page_content">
                 <section id="region-main">
                     <div class="row">
-                        <div class="block_myoverview_column col-sm-12 col-xl-8">
+                        <div class='{{blockmyoverviewclasses}}'>
                             {{{coursesoptions}}}
                              {{{maincontent}}}
                          </div>
@@ -57,6 +57,6 @@
 </div>
 {{#js}}
     require(['theme_snap/my_courses'], function(my_courses) {
-    my_courses.init({{{sitepolicyacceptreqd}}});
+    my_courses.init({{sitepolicyacceptreqdmycourses}});
     });
 {{/js}}

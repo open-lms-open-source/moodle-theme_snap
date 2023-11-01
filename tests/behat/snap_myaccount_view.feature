@@ -32,26 +32,23 @@ Feature: Correct visualization of the general view for My Account plugin only fo
       | linkadmincategories | 0 |
 
   @javascript
-  Scenario: As a Student in Snap, I'm not able to see the My Account link in the personal menu in Snap.
+  Scenario: As a Student in Snap, I'm not able to see the My Account link in the user menu in Snap.
     Given I am using Open LMS
     And I log in as "student1"
-    And I open the personal menu
-    And I wait for the personal menu to be loaded
+    And I open the user menu
     And I should not see "My Account"
     And I log out
     And I log in as "teacher1"
-    And I open the personal menu
-    And I wait for the personal menu to be loaded
+    And I open the user menu
     And I should not see "My Account"
 
   @javascript
-  Scenario: As an admin in Snap, I'm able to see and enter to the My Account page under personal menu.
+  Scenario: As an admin in Snap, I'm able to see and enter to the My Account page under user menu.
     Given I am using Open LMS
     Given I log in as "admin"
-    And I open the personal menu
-    And I wait for the personal menu to be loaded
+    And I open the user menu
     And I should see "My Account"
-    And I click on "div.snap-pm-user a#snap-pm-myaccount" "css_element"
+    And I follow "My Account"
     # Check the existence of the first view in the page - General.
     And I should see "General"
     # Check for the existence of the main icons for this view.
@@ -64,10 +61,9 @@ Feature: Correct visualization of the general view for My Account plugin only fo
   Scenario: As an Admin in Snap, I'm redirected to specific pages to change Site logo or Site full name in Snap.
     Given I am using Open LMS
     And I log in as "admin"
-    And I open the personal menu
-    And I wait for the personal menu to be loaded
+    And I open the user menu
     And I should see "My Account"
-    And I click on "div.snap-pm-user a#snap-pm-myaccount" "css_element"
+    And I follow "My Account"
     # Check the existence of the first view in the page - General.
     And I should see "General"
     And I am on my account default page

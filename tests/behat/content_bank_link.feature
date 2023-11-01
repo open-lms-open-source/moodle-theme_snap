@@ -42,7 +42,7 @@ Feature: When the Moodle theme is set to Snap, the content bank link should show
     And I am on front page
     And I click on "#admin-menu-trigger" "css_element"
     And I should see "Content bank"
-    And I open the personal menu
+    And I follow "My Courses"
     And I click on "Browse all courses" "link"
     And I follow "Manage courses"
     And I click on "#admin-menu-trigger" "css_element"

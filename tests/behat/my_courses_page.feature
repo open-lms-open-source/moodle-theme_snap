@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2023 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap
+@theme @theme_snap @theme_snap_personalmenu
 Feature: Users can access to the My Courses page in Snap.
 
   Background:
@@ -47,7 +47,6 @@ Feature: Users can access to the My Courses page in Snap.
   @javascript
   Scenario: User can access to course management options in Snap's My Courses page.
     Given I log in as "admin"
-    And I close the personal menu
     And I should see "Course overview"
     Then ".block_myoverview" "css_element" should exist
     And ".snap-page-my-courses-options .btn-group" "css_element" should exist
@@ -63,7 +62,6 @@ Feature: Users can access to the My Courses page in Snap.
     And I should see "Manage course categories and courses"
     And I log out
     And I log in as "student1"
-    And I close the personal menu
     And I should see "Course overview"
     Then ".block_myoverview" "css_element" should exist
     And ".snap-page-my-courses-options .btn-group" "css_element" should exist
@@ -78,16 +76,12 @@ Feature: Users can access to the My Courses page in Snap.
       | enablecourserequests | 0 |
     And I log out
     And I log in as "student1"
-    And I close the personal menu
     And I should see "Course overview"
     Then ".block_myoverview" "css_element" should exist
     And ".snap-page-my-courses-options .btn-group" "css_element" should not exist
 
   @javascript
   Scenario: User can see the Snap feeds using the new layout in my courses.
-    Given the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
-      | theme_snap_my_courses_new_layout | 1 | |
     And I log in as "admin"
     And I should see "Browse all courses"
     And I should see "Course overview"
@@ -95,21 +89,6 @@ Feature: Users can access to the My Courses page in Snap.
     And I click on ".snap-page-my-courses-options" "css_element"
     And I should see "New course"
     And I should see "Manage courses"
-    And the following config values are set as admin:
-      | theme_snap_my_courses_new_layout | 0 |
-    And I log in as "admin"
-    And I should not see "Browse all courses"
-    And I should see "Course overview"
-    And I should not see "Snap feeds"
-    And I click on ".snap-page-my-courses-options" "css_element"
-    And I should see "New course"
-    And I should see "Manage courses"
-
-  @javascript
-  Scenario: User can see the Snap feeds data the new layout in my courses.
-    Given the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
-      | theme_snap_my_courses_new_layout | 1 | |
     And I log in as "teacher1"
     And I should see "Course overview"
     And I should see "Snap feeds"
@@ -125,9 +104,6 @@ Feature: Users can access to the My Courses page in Snap.
 
   @javascript
   Scenario: User can see the Snap feeds items based on the Snap settings.
-    Given the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
-      | theme_snap_my_courses_new_layout | 1 | |
     And I log in as "teacher1"
     And I should see "Course overview"
     And I should see "Snap feeds"
@@ -153,3 +129,22 @@ Feature: Users can access to the My Courses page in Snap.
     And I should not see "Grading"
     And I should not see "Messages"
     And I should not see "Forum posts"
+
+  @javascript
+  Scenario: User can disable personal menu to redirect to the My Courses page with header button.
+    Given I log in as "admin"
+    And "#snap-pm" "css_element" should not be visible
+    And I follow "My Courses"
+    Then ".block_myoverview" "css_element" should exist
+    And ".snap-page-my-courses-options .btn-group" "css_element" should exist
+    Then the following config values are set as admin:
+      | personalmenuenablepersonalmenu | 1 | theme_snap  |
+    And I log in as "admin"
+    Then "#snap-pm" "css_element" should be visible
+    Then the following config values are set as admin:
+      | personalmenulogintoggle | 0 | theme_snap  |
+    And I log in as "admin"
+    Then "#snap-pm" "css_element" should not be visible
+    And I follow "My Courses"
+    Then "#snap-pm" "css_element" should be visible
+    And "#page-my-index .page-mycourses" "css_element" should not exist

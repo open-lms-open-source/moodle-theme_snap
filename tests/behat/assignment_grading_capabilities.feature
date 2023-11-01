@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
 
   Background:
     Given I log in as "admin"
-    And I close the personal menu
     And I navigate to "Users > Permissions > Define roles" in current page administration
     And I click on "Add a new role" "button"
     And I set the field with xpath "//select[@id = 'id_resettype']" to "Teacher"
@@ -76,13 +75,11 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
   @javascript
   Scenario: User sees empty grading section
     Given I log in as "teacher1"
-    And I close the personal menu
     And I follow "My Courses"
     And I should see "Assignment One"
     And I should see "Assignment Two"
     Then I log out
     Given I log in as "teacher2"
-    And I close the personal menu
     And I follow "My Courses"
     And I should not see "Assignment One"
     And I should see "Assignment Two"

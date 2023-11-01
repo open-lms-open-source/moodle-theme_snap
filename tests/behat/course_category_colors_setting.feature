@@ -55,6 +55,7 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
   @javascript
   Scenario: Load all classes in each category hierarchy.
     Given I log in as "admin"
+    And I follow "My Courses"
     And I follow "Browse all courses"
     And I wait until the page is ready
     And I check body for classes "theme-snap"
@@ -78,6 +79,7 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I wait until the page is ready
     And I log in as "admin"
     And I wait until the page is ready
+    And I follow "My Courses"
     And I follow "Browse all courses"
     And I follow "Cat 5"
     And I check element "a.btn.btn-secondary" with color "#00FF00"
@@ -101,6 +103,7 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I wait until the page is ready
     And I log in as "admin"
     And I wait until the page is ready
+    And I follow "My Courses"
     And I follow "Browse all courses"
     And I wait until the page is ready
     And I follow "Cat 5"
