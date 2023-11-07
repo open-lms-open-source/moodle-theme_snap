@@ -260,6 +260,10 @@ div.editor_atto_toolbar {
     max-height: 100vh !important;
     min-height: 100px !important;
     resize: none;
+
+    p {
+        @extend .text-break;
+    }
 }
 
 // Help Atto editor select img's properly
