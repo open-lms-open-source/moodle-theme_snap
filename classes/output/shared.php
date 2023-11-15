@@ -467,7 +467,6 @@ EOF;
             $loginvars = [$enabledlogin, null];
         }
         $PAGE->requires->js_call_amd('theme_snap/snap', 'snapInit', $initvars);
-        $PAGE->requires->js_call_amd('theme_snap/accessibility', 'snapAxInit', $initaxvars);
         if (!empty($CFG->calendar_adminseesall) && is_siteadmin()) {
             $PAGE->requires->js_call_amd('theme_snap/adminevents', 'init');
         }
