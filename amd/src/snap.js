@@ -1219,11 +1219,13 @@ nodeToChange = $(selectorToChange);
 
                     // Code for Tiles particular loading, needed before other scripts but after the document is ready.
                     var targetTilesSect = document.querySelector('section#tiles-section');
-                    var configTilesSect = {childList: true, subtree: true};
-                    var observerTilesSect = new MutationObserver(function() {
-                        util.processAnimatedImages();
-                    });
-                    observerTilesSect.observe(targetTilesSect, configTilesSect);
+                    if (targetTilesSect) {
+                        var configTilesSect = {childList: true, subtree: true};
+                        var observerTilesSect = new MutationObserver(function() {
+                            util.processAnimatedImages();
+                        });
+                        observerTilesSect.observe(targetTilesSect, configTilesSect);
+                    }
 
                     waitForFullScreenButton();
                 });
