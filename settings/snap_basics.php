@@ -71,20 +71,6 @@ $setting = new admin_setting_configstoredfile($name, $title, $description, 'favi
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
-$name = 'theme_snap/footerheading';
-$title = new lang_string('footnote', 'theme_snap');
-$description = '';
-$setting = new admin_setting_heading($name, $title, $description);
-$snapsettings->add($setting);
-
-// Custom footer setting.
-$name = 'theme_snap/footnote';
-$title = new lang_string('footnote', 'theme_snap');
-$description = new lang_string('footnotedesc', 'theme_snap');
-$default = '';
-$setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-$snapsettings->add($setting);
-
 // Advanced branding heading.
 $name = 'theme_snap/advancedbrandingheading';
 $title = new lang_string('advancedbrandingheading', 'theme_snap');

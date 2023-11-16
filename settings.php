@@ -41,4 +41,5 @@ if ($ADMIN->fulltree) {
     require('settings/profile_based_branding.php');
     require('settings/snap_hvp_settings.php');
     require('settings/login_settings.php');
+    require('settings/snap_footer_settings.php');
 }

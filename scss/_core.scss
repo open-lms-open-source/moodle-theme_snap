@@ -3646,9 +3646,15 @@ body:not(.pagelayout-course) #moodle-footer {
     padding-bottom: 1em;
     clear: both;
     color: $gray-lighter;
-    background-color: $body-color;
+    background-color: $snap-footer-bg-color;
     a {
         font-weight: bold;
+    }
+    #snap-site-footer {
+        color: $snap-footer-txt-color;
+        a:not(.btn) {
+            color: $snap-footer-txt-color !important;
+        }
     }
 }
 

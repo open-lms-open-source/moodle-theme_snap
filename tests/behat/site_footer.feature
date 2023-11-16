@@ -44,11 +44,13 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
     And I expand "Appearance" node
     And I expand "Themes" node
     And I follow "Snap"
+    Then I click on "Snap footer" "link"
     Then I should see "Site footer"
     And I set the following fields to these values:
       | Site footer | <iframe></iframe> <p>New footer</p>|
     And I click on "Save changes" "button"
     And I wait until the page is ready
+    Then I click on "Snap footer" "link"
     Then I should see "New footer"
     And "iframe" "css_element" should be visible
     And I log out
@@ -88,3 +90,29 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
     And I wait until "#goto-top-link" "css_element" is not visible
     And I should see "Untitled Topic"
     And I should not see "Welcome to your new course"
+
+  @javascript
+  Scenario: Go to Snap footer settings page, set colors for footer background color and footer text color, and see contrast message.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | linkadmincategories | 0 |
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Appearance" node
+    And I expand "Themes" node
+    And I follow "Snap"
+    Then I click on "Snap footer" "link"
+    And I should see "Snap footer"
+    And I should see "Footer customization"
+    And I should see "Footer background color"
+    And I should see "Footer text color"
+    And I should not see "This color combination doesn't comply"
+    And I set the following fields to these values:
+      | s_theme_snap_footerbg  | #000000 |
+      | s_theme_snap_footertxt   | #000000 |
+    And I click on "Save changes" "button"
+    And I wait until the page is ready
+    And I should see "Changes saved"
+    Then I click on "Snap footer" "link"
+    And I should see "This color combination doesn't comply"

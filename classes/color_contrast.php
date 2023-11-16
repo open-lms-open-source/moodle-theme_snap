@@ -136,14 +136,16 @@ class color_contrast {
      * @return array|float
      */
     public static function compare_colors($identifier) {
-        if ($identifier == 1) {
+        if ($identifier == admin_setting_configcolorwithcontrast::BASICS) {
             $ratio = self::compare_basics_color();
-        } else if ($identifier == 2) {
+        } else if ($identifier == admin_setting_configcolorwithcontrast::NAVIGATION_BAR) {
             $ratio = self::compare_navbar_color();
-        } else if ($identifier == 3) {
+        } else if ($identifier == admin_setting_configcolorwithcontrast::NAVIGATION_BAR_BUTTON) {
             $ratio = self::compare_navbarbutton_color();
-        } else if ($identifier == 4) {
+        } else if ($identifier == admin_setting_configcolorwithcontrast::FEATURESPOT_BACK) {
             $ratio = [self::compare_featurespot_title_color(), self::compare_featurespot_content_color()];
+        } else if ($identifier == admin_setting_configcolorwithcontrast::FOOTER) {
+            $ratio = self::compare_footer_txt_color();
         }
         return $ratio;
     }
@@ -177,6 +179,17 @@ class color_contrast {
         $navbarbutcolor1 = get_config('theme_snap', 'navbarbuttoncolor');
         $navbarbutcolor2 = get_config('theme_snap', 'navbarbuttonlink');
         $contrast = self::evaluate_color_contrast($navbarbutcolor1, $navbarbutcolor2);
+        return $contrast;
+    }
+
+    /**
+     * Compare the footer text color with the footer background color.
+     * @return float
+     */
+    public static function compare_footer_txt_color() {
+        $footertxtcolor = get_config('theme_snap', 'footertxt');
+        $footerbgcolor = get_config('theme_snap', 'footerbg');
+        $contrast = self::evaluate_color_contrast($footertxtcolor, $footerbgcolor);
         return $contrast;
     }
 
