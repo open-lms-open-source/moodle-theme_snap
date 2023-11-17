@@ -1,5 +1,5 @@
 module.exports = {
   output: {
-    jsonpFunction: 'webpackJsonpSnapCE'
+    chunkLoadingGlobal: 'webpackJsonpSnapCE'
   }
 };

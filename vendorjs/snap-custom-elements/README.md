@@ -20,4 +20,3 @@ npm run test-and-build
 This will generate:
 
 * `theme/snap/vendorjs/snap-custom-elements/snap-ce.js`.
-* `theme/snap/vendorjs/snap-custom-elements/snap-ce-es5.js`.

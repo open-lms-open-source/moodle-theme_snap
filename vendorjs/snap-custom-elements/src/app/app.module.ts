@@ -19,10 +19,6 @@ import {FeedErrorModalComponent} from "./feed-error-modal/feed-error-modal.compo
     BrowserAnimationsModule,
     HttpClientModule,
   ],
-  entryComponents: [
-    FeedComponent,
-    FeedErrorModalComponent
-  ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
