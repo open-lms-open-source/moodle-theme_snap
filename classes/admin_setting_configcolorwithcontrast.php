@@ -40,6 +40,8 @@ class admin_setting_configcolorwithcontrast extends \admin_setting_configcolourp
 
     const FEATURESPOT_BACK = 4;
 
+    const FOOTER = 5;
+
     /**
      *
      * @param string $name

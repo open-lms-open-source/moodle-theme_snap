@@ -139,6 +139,7 @@ Feature: Users can access to the My Courses page in Snap.
     And ".snap-page-my-courses-options .btn-group" "css_element" should exist
     Then the following config values are set as admin:
       | personalmenuenablepersonalmenu | 1 | theme_snap  |
+      | personalmenulogintoggle        | 1 | theme_snap  |
     And I log in as "admin"
     Then "#snap-pm" "css_element" should be visible
     Then the following config values are set as admin:
