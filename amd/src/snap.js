@@ -785,23 +785,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             $('.nav-link[href="' + tabHash + '"]').tab('show');
                             $(window).scrollTop(0);
                         }
-
-                        // Hide advanced feeds additional life time setting when advanced feeds are disabled.
-                        var changeNodeVisibilityOnChecked = function(selectorToCheck, selectorToChange) {
-                            var nodeToCheck = $(selectorToCheck),
-nodeToChange = $(selectorToChange);
-                            if (nodeToCheck.is(':checked')) {
-                                nodeToChange.show();
-                                return;
-                            }
-                            nodeToChange.hide();
-                        };
-                        var advFeedsCheckboxSelector = '#id_s_theme_snap_personalmenuadvancedfeedsenable';
-                        var advFeedsLifeTimeSelector = '#admin-personalmenuadvancedfeedslifetime';
-                        changeNodeVisibilityOnChecked(advFeedsCheckboxSelector, advFeedsLifeTimeSelector);
-                        $(advFeedsCheckboxSelector).on('click', function() {
-                            changeNodeVisibilityOnChecked(advFeedsCheckboxSelector, advFeedsLifeTimeSelector);
-                        });
                     }
 
                     // Add extra padding when the error validation message appears at the moment of enter a not valid

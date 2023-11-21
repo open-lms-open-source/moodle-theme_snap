@@ -16,6 +16,8 @@
 
 defined('MOODLE_INTERNAL') || die;// Main settings.
 
+global $PAGE;
+
 $snapsettings = new admin_settingpage('themesnappersonalmenu', get_string('personalmenuandsnapfeeds', 'theme_snap'));
 
 // Personal menu enable settings.
@@ -56,9 +58,10 @@ $tohide     = 'theme_snap/showcoursegradepersonalmenu';
 $settings->hide_if($tohide, $dependency, 'notchecked', 0);
 
 // Snap feeds settings.
+$advancedfeedsdependants = [];
 $name = 'theme_snap/mycoursessnapfeedsheading';
 $title = new lang_string('mycoursessnapfeedsheading', 'theme_snap');
-$description = '';
+$description = new lang_string('mycoursessnapfeedsdesc', 'theme_snap');
 $setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
@@ -68,6 +71,7 @@ $title = new lang_string('deadlinestoggle', 'theme_snap');
 $description = new lang_string('deadlinestoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+$advancedfeedsdependencies[] = $setting->name;
 $snapsettings->add($setting);
 
 // Personal menu recent feedback & grading on/off.
@@ -76,6 +80,7 @@ $title = new lang_string('feedbacktoggle', 'theme_snap');
 $description = new lang_string('feedbacktoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+$advancedfeedsdependencies[] = $setting->name;
 $snapsettings->add($setting);
 
 // Personal menu messages on/off.
@@ -84,6 +89,7 @@ $title = new lang_string('messagestoggle', 'theme_snap');
 $description = new lang_string('messagestoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+$advancedfeedsdependencies[] = $setting->name;
 $snapsettings->add($setting);
 
 // Personal menu forum posts on/off.
@@ -92,13 +98,7 @@ $title = new lang_string('forumpoststoggle', 'theme_snap');
 $description = new lang_string('forumpoststoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
-
-// Advanced Snap feeds settings.
-$name = 'theme_snap/mycoursesadvancedsnapfeedsheading';
-$title = new lang_string('mycoursesadvancedsnapfeedsheading', 'theme_snap');
-$description = '';
-$setting = new admin_setting_heading($name, $title, $description);
+$advancedfeedsdependencies[] = $setting->name;
 $snapsettings->add($setting);
 
 // Enable advanced PM feeds.
@@ -145,11 +145,10 @@ $snapsettings->add($setting);
 
 $settings->add($snapsettings);
 
-// Advanced feeds hidden settings.
-$dependency = 'theme_snap/personalmenuadvancedfeedsenable';
-// Only show per page option if advanced feeds are enabled.
-$tohide     = 'theme_snap/personalmenuadvancedfeedsperpage';
-$settings->hide_if($tohide, $dependency, 'notchecked');
-// Only show life time if advanced feeds are enabled.
-$tohide     = 'theme_snap/personalmenuadvancedfeedslifetime';
-$settings->hide_if($tohide, $dependency, 'notchecked');
+// Personalmenuadvancedfeedsenable depends on $advancedfeedsdependencie.
+// Personalmenuadvancedfeedsperpage and personalmenuadvancedfeedslifetime depends on personalmenuadvancedfeedsenable.
+$PAGE->requires->js_call_amd('theme_snap/hide_settings',
+    'hideDependingOnChecked',
+    array('personalmenuadvancedfeedsenable',
+    $advancedfeedsdependencies,
+    array('personalmenuadvancedfeedsperpage', 'personalmenuadvancedfeedslifetime')));

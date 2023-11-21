@@ -48,7 +48,7 @@ export class StringService {
     };
 
     return this.moodleService.service(methodName, requestBody).pipe(
-      map(this.moodleService.extractData),
+      map((x) => this.moodleService.extractData(x)),
       map(stringData => {
         return this.processStrings(cachedIds, stringData);
       })
