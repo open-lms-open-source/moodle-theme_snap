@@ -1,0 +1,108 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_tiles/above_tiles
+
+    Example context (json):
+    {
+        "editing": "0",
+        "section_zero_show": "1",
+        "is_multi_section": "1",
+        "has_filter_buttons": "1",
+        "fiternumberedbuttons": [{
+            "id": 12345,
+            "buttonnum": 2,
+            "sections": [3,4,5],
+            "title": "3-5"
+        }]
+    }
+}}
+{{#has_filter_buttons}}
+    <div id="snap-tiles-with-filter-buttons">
+{{/has_filter_buttons}}
+{{^editing}}
+    <div id="abovetiles"
+         class="{{#has_filter_buttons}}justify-content-between{{/has_filter_buttons}}{{^has_filter_buttons}}justify-content-end{{/has_filter_buttons}}">
+        <div id="headerabovetiles" class="headerabovetiles" aria-hidden="true">
+        <div id="snap-course-dashboard">
+            <a href="{{urlcoursetools}}" id="snap-course-tools" class="tiles-dashboard">
+                <img src="{{imgurltools}}" class="svg-icon" alt="" />{{#str}}coursetools, theme_snap{{/str}}
+            </a>
+        </div>
+        {{#has_edit_capability}}
+            <div id="edit-course-content-header">
+                <a href="{{urleditmode}}" id="snap-editmode-header" class="btn btn-primary tiles-dashboard edit-course-content ml-4">
+                    {{editstring}}
+                </a>
+            </div>
+        {{/has_edit_capability}}
+        {{#is_multi_section}}
+            {{#has_filter_buttons}}
+                <div id="filterbuttons">
+                        <span id="filterintro">
+                            {{#pix}}filter, format_tiles{{/pix}}
+                        </span>
+                    {{#fiternumberedbuttons}}
+                        {{> format_tiles/filterbutton}}
+                    {{/fiternumberedbuttons}}
+                    {{#fiteroutcomebuttons}}
+                        {{> format_tiles/filterbutton}}
+                    {{/fiteroutcomebuttons}}
+                    <div id="filterbutton-all" class="filterbutton" data-buttonid="all" data-sections="[all]">
+                        {{#str}}all, format_tiles{{/str}}
+                    </div>
+                </div>
+            {{/has_filter_buttons}}
+            <div>
+                <span class="mr-1">
+                    {{#overall_progress_indicator}}
+                        {{> format_tiles/progress}}
+                    {{/overall_progress_indicator}}
+                </span>
+                {{#jsnavadminallowed}}
+                    <div class="btn-group">
+                        <button type="button" class="tiles-top-button align-top" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{#pix}}i/settings, core, {{#str}}settings{{/str}}{{/pix}}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{{config.wwwroot}}}/course/view.php?id={{courseid}}&stopjsnav=1">
+                                {{#jsnavuserenabled}}
+                                    {{#pix}}toggle-on, format_tiles, {{#str}}jsactivate, format_tiles{{/str}}{{/pix}}{{#str}}jsactivate, format_tiles{{/str}}
+                                {{/jsnavuserenabled}}
+                                {{^jsnavuserenabled}}
+                                    {{#pix}}toggle-off, format_tiles, {{#str}}jsdeactivate, format_tiles{{/str}}{{/pix}}{{#str}}jsdeactivate, format_tiles{{/str}}
+                                {{/jsnavuserenabled}}
+                            </a>
+                        </div>
+                    </div>
+                {{/jsnavadminallowed}}
+                {{^editing}}{{#section_zero_show}}
+                    <button class="tiles-top-button buttonhidesec0 open align-top" id="buttonhidesec0"></button>
+                {{/section_zero_show}}{{/editing}}
+            </div>
+        {{/is_multi_section}}
+        {{^is_multi_section}}
+            {{^editing}}{{#section_zero_show}}
+                <div class="buttonhidesec0 open" id="buttonhidesec0"></div>
+            {{/section_zero_show}}{{/editing}}
+        {{/is_multi_section}}
+        </div>
+    </div>
+{{/editing}}
+{{#has_filter_buttons}}
+    </div>
+{{/has_filter_buttons}}
