@@ -40,7 +40,7 @@ class format_tiles_renderer extends renderer {
     }
 
     public function render_from_template($templatename, $data) {
-        global $PAGE, $OUTPUT, $CFG;
+        global $CFG;
 
         // Always work data as object.
         if (is_array($data)) {
@@ -48,7 +48,7 @@ class format_tiles_renderer extends renderer {
         }
         // Emulates overwriting of export_for_template method for all templates.
         // Get data for mustache OpenLMS templates.
-        $isediting = $PAGE->user_is_editing();
+        $isediting = $this->page->user_is_editing();
         $format = course_get_format($this->page->course->id);
         $course = $format->get_course();
         $editingonparam = optional_param('notifyeditingon', 0, PARAM_INT);
@@ -56,7 +56,7 @@ class format_tiles_renderer extends renderer {
         if ($editingonparam === 0) {
             $currenturl = $currenturl . '&notifyeditingon=1';
         }
-        $data->imgurltools = $OUTPUT->image_url('course_dashboard', 'theme');
+        $data->imgurltools = $this->output->image_url('course_dashboard', 'theme');
         $data->urlcoursetools = $currenturl . '#coursetools';
         if (has_capability('moodle/course:update', \context_system::instance())) {
             $data->has_edit_capability = true;
@@ -74,8 +74,8 @@ class format_tiles_renderer extends renderer {
 
         // Additional output HTML to render Snap Course tools and edit mode button in footer.
         $data->course_tools = shared::course_tools(true);
-        $data->edit_mode = shared::render_edit_mode($course->id, 'tiles', $PAGE->pagetype);
+        $data->edit_mode = shared::render_edit_mode($course->id, 'tiles', $this->page->pagetype);
 
-        return $OUTPUT->render_from_template($templatename, $data);
+        return $this->output->render_from_template($templatename, $data);
     }
 }
