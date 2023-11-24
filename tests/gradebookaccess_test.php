@@ -23,7 +23,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace theme_snap;
-use \theme_snap\output\shared;
+use theme_snap\output\shared;
 
 class gradebookaccess_test extends \advanced_testcase {
 
