@@ -24,7 +24,7 @@
  */
 
 require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
-use \Behat\Mink\Exception\ExpectationException;
+use Behat\Mink\Exception\ExpectationException;
 
 /**
  * New steps used to test the scrollback to the last activity/resource accessed.

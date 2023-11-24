@@ -25,8 +25,8 @@
 namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
-use \theme_snap\local;
-use \theme_snap\activity;
+use theme_snap\local;
+use theme_snap\activity;
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');

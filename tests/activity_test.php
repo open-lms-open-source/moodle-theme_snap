@@ -16,8 +16,8 @@
 namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
-use \theme_snap\activity,
-    \theme_snap\snap_base_test;
+use theme_snap\activity;
+use theme_snap\snap_base_test;
 use theme_snap\local;
 use theme_snap\task\refresh_deadline_caches_task;
 
