@@ -7,7 +7,6 @@
     "test": "ng test",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
-    "e2e": "ng e2e",
     "test-and-build": "npm run test-headless && npm run build && npm run package",
     "build": "ng build --configuration production --output-hashing=none",
     "package": "bash build-ce.sh"
@@ -46,7 +45,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "^2.1.0",
     "karma-junit-reporter": "^2.0.1",
-    "protractor": "~5.4.0",
     "ts-node": "~10.9.1",
     "tslint": "~5.20.1",
     "typescript": "~5.2.2"
