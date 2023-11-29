@@ -2998,6 +2998,12 @@ span.editinstructions {
     }
 }
 
+// Align 'Turn editing on' button below course name.
+.path-grade-report .snap-page-heading-button,
+.path-mod-lightboxgallery .snap-page-heading-button {
+    justify-content: normal;
+}
+
 body.path-course-index {
     .add-course-btn-container {
         margin-top: 1em;
