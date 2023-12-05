@@ -149,3 +149,28 @@ Feature: Users can access to the My Courses page in Snap.
     And I follow "My Courses"
     Then "#snap-pm" "css_element" should be visible
     And "#page-my-index .page-mycourses" "css_element" should not exist
+
+  @javascript
+  Scenario: User will see a warning message when the Course overview block is disabled.
+    Given the following config values are set as admin:
+      | defaulthomepage | 3 |
+    And I change window size to "large"
+    And I log in as "admin"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I follow "Plugins"
+    And I follow "Category: Blocks"
+    And I follow "Manage blocks"
+    And I click on "Hide" "icon" in the "Course overview" "table_row"
+    And I follow "My Courses"
+    Then ".block_myoverview" "css_element" should not exist
+    And I should see "The Course overview block is disabled"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I follow "Plugins"
+    And I follow "Category: Blocks"
+    And I follow "Manage blocks"
+    And I click on "Show" "icon" in the "Course overview" "table_row"
+    And I follow "My Courses"
+    Then ".block_myoverview" "css_element" should exist
+    And I should not see "The Course overview block is disabled"

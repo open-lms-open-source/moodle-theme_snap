@@ -23,7 +23,7 @@ $snapsettings = new admin_settingpage('themesnappersonalmenu', get_string('perso
 // Personal menu enable settings.
 $name = 'theme_snap/personalmenuenablepersonalmenuheading';
 $title = new lang_string('personalmenuenablepersonalmenuheading', 'theme_snap');
-$description = '';
+$description = new lang_string('personalmenuenablepersonalmenuheadingdesc', 'theme_snap');
 $setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 

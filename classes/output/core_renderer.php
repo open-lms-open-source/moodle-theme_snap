@@ -2457,6 +2457,8 @@ HTML;
      */
     public function my_courses_snap_page_content() {
 
+        global $DB;
+
         $browseallcourses = '';
         if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
             $url = new moodle_url('/course/');
@@ -2474,6 +2476,9 @@ HTML;
             $blockmyoverviewclasses = "block_myoverview_column col-sm-12 col-xl-8";
         }
 
+        // Check if Course overview block is enabled.
+        $enableblockmessage = $DB->get_field('block', 'visible', ['name' => 'myoverview']) ? false : true;
+
         $data = (object) [
             'custommenuspacer' => $this->custom_menu_spacer(),
             'snapnavbar' => $this->snapnavbar(''),
@@ -2487,6 +2492,7 @@ HTML;
             'snapblocks' => $this->snap_blocks(),
             'sitepolicyacceptreqdmycourses' => $sitepolicyacceptreqdmycourses,
             'blockmyoverviewclasses' => $blockmyoverviewclasses,
+            'enableblockmessage' => $enableblockmessage,
         ];
 
         $content = $this->render_from_template('theme_snap/my_courses', $data);
