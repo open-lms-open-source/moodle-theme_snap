@@ -43,6 +43,11 @@
                         <div class='{{blockmyoverviewclasses}}'>
                             {{{coursesoptions}}}
                              {{{maincontent}}}
+                             {{#enableblockmessage}}
+                             <div class="p-3 alert alert-warning">
+                                <span>{{#str}}enableblockmyoverviewwarning, theme_snap{{/str}}</span>
+                             </div>
+                             {{/enableblockmessage}}
                          </div>
                          <div class="snap_feeds_columncol col-sm-12 col-xl-3">
                              {{{snapfeeds}}}
