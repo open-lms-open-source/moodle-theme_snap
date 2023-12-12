@@ -183,7 +183,7 @@ class image {
             'component' => $component,
             'filearea' => $filearea,
             'itemid' => $itemid,
-            'filepath' => '/'
+            'filepath' => '/',
         );
 
         \ob_start();

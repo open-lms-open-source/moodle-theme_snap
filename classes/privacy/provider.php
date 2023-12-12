@@ -180,7 +180,7 @@ class provider implements metadata_provider, request_provider,
         }
 
         $params = [
-            'courseid' => $context->instanceid
+            'courseid' => $context->instanceid,
         ];
 
         $sql = "SELECT DISTINCT(tscf.userid) as userid

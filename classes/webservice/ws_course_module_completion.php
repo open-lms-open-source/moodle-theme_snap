@@ -36,7 +36,7 @@ class ws_course_module_completion extends \external_api {
     public static function service_parameters() {
         $parameters = [
             'id' => new \external_value(PARAM_INT, 'Course module id', VALUE_REQUIRED),
-            'completionstate' => new \external_value(PARAM_BOOL, 'Course module completion state', VALUE_REQUIRED)
+            'completionstate' => new \external_value(PARAM_BOOL, 'Course module completion state', VALUE_REQUIRED),
         ];
         return new \external_function_parameters($parameters);
     }
@@ -47,7 +47,7 @@ class ws_course_module_completion extends \external_api {
     public static function service_returns() {
         $keys = [
             'id' => new \external_value(PARAM_INT, 'course module id'),
-            'completionhtml' => new \external_value(PARAM_RAW, 'completion html')
+            'completionhtml' => new \external_value(PARAM_RAW, 'completion html'),
         ];
         return new \external_single_structure($keys, 'course_module_completion');
     }
@@ -63,7 +63,7 @@ class ws_course_module_completion extends \external_api {
         $html = $service->module_toggle_completion($id, $completionstate);
         return [
             'id' => $id,
-            'completionhtml' => $html
+            'completionhtml' => $html,
         ];
     }
 }

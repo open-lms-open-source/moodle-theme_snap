@@ -56,7 +56,7 @@ class ws_course_sections extends \external_api {
             'loadmodules' => new \external_value(PARAM_BOOL,
                     'Should modules be returned, if false, the modules array will be empty. ' .
                     '(Only available for section visibility)',
-                    VALUE_REQUIRED)
+                    VALUE_REQUIRED),
         ];
         return new \external_function_parameters($parameters);
     }
@@ -75,7 +75,7 @@ class ws_course_sections extends \external_api {
                 definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc'),
                 'Table of contents',
                 VALUE_REQUIRED
-            )
+            ),
         ];
 
         return new \external_single_structure($keys, 'course_completion');

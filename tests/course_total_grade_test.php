@@ -76,99 +76,99 @@ class course_total_grade_Test extends \advanced_testcase {
             [
                 'hidden' => 0,
                 'grademin' => 0,
-                'grademax' => 100
+                'grademax' => 100,
             ],
             [
                 'hidden' => 0,
                 'grademin' => 0,
-                'grademax' => 80
+                'grademax' => 80,
             ],
             [
                 'hidden' => 0,
                 'aggregationcoef' => 25,
-                'grademax' => 80
+                'grademax' => 80,
             ],
             [
                 'hidden' => 0,
                 'aggregationcoef' => 50,
-                'grademax' => 100
+                'grademax' => 100,
             ],
             [
                 'hidden' => 1,
                 'grademin' => 0,
-                'grademax' => 100
+                'grademax' => 100,
             ],
             [
                 'hidden' => 1,
                 'grademin' => 0,
-                'grademax' => 80
+                'grademax' => 80,
             ],
             [
                 'hidden' => 1,
                 'aggregationcoef' => 25,
-                'grademax' => 80
+                'grademax' => 80,
             ],
             [
                 'hidden' => 1,
                 'aggregationcoef' => 50,
-                'grademax' => 100
+                'grademax' => 100,
             ],
             [
                 'hidden' => 0,
                 'grademin' => 0,
                 'grademax' => 100,
                 'gradetype' => GRADE_TYPE_SCALE,
-                'scaleid' => $this->scaleid
+                'scaleid' => $this->scaleid,
             ],
             [
                 'hidden' => 0,
                 'grademin' => 0,
                 'grademax' => 80,
                 'gradetype' => GRADE_TYPE_SCALE,
-                'scaleid' => $this->scaleid
+                'scaleid' => $this->scaleid,
             ],
             [
                 'hidden' => 0,
                 'aggregationcoef' => 25,
                 'grademax' => 80,
                 'gradetype' => GRADE_TYPE_SCALE,
-                'scaleid' => $this->scaleid
+                'scaleid' => $this->scaleid,
             ],
             [
                 'hidden' => 0,
                 'aggregationcoef' => 50,
                 'grademax' => 100,
                 'gradetype' => GRADE_TYPE_SCALE,
-                'scaleid' => $this->scaleid
+                'scaleid' => $this->scaleid,
             ],
             [
                 'hidden' => 1,
                 'grademin' => 0,
                 'grademax' => 100,
                 'gradetype' => GRADE_TYPE_SCALE,
-                'scaleid' => $this->scaleid
+                'scaleid' => $this->scaleid,
             ],
             [
                 'hidden' => 1,
                 'grademin' => 0,
                 'grademax' => 80,
                 'gradetype' => GRADE_TYPE_SCALE,
-                'scaleid' => $this->scaleid
+                'scaleid' => $this->scaleid,
             ],
             [
                 'hidden' => 1,
                 'aggregationcoef' => 25,
                 'grademax' => 80,
                 'gradetype' => GRADE_TYPE_SCALE,
-                'scaleid' => $this->scaleid
+                'scaleid' => $this->scaleid,
             ],
             [
                 'hidden' => 1,
                 'aggregationcoef' => 50,
                 'grademax' => 100,
                 'gradetype' => GRADE_TYPE_SCALE,
-                'scaleid' => $this->scaleid
-            ]
+                'scaleid' => $this->scaleid,
+            ],
         ];
         return $gradeitemsettings;
     }
@@ -205,7 +205,7 @@ class course_total_grade_Test extends \advanced_testcase {
             'userid' => 0,
             'name' => 'Test scale',
             'scale' => 'A, B, C, D',
-            'description' => 'Test scale desc'
+            'description' => 'Test scale desc',
         ]);
 
         $gi = 0;
@@ -249,7 +249,7 @@ class course_total_grade_Test extends \advanced_testcase {
                 foreach ($this->users as $user) {
                     $grades[$user->id] = (object)[
                         'rawgrade' => intval(rand(0, 99)),
-                        'userid' => $user->id
+                        'userid' => $user->id,
                     ];
                 }
                 $assignrow->cmidnumber = null;
@@ -281,7 +281,7 @@ class course_total_grade_Test extends \advanced_testcase {
 
         $failobj = (object)[
             'fromcache' => false, // Useful for debugging and unit testing.
-            'feedback' => false
+            'feedback' => false,
         ];
 
         $config = get_config('theme_snap');
@@ -323,7 +323,7 @@ class course_total_grade_Test extends \advanced_testcase {
         // Default feedbackobj.
         $feedbackobj = (object)[
             'feedbackurl' => $feedbackurl->out(),
-            'showgrade' => $config->showcoursegradepersonalmenu
+            'showgrade' => $config->showcoursegradepersonalmenu,
         ];
 
         if (!$coursegrade->is_hidden() || $canviewhidden) {
@@ -332,7 +332,7 @@ class course_total_grade_Test extends \advanced_testcase {
                     'type' => 'report',
                     'plugin' => 'user',
                     'courseid' => $course->id,
-                    'userid' => $USER->id)
+                    'userid' => $USER->id, )
             );
             $report = new \gradereport_user\report\user($course->id, $gpr, $coursecontext, $USER->id);
             $report->fill_table();
@@ -342,7 +342,7 @@ class course_total_grade_Test extends \advanced_testcase {
             $ignoregrades = [
                 '-',
                 '&nbsp;',
-                get_string('error')
+                get_string('error'),
             ];
             if (!in_array($coursegrade, $ignoregrades)) {
                 $feedbackobj->coursegrade = $coursegrade;
@@ -448,7 +448,7 @@ class course_total_grade_Test extends \advanced_testcase {
                 $settings = [
                     GRADE_REPORT_HIDE_TOTAL_IF_CONTAINS_HIDDEN,
                     GRADE_REPORT_SHOW_TOTAL_IF_CONTAINS_HIDDEN,
-                    GRADE_REPORT_SHOW_REAL_TOTAL_IF_CONTAINS_HIDDEN
+                    GRADE_REPORT_SHOW_REAL_TOTAL_IF_CONTAINS_HIDDEN,
                 ];
 
                 $settingdisplaytypes = [
@@ -460,7 +460,7 @@ class course_total_grade_Test extends \advanced_testcase {
                     GRADE_DISPLAY_TYPE_PERCENTAGE_LETTER,
                     GRADE_DISPLAY_TYPE_LETTER,
                     GRADE_DISPLAY_TYPE_LETTER_REAL,
-                    GRADE_DISPLAY_TYPE_LETTER_PERCENTAGE
+                    GRADE_DISPLAY_TYPE_LETTER_PERCENTAGE,
                 ];
 
                 foreach ($settings as $setting) {

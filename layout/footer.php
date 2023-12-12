@@ -95,7 +95,7 @@ if (!empty($custommenu)) {
             }
             echo get_string('poweredbyrunby', 'theme_snap', (object) [
                     'subdomain' => $this->get_poweredby_subdomain(),
-                    'year'      => date('Y', time())
+                    'year'      => date('Y', time()),
             ]);
             ?>
         </small>

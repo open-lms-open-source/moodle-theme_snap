@@ -51,7 +51,7 @@ class ws_course_cards_data extends \external_api {
     public static function service_parameters() {
         $parameters = [
             'page' => new \external_value(PARAM_INT, 'Page', VALUE_DEFAULT, 0),
-            'category' => new \external_value(PARAM_TEXT, 'Category', VALUE_DEFAULT, 'current')
+            'category' => new \external_value(PARAM_TEXT, 'Category', VALUE_DEFAULT, 'current'),
         ];
         return new \external_function_parameters($parameters);
     }
@@ -76,7 +76,7 @@ class ws_course_cards_data extends \external_api {
                 ),
                 'showextralink' => new \external_value(PARAM_BOOL, 'Show an extra avatar link', VALUE_REQUIRED),
                 'published' => new \external_value(PARAM_BOOL, 'Is this course published', VALUE_REQUIRED),
-                'favorited' => new \external_value(PARAM_BOOL, 'Is this course marked as a favorite', VALUE_REQUIRED)
+                'favorited' => new \external_value(PARAM_BOOL, 'Is this course marked as a favorite', VALUE_REQUIRED),
             ])
         );
     }
