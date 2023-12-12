@@ -78,7 +78,7 @@ class ws_course_cards_categories extends \external_api {
         $wheres = array("c.id <> :siteid");
         $params = array('siteid' => SITEID);
 
-        if (isset($USER->loginascontext) and $USER->loginascontext->contextlevel == CONTEXT_COURSE) {
+        if (isset($USER->loginascontext) && $USER->loginascontext->contextlevel == CONTEXT_COURSE) {
             $wheres[] = "courseid = :loginas";
             $params['loginas'] = $USER->loginascontext->instanceid;
         }

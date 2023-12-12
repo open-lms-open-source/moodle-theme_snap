@@ -110,11 +110,11 @@ trait format_section_trait {
         // FIXME: This is really evil and should by using the navigation API.
         $course = course_get_format($course)->get_course();
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
-        or !$course->hiddensections;
+        || !$course->hiddensections;
 
         $links = array('previous' => '', 'next' => '');
         $back = $sectionno - 1;
-        while ($back > -1 and empty($links['previous'])) {
+        while ($back > -1 && empty($links['previous'])) {
             if ($canviewhidden
             || $sections[$back]->uservisible
             || $sections[$back]->availableinfo) {
@@ -138,7 +138,7 @@ trait format_section_trait {
 
         $forward = $sectionno + 1;
         $numsections = course_get_format($course)->get_last_section_number();
-        while ($forward <= $numsections and empty($links['next'])) {
+        while ($forward <= $numsections && empty($links['next'])) {
             if ($canviewhidden
             || $sections[$forward]->uservisible
             || $sections[$forward]->availableinfo) {
@@ -510,10 +510,10 @@ trait format_section_trait {
             echo $this->course_section($course, $thissection, $modinfo);
         }
 
-        if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
+        if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             foreach ($modinfo->get_section_info_all() as $section => $thissection) {
-                if ($section <= $numsections or empty($modinfo->sections[$section])) {
+                if ($section <= $numsections || empty($modinfo->sections[$section])) {
                     // This is not stealth section or it is empty.
                     continue;
                 }

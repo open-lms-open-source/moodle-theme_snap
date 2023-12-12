@@ -61,7 +61,7 @@ class admin_setting_configcolorcategory extends \admin_setting_configtext {
 
         $default = $this->get_defaultsetting();
         $defaultinfo = $default;
-        if (!is_null($default) and $default !== '') {
+        if (!is_null($default) && $default !== '') {
             $defaultinfo = "\n".$default;
         }
 
