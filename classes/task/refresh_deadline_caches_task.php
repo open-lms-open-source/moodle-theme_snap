@@ -91,7 +91,7 @@ SQL;
             'feedtype' => 'deadlines',
         ]));
         $snapfeedsblockexists     = (get_config('block_snapfeeds') !== false) ||
-            (is_callable('mr_on') and mr_on('snapfeeds', 'block'));
+            (is_callable('mr_on') && mr_on('snapfeeds', 'block'));
 
         $this->cachekeys = [];
         // We should skip CM checks to only populate caches for events.

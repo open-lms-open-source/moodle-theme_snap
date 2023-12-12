@@ -90,7 +90,7 @@ class kernel {
         $buffer   = trim(ob_get_contents());
         ob_end_clean();
 
-        if (!empty($response) and !empty($buffer)) {
+        if (!empty($response) && !empty($buffer)) {
             throw new \coding_exception('Mixed return output and buffer output');
         } else if (!empty($buffer)) {
             $response = $buffer;

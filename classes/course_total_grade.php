@@ -143,7 +143,7 @@ class course_total_grade extends \grade_report_overview {
             return $output;
         }
 
-        if (!$canviewhidden and !is_null($finalgrade)) {
+        if (!$canviewhidden && !is_null($finalgrade)) {
             if ($coursegrade->is_hidden()) {
                 $finalgrade = null;
             } else {

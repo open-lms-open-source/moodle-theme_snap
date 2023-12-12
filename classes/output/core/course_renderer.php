@@ -65,7 +65,7 @@ class course_renderer extends \core_course_renderer {
 
         $modinfo = get_fast_modinfo($SITE);
         $section = $modinfo->get_section_info(1);
-        if (($section && (!empty($modinfo->sections[1]) or !empty($section->summary))) or $editing) {
+        if (($section && (!empty($modinfo->sections[1]) || !empty($section->summary))) || $editing) {
             $output .= $this->box_start('generalbox sitetopic');
 
             // If currently moving a file then show the current clipboard.
@@ -1771,7 +1771,7 @@ class course_renderer extends \core_course_renderer {
             foreach ($modinfo->sections[$section->section] as $modnumber) {
                 $mod = $modinfo->cms[$modnumber];
 
-                if ($ismoving and $mod->id == $USER->activitycopy) {
+                if ($ismoving && $mod->id == $USER->activitycopy) {
                     // Do not display moving mod.
                     continue;
                 }
