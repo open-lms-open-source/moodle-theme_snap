@@ -347,7 +347,7 @@ class services_course_test extends \advanced_testcase {
         $pattern = '/>(.*)<\/a>/';
         preg_match_all($pattern, $tochtml, $matches);
         for ($x = 0; $x < count($titles); $x++) {
-            $this->assertEquals(htmlspecialchars($titles[$x]), $matches[1][$x]);
+            $this->assertEquals(htmlspecialchars($titles[$x], ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401), $matches[1][$x]);
         }
     }
 

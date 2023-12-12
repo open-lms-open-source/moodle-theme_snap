@@ -1195,7 +1195,7 @@ class behat_theme_snap extends behat_base {
             $sectionnumber = $section - 1;
         }
         $expectedtitle = '<span class="nav_guide" section-number="' . $sectionnumber . '">' . $ttype
-            . ' section</span><br>'.htmlentities($linktitle);
+            . ' section</span><br>'.htmlentities($linktitle, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401);
         if (strtolower($title) !== strtolower($expectedtitle)) {
             $msg = $ttype.' title does not match expected "' . $expectedtitle . '"' . ' V "' . $title .
                     '" - selector = "'.$titleselector.'"';
