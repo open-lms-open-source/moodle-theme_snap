@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,18 +12,15 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace theme_snap\renderables;
-// Prepare for code checker update. Will be remove on INT-17966.
-// @codingStandardsIgnoreLine
-defined('MOODLE_INTERNAL') || die();
 
-use theme_snap\local,
-    moodle_url;
+use theme_snap\local;
+use moodle_url;
 
 /**
- * Featured courses renderable
+ * Featured courses renderable.
  *
  * @author    Guy Thomas
  * @copyright Copyright (c) 2017 Open LMS
@@ -74,8 +71,8 @@ class featured_courses implements \renderable, \templatable {
         }
 
         // Build array of course ids to display.
-        $ids = array("fc_one", "fc_two", "fc_three", "fc_four", "fc_five", "fc_six", "fc_seven", "fc_eight");
-        $courseids = array();
+        $ids = ["fc_one", "fc_two", "fc_three", "fc_four", "fc_five", "fc_six", "fc_seven", "fc_eight"];
+        $courseids = [];
         $config = get_config('theme_snap');
         foreach ($ids as $id) {
             if (!empty($config->$id)) {
@@ -93,7 +90,7 @@ class featured_courses implements \renderable, \templatable {
         }
 
         // Order records to match order input.
-        $orderedcourses = array();
+        $orderedcourses = [];
         foreach ($courseids as $courseid) {
             if (!empty($courses[$courseid])) {
                 $orderedcourses[] = $courses[$courseid];
