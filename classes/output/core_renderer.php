@@ -66,7 +66,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @var array|string[]
      */
     private array $listhidden = [
-        'pluginxp' => '/blocks/xp/index.php'
+        'pluginxp' => '/blocks/xp/index.php',
     ];
 
     /**
@@ -107,7 +107,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $helptext = format_text($mod[$component]->help, FORMAT_MARKDOWN);
                     $data = (object) [
                         'helptext' => $helptext,
-                        'modtitle' => $mod[$component]->title
+                        'modtitle' => $mod[$component]->title,
                     ];
                     $collapsablehelp = $this->render_from_template('theme_snap/heading_help_collapse', $data);
                     $classnames .= ' d-inline';
@@ -394,7 +394,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 'image' => $image,
                 'content' => $link.$metastr,
                 'class' => $extraclasses,
-                'attributes' => $attributes
+                'attributes' => $attributes,
         ];
         return $this->render_from_template('theme_snap/media_object', $data);
     }
@@ -409,7 +409,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $timetext .= ', ' . \calendar_time_representation($time);
         $datetime = date(DateTime::W3C, $time);
         return html_writer::tag('time', $timetext, array(
-            'datetime' => $datetime)
+            'datetime' => $datetime, )
         );
     }
 
@@ -528,7 +528,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $data = (object) [
             'update' => $sections,
-            'mobilemenu' => $mobilemenu
+            'mobilemenu' => $mobilemenu,
         ];
         return $data;
     }
@@ -744,7 +744,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $profilelink = [
             'id' => 'snap-pm-profile',
             'link' => s($CFG->wwwroot). '/user/profile.php?id=' .$userid,
-            'title' => get_string('profile')
+            'title' => get_string('profile'),
         ];
         $quicklinks = [$profilelink];
         // We need to verify the existence of My Account plugin in the code base to display this.
@@ -755,39 +755,39 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $myaccountlink = [
                 'id' => 'snap-pm-myaccount',
                 'link' => s($CFG->wwwroot) . '/local/myaccount/view.php?controller=default&action=view',
-                'title' => get_string('myaccount', 'local_myaccount')
+                'title' => get_string('myaccount', 'local_myaccount'),
             ];
             $quicklinks[] = $myaccountlink;
         }
         $dashboardlink = [
             'id' => 'snap-pm-dashboard',
             'link' => s($CFG->wwwroot). '/my',
-            'title' => get_string('myhome')
+            'title' => get_string('myhome'),
         ];
         $quicklinks[] = $dashboardlink;
         $gradelink = [
             'id' => 'snap-pm-grades',
             'link' => s($CFG->wwwroot). '/grade/report/overview/index.php',
-            'title' => get_string('grades')
+            'title' => get_string('grades'),
         ];
         $quicklinks[] = $gradelink;
         $preferenceslink = [
             'id' => 'snap-pm-preferences',
             'link' => s($CFG->wwwroot). '/user/preferences.php',
-            'title' => get_string('preferences')
+            'title' => get_string('preferences'),
         ];
         $quicklinks[] = $preferenceslink;
         $logoutlink = [
             'id' => 'snap-pm-logout',
             'link' => s($CFG->wwwroot).'/login/logout.php?sesskey='.sesskey(),
-            'title' => get_string('logout')
+            'title' => get_string('logout'),
         ];
 
         if (is_callable('mr_on') && mr_on('catalogue', '_MR_LOCAL')) {
             $coursecataloguelink = [
                 'id' => 'snap-pm-course-catalogue',
                 'link' => s($CFG->wwwroot) . '/local/catalogue/index.php',
-                'title' => get_string('pluginname', 'local_catalogue')
+                'title' => get_string('pluginname', 'local_catalogue'),
             ];
             $quicklinks[] = $coursecataloguelink;
         }
@@ -795,7 +795,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $programcataloguelink = [
                 'id' => 'snap-pm-program-catalogue',
                 'link' => s($CFG->wwwroot) . '/enrol/programs/catalogue/index.php',
-                'title' => get_string('catalogue', 'enrol_programs')
+                'title' => get_string('catalogue', 'enrol_programs'),
             ];
             $quicklinks[] = $programcataloguelink;
         }
@@ -803,7 +803,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $myprogramslink = [
                 'id' => 'snap-pm-my-programs',
                 'link' => s($CFG->wwwroot) . '/enrol/programs/my/index.php',
-                'title' => get_string('pluginname', 'block_myprograms')
+                'title' => get_string('pluginname', 'block_myprograms'),
             ];
             $quicklinks[] = $myprogramslink;
         }
@@ -817,24 +817,24 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     'id' => $courseid,
                     'sesskey' => sesskey(),
                     'switchrole' => -1,
-                    'returnurl' => $returnurl
+                    'returnurl' => $returnurl,
                 ));
                 $switchrole = [
                     'id' => 'snap-pm-switchroleto',
                     'link' => $link->out(false),
-                    'title' => get_string('switchroleto')
+                    'title' => get_string('switchroleto'),
                 ];
             } else {
                 $link = new moodle_url('/course/switchrole.php', array(
                     'id' => $courseid,
                     'sesskey' => sesskey(),
                     'switchrole' => 0,
-                    'returnurl' => $returnurl
+                    'returnurl' => $returnurl,
                 ));
                 $switchrole = [
                     'id' => 'snap-pm-switchrolereturn',
                     'link' => $link->out(false),
-                    'title' => get_string('switchrolereturn')
+                    'title' => get_string('switchrolereturn'),
                 ];
             }
             $quicklinks[] = $switchrole;
@@ -870,7 +870,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if ($published) {
             $currentcourses = [
                 'count' => count($published),
-                'courses' => $published
+                'courses' => $published,
             ];
         }
 
@@ -878,7 +878,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if ($hidden) {
             $hiddencourses = [
                 'count' => count($hidden),
-                'courses' => $hidden
+                'courses' => $hidden,
             ];
         }
 
@@ -896,7 +896,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $endyear = array_values($yearcourses)[0]->endyear;
             $year = (object) [
                  'year' => $endyear,
-                 'courses' => $courses
+                 'courses' => $courses,
             ];
             // Append each year object.
             $pastcourselist[] = $year;
@@ -915,7 +915,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (!empty($currentcourses) || !empty($hiddencourses)) {
             $currentcourselist = [
                 'hidden' => $hiddencourses,
-                'published' => $currentcourses
+                'published' => $currentcourses,
             ];
         }
 
@@ -953,7 +953,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'pastcourselist' => $pastcourselist,
             'browseallcourses' => $browseallcourses,
             'updates' => $this->render_callstoaction(),
-            'advancedfeeds' => $this->advanced_feeds_enabled()
+            'advancedfeeds' => $this->advanced_feeds_enabled(),
         ];
 
         if ($courselimitclass) {
@@ -1049,7 +1049,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     'name' => $slidename,
                     'image' => $this->page->theme->setting_file_url($image, $image),
                     'title' => $this->page->theme->settings->$title,
-                    'subtitle' => $this->page->theme->settings->$subtitle
+                    'subtitle' => $this->page->theme->settings->$subtitle,
                 ];
                 $slides[] = $slide;
             }
@@ -1073,7 +1073,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 'carouselplaybutton' => $carouselplaybutton,
                 'carouselpausebutton' => $carouselpausebutton,
                 'covercarousellabel' => $covercarousellabel,
-                'carouselhidecontrols' => $carouselhidecontrols];
+                'carouselhidecontrols' => $carouselhidecontrols, ];
         $data['slides'] = $slides;
         return $this->render_from_template('theme_snap/carousel', $data);
     }
@@ -1315,7 +1315,7 @@ HTML;
             get_string('morenews', 'theme_snap'),
             ['class' => 'btn btn-secondary',
              'role' => 'button',
-             'tabindex' => 0]
+             'tabindex' => 0, ]
         );
         if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
             $actionlinks .= html_writer::link(
@@ -1323,7 +1323,7 @@ HTML;
                 get_string('addanewtopic', 'forum'),
                 ['class' => 'btn btn-primary',
                     'role' => 'button',
-                    'tabindex' => 0]
+                    'tabindex' => 0, ]
             );
         }
         $output .= html_writer::end_div();
@@ -1834,7 +1834,7 @@ HTML;
             foreach ($roles as $key => $name) {
                 $url = new moodle_url('/course/switchrole.php', array(
                     'id' => $course->id, 'sesskey' => sesskey(),
-                    'switchrole' => $key, 'returnurl' => $this->page->url->out_as_local_url(false)));
+                    'switchrole' => $key, 'returnurl' => $this->page->url->out_as_local_url(false), ));
                 $switchroles->add($name, $url, navigation_node::TYPE_SETTING, null, $key, new \pix_icon('i/switchrole', ''));
             }
         }

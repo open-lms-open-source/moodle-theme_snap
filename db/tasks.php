@@ -32,7 +32,7 @@ $tasks = [
         'hour'      => '1',
         'day'       => '*',
         'dayofweek' => '1-5',
-        'month'     => '*'
+        'month'     => '*',
     ], [
         'classname' => '\theme_snap\task\reset_deadlines_query_count_task',
         'blocking'  => 0,
@@ -40,6 +40,6 @@ $tasks = [
         'hour'      => '*',
         'day'       => '*',
         'dayofweek' => '*',
-        'month'     => '*'
+        'month'     => '*',
     ],
 ];

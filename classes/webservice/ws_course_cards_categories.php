@@ -51,7 +51,7 @@ class ws_course_cards_categories extends \external_api {
      */
     public static function service_parameters() {
         $parameters = [
-            'page' => new \external_value(PARAM_TEXT, 'Page', VALUE_DEFAULT, 0)
+            'page' => new \external_value(PARAM_TEXT, 'Page', VALUE_DEFAULT, 0),
         ];
         return new \external_function_parameters($parameters);
     }
@@ -190,12 +190,12 @@ class ws_course_cards_categories extends \external_api {
             if ((int)$course->stamp != 0) {
                 $categories[] = (object)[
                     'category' => (string)$course->cat_year,
-                    'courses' => $course->courses
+                    'courses' => $course->courses,
                 ];
             } else {
                 $categories[] = (object)[
                     'category' => 'current',
-                    'courses' => $course->courses
+                    'courses' => $course->courses,
                 ];
             }
         }

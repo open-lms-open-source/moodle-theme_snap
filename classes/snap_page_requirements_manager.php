@@ -43,7 +43,7 @@ class snap_page_requirements_manager extends \page_requirements_manager {
      */
     public function js_init_call($function, array $extraarguments = null, $ondomready = false, array $module = null) {
         $blacklist = [
-            'M.core_completion.init'
+            'M.core_completion.init',
         ];
         if (in_array($function, $blacklist)) {
             return;

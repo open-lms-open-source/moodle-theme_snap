@@ -74,7 +74,7 @@ class admin_setting_configcolorwithcontrast extends \admin_setting_configcolourp
                 $message = get_string('spotinvalidratio', 'theme_snap',
                     [
                         'name' => $additionalinfo,
-                        'value' => number_format((float)$contrast, 2)
+                        'value' => number_format((float)$contrast, 2),
                     ]);
             } else {
                 $message = get_string('invalidratio', 'theme_snap', number_format((float)$contrast, 2));

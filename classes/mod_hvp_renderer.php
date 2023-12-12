@@ -48,7 +48,7 @@ if (file_exists($h5prenderer)) {
             if (!empty($content)) {
                 $styles[] = (object) array(
                     'path' => $this->get_style_url($content),
-                    'version' => ''
+                    'version' => '',
                 );
             }
         }

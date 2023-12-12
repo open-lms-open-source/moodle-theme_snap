@@ -58,7 +58,7 @@ class activity_test extends snap_base_test {
         $params = [
             'course' => $courseid,
             'duedate' => $duedate,
-            'grade' => 100
+            'grade' => 100,
         ];
         foreach ($opts as $key => $val) {
             // Overwrite or add opt vals to params.
@@ -101,7 +101,7 @@ class activity_test extends snap_base_test {
         $params = [
             'course' => $courseid,
             'timeclose' => $duedate,
-            'grade' => 100
+            'grade' => 100,
         ];
         foreach ($opts as $key => $val) {
             // Overwrite or add opt vals to params.
@@ -137,7 +137,7 @@ class activity_test extends snap_base_test {
             'completionexpected' => $duedate,
             'grade' => 100,
             'completion' => 2,
-            'completionview' => 1
+            'completionview' => 1,
         ];
         foreach ($opts as $key => $val) {
             // Overwrite or add opt vals to params.
@@ -226,7 +226,7 @@ class activity_test extends snap_base_test {
         }
         if (!$existingovd) {
             $overridedata = (object)[$fkeyfield => $elementid, $typefield => $typeid,
-                $ovdfield => $ovdval];
+                $ovdfield => $ovdval, ];
             if (!empty($sortorder)) {
                 $overridedata->sortorder = $sortorder;
             }
@@ -416,7 +416,7 @@ class activity_test extends snap_base_test {
             'cm' => $cm,
             'group' => $group,
             'assign' => $assignobj->get_instance(),
-            'assignobj' => $assignobj
+            'assignobj' => $assignobj,
         ];
     }
 
@@ -839,28 +839,28 @@ class activity_test extends snap_base_test {
             (object)[
                 'modulename' => 'assign',
                 'instance' => '1000',
-                'id' => '1'
+                'id' => '1',
             ],
             (object)[
                 'modulename' => 'quiz',
                 'instance' => '99',
-                'id' => '2'
+                'id' => '2',
             ],
             (object)[
                 'modulename' => 'assign',
                 'instance' => '1000',
-                'id' => '3'
+                'id' => '3',
             ],
             (object)[
                 'modulename' => 'lesson',
                 'instance' => '1000', // Here to check it doesn't interfere with assign.
-                'id' => '4'
+                'id' => '4',
             ],
             (object)[
                 'modulename' => 'assign',
                 'instance' => '1000',
-                'id' => '5'
-            ]
+                'id' => '5',
+            ],
         ];
 
         $events = \phpunit_util::call_internal_method(null, 'hash_events_by_module_instance', [$events],
@@ -1111,39 +1111,39 @@ class activity_test extends snap_base_test {
         $assigngen->create_instance([
             'name' => 'Assign 1',
             'course' => $course->id,
-            'duedate' => $approachingdeadline
+            'duedate' => $approachingdeadline,
         ]);
         $assigngen->create_instance([
             'name' => 'Assign 2',
             'course' => $course->id,
-            'duedate' => strtotime('tomorrow') + HOURSECS * 2 // Add two hours so that test works at 23:30.
+            'duedate' => strtotime('tomorrow') + HOURSECS * 2, // Add two hours so that test works at 23:30.
         ]);
         $assigngen->create_instance([
             'name' => 'Assign 3',
             'course' => $course->id,
-            'duedate' => strtotime('next week')
+            'duedate' => strtotime('next week'),
         ]);
         $assigngen->create_instance([
             'name' => 'Assign 4',
             'course' => $course->id,
-            'duedate' => $deadlinepast
+            'duedate' => $deadlinepast,
         ]);
 
         $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
         $quizgen->create_instance([
             'name' => 'Quiz 1',
             'course' => $course->id,
-            'timeclose' => $approachingdeadline + 1 // Add 1 second so that Quiz deadlines sort predictably after Assign.
+            'timeclose' => $approachingdeadline + 1, // Add 1 second so that Quiz deadlines sort predictably after Assign.
         ]);
         $quizgen->create_instance([
             'name' => 'Quiz 2',
             'course' => $course->id,
-            'timeclose' => strtotime('tomorrow') + (HOURSECS * 2) + 1 // Add two hours so that test works at 23:30.
+            'timeclose' => strtotime('tomorrow') + (HOURSECS * 2) + 1, // Add two hours so that test works at 23:30.
         ]);
         $quizgen->create_instance([
             'name' => 'Quiz 3',
             'course' => $course->id,
-            'timeclose' => strtotime('next month') + 1
+            'timeclose' => strtotime('next month') + 1,
         ]);
 
         // 5 items should be shown as final deadline 3rd quiz gets cut off and assignment with past deadline should not
@@ -1190,7 +1190,7 @@ class activity_test extends snap_base_test {
             'GMT+10' => 'Pacific/Guam',
             'GMT+11' => 'Pacific/Efate',
             'GMT+12' => 'Asia/Anadyr',
-            'GMT+13' => 'Pacific/Apia'
+            'GMT+13' => 'Pacific/Apia',
         ];
 
         foreach ($timezones as $offset => $tz) {
@@ -1351,7 +1351,7 @@ class activity_test extends snap_base_test {
     protected function get_date_condition_json($time, $comparator = '>=') {
         return json_encode(
             \core_availability\tree::get_root_json(
-                [\availability_date\condition::get_json($comparator, $time)
+                [\availability_date\condition::get_json($comparator, $time),
                 ]
             )
         );
@@ -1438,7 +1438,7 @@ class activity_test extends snap_base_test {
                 \core_availability\tree::get_root_json(
                     [\availability_group\condition::get_json($group1->id)]
                 )
-            )
+            ),
         ];
         $duedate1 = time() + (DAYSECS * 2);
         $this->create_assignment($course->id, $duedate1, $opts);
@@ -1449,7 +1449,7 @@ class activity_test extends snap_base_test {
                 \core_availability\tree::get_root_json(
                     [\availability_group\condition::get_json($group2->id)]
                 )
-            )
+                ),
         ];
         $duedate2 = time() + (DAYSECS * 3);
         $this->create_assignment($course->id, $duedate2, $opts);
@@ -1736,9 +1736,9 @@ class activity_test extends snap_base_test {
         $lti1 = $this->getDataGenerator()->create_module('lti', ['course' => $course->id],
             ['completionexpected' => $todayts + WEEKSECS, 'completion' => 2, 'completionview' => 1]);
         $lti2 = $this->getDataGenerator()->create_module('lti', ['course' => $course->id,
-            'icon' => 'https://upload.wikimedia.org/wikipedia/commons/1/15/Wireless-icon.svg'],
+            'icon' => 'https://upload.wikimedia.org/wikipedia/commons/1/15/Wireless-icon.svg', ],
             ['completionexpected' => $todayts + WEEKSECS,
-                'completion' => 2, 'completionview' => 1]);
+                'completion' => 2, 'completionview' => 1, ]);
 
         $deadlines = local::get_feed('deadlines');
         $this->assertStringContainsString('boost/lti/1/icon', $deadlines[0]['iconUrl']);
@@ -1803,7 +1803,7 @@ class activity_test extends snap_base_test {
 
         $dg = $this->getDataGenerator();
         $student = $dg->create_user([
-            'lastlogin' => (new \DateTime('1 week ago', \core_date::get_server_timezone_object()))->getTimestamp()
+            'lastlogin' => (new \DateTime('1 week ago', \core_date::get_server_timezone_object()))->getTimestamp(),
         ]);
         $teacher = $dg->create_user();
         $course = $dg->create_course();
@@ -1833,7 +1833,7 @@ class activity_test extends snap_base_test {
         if ($snapfeedsblockexists) {
             // Snap feeds block test for deadlines refresh. This works w.o the block b/c we use only DB data.
             $snapdeadlinesconfigdata = (object) [
-                'feedtype' => 'deadlines'
+                'feedtype' => 'deadlines',
             ];
             $time = new \DateTime("now", \core_date::get_user_timezone_object());
 
@@ -1846,7 +1846,7 @@ class activity_test extends snap_base_test {
                 'configdata' => base64_encode(serialize($snapdeadlinesconfigdata)),
                 'showinsubcontexts' => 1,
                 'timecreated' => $time->getTimestamp(),
-                'timemodified' => $time->getTimestamp()
+                'timemodified' => $time->getTimestamp(),
             ];
             $DB->insert_record('block_instances', $blockinsert);
         }

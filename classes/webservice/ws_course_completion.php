@@ -36,7 +36,7 @@ class ws_course_completion extends \external_api {
         $parameters = [
             'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
             'unavailablesections' => new \external_value(PARAM_SEQUENCE, 'Unvailable section ids', VALUE_REQUIRED),
-            'unavailablemods' => new \external_value(PARAM_SEQUENCE, 'Unvailable module ids', VALUE_REQUIRED)
+            'unavailablemods' => new \external_value(PARAM_SEQUENCE, 'Unvailable module ids', VALUE_REQUIRED),
         ];
         return new \external_function_parameters($parameters);
     }
@@ -52,7 +52,7 @@ class ws_course_completion extends \external_api {
                 new \external_single_structure(
                     [
                         'number' => new \external_value(PARAM_INT, 'section number'),
-                        'html'   => new \external_value(PARAM_RAW, 'html')
+                        'html'   => new \external_value(PARAM_RAW, 'html'),
                     ],
                     'Newly available sections', VALUE_REQUIRED
                 )
@@ -61,7 +61,7 @@ class ws_course_completion extends \external_api {
                 new \external_single_structure(
                     [
                         'id' => new \external_value(PARAM_INT, 'id'),
-                        'html' => new \external_value(PARAM_RAW, 'html')
+                        'html' => new \external_value(PARAM_RAW, 'html'),
                     ],
                     'Newly available mods', VALUE_REQUIRED
                 )
@@ -69,7 +69,7 @@ class ws_course_completion extends \external_api {
             'toc' => new \external_single_structure(
                 definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc'),
                 'Table of contents', VALUE_REQUIRED
-            )
+            ),
         ];
         return new \external_single_structure($keys, 'course_completion');
     }

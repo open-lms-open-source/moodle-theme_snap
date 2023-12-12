@@ -50,7 +50,7 @@ class webservice_ws_course_toc_test extends \advanced_testcase {
         $toc = new \theme_snap\renderables\course_toc($course, $nullformat, $loadmodules);
 
         $expected = [
-            'toc' => $toc->export_for_template($OUTPUT)
+            'toc' => $toc->export_for_template($OUTPUT),
         ];
 
         $serviceresult = \theme_snap\webservice\ws_course_sections::service($course->shortname, $action, 0, 0, 0);

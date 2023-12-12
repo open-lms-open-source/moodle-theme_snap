@@ -185,7 +185,7 @@ $THEME->layouts = array(
     // Embeded pages, like iframe/object embeded in moodleform - it needs as much space as possible.
     'embedded' => array(
         'file' => 'embedded.php',
-        'regions' => array()
+        'regions' => array(),
     ),
     // Used during upgrade and install, and for the 'This site is undergoing maintenance' message.
     // This must not have any blocks, links, or API calls that would lead to database or cache interaction.
@@ -227,7 +227,7 @@ $THEME->hidefromselector = false;
 // For use with Flexpage layouts.
 $THEME->blockrtlmanipulations = array(
     'side-pre' => 'side-post',
-    'side-post' => 'side-pre'
+    'side-post' => 'side-pre',
 );
 
 if ($themeissnap && $notajaxscript) {

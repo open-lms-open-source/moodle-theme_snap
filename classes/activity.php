@@ -1067,7 +1067,7 @@ class activity {
                 $instdates = (object)[
                     'timeopen' => $timeopen,
                     'timeclose' => $timeclose,
-                    'fromcache' => false
+                    'fromcache' => false,
                 ];
                 $moddates[$courseid . '_' . $modname][$assigninstance] = $instdates;
             }
@@ -1108,7 +1108,7 @@ class activity {
                 $instdates = (object)[
                     'timeopen' => $timeopen,
                     'timeclose' => $timeclose,
-                    'fromcache' => $eventsfromcache
+                    'fromcache' => $eventsfromcache,
                 ];
 
                 if ($event->modulename === $modname) {
@@ -1167,7 +1167,7 @@ class activity {
             'modname' => $mod->modname,
             'courseid1' => $courseid,
             'courseid2' => $courseid,
-            'userid' => $USER->id
+            'userid' => $USER->id,
         );
         $grades[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, $params);
 
@@ -1354,7 +1354,7 @@ class activity {
             'timestamp' => null,
             'events' => [],
             'courses' => [],
-            'fromcache' => false
+            'fromcache' => false,
         ];
 
         if (empty($courses)) {
@@ -1529,7 +1529,7 @@ class activity {
             'timestamp' => null,
             'events' => [],
             'courses' => [],
-            'fromcache' => false
+            'fromcache' => false,
         ];
 
         if (empty($courses)) {

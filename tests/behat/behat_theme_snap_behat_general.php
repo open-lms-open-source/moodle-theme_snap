@@ -74,7 +74,7 @@ class behat_theme_snap_behat_general extends behat_general {
      */
     protected function check_text_visible_in_nodes($nodes, $text, $element = false) {
         $args = [
-            'nodes' => $nodes, 'text' => $text, 'element' => $element
+            'nodes' => $nodes, 'text' => $text, 'element' => $element,
         ];
 
         $this->spin(
@@ -96,7 +96,7 @@ class behat_theme_snap_behat_general extends behat_general {
             $args,
             false,
             false,
-            true
+            true,
         );
     }
 
