@@ -104,7 +104,7 @@ class mediaresource_controller extends controller_abstract {
         // Trigger module instance viewed event.
         $event = \mod_resource\event\course_module_viewed::create(array(
             'objectid' => $cm->instance,
-            'context' => $context
+            'context' => $context,
         ));
         $resource = $DB->get_record('resource', array('id' => $cm->instance));
         $event->add_record_snapshot('course_modules', $cm);
@@ -133,7 +133,7 @@ class mediaresource_controller extends controller_abstract {
 
         return json_encode(array(
             'html' => $media->content,
-            'completionhtml' => $media->completionhtml
+            'completionhtml' => $media->completionhtml,
         ));
     }
 

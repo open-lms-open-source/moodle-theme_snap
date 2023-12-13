@@ -83,7 +83,7 @@ class local {
         global $USER;
 
         $failobj = (object) [
-            'coursegrade' => false
+            'coursegrade' => false,
         ];
 
         $config = get_config('theme_snap');
@@ -125,7 +125,7 @@ class local {
         // Default feedbackobj.
         $feedbackobj = (object) [
             'feedbackurl' => $feedbackurl->out(),
-            'showgrade' => $config->showcoursegradepersonalmenu
+            'showgrade' => $config->showcoursegradepersonalmenu,
         ];
 
         if (!$coursegrade->is_hidden() || $canviewhidden) {
@@ -134,7 +134,7 @@ class local {
                     'type' => 'report',
                     'plugin' => 'overview',
                     'courseid' => $course->id,
-                    'userid' => $USER->id)
+                    'userid' => $USER->id, )
             );
 
             // Create a report instance.
@@ -144,7 +144,7 @@ class local {
                 '',
                 '-',
                 '&nbsp;',
-                get_string('error')
+                get_string('error'),
             ];
             if (!in_array($coursegrade['value'], $ignoregrades)) {
                 $feedbackobj->coursegrade = $coursegrade;
@@ -347,7 +347,7 @@ class local {
             'total' => null,
             'progress' => null,
             'fromcache' => false, // Useful for debugging and unit testing.
-            'render' => false // Template flag.
+            'render' => false, // Template flag.
         ];
         $completioninfo = new \completion_info($course);
 
@@ -400,7 +400,7 @@ class local {
                 'progress' => $progresspercent,
                 'timestamp' => microtime(true),
                 'fromcache' => false,
-                'render' => true
+                'render' => true,
             ];
         } else {
             // Everything except timestamp is null because nothing is trackable at the moment.
@@ -484,7 +484,7 @@ class local {
 
             $courseinfo[$courseid] = (object) array(
                 'course' => $courseid,
-                'completion' => self::course_completion_progress($course)
+                'completion' => self::course_completion_progress($course),
             );
 
             if (!empty($showgrades)) {
@@ -744,7 +744,7 @@ class local {
             // the specific message in the message index page.
             $url = new \moodle_url('/message/index.php', array(
                 'viewing' => 'unread',
-                'user2' => $message->useridfrom)
+                'user2' => $message->useridfrom, )
             );
 
             if (!$renderhtml) {
@@ -789,7 +789,7 @@ class local {
                 'description'  => $meta,
                 'extraClasses' => $unreadclass,
                 'fromCache'    => 0,
-                'itemId'    => $message->uniqueid
+                'itemId'    => $message->uniqueid,
             ];
         }
         return $res;
@@ -813,7 +813,7 @@ class local {
         $datetime = date(\DateTime::W3C, $timeinpast);
         return html_writer::tag('time', $relativetext, array(
             'is' => 'relative-time',
-            'datetime' => $datetime)
+            'datetime' => $datetime, )
         );
     }
 
@@ -1222,7 +1222,7 @@ class local {
             'jpg'  => 'image/jpeg',
             'gif'  => 'image/gif',
             'png'  => 'image/png',
-            'svg'  => 'image/svg'
+            'svg'  => 'image/svg',
         ];
         foreach ($supportedexts as $ext) {
             if (in_array($ext, $supportedexts) && isset($typemaps[$ext])) {
@@ -1497,7 +1497,7 @@ class local {
         $filenamemap = [
             CONTEXT_SYSTEM => 'site-image',
             CONTEXT_COURSECAT => 'category-image',
-            CONTEXT_COURSE => 'course-image'
+            CONTEXT_COURSE => 'course-image',
         ];
 
         if (empty($filenamemap[$contextlevel])) {
@@ -1765,7 +1765,7 @@ class local {
                                      'sepgps1a' => SEPARATEGROUPS,
                                      'sepgps2a' => SEPARATEGROUPS,
                                      'user1a'   => $user->id,
-                                     'user2a'   => $user->id
+                                     'user2a'   => $user->id,
 
                                  ]
             );
@@ -1820,7 +1820,7 @@ class local {
                                       'user1b'   => $user->id,
                                       'user2b'   => $user->id,
                                       'user3b'   => $user->id,
-                                      'user4b'   => $user->id
+                                      'user4b'   => $user->id,
                                   ]
             );
 
@@ -1883,14 +1883,14 @@ class local {
                     'lastname' => $post->lastname,
                     'picture' => $post->picture,
                     'imagealt' => $post->imagealt,
-                    'email' => $post->email
+                    'email' => $post->email,
                 ];
 
                 if ($post->type === 'hsuforum') {
                     $postuser = hsuforum_anonymize_user($postuser, (object)array(
                         'id' => $post->forum,
                         'course' => $post->course,
-                        'anonymous' => $post->forumanonymous
+                        'anonymous' => $post->forumanonymous,
                     ), $post);
                 }
 
@@ -1907,9 +1907,9 @@ class local {
                         'id' => $post->postid,
                         'discussion' => $post->discussion,
                         'subject' => $post->subject,
-                        'parent' => $post->parent
+                        'parent' => $post->parent,
                     ],
-                    'user' => $postuser
+                    'user' => $postuser,
                 ];
             }
         }
@@ -2159,7 +2159,7 @@ class local {
 SQL;
             $params = [
                 'userid' => $user->id,
-                'fieldid' => $fieldnameorid
+                'fieldid' => $fieldnameorid,
             ];
             $value = $DB->get_field_sql($sql, $params);
         }

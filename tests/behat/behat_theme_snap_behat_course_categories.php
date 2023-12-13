@@ -163,7 +163,7 @@ class behat_theme_snap_behat_course_categories extends behat_base {
 
         $event = \core\event\course_category_created::create(array(
             'objectid' => $newcategory->id,
-            'context' => $categorycontext
+            'context' => $categorycontext,
         ));
         $event->trigger();
 

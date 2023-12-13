@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\renderables\featured_courses;
 
-if (isloggedin() and !isguestuser() and isset($CFG->frontpageloggedin)) {
+if (isloggedin() && !isguestuser() && isset($CFG->frontpageloggedin)) {
     $frontpagelayout = $CFG->frontpageloggedin;
 } else {
     $frontpagelayout = $CFG->frontpage;

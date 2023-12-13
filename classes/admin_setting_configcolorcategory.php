@@ -61,7 +61,7 @@ class admin_setting_configcolorcategory extends \admin_setting_configtext {
 
         $default = $this->get_defaultsetting();
         $defaultinfo = $default;
-        if (!is_null($default) and $default !== '') {
+        if (!is_null($default) && $default !== '') {
             $defaultinfo = "\n".$default;
         }
 
@@ -79,7 +79,7 @@ class admin_setting_configcolorcategory extends \admin_setting_configtext {
             $contrastmessage = get_string('catinvalidratio', 'theme_snap', [
                     'white' => implode(', ', $failedcontrast['white']),
                     'custombar' => implode(', ', $failedcontrast['custombar']),
-                    'customnav' => implode(', ', $failedcontrast['customnav'])
+                    'customnav' => implode(', ', $failedcontrast['customnav']),
                 ]);
 
             $element .= $OUTPUT->notification($contrastmessage, \core\output\notification::NOTIFY_WARNING);

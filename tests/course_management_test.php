@@ -45,7 +45,7 @@ class course_management_test extends \advanced_testcase {
 
         $rendercategory = \core_course_category::get($catrecord->id);
         $courserecord = $generator->create_course([
-            'category' => $catrecord->id
+            'category' => $catrecord->id,
         ]);
         $rendercourse = new \core_course_list_element($courserecord);
 

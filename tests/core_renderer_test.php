@@ -116,36 +116,36 @@ class core_renderer_test extends \advanced_testcase {
                 [
                     [
                         'text' => 'Home',
-                        'key' => 'home'
+                        'key' => 'home',
                     ],
                     [
                         'text' => 'Home',
-                        'key' => 'home'
+                        'key' => 'home',
                     ],
                     [
                         'text' => 'Preferences',
-                        'key' => 'preferences'
+                        'key' => 'preferences',
                     ],
                 ],
-                ['Home', 'Preferences']
+                ['Home', 'Preferences'],
             ],
             'Breadcrumb items based on course view.' => [
                 [
                     [
                         'text' => 'Home',
-                        'key' => 'home'
+                        'key' => 'home',
                     ],
                     [
                         'text' => 'My Courses',
-                        'key' => 'my_courses'
+                        'key' => 'my_courses',
                     ],
                     [
                         'text' => 'Course 1',
-                        'key' => 'course1'
+                        'key' => 'course1',
                     ],
                 ],
-                ['Home', 'My Courses', 'Course 1']
-            ]
+                ['Home', 'My Courses', 'Course 1'],
+            ],
         ];
     }
 

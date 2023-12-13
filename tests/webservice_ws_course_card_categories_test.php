@@ -52,7 +52,7 @@ class webservice_ws_course_card_categories_test extends \advanced_testcase {
         // Create course.
         $course = $this->getDataGenerator()->create_course([
             'startdate' => '1252304000',
-            'enddate' => '1262304000'
+            'enddate' => '1262304000',
         ]);
         // Enrol student.
         $this->getDataGenerator()->enrol_user($user->id,
@@ -62,7 +62,7 @@ class webservice_ws_course_card_categories_test extends \advanced_testcase {
         // Create course.
         $course = $this->getDataGenerator()->create_course([
             'startdate' => '1352304000',
-            'enddate' => '1362304000'
+            'enddate' => '1362304000',
         ]);
         // Enrol student.
         $this->getDataGenerator()->enrol_user($user->id,
@@ -72,7 +72,7 @@ class webservice_ws_course_card_categories_test extends \advanced_testcase {
         // Create course.
         $course = $this->getDataGenerator()->create_course([
             'startdate' => '1452304000',
-            'enddate' => '1462304000'
+            'enddate' => '1462304000',
         ]);
         // Enrol student.
         $this->getDataGenerator()->enrol_user($user->id,

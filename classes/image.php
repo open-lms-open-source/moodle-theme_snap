@@ -158,7 +158,7 @@ class image {
 
         if (\function_exists('imagecreatetruecolor')) {
             $newimage = \imagecreatetruecolor($newwidth, $newheight);
-            if ($imageinfo->mimetype != 'image/jpeg' and $imagefnc === 'imagepng') {
+            if ($imageinfo->mimetype != 'image/jpeg' && $imagefnc === 'imagepng') {
                 if ($t) {
                     // Transparent GIF hacking...
                     $transparentcolour = \imagecolorallocate($newimage , $t['red'] , $t['green'] , $t['blue']);
@@ -183,7 +183,7 @@ class image {
             'component' => $component,
             'filearea' => $filearea,
             'itemid' => $itemid,
-            'filepath' => '/'
+            'filepath' => '/',
         );
 
         \ob_start();

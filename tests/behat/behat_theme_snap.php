@@ -257,7 +257,7 @@ class behat_theme_snap extends behat_base {
             'filearea' => 'private',
             'itemid' => 0,
             'filepath' => '/',
-            'filename' => 'test.png');
+            'filename' => 'test.png', );
 
         $fs->create_file_from_pathname($fileinfo, $CFG->dirroot . "/theme/snap/tests/fixtures/testpng.png");
 
@@ -358,7 +358,7 @@ class behat_theme_snap extends behat_base {
             $user = $DB->get_record('user', ['username' => $row['username']]);
             $grades[$user->id] = (object) [
                 'rawgrade' => $row['grade'],
-                'userid' => $user->id
+                'userid' => $user->id,
             ];
 
             $assignrow->cmidnumber = null;
@@ -369,7 +369,7 @@ class behat_theme_snap extends behat_base {
                     $formdata = (object)[
                         'id' => $cm->id,
                         'assignfeedbackcomments_editor[text]' => $row['feedback'],
-                        'assignfeedbackcomments_editor[format]' => FORMAT_HTML
+                        'assignfeedbackcomments_editor[format]' => FORMAT_HTML,
                     ];
                     if (!$commentsplugin->save_settings($formdata)) {
                         throw new moodle_exception($commentsplugin->get_error());
@@ -1201,7 +1201,7 @@ class behat_theme_snap extends behat_base {
             $sectionnumber = $section - 1;
         }
         $expectedtitle = '<span class="nav_guide" section-number="' . $sectionnumber . '">' . $ttype
-            . ' section</span><br>'.htmlentities($linktitle);
+            . ' section</span><br>'.htmlentities($linktitle, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401);
         if (strtolower($title) !== strtolower($expectedtitle)) {
             $msg = $ttype.' title does not match expected "' . $expectedtitle . '"' . ' V "' . $title .
                     '" - selector = "'.$titleselector.'"';

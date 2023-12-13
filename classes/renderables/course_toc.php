@@ -265,7 +265,7 @@ class course_toc implements \renderable, \templatable {
         $this->footer = (object) [
             'canaddnewsection' => has_capability('moodle/course:update', context_course::instance($this->course->id)),
             'imgurladdnewsection' => $OUTPUT->image_url('pencil', 'theme'),
-            'imgurltools' => $OUTPUT->image_url('course_dashboard', 'theme')
+            'imgurltools' => $OUTPUT->image_url('course_dashboard', 'theme'),
         ];
     }
 

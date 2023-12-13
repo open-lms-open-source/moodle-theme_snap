@@ -66,7 +66,7 @@ class services_course_test extends \advanced_testcase {
             $startdate = $enddate - YEARSECS;
             $record = (object) [
                 'startdate' => $startdate,
-                'enddate' => $enddate
+                'enddate' => $enddate,
             ];
             $this->courses[] = $this->getDataGenerator()->create_course($record);
         }
@@ -129,7 +129,7 @@ class services_course_test extends \advanced_testcase {
             $this->courses[11]->id,
             $this->courses[12]->id,
             $this->courses[13]->id,
-            $this->courses[14]->id
+            $this->courses[14]->id,
         ];
 
         // Collapse pastcourses (currently hashed by year).
@@ -143,7 +143,7 @@ class services_course_test extends \advanced_testcase {
         }
         $expectedfavorites = [
             $this->courses[0]->id,
-            $this->courses[1]->id
+            $this->courses[1]->id,
         ];
         $this->assertEquals($expectedfavorites, array_keys($favorites));
 
@@ -192,7 +192,7 @@ class services_course_test extends \advanced_testcase {
         // Create course with completion tracking enabled.
         $course = $generator->create_course([
             'enablecompletion' => 1,
-            'numsections' => 3
+            'numsections' => 3,
         ], ['createsections' => true]);
 
         // Enrol user to completion tracking course.
@@ -220,7 +220,7 @@ class services_course_test extends \advanced_testcase {
         $sectionupdate = [
             'id' => $section->id,
             'availability' => json_encode(\core_availability\tree::get_root_json(
-                [\availability_completion\condition::get_json($page1->cmid, COMPLETION_COMPLETE)], '&'))
+                [\availability_completion\condition::get_json($page1->cmid, COMPLETION_COMPLETE)], '&')),
         ];
         $DB->update_record('course_sections', $sectionupdate);
 
@@ -272,7 +272,7 @@ class services_course_test extends \advanced_testcase {
         $course = $generator->create_course([
             'shortname' => 'testlistlarge',
             'format' => 'topics',
-            'numsections' => 10
+            'numsections' => 10,
         ], ['createsections' => true]);
         $page = $generator->create_module('page', array('course' => $course->id, 'name' => 'test page'));
 
@@ -288,7 +288,7 @@ class services_course_test extends \advanced_testcase {
         $generator->create_course([
             'shortname' => 'testlistsmall',
             'format' => 'topics',
-            'numsections' => 9
+            'numsections' => 9,
         ], ['createsections' => true]);
         $toc = $this->courseservice->course_toc('testlistsmall');
         $this->assertNotEquals('list-large', $toc->chapters->listlarge);
@@ -297,7 +297,7 @@ class services_course_test extends \advanced_testcase {
         $generator->create_course([
             'shortname' => 'socialcourse',
             'format' => 'social',
-            'numsections' => 2
+            'numsections' => 2,
         ], ['createsections' => true]);
         $toc = $this->courseservice->course_toc('socialcourse');
         $this->assertFalse($toc->formatsupportstoc);
@@ -310,7 +310,7 @@ class services_course_test extends \advanced_testcase {
         $generator->create_course([
             'shortname' => 'testcourse',
             'format' => 'topics',
-            'numsections' => 2
+            'numsections' => 2,
         ], ['createsections' => true]);
         $chapters = $this->courseservice->course_toc_chapters('testcourse');
 
@@ -326,7 +326,7 @@ class services_course_test extends \advanced_testcase {
         $course = $generator->create_course([
             'shortname' => 'testcourse',
             'format' => 'topics',
-            'numsections' => count($titles) - 1
+            'numsections' => count($titles) - 1,
         ], ['createsections' => true]);
 
         // Get section names for course.
@@ -347,7 +347,7 @@ class services_course_test extends \advanced_testcase {
         $pattern = '/>(.*)<\/a>/';
         preg_match_all($pattern, $tochtml, $matches);
         for ($x = 0; $x < count($titles); $x++) {
-            $this->assertEquals(htmlspecialchars($titles[$x]), $matches[1][$x]);
+            $this->assertEquals(htmlspecialchars($titles[$x], ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401), $matches[1][$x]);
         }
     }
 
@@ -358,7 +358,7 @@ class services_course_test extends \advanced_testcase {
         $generator->create_course([
             'shortname' => 'testcourse',
             'format' => 'topics',
-            'numsections' => 5
+            'numsections' => 5,
         ], ['createsections' => true]);
 
         $this->setAdminUser();
@@ -393,7 +393,7 @@ class services_course_test extends \advanced_testcase {
         $generator->create_course([
             'shortname' => 'testcourse',
             'format' => 'topics',
-            'numsections' => 5
+            'numsections' => 5,
         ], ['createsections' => true]);
 
         $this->setAdminUser();
@@ -470,7 +470,7 @@ class services_course_test extends \advanced_testcase {
         $course = $generator->create_course([
             'shortname' => 'testcourse',
             'format' => 'topics',
-            'numsections' => 5
+            'numsections' => 5,
         ], ['createsections' => true]);
 
         $this->assertEquals(6, $this->count_course_sections($course->id));
@@ -501,7 +501,7 @@ class services_course_test extends \advanced_testcase {
         // Create course with completion tracking enabled.
         $course = $generator->create_course([
             'enablecompletion' => 1,
-            'numsections' => 3
+            'numsections' => 3,
         ], ['createsections' => true]);
 
         // Enrol user to completion tracking course.
@@ -565,7 +565,7 @@ class services_course_test extends \advanced_testcase {
             $topics->id,
             'editingteacher');
         $this->getDataGenerator()->create_module('assign', ['course' => $topics->id, 'section' => 1,
-            'name' => 'Section Assign']);
+            'name' => 'Section Assign', ]);
         $params = ['courseid' => $topics->id, 'section' => 1];
         $this->setUser($student);
         $section = theme_snap_output_fragment_section($params);
@@ -574,7 +574,7 @@ class services_course_test extends \advanced_testcase {
         $this->assertStringNotContainsString('snap-modchooser', $section);
         $this->assertStringContainsString('Section Assign', $section);
         $this->getDataGenerator()->create_module('forum', ['course' => $topics->id, 'section' => 2,
-            'name' => 'Fragment forum']);
+            'name' => 'Fragment forum', ]);
         $params['section'] = 2;
         $section = theme_snap_output_fragment_section($params);
         $this->assertStringContainsString('Fragment forum', $section);

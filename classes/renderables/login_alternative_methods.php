@@ -63,7 +63,7 @@ class login_alternative_methods implements \renderable {
                 $this->potentialidps[] = (object) [
                     'url' => $idp['url']->out(),
                     'name' => $idp['name'],
-                    'icon' => $icon
+                    'icon' => $icon,
                 ];
             }
         }

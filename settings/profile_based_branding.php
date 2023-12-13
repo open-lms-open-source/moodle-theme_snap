@@ -48,7 +48,7 @@ $fields = [
 
 // Get the profile fields which are string type.
 $params = [
-    'datatype' => 'text'
+    'datatype' => 'text',
 ];
 $sql = <<<SQL
         SELECT uf.id, uf.name, cat.name as category

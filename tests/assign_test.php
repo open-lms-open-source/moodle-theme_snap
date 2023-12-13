@@ -25,8 +25,8 @@
 namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
-use \theme_snap\local;
-use \theme_snap\activity;
+use theme_snap\local;
+use theme_snap\activity;
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/assign/tests/base_test.php');
@@ -46,7 +46,7 @@ class assign_test extends \mod_assign\base_test {
                                                'attemptreopenmethod' => ASSIGN_ATTEMPT_REOPEN_METHOD_MANUAL,
                                                'maxattempts' => 3,
                                                'submissiondrafts' => 1,
-                                               'assignsubmission_onlinetext_enabled' => 1));
+                                               'assignsubmission_onlinetext_enabled' => 1, ));
 
         // Add a submission.
         $this->setUser($this->students[0]);
@@ -54,7 +54,7 @@ class assign_test extends \mod_assign\base_test {
         $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
                                          'text' => 'Submission text',
-                                         'format' => FORMAT_HTML);
+                                         'format' => FORMAT_HTML, );
         $plugin = $assign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -92,7 +92,7 @@ class assign_test extends \mod_assign\base_test {
         $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
                                          'text' => 'Submission text 2',
-                                         'format' => FORMAT_HTML);
+                                         'format' => FORMAT_HTML, );
         $plugin = $assign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -137,7 +137,7 @@ class assign_test extends \mod_assign\base_test {
         $assign = $this->create_instance([
             'duedate' => time() - (4 * DAYSECS),
             'assignsubmission_onlinetext_enabled' => 1,
-            'name' => 'Overdue Assignment Test'
+            'name' => 'Overdue Assignment Test',
         ]);
 
         $this->setUser($this->students[0]);
@@ -180,7 +180,7 @@ class assign_test extends \mod_assign\base_test {
         $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
                                          'text' => 'Submission text',
-                                         'format' => FORMAT_HTML);
+                                         'format' => FORMAT_HTML, );
         $plugin = $assign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
         $submission->status = ASSIGN_SUBMISSION_STATUS_SUBMITTED;
@@ -208,7 +208,7 @@ class assign_test extends \mod_assign\base_test {
         $this->create_instance();
         $assign = $this->create_instance(array('duedate' => time(),
                                                'submissiondrafts' => 1,
-                                               'assignsubmission_onlinetext_enabled' => 1));
+                                               'assignsubmission_onlinetext_enabled' => 1, ));
 
         // Add a submission.
         $this->setUser($this->students[0]);
@@ -216,7 +216,7 @@ class assign_test extends \mod_assign\base_test {
         $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
                                          'text' => 'Submission text',
-                                         'format' => FORMAT_HTML);
+                                         'format' => FORMAT_HTML, );
         $plugin = $assign->get_submission_plugin_by_type('onlinetext');
         $plugin->save($submission, $data);
 
@@ -359,7 +359,7 @@ class assign_test extends \mod_assign\base_test {
         $data = new \stdClass();
         $data->onlinetext_editor = array('itemid' => file_get_unused_draft_itemid(),
             'text' => 'Submission text',
-            'format' => FORMAT_HTML);
+            'format' => FORMAT_HTML, );
         $this->create_user_submission($students[0], $assign, $data);
 
         $this->setUser($teachers[0]);
