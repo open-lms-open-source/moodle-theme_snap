@@ -34,7 +34,7 @@ class ws_course_toc_chapters extends \external_api {
      */
     public static function service_parameters() {
         $parameters = [
-            'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED)
+            'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
         ];
         return new \external_function_parameters($parameters);
     }
@@ -53,9 +53,9 @@ class ws_course_toc_chapters extends \external_api {
                         'Table of content chapters',
                         true
                     ),
-                    'listlarge' => new \external_value(PARAM_ALPHAEXT, 'Additional class if the list is considered large')
+                    'listlarge' => new \external_value(PARAM_ALPHAEXT, 'Additional class if the list is considered large'),
                 ]
-            )
+            ),
         ];
 
         return new \external_single_structure($keys, 'course_toc_chapters');

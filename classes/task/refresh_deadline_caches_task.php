@@ -84,14 +84,14 @@ SQL;
         $lastlogints              = $lastlogindate->getTimestamp();
         $users                    = $DB->get_recordset_sql($query, [
             'deleted'             => 0,
-            'lastlogints'         => strtotime(date('Y-m-d', $lastlogints))
+            'lastlogints'         => strtotime(date('Y-m-d', $lastlogints)),
         ]);
         $blockinstances           = []; // Local cache of instances in courses.
         $snapfeedsdeadlinesconfig = base64_encode(serialize((object) [
-            'feedtype' => 'deadlines'
+            'feedtype' => 'deadlines',
         ]));
         $snapfeedsblockexists     = (get_config('block_snapfeeds') !== false) ||
-            (is_callable('mr_on') and mr_on('snapfeeds', 'block'));
+            (is_callable('mr_on') && mr_on('snapfeeds', 'block'));
 
         $this->cachekeys = [];
         // We should skip CM checks to only populate caches for events.

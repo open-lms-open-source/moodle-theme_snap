@@ -196,36 +196,36 @@ class webservice_definition_helper extends \advanced_testcase {
                 'type' => PARAM_RAW,
                 'desc' => 'My head',
                 'required' => false,
-                'allownull' => true
+                'allownull' => true,
             ],
             'shoulders' => [
                 'instanceof' => 'external_value',
                 'type' => PARAM_RAW,
                 'desc' => 'My shoulders',
                 'required' => true,
-                'allownull' => true
+                'allownull' => true,
             ],
             'knees' => [
                 'instanceof' => 'external_value',
                 'type' => PARAM_ALPHA,
                 'desc' => 'A description of my knees.',
                 'required' => false,
-                'allownull' => false
+                'allownull' => false,
             ],
             'toes' => [
                 'instanceof' => 'external_value',
                 'type' => PARAM_INT,
                 'desc' => 'Count of my toes.',
                 'required' => false,
-                'allownull' => true
+                'allownull' => true,
             ],
             'ears' => [
                 'instanceof' => 'external_value',
                 'type' => PARAM_TEXT,
                 'desc' => 'A description of my ears.',
                 'required' => true,
-                'allownull' => true
-            ]
+                'allownull' => true,
+            ],
         ];
 
         foreach ($expecteds as $name => $expected) {

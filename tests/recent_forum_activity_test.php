@@ -126,11 +126,11 @@ class recent_forum_activity_test extends \advanced_testcase {
         // Add 2 groups to course2.
         $this->group1 = $this->getDataGenerator()->create_group([
             'courseid' => $this->course2->id,
-            'name' => 'Group 1'
+            'name' => 'Group 1',
         ]);
         $this->group2 = $this->getDataGenerator()->create_group([
             'courseid' => $this->course2->id,
-            'name' => 'Group 2'
+            'name' => 'Group 2',
         ]);
 
         // Add user1 to both groups but user2 to just group1.
@@ -328,7 +328,7 @@ class recent_forum_activity_test extends \advanced_testcase {
             foreach ($users as $user) {
                 $eventparams = [
                     'userid' => $user->id,
-                    'context' => \context_course::instance($tmpcourse->id)
+                    'context' => \context_course::instance($tmpcourse->id),
                 ];
                 $event = \core\event\course_viewed::create($eventparams);
                 $event->trigger();

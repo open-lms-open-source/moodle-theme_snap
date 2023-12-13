@@ -492,7 +492,7 @@ class definition_helper {
                     'int' => PARAM_INT,
                     'integer' => PARAM_INT,
                     'float' => PARAM_FLOAT,
-                    'moodle_url' => PARAM_URL
+                    'moodle_url' => PARAM_URL,
                 ];
                 $type = trim($matches[1]);
                 if (isset($aliases[$type])) {

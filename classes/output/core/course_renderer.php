@@ -65,7 +65,7 @@ class course_renderer extends \core_course_renderer {
 
         $modinfo = get_fast_modinfo($SITE);
         $section = $modinfo->get_section_info(1);
-        if (($section && (!empty($modinfo->sections[1]) or !empty($section->summary))) or $editing) {
+        if (($section && (!empty($modinfo->sections[1]) || !empty($section->summary))) || $editing) {
             $output .= $this->box_start('generalbox sitetopic');
 
             // If currently moving a file then show the current clipboard.
@@ -147,7 +147,7 @@ class course_renderer extends \core_course_renderer {
                     RESOURCELIB_DISPLAY_FRAME,
                     RESOURCELIB_DISPLAY_NEW,
                     RESOURCELIB_DISPLAY_DOWNLOAD,
-                    RESOURCELIB_DISPLAY_POPUP
+                    RESOURCELIB_DISPLAY_POPUP,
                 );
                 if (!empty($mod->customdata['display'])) {
                     if (in_array($mod->customdata['display'], $modresourceneoptions)) {
@@ -397,16 +397,16 @@ class course_renderer extends \core_course_renderer {
 
                 $output .= html_writer::start_tag('form', array('method' => 'post',
                     'action' => new moodle_url('/course/togglecompletion.php'),
-                    'class' => 'togglecompletion'. $extraclass));
+                    'class' => 'togglecompletion'. $extraclass, ));
                 $output .= html_writer::start_tag('div');
                 $output .= html_writer::empty_tag('input', array(
-                    'type' => 'hidden', 'name' => 'id', 'value' => $mod->id));
+                    'type' => 'hidden', 'name' => 'id', 'value' => $mod->id, ));
                 $output .= html_writer::empty_tag('input', array(
-                    'type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()));
+                    'type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey(), ));
                 $output .= html_writer::empty_tag('input', array(
-                    'type' => 'hidden', 'name' => 'modulename', 'value' => $formattedname));
+                    'type' => 'hidden', 'name' => 'modulename', 'value' => $formattedname, ));
                 $output .= html_writer::empty_tag('input', array(
-                    'type' => 'hidden', 'name' => 'completionstate', 'value' => $newstate));
+                    'type' => 'hidden', 'name' => 'completionstate', 'value' => $newstate, ));
                 $output .= html_writer::tag('button',
                     $this->output->pix_icon('i/completion-' . $completionicon, $imgalt),
                     array('class' => 'btn btn-link', 'aria-live' => 'assertive'));
@@ -560,7 +560,7 @@ class course_renderer extends \core_course_renderer {
                     'class' => 'svg-icon',
                     'title' => $ariaconditionaltag,
                     'aria-hidden' => 'true',
-                    'src' => $conditionaltagsrc
+                    'src' => $conditionaltagsrc,
                 ]);
                 $coursetoolsicon = html_writer::tag('a', $restrictionsource, [
                     'tabindex' => '0',
@@ -573,7 +573,7 @@ class course_renderer extends \core_course_renderer {
                     'data-html' => 'true',
                     'clickable' => 'true',
                     'data-content' => $availabilityinfo,
-                    'aria-label' => $ariaconditionaltag
+                    'aria-label' => $ariaconditionaltag,
                 ]);
             }
         }
@@ -601,7 +601,7 @@ class course_renderer extends \core_course_renderer {
         $baseurl = new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
 
         $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles',
-            'makeavailable', 'makeunavailable'), 'moodle');
+            'makeavailable', 'makeunavailable', ), 'moodle');
         // TODO - add snap strings here.
 
         // Move, Edit, Delete.
@@ -909,7 +909,7 @@ class course_renderer extends \core_course_renderer {
                 $engagementmeta[] = get_string('xofy'.$meta->submitstrkey, 'theme_snap',
                     (object) array(
                         'completed' => $meta->numsubmissions,
-                        'participants' => \theme_snap\local::course_participant_count($COURSE->id, $mod->modname)
+                        'participants' => \theme_snap\local::course_participant_count($COURSE->id, $mod->modname),
                     )
                 );
             }
@@ -924,7 +924,7 @@ class course_renderer extends \core_course_renderer {
                     'action' => 'grading',
                     'id' => $mod->id,
                     'tsort' => 'timesubmitted',
-                    'filter' => 'require_grading'
+                    'filter' => 'require_grading',
                 );
                 $url = new moodle_url("/mod/{$mod->modname}/view.php", $params);
 
@@ -975,7 +975,7 @@ class course_renderer extends \core_course_renderer {
             $content .= html_writer::link($url, $labeltext,
                     [
                         'class' => 'snap-due-date tag '.$dateclass,
-                        'data-from-cache' => $meta->timesfromcache ? 1 : 0
+                        'data-from-cache' => $meta->timesfromcache ? 1 : 0,
                     ]);
         }
 
@@ -1006,7 +1006,7 @@ class course_renderer extends \core_course_renderer {
                         $file->get_filearea(),
                         $file->get_itemid(),
                         $file->get_filepath(),
-                        $file->get_filename()
+                        $file->get_filename(),
                 );
             }
         }
@@ -1401,7 +1401,7 @@ class course_renderer extends \core_course_renderer {
             'id' => $formid,
             'inputid' => $inputid,
             'inputsize' => $inputsize,
-            'value' => $value
+            'value' => $value,
         ];
 
         return $this->render_from_template('theme_snap/course_search_form', $data);
@@ -1658,7 +1658,7 @@ class course_renderer extends \core_course_renderer {
         $fullname = '<a href="' .$CFG->wwwroot. '/user/profile.php?id=' .$user->id. '">'.format_string(fullname($user)).'</a>';
         $data = (object) [
             'image' => $picture,
-            'content' => $fullname
+            'content' => $fullname,
         ];
         if ($USER->id != $user->id) {
             $messageicon = '<img class="svg-icon" alt="" role="presentation" src="'
@@ -1720,7 +1720,7 @@ class course_renderer extends \core_course_renderer {
                 $data = (object) [
                     'image' => $img,
                     'content' => $moduleactivity,
-                    'class' => $modname
+                    'class' => $modname,
                 ];
                 $output .= $this->render_from_template('theme_snap/media_object', $data);
             }
@@ -1771,7 +1771,7 @@ class course_renderer extends \core_course_renderer {
             foreach ($modinfo->sections[$section->section] as $modnumber) {
                 $mod = $modinfo->cms[$modnumber];
 
-                if ($ismoving and $mod->id == $USER->activitycopy) {
+                if ($ismoving && $mod->id == $USER->activitycopy) {
                     // Do not display moving mod.
                     continue;
                 }

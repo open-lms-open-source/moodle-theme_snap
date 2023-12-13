@@ -96,6 +96,6 @@ class behat_theme_snap_behat_permissions extends behat_permissions {
             'capability' => $capability,
             'permission' => 1,
             'timemodified' => time(),
-            'modifierid' => 0));
+            'modifierid' => 0, ));
     }
 }

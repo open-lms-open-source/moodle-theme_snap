@@ -110,11 +110,11 @@ trait format_section_trait {
         // FIXME: This is really evil and should by using the navigation API.
         $course = course_get_format($course)->get_course();
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
-        or !$course->hiddensections;
+        || !$course->hiddensections;
 
         $links = array('previous' => '', 'next' => '');
         $back = $sectionno - 1;
-        while ($back > -1 and empty($links['previous'])) {
+        while ($back > -1 && empty($links['previous'])) {
             if ($canviewhidden
             || $sections[$back]->uservisible
             || $sections[$back]->availableinfo) {
@@ -138,7 +138,7 @@ trait format_section_trait {
 
         $forward = $sectionno + 1;
         $numsections = course_get_format($course)->get_last_section_number();
-        while ($forward <= $numsections and empty($links['next'])) {
+        while ($forward <= $numsections && empty($links['next'])) {
             if ($canviewhidden
             || $sections[$forward]->uservisible
             || $sections[$forward]->availableinfo) {
@@ -263,7 +263,7 @@ trait format_section_trait {
         // SHAME - Remove tabindex when editing menu is shown.
         $sectionarrayvars = array('id' => 'section-'.$section->section,
         'class' => 'section main clearfix'.$sectionstyle,
-        'aria-label' => get_section_name($course, $section));
+        'aria-label' => get_section_name($course, $section), );
         if (!$PAGE->user_is_editing()) {
             $sectionarrayvars['tabindex'] = '-1';
         }
@@ -327,7 +327,7 @@ trait format_section_trait {
                 $o .= html_writer::tag('div', $sectiontools, array(
                     'class' => 'js-only snap-section-editing actions',
                     'role' => 'region',
-                    'aria-label' => get_string('topicactions', 'theme_snap')
+                    'aria-label' => get_string('topicactions', 'theme_snap'),
                 ));
             }
         }
@@ -510,10 +510,10 @@ trait format_section_trait {
             echo $this->course_section($course, $thissection, $modinfo);
         }
 
-        if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
+        if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             foreach ($modinfo->get_section_info_all() as $section => $thissection) {
-                if ($section <= $numsections or empty($modinfo->sections[$section])) {
+                if ($section <= $numsections || empty($modinfo->sections[$section])) {
                     // This is not stealth section or it is empty.
                     continue;
                 }
@@ -583,7 +583,7 @@ trait format_section_trait {
         <h3>$heading</h3>";
         $output .= html_writer::start_tag('form', array(
             'method' => 'post',
-            'action' => $url->out_omit_querystring()
+            'action' => $url->out_omit_querystring(),
         ));
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
@@ -689,7 +689,7 @@ trait format_section_trait {
             'name' => $name,
             'value' => $currenttext,
             'rows' => 15,
-            'cols' => 65
+            'cols' => 65,
         ];
 
         return $OUTPUT->render_from_template('core_form/editor_textarea', $context);
@@ -734,7 +734,7 @@ trait format_section_trait {
         $modchooserid = "snap-create-activity-$section";
         $modchooser = html_writer::tag('div', $modchoosercontent, [
             'class' => 'col-sm-6 snap-modchooser',
-            'id' => $modchooserid
+            'id' => $modchooserid,
         ]);
 
         // Add zone for quick uploading of files.

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 namespace theme_snap;
-use \theme_snap\snap_base_test;
+use theme_snap\snap_base_test;
 
 /**
  * Testing TOC Renderer for Snap theme.

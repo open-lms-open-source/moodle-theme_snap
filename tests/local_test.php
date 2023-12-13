@@ -506,7 +506,7 @@ class local_test extends snap_base_test {
             'testpng_small.png' => false,
             'testgif.gif' => false,
             'testgif_small.gif' => false,
-            'testsvg.svg' => false
+            'testsvg.svg' => false,
         ];
 
         foreach ($fixtures as $filename => $shouldberesized) {
@@ -587,7 +587,7 @@ class local_test extends snap_base_test {
             'bpd_bikes_1379px.jpg' => true,
             'bpd_bikes_1280px.jpg' => true,
             'bpd_bikes_1000px.jpg' => false,
-            'bpd_bikes_640px.jpg' => false
+            'bpd_bikes_640px.jpg' => false,
         ];
         foreach ($fixtures as $filename => $shouldberesized) {
 
@@ -854,7 +854,7 @@ class local_test extends snap_base_test {
         // Assert completion data populated and cache dumped on assignment creation.
         $params = [
             'course' => $course->id,
-            'completion' => COMPLETION_TRACKING_AUTOMATIC
+            'completion' => COMPLETION_TRACKING_AUTOMATIC,
         ];
         $cm = $this->add_assignment($params);
         $comp = local::course_completion_progress($course);
@@ -886,7 +886,7 @@ class local_test extends snap_base_test {
         $grades = array();
         $grades[$student->id] = (object) [
             'rawgrade' => 60,
-            'userid' => $student->id
+            'userid' => $student->id,
         ];
         $assignrow->cmidnumber = null;
         assign_grade_item_update($assignrow, $grades);
@@ -906,7 +906,7 @@ class local_test extends snap_base_test {
         $grades = array();
         $grades[$teacher->id] = (object) [
             'rawgrade' => 60,
-            'userid' => $teacher->id
+            'userid' => $teacher->id,
         ];
         $assignrow->cmidnumber = null;
         assign_grade_item_update($assignrow, $grades);
@@ -984,7 +984,7 @@ class local_test extends snap_base_test {
         // Assert feedback available is empty.
         // (requires grading for feedback available).
         $params = [
-            'course' => $course->id
+            'course' => $course->id,
         ];
         $cm = $this->add_assignment($params);
         $feedback = local::course_grade($course);
@@ -999,7 +999,7 @@ class local_test extends snap_base_test {
         $grades = array();
         $grades[$student2->id] = (object) [
             'rawgrade' => 60,
-            'userid' => $student2->id
+            'userid' => $student2->id,
         ];
         $assignrow->cmidnumber = null;
         assign_grade_item_update($assignrow, $grades);
@@ -1019,7 +1019,7 @@ class local_test extends snap_base_test {
         $grades = array();
         $grades[$student->id] = (object) [
             'rawgrade' => 60,
-            'userid' => $student->id
+            'userid' => $student->id,
         ];
         $assignrow->cmidnumber = null;
         assign_grade_item_update($assignrow, $grades);
@@ -1200,17 +1200,17 @@ class local_test extends snap_base_test {
 
         // Filling up database with custom field data.
         $catid = $DB->insert_record('user_info_category', (object) [
-            'name'       => 'Favourite things'
+            'name'       => 'Favourite things',
         ]);
         $fieldid = $DB->insert_record('user_info_field', (object) [
             'shortname'  => 'favfood',
             'name'       => 'Favourite food',
-            'categoryid' => $catid
+            'categoryid' => $catid,
         ]);
         $DB->insert_record('user_info_data', (object) [
             'data'       => 'Banana split',
             'fieldid'    => $fieldid,
-            'userid'     => $user->id
+            'userid'     => $user->id,
         ]);
 
         // Changing the used field to the custom field.
@@ -1448,7 +1448,7 @@ class local_test extends snap_base_test {
             $this->setUser($student);
             $params = [
                 'course' => $course->id,
-                'completion' => COMPLETION_TRACKING_AUTOMATIC
+                'completion' => COMPLETION_TRACKING_AUTOMATIC,
             ];
             $cm = $this->add_assignment($params);
 
@@ -1469,7 +1469,7 @@ class local_test extends snap_base_test {
             $grades = array();
             $grades[$student->id] = (object) [
                 'rawgrade' => 60,
-                'userid' => $student->id
+                'userid' => $student->id,
             ];
             $assignrow->cmidnumber = null;
             assign_grade_item_update($assignrow, $grades);
@@ -1477,7 +1477,7 @@ class local_test extends snap_base_test {
             $grades = array();
             $grades[$teacher->id] = (object) [
                 'rawgrade' => 60,
-                'userid' => $teacher->id
+                'userid' => $teacher->id,
             ];
             $assignrow->cmidnumber = null;
             assign_grade_item_update($assignrow, $grades);

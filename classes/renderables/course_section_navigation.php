@@ -54,7 +54,7 @@ class course_section_navigation implements \renderable {
         $course = course_get_format($course)->get_course();
 
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
-        or !$course->hiddensections;
+        || !$course->hiddensections;
 
         $this->previous = false;
         $target = $sectionno - 1;

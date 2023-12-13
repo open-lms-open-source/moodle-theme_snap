@@ -29,7 +29,7 @@ $definitions = array(
     'webservicedefinitions' => [
         'mode'               => cache_store::MODE_APPLICATION,
         'simplekeys'         => false,
-        'simpledata'         => false
+        'simpledata'         => false,
     ],
     // This is used so that we can invalidate session level caches if the course completion settings for a course
     // change.
@@ -37,14 +37,14 @@ $definitions = array(
         'mode'               => cache_store::MODE_APPLICATION,
         'simplekeys'         => true,
         'simpledata'         => true,
-        'staticacceleration' => false
+        'staticacceleration' => false,
     ],
     // This is used to cache completion data per course / user.
     'course_completion_progress' => [
         'mode'               => cache_store::MODE_SESSION,
         'simplekeys'         => true,
         'simpledata'         => false,
-        'staticacceleration' => false
+        'staticacceleration' => false,
     ],
     // This is used to cache deadlines per courses and groups.
     'activity_deadlines' => [
@@ -54,13 +54,13 @@ $definitions = array(
         'staticacceleration' => false,
         'invalidationevents' => [
             'groupmemberschanged',
-        ]
+        ],
     ],
     'generalstaticappcache' => [
         'mode'               => cache_store::MODE_APPLICATION,
         'simplekeys'         => true,
         'simpledata'         => false,
-        'staticacceleration' => true
+        'staticacceleration' => true,
     ],
     'profile_based_branding' => [
         'mode'               => cache_store::MODE_SESSION,

@@ -38,8 +38,8 @@ class ws_cover_image extends \external_api {
                 'imagedata' => new \external_value(PARAM_TEXT, 'Image data', VALUE_REQUIRED),
                 'imagefilename' => new \external_value(PARAM_TEXT, 'Image filename', VALUE_REQUIRED),
                 'categoryid' => new \external_value(PARAM_INT, 'Category Id', VALUE_OPTIONAL),
-                'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_OPTIONAL)
-            ], 'Params wrapper - just here to accommodate optional values', VALUE_REQUIRED)
+                'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_OPTIONAL),
+            ], 'Params wrapper - just here to accommodate optional values', VALUE_REQUIRED),
         ];
         return new \external_function_parameters($parameters);
     }
@@ -50,7 +50,7 @@ class ws_cover_image extends \external_api {
     public static function service_returns() {
         $keys = [
             'success' => new \external_value(PARAM_BOOL, 'Was the cover image successfully changed', VALUE_REQUIRED),
-            'contrast' => new \external_value(PARAM_TEXT, 'The color contrast has a warning', VALUE_OPTIONAL)
+            'contrast' => new \external_value(PARAM_TEXT, 'The color contrast has a warning', VALUE_OPTIONAL),
         ];
 
         return new \external_single_structure($keys, 'coverimage');

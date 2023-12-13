@@ -72,7 +72,7 @@ class course_toc_progress {
         // Set this to empty or web service won't be happy on early abort.
         $this->progress = (object) [
             'complete' => null,
-            'total' => null
+            'total' => null,
         ];
 
         if (!$completioninfo->is_enabled()) {
@@ -86,7 +86,7 @@ class course_toc_progress {
 
         $this->progress = (object) [
             'complete' => $sac->progress->complete,
-            'total' => $sac->progress->total
+            'total' => $sac->progress->total,
         ];
         $this->pixcompleted = $OUTPUT->image_url('i/completion-manual-y');
         $this->completed = $sac->progress->complete === $sac->progress->total;

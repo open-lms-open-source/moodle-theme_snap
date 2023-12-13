@@ -60,7 +60,7 @@ class ws_course_card extends \external_api {
             ),
             'showextralink' => new \external_value(PARAM_BOOL, 'Show an extra avatar link', VALUE_REQUIRED),
             'published' => new \external_value(PARAM_BOOL, 'Is this course published', VALUE_REQUIRED),
-            'favorited' => new \external_value(PARAM_BOOL, 'Is this course marked as a favorite', VALUE_REQUIRED)
+            'favorited' => new \external_value(PARAM_BOOL, 'Is this course marked as a favorite', VALUE_REQUIRED),
         ];
 
         return new \external_single_structure($keys, 'coursecard');

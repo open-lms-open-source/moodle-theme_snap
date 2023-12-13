@@ -89,7 +89,8 @@ class ce_render_helper {
             // so for testing purposes, we'll populate the component data when the page is being rendered.
             || !empty($CFG->theme_snap_prepopulate_advanced_feeds)
         ) {
-            $initialvalue = htmlspecialchars(json_encode(local::get_feed($feedkey, 0, $pagesize)));
+            $initialvalue = htmlspecialchars(json_encode(local::get_feed($feedkey, 0, $pagesize)),
+                        ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401);
             $initialvalue = "initial-value=\"{$initialvalue}\"";
         }
 

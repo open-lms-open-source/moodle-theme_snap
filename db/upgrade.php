@@ -111,7 +111,7 @@ function xmldb_theme_snap_upgrade($oldversion) {
                 $conditions = ['component' => 'core_course',
                     'itemtype' => 'courses',
                     'itemid' => $courseid,
-                    'userid' => $userid
+                    'userid' => $userid,
                 ];
                 // Checks if the user already has marked as favourite that course via dashboard.
                 if (!$DB->record_exists('favourite', $conditions)) {
