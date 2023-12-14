@@ -1233,6 +1233,39 @@ class course_renderer extends \core_course_renderer {
         $target = '';
         $cmname = $mod->modname;
         $iconurl = $mod->get_icon_url();
+
+        // Resources icon and colors depending on File Extension.
+        if (strpos($cmname, 'resource') !== false) {
+            list(, $resourcetype) = $this->get_mod_type($mod);
+
+            $standardicons = [
+                'mp3' => 'audio',
+                'wav' => 'audio',
+                'writer' => 'document',
+                'oth' => 'document',
+                'flash' => 'pdf',
+                'eps' => 'pdf',
+                'impress' => 'powerpoint',
+                'chart' => 'spreadsheet',
+                'database' => 'spreadsheet',
+                'calc' => 'spreadsheet',
+                'sourcecode' => 'text',
+                'html' => 'text',
+                'markup' => 'text',
+                'mpeg' => 'video',
+                'wmv' => 'video',
+                'avi' => 'video',
+                'quicktime' => 'video',
+            ];
+            $resourcetype = $standardicons[$resourcetype] ?? $resourcetype;
+
+            $icons = array('audio', 'document', 'pdf', 'powerpoint', 'spreadsheet', 'text', 'video');
+            if ((in_array($resourcetype, $icons))) {
+                $resourceiconurl = $this->output->image_url('resource/'.$resourcetype, 'theme');
+                $iconurl = $resourceiconurl ?? $iconurl;
+            }
+        }
+
         $activityimg = "<div class='activityiconcontainer ".$cmname."'>";
         if (strpos($iconurl, $CFG->wwwroot) !== 0) { // For LTI activities with custom icon URLs.
             $activityimg = "<div class='activityiconcontainer ".$cmname."' style='background-color:transparent;'>";
