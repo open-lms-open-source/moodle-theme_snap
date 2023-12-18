@@ -175,10 +175,15 @@
 // Tab - Personal menu.
 // -------------------------
 #themesnappersonalmenu.active {
+    #admin-forumpoststoggle,
+    #admin-personalmenuadvancedfeedsenable {
+        clear: both;
+    }
 
     .form-item {
         @include make-col(4);
         float: left;
+        width: 33.33%;
     }
 }
 // -------------------------
