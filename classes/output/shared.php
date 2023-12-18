@@ -38,6 +38,7 @@ use single_button;
 require_once($CFG->dirroot.'/grade/querylib.php');
 require_once($CFG->libdir.'/gradelib.php');
 require_once($CFG->dirroot.'/grade/lib.php');
+require_once($CFG->libdir.'/badgeslib.php');
 
 class shared extends \renderer_base {
 
@@ -812,6 +813,7 @@ EOF;
                     'title' => $badgesicon . $site->get_integration_catalog_title()
                 );
             } else {
+                require_once($CFG->dirroot.'/mod/mediasite/navigation.php');
                 foreach (get_mediasite_sites(true, false) as $site) {
                     $url = new moodle_url('/mod/mediasite/courses7.php', array('id' => $COURSE->id, 'siteid' => $site->id));
                     $links[] = array(
