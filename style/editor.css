@@ -748,7 +748,7 @@ blockquote .small:before {
 }
 
 .blockquote-reverse,
-blockquote.pull-right {
+blockquote.pull-right, blockquote.float-right {
     padding-right: 15px;
     padding-left: 0;
     border-right: 5px solid #dadada;
@@ -758,19 +758,25 @@ blockquote.pull-right {
 
 .blockquote-reverse footer:before,
 blockquote.pull-right footer:before,
+blockquote.float-right footer:before,
 .blockquote-reverse small:before,
 blockquote.pull-right small:before,
+blockquote.float-right small:before,
 .blockquote-reverse .small:before,
-blockquote.pull-right .small:before {
+blockquote.pull-right .small:before,
+blockquote.float-right .small:before {
     content: '';
 }
 
 .blockquote-reverse footer:after,
 blockquote.pull-right footer:after,
+blockquote.float-right footer:after,
 .blockquote-reverse small:after,
 blockquote.pull-right small:after,
+blockquote.float-right small:after,
 .blockquote-reverse .small:after,
-blockquote.pull-right .small:after {
+blockquote.pull-right .small:after,
+blockquote.float-right .small:after {
     content: '\00A0 \2014';
 }
 
@@ -2813,11 +2819,11 @@ a.thumbnail.active {
     margin-right: auto;
 }
 
-.pull-right {
+.pull-right, .float-right {
     float: right !important;
 }
 
-.pull-left {
+.pull-left, .float-left {
     float: left !important;
 }
 

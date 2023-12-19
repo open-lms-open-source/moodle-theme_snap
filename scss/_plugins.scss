@@ -1158,7 +1158,7 @@ body.format-tiles.editing {
     }
 
     // Sections styles.
-    #changenumsections a.pull-right {
+    #changenumsections a.pull-right, #changenumsections a.float-right {
         color: #fff;
         background-color: $brand-primary;
         border: 1px solid transparent;
