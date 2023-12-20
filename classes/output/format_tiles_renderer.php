@@ -28,7 +28,6 @@ use format_tiles\output\renderer;
 use theme_snap\output\format_tiles\content\tiles_content;
 
 class format_tiles_renderer extends renderer {
-    use format_section_trait;
 
     public function render_content() {
         $format = course_get_format($this->page->course->id);
