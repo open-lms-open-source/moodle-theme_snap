@@ -74,7 +74,19 @@ class format_tiles_renderer extends renderer {
         // Additional output HTML to render Snap Course tools and edit mode button in footer.
         $data->course_tools = shared::course_tools(true);
         $data->edit_mode = shared::render_edit_mode($course->id, 'tiles', $this->page->pagetype);
-
+        $renderer = $this->page->get_renderer('core', 'course');
+        $completioninfo = new \completion_info($course);
+        $modinfo = get_fast_modinfo($course);
+        $coursebuttoncompletionlist = [];
+        foreach ($modinfo->get_cms() as $mod) {
+            if ($mod->get_user_visible()) {
+                $coursebuttoncompletionlist[] = (object) [
+                    'modid' => $mod->id,
+                    'button' => $renderer->course_section_cm_completion($course, $completioninfo, $mod)
+                ];
+            }
+        }
+        $data->course_buttons_completion = $coursebuttoncompletionlist;
         return $this->output->render_from_template($templatename, $data);
     }
 }
