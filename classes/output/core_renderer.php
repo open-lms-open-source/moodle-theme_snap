@@ -2457,7 +2457,7 @@ HTML;
      */
     public function my_courses_snap_page_content() {
 
-        global $DB;
+        global $DB, $USER;
 
         $browseallcourses = '';
         if (!empty($CFG->navshowallcourses) || has_capability('moodle/site:config', context_system::instance())) {
