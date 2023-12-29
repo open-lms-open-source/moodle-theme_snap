@@ -1140,7 +1140,7 @@ footer #moodle-footer
     #snap-header {
         padding: .5em 4%;
         padding-bottom: 0;
-        .pull-right.js-only {
+        .pull-right.js-only, .float-right.js-only {
             .nav-link {
                 padding: .5rem .5rem;
             }
@@ -1272,7 +1272,7 @@ footer #moodle-footer
 // Styles for Snap user menu.
 #snap-header {
 
-    .pull-right.js-only.row {
+    .pull-right.js-only.row, .float-right.js-only.row {
         margin-top: 1em;
     }
 
@@ -1450,7 +1450,7 @@ footer #moodle-footer
 // md: 768px.
 @include media-breakpoint-down(md) {
     #snap-header {
-        .pull-right.js-only.row {
+        .pull-right.js-only.row, .float-right.js-only.row {
             #snap-pm-trigger.js-snap-pm-trigger {
                 span.hidden-xs-down {
                     display: none;
@@ -4498,7 +4498,9 @@ section#region-main {
 
 .activity-navigation {
     .pull-right,
-    .pull-left {
+    .pull-left,
+    .float-right,
+    .float-left {
         a {
             white-space: inherit;
         }

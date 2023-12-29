@@ -219,7 +219,6 @@ EOF;
         $PAGE->requires->strings_for_js([
             'afterresource',
             'aftersection',
-            'clicktochangeinbrackets',
             'confirmdeletesection',
             'deletechecktype',
             'deletechecktypename',
