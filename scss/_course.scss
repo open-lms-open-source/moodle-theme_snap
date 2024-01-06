@@ -940,6 +940,19 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
 }
 
 // -------------------------
+// Snap label
+// -------------------------
+
+.section .activity.modtype_label.label {
+    background-image: none;
+    height: auto;
+    text-align: left;
+    font-weight: 400;
+    box-shadow: none;
+    @include clearfix;
+}
+
+// -------------------------
 // Snap native assets - books, page, images
 // -------------------------
 
@@ -1065,13 +1078,12 @@ body.snap-resource-list .section li.snap-resource {
 // -------------------------
 // Snap resources as cards.
 // -------------------------
-body.snap-resource-card li.snap-resource {
+body.snap-resource-card li.snap-resource:not(.label) {
     height: 200px;
     width: 31%;
     margin: 1%;
     float: left;
     clear: none;
-    background-image: url([[pix:theme|file]]);
     background-repeat: no-repeat;
     background-position: 50% 70%;
     background-size: 33px auto;
@@ -1689,6 +1701,11 @@ body.snap-resource-card {
     &.launch-tiles-standard,
     &.launch-tiles-module-modal,
     &.activity-wrapper,{
+
+        &.modtype_label {
+            padding-left: 1em;
+            border: none;
+        }
 
         .activityiconcontainer,
         .instancename {
