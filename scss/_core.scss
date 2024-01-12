@@ -624,6 +624,11 @@ li.modtype_page {
             float: left;
             width: 100%;
         }
+        #pagemod-content-container {
+            background-color: #f8f9fa;
+            border-radius: 0.5em;
+            padding: 1em;
+        }
     }
 }
 
@@ -5445,11 +5450,11 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
     width: fit-content;
     padding: 0;
     background-color: $brand-primary;
-    border-radius: 5px;
+    border-radius: 0.6em;
 
     img {
         margin: 0;
-        border-radius: 5px;
+        border-radius: 0.5em;
     }
 
     .anim-play-resume-buttons {

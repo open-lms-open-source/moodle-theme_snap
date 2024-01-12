@@ -887,22 +887,27 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
                 @include alakazam;
             }
 
+            .snap-resource-card-fadeout {
+                display: none;
+            }
+
             // Link to the mod (headings in snap).
             .snap-asset-link {
+                display: flex;
                 font-size: 1em;
                 margin: 0;
                 @include alakazam;
 
+                img.activityicon {
+                    &:hover,
+                    &:focus {
+                        transform: scale(1.25);
+                    }
+                }
+
                 // The link itself.
                 a {
                     color: $body-color;
-
-                    &:hover,
-                    &:focus {
-                        .activityicon {
-                            transform: scale(1.25);
-                        }
-                    }
                 }
             }
             .contentafterlink p a {
@@ -910,9 +915,13 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
             }
             // Size of the icons container.
             .activityiconcontainer {
-                width: 45px;
-                height: 45px;
+                min-width: 50px;
+                min-height: 50px;
                 padding: 0.3rem;
+            }
+            .snap-header-card {
+                display: flex;
+                justify-content: space-between;
             }
         }
     }
@@ -985,8 +994,8 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
     }
 
     &.state-expanded {
-        .summary-text,
-        .summary-figure {
+        .summary-container,
+        .readmore-button {
             display: none;
         }
     }
@@ -1095,9 +1104,6 @@ body.snap-resource-card li.snap-resource:not(.label) {
     // Resource cards are clickable with data-href, so add cursor pointer.
     .asset-wrapper {
         @include clearfix;
-        .snap-header-card {
-            padding-bottom: 1.5em;
-        }
         .snap-asset-actions {
             display: flex;
         }
@@ -1132,14 +1138,14 @@ body.snap-resource-card {
         }
         .snap-header-card-icons {
             display: inline-block;
-            width: 40%;
+            width: auto;
             height: 100%;
             max-height: 1.4em;
         }
     }
     // Modify restriction icon size and position for course cards.
     .snap-header-card {
-        padding-bottom: 1em;
+        padding-top: 1em;
         .snap-header-card-icons {
             a[id^="snap-restriction-"] {
                 padding: 0;
@@ -1168,8 +1174,40 @@ body.snap-resource-card {
                 display: inline-block;
                 float: right;
             }
+            .snap-conditional-tag {
+                margin: unset;
+            }
+            .snap-asset-completion-tracking div {
+                display: flex;
+            }
         }
     }
+    .snap-asset-content {
+        .no-overflow {
+            background-color: $color-bk-resource;
+            border-radius: 0.5em;
+            padding: 1em;
+            margin: 1em 0;
+            img {
+                border-radius: 0.5em;
+            }
+        }
+    }
+
+
+
+    li.modtype_label {
+        .snap-asset-content {
+            .no-overflow {
+                background-color: transparent;
+                margin: unset;
+            }
+            .snap-assettype {
+                display: none;
+            }
+        }
+    }
+
     // Modify the resource activity icon and card width.
     li.modtype_resource {
         .activityiconcontainer {
@@ -1178,7 +1216,6 @@ body.snap-resource-card {
         .activityiconcontainer,
         .instancename {
             display: inline-block;
-            margin-right: 1rem;
         }
 
         .activityicon {
@@ -1263,23 +1300,43 @@ body.snap-resource-card {
             }
         }
 
-        //.asset-wrapper {
-        //    padding: 0.5em 0.5em;
-        //}
+        .snap-header-card-icons {
+            min-width: fit-content;
+        }
 
         .snap-asset-link {
+            max-width: 80%;
+            .snap-header-container {
+                max-width: 65%;
+            }
+            .snap-assettype {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100%;
+            }
+            .activityiconcontainer {
+                margin-right: 0.5em;
+                max-width: 45px;
+                max-height: 45px;
+                min-height: 45px;
+                min-width: 45px;
+                .activityicon {
+                    width: 35px;
+                }
+            }
             a.mod-link {
                 display: flex;
                 align-items: baseline;
                 cursor: pointer;
-                .activityiconcontainer {
-                    margin-right: 0.5em;
-                    min-width: 45px;
-                }
+
                 p.instancename {
                     max-height: 2.5em;
                     display: block;
-                    @include multiLineEllipsis($lineHeight: 1.25em, $lineCount: 2, $bgColor: white);
+                    font-size: 0.8em;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    margin-right: unset;
                 }
             }
         }
@@ -1287,9 +1344,10 @@ body.snap-resource-card {
         div.contentafterlink {
             .no-overflow {
                 word-wrap: break-word;
-                max-height: 4.2em;
+                max-height: 5.1em;
                 overflow: hidden;
                 position: relative;
+                margin-top: unset;
             }
             p.snap-resource-card-fadeout {
                 position: absolute;
@@ -1522,6 +1580,18 @@ body.snap-resource-card {
             .activityiconcontainer {
                 background-color: $color-book;
             }
+            .summary-text.row {
+                justify-content: space-around;
+                padding: 0 1em;
+                .content-row,
+                .chapters-row {
+                    padding: 1em;
+                }
+                .content-row {
+                    background-color: $color-bk-resource;
+                    border-radius: 0.5em;
+                }
+            }
         }
 
         &.modtype_page {
@@ -1529,18 +1599,47 @@ body.snap-resource-card {
             .asset-wrapper .snap-asset-content {
                 .contentafterlink {
                     .summary-figure {
-                        margin-bottom: 1em;
+                        padding: 1em;
                         margin-left: .5em;
                     }
                     .summary-text {
+                        margin: 1em;
                         img {
                             margin-left: .5em;
+                            border-radius: 0.5em;
                         }
+                    }
+                    .summary-container {
+                        background-color: $color-bk-resource;
+                        border-radius: 0.5em;
+                        overflow: hidden;
+                        margin-bottom: 1em;
+                        img {
+                            border-radius: 0.5em;
+                        }
+                    }
+                    .readmore-container {
+                        text-align: right;
                     }
                 }
             }
             .activityiconcontainer {
                 background-color: $color-page;
+            }
+        }
+
+        &.modtype_resource {
+            .snap-resource-figure {
+                width: 100%;
+                img {
+                    border-radius: 0.5em;
+                }
+            }
+            .snap-resource-figure-caption {
+                background-color: $color-bk-resource;
+                border-radius: 0.5em;
+                margin-top: 1em;
+                padding: 1em 1em;
             }
         }
 
@@ -1887,11 +1986,13 @@ body.snap-resource-card {
 .snap-stealth-tag,
 .snap-draft-tag,
 .snap-current-tag {
-    font-size: small;
     font-family: $font-family-system;
-    background-color: #eee;
+    background-color: $brand-warning;
     margin: 0.5em 0;
-    padding: 0.5em;
+    border-radius: 0.5rem;
+    padding: 0.5em 1em;
+    color: $body-bg;
+    font-weight: 500;
 
     .availabilityinfo {
         display: inline;

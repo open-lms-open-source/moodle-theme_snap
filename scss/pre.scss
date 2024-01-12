@@ -86,7 +86,7 @@ $state-danger-border:            fade-out($brand-danger, 0.9);
 
 $footer-color-bg:                #f1f0ee;
 
-$user-content-max-width:         43.5em;
+$user-content-max-width:         50em;
 
 // -------------------------
 // Button customisations
@@ -131,6 +131,7 @@ $color-questionnaire:                #f7981d; // Questionnaire, IMSCP, SCORM, Su
 $color-url:                          #999999; // URL
 $color-label:                        #3956b5; // Label
 $color-page:                         #5746d3; // Page
+$color-bk-resource:                  #f8f9fa; // For resources description background.
 
 // Open LMS
 $color-certificate:                  #be46ce; // Course certificate
