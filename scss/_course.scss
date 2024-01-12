@@ -1350,6 +1350,7 @@ body.snap-resource-card {
                 margin-top: unset;
             }
             p.snap-resource-card-fadeout {
+                display: inline-block;
                 position: absolute;
                 bottom: 0;
                 left: 0;
@@ -1659,7 +1660,7 @@ body.snap-resource-card {
         }
 
         &.modtype_goone {
-            border-top-color: $color-customquiz;
+            border-top-color: $color-go1;
             .activityiconcontainer {
                 background-color: $color-go1;
             }
@@ -1686,7 +1687,7 @@ body.snap-resource-card {
 // -------------------------
 body.snap-resource-list,
 body.snap-resource-card {
-    li.snap-resource.modtype_resource {
+    li.snap-resource {
 
         &.snap-mime-spreadsheet,
         &.snap-mime-chart,
