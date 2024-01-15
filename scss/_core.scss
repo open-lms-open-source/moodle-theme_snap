@@ -5309,6 +5309,34 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
     margin-bottom: 0.5em;
 }
 
+body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
+    width: 100%;
+    border-bottom: 1px solid $gray-300;
+    border-top: 1px solid $gray-300;
+    margin-bottom: 1.3em;
+    padding-top: 1em;
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        column-gap: 1.5em;
+
+        .navitem {
+            display: flex;
+            margin-bottom: 1em;
+
+            .btn.dropdown-toggle {
+                padding: 0;
+                font-size: 1.1rem;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
 #page-admin-tool-usertours-configure {
     #id_description,
     #id_title {
