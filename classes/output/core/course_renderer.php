@@ -476,18 +476,9 @@ class course_renderer extends \core_course_renderer {
         // Display the link to the module (or do nothing if module has no url).
         $cmname = $this->course_section_cm_name($mod, $displayoptions);
         $assetlink = '';
-        $assettype = '';
 
         if (!empty($cmname)) {
             // Activity/resource type.
-            $snapmodtype = $this->get_mod_type($mod)[0];
-            $pagecurrentstr = get_string('modulename', 'mod_page');
-            $bookcurrentstr = get_string('modulename', 'mod_book');
-            if (strcmp($snapmodtype, $pagecurrentstr) == 0 || strcmp($snapmodtype, $bookcurrentstr) == 0) {
-                $snapmodtype = '';
-            }
-            $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
-            // Asset link.
             $assetlink .= '<h3 class="snap-asset-link">'.$cmname.'</h3>';
         }
 
@@ -583,9 +574,9 @@ class course_renderer extends \core_course_renderer {
 
         // Build output.
         $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
-        $content = '<div class="snap-asset-content">'.$assetlink.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.'</div>';
+        $content = '<div class="snap-asset-content">'.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.'</div>';
         $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.$coursetoolsicon.'</div>';
-        $output .= '<div class="snap-header-card">'.$assettype.$cardicons.'</div>'.$content;
+        $output .= '<div class="snap-header-card">'.$assetlink.$cardicons.'</div>'.$content;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
         $supported = ['topics', 'weeks', 'site'];
@@ -1095,12 +1086,15 @@ class course_renderer extends \core_course_renderer {
         $pmcontextattribute = 'data-pagemodcontext="'.$mod->context->id.'"';
 
         $o = "
-        {$thumbnail}
-        <div class='summary-text'>
-            {$preview}
-            <p><a class='$pslinkclass' title='{$mod->name}' href='{$mod->url}' $pmcontextattribute>{$readmore}</a></p>
+        <div class='summary-container'>
+            {$thumbnail}
+            <div class='summary-text'>
+                {$preview}
+            </div>
         </div>
-
+        <div class='readmore-container'>
+        <a class='readmore-button $pslinkclass' title='{$mod->name}' href='{$mod->url}' $pmcontextattribute>{$readmore}</a>
+        </div>
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
             <div id='pagemod-content-container'>
                 {$content}
@@ -1131,8 +1125,8 @@ class course_renderer extends \core_course_renderer {
             $formatoptions->context = $context;
             $content = format_text($content, $book->introformat, $formatoptions);
             $o = '<div class="summary-text row">';
-            $o .= '<div class="col-sm-6">' .$content. '</div>';
-            $o .= '<div class="col-sm-6">' .$this->book_get_toc($chapters, $book, $cm) . '</div>';
+            $o .= '<div class="content-row col-sm-6">' .$content. '</div>';
+            $o .= '<div class="chapters-row col-sm-6">' .$this->book_get_toc($chapters, $book, $cm) . '</div>';
             $o .= '</div>';
             return $o;
         }
@@ -1329,12 +1323,18 @@ class course_renderer extends \core_course_renderer {
                 $url = $fullurl;
             }
         }
+        // Activity/resource type.
+        $snapmodtype = $this->get_mod_type($mod)[0];
+        $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
 
         if ($mod->uservisible) {
-            $output .= "<a $target $onclicklti $resourceonclick class='mod-link' href='$url'>"
-                            .$activityimg.
-                            "<p class='instancename'>$instancename</p>
-                        </a>";
+            $output .= $activityimg;
+            $output .= "<div class='snap-header-container'>"
+                             .$assettype.
+                            "<a $target $onclicklti $resourceonclick class='mod-link' href='$url' title='$instancename'>".
+                                "<p class='instancename'>$instancename</p>
+                            </a>
+                        </div>";
             $output .= $groupinglabel;
         } else {
             // We may be displaying this just in order to show information
