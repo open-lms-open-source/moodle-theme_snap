@@ -211,10 +211,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             });
             var tempnode = $('<div></div>');
             templates.replaceNodeContents(tempnode, html, '');
-            // Append resource card fadeout to content resource card.
-            tempnode.find('.snap-resource-long .contentafterlink .snap-resource-card-fadeout').each(function() {
-                $(this).appendTo($(this).prevAll('.snap-resource-long .contentafterlink .no-overflow'));
-            });
+
             // Remove from Dom the completion tracking when it is disabled for an activity.
             tempnode.find('.snap-header-card .snap-header-card-icons .disabled-snap-asset-completion-tracking').remove();
             if (existingSections.length > 0) {

@@ -195,6 +195,21 @@ define(
                 $('#moodle-blocks').addClass('state-visible');
             }
 
+            // Show chevron Icon in content resource card.
+            $('.snap-resource-long .snap-asset-content').each(function() {
+                var container = $(this).find('.contentafterlink .no-overflow');
+                var paragraph = container.find('p');
+                var chevronIcon = $(this).find('.fa-chevron-down');
+                // Show only when text is too long.
+                if (paragraph.length > 0) {
+                    setTimeout(function() {
+                        if (paragraph[0].offsetHeight < paragraph[0].scrollHeight) {
+                            chevronIcon[0].style.display = 'block';
+                        }
+                    }, 100);
+                }
+            });
+
             // If a modlue was in the hash then scroll to it.
             if (mod !== null) {
                 $(section).addClass('state-visible');

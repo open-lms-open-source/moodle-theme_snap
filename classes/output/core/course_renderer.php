@@ -754,14 +754,10 @@ class course_renderer extends \core_course_renderer {
         }
         if ($mod->url) {
             if ($content) {
-                // Add extra content to create fadeout to resource cards activities and SCORM package.
-                if ((plugin_supports('mod', $mod->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE) ||
-                    $mod->modname === 'scorm') {
-                        $fadeoutcard = "<p class='snap-resource-card-fadeout'>&nbsp;</p>";
-                        $content .= $fadeoutcard;
-                }
                 // If specified, display extra content after link.
                 $output = html_writer::tag('div', $content, array('class' => trim('contentafterlink ' . $textclasses)));
+                // Add chevron icon to content.
+                $output .= '<i class="fa fa-chevron-down" aria-hidden="true"></i>';
             }
         } else {
             $snapmodtype = $this->get_mod_type($mod)[0];
@@ -774,7 +770,7 @@ class course_renderer extends \core_course_renderer {
 
             // No link, so display only content.
             $output = html_writer::tag('div', $assettype . $accesstext . $content,
-                array('class' => 'contentwithoutlink ' . $textclasses));
+                array('class' => 'contentwithoutlink text-break' . $textclasses));
         }
         return $output;
     }
@@ -1051,7 +1047,7 @@ class course_renderer extends \core_course_renderer {
         }
 
         $readmore = get_string('readmore', 'theme_snap');
-        $close = get_string('closebuttontitle', 'moodle');
+        $close = get_string('collapseicon', 'theme_snap');
 
         $content = '';
         $contentloaded = 0;
@@ -1099,8 +1095,8 @@ class course_renderer extends \core_course_renderer {
             <div id='pagemod-content-container'>
                 {$content}
             </div>
-            <div class='d-block'><hr><a  class='snap-action-icon snap-icon-close' href='#' role='button'>
-            <small>$close</small></a></div>
+            <div class='d-block'><a  class='snap-action-icon' href='#' role='button' title='{$close} {$page->name}'>
+            <i class='fa fa-chevron-up' aria-hidden=''true'></i></a></div>
         </div>";
 
         return $o;
