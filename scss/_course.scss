@@ -1177,8 +1177,13 @@ body.snap-resource-card {
             .snap-conditional-tag {
                 margin: unset;
             }
-            .snap-asset-completion-tracking div {
-                display: flex;
+            .snap-asset-completion-tracking {
+                .autocompletion {
+                    display: flex;
+                }
+                div {
+                    display: flex;
+                }
             }
         }
     }
@@ -2051,14 +2056,10 @@ body.snap-resource-card {
 
 // Hide draft tag, unless asset has class draft (can be added by js).
 .snap-draft-tag,
-.snap-current-tag {
+.snap-current-tag,
+.snap-stealth-tag {
     display: none !important; // SHAME - overcome bad overspecificity...
     font-size: $font-size-sm;
-}
-
-// Hide stealth tag, unless asset has class stealth (can be added by js).
-.snap-stealth-tag {
-    display: none !important;
 }
 
 // Hide draft and stealth tag if the sections has hidden class.
@@ -2227,13 +2228,7 @@ form.togglecompletion {
     }
 }
 
-/* Indent text associated with activity/resource. */
-.section li.snap-activity {
-    .contentafterlink,
-    .hsuforum-recent {
-        margin-left: (33px + 32px); // icon size (33px + margin);
-    }
-}
+
 
 // -------------------------
 // Snap actions
