@@ -908,6 +908,7 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
                 // The link itself.
                 a {
                     color: $body-color;
+                    display: block;
                 }
             }
             .contentafterlink p a {
@@ -1127,11 +1128,10 @@ body.snap-resource-card li.snap-resource:not(.label) {
 // -----------------------------------------------------------
 body.snap-resource-list,
 body.snap-resource-card {
-    // Establish 60% for title and 40% for icons in the activity header.
     .asset-wrapper {
         .snap-assettype {
             display: inline-block;
-            width: 60%;
+            width: 100%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -1191,6 +1191,19 @@ body.snap-resource-card {
             img {
                 border-radius: 0.5em;
             }
+        }
+        .snap-action-icon {
+            padding: 0;
+            font-size: 1.2em;
+        }
+        .fa-chevron-down {
+            display: none;
+            color: $brand-primary;
+            text-align: center;
+        }
+        .fa-chevron-up {
+            color: $brand-primary;
+            text-align: center;
         }
     }
 
@@ -1341,13 +1354,26 @@ body.snap-resource-card {
             }
         }
 
-        div.contentafterlink {
+        .snap-asset-content {
             .no-overflow {
-                word-wrap: break-word;
-                max-height: 5.1em;
+                background-color: transparent;
+                padding: unset;
+                margin: unset;
+            }
+        }
+
+        div.contentafterlink {
+            padding: 1em;
+            margin-top: 0.5em;
+            background-color: $color-bk-resource;
+            border-radius: 0.5em;
+            .no-overflow {
+                -webkit-line-clamp: 3;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
                 overflow: hidden;
-                position: relative;
-                margin-top: unset;
+                line-height: 1.4em;
+                height: 4.2em;
             }
             p.snap-resource-card-fadeout {
                 display: inline-block;
