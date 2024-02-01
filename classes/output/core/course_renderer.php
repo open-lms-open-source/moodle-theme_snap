@@ -757,7 +757,7 @@ class course_renderer extends \core_course_renderer {
                 // If specified, display extra content after link.
                 $output = html_writer::tag('div', $content, array('class' => trim('contentafterlink ' . $textclasses)));
                 // Add chevron icon to content.
-                $output .= '<i class="fa fa-chevron-down" aria-hidden="true"></i>';
+                $output .= '<a href="'.$mod->url.'"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>';
             }
         } else {
             $snapmodtype = $this->get_mod_type($mod)[0];
@@ -1065,14 +1065,14 @@ class course_renderer extends \core_course_renderer {
             $contentloaded = !$lazyload ? 1 : 0;
         }
         // With previous design, we allow displaying videos.
-        if (!empty(get_config('theme_snap', 'design_mod_page')) && $content == '') {
+        if (!empty(get_config('theme_snap', 'behavior_mod_page')) && $content == '') {
             if (stripos($page->content, '<video') !== false) {
                 $content = $page->content;
                 $contentloaded = 1;
             }
         }
 
-        $pagenewwindow = get_config('theme_snap', 'design_mod_page');
+        $pagenewwindow = get_config('theme_snap', 'behavior_mod_page');
         // Check for mod page design setting to open the content inline on the same page or in another window.
         if ($pagenewwindow) {
             $pslinkclass = 'btn btn-secondary pagemod-readmore';

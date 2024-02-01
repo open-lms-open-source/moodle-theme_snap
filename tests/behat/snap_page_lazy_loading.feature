@@ -46,7 +46,7 @@ Feature: When the moodle theme is set to Snap course pages can be rendered using
   Scenario Outline: Check if Page content is being lazy loaded
     Given the following config values are set as admin:
       | lazyload_mod_page | <lazyload>        | theme_snap |
-      | design_mod_page   | <design_mod_page> | theme_snap |
+      | behavior_mod_page   | <behavior_mod_page> | theme_snap |
     And I log in as "teacher1"
     And I am on the course "C1"
     And I follow "Topic 1"
@@ -55,11 +55,11 @@ Feature: When the moodle theme is set to Snap course pages can be rendered using
     And ".pagemod-readmore" "css_element" <exist>
     And "<class>" "css_element" should exist
     Examples:
-      | lazyload | design_mod_page | class                                       | exist            |
-      | 0        | 0               | .pagemod-content[data-content-loaded=\"1\"] | should not exist |
-      | 1        | 0               | .pagemod-content[data-content-loaded=\"0\"] | should not exist |
-      | 0        | 1               | .pagemod-content[data-content-loaded=\"1\"] | should exist     |
-      | 1        | 1               | .pagemod-content[data-content-loaded=\"0\"] | should exist     |
+      | lazyload | behavior_mod_page | class                                       | exist            |
+      | 0        | 0                 | .pagemod-content[data-content-loaded=\"1\"] | should not exist |
+      | 1        | 0                 | .pagemod-content[data-content-loaded=\"0\"] | should not exist |
+      | 0        | 1                 | .pagemod-content[data-content-loaded=\"1\"] | should exist     |
+      | 1        | 1                 | .pagemod-content[data-content-loaded=\"0\"] | should exist     |
 
   @javascript
   Scenario: Check the file tree of a folder when lazy load is active

@@ -128,5 +128,14 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2022042800, 'theme', 'snap');
     }
 
+    if ($oldversion < 2024020100) {
+        if (!is_null(get_config('theme_snap', 'design_mod_page'))) {
+            $previous = get_config('theme_snap', 'design_mod_page');
+            set_config('behavior_mod_page', $previous, 'theme_snap');
+            unset_config('design_mod_page', 'theme_snap');
+        }
+        upgrade_plugin_savepoint(true, 2024020100, 'theme', 'snap');
+    }
+
     return true;
 }
