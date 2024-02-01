@@ -742,21 +742,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     // Make sure that the blocks are always within page-content for assig view page.
                     $('#page-mod-assign-view #page-content').append($('#moodle-blocks'));
 
-                    // Show chevron Icon in content resource card.
-                    $('.snap-resource-long .snap-asset-content').each(function() {
-                        var container = $(this).find('.contentafterlink .no-overflow');
-                        var paragraph = container.find('p');
-                        var chevronIcon = $(this).find('.fa-chevron-down');
-                        // Show only when text is too long.
-                        if (paragraph.length > 0) {
-                            $(window).on('load', function() {
-                                if (paragraph[0].offsetHeight < paragraph[0].scrollHeight) {
-                                    chevronIcon[0].style.display = 'block';
-                                }
-                            });
-                        }
-                    });
-
                     // Remove from Dom the completion tracking when it is disabled for an activity.
                     $('.snap-header-card .snap-header-card-icons .disabled-snap-asset-completion-tracking').remove();
 
