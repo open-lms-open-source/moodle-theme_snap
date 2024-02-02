@@ -314,38 +314,6 @@ define(
                     lightboxMedia($(this).closest('.snap-resource, .snap-extended-resource'));
                     e.preventDefault();
                 });
-
-                // Make resource cards clickable.
-                $(document).on('click', '.snap-resource-card .snap-resource, .snap-extended-resource', function(e) {
-                    var trigger = $(e.target),
-                        hreftarget = '_self',
-                        link = $(trigger).closest('.snap-resource').find('.snap-asset-link a'),
-                        href = '';
-                    if (link.length > 0) {
-                        href = $(link).attr('href');
-                    }
-
-                    // Excludes any clicks in the actions menu, on links or forms.
-                    var selector = '.snap-asset-completion-tracking, ' +
-                        '.snap-asset-actions, .contentafterlink a, .ally-actions, ' +
-                        '.snap-header-card, .contentafterlink, .snap-asset-meta';
-                    var withintarget = $(trigger).closest(selector).length;
-                    if (!withintarget) {
-                        if ($(this).hasClass('js-snap-media')) {
-                            lightboxMedia(this);
-                        } else {
-                            if (href === '') {
-                                return;
-                            }
-                            if ($(link).attr('target') === '_blank') {
-                                hreftarget = '_blank';
-                            }
-                            sessionStorage.setItem('lastMod', $(this).attr('id'));
-                            window.open(href, hreftarget);
-                        }
-                        e.preventDefault();
-                    }
-                });
             }
         };
     }

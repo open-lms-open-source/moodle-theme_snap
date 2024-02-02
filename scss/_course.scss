@@ -1268,6 +1268,14 @@ body.snap-resource-card {
     }
 }
 
+body.snap-resource-list,
+body.snap-resource-card {
+    li.modtype_folder .container-fluid {
+        margin-top: 1em;
+    }
+}
+
+
 // -----------------------------------------------------------
 // Cards view - Ellipsis title and gradient content.
 // -----------------------------------------------------------
@@ -1364,6 +1372,14 @@ body.snap-resource-card {
                 background-color: transparent;
                 padding: unset;
                 margin: unset;
+            }
+            a {
+                &:hover {
+                    text-decoration: unset;
+                }
+                i.fa-chevron-down {
+                    display: block;
+                }
             }
         }
 
