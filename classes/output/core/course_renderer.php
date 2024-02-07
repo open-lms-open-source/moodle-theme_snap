@@ -757,7 +757,7 @@ class course_renderer extends \core_course_renderer {
                 // If specified, display extra content after link.
                 $output = html_writer::tag('div', $content, array('class' => trim('contentafterlink ' . $textclasses)));
                 // Add chevron icon to content.
-                $output .= '<a href="'.$mod->url.'"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>';
+                $output .= '<a href="'.$mod->url.'&forceview=1"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>';
             }
         } else {
             $snapmodtype = $this->get_mod_type($mod)[0];
