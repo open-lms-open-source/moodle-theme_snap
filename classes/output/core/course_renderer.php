@@ -572,142 +572,20 @@ class course_renderer extends \core_course_renderer {
         // Add draft, conditional.
         $assetmeta = $stealthtag.$drafttag;
 
+        // Add edit menu to Snap.
+        $snapmenu = '';
+        $snapmenu .= $this->course_section_menu_actions($mod);
+
         // Build output.
         $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
         $content = '<div class="snap-asset-content">'.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.'</div>';
-        $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.$coursetoolsicon.'</div>';
+        $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.$coursetoolsicon.$snapmenu.'</div>';
         $output .= '<div class="snap-header-card">'.$assetlink.$cardicons.'</div>'.$content;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
         $supported = ['topics', 'weeks', 'site'];
         if (!in_array($COURSE->format, $supported)) {
             return parent::course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions).$assetmeta;
-        }
-
-        // Build up edit actions.
-        $actions = '';
-        $actionsadvanced = array();
-        $coursecontext = context_course::instance($mod->course);
-        $modcontext = context_module::instance($mod->id);
-        $baseurl = new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
-
-        $str = get_strings(array('delete', 'move', 'duplicate', 'hide', 'show', 'roles',
-            'makeavailable', 'makeunavailable', ), 'moodle');
-        // TODO - add snap strings here.
-
-        // Move, Edit, Delete.
-        if (has_capability('moodle/course:manageactivities', $modcontext)) {
-            $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
-            $moveicon = '<i aria-hidden="true" title="'.$movealt.'" alt="'.$movealt.'" class="icon fa fa-arrow-right fa-fw"></i>';
-            $editalt = s(get_string('edit', 'theme_snap', $mod->get_formatted_name()));
-            $editicon = '<i aria-hidden="true" title="'.$editalt.'" alt="'.$editalt.'" class="icon fa fa-pencil fa-fw"></i>';
-            $actions .= '<label role="button" class="snap-asset-move" for="snap-move-mod-'.$mod->id.'">';
-            $actions .= '<input id="snap-move-mod-'.$mod->id.'" aria-label="'.$movealt.'"
-             class="js-snap-asset-move sr-only" role="button" type="checkbox">';
-            $actions .= '<span class="sr-only">'.$movealt.'</span>'.$moveicon.'</label>';
-            $actions .= '<a class="snap-edit-asset" role="button" href="' .
-                new moodle_url($baseurl, array('update' => $mod->id)) . '"
-                aria-label="' . get_string('activityedit', 'theme_snap') . '">';
-            $actions .= $editicon.'</a>';
-            $actionsadvanced[] = '<li><a href="'.new moodle_url($baseurl, array('delete' => $mod->id)).
-                '" data-action="delete" role="button" class="js_snap_delete dropdown-item">'.$str->delete.'</a></li>';
-        }
-
-        // Hide/Show.
-        if (has_capability('moodle/course:activityvisibility', $modcontext)) {
-            $ariacbaction = get_string('hideandshowactioncb', 'theme_snap');
-            $actions .= '<input class="sr-only" type="checkbox" aria-label="'.$ariacbaction.'">';
-            $hideaction = '<li><a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
-            $hideaction .= '" data-action="hide" role="button" class="dropdown-item editing_hide js_snap_hide">'
-                .$str->hide.'</a></li>';
-            $actionsadvanced[] = $hideaction;
-            $showaction = '<li><a href="'.new moodle_url($baseurl, array('show' => $mod->id));
-            $showaction .= '" data-action="show" role="button" class="dropdown-item editing_show js_snap_show">'
-                .$str->show.'</a></li>';
-            $actionsadvanced[] = $showaction;
-
-            // Stealth action.
-            $courseformat = course_get_format($mod->get_course());
-
-            $makeunavailable = '<li><a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
-            $makeunavailable .= '" data-action="hide" role="button" class="dropdown-item editing_makeunavailable js_snap_hide">' .
-                $str->makeunavailable . '</a></li>';
-            $actionsadvanced[] = $makeunavailable;
-
-            if (!empty($CFG->allowstealth) && $mod->has_view()) {
-                $action = 'stealth';
-                $actionstealth = '<li><a href="'.new moodle_url($baseurl, array($action => $mod->id));
-                $actionstealth .= '" data-action="' . $action . '"
-                    role="button" class="dropdown-item editing_makeavailable js_snap_stealth">' .
-                    $str->makeavailable.'</a></li>';
-                $actionsadvanced[] = $actionstealth;
-
-                $action = 'show';
-                $actionstealthshow = '<li><a href="'.new moodle_url($baseurl, array($action => $mod->id));
-                $actionstealthshow .= '" data-action="' . $action .
-                    '" role="button" class="dropdown-item editing_makeavailable js_snap_stealthshow">' .
-                    $str->makeavailable.'</a></li>';
-                $actionsadvanced[] = $actionstealthshow;
-            }
-        }
-
-        // Duplicate.
-        $dupecaps = array('moodle/backup:backuptargetimport', 'moodle/restore:restoretargetimport');
-        if (has_all_capabilities($dupecaps, $coursecontext) &&
-            plugin_supports('mod', $mod->modname, FEATURE_BACKUP_MOODLE2) &&
-            plugin_supports('mod', $mod->modname, 'duplicate', true)) {
-            $actionsadvanced[] = "<li><a href='".new moodle_url($baseurl, array('duplicate' => $mod->id)).
-                "' data-action='duplicate' role='button' class='dropdown-item js_snap_duplicate'>$str->duplicate</a></li>";
-        }
-
-        // Asign roles.
-        if (has_capability('moodle/role:assign', $modcontext)) {
-            $actionsadvanced[] = "<li><a role='button' class='dropdown-item' href='".
-                new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id)).
-                "'>$str->roles</a></li>";
-        }
-
-        // Give local plugins a chance to add icons.
-        $localplugins = array();
-        foreach (get_plugin_list_with_function('local', 'extend_module_editing_buttons') as $function) {
-            $localplugins = array_merge($localplugins, $function($mod));
-        }
-
-        foreach (get_plugin_list_with_function('block', 'extend_module_editing_buttons') as $function) {
-            $localplugins = array_merge($localplugins, $function($mod));
-        }
-
-        // TODO - pld string is far too long....
-        $locallinks = '';
-        foreach ($localplugins as $localplugin) {
-            $url = $localplugin->url;
-            $text = $localplugin->text;
-            $class = 'dropdown-item ' . $localplugin->attributes['class'];
-            $actionsadvanced[] = "<a href='$url' class='$class'>$text</a>";
-        }
-
-        $advancedactions = '';
-        if (!empty($actionsadvanced)) {
-            $moreicon = '<i aria-hidden="true" class="icon fa fa-ellipsis-v fa-fw"></i>';
-            $advancedactions = '<div class="dropdown snap-edit-more-dropdown">';
-            $advancedactions .= '<button class="snap-edit-asset-more" ';
-            $advancedactions .= 'data-toggle="dropdown" data-boundary="window" data-offset="-10,12"';
-            $advancedactions .= 'aria-label="' . get_string('moreoptionslabel', 'theme_snap') . '" aria-expanded="false"';
-            $advancedactions .= 'aria-controls="#snap-asset-menu">'.$moreicon.'</button>';
-            $advancedactions .= '<ul id="snap-asset-menu" class="dropdown-menu asset-edit-menu">';
-            foreach ($actionsadvanced as $action) {
-                $advancedactions .= "$action";
-            }
-            $advancedactions .= "</ul></div>";
-        }
-        $output .= "</div>"; // Close .activityinstance.
-
-        // Add actions menu.
-        if ($actions) {
-            $output .= "<div class='js-only snap-asset-actions' role='region' aria-label='" .
-                get_string('courseactionslabel', 'theme_snap') . "'>";
-            $output .= $actions.$advancedactions;
-            $output .= "</div>";
         }
         $output .= "</div>"; // Close .asset-wrapper.
         return $output;
@@ -1918,5 +1796,145 @@ class course_renderer extends \core_course_renderer {
         }
 
         return $onclicklti;
+    }
+
+    /**
+     * Renders HTML for displaying the sequence of course module editing buttons
+     *
+     * @param cm_info $mod The module we are displaying actions for.
+     * @return string
+     *
+     * @see course_get_cm_edit_actions()
+     *
+     */
+    public function course_section_menu_actions(cm_info $mod = null) {
+        global $CFG;
+        // Build up edit actions.
+        $actions = '';
+        $actionsadvanced = array();
+        $coursecontext = context_course::instance($mod->course);
+        $modcontext = context_module::instance($mod->id);
+        $baseurl = new moodle_url('/course/mod.php', array('sesskey' => sesskey()));
+
+        $str = get_strings(array('editsettings', 'delete', 'move', 'duplicate', 'hide', 'show', 'roles',
+            'makeavailable', 'makeunavailable', ), 'moodle');
+
+        // Move, Edit, Delete.
+        if (has_capability('moodle/course:manageactivities', $modcontext)) {
+            // Update button.
+            $actionsadvanced[] = '<li><a href="'.new moodle_url($baseurl, array('update' => $mod->id)).
+                '" data-action="update" role="button" class="snap-edit-asset dropdown-item" role="button">'.
+                '<i class="icon fa fa-pencil fa-fw "></i>'.$str->editsettings.'</a></li>';
+            // Move button.
+            $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
+            $actionsadvanced[] = '<li><a><label role="button" class="snap-asset-move dropdown-item" for="snap-move-mod-'
+                .$mod->id.'"><input id="snap-move-mod-'.$mod->id.'" aria-label="'.$movealt.
+                '"class="js-snap-asset-move sr-only" role="button" type="checkbox">'.
+                '<i class="icon fa fa-arrows fa-fw "></i>'.$str->move.'</label></a></li>';
+            // Delete button.
+            $actionsadvanced[] = '<li><a href="'.new moodle_url($baseurl, array('delete' => $mod->id)).
+                '" data-action="delete" role="button" class="js_snap_delete dropdown-item">'.
+                '<i class="icon fa fa-trash fa-fw "></i>'.$str->delete.'</a></li>';
+        }
+
+        // Hide/Show.
+        if (has_capability('moodle/course:activityvisibility', $modcontext)) {
+            $ariacbaction = get_string('hideandshowactioncb', 'theme_snap');
+            $actions .= '<input class="sr-only" type="checkbox" aria-label="'.$ariacbaction.'">';
+            $hideaction = '<li><a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
+            $hideaction .= '" data-action="hide" role="button" class="dropdown-item editing_hide js_snap_hide">'.
+                '<i class="icon fa fa-eye fa-fw "></i>'.$str->hide.'</a></li>';
+            $actionsadvanced[] = $hideaction;
+            $showaction = '<li><a href="'.new moodle_url($baseurl, array('show' => $mod->id));
+            $showaction .= '" data-action="show" role="button" class="dropdown-item editing_show js_snap_show">'.
+                '<i class="icon fa fa-eye-slash fa-fw "></i>'.$str->show.'</a></li>';
+            $actionsadvanced[] = $showaction;
+
+            // Stealth action.
+            $courseformat = course_get_format($mod->get_course());
+
+            $makeunavailable = '<li><a href="'.new moodle_url($baseurl, array('hide' => $mod->id));
+            $makeunavailable .= '" data-action="hide" role="button" class="dropdown-item editing_makeunavailable js_snap_hide">' .
+                '<i class="icon fa fa-commenting fa-fw "></i>'.$str->makeunavailable . '</a></li>';
+            $actionsadvanced[] = $makeunavailable;
+
+            if (!empty($CFG->allowstealth) && $mod->has_view()) {
+                $action = 'stealth';
+                $actionstealth = '<li><a href="'.new moodle_url($baseurl, array($action => $mod->id));
+                $actionstealth .= '" data-action="' . $action . '"
+                    role="button" class="dropdown-item editing_makeavailable js_snap_stealth">' .
+                    '<i class="icon fa fa-ban fa-fw "></i>'.$str->makeavailable.'</a></li>';
+                $actionsadvanced[] = $actionstealth;
+
+                $action = 'show';
+                $actionstealthshow = '<li><a href="'.new moodle_url($baseurl, array($action => $mod->id));
+                $actionstealthshow .= '" data-action="' . $action .
+                    '" role="button" class="dropdown-item editing_makeavailable js_snap_stealthshow">' .
+                    '<i class="icon fa fa-ban fa-fw "></i>'.$str->makeavailable.'</a></li>';
+                $actionsadvanced[] = $actionstealthshow;
+            }
+        }
+
+        // Duplicate.
+        $dupecaps = array('moodle/backup:backuptargetimport', 'moodle/restore:restoretargetimport');
+        if (has_all_capabilities($dupecaps, $coursecontext) &&
+            plugin_supports('mod', $mod->modname, FEATURE_BACKUP_MOODLE2) &&
+            plugin_supports('mod', $mod->modname, 'duplicate', true)) {
+            $actionsadvanced[] = "<li><a href='".new moodle_url($baseurl, array('duplicate' => $mod->id)).
+                "' data-action='duplicate' role='button' class='dropdown-item js_snap_duplicate'>".
+                "<i class='icon fa fa-copy fa-fw'></i>$str->duplicate</a></li>";
+        }
+
+        // Assign roles.
+        if (has_capability('moodle/role:assign', $modcontext)) {
+            $actionsadvanced[] = "<li><a role='button' class='dropdown-item' href='".
+                new moodle_url('/admin/roles/assign.php', array('contextid' => $modcontext->id)).
+                "'><i class='icon fa fa-user-circle fa-fw'></i>$str->roles</a></li>";
+        }
+
+        // Give local plugins a chance to add icons.
+        $localplugins = array();
+        foreach (get_plugin_list_with_function('local', 'extend_module_editing_buttons') as $function) {
+            $localplugins = array_merge($localplugins, $function($mod));
+        }
+
+        foreach (get_plugin_list_with_function('block', 'extend_module_editing_buttons') as $function) {
+            $localplugins = array_merge($localplugins, $function($mod));
+        }
+
+        // TODO - pld string is far too long....
+        $locallinks = '';
+        foreach ($localplugins as $localplugin) {
+            $url = $localplugin->url;
+            $text = $localplugin->text;
+            $icon = $localplugin->icon;
+            $iconhtml = $this->pix_icon($icon->pix, $text, $icon->component);
+            $class = 'dropdown-item ' . $localplugin->attributes['class'];
+            $actionsadvanced[] = "<a href='$url' class='$class'>$iconhtml $text</a>";
+        }
+
+        $advancedactions = '';
+        if (!empty($actionsadvanced)) {
+            $moreicon = '<i aria-hidden="true" class="icon fa fa-chevron-down fa-fw"></i>';
+            $advancedactions = '<div class="dropdown snap-edit-more-dropdown">';
+            $advancedactions .= '<button class="snap-edit-asset-more" ';
+            $advancedactions .= 'data-toggle="dropdown" data-boundary="window" data-offset="-10,12"';
+            $advancedactions .= 'aria-label="' . get_string('moreoptionslabel', 'theme_snap') . '" aria-expanded="false"';
+            $advancedactions .= 'aria-controls="#snap-asset-menu">'.$moreicon.'</button>';
+            $advancedactions .= '<ul id="snap-asset-menu" class="dropdown-menu asset-edit-menu">';
+            foreach ($actionsadvanced as $action) {
+                $advancedactions .= "$action";
+            }
+            $advancedactions .= "</ul></div>";
+        }
+        // Add actions menu.
+        if ($advancedactions) {
+            $output = '';
+            $output .= "<div class='js-only snap-asset-actions' role='region' aria-label='" .
+                get_string('courseactionslabel', 'theme_snap') . "'>";
+            $output .= $advancedactions;
+            $output .= "</div>";
+        }
+        return $output;
     }
 }

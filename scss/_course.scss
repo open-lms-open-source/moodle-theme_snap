@@ -1105,9 +1105,6 @@ body.snap-resource-card li.snap-resource:not(.label) {
     // Resource cards are clickable with data-href, so add cursor pointer.
     .asset-wrapper {
         @include clearfix;
-        .snap-asset-actions {
-            display: flex;
-        }
     }
     // Ajust size of moodle putting filetype on screen
     .resourcelinkdetails {
@@ -1137,10 +1134,34 @@ body.snap-resource-card {
             text-overflow: ellipsis;
         }
         .snap-header-card-icons {
-            display: inline-block;
+            display: inline-flex;
             width: auto;
             height: 100%;
             max-height: 1.4em;
+            align-items: center;
+            justify-content: flex-end;
+            > * {
+                margin-left: 6px;
+            }
+            i,
+            img,
+            button {
+                width: 20px;
+                height: 20px;
+                margin: unset;
+                padding: unset;
+            }
+            .snap-edit-asset-more {
+                display: flex;
+            }
+            #snap-asset-menu {
+                i.icon,
+                img.icon, {
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 6px;
+                }
+            }
         }
     }
     // Modify restriction icon size and position for course cards.
@@ -1173,9 +1194,6 @@ body.snap-resource-card {
             .snap-asset-completion-tracking {
                 display: inline-block;
                 float: right;
-            }
-            .snap-conditional-tag {
-                margin: unset;
             }
             .snap-asset-completion-tracking {
                 .autocompletion {
@@ -1282,9 +1300,6 @@ body.snap-resource-card {
 body.snap-resource-card {
     li.snap-resource.snap-resource-long {
         height: 14em;
-        .snap-asset-actions {
-            bottom: 0
-        }
     }
     // Hide multimedia content on resource cards description.
     li.snap-resource.snap-resource-long.modtype_url,
@@ -1435,17 +1450,6 @@ body.snap-resource-card {
         .activityinstance .activityicon {
             display: inline;
         }
-
-        .snap-asset-actions {
-            width: 250px;
-            .snap-asset-move,
-            .snap-edit-more-dropdown,
-            > a {
-                width: 25%;
-                text-align: left;
-                padding: 0;
-            }
-        }
     }
 }
 
@@ -1454,10 +1458,6 @@ body.snap-resource-card {
 // -------------------------
 .snap-resource-list li.snap-resource {
     margin: 0 1%;
-
-    .snap-asset-actions {
-        width: 250px;
-    }
 
     .activityiconcontainer,
     .instancename {
@@ -2252,20 +2252,8 @@ form.togglecompletion {
 
 // All the editing options in one region.
 .snap-asset-actions {
-    position: absolute;
-    bottom: auto;
-    left: 0;
-    width: 250px;
-
     & > a,
-    .snap-edit-more-dropdown,
-    .snap-asset-move {
-        display: inline-block !important;
-        padding: 0 7%;
-        text-align: center;
-        width: 33%;
-        cursor: pointer;
-
+    .snap-edit-more-dropdown {
         &:hover,
         &:focus {
             .icon {
@@ -2295,22 +2283,23 @@ form.togglecompletion {
         background-color: white;
     }
 
-    // When checkbox for moving is checked
-    input[type=checkbox]:checked + .icon {
-        background-color: $brand-success !important;
-    }
-
     .dropdown-menu {
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
         border: 0;
-        padding: 0;
-    }
-
-    .dropdown-menu a {
-        font-weight: inherit;
-        font-size: 0.8em;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        padding: 10px 0;
+        border-radius: 0.5em;
+        min-width: 16.1rem;
+        a {
+            font-weight: inherit;
+            font-size: 0.8em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .pld-dropdown a,
+        .editing_backup {
+            display: inline-flex;
+            align-items: baseline;
+        }
     }
 
     input.sr-only[type="checkbox"],
@@ -2319,44 +2308,16 @@ form.togglecompletion {
     }
 
     .snap-asset-move {
+        margin: 0;
         input.sr-only[type="checkbox"] {
             display: inherit;
         }
-    }
-
-    label.snap-asset-move .icon,
-    a.snap-edit-asset .icon,
-    .dropdown-toggle .icon {
-        font-size: 1.3em;
-        color: $icons-color;
-    }
-}
-
-.modtype_page,
-.modtype_label,
-.modtype_book {
-    .snap-asset-actions {
-        bottom: 0;
     }
 }
 
 // Modify H3 size so the chapter title inside a book activity has a correct size between the other words.
 .modtype_book .asset-wrapper .snap-asset-content .summary-text.row h4 {
     font-size: 1em;
-}
-
-.snap-resource {
-    .snap-asset-actions {
-        width: 100%;
-
-        & > a,
-        .snap-edit-more-dropdown,
-        label {
-            padding: 0.3em 7%;
-            text-align: center;
-            width: 33%;
-        }
-    }
 }
 
 /* reset some moodle shame */
