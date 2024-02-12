@@ -1133,6 +1133,21 @@ body.snap-resource-card {
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        // Fix local bfaltformat icon in Snap course.
+        .local_bfaltformat-button_span {
+            z-index: unset;
+        }
+        .local-bfaltformat-access-icon {
+            display: flex;
+            height: 19px;
+            width: 19px;
+        }
+        .snap-header-card .local-bfaltformat-access-button {
+            display: contents;
+        }
+        .mod-link {
+            display: inline-flex;
+        }
         .snap-header-card-icons {
             display: inline-flex;
             width: auto;
@@ -2259,6 +2274,17 @@ form.togglecompletion {
             .icon {
                 transform: scale(1.1);
                 border-color: $gray-light;
+            }
+        }
+        .snap-edit-asset-more i.icon.fa-chevron-up {
+            display: none;
+        }
+        &.show .snap-edit-asset-more {
+            i.icon.fa-chevron-down {
+                display: none;
+            }
+            i.icon.fa-chevron-up {
+                display: inline-block;
             }
         }
     }
