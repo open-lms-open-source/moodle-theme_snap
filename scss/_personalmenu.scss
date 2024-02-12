@@ -545,6 +545,10 @@ body.snap-pm-open {
 .snap-personal-menu-more {
     display: block;
     text-align: right;
+    .snap-feeds-refresh-icon,
+    .snap-feeds-more-icon{
+        display: none;
+    }
 }
 
 .snap-personal-menu-feed-loading {

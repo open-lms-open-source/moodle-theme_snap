@@ -26,10 +26,15 @@
 <div class='snap-feeds'>
     <h5>{{#str}}snapfeedsblocktitle, theme_snap{{/str}}</h5>
     <hr class="mt-0">
-    <div id="snap-my-courses-updates">
+    <div id="snap-{{{location}}}-updates">
             {{#update}}
                 <section>{{{.}}}</section>
             {{/update}}
     </div>
 </div>
 {{/updates}}
+{{#js}}
+    require(['theme_snap/snap_feeds'], function(snap_feeds) {
+    snap_feeds.init();
+    });
+{{/js}}

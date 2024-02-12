@@ -179,6 +179,107 @@ body.path-site .block.block_settings {
     }
 }
 
+#snap_feeds_side_menu {
+    background-color: #EEF0F6;
+    visibility: hidden;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 13;
+    right: -100%;
+    border-left: 1px solid #eee;
+    transition: right 0.4s ease-in-out;
+    width: 320px;
+    position: fixed;
+    top: 0em;
+    &.state-visible {
+        visibility: visible;
+        right: 0;
+    }
+    .snap-feeds {
+        margin-top: 10em;
+        h5, hr {
+            display: none;
+        }
+        section {
+            background-color: #fff;
+            margin: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            .snap-personal-menu-more {
+                pointer-events: none;
+                margin-top: 1em;
+                margin-right: -0.8rem;
+                .snap-feeds-refresh-icon,
+                .snap-feeds-more-icon {
+                    display: block;
+                    margin-right: 0.8em;
+                }
+                small {
+                    display: none;
+                }
+                :before {
+                    pointer-events: all;
+                }
+            }
+            h2 {
+                clear: both;
+                font-size: 1rem;
+                font-weight: 700;
+                line-height: 1;
+                padding: 0.5em 0;
+                margin: 0.5em 0;
+            }
+            .snap-feeds-menu-more {
+                display: block;
+                text-align: right;
+                pointer-events: none;
+                margin-right: -0.8rem;
+                small {
+                    display: none;
+                }
+                img {
+                    pointer-events: all;
+                }
+            }
+            #snap-feeds-menu-messages,
+            #snap-feeds-menu-forumposts {
+                .userinitials {
+                    float: left;
+                    width: 40px;
+                    height: 40px;
+                    font-size: unset;
+                    margin: 0.3em 1em 0 0.3em;
+                }
+            }
+            .feeditem h3 {
+                font-size: 0.85rem;
+                small {
+                    display: block;
+                    br {
+                        display: none;
+                    }
+                }
+            }
+            span {
+                font-size: .7rem;
+            }
+        }
+    }
+}
+
+// Admin block link.
+#snap_feeds_side_menu_trigger {
+    text-align: center;
+    width: 2.35em;
+    svg {
+        margin-top: 0.6em;
+        path {
+            stroke: currentColor;
+        }
+    }
+}
+
 /* icons in blocks */
 .block_navigation .block_tree .tree_item.branch,
 .block_settings .block_tree .tree_item.branch {
