@@ -1912,12 +1912,13 @@ class course_renderer extends \core_course_renderer {
 
         $advancedactions = '';
         if (!empty($actionsadvanced)) {
-            $moreicon = '<i aria-hidden="true" class="icon fa fa-chevron-down fa-fw"></i>';
+            $moreicons = '<i aria-hidden="true" class="icon fa fa-chevron-down fa-fw"></i>'.
+                '<i aria-hidden="true" class="icon fa fa-chevron-up fa-fw"></i>';
             $advancedactions = '<div class="dropdown snap-edit-more-dropdown">';
             $advancedactions .= '<button class="snap-edit-asset-more" ';
             $advancedactions .= 'data-toggle="dropdown" data-boundary="window" data-offset="-10,12"';
             $advancedactions .= 'aria-label="' . get_string('moreoptionslabel', 'theme_snap') . '" aria-expanded="false"';
-            $advancedactions .= 'aria-controls="#snap-asset-menu">'.$moreicon.'</button>';
+            $advancedactions .= 'aria-controls="#snap-asset-menu">'.$moreicons.'</button>';
             $advancedactions .= '<ul id="snap-asset-menu" class="dropdown-menu asset-edit-menu">';
             foreach ($actionsadvanced as $action) {
                 $advancedactions .= "$action";
