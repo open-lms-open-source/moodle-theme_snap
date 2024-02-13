@@ -119,6 +119,25 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-
     .fitem_fcheckbox .fitemtitle label {
         display: none;
     }
+
+    .form-group.row {
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+
+      .col-md-9 {
+        @extend .col-12;
+      }
+    }
+
+    .col-md-3 {
+        display: none;
+    }
+
+    .form-check > span{
+        white-space: normal !important;
+    }
 }
 
 .form-item {
