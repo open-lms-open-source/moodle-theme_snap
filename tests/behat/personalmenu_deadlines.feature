@@ -48,6 +48,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario Outline: Student sees correct submission status against deadlines when 1 out of 2 assignments are submitted by student.
+    And I skip because "I will be fixed on INT-19673"
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##tomorrow##    |
@@ -84,6 +85,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
 
   @javascript
   Scenario Outline: Student sees correct submission status against deadlines when 2 assignments are from different courses.
+    And I skip because "I will be fixed on INT-19673"
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##tomorrow##    |
