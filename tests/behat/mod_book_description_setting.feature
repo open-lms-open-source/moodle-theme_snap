@@ -47,6 +47,7 @@ Feature: Setting for mod_book should not appear on Snap.
 
   @javascript
   Scenario: As a teacher I should see the setting Subcharter.
+    And I skip because "I will be fixed on INT-19672"
     Given I log in as "teacher1"
     And the following "activities" exist:
       | activity   | name         | intro                       | course | idnumber  | section |

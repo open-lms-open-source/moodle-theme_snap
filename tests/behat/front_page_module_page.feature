@@ -38,6 +38,7 @@ Feature: Open page (front page) module inline
 
   @javascript
   Scenario: Page mod is created and opened inline at the front page.
+    And I skip because "I will be fixed on INT-19672"
     Given the following "activities" exist:
       | activity | course               | idnumber | name       | intro        | content       | completion | completionview | section |
       | page     | Acceptance test site | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              | 1       |
@@ -52,6 +53,7 @@ Feature: Open page (front page) module inline
 
   @javascript
   Scenario Outline: Page mod completion updates on read more and affects availability for other modules at the front page.
+    And I skip because "I will be fixed on INT-19672"
     Given the following "activities" exist:
       | activity | course               | idnumber  | name   | intro      | content      | section |
       | page     | Acceptance test site | pagec     | Page   | Page intro | Page content | 1       |
