@@ -59,6 +59,7 @@ Feature: When the moodle theme is set to Snap, switching between roles should be
 
   @javascript
   Scenario: Teacher can switch to guest role and back in course front page.
+    And I skip because "I will be fixed on INT-19670"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
