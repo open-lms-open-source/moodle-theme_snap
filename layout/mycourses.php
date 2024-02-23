@@ -26,5 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 require(__DIR__.'/header.php');
 
 echo $OUTPUT->my_courses_snap_page_content();
+echo $OUTPUT->snap_feeds_side_menu();
 
 require(__DIR__.'/footer.php');

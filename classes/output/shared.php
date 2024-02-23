@@ -313,7 +313,8 @@ EOF;
             'movingdropsectionhelp',
             'movingstartedhelp',
             'notpublished',
-            'visibility'
+            'visibility',
+            'snapfeedsblocktitle'
         ), 'theme_snap');
 
         $PAGE->requires->strings_for_js([
@@ -326,7 +327,9 @@ EOF;
             'modshow',
             'hiddenoncoursepage',
             'showoncoursepage',
-            'switchrolereturn'
+            'switchrolereturn',
+            'show',
+            'hide'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([

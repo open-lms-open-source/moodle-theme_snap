@@ -179,7 +179,10 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 </section>
 </div>
 
-<?php require(__DIR__.'/moodle-blocks.php'); ?>
+<?php
+require(__DIR__.'/moodle-blocks.php');
+echo $OUTPUT->snap_feeds_side_menu();
+?>
 </main>
 
 </div>

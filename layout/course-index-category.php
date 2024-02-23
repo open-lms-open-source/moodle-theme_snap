@@ -108,6 +108,7 @@ if (!empty($coverimagecss)) {
         </main>
         <?php
         echo $OUTPUT->custom_block_region('side-pre');
+        echo $OUTPUT->snap_feeds_side_menu();
         ?>
     </div>
 </div>

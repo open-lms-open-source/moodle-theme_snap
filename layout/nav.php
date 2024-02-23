@@ -74,6 +74,7 @@ echo html_writer::link($defaulthomeurl, $sitefullname, $attrs);
     echo '<span class="hidden-md-down">';
     echo core_renderer::search_box();
     echo '</span>';
+    echo $OUTPUT->snap_feeds_side_menu_trigger();
     echo $OUTPUT->render($settingslink);
     ?>
 </div>
