@@ -2035,11 +2035,10 @@ body.snap-resource-card {
 .snap-draft-tag,
 .snap-current-tag {
     font-family: $font-family-system;
-    background-color: $brand-warning;
+    background-color: #eee;
     margin: 0.5em 0;
     border-radius: 0.5rem;
     padding: 0.5em 1em;
-    color: $body-bg;
     font-weight: 500;
 
     .availabilityinfo {
