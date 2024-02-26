@@ -33,11 +33,11 @@ class gradebookaccess_test extends \advanced_testcase {
         $this->resetAfterTest(true);
 
         // Get the id for the necessary roles.
-        $studentrole = $DB->get_field('role', 'id', array('shortname' => 'student'));
-        $editteacherrole = $DB->get_field('role', 'id', array('shortname' => 'editingteacher'));
+        $studentrole = $DB->get_field('role', 'id', ['shortname' => 'student']);
+        $editteacherrole = $DB->get_field('role', 'id', ['shortname' => 'editingteacher']);
 
         // Create a course with grades enabled to students.
-        $course1 = $this->getDataGenerator()->create_course(array('showgrades' => 1));
+        $course1 = $this->getDataGenerator()->create_course(['showgrades' => 1]);
         $PAGE->set_course($course1); // This becomes necessary because gradebook_accessible depends on $COURSE.
 
         // Create two users.
@@ -66,11 +66,11 @@ class gradebookaccess_test extends \advanced_testcase {
         $this->resetAfterTest(true);
 
         // Get the id for the necessary roles.
-        $studentrole = $DB->get_field('role', 'id', array('shortname' => 'student'));
-        $editteacherrole = $DB->get_field('role', 'id', array('shortname' => 'editingteacher'));
+        $studentrole = $DB->get_field('role', 'id', ['shortname' => 'student']);
+        $editteacherrole = $DB->get_field('role', 'id', ['shortname' => 'editingteacher']);
 
         // Create a course with grades disabled to students.
-        $course2 = $this->getDataGenerator()->create_course(array('showgrades' => 0));
+        $course2 = $this->getDataGenerator()->create_course(['showgrades' => 0]);
         $PAGE->set_course($course2); // This becomes necessary because gradebook_accessible depends on $COURSE.
 
         // Create two users.

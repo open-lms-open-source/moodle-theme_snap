@@ -66,19 +66,19 @@ class addsection_controller extends controller_abstract {
         $numsections = course_get_format($courseid)->get_last_section_number() + 1;
         course_create_sections_if_missing($course, range(0, $numsections));
 
-        $options = array(
+        $options = [
             'subdirs' => 0,
             'maxbytes' => 0,
             'maxfiles' => -1,
             'context' => $context,
-        );
+        ];
         $modinfo = get_fast_modinfo($course);
         $section = $modinfo->get_section_info($numsections, MUST_EXIST);
         $summarytext = file_save_draft_area_files($draftitemid, $context->id, 'course', 'section',
                                                   $section->id, $options, $summarytext);
-        $DB->set_field('course_sections', 'name', $sectioname, array('id' => $section->id));
-        $DB->set_field('course_sections', 'summary', $summarytext, array('id' => $section->id));
-        $DB->set_field('course_sections', 'summaryformat', $summaryformat, array('id' => $section->id));
+        $DB->set_field('course_sections', 'name', $sectioname, ['id' => $section->id]);
+        $DB->set_field('course_sections', 'summary', $summarytext, ['id' => $section->id]);
+        $DB->set_field('course_sections', 'summaryformat', $summaryformat, ['id' => $section->id]);
         rebuild_course_cache($course->id);
 
         redirect(course_get_url($course, $section->section));

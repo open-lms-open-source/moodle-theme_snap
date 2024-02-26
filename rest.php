@@ -63,7 +63,7 @@ $PAGE->set_context($context);
 if ($course !== null) {
     $PAGE->set_course($course);
 }
-$PAGE->set_url('/theme/snap/rest.php', array('action' => $action, 'contextid' => $context->id));
+$PAGE->set_url('/theme/snap/rest.php', ['action' => $action, 'contextid' => $context->id]);
 
 if ($cm !== null) {
     $PAGE->set_cm($cm);

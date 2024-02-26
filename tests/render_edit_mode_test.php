@@ -46,8 +46,8 @@ class render_edit_mode_test extends \advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_user();
         $teacher = $this->getDataGenerator()->create_user();
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
         $coursecontext = \context_course::instance($course->id);
         $PAGE->set_pagetype('course-view-' . $course->format);
         // Assign capability for viewing course for students.

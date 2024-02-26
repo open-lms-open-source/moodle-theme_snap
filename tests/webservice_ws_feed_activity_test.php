@@ -78,19 +78,19 @@ class webservice_ws_feed_activity_test extends \advanced_testcase {
         $record = new \stdClass();
         $record->course = $course;
 
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $this->getDataGenerator()->enrol_user($student->id, $course->id, $studentrole->id);
 
         // Create an activity, e.g. an Assign activity.
         $assignmodulename = 'assign';
         $assignactivityname = 'Assignment';
         $assign = $this->getDataGenerator()->create_module($assignmodulename, $record);
-        $this->getDataGenerator()->create_event(array(
+        $this->getDataGenerator()->create_event([
             'userid' => $student->id,
             'modulename' => $assignmodulename,
             'eventtype' => 'due',
             'instance' => $assign->id,
-        ));
+        ]);
 
         $this->setUser($student);
         $deadlines = ws_feed::service('deadlines');
@@ -102,12 +102,12 @@ class webservice_ws_feed_activity_test extends \advanced_testcase {
         $this->setAdminUser();
         $quizmodulename = 'quiz';
         $quiz = $this->getDataGenerator()->create_module($quizmodulename, $record);
-        $this->getDataGenerator()->create_event(array(
+        $this->getDataGenerator()->create_event([
             'userid' => $student->id,
             'modulename' => $quizmodulename,
             'eventtype' => 'due',
             'instance' => $quiz->id,
-        ));
+        ]);
 
         $this->setUser($student);
         $deadlines = ws_feed::service('deadlines');
@@ -120,12 +120,12 @@ class webservice_ws_feed_activity_test extends \advanced_testcase {
         $this->setAdminUser();
         $labelmodulename = 'label';
         $label = $this->getDataGenerator()->create_module($labelmodulename, $record);
-        $this->getDataGenerator()->create_event(array(
+        $this->getDataGenerator()->create_event([
             'userid' => $student->id,
             'modulename' => $labelmodulename,
             'eventtype' => 'due',
             'instance' => $label->id,
-        ));
+        ]);
 
         $this->setUser($student);
         $deadlines = ws_feed::service('deadlines');

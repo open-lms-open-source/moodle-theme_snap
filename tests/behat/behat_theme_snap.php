@@ -251,13 +251,13 @@ class behat_theme_snap extends behat_base {
 
         $fs = get_file_storage();
         // Prepare file record object.
-        $fileinfo = array(
+        $fileinfo = [
             'contextid' => $context->id,
             'component' => 'user',
             'filearea' => 'private',
             'itemid' => 0,
             'filepath' => '/',
-            'filename' => 'test.png', );
+            'filename' => 'test.png', ];
 
         $fs->create_file_from_pathname($fileinfo, $CFG->dirroot . "/theme/snap/tests/fixtures/testpng.png");
 
@@ -347,7 +347,7 @@ class behat_theme_snap extends behat_base {
         $gradeitem = $assign->get_grade_item();
         $gradeitem->update();
         $assignrow = $assign->get_instance();
-        $grades = array();
+        $grades = [];
 
         $commentsplugin = $assign->get_feedback_plugin_by_type('comments');
         if ($commentsplugin->is_visible()) {
@@ -1414,8 +1414,8 @@ class behat_theme_snap extends behat_base {
      */
     protected function unassign_role_from_user($contextid, $userid, $roleid) {
         global $DB;
-        $user = $DB->get_record('user', array('id' => $userid), '*', MUST_EXIST);
-        $ras = $DB->get_records('role_assignments', array('contextid' => $contextid, 'userid' => $user->id, 'roleid' => $roleid));
+        $user = $DB->get_record('user', ['id' => $userid], '*', MUST_EXIST);
+        $ras = $DB->get_records('role_assignments', ['contextid' => $contextid, 'userid' => $user->id, 'roleid' => $roleid]);
         foreach ($ras as $ra) {
             if ($ra->component) {
                 if (strpos($ra->component, 'enrol_') !== 0) {
@@ -1593,7 +1593,7 @@ class behat_theme_snap extends behat_base {
         $xpathtocheck = $activityxpath .
             "//img[contains(@alt, '$imgalttext')]|//input[@type='image'][contains(@alt, '$imgalttext')]";
         $this->execute("behat_general::should_exist",
-            array($xpathtocheck, "xpath_element")
+            [$xpathtocheck, "xpath_element"]
         );
     }
 
@@ -1616,7 +1616,7 @@ class behat_theme_snap extends behat_base {
         $xpathtocheck = $activityxpath .
             "//img[contains(@alt, '$imgalttext')]|//input[@type='image'][contains(@alt, '$imgalttext')]";
         $this->execute("behat_general::should_exist",
-            array($xpathtocheck, "xpath_element")
+            [$xpathtocheck, "xpath_element"]
         );
     }
 

@@ -43,11 +43,11 @@ if ($homepage === 1) {
     $defaulthomeurl = $CFG->wwwroot;
 }
 $sitefullname = format_string($SITE->fullname);
-$attrs = array(
+$attrs = [
     'aria-label' => get_string('home', 'theme_snap'),
     'id' => 'snap-home',
     'title' => $sitefullname,
-);
+];
 
 if (!empty($PAGE->theme->settings->logo)) {
     $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname).'</span>';
