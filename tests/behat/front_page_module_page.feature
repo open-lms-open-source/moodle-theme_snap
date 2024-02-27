@@ -99,7 +99,6 @@ Feature: Open page (front page) module inline
     And I log out
     And I am on site homepage
     And I should not see "page content1"
-    Then I click on ".pagemod-readmore" "css_element"
+    And I click on ".readmore-container button" "css_element"
     And I should not see an error dialog
-    And I wait until ".pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     And I should see "page content1"
