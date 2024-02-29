@@ -5552,51 +5552,6 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
             margin: 0;
         }
 
-        .snap-feeds {
-            padding-top: 1rem;
-
-            hr {
-                margin-top: 1rem!important;
-            }
-
-            h5 {
-                font-weight: bold;
-            }
-
-            h2 {
-                clear: both;
-                font-size: 1rem;
-                font-weight: bold;
-                line-height: 1;
-                padding: 0.5em 0;
-                margin: 0.5em 0;
-            }
-
-            #snap-my-courses-updates {
-                section {
-                    border: 1px solid $gray-light;
-                    margin-bottom: 1rem;
-                    border-radius: 0.5rem;
-                    padding: 0.5rem;
-
-                    #snap-my-courses-messages,
-                    #snap-my-courses-forumposts {
-                        .userinitials {
-                            float: left;
-                            width: 40px;
-                            height: 40px;
-                            font-size: unset;
-                            margin: 0.3em 1em 0 0.3em;
-                        }
-                    }
-                }
-                .snap-my-courses-more {
-                    display: block;
-                    text-align: right;
-                }
-            }
-        }
-
         .snap-page-my-courses-options {
             margin-top: 1rem;
         }
@@ -5654,9 +5609,6 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
     #page-header #page-mast {
         h1 {
             float: left;
-        }
-        .snap-my-courses-more {
-            float: right;
         }
     }
 }

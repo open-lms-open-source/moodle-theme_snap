@@ -98,11 +98,7 @@ class ce_render_helper {
         if (!empty($courseid)) {
             $courseidatt = "course-id=\"{$courseid}\"";
         }
-        if ($location == 'mycourses') {
-            $locationid = 'my-courses';
-        } else {
-            $locationid = 'personal-menu';
-        }
+        $locationid = 'personal-menu';
 
         return <<<HTML
 <snap-feed elem-id="snap-{$locationid}-feed-{$feedkey}"

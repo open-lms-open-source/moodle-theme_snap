@@ -161,9 +161,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $text = get_string($langstring, 'theme_snap');
         $iconurl = $OUTPUT->image_url($iconname, 'theme');
         $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '" alt="'.$text.'">';
-        if ($location == 'mycourses') {
-            $link = '<a class="snap-my-courses-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
-        } else if ($location == 'snapfeedsmenu') {
+        if ($location == 'snapfeedsmenu') {
             $link = '<a class="snap-feeds-menu-more" href="' .$url. '" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
         } else {
             $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
@@ -330,10 +328,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ->render_feed_web_component('messages', $heading, get_string('nomessages', 'theme_snap'),
                     false, true, true, 0, $location);
         } else {
-            if ($location == 'mycourses') {
-                $o = '<h2>'.$heading.'</h2>';
-                $o .= '<div id="snap-my-courses-messages"></div>';
-            } else if ($location == 'snapfeedsmenu') {
+            if ($location == 'snapfeedsmenu') {
                 $o = '<h2>'.$heading.'</h2>';
                 $o .= '<div id="snap-feeds-menu-messages"></div>';
             } else {
@@ -366,10 +361,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                             get_string('noforumposts', 'theme_snap'), $virtualpaging,
                  true, true, 0, $location);
         } else {
-            if ($location == 'mycourses') {
-                $o = '<h2>'.$heading.'</h2>
-                <div id="snap-my-courses-forumposts"></div>';
-            } else if ($location == 'snapfeedsmenu') {
+            if ($location == 'snapfeedsmenu') {
                 $o = '<h2>'.$heading.'</h2>
                 <div id="snap-feeds-menu-forumposts"></div>';
             } else {
@@ -617,10 +609,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                             get_string('nograding', 'theme_snap'), $virtualpaging,
                 true, true, 0, $location);
         } else {
-            if ($location == 'mycourses') {
-                $o = "<h2>$heading</h2>";
-                $o .= '<div id="snap-my-courses-grading"></div>';
-            } else if ($location == 'snapfeedsmenu') {
+            if ($location == 'snapfeedsmenu') {
                 $o = "<h2>$heading</h2>";
                 $o .= '<div id="snap-feeds-menu-grading"></div>';
             } else {
@@ -649,10 +638,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                             get_string('nograded', 'theme_snap'), $virtualpaging,
                 true, true, 0, $location);
         } else {
-            if ($location == 'mycourses') {
-                $o = "<h2>$heading</h2>";
-                $o .= '<div id="snap-my-courses-graded"></div>';
-            } else if ($location == 'snapfeedsmenu') {
+            if ($location == 'snapfeedsmenu') {
                 $o = "<h2>$heading</h2>";
                 $o .= '<div id="snap-feeds-menu-graded"></div>';
             } else {
@@ -684,10 +670,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 get_string('nodeadlines', 'theme_snap'), $virtualpaging,
                 true, true, 0, $location);
         } else {
-            if ($location == 'mycourses') {
-                $o = "<h2>$heading</h2>";
-                $o .= '<div id="snap-my-courses-deadlines"></div>';
-            } else if ($location == 'snapfeedsmenu') {
+            if ($location == 'snapfeedsmenu') {
                 $o = "<h2>$heading</h2>";
                 $o .= '<div id="snap-feeds-menu-deadlines"></div>';
             } else {
@@ -2003,12 +1986,7 @@ HTML;
         }
 
         $intelliboardheading = get_string('intelliboardroot', 'local_intelliboard');
-        if ($location == 'mycourses') {
-            $o = '<h2>' .$intelliboardheading. '</h2>';
-            $o .= '<div id="snap-my-courses-intelliboard">'
-                .$links.
-                '</div>';
-        } else if ($location == 'snapfeedsmenu') {
+        if ($location == 'snapfeedsmenu') {
             $o = '<h2>' .$intelliboardheading. '</h2>';
             $o .= '<div id="snap-feeds-menu-intelliboard">'
                 .$links.
@@ -2101,12 +2079,7 @@ HTML;
         }
 
         $intellicartheading = get_string('intellicart', 'local_intellicart');
-        if ($location == 'mycourses') {
-            $o = '<h2>' .$intellicartheading. '</h2>';
-            $o .= '<div id="snap-my-courses-intellicart">'
-                .$link.
-                '</div>';
-        } else if ($location == 'snapfeedsmenu') {
+        if ($location == 'snapfeedsmenu') {
             $o = '<h2>' .$intellicartheading. '</h2>';
             $o .= '<div id="snap-feeds-menu-intellicart">'
                 .$link.
@@ -2471,11 +2444,7 @@ HTML;
      */
     public function snap_feeds($location) {
 
-        if ($location == 'mycourses') {
-            $updatesid = 'my-courses';
-        } else {
-            $updatesid = 'feeds';
-        }
+        $updatesid = 'feeds';
 
         $data = (object) [
             'updates' => $this->render_callstoaction($location),
@@ -2500,10 +2469,8 @@ HTML;
         }
         $manager = new \core_privacy\local\sitepolicy\manager();
         $policyurlexist = $manager->is_defined();
-        $sitepolicyacceptreqdmycourses = isloggedin() && $policyurlexist && empty($USER->policyagreed) && !is_siteadmin();
 
         // When there are not Snap feeds enabled in the settings, the block overview will be centered in the page.
-        $feeds = $this->snap_feeds('mycourses');
         if (empty($feeds)) {
             $blockmyoverviewclasses = "block_myoverview_column col-12 single_column";
         } else {
@@ -2521,10 +2488,9 @@ HTML;
             'browseallcourses' => $browseallcourses,
             'maincontent' => $this->main_content(),
             'coursesoptions' => $this->snap_my_courses_management_options(),
-            'snapfeeds' => $feeds,
             'standaraftermainregion' => $this->standard_after_main_region_html(),
             'snapblocks' => $this->snap_blocks(),
-            'sitepolicyacceptreqdmycourses' => $sitepolicyacceptreqdmycourses,
+            'snapfeedssidemenu' => $this->snap_feeds_side_menu(),
             'blockmyoverviewclasses' => $blockmyoverviewclasses,
             'enableblockmessage' => $enableblockmessage,
         ];
