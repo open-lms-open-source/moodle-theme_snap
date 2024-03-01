@@ -282,11 +282,17 @@ body.path-site .block.block_settings {
     text-align: center;
     width: 2.35em;
     svg {
-        margin-top: 0.6em;
+        margin-top: 0.4em;
         path {
             stroke: currentColor;
         }
     }
+}
+
+.snap_line_separator {
+    border-left: 2px solid $icons-color;
+    height: 25px;
+    margin: 0.5rem 0.5rem 0 0.5rem
 }
 
 /* icons in blocks */
