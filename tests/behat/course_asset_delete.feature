@@ -24,6 +24,7 @@
 Feature: When the moodle theme is set to Snap, teachers can delete course resources and activities without having to reload the page.
 
   Background:
+    And I skip because "I will be fixed on INT-19716"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |

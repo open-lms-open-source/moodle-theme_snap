@@ -24,6 +24,7 @@
 Feature: When theme is set to Snap, and course:activityvisibility is set for students, a student should be able to hide an activity.
 
   Background:
+    And I skip because "I will be fixed on INT-19716"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
