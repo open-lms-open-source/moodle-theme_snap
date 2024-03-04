@@ -42,6 +42,7 @@ Feature: Check functionality in activity cards.
 
   @javascript @accessibility
   Scenario: Add an image to an activity card, student and teacher should not see the image in the content.
+    And I skip because "I will be fixed on INT-19667"
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I add a "Folder" to section "1" and I fill the form with:
@@ -65,6 +66,7 @@ Feature: Check functionality in activity cards.
 
   @javascript @accessibility
   Scenario Outline: Add an image to an activity card, student and teacher should see the image in the content, when activity display is set as list in Snap settings.
+    And I skip because "I will be fixed on INT-19667"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |

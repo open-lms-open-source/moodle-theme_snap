@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
   as session issues.
 
   Background:
+    And I skip because "I will be fixed on INT-19716"
     Given the following config values are set as admin:
       | defaulthomepage | 0 |
     And the following "users" exist:

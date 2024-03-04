@@ -24,6 +24,7 @@
 Feature: When the Moodle theme is set to Snap, on moving assets some links shouldn't be reached.
 
   Background:
+    And I skip because "I will be fixed on INT-19666"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"

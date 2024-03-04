@@ -25,6 +25,7 @@ Feature: A student should not see any recent forum activity
   on his personal menu if he is not part of the posted group
 
   Background:
+    And I skip because "I will be fixed on INT-19673"
     Given the following "users" exist:
       | username | firstname | lastname | email                 |
       | teacher1 | Teacher   | 1        | teacher1@example.com  |

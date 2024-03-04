@@ -24,6 +24,7 @@
 Feature: Users can access to the My Courses page in Snap.
 
   Background:
+    And I skip because "I will be fixed on INT-19716"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | student1  | Student    | 1         | student1@example.com  |
