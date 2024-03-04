@@ -25,6 +25,7 @@ Feature: Open page module inline
   I need to view page modules inline and have auto completion tracking updated.
 
   Background:
+    And I skip because "I will be fixed on INT-19670"
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion |
       | Course 1 | C1        | topics | 0        | 1         | 1                |

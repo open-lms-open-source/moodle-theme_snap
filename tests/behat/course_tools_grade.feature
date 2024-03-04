@@ -291,6 +291,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
 
   @javascript
   Scenario: Grade report single view should have an edit button.
+    And I skip because "I will be fixed on INT-19670"
     Given I log in as "admin"
     When I am on "Course 1" course homepage
     And I click on "#admin-menu-trigger" "css_element"

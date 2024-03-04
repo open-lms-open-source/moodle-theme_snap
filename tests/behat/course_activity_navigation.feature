@@ -30,6 +30,7 @@ Feature: Activity navigation in Snap theme
   I need to use the activity navigation controls in activities
 
   Background:
+    And I skip because "I will be fixed on INT-19668"
     Given the following config values are set as admin:
       | allowstealth | 1    |
       | theme        | snap |

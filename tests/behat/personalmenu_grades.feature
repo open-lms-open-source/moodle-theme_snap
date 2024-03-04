@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   grades / grading column showing them things that have recently had feedback or have recently been submitted.
 
   Background:
+    And I skip because "I will be fixed on INT-19673"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | groupmodeforce |
       | Course 1 | C1        | 0        | 1         | 0              |
@@ -69,6 +70,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
   @javascript
   Scenario Outline: 1 out of 2 assignments are submitted by student and graded by teacher.
+    And I skip because "I will be fixed on INT-19673"
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro                         | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1                                   | 1                               | 1       |

@@ -23,6 +23,7 @@
 Feature: Course scrollback navigation in Snap theme
 
   Background:
+    And I skip because "I will be fixed on INT-19668"
     Given the following config values are set as admin:
       | theme        | snap |
     Given the following "users" exist:

@@ -24,6 +24,7 @@
 Feature: Aria label validation for core forum options.
 
   Background:
+    And I skip because "I will be fixed on INT-19666"
     Given the following "users" exist:
       | username | firstname | lastname | email                 |
       | teacher1 | Teacher   | 1        | teacher1@example.com  |

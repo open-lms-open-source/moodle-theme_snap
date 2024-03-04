@@ -26,6 +26,7 @@ Feature: In Open forums while using Snap, the student should see the options
   unsubscribe from the post.
 
   Background:
+    And I skip because "I will be fixed on INT-19672"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |

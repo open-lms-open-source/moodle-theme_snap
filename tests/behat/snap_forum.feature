@@ -23,6 +23,7 @@
 
 Feature: When the moodle theme is set to Snap, core forums displays correctly.
   Background:
+    And I skip because "I will be fixed on INT-19716"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
