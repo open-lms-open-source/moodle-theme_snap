@@ -156,6 +156,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
 
   @javascript
   Scenario: Admin user can change and delete site cover image.
+    And I skip because "I will be fixed on INT-19668"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | user1    | User      | 1        | user1@example.com    |

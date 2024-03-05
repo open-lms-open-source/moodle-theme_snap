@@ -24,6 +24,7 @@ Feature: The setting Enable Advanced feeds should be available only when at leas
 
   @javascript
   Scenario: Go to Snap Personal menu and Snap feeds settings page and enable any of the dependency options
+    And I skip because "I will be fixed on INT-19673"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"

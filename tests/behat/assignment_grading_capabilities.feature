@@ -75,11 +75,11 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
   @javascript
   Scenario: User sees empty grading section
     Given I log in as "teacher1"
-    And I follow "My Courses"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
     And I should see "Assignment One"
     And I should see "Assignment Two"
     Then I log out
     Given I log in as "teacher2"
-    And I follow "My Courses"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
     And I should not see "Assignment One"
     And I should see "Assignment Two"

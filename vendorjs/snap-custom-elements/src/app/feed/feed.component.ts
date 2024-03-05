@@ -154,7 +154,6 @@ export class FeedComponent implements OnInit {
       }
     } else {
       if (!this.waitForPersonalMenu || document.querySelectorAll('body.snap-pm-open').length > 0
-        || document.querySelectorAll('.page-mycourses .snap-feeds').length > 0
         || document.querySelectorAll('#snap_feeds_side_menu .snap-feeds').length > 0) {
         this.resetFeed();
       }

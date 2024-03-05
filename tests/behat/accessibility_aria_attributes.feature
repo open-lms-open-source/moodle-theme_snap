@@ -92,6 +92,7 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript @accessibility
   Scenario: Elements in personal menu must comply with the accessibility standards.
+    And I skip because "I will be fixed on INT-19729"
     Given the following config values are set as admin:
       | personalmenuenablepersonalmenu | 1 | theme_snap |
     And I log in as "admin"

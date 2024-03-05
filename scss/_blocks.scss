@@ -252,7 +252,10 @@ body.path-site .block.block_settings {
                     margin: 0.3em 1em 0 0.3em;
                 }
             }
-            .feeditem h3 {
+            #snap-feeds-menu-messages .snap-media-body p {
+                font-size: 0.75rem;
+            }
+            h3 {
                 font-size: 0.85rem;
                 small {
                     display: block;
@@ -264,6 +267,12 @@ body.path-site .block.block_settings {
             span {
                 font-size: .7rem;
             }
+            #snap-feeds-menu-intellicart,
+            #snap-feeds-menu-intelliboard {
+                a {
+                    font-size: .85rem;
+                }
+            }
         }
     }
 }
@@ -273,11 +282,17 @@ body.path-site .block.block_settings {
     text-align: center;
     width: 2.35em;
     svg {
-        margin-top: 0.6em;
+        margin-top: 0.4em;
         path {
             stroke: currentColor;
         }
     }
+}
+
+.snap_line_separator {
+    border-left: 2px solid $icons-color;
+    height: 25px;
+    margin: 0.5rem 0.5rem 0 0.5rem
 }
 
 /* icons in blocks */

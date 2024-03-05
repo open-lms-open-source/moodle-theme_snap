@@ -82,56 +82,6 @@ Feature: Users can access to the My Courses page in Snap.
     And ".snap-page-my-courses-options .btn-group" "css_element" should not exist
 
   @javascript
-  Scenario: User can see the Snap feeds using the new layout in my courses.
-    And I log in as "admin"
-    And I should see "Browse all courses"
-    And I should see "Course overview"
-    And I should see "Snap feeds"
-    And I click on ".snap-page-my-courses-options" "css_element"
-    And I should see "New course"
-    And I should see "Manage courses"
-    And I log in as "teacher1"
-    And I should see "Course overview"
-    And I should see "Snap feeds"
-    And I should see "Today"
-    And I am on "Course 1" course homepage
-    Then I follow "Edit \"Test assignment1\""
-    And I expand all fieldsets
-    And I set the following fields to these values:
-      | Due date | ##tomorrow## |
-    And I press "Save and return to course"
-    And I log in as "teacher1"
-    And I should see "Tomorrow"
-
-  @javascript
-  Scenario: User can see the Snap feeds items based on the Snap settings.
-    And I log in as "teacher1"
-    And I should see "Course overview"
-    And I should see "Snap feeds"
-    And I should see "Deadlines"
-    And I should see "Grading"
-    And I should see "Messages"
-    And I should see "Forum posts"
-    Then the following config values are set as admin:
-      | deadlinestoggle | 0 | theme_snap  |
-      | feedbacktoggle  | 0  | theme_snap |
-    And I log in as "teacher1"
-    And I should see "Snap feeds"
-    And I should not see "Deadlines"
-    And I should not see "Grading"
-    And I should see "Messages"
-    And I should see "Forum posts"
-    Then the following config values are set as admin:
-      | messagestoggle   | 0  | theme_snap  |
-      | forumpoststoggle | 0  | theme_snap  |
-    And I log in as "teacher1"
-    And I should not see "Snap feeds"
-    And I should not see "Deadlines"
-    And I should not see "Grading"
-    And I should not see "Messages"
-    And I should not see "Forum posts"
-
-  @javascript
   Scenario: User can disable personal menu to redirect to the My Courses page with header button.
     Given I log in as "admin"
     And "#snap-pm" "css_element" should not be visible
