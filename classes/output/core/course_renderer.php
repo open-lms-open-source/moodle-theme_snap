@@ -956,6 +956,14 @@ class course_renderer extends \core_course_renderer {
         }
         $pmcontextattribute = 'data-pagemodcontext="'.$mod->context->id.'"';
 
+        $expandpagebutton = "
+            <button class='btn collapsed w-100' type='button' data-toggle='collapse' 
+            data-target='#collapseContent-mod{$mod->context->id}' aria-expanded='false' aria-controls='collapseContent-mod{$mod->context->id}'>
+                <i aria-hidden='true' class='icon fa fa-chevron-down fa-fw'></i>
+                <i aria-hidden='true' class='icon fa fa-chevron-up fa-fw'></i>
+            </button>
+        ";
+        $modcontent = $page->content;
         $o = "
         <div class='summary-container'>
             {$thumbnail}
@@ -963,8 +971,11 @@ class course_renderer extends \core_course_renderer {
                 {$preview}
             </div>
         </div>
+        <div id='collapseContent-mod{$mod->context->id}' class='collapse'>
+            {$modcontent}
+        </div>
         <div class='readmore-container'>
-        <a class='readmore-button $pslinkclass' title='{$mod->name}' href='{$mod->url}' $pmcontextattribute>{$readmore}</a>
+            {$expandpagebutton}
         </div>
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
             <div id='pagemod-content-container'>

@@ -52,7 +52,7 @@ Feature: When the moodle theme is set to Snap course pages can be rendered using
     And I follow "Topic 1"
     And I should see "Test Page"
     And ".pagemod-content" "css_element" should exist
-    And ".pagemod-readmore" "css_element" <exist>
+    And ".readmore-container button" "css_element" <exist>
     And "<class>" "css_element" should exist
     Examples:
       | lazyload | behavior_mod_page | class                                       | exist            |
