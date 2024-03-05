@@ -53,8 +53,8 @@ Feature: Snap managing contacts
   Scenario: Send a 'contact request' to add a contact in snap
     Given I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Search" "field"
     And I set the field with xpath "//*[@data-region='search-input']" to "Student 4"
     And I click on ".btn-submit[data-action='search']" "css_element"
@@ -65,8 +65,8 @@ Feature: Snap managing contacts
     And I log out
     And I log in as "student3"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Search" "field"
     And I set the field with xpath "//*[@data-region='search-input']" to "Student 4"
     And I click on ".btn-submit[data-action='search']" "css_element"
@@ -77,8 +77,8 @@ Feature: Snap managing contacts
     And I log out
     And I log in as "student4"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     Then I should see "2" in the ".bg-primary[data-region='contact-request-count']" "css_element"
     And I click on "Contacts" "link"
     Then I should see "2" in the "//div[@data-region='view-contacts']//*[@data-region='contact-request-count']" "xpath_element"
@@ -90,16 +90,16 @@ Feature: Snap managing contacts
     And I log out
     And I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Contacts" "link"
     Then I should see "Student 4" in the "//*[@data-section='contacts']" "xpath_element"
 
   Scenario: Decline a 'contact request' in snap
     Given I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Search" "field"
     And I set the field with xpath "//*[@data-region='search-input']" to "Student 3"
     And I click on ".btn-submit[data-action='search']" "css_element"
@@ -110,8 +110,8 @@ Feature: Snap managing contacts
     And I log out
     And I log in as "student3"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     Then I should see "1" in the ".bg-primary[data-region='contact-request-count']" "css_element"
     And I click on "Contacts" "link"
     Then I should see "1" in the "//div[@data-region='view-contacts']//*[@data-region='contact-request-count']" "xpath_element"
@@ -124,8 +124,8 @@ Feature: Snap managing contacts
   Scenario: Remove existing contact in snap
     Given I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Contacts" "link"
     And I click on "Student 2" "link" in the "//*[@data-section='contacts']" "xpath_element"
     And I click on "conversation-actions-menu-button" "button"

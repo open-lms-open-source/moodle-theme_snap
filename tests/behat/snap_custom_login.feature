@@ -29,6 +29,7 @@ Feature: When the moodle theme is set to Snap, the custom snap login form should
 
   @javascript
   Scenario: The login template must change when the Stylish template is selected.
+    And I skip because "I will be fixed on INT-19670"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"

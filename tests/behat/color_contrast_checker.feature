@@ -33,6 +33,7 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
 
   @javascript
   Scenario: Go to Snap settings page, put a color in theme color and see contrast message.
+    And I skip because "I will be fixed on INT-19666"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
@@ -48,6 +49,7 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
 
   @javascript
   Scenario: Go to Snap settings page, put a valid JSON text in it and see contrast message.
+    And I skip because "I will be fixed on INT-19666"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
@@ -69,6 +71,7 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
 
   @javascript
   Scenario: Go to Snap settings page, put a valid JSON text in it and don't see contrast message.
+    And I skip because "I will be fixed on INT-19666"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"

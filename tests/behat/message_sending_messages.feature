@@ -56,8 +56,8 @@ Feature: Snap message send messages
   Scenario: Send a message to a group conversation in snap
     Given I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "//span[contains(text(),\"Group\")]" "xpath_element"
     And I click on ".rounded-circle[alt='Group 1']" "css_element"
     When I send "Hi!" message in the message area
@@ -65,8 +65,8 @@ Feature: Snap message send messages
     And I log out
     And I log in as "student2"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I should see "1" in the ".section[data-region='view-overview-group-messages'] small[data-region='section-total-count-container'] span[data-region='section-total-count']" "css_element"
     And I should see "1" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 1 unread conversations']" "css_element"
     And I should see "1" in the ".badge-primary[data-region='unread-count']" "css_element"
@@ -78,8 +78,8 @@ Feature: Snap message send messages
   Scenario: Send a message to a starred conversation in snap
     Given I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "//span[contains(text(),\"Group\")]" "xpath_element"
     And I click on ".rounded-circle[alt='Group 1']" "css_element"
     And I click on "conversation-actions-menu-button" "button"
@@ -94,8 +94,8 @@ Feature: Snap message send messages
     And I log out
     And I log in as "student2"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I should see "1" in the ".section[data-region='view-overview-favourites'] span[data-region='section-total-count']" "css_element"
     And I should see "1" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 1 unread conversations']" "css_element"
     And I should see "1" in the ".badge-primary[data-region='unread-count'] span" "css_element"
@@ -111,8 +111,8 @@ Feature: Snap message send messages
       | student3 | student2 |
     And I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Contacts" "link"
     And I click on "Student 2" "link" in the "//*[@data-section='contacts']" "xpath_element"
     When I send "Hi!" message in the message area
@@ -120,8 +120,8 @@ Feature: Snap message send messages
     And I log out
     And I log in as "student3"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Contacts" "link"
     And I click on "Student 2" "link" in the "//*[@data-section='contacts']" "xpath_element"
     When I send "Hello!" message in the message area
@@ -131,8 +131,8 @@ Feature: Snap message send messages
     And I log out
     And I log in as "student2"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I should see "2" in the ".section[data-region='view-overview-messages'] span[data-region='section-total-count']" "css_element"
     And I should see "2" in the ".badge-primary[data-region='section-unread-count'][aria-label='There are 2 unread conversations']" "css_element"
     And I should see "1" in the "Student 1" "core_message > Message"
@@ -151,8 +151,8 @@ Feature: Snap message send messages
   Scenario: Message bubble should have a specific color instead of site color.
     Given I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "//span[contains(text(),\"Group\")]" "xpath_element"
     And I click on ".rounded-circle[alt='Group 1']" "css_element"
     And I click on "conversation-actions-menu-button" "button"
@@ -174,8 +174,8 @@ Feature: Snap message send messages
       | student3 | student2 |
     And I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Contacts" "link"
     And I click on "Student 2" "link" in the "//*[@data-section='contacts']" "xpath_element"
     When I send "Hi!" message in the message area
@@ -183,8 +183,8 @@ Feature: Snap message send messages
     And I log out
     And I log in as "student3"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Contacts" "link"
     And I click on "Student 2" "link" in the "//*[@data-section='contacts']" "xpath_element"
     When I send "Hello!" message in the message area
@@ -246,8 +246,8 @@ Feature: Snap message send messages
       | student3 | student2 |
     And I log in as "student1"
     And I am on site homepage
-    And I follow "My Courses"
-    And I follow "View my messages"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "//a[@title='View my messages']//img" "xpath_element"
     And I click on "Contacts" "link"
     And I click on "Student 2" "link" in the "//*[@data-section='contacts']" "xpath_element"
     When I send "Hi!" message in the message area
@@ -255,7 +255,7 @@ Feature: Snap message send messages
     And I log out
     And I log in as "student2"
     And I am on site homepage
-    And I follow "My Courses"
-    And I click on "#snap-my-courses-feed-messages > div > div > a" "css_element"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And I click on "#snap-personal-menu-feed-messages > div > div > a" "css_element"
     # To check that the message is opened directly.
     And I should see "Hi!" in the "//div[@class='body-container position-relative']//div[@data-region='view-conversation']//div[@data-region='content-message-container']//div[@data-region='message']//div[@data-region='text-container']//p" "xpath_element"
