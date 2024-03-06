@@ -635,7 +635,9 @@ class course_renderer extends \core_course_renderer {
                 // If specified, display extra content after link.
                 $output = html_writer::tag('div', $content, ['class' => trim('contentafterlink ' . $textclasses)]);
                 // Add chevron icon to content.
-                $output .= '<a href="'.$mod->url.'&forceview=1"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>';
+                $output .= '<div class="mt-3">
+                            <a href="'.$mod->url.'&forceview=1"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                </div>';
             }
         } else {
             $snapmodtype = $this->get_mod_type($mod)[0];
@@ -923,6 +925,7 @@ class course_renderer extends \core_course_renderer {
 
         $readmore = get_string('readmore', 'theme_snap');
         $close = get_string('collapseicon', 'theme_snap');
+        $expand = get_string('expandicon', 'theme_snap');
 
         $content = '';
         $contentloaded = 0;
@@ -959,8 +962,8 @@ class course_renderer extends \core_course_renderer {
         $expandpagebutton = "
             <button class='btn collapsed w-100' type='button' data-toggle='collapse' 
             data-target='#collapseContent-mod{$mod->context->id}' aria-expanded='false' aria-controls='collapseContent-mod{$mod->context->id}'>
-                <i aria-hidden='true' class='icon fa fa-chevron-down fa-fw'></i>
-                <i aria-hidden='true' class='icon fa fa-chevron-up fa-fw'></i>
+                <i aria-hidden='true' class='icon fa fa-chevron-down fa-fw' title='{$expand} {$page->name}'></i>
+                <i aria-hidden='true' class='icon fa fa-chevron-up fa-fw' title='{$close} {$page->name}'></i>
             </button>
         ";
         $modcontent = $page->content;
