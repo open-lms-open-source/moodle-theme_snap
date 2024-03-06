@@ -458,3 +458,4 @@ $string['snapfooterbgcolor'] = 'Footer background color';
 $string['snapfootertxtcolor'] = 'Footer text color';
 $string['enableblockmyoverviewwarning'] = 'The Course overview block is disabled. In order to display the courses, please enable the block.';
 $string['collapseicon'] = 'Collapse the content of';
+$string['expandicon'] = 'Expand the content of';
