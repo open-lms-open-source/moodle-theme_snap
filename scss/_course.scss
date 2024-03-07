@@ -1685,24 +1685,8 @@ body.snap-resource-card {
                         text-align: center;
                     
                         .btn {
-                            i.icon.fa-chevron-down {
-                                color: $color-page;
-                                display: none;
-                            }
-                    
-                            i.icon.fa-chevron-up {
-                                color: $color-page;
+                            i.icon {
                                 display: inline-block;
-                            }
-                    
-                            &.collapsed {
-                                i.icon.fa-chevron-down {
-                                    display: inline-block;
-                                }
-                    
-                                i.icon.fa-chevron-up {
-                                    display: none;
-                                }
                             }
                         }
                     }

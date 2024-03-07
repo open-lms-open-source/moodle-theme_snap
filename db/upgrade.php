@@ -137,5 +137,10 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024020100, 'theme', 'snap');
     }
 
+    if ($oldversion < 2024030700) {
+        unset_config('behavior_mod_page', 'theme_snap');
+        upgrade_plugin_savepoint(true, 2024030700, 'theme', 'snap');
+    }
+
     return true;
 }
