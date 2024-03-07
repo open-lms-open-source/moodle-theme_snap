@@ -44,7 +44,6 @@ Feature: Open page module inline
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
-      | behavior_mod_page     | 1        | theme_snap |
     And the following "activities" exist:
       | activity | course | idnumber | name       | intro        | content       | completion | completionview |
       | page     | C1     | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              |
@@ -75,7 +74,6 @@ Feature: Open page module inline
     And the following config values are set as admin:
       | coursepartialrender | <Option>   | theme_snap |
       | resourcedisplay     | <Option 2> | theme_snap |
-      | behavior_mod_page     | 1          | theme_snap |
     And I am on the course main page for "C1"
     # Restrict the second page module to only be accessible after the first page module is marked complete.
     And I restrict course asset "Page restricted" by completion of "Page completion"

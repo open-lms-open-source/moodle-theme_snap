@@ -943,39 +943,28 @@ class course_renderer extends \core_course_renderer {
             $contentloaded = !$lazyload ? 1 : 0;
         }
         // With previous design, we allow displaying videos.
-        if (!empty(get_config('theme_snap', 'behavior_mod_page')) && $content == '') {
+        if ($content == '') {
             if (stripos($page->content, '<video') !== false) {
                 $content = $page->content;
                 $contentloaded = 1;
             }
         }
 
-        $pagenewwindow = get_config('theme_snap', 'behavior_mod_page');
-        // Check for mod page design setting to open the content inline on the same page or in another window.
-        if ($pagenewwindow) {
-            $pslinkclass = 'btn btn-secondary pagemod-readmore';
-        } else {
-            $pslinkclass = 'btn btn-secondary';
-        }
         $pmcontextattribute = 'data-pagemodcontext="'.$mod->context->id.'"';
-
         $expandpagebutton = "
-            <button class='btn collapsed w-100' type='button' data-toggle='collapse' 
-            data-target='#collapseContent-mod{$mod->context->id}' aria-expanded='false' aria-controls='collapseContent-mod{$mod->context->id}'>
+            <button 
+                class='btn collapsed w-100 pagemod-readmore readmore-button snap-action-icon'
+                {$pmcontextattribute}
+                aria-expanded='false'>
                 <i aria-hidden='true' class='icon fa fa-chevron-down fa-fw' title='{$expand} {$page->name}'></i>
-                <i aria-hidden='true' class='icon fa fa-chevron-up fa-fw' title='{$close} {$page->name}'></i>
             </button>
         ";
-        $modcontent = $page->content;
         $o = "
         <div class='summary-container'>
             {$thumbnail}
             <div class='summary-text'>
                 {$preview}
             </div>
-        </div>
-        <div id='collapseContent-mod{$mod->context->id}' class='collapse'>
-            {$modcontent}
         </div>
         <div class='readmore-container'>
             {$expandpagebutton}

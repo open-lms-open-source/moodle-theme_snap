@@ -34,7 +34,6 @@ Feature: Open page (front page) module inline
     And debugging is turned off
     And the following config values are set as admin:
       | lazyload_mod_page | 0 | theme_snap |
-      | behavior_mod_page   | 1 | theme_snap |
 
   @javascript
   Scenario: Page mod is created and opened inline at the front page.
