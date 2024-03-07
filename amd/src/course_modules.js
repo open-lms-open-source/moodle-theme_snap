@@ -287,12 +287,10 @@ define(
 
         return {
 
-            init: function(courseConfig) {
+            init: function() {
 
                 // Listeners.
-                if (courseConfig.loadPageInCourse) {
-                    listenPageModuleReadMore();
-                }
+                listenPageModuleReadMore();
                 listenManualCompletion();
 
                 // Add toggle class for hide/show activities/resources - additional to moodle adding dim.
