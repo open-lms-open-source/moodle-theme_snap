@@ -212,6 +212,7 @@ $string['headingfont'] = 'Heading font';
 $string['headingfont_desc'] = 'This sans-serif font is used in the headings (h1 - h6 elements) across your site. If you are including a custom webfont remember to add it to the Moodle additional HTML. If you want to modify fonts of other elements, please make use of the Custom CSS option, for examples on how to do this, please take a look at this <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">documentation</a>.';
 $string['helpwithlogin'] = 'Help with login';
 $string['helpwithloginandguest'] = 'Help with login / guest access';
+$string['loginrequiredmessage'] = '* indicates a required field';
 $string['hiddencoursestoggle'] = 'Hidden courses';
 $string['highlightedsection'] = 'highlighted';
 $string['home'] = 'home';

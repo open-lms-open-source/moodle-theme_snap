@@ -116,6 +116,7 @@
             <input id="anchor" type="hidden" name="anchor" value="">
             <script>document.getElementById('anchor').value = location.hash;</script>
 
+            <p class="snap-indication">{{#str}} loginrequiredmessage, theme_snap {{/str}}</p>
             <label for="username" class="sr-only">
                 {{^canloginbyemail}}
                     {{#str}} username {{/str}}
@@ -124,14 +125,14 @@
                     {{#str}} usernameemail {{/str}}
                 {{/canloginbyemail}}
             </label>
-            <input type="text" name="username" id="username" autocomplete="username"
+            <input type="text" name="username" id="username" autocomplete="username" required
                 class="form-control"
                 value="{{username}}"
-                placeholder="{{^canloginbyemail}}{{#cleanstr}}username{{/cleanstr}}{{/canloginbyemail}}{{#canloginbyemail}}{{#cleanstr}}usernameemail{{/cleanstr}}{{/canloginbyemail}}">
+                placeholder="{{^canloginbyemail}}{{#cleanstr}}username{{/cleanstr}}{{/canloginbyemail}}{{#canloginbyemail}}{{#cleanstr}}usernameemail{{/cleanstr}}{{/canloginbyemail}}*">
             <label for="password" class="sr-only">{{#str}} password {{/str}}</label>
-            <input type="password" name="password" id="password" autocomplete="current-password" value=""
+            <input type="password" name="password" id="password" autocomplete="current-password" value="" required
                 class="form-control"
-                placeholder="{{#cleanstr}}password{{/cleanstr}}">
+                placeholder="{{#cleanstr}}password{{/cleanstr}}*">
             <br>
             <a class="small btn btn-link btn-block" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
             <button type="submit" class="btn btn-primary btn-block" id="loginbtn">{{#str}}login{{/str}}</button>
