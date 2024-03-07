@@ -34,7 +34,6 @@
     * instructionsformat - Format of instructions,
     * loginurl - Login url,
     * rememberusername - Remeber username?,
-    * passwordautocomplete - Allow password autocomplete?,
     * signupurl - Signup url,
     * cookieshelpiconformatted - Formatted html of cookies help icon,
     * errorformatted - Formatted error,
@@ -85,7 +84,6 @@
         "instructionsformat": "1",
         "loginurl": "http://localhost/stable_master/login/index.php",
         "rememberusername": true,
-        "passwordautocomplete": false,
         "signupurl": "http://localhost/stable_master/login/signup.php",
         "cookieshelpiconformatted": "",
         "errorformatted": "",
@@ -112,7 +110,7 @@
             </div>
         {{/error}}
 
-        <form action="{{loginurl}}" method="post" id="login" {{^passwordautocomplete}}autocomplete="off"{{/passwordautocomplete}} class="snap-custom-form">
+        <form action="{{loginurl}}" method="post" id="login" class="snap-custom-form">
             <hr id="login_hr_first" style="display: none;">
             <input type="hidden" name="logintoken" value="{{logintoken}}">
             <input id="anchor" type="hidden" name="anchor" value="">
@@ -126,15 +124,14 @@
                     {{#str}} usernameemail {{/str}}
                 {{/canloginbyemail}}
             </label>
-            <input type="text" name="username" id="username"
+            <input type="text" name="username" id="username" autocomplete="username"
                 class="form-control"
                 value="{{username}}"
                 placeholder="{{^canloginbyemail}}{{#cleanstr}}username{{/cleanstr}}{{/canloginbyemail}}{{#canloginbyemail}}{{#cleanstr}}usernameemail{{/cleanstr}}{{/canloginbyemail}}">
             <label for="password" class="sr-only">{{#str}} password {{/str}}</label>
-            <input type="password" name="password" id="password" value=""
+            <input type="password" name="password" id="password" autocomplete="current-password" value=""
                 class="form-control"
-                placeholder="{{#cleanstr}}password{{/cleanstr}}"
-                {{^passwordautocomplete}}autocomplete="off"{{/passwordautocomplete}}>
+                placeholder="{{#cleanstr}}password{{/cleanstr}}">
             <br>
             <a class="small btn btn-link btn-block" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
             <button type="submit" class="btn btn-primary btn-block" id="loginbtn">{{#str}}login{{/str}}</button>
