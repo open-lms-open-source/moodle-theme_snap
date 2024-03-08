@@ -44,7 +44,6 @@ if ($homepage === 1) {
 }
 $sitefullname = format_string($SITE->fullname);
 $attrs = array(
-    'aria-label' => get_string('home', 'theme_snap'),
     'id' => 'snap-home',
     'title' => $sitefullname,
 );
