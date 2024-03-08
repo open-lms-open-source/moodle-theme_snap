@@ -206,3 +206,9 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     Then I should see "Copy to Sharing Cart"
     And I click on ".snap-activity[data-type='Assignment'] a.editing_backup" "css_element"
     Then I should see "Are you sure you want to copy this"
+    And I log out
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" should not exist
+    Then I should not see "Copy to Sharing Cart"
