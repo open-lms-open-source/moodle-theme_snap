@@ -94,44 +94,44 @@
 }}
 <div class="m-y-3 hidden-sm-down"></div>
 <div class="row snap-login-row"  id="logins">
-    <div class="snap-login snap-login-optio`n snap-login-cell" id="base-login">
+    <div class="snap-login snap-login-option snap-login-cell" id="base-login">
         {{#logourl}}
         <h1 class="text-center"><img class="d-block" alt="{{sitename}}" src="{{logourl}}"></h1>
         {{/logourl}}
         {{^logourl}}
         <h1 id="site_name_snap" class="text-center">{{sitename}}</h1>
         {{/logourl}}
-
         {{#error}}
             <div class="loginerrors">
                 <div class="alert alert-danger" role="alert">{{error}}</div>
             </div>
         {{/error}}
-
         <form action="{{loginurl}}" method="post" id="login" class="snap-custom-form">
             <hr id="login_hr_first" style="display: none;">
             <input type="hidden" name="logintoken" value="{{logintoken}}">
             <input id="anchor" type="hidden" name="anchor" value="">
             <script>document.getElementById('anchor').value = location.hash;</script>
-
             <p class="snap-indication">{{#str}} loginrequiredmessage, theme_snap {{/str}}</p>
-            <label for="username" class="sr-only">
-                {{^canloginbyemail}}
-                    {{#str}} username {{/str}}
-                {{/canloginbyemail}}
-                {{#canloginbyemail}}
-                    {{#str}} usernameemail {{/str}}
-                {{/canloginbyemail}}
-            </label>
-            <input type="text" name="username" id="username" autocomplete="username" required
-                class="form-control"
-                value="{{username}}"
-                placeholder="{{^canloginbyemail}}{{#cleanstr}}username{{/cleanstr}}{{/canloginbyemail}}{{#canloginbyemail}}{{#cleanstr}}usernameemail{{/cleanstr}}{{/canloginbyemail}}*">
-            <label for="password" class="sr-only">{{#str}} password {{/str}}</label>
-            <input type="password" name="password" id="password" autocomplete="current-password" value="" required
-                class="form-control"
-                placeholder="{{#cleanstr}}password{{/cleanstr}}*">
-            <br>
+            <div class="floating-label">
+                <input  type="text" name="username" id="username" autocomplete="username" required
+                        class="form-control"
+                        value="{{username}}"
+                        placeholder="{{^canloginbyemail}}{{#cleanstr}}username{{/cleanstr}}{{/canloginbyemail}}{{#canloginbyemail}}{{#cleanstr}}usernameemail{{/cleanstr}}{{/canloginbyemail}}*">
+                <label for="username">
+                    {{^canloginbyemail}}
+                        {{#str}} username {{/str}}
+                    {{/canloginbyemail}}
+                    {{#canloginbyemail}}
+                        {{#str}} usernameemail {{/str}}
+                    {{/canloginbyemail}}
+                </label>
+            </div>
+            <div class="floating-label">
+                <input type="password" name="password" id="password" autocomplete="current-password" value="" required
+                       class="form-control"
+                       placeholder="{{#cleanstr}}password{{/cleanstr}}*">
+                <label for="password" class="sr-only">{{#str}} password {{/str}}</label>
+            </div>
             <a class="small btn btn-link btn-block" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
             <button type="submit" class="btn btn-primary btn-block" id="loginbtn">{{#str}}login{{/str}}</button>
         </form>
@@ -226,8 +226,4 @@
         {{/autofocusform}}
     {{/error}}
     });
-
-
-
 {{/js}}
-
