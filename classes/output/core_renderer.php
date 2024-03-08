@@ -2420,6 +2420,16 @@ HTML;
                     $myprograms->titleidentifier = 'pluginname,block_myprograms';
                     $additionallinks[] = $myprograms;
                 }
+                // My reports link.
+                if (is_callable('mr_on') && mr_on('reportbuilder', '_MR_LOCAL')) {
+                    $reportbuilder = new stdClass();
+                    $reportbuilder->itemtype = 'link';
+                    $reportbuilder->url = new moodle_url( '/local/reportbuilder/myreports.php');
+                    $reportbuilder->link = $reportbuilder->itemtype == 'link';
+                    $reportbuilder->title = get_string('myreports', 'local_reportbuilder');
+                    $reportbuilder->titleidentifier = 'myreports,local_reportbuilder';
+                    $additionallinks[] = $reportbuilder;
+                }
 
                 if (count($additionallinks)) {
                     $dividerstart = new stdClass();
