@@ -973,7 +973,7 @@ class course_renderer extends \core_course_renderer {
             <div id='pagemod-content-container'>
                 {$content}
             </div>
-            <div class='d-block'><a  class='snap-action-icon' href='#' role='button' title='{$close} {$page->name}'>
+            <div class='d-block'><a  class='snap-action-icon' href='#' role='button' aria-expanded='true' title='{$close} {$page->name}'>
             <i class='fa fa-chevron-up' aria-hidden=''true'></i></a></div>
         </div>";
 
