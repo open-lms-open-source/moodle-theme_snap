@@ -37,7 +37,7 @@ $contextid = optional_param('contextid', $systemcontext->id, PARAM_INT);
 
 list($context, $course, $cm) = get_context_info_array($contextid);
 
-$nologinactions = ['get_loginstatus', 'read_page']; // Actions which do not require login checks.
+$nologinactions = ['get_loginstatus', 'read_page', 'get_page']; // Actions which do not require login checks.
 if (!in_array($action, $nologinactions)) {
     if (!isloggedin()) {
         // We used to let the require_login code below throw an exception when
@@ -49,7 +49,7 @@ if (!in_array($action, $nologinactions)) {
         ]);
         return;
     }
-    $courseactions = ['get_media', 'get_page'];
+    $courseactions = ['get_media'];
     if (in_array($action, $courseactions)) {
         require_login($course, false, $cm, false, true);
     } else {
