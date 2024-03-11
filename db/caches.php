@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$definitions = [
+$definitions = array(
     'webservicedefinitions' => [
         'mode'               => cache_store::MODE_APPLICATION,
         'simplekeys'         => false,
@@ -83,5 +83,5 @@ $definitions = [
         'simplekeys'         => true,
         'simpledata'         => false,
     ],
-];
+);
 

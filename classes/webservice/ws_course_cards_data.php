@@ -68,11 +68,11 @@ class ws_course_cards_data extends \external_api {
                 'url' => new \external_value(PARAM_RAW, 'Course url', VALUE_REQUIRED),
                 'visibleavatars' => new \external_multiple_structure(
                     new \external_value(PARAM_RAW, 'Avatar HTML'),
-                    'An array of visible avatars, each as a single html string.', VALUE_DEFAULT, []
+                    'An array of visible avatars, each as a single html string.', VALUE_DEFAULT, array()
                 ),
                 'hiddenavatars' => new \external_multiple_structure(
                     new \external_value(PARAM_RAW, 'Avatar HTML'),
-                    'An array of hidden avatars, each as a single html string.', VALUE_DEFAULT, []
+                    'An array of hidden avatars, each as a single html string.', VALUE_DEFAULT, array()
                 ),
                 'showextralink' => new \external_value(PARAM_BOOL, 'Show an extra avatar link', VALUE_REQUIRED),
                 'published' => new \external_value(PARAM_BOOL, 'Is this course published', VALUE_REQUIRED),
@@ -103,9 +103,9 @@ class ws_course_cards_data extends \external_api {
         $courseservice = course::service();
         $size = 9;
         $offset = $page * $size;
-        $wheres = ["c.id <> :siteid"];
+        $wheres = array("c.id <> :siteid");
 
-        $params = ['siteid' => SITEID];
+        $params = array('siteid' => SITEID);
 
         $isfavorite = "";
 

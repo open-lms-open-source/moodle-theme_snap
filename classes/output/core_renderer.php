@@ -89,7 +89,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         global $USER;
         $image = '';
         if ($icon) {
-            $image = $this->pix_icon($icon, $iconalt, $component, ['class' => 'icon iconlarge']);
+            $image = $this->pix_icon($icon, $iconalt, $component, array('class' => 'icon iconlarge'));
         }
 
         $help = '';
@@ -240,14 +240,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     </svg>';
          // @codingStandardsIgnoreEnd
         $url = '#inst' . $settingslink->instanceid;
-        $attributes = [
+        $attributes = array(
             'id' => 'admin-menu-trigger',
             'class' => 'pull-right',
             'data-toggle' => 'tooltip',
             'data-placement' => 'bottom',
             'title' => get_string('admin', 'theme_snap'),
             'aria-label' => get_string('admin', 'theme_snap'),
-        ];
+        );
 
         return html_writer::link($url, $gearicon, $attributes);
     }
@@ -433,8 +433,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $timetext = \calendar_day_representation($time);
         $timetext .= ', ' . \calendar_time_representation($time);
         $datetime = date(DateTime::W3C, $time);
-        return html_writer::tag('time', $timetext, [
-            'datetime' => $datetime, ]
+        return html_writer::tag('time', $timetext, array(
+            'datetime' => $datetime, )
         );
     }
 
@@ -871,24 +871,24 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (has_capability('moodle/role:switchroles', $coursecontext) || is_role_switched($courseid)) {
             $returnurl = $this->page->url->out_as_local_url(false);
             if (!is_role_switched($courseid)) {
-                $link = new moodle_url('/course/switchrole.php', [
+                $link = new moodle_url('/course/switchrole.php', array(
                     'id' => $courseid,
                     'sesskey' => sesskey(),
                     'switchrole' => -1,
                     'returnurl' => $returnurl,
-                ]);
+                ));
                 $switchrole = [
                     'id' => 'snap-pm-switchroleto',
                     'link' => $link->out(false),
                     'title' => get_string('switchroleto'),
                 ];
             } else {
-                $link = new moodle_url('/course/switchrole.php', [
+                $link = new moodle_url('/course/switchrole.php', array(
                     'id' => $courseid,
                     'sesskey' => sesskey(),
                     'switchrole' => 0,
                     'returnurl' => $returnurl,
-                ]);
+                ));
                 $switchrole = [
                     'id' => 'snap-pm-switchrolereturn',
                     'link' => $link->out(false),
@@ -1042,12 +1042,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
             $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
             $linkcontent = $picture.$menu;
-            $attributes = [
+            $attributes = array(
                 'aria-haspopup' => 'true',
                 'class' => 'js-snap-pm-trigger snap-my-courses-menu',
                 'id' => 'snap-pm-trigger',
                 'aria-controls' => 'snap-pm',
-            ];
+            );
             $output .= html_writer::link('#', $linkcontent, $attributes);
         }
         return $output;
@@ -1093,8 +1093,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $slidenames = ["slide_one", "slide_two", "slide_three"];
-        $slides = [];
+        $slidenames = array("slide_one", "slide_two", "slide_three");
+        $slides = array();
         $i = 0;
         foreach ($slidenames as $slidename) {
             $image = $slidename . '_image';
@@ -1272,21 +1272,21 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $cm      = get_coursemodule_from_instance('forum', $forum->id, $SITE->id, false, MUST_EXIST);
         $context = \context_module::instance($cm->id, MUST_EXIST);
 
-        $output  = html_writer::start_tag('div', ['id' => 'site-news-forum', 'class' => 'clearfix']);
-        $output .= $this->heading(format_string($forum->name, true, ['context' => $context]));
+        $output  = html_writer::start_tag('div', array('id' => 'site-news-forum', 'class' => 'clearfix'));
+        $output .= $this->heading(format_string($forum->name, true, array('context' => $context)));
 
         $groupmode    = groups_get_activity_groupmode($cm, $SITE);
         $currentgroup = groups_get_activity_group($cm);
 
         if (!$discussions = forum_get_discussions($cm,
             'p.modified DESC', true, null, $SITE->newsitems, false, -1, $SITE->newsitems)) {
-            $output .= html_writer::tag('div', '('.get_string('nonews', 'forum').')', ['class' => 'forumnodiscuss']);
+            $output .= html_writer::tag('div', '('.get_string('nonews', 'forum').')', array('class' => 'forumnodiscuss'));
 
             if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
                 $output .= html_writer::link(
-                    new moodle_url('/mod/forum/post.php', ['forum' => $forum->id]),
+                    new moodle_url('/mod/forum/post.php', array('forum' => $forum->id)),
                     get_string('addanewtopic', 'forum'),
-                    ['class' => 'btn btn-primary']
+                    array('class' => 'btn btn-primary')
                 );
             } else {
                 // No news and user cannot edit, so return nothing.
@@ -1296,7 +1296,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $output.'</div>';
         }
 
-        $output .= html_writer::start_div('', ['id' => 'news-articles']);
+        $output .= html_writer::start_div('', array('id' => 'news-articles'));
 
         $counter = 0;
         foreach ($discussions as $discussion) {
@@ -1314,7 +1314,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $imagestyle = " style=\"background-image:url('$imageurl')\"";
             }
 
-            $name    = format_string($discussion->name, true, ['context' => $context]);
+            $name    = format_string($discussion->name, true, array('context' => $context));
             $date    = userdate($discussion->modified, get_string('strftimedatetime', 'langconfig'));
 
             $message = format_text($message, $discussion->messageformat, ['context' => $context]);
@@ -1369,7 +1369,7 @@ HTML;
             $counter++;
         }
         $actionlinks = html_writer::link(
-            new moodle_url('/mod/forum/view.php', ['id' => $cm->id]),
+            new moodle_url('/mod/forum/view.php', array('id' => $cm->id)),
             get_string('morenews', 'theme_snap'),
             ['class' => 'btn btn-secondary',
              'role' => 'button',
@@ -1377,7 +1377,7 @@ HTML;
         );
         if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
             $actionlinks .= html_writer::link(
-                new moodle_url('/mod/forum/post.php', ['forum' => $forum->id]),
+                new moodle_url('/mod/forum/post.php', array('forum' => $forum->id)),
                 get_string('addanewtopic', 'forum'),
                 ['class' => 'btn btn-primary',
                     'role' => 'button',
@@ -1398,7 +1398,7 @@ HTML;
      * @param array $additionalclasses
      * @return array|string
      */
-    public function body_css_classes(array $additionalclasses = []) {
+    public function body_css_classes(array $additionalclasses = array()) {
         global $COURSE, $SESSION, $CFG, $USER;
 
         $openfixyafterlogin = false;
@@ -1424,7 +1424,7 @@ HTML;
 
         // Define the page types we want to purge yui classes from the body  - e.g. local-joulegrader-view,
         // local-pld-view, etc.
-        $killyuipages = [
+        $killyuipages = array(
             'local-pld-view',
             'local-joulegrader-view',
             'blocks-conduit-view',
@@ -1433,7 +1433,7 @@ HTML;
             'blocks-campusvue-view',
             'enrol-instances',
             'admin-report-eventlist-index',
-        ];
+        );
         if (in_array($this->page->pagetype, $killyuipages)) {
             $classes = array_diff ($classes, ['yui-skin-sam', 'yui3-skin-sam']);
             $classes[] = 'yui-bootstrapped';
@@ -1525,7 +1525,7 @@ HTML;
         if ($id == 0) {
             return [];
         }
-        $category = $DB->get_record('course_categories', ['id' => $id]);
+        $category = $DB->get_record('course_categories', array('id' => $id));
         if (!$category) {
             throw new \moodle_exception('unknowncategory');
         }
@@ -1570,7 +1570,7 @@ HTML;
         $output = $this->box_start('generalbox snap-continue-cancel', 'notice');
         $output .= html_writer::tag('h4', get_string('confirm'));
         $output .= html_writer::tag('p', $message);
-        $output .= html_writer::tag('div', $this->render($continue) . $this->render($cancel), ['class' => 'buttons']);
+        $output .= html_writer::tag('div', $this->render($continue) . $this->render($cancel), array('class' => 'buttons'));
         $output .= $this->box_end();
         return $output;
     }
@@ -1588,8 +1588,8 @@ HTML;
      * @return string
      */
     public function feature_spot_cards() {
-        $fsnames = ["fs_one", "fs_two", "fs_three"];
-        $features = [];
+        $fsnames = array("fs_one", "fs_two", "fs_three");
+        $features = array();
         // Note - we are using underscores in the settings to make easier to read.
 
         foreach ($fsnames as $feature) {
@@ -1862,7 +1862,7 @@ HTML;
      * @param int $contextid
      */
     private function add_contentbank_navigation_node(navigation_node $item, $contextid) {
-        $url = new moodle_url('/contentbank/index.php', ['contextid' => $contextid]);
+        $url = new moodle_url('/contentbank/index.php', array('contextid' => $contextid));
         $item->add(get_string('contentbank'), $url, navigation_node::TYPE_CUSTOM, null, 'contentbank', new \pix_icon('brush', ''));
     }
 
@@ -1877,7 +1877,7 @@ HTML;
         $course = $this->page->course;
         $coursecontext = context_course::instance($course->id);
         // Switch roles.
-        $roles = [];
+        $roles = array();
         $assumedrole = $this->in_alternative_role();
         if ($assumedrole !== false) {
             $roles[0] = get_string('switchrolereturn');
@@ -1900,9 +1900,9 @@ HTML;
                 $switchroles->force_open();
             }
             foreach ($roles as $key => $name) {
-                $url = new moodle_url('/course/switchrole.php', [
+                $url = new moodle_url('/course/switchrole.php', array(
                     'id' => $course->id, 'sesskey' => sesskey(),
-                    'switchrole' => $key, 'returnurl' => $this->page->url->out_as_local_url(false), ]);
+                    'switchrole' => $key, 'returnurl' => $this->page->url->out_as_local_url(false), ));
                 $switchroles->add($name, $url, navigation_node::TYPE_SETTING, null, $key, new \pix_icon('i/switchrole', ''));
             }
         }
@@ -2328,7 +2328,7 @@ HTML;
      * @return array
      */
     public function remove_duplicated_breadcrumbs($breadcrumbs): array {
-        $breadcrumbskeys = [];
+        $breadcrumbskeys = array();
         $filtereditems = array_filter($breadcrumbs, function($item) use (&$breadcrumbskeys) {
             $text = $item->text instanceof lang_string ? $item->text->out() : $item->text;
             if (array_key_exists($text, $breadcrumbskeys)) {
@@ -2357,11 +2357,11 @@ HTML;
             $url = '#';
         }
         $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
-        $attributes = [
+        $attributes = array(
             'aria-haspopup' => 'true',
             'class' => $classes,
             'id' => 'snap-pm-trigger',
-        ];
+        );
         $output .= html_writer::link($url, $menu, $attributes);
         return $output;
     }
@@ -2382,7 +2382,7 @@ HTML;
             $preferencesposition = array_search('preferences,moodle', array_column($data['items'], 'titleidentifier'));
 
             if ($preferencesposition) {
-                $additionallinks = [];
+                $additionallinks = array();
 
                 // My account link.
                 if ((has_capability('moodle/site:config', context_system::instance())) &&
@@ -2391,9 +2391,9 @@ HTML;
                     mr_on("myaccount", "_MR_LOCAL")) {
                     $myaccount = new stdClass();
                     $myaccount->itemtype = 'link';
-                    $myaccount->url = new moodle_url('/local/myaccount/view.php?controller=default&action=view', [
-                        'id' => 'snap-pm-myaccount',
-                    ]);
+                    $myaccount->url = new moodle_url('/local/myaccount/view.php?controller=default&action=view', array(
+                        'id' => 'snap-pm-myaccount'
+                    ));
                     $myaccount->link = $myaccount->itemtype == 'link';
                     $myaccount->title = get_string('myaccount', 'local_myaccount');
                     $myaccount->titleidentifier = 'myaccount,local_myaccount';
@@ -2403,9 +2403,9 @@ HTML;
                 // Dashboard link.
                 $dashboardlink = new stdClass();
                 $dashboardlink->itemtype = 'link';
-                $dashboardlink->url = new moodle_url('/my', [
-                    'id' => 'snap-pm-dashboard',
-                ]);
+                $dashboardlink->url = new moodle_url('/my', array(
+                    'id' => 'snap-pm-dashboard'
+                ));
                 $dashboardlink->link = $dashboardlink->itemtype == 'link';
                 $dashboardlink->title = get_string('myhome');
                 $dashboardlink->titleidentifier = 'myhome,moodle';
@@ -2415,9 +2415,9 @@ HTML;
                 if (is_callable('mr_on') && mr_on('catalogue', '_MR_LOCAL')) {
                     $localcatalogue = new stdClass();
                     $localcatalogue->itemtype = 'link';
-                    $localcatalogue->url = new moodle_url('/local/catalogue/index.php', [
-                        'id' => 'snap-pm-course-catalogue',
-                    ]);
+                    $localcatalogue->url = new moodle_url('/local/catalogue/index.php', array(
+                        'id' => 'snap-pm-course-catalogue'
+                    ));
                     $localcatalogue->link = $localcatalogue->itemtype == 'link';
                     $localcatalogue->title = get_string('pluginname', 'local_catalogue');
                     $localcatalogue->titleidentifier = 'pluginname,local_catalogue';
@@ -2427,9 +2427,9 @@ HTML;
                 if (is_callable('mr_on') && mr_on('programs', '_MR_ENROL')) {
                     $programs = new stdClass();
                     $programs->itemtype = 'link';
-                    $programs->url = new moodle_url('/enrol/programs/catalogue/index.php', [
-                        'id' => 'snap-pm-program-catalogue',
-                    ]);
+                    $programs->url = new moodle_url('/enrol/programs/catalogue/index.php', array(
+                        'id' => 'snap-pm-program-catalogue'
+                    ));
                     $programs->link = $programs->itemtype == 'link';
                     $programs->title = get_string('catalogue', 'enrol_programs');
                     $programs->titleidentifier = 'catalogue,enrol_programs';
@@ -2439,9 +2439,9 @@ HTML;
                 if (is_callable('mr_on') && mr_on('myprograms', '_MR_BLOCKS')) {
                     $myprograms = new stdClass();
                     $myprograms->itemtype = 'link';
-                    $myprograms->url = new moodle_url( '/enrol/programs/my/index.php', [
-                        'id' => 'snap-pm-my-programs',
-                    ]);
+                    $myprograms->url = new moodle_url( '/enrol/programs/my/index.php', array(
+                        'id' => 'snap-pm-my-programs'
+                    ));
                     $myprograms->link = $myprograms->itemtype == 'link';
                     $myprograms->title = get_string('pluginname', 'block_myprograms');
                     $myprograms->titleidentifier = 'pluginname,block_myprograms';
@@ -2551,13 +2551,13 @@ HTML;
 
         $icon = file_get_contents($CFG->dirroot . '/theme/snap/pix/snapfeeds.svg');
         $url = '#snap_feeds_side_menu';
-        $attributes = [
+        $attributes = array(
             'id' => 'snap_feeds_side_menu_trigger',
             'class' => 'js-snap-feeds-side-menu-trigger',
             'title' => get_string('show'). ' ' .get_string('snapfeedsblocktitle', 'theme_snap'),
             'aria-label' => get_string('show'). ' ' .get_string('snapfeedsblocktitle', 'theme_snap'),
             'aria-expanded' => "false",
-        ];
+        );
 
         return html_writer::link($url, $icon, $attributes);
 
@@ -2577,7 +2577,7 @@ HTML;
         if (empty($feeds)) {
             return $output;
         }
-        $output .= html_writer::tag('div', $feeds, ['id' => 'snap_feeds_side_menu']);
+        $output .= html_writer::tag('div', $feeds, array('id' => 'snap_feeds_side_menu'));
         return $output;
     }
 }

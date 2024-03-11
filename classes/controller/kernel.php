@@ -68,7 +68,7 @@ class kernel {
 
         $controller->init($action);
 
-        return [$controller, $method];
+        return array($controller, $method);
     }
 
     /**

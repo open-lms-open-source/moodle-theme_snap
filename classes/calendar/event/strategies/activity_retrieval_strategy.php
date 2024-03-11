@@ -62,23 +62,23 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
     ) {
         global $DB, $CFG;
 
-        $params = [];
+        $params = array();
         // Quick test.
         if (empty($users) && empty($groups) && empty($courses) && empty($categories)) {
-            return [];
+            return array();
         }
 
         if (is_numeric($users)) {
-            $users = [$users];
+            $users = array($users);
         }
         if (is_numeric($groups)) {
-            $groups = [$groups];
+            $groups = array($groups);
         }
         if (is_numeric($courses)) {
-            $courses = [$courses];
+            $courses = array($courses);
         }
         if (is_numeric($categories)) {
-            $categories = [$categories];
+            $categories = array($categories);
         }
 
         // Array of filter conditions. To be concatenated by the OR operator.
@@ -133,7 +133,7 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
         // events no matter what. Allowing the code to proceed might return a completely
         // valid query with only time constraints, thus selecting ALL events in that time frame!
         if (empty($filters)) {
-            return [];
+            return array();
         }
 
         // Build our clause for the filters.
