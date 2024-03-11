@@ -1899,7 +1899,14 @@ class course_renderer extends \core_course_renderer {
         }
 
         foreach (get_plugin_list_with_function('block', 'extend_module_editing_buttons') as $function) {
-            $localplugins = array_merge($localplugins, $function($mod));
+            // The Sharing Cart block should only be available for user with capability to manage activities.
+            if ($function === 'block_sharing_cart_extend_module_editing_buttons') {
+                if (has_capability('moodle/course:manageactivities', $modcontext)) {
+                    $localplugins = array_merge($localplugins, $function($mod));
+                }
+            } else {
+                $localplugins = array_merge($localplugins, $function($mod));
+            }
         }
 
         // TODO - pld string is far too long....
@@ -1929,8 +1936,8 @@ class course_renderer extends \core_course_renderer {
             $advancedactions .= "</ul></div>";
         }
         // Add actions menu.
+        $output = '';
         if ($advancedactions) {
-            $output = '';
             $output .= "<div class='js-only snap-asset-actions' role='region' aria-label='" .
                 get_string('courseactionslabel', 'theme_snap') . "'>";
             $output .= $advancedactions;
