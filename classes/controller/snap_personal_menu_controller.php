@@ -52,9 +52,9 @@ class snap_personal_menu_controller extends controller_abstract {
      * @return string
      */
     public function get_forumposts_action() {
-        return json_encode(array(
+        return json_encode([
             'html' => \theme_snap\local::render_recent_forum_activity(),
-        ));
+        ]);
     }
 
     /**
@@ -63,9 +63,9 @@ class snap_personal_menu_controller extends controller_abstract {
      * @return string
      */
     public function get_graded_action() {
-        return json_encode(array(
+        return json_encode([
             'html' => \theme_snap\local::graded(),
-        ));
+        ]);
     }
 
     /**
@@ -74,9 +74,9 @@ class snap_personal_menu_controller extends controller_abstract {
      * @return string
      */
     public function get_messages_action() {
-        return json_encode(array(
+        return json_encode([
             'html' => \theme_snap\local::messages(),
-        ));
+        ]);
     }
 
     /**
@@ -85,9 +85,9 @@ class snap_personal_menu_controller extends controller_abstract {
      * @return string
      */
     public function get_grading_action() {
-        return json_encode(array(
+        return json_encode([
             'html' => \theme_snap\local::grading(),
-        ));
+        ]);
     }
 
     /**
@@ -101,9 +101,9 @@ class snap_personal_menu_controller extends controller_abstract {
             $courseids = explode(',', $courseids);
         }
         $courseinfo = \theme_snap\local::courseinfo($courseids);
-        return json_encode(array(
+        return json_encode([
             'info' => $courseinfo,
-        ));
+        ]);
     }
 
     /**

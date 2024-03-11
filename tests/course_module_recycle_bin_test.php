@@ -62,10 +62,10 @@ class course_module_recycle_bin_test extends \advanced_testcase {
         set_config('coursebinenable', 1, 'tool_recyclebin');
 
         $this->course = $this->getDataGenerator()->create_course(
-            array('numsections' => 3, 'format' => 'weeks'),
-            array('createsections' => true));
+            ['numsections' => 3, 'format' => 'weeks'],
+            ['createsections' => true]);
         $this->assign = $this->getDataGenerator()->create_module('assign',
-            array('course' => $this->course, 'section' => 1));
+            ['course' => $this->course, 'section' => 1]);
 
         $this->courseservice = course::service();
     }

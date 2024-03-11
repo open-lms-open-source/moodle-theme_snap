@@ -52,9 +52,9 @@ class behat_theme_snap_behat_course_categories extends behat_base {
 
         // Now that we need them require the data generators.
 
-        $requiredfields = array('id', 'idnumber');
+        $requiredfields = ['id', 'idnumber'];
         $elementname = 'categories';
-        $categories = array();
+        $categories = [];
         foreach ($data->getHash() as $elementdata) {
 
             // Check if all the required fields are there.
@@ -66,7 +66,7 @@ class behat_theme_snap_behat_course_categories extends behat_base {
             $categories[] = $elementdata;
         }
         foreach ($categories as $category) {
-            $category['parent'] = $DB->get_field('course_categories', 'id', array('idnumber' => $category['category']));
+            $category['parent'] = $DB->get_field('course_categories', 'id', ['idnumber' => $category['category']]);
             self::create_category($category);
         }
     }
@@ -106,7 +106,7 @@ class behat_theme_snap_behat_course_categories extends behat_base {
             if (core_text::strlen($data->idnumber) > 100) {
                 throw new moodle_exception('idnumbertoolong');
             }
-            if (strval($data->idnumber) !== '' && $DB->record_exists('course_categories', array('idnumber' => $data->idnumber))) {
+            if (strval($data->idnumber) !== '' && $DB->record_exists('course_categories', ['idnumber' => $data->idnumber])) {
                 throw new moodle_exception('categoryidnumbertaken');
             }
             $newcategory->idnumber = $data->idnumber;
@@ -119,7 +119,7 @@ class behat_theme_snap_behat_course_categories extends behat_base {
         if (empty($data->parent)) {
             $parent = core_course_category::get(0);
         } else {
-            $parent = $DB->get_record('course_categories', array('id' => $data->parent));
+            $parent = $DB->get_record('course_categories', ['id' => $data->parent]);
         }
         $newcategory->parent = $parent->id;
         $newcategory->depth = $parent->depth + 1;
@@ -137,10 +137,10 @@ class behat_theme_snap_behat_course_categories extends behat_base {
 
         $newcategory->sortorder = 0;
         $newcategory->timemodified = time();
-        $DB->insert_records('course_categories', array($newcategory), true);
+        $DB->insert_records('course_categories', [$newcategory], true);
             // Update path (only possible after we know the category id.
         $path = $parent->path . '/' . $newcategory->id;
-        $DB->set_field('course_categories', 'path', $path, array('id' => $newcategory->id));
+        $DB->set_field('course_categories', 'path', $path, ['id' => $newcategory->id]);
 
         // We should mark the context as dirty.
         context_coursecat::instance($newcategory->id)->mark_dirty();
@@ -161,10 +161,10 @@ class behat_theme_snap_behat_course_categories extends behat_base {
             $DB->update_record('course_categories', $updatedata);
         }
 
-        $event = \core\event\course_category_created::create(array(
+        $event = \core\event\course_category_created::create([
             'objectid' => $newcategory->id,
             'context' => $categorycontext,
-        ));
+        ]);
         $event->trigger();
 
         cache_helper::purge_by_event('changesincoursecat');

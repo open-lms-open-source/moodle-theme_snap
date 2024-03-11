@@ -41,7 +41,7 @@ class behat_theme_snap_behat_course extends behat_course {
             return parent::i_add_to_section($activity, $section);
         }
         $this->execute('behat_general::i_click_on',
-            array("//li/a[@section-number='$section']", 'xpath_element'));
+            ["//li/a[@section-number='$section']", 'xpath_element']);
 
         $this->execute("behat_theme_snap_behat_course::i_open_the_activity_chooser_of_the_section", $section);
         $xpath = "(//div[@data-region]/a[div[contains(text(),'$activity')]])[1]";
@@ -63,7 +63,7 @@ class behat_theme_snap_behat_course extends behat_course {
      */
     public function i_open_the_activity_chooser_of_the_section(int $section) {
         $this->execute('behat_general::i_click_on',
-            array("//button[@data-action='open-chooser' and @data-sectionid='$section']", 'xpath_element'));
+            ["//button[@data-action='open-chooser' and @data-sectionid='$section']", 'xpath_element']);
 
         $node = $this->get_selected_node('xpath_element', '//div[@data-region="modules"]');
         $this->ensure_node_is_visible($node);

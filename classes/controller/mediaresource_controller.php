@@ -66,10 +66,10 @@ class mediaresource_controller extends controller_abstract {
         } else {
             $file = reset($files);
             unset($files);
-            $embedoptions = array(
+            $embedoptions = [
                 \core_media_manager::OPTION_TRUSTED => true,
                 \core_media_manager::OPTION_BLOCK => true,
-            );
+            ];
             $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
             $moodleurl = new \moodle_url('/pluginfile.php' . $path);
             $embedhtml = \core_media_manager::instance()->embed_url($moodleurl, $resource->name, 0, 0, $embedoptions);
@@ -102,11 +102,11 @@ class mediaresource_controller extends controller_abstract {
         $context  = \context_module::instance($cm->id);
 
         // Trigger module instance viewed event.
-        $event = \mod_resource\event\course_module_viewed::create(array(
+        $event = \mod_resource\event\course_module_viewed::create([
             'objectid' => $cm->instance,
             'context' => $context,
-        ));
-        $resource = $DB->get_record('resource', array('id' => $cm->instance));
+        ]);
+        $resource = $DB->get_record('resource', ['id' => $cm->instance]);
         $event->add_record_snapshot('course_modules', $cm);
         $event->add_record_snapshot('course', $COURSE);
         $event->add_record_snapshot('resource', $resource);
@@ -131,10 +131,10 @@ class mediaresource_controller extends controller_abstract {
     public function get_media_action() {
         $media = $this->read_media();
 
-        return json_encode(array(
+        return json_encode([
             'html' => $media->content,
             'completionhtml' => $media->completionhtml,
-        ));
+        ]);
     }
 
 }

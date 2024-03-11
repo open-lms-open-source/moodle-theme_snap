@@ -225,7 +225,7 @@ class activity {
                        AND ac.subtype='assignsubmission'
                        AND plugin!='comments'
                   GROUP BY a.id;";
-            $submissionsenabled = $DB->get_records_sql($sql, array($courseid));
+            $submissionsenabled = $DB->get_records_sql($sql, [$courseid]);
             $coursequeried = $courseid;
         }
 
@@ -323,7 +323,7 @@ class activity {
     public static function assign_ungraded($courseids, $since = null) {
         global $DB;
 
-        $ungraded = array();
+        $ungraded = [];
 
         if ($since === null) {
             $since = time() - (12 * WEEKSECS);
@@ -415,7 +415,7 @@ class activity {
             $since = time() - (12 * WEEKSECS);
         }
 
-        $ungraded = array();
+        $ungraded = [];
 
         foreach ($courseids as $courseid) {
 
@@ -489,13 +489,13 @@ class activity {
         }
 
         // Check to see if this assign is graded.
-        $params = array(
+        $params = [
             'courseid'      => $courseid,
             'itemtype'      => 'mod',
             'itemmodule'    => 'assign',
             'gradetypenone' => GRADE_TYPE_NONE,
             'gradetypetext' => GRADE_TYPE_TEXT,
-        );
+        ];
 
         $sql = 'SELECT DISTINCT iteminstance
                 FROM {grade_items}
@@ -590,7 +590,7 @@ class activity {
                                                   $extraselect = '') {
         global $DB;
 
-        static $modtotalsbyid = array();
+        static $modtotalsbyid = [];
 
         if (!isset($modtotalsbyid[$maintable][$courseid])) {
             // Results are not cached, so lets get them.
@@ -640,7 +640,7 @@ class activity {
     public static function assign_num_submissions($courseid, $modid) {
         global $DB;
 
-        static $modtotalsbyid = array();
+        static $modtotalsbyid = [];
 
         if (!isset($modtotalsbyid['assign'][$courseid])) {
             // Results are not cached, so lets get them.
@@ -799,7 +799,7 @@ class activity {
         global $DB, $USER;
 
         // Note: Caches all submissions to minimise database transactions.
-        static $submissions = array();
+        static $submissions = [];
 
         // Pull from cache?
         if (!PHPUNIT_TEST) {
@@ -1056,7 +1056,7 @@ class activity {
                 $assigninstance = $assign->id;
                 $dates = $moddates[$courseid . '_' . $modname][$assigninstance];
                 // Check if there is any extension.
-                $flags = $DB->get_record('assign_user_flags', array('assignment' => $assigninstance, 'userid' => $USER->id));
+                $flags = $DB->get_record('assign_user_flags', ['assignment' => $assigninstance, 'userid' => $USER->id]);
                 if (!empty($flags->extensionduedate)) {
                     // If there is an extension, then assign the duedate of the extension.
                     $timeclose = $flags->extensionduedate;
@@ -1133,7 +1133,7 @@ class activity {
     public static function grade_row($courseid, $mod) {
         global $DB, $USER;
 
-        static $grades = array();
+        static $grades = [];
 
         if (isset($grades[$courseid.'_'.$mod->modname])
             && isset($grades[$courseid.'_'.$mod->modname][$mod->instance])
@@ -1163,12 +1163,12 @@ class activity {
                          OR gg.feedback IS NOT NULL
                      )
                      ";
-        $params = array(
+        $params = [
             'modname' => $mod->modname,
             'courseid1' => $courseid,
             'courseid2' => $courseid,
             'userid' => $USER->id,
-        );
+        ];
         $grades[$courseid.'_'.$mod->modname] = $DB->get_records_sql($sql, $params);
 
         if (isset($grades[$courseid.'_'.$mod->modname][$mod->instance])) {
@@ -1218,7 +1218,7 @@ class activity {
         $params = array_merge($params, [$USER->id, $showfrom, $showfrom]);
         $grades = $DB->get_records_sql($sql, $params, 0, 5);
 
-        $eventdata = array();
+        $eventdata = [];
         foreach ($grades as $grade) {
             $eventdata[] = $grade;
         }
@@ -1680,7 +1680,7 @@ class activity {
 
         $sqlgroupsjoin = '';
         $sqlgroupswhere = '';
-        $groupparams = array();
+        $groupparams = [];
 
         $course = get_course($courseid);
         $groupmode = groups_get_course_groupmode($course);
@@ -1703,7 +1703,7 @@ class activity {
                    WHERE g.courseid = :courseid2
                      AND gm.userid = :userid)";
         }
-        return array($sqlgroupsjoin, $sqlgroupswhere, $groupparams);
+        return [$sqlgroupsjoin, $sqlgroupswhere, $groupparams];
     }
 
     /**

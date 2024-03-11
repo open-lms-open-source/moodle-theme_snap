@@ -46,10 +46,10 @@ if (file_exists($h5prenderer)) {
             $content = $this->get_settings('hvpcustomcss');
 
             if (!empty($content)) {
-                $styles[] = (object) array(
+                $styles[] = (object) [
                     'path' => $this->get_style_url($content),
                     'version' => '',
-                );
+                ];
             }
         }
 

@@ -100,7 +100,7 @@ class recent_forum_activity_test extends \advanced_testcase {
         $this->teacher2 = $this->getDataGenerator()->create_user();
 
         // Enrol (as students) user1 to both courses but user2 only to course2.
-        $sturole = $DB->get_record('role', array('shortname' => 'student'));
+        $sturole = $DB->get_record('role', ['shortname' => 'student']);
         $this->getDataGenerator()->enrol_user($this->user1->id,
             $this->course1->id,
             $sturole->id);
@@ -112,7 +112,7 @@ class recent_forum_activity_test extends \advanced_testcase {
             $sturole->id);
 
         // Enrol teachers on both courses.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
+        $teacherrole = $DB->get_record('role', ['shortname' => 'editingteacher']);
         $teachers = [$this->teacher2, $this->teacher1];
         foreach ($teachers as $teacher) {
             $this->getDataGenerator()->enrol_user($teacher->id,
@@ -290,8 +290,8 @@ class recent_forum_activity_test extends \advanced_testcase {
         // User 2 count.
         $user2c = 0;
 
-        $sturole = $DB->get_record('role', array('shortname' => 'student'));
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $sturole = $DB->get_record('role', ['shortname' => 'student']);
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
 
         $totalcourses = 20;
         $totalforums = 0;
