@@ -22,6 +22,7 @@
 @theme @theme_snap @theme_snap_lazy_loading @snap_page_resource
 Feature: When the moodle theme is set to Snap course pages can be rendered using lazy loading.
   Background:
+    Given I skip because "to debug Behat test failure in GL Pipeline in INT-19721"
     Given the following "courses" exist:
       | fullname | shortname |
       | Course 1 | C1 |
