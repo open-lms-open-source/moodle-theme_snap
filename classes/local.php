@@ -1159,6 +1159,9 @@ class local {
     public static function extract_first_image($html) {
         $doc = new \DOMDocument();
         libxml_use_internal_errors(true); // Required for HTML5.
+
+        // An empty string here means that the string was filtered for safety reasons.
+        $html = $html ?: '<p></p>';
         $doc->loadHTML($html);
         libxml_clear_errors(); // Required for HTML5.
         $imagetags = $doc->getElementsByTagName('img');
