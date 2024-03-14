@@ -1178,3 +1178,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: $brand-primary;
     }
 }
+
+/*
+    Defining brand primary color accesible from css
+*/
+:root {
+    --brand-primary: #{$brand-primary};
+}
