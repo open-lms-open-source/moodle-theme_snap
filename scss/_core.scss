@@ -3269,6 +3269,12 @@ table#user-grades tr.avg td.cell {
     .search-widget .user-info.d-block {
         padding: 6px;
     }
+    .dropdown-menu.show {
+        z-index: 1;
+    }
+    .table-responsive {
+        white-space: break-spaces; // Needed for dropdowns to take up space without scrolling.
+    }
 }
 #page-local-joulegrader-view {
     #local-joulegrader-navigation {
