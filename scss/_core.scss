@@ -141,6 +141,48 @@ table.boxwidthwide {
         justify-content: center;
     }
 
+    /**
+      floating labels in login form
+    */
+    .floating-label {
+        position: relative;
+    }
+
+    .floating-label input {
+        position: relative;
+        z-index: 2;
+    }
+
+    .floating-label input:focus ~ label {
+        left: 5px;
+        top: -10px;
+        opacity: 1;
+        height: auto;
+        width: auto;
+        clip: auto;
+        z-index: 2;
+        padding: 0 5px 0 5px;
+        background-color: #ffffff;
+        border-radius: 5px;
+    }
+
+    input:focus::placeholder {
+        color: transparent;
+    }
+
+    .floating-label label {
+        position: absolute;
+        left: 5px;
+        top: 10px;
+        z-index: 1;
+        font-size: 0.7em;
+        font-weight: bold;
+        transition: top .2s ease-in-out;
+    }
+    /**
+      end floating labels in login form
+    */
+
     // The site name.
     .snap-logo-sitename {
         text-indent: 100%;
@@ -173,6 +215,9 @@ table.boxwidthwide {
         }
         button#loginbtn {
             width: auto;
+            font-size: 0.8em;
+        }
+        .snap-indication {
             font-size: 0.8em;
         }
     }
