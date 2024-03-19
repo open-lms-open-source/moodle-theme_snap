@@ -72,10 +72,10 @@ function xmldb_theme_snap_upgrade($oldversion) {
         $table->add_field('timefavorited', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
 
         // Adding keys to table theme_snap_course_favorites.
-        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
 
         // Adding indexes to table theme_snap_course_favorites.
-        $table->add_index('userid-courseid', XMLDB_INDEX_UNIQUE, array('userid', 'courseid'));
+        $table->add_index('userid-courseid', XMLDB_INDEX_UNIQUE, ['userid', 'courseid']);
 
         // Conditionally launch create table for theme_snap_course_favorites.
         if (!$dbman->table_exists($table)) {

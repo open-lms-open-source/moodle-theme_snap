@@ -26,10 +26,10 @@ $setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
 // Select login template.
-$templates = array (
+$templates = [
     'classic_template' => $OUTPUT->image_url('classic_template', 'theme_snap'),
     'stylish_template' => $OUTPUT->image_url('stylish_template', 'theme_snap'),
-);
+];
 $snaptemplatetitle = get_string('classic_template', 'theme_snap');
 $snapstylishtemplatetitle = get_string('stylish_template', 'theme_snap');
 $templatedescription =
@@ -51,14 +51,14 @@ $templatedescription =
 $name = 'theme_snap/loginpagetemplate';
 $title = new lang_string('loginpagetemplate', 'theme_snap');
 $setting = new admin_setting_configselect($name, $title, $templatedescription, 'classic',
-    array('classic' => get_string('classic_template', 'theme_snap'), 'stylish' => get_string('stylish_template', 'theme_snap')));
+    ['classic' => get_string('classic_template', 'theme_snap'), 'stylish' => get_string('stylish_template', 'theme_snap')]);
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
 $name = 'theme_snap/loginbgimg';
 $title = get_string('loginbgimg', 'theme_snap');
 $description = get_string('loginbgimgdesc', 'theme_snap');
-$opts = array('accepted_types' => array('.png', '.jpg'), 'maxfiles' => 3);
+$opts = ['accepted_types' => ['.png', '.jpg'], 'maxfiles' => 3];
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbgimg', 0, $opts);
 $setting->set_updatedcallback('theme_snap_resize_bgimage_after_save');
 $snapsettings->add($setting);

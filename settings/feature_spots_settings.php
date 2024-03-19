@@ -55,19 +55,19 @@ $snapsettings->add($setting);
 // Feature spot images.
 $name = 'theme_snap/fs_one_image';
 $title = new lang_string('featureoneimage', 'theme_snap');
-$opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+$opts = ['accepted_types' => ['.png', '.jpg', '.gif', '.webp', '.svg']];
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'fs_one_image', 0, $opts);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/fs_two_image';
 $title = new lang_string('featuretwoimage', 'theme_snap');
-$opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+$opts = ['accepted_types' => ['.png', '.jpg', '.gif', '.webp', '.svg']];
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'fs_two_image', 0, $opts);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/fs_three_image';
 $title = new lang_string('featurethreeimage', 'theme_snap');
-$opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+$opts = ['accepted_types' => ['.png', '.jpg', '.gif', '.webp', '.svg']];
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'fs_three_image', 0, $opts);
 $snapsettings->add($setting);
 

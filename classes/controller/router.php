@@ -78,7 +78,7 @@ class router {
             } else if ($reflection->getMethod($method)->isPublic() !== true) {
                 throw new coding_exception("The controller callback is not public: $method");
             }
-            return array($controller, $method);
+            return [$controller, $method];
         }
         throw new coding_exception("Unable to handle request for $method");
     }

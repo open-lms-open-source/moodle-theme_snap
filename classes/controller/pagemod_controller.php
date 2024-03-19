@@ -64,10 +64,10 @@ class pagemod_controller extends controller_abstract {
         $context = $PAGE->context;
 
         // Trigger module instance viewed event.
-        $event = \mod_page\event\course_module_viewed::create(array(
+        $event = \mod_page\event\course_module_viewed::create([
             'objectid' => $page->id,
             'context' => $context,
-        ));
+        ]);
         $event->add_record_snapshot('course_modules', $cm);
         $event->add_record_snapshot('course', $COURSE);
         $event->add_record_snapshot('page', $page);
@@ -90,11 +90,11 @@ class pagemod_controller extends controller_abstract {
     public function get_page_action() {
         $page = $this->read_page();
 
-        return json_encode(array(
+        return json_encode([
             'html' => $page->content,
             'cmid' => $page->cmid,
             'completionhtml' => $page->completionhtml,
-        ));
+        ]);
     }
 
     /**
@@ -105,11 +105,11 @@ class pagemod_controller extends controller_abstract {
     public function read_page_action() {
         $page = $this->read_page();
 
-        return json_encode(array(
+        return json_encode([
             'id' => $page->id,
             'cmid' => $page->cmid,
             'completionhtml' => $page->completionhtml,
-        ));
+        ]);
     }
 
 }

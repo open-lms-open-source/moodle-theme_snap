@@ -40,7 +40,7 @@ class webservice_ws_course_card_categories_test extends \advanced_testcase {
         $this->resetAfterTest();
 
         $user = $this->getDataGenerator()->create_user();
-        $sturole = $DB->get_record('role', array('shortname' => 'student'));
+        $sturole = $DB->get_record('role', ['shortname' => 'student']);
 
         // Create course.
         $course = $this->getDataGenerator()->create_course();

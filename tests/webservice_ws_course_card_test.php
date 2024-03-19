@@ -43,7 +43,7 @@ class webservice_ws_course_card_test extends \advanced_testcase {
         $user = $this->getDataGenerator()->create_user();
 
         // Enrol user to course.
-        $sturole = $DB->get_record('role', array('shortname' => 'student'));
+        $sturole = $DB->get_record('role', ['shortname' => 'student']);
         $this->getDataGenerator()->enrol_user($user->id,
             $course->id,
             $sturole->id);

@@ -44,7 +44,7 @@ class behat_theme_snap_behat_permissions extends behat_permissions {
     public function i_set_the_following_system_permissions_of_role($rolename, $table) {
         global $DB;
         // Find role by name.
-        $roleid = $DB->get_field('role', 'id', array('shortname' => strtolower($rolename)), MUST_EXIST);
+        $roleid = $DB->get_field('role', 'id', ['shortname' => strtolower($rolename)], MUST_EXIST);
         // Spawn a new system context instance.
         $systemcontext = \context_system::instance();
         // Add capabilities to role given the table of capabilities.
@@ -90,12 +90,12 @@ class behat_theme_snap_behat_permissions extends behat_permissions {
     public function i_set_activityvisibility_capability_to_student ($capability) {
         global $DB;
 
-        $DB->insert_record('role_capabilities', array(
+        $DB->insert_record('role_capabilities', [
             'contextid' => 1,
             'roleid' => 5,
             'capability' => $capability,
             'permission' => 1,
             'timemodified' => time(),
-            'modifierid' => 0, ));
+            'modifierid' => 0, ]);
     }
 }
