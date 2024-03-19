@@ -908,7 +908,7 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
                 // The link itself.
                 a {
                     color: $body-color;
-                    display: block;
+                    display: inline-block;
                 }
             }
             .contentafterlink p a {
@@ -1136,6 +1136,7 @@ body.snap-resource-card {
         // Fix local bfaltformat icon in Snap course.
         .local_bfaltformat-button_span {
             z-index: unset;
+            display: inline-block;
         }
         .local-bfaltformat-access-icon {
             display: flex;
