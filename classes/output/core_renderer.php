@@ -1166,6 +1166,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         global $COURSE;
 
         $heading = $this->page->heading;
+        $pagetype = $this->page->pagetype;
 
         if ($this->page->pagelayout == 'mypublic' && $COURSE->id == SITEID) {
             // For the user profile page message button we need to call 2.9 content_header.
@@ -1173,12 +1174,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         } else if ($COURSE->id != SITEID && stripos($heading, format_string($COURSE->fullname)) === 0) {
             // If we are on a course page which is not the site level course page.
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
-            // Set heading to course fullname - ditch anything else that's in it.
-            // This will make huge page headings like:
-            // My course: View: Preferences: Grader report
-            // simply show -
-            // My course
-            // This is intentional.
             $heading = format_string($COURSE->fullname);
             $heading = html_writer::link($courseurl, $heading);
             $heading = html_writer::tag($tag, $heading);
@@ -1206,6 +1201,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
                             ['class' => 'btn btn-secondary btn-sm']);
             $heading .= $link;
         }
+
+        // Set core heading to Gradebook.
+        if (strpos($pagetype, 'grade-report-') === 0 || strpos($pagetype, 'grade-edit-') === 0) {
+            // If we are in a Gradebook page set default header.
+            $heading = parent::context_header();
+        }
+
         return $heading;
     }
 
