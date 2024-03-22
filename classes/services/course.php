@@ -97,9 +97,9 @@ class course {
      * @throws \file_exception
      * @throws \stored_file_creation_exception
      */
-    public function setcoverimage(\context $context, $data, $filename) {
+    public function setcoverimage(\context $context, $filename, $fileid) {
 
-        global $CFG;
+        global $CFG, $USER;
 
         require_capability('moodle/course:changesummary', $context);
 
@@ -112,8 +112,10 @@ class course {
 
         $newfilename = 'rawcoverimage.'.$ext;
 
-        $binary = base64_decode($data);
-        if (strlen($binary) > get_max_upload_file_size($CFG->maxbytes)) {
+        $usercontext = \context_user::instance($USER->id);
+
+        $filefromdraft = $fs->get_file($usercontext->id, 'user', 'draft', $fileid, '/', $filename);
+        if ($filefromdraft->get_filesize() > get_max_upload_file_size($CFG->maxbytes)) {
             throw new \moodle_exception('error:coverimageexceedsmaxbytes', 'theme_snap');
         }
 
@@ -150,7 +152,7 @@ class course {
         }
 
         // Create new cover image file and process it.
-        $storedfile = $fs->create_file_from_string($fileinfo, $binary);
+        $storedfile = $fs->create_file_from_storedfile($fileinfo, $filefromdraft);
         $success = $storedfile instanceof \stored_file;
         if ($context->contextlevel === CONTEXT_SYSTEM) {
             set_config('poster', $newfilename, 'theme_snap');

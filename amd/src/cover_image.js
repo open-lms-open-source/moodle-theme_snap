@@ -23,10 +23,15 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
     function($, log, ajax, notification, ajaxNotify) {
 
         // TODO - in Moodle 3.1 we should use the core template for this.
-        var addCoverImageAlert = function(id, msg) {
+        var addCoverImageAlert = function(id, msg, position = null) {
+            if (position === "dialogue") {
+                var alertPosition = '.snap_cover_image_description';
+            } else {
+                var alertPosition = '#snap-coverimagecontrol';
+            }
             var closestr = M.util.get_string('closebuttontitle', 'moodle');
             if (!$(id).length) {
-                $('#snap-coverimagecontrol').before(
+                $(alertPosition).before(
                     '<div id="' + id + '" class="snap-alert-cover-image alert alert-warning" role="alert">' +
                     msg +
                     '<button type="button" class="close" data-dismiss="alert" aria-label="' + closestr + '">' +
@@ -59,6 +64,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             $('#snap-changecoverimageconfirmation').removeClass('state-visible');
             $('label[for="snap-coverfiles"]').addClass('state-visible');
             $('#snap-coverfiles').val('');
+            $('body').removeClass('cover-image-change');
         };
 
         /**
@@ -73,108 +79,180 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
         };
 
         /**
-         *
+         * Moodle dialogue box.
+         * @param {string} courseShortName
+         * @param {int} categoryId
+         * @param {object} fpoptions
          * @param {int} siteMaxBytes
-         * @param {object} ajaxParams
          */
-        var coverImage = function(siteMaxBytes, ajaxParams) {
-            // Take a backup of what the current background image url is (if any).
-            $('#page-header').data('servercoverfile', $('#page-header').css('background-image'));
+        var moodledialogue = function(courseShortName, categoryId, fpoptions, siteMaxBytes) {
+            var maxbytesstr = humanFileSize(siteMaxBytes);
+            let title = M.util.get_string('imageproperties', 'theme_snap');
+            let coverImageDesc = M.util.get_string('coverimagedesc', 'theme_snap', maxbytesstr);
+            let browseRepositories = M.util.get_string('browserepositories', 'theme_snap');
+            let saveImage = M.util.get_string('saveimage', 'theme_snap');
 
-            $('#changecoverimage').click(function(e) {
+            let content =
+                '<div class="mb-1 snap_cover_image_dialogue">' +
+                    '<p class="snap_cover_image_description">' + coverImageDesc + '</p>' +
+                    '<div class="input-group input-append w-100 snap_cover_image_browser_options">' +
+                        '<button class="btn btn-secondary snap_cover_image_browser" id="id_snap_cover_image_browser">' +
+                        browseRepositories + '</button>' +
+                    '</div>' +
+                // Add the image preview.
+                '<div class="mdl-align">' +
+                    '<div class="snap_cover_image_preview_box">' +
+                        '<img id="id_snap_cover_image_preview" class="snap_cover_image_preview" alt="" style="display: none;"/>' +
+                    '</div>' +
+                '</div>' +
+                // Add the save button.
+                '<div class="snap_cover_image_save">' +
+                        '<button class="btn btn-secondary snap_cover_image_save_button" id="id_snap_cover_image_save_button"' +
+                        'disabled>' + saveImage + '</button>' +
+                    '</div>' +
+                '</div>';
+
+            var dialogue = new M.core.dialogue({
+                headerContent: title,
+                bodyContent: content,
+                width: '600px',
+                modal: true,
+                visible: false,
+                render: true,
+                additionalBaseClass: 'snap_cover_image_dialogue',
+            });
+            dialogue.show();
+
+            $('body').addClass('cover-image-change');
+            $('label[for="snap-coverfiles"]').addClass('ajaxing');
+
+            $('#id_snap_cover_image_browser').click(function(e) {
                 e.preventDefault();
-                $(this).removeClass('state-visible');
-                $('label[for="snap-coverfiles"]').addClass('state-visible');
+                showFilepicker('image', fpoptions, filepickerCallback(courseShortName, categoryId));
             });
+            $('#id_snap_cover_image_save_button').click(function() {
+                dialogue.hide();
+            });
+            $('.snap_cover_image_dialogue .closebutton, .moodle-dialogue-lightbox').click(function() {
+                state1();
+            });
+            dialogue.after("visibleChange", function() {
+                if ($('#snap-changecoverimageconfirmation .ok').hasClass('ajaxing')) {
+                    state2();
+                }
+                if (!dialogue.get('visible')) {
+                    dialogue.destroy(true);
+                }
+            });
+        };
 
-            var file,
-                filedata;
+        /**
+         * Load the image in the preview box.
+         * @param {object} params
+         * @param {string} courseShortName
+         * @param {int} categoryId
+         */
+        var loadPreviewImage = function(params, courseShortName, categoryId) {
 
-            $('#snap-coverfiles').on('change', function(e) {
-                $('body').addClass('cover-image-change');
-                var files = e.target.files; // FileList object
-                if (!files.length) {
-                    return;
+            var image = new Image();
+            image.onerror = function() {
+                var preview = document.getElementById('id_snap_cover_image_preview');
+                preview.setAttribute('style', 'display:none');
+            };
+
+            image.onload = function() {
+                var input;
+                var imageWidth = this.width;
+                input = document.getElementById('id_snap_cover_image_preview');
+                input.setAttribute('src', params.url);
+                input.setAttribute('style', 'display:inline');
+                $('.snap_cover_image_save_button').prop("disabled", false);
+
+                // Warn if image resolution is too small.
+                if (imageWidth < 1024) {
+                    $('#snap-alert-cover-image-size').remove();
+                    addCoverImageAlert('snap-alert-cover-image-size',
+                        M.util.get_string('error:coverimageresolutionlow', 'theme_snap'),
+                        'dialogue'
+                    );
+                } else {
+                    $('#snap-alert-cover-image-size').remove();
                 }
 
-                file = files[0];
+                $('#id_snap_cover_image_save_button').click(function() {
 
-                // Only process image files.
-                if (!file.type.match('image.*')) {
-                    return;
+                    // Ensure that the page-header in courses has the mast-image class.
+                    $('.path-course-view #page-header').addClass('mast-image');
+                    $('.path-course-view #page-header .breadcrumb-item a').addClass('mast-breadcrumb');
+
+                    $('#page-header').css('background-image', 'url(' + params.url + ')');
+
+                    state2();
+                    saveImage(params, courseShortName, categoryId);
+                });
+
+            };
+            image.src = params.url;
+        };
+
+
+        /**
+         * Callback for file picker.
+         * @param {string} courseShortName
+         * @param {int} categoryId
+         */
+        var filepickerCallback = function(courseShortName, categoryId) {
+            return function(params) {
+            if (params.url !== '') {
+                // Load the preview image.
+                loadPreviewImage(params, courseShortName, categoryId);
                 }
+            };
+        };
 
-                var reader = new FileReader();
-
-                $('label[for="snap-coverfiles"]').addClass('ajaxing');
-
-                // Closure to capture the file information.
-                reader.onload = (function(theFile) {
-                    return function(e) {
-
-                        // Set page header to use local version for now.
-                        filedata = e.target.result;
-
-                        // Ensure that the page-header in courses has the mast-image class.
-                        $('.path-course-view #page-header').addClass('mast-image');
-                        $('.path-course-view #page-header .breadcrumb-item a').addClass('mast-breadcrumb');
-
-                        // Warn if image file size exceeds max upload size.
-                        // Note: The site max bytes is intentional, as the person who can do the upload would be able to
-                        // override the course upload limit anyway.
-                        var maxbytes = siteMaxBytes;
-                        if (theFile.size > maxbytes) {
-                            // Go back to initial state and show warning about image file size.
-                            state1();
-                            var maxbytesstr = humanFileSize(maxbytes);
-                            var message = M.util.get_string('error:coverimageexceedsmaxbytes', 'theme_snap', maxbytesstr);
-                            addCoverImageAlert('snap-alert-cover-image-bytes', message);
-                            return;
-                        } else {
-                            $('#snap-alert-cover-image-bytes').remove();
-                        }
-
-                        // Warn if image resolution is too small.
-                        var img = $('<img />');
-                        img = img.get(0);
-                        img.src = filedata;
-                        $(img).on('load', function() {
-                            if (img.width < 1024) {
-                                addCoverImageAlert('snap-alert-cover-image-size',
-                                    M.util.get_string('error:coverimageresolutionlow', 'theme_snap')
-                                );
-                            } else {
-                                $('#snap-alert-cover-image-size').remove();
-                            }
-                        });
-
-                        $('#page-header').css('background-image', 'url(' + filedata + ')');
-                        $('#page-header').data('localcoverfile', theFile.name);
-
-                        state2();
-                    };
-                })(file);
-
-                // Read in the image file as a data URL.
-                reader.readAsDataURL(file);
-
+        /**
+         * Create file picker.
+         * @param {string} type
+         * @param {object} fpoptions
+         * @param {Function} callback
+         */
+        var showFilepicker = function(type, fpoptions, callback) {
+            Y.use('core_filepicker', function(Y) {
+                var options = fpoptions;
+                options.formcallback = callback;
+                M.core_filepicker.show(Y, options);
             });
+        };
+
+        /**
+         * Save image after confirmation.
+         * @param {object} params
+         * @param {string} courseShortName
+         * @param {int} categoryId
+         */
+        var saveImage = function(params, courseShortName, categoryId) {
+
             $('#snap-changecoverimageconfirmation .ok').click(function() {
+                var ajaxParams = {};
 
-                if ($(this).parent().hasClass('disabled')) {
+                if (categoryId !== null) {
+                    ajaxParams.categoryid = categoryId;
+                } else if (courseShortName !== null) {
+                    ajaxParams.courseshortname = courseShortName;
+                } else {
                     return;
                 }
 
-                $('#snap-alert-cover-image-size').remove();
-                $('#snap-alert-cover-image-bytes').remove();
+                if (params.id !== undefined) {
+                    ajaxParams.fileid = params.id;
+                } else {
+                    var fileNameWithoutSpaces = params.file.replace(/ .*/, "");
+                    var regex = new RegExp("draft\\/(\\d+)\\/" + fileNameWithoutSpaces, "g");
+                    var urlId = params.url.match(regex);
+                    ajaxParams.fileid = urlId[0].match(/\d+/)[0];
+                }
 
-                $('#snap-changecoverimageconfirmation .ok').addClass('ajaxing');
-                $('#snap-changecoverimageconfirmation').addClass('disabled');
-
-                var imageData = filedata.split('base64,')[1];
-
-                ajaxParams.imagedata = imageData;
-                ajaxParams.imagefilename = file.name;
+                ajaxParams.imagefilename = params.file;
 
                 ajax.call([
                     {
@@ -182,7 +260,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                         args: {params: ajaxParams},
                         done: function(response) {
                             state1();
-                            if(response.contrast) {
+                            if (response.contrast) {
                                 addCoverImageAlert('snap-alert-cover-image-size',
                                     response.contrast
                                 );
@@ -190,6 +268,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                             if (!response.success && response.warning) {
                                 addCoverImageAlert('snap-alert-cover-image-upload-failed', response.warning);
                             }
+                            $('#snap-changecoverimageconfirmation .ok').off("click");
                         },
                         fail: function(response) {
                             state1();
@@ -198,27 +277,62 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                     }
                 ], true, true);
             });
+
             $('#snap-changecoverimageconfirmation .cancel').click(function() {
 
                 if ($(this).parent().hasClass('disabled')) {
                     return;
                 }
-
                 $('#page-header').css('background-image', $('#page-header').data('servercoverfile'));
+                $('.path-course-view #page-header').removeClass('mast-image');
                 state1();
             });
-            $('#snap-coverimagecontrol').addClass('snap-js-enabled');
-        };
-
-        var categoryCoverImage = function(categoryId, siteMaxBytes) {
-            var ajaxParams = {imagefilename: null, imagedata: null, categoryid: categoryId,
-                    courseshortname: null};
-
-            coverImage(siteMaxBytes, ajaxParams);
         };
 
         /**
-         * Main function
+         *
+         * @param {object} ajaxParams
+         * @param {string} courseShortName
+         * @param {int} categoryId
+         * @param {int} siteMaxBytes
+         */
+        var coverImage = function(ajaxParams, courseShortName = null, categoryId = null, siteMaxBytes) {
+
+            if (courseShortName === null && categoryId === null) {
+                return;
+            }
+
+            ajax.call([
+                {
+                    methodname: 'theme_snap_file_manager_options',
+                    args: [],
+                    done: function(data) {
+                        var fpoptions = JSON.parse(data.fpoptions);
+                        // Take a backup of what the current background image url is (if any).
+                        $('#page-header').data('servercoverfile', $('#page-header').css('background-image'));
+                        $('#snap-coverimagecontrol').addClass('snap-js-enabled');
+                        $('#snap-coverfiles').click(function() {
+                            moodledialogue(courseShortName, categoryId, fpoptions, siteMaxBytes);
+                        });
+                    },
+                    fail: function() {
+                        return;
+                    }
+                }
+            ], true, true);
+        };
+
+        /**
+         * @param {int} categoryId
+         * @param {int} siteMaxBytes
+         */
+        var categoryCoverImage = function(categoryId, siteMaxBytes) {
+            var ajaxParams = {imagefilename: null, imagedata: null, categoryid: categoryId,
+                    courseshortname: null};
+            coverImage(ajaxParams, null, categoryId, siteMaxBytes);
+        };
+
+        /**
          * @param {string} courseShortName
          * @param {int} siteMaxBytes
          */
@@ -226,7 +340,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             var ajaxParams = {imagefilename: null, imagedata: null, categoryid: null,
                     courseshortname: courseShortName};
 
-            coverImage(siteMaxBytes, ajaxParams);
+            coverImage(ajaxParams, courseShortName, null, siteMaxBytes);
         };
         return {courseImage: courseCoverImage, categoryImage: categoryCoverImage};
     }

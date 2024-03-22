@@ -39,6 +39,7 @@ require_once($CFG->dirroot.'/grade/querylib.php');
 require_once($CFG->libdir.'/gradelib.php');
 require_once($CFG->dirroot.'/grade/lib.php');
 require_once($CFG->libdir.'/badgeslib.php');
+require_once($CFG->dirroot.'/repository/lib.php');
 
 class shared extends \renderer_base {
 
@@ -315,7 +316,11 @@ EOF;
             'movingstartedhelp',
             'notpublished',
             'visibility',
-            'snapfeedsblocktitle'
+            'snapfeedsblocktitle',
+            'imageproperties',
+            'coverimagedesc',
+            'browserepositories',
+            'saveimage'
         ), 'theme_snap');
 
         $PAGE->requires->strings_for_js([
@@ -456,6 +461,14 @@ EOF;
         $blockreports = array_key_exists('reports', core_component::get_plugin_list('block'));
         $allyreport = (\core_component::get_component_directory('report_allylti') !== null);
         $localcatalogue = array_key_exists('catalogue', $localplugins);
+
+        if ((has_capability('moodle/course:changesummary', context_course::instance($COURSE->id))) ||
+            (has_capability('moodle/category:manage', context_course::instance($COURSE->id)))) {
+            $args = new stdClass();
+            $args->accepted_types = array('.jpeg', '.png', '.gif');
+            $args->return_types = 2;
+            initialise_filepicker($args);
+        }
 
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole, $brandcolors,

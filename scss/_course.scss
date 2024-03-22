@@ -3111,3 +3111,32 @@ body[id^='page-mod-data'] {
         margin-bottom: 1em;
     }
 }
+
+.snap_cover_image_dialogue {
+    .snap_cover_image_description {
+        font-size: small;
+    }
+    .snap_cover_image_save {
+        margin-top: 2em;
+        text-align: right;
+    }
+    .snap_cover_image_preview_box {
+        margin-top: 1em;
+        .snap_cover_image_preview {
+            width: 450px;
+        }
+    }
+    .snap_cover_image_browser_options {
+        margin-top: 2em;
+        margin-bottom: 2em;
+        text-align: center;
+        display: block;
+    }
+    .snap_cover_image_dialogue {
+        padding: 1em;
+    }
+    .snap_cover_image_preview {
+        border-radius: 0.5rem;
+    }
+
+}
