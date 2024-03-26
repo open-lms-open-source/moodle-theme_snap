@@ -105,5 +105,14 @@ $functions = [
         'loginrequired'   => true,
         'readonlysession' => true, // We don't modify the session.
     ],
+    'theme_snap_file_manager_options'              => [
+        'classname'       => 'theme_snap\\webservice\\ws_file_manager_options',
+        'methodname'      => 'service',
+        'description'     => 'File manager options data',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
+    ],
 ];
 
