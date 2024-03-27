@@ -1020,6 +1020,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                 &.active {
                     color: $brand-primary;
                 }
+                &:focus {
+                    outline: 3px solid $brand-primary;
+                }
             }
         }
 
@@ -1039,11 +1042,11 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             border: none;
             text-transform: uppercase;
             font-size: medium;
+            border-radius: 5px;
         }
 
         .nav-tabs .nav-link.active {
             border-bottom: 5px $brand-primary solid ;
-            border-radius: 5px;
         }
 
         select.custom-select {
@@ -1084,8 +1087,11 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             min-height: 2.5em;
             min-width: 9em;
         }
+        #pld_tab_content a {
+            font-weight: 700;
+        }
 
-        a:focus, .dropdown-toggle:focus,
+        .dropdown-toggle:focus,
         select.custom-select:focus, select.custom-select, .nav-link:focus,
         .btn.btn-secondary, .btn-group  {
             outline: transparent;
