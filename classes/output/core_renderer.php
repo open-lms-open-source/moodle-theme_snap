@@ -156,12 +156,22 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function column_header_icon_link($langstring, $iconname, $url, $location = '') {
         // @codingStandardsIgnoreStart
         // Core renderer has not $output attribute, but code checker requires it.
-        global $OUTPUT;
+        global $OUTPUT, $CFG;
         $text = get_string($langstring, 'theme_snap');
         $iconurl = $OUTPUT->image_url($iconname, 'theme');
         $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '" alt="'.$text.'">';
+        $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
         if ($location == 'snapfeedsmenu') {
-            $link = '<a class="snap-feeds-menu-more" href="' .$url. '" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
+            if ($snapfeedsurlparam) {
+                if (str_contains($langstring, 'viewmessaging')) {
+                    $link = '<a class="snap-feeds-menu-more" href="' .$url. '?snapfeedsclicked=on" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
+                } else {
+                    $link = '<a class="snap-feeds-menu-more" href="' .$url. '&snapfeedsclicked=on" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
+                }
+            } else {
+                $link = '<a class="snap-feeds-menu-more" href="' .$url. '" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
+            }
+
         } else {
             $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
         }
@@ -1967,19 +1977,19 @@ HTML;
         // Student dashboard link.
         if (in_array("intelliboard_student", $navlist, true)) {
             $node = $nav->get("intelliboard_student");
-            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_learner');
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_learner', $location);
         }
 
         // Instructor dashboard link.
         if (in_array("intelliboard_instructor", $navlist, true)) {
             $node = $nav->get("intelliboard_instructor");
-            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard');
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard', $location);
         }
 
         // Competency dashboard link.
         if (in_array("intelliboard_competency", $navlist, true)) {
             $node = $nav->get("intelliboard_competency");
-            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_competencies');
+            $links .= $this->render_intelliboard_link($node->get_content(), $node->action(), 'intelliboard_competencies', $location);
         }
 
         // No links to display.
@@ -2010,13 +2020,22 @@ HTML;
      * @param string $icon icon sufix.
      * @return string
      */
-    public function render_intelliboard_link($name, $url, $icon) {
+    public function render_intelliboard_link($name, $url, $icon, $location = '') {
         // @codingStandardsIgnoreStart
         // Core renderer has not $output attribute, but code checker requires it.
-        global $OUTPUT;
+        global $OUTPUT, $CFG;
         $iconurl = $OUTPUT->image_url($icon, 'theme');
         $img = '<img class="svg-icon" role="presentation" src="'.$iconurl.'">';
-        $o = '<a href=" '.$url.' ">'.$img.s($name).'</a><br>';
+        $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
+        if ($location == 'snapfeedsmenu') {
+            if ($snapfeedsurlparam) {
+                $o = '<a href=" '.$url.'?snapfeedsclicked=on ">'.$img.s($name).'</a><br>';
+            } else {
+                $o = '<a href=" '.$url.' ">'.$img.s($name).'</a><br>';
+            }
+        } else {
+            $o = '<a href=" '.$url.' ">'.$img.s($name).'</a><br>';
+        }
         return $o;
         // @codingStandardsIgnoreEnd
     }
@@ -2054,7 +2073,7 @@ HTML;
     protected function render_intellicart($location = '') {
         // @codingStandardsIgnoreStart
         // Core renderer has not $output attribute, but code checker requires it.
-        global $OUTPUT;
+        global $OUTPUT, $CFG;
         $o = '';
         $link = '';
 
@@ -2072,7 +2091,16 @@ HTML;
             $node = $nav->get("intellicart_dashboard");
             $iconurl = $OUTPUT->image_url('intelliboard', 'theme');
             $img = '<img class="svg-icon" role="presentation" src="'.s($iconurl).'">';
-            $link .= '<a href=" '. $node->action() .' ">'.$img.s($node->get_content()).'</a><br>';
+            $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
+            if ($location == 'snapfeedsmenu') {
+                if ($snapfeedsurlparam) {
+                    $link .= '<a href=" '. $node->action() .'?snapfeedsclicked=on ">'.$img.s($node->get_content()).'</a><br>';
+                } else {
+                    $link .= '<a href=" '. $node->action() .' ">'.$img.s($node->get_content()).'</a><br>';
+                }
+            } else {
+                $link .= '<a href=" '. $node->action() .' ">'.$img.s($node->get_content()).'</a><br>';
+            }
         }
 
         // No links to display.
@@ -2448,12 +2476,16 @@ HTML;
      * @return string.
      */
     public function snap_feeds($location) {
+        global $CFG;
 
         $updatesid = 'feeds';
+
+        $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
 
         $data = (object) [
             'updates' => $this->render_callstoaction($location),
             'location' => $updatesid,
+            'urlparameter' => $snapfeedsurlparam,
         ];
         $feeds = $this->render_from_template('theme_snap/snap_feeds', $data);
         return $feeds;

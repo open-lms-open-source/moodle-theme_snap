@@ -73,6 +73,7 @@ class ws_feed extends external_api {
                 'extraClasses' => new external_value(PARAM_RAW, 'Feed item extra CSS classes'),
                 'fromCache'    => new external_value(PARAM_INT, 'Data from cache flag'),
                 'itemId'       => new external_value(PARAM_INT, 'Id item we are sending', VALUE_DEFAULT),
+                'urlParameter' => new external_value(PARAM_BOOL,'Flag to add URL parameter', VALUE_OPTIONAL),
             ])
         );
     }
