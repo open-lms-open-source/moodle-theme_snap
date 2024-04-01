@@ -730,7 +730,7 @@ class local {
     }
 
     public static function messages_data($renderhtml = false, $limitfrom = 0, $limitnum = 5, $maxid = -1) {
-        global $USER, $PAGE;
+        global $USER, $PAGE, $CFG;
 
         $messages = self::get_user_messages($USER->id, null, $limitfrom, $limitnum, $maxid);
         if (empty($messages)) {
@@ -779,6 +779,8 @@ class local {
                 $info = '<p>'.$info.'</p>';
             }
 
+            $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
+
             $res[] = [
                 'iconUrl'      => $frompicture,
                 'iconDesc'     => '',
@@ -790,6 +792,7 @@ class local {
                 'extraClasses' => $unreadclass,
                 'fromCache'    => 0,
                 'itemId'    => $message->uniqueid,
+                'urlParameter'    => $snapfeedsurlparam,
             ];
         }
         return $res;
@@ -838,7 +841,7 @@ class local {
      * @throws \coding_exception
      */
     public static function graded_data($onlyactive = true, $renderhtml = false) {
-        global $USER, $PAGE;
+        global $USER, $PAGE, $CFG;
 
         /** @var \theme_snap\output\core_renderer $output */
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
@@ -889,6 +892,9 @@ class local {
             $meta = get_string('released', 'theme_snap', $output->friendly_datetime($releasedon));
 
             $grade = new \grade_grade(array('itemid' => $grade->itemid, 'userid' => $USER->id));
+
+            $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
+
             if (!$grade->is_hidden() || $canviewhiddengrade) {
                 $res[] = [
                     'iconUrl'      => $modimage,
@@ -900,6 +906,7 @@ class local {
                     'description'  => $meta,
                     'extraClasses' => '',
                     'fromCache'    => 0,
+                    'urlParameter'    => $snapfeedsurlparam,
                 ];
             }
         }
@@ -938,7 +945,7 @@ class local {
     }
 
     public static function grading_data($renderhtml = false) {
-        global $USER, $PAGE;
+        global $USER, $PAGE, $CFG;
 
         $grading = self::all_ungraded($USER->id);
 
@@ -989,6 +996,8 @@ class local {
                 $url = $url->out();
             }
 
+            $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
+
             $res[] = [
                 'iconUrl'      => $modimage,
                 'iconDesc'     => $modname,
@@ -999,6 +1008,7 @@ class local {
                 'description'  => $meta,
                 'extraClasses' => '',
                 'fromCache'    => 0,
+                'urlParameter'    => $snapfeedsurlparam,
             ];
         }
 
@@ -1990,7 +2000,7 @@ class local {
      * @throws \moodle_exception
      */
     public static function recent_forum_activity_data($renderhtml = false) {
-        global $PAGE, $OUTPUT;
+        global $PAGE, $OUTPUT, $CFG;
         $activities = self::recent_forum_activity();
         if (empty($activities)) {
             return [];
@@ -2041,6 +2051,8 @@ class local {
             $description = self::relative_time($activity->timestamp)
                 . '<br>' . format_text($forumpath, FORMAT_HTML, $formatoptions);
 
+            $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
+
             $res[] = [
                 'iconUrl'      => $iconurl,
                 'iconDesc'     => '',
@@ -2051,6 +2063,7 @@ class local {
                 'description'  => $description,
                 'extraClasses' => '',
                 'fromCache'    => 0,
+                'urlParameter'    => $snapfeedsurlparam,
             ];
         }
         return $res;
@@ -2324,7 +2337,7 @@ SQL;
     }
 
     public static function deadlines_data($eventsobj, $renderhtml = false) {
-        global $PAGE;
+        global $PAGE, $CFG;
 
         $events = $eventsobj->events;
         $fromcache = $eventsobj->fromcache ? 1 : 0;
@@ -2398,6 +2411,8 @@ SQL;
                     $url = $url->out();
                 }
 
+                $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
+
                 $res[] = [
                     'iconUrl'      => $modimage,
                     'iconDesc'     => $modname,
@@ -2408,6 +2423,7 @@ SQL;
                     'description'  => $meta,
                     'extraClasses' => '',
                     'fromCache'    => $fromcache,
+                    'urlParameter'    => $snapfeedsurlparam,
                 ];
             }
         }

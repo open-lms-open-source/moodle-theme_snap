@@ -26,9 +26,10 @@ define(['jquery', 'core/log','theme_snap/util', 'theme_snap/ajax_notification'],
     function($, log, util, ajaxNotify) {
         /**
          * Load Snap feeds content when advanced feeds are disabled.
+         * @param {boolean} urlParameter
          *
          */
-        var update = function() {
+        var update = function(urlParameter) {
             $(document).ready(function() {
                 var loadAjaxInfo = function(type) {
                     // Target for data to be displayed on screen.
@@ -61,7 +62,12 @@ define(['jquery', 'core/log','theme_snap/util', 'theme_snap/ajax_notification'],
                                             // attribute populated immediately so things like behat can utilise it.
                                             // .data just sets the value in memory, not the dom.
                                             $(container).attr('data-content-loaded', '1');
-                                            $(container).html(data.html);
+                                            if (urlParameter) {
+                                                let modifiedHTML = modifyHTML(data.html);
+                                                $(container).html(modifiedHTML);
+                                            } else {
+                                                $(container).html(data.html);
+                                            }
                                         }
                                     });
                                 }
@@ -82,21 +88,44 @@ define(['jquery', 'core/log','theme_snap/util', 'theme_snap/ajax_notification'],
         };
 
         /**
-         * Apply Snap feeds side menu listeners.
+         * Modify the HTML to add the snapfeedsclicked label in the URL.
+         * @param {string} html
          */
-        var applyListeners = function() {
+        var modifyHTML = function(html) {
+            const beforeURLPattern = "<div class=\"snap-media-body\">\n<a href=\"";
+            const afterURLPattern = "\"><h3>";
+            const regex = new RegExp(beforeURLPattern + "(.*)" + afterURLPattern, "g");
+            const results = [...html.matchAll(regex)];
+            let modifiedHTML = html;
+            if (results.length > 0) {
+                results.forEach(result => {
+                    const originalURL = result[1];
+                    const modifiedURL = originalURL + "&snapfeedsclicked=on";
+                    modifiedHTML = modifiedHTML.replace(originalURL, modifiedURL);
+                });
+            } else {
+                return html;
+            }
+            return modifiedHTML;
+        };
+
+        /**
+         * Apply Snap feeds side menu listeners.
+         * @param {boolean} urlParameter
+         */
+        var applyListeners = function(urlParameter) {
             // On clicking snap feeds side menu trigger.
             $(document).on("click", ".js-snap-feeds-side-menu-trigger", function(event) {
                 if ($('#snap_feeds_side_menu').is(':visible')) {
-                    update();
+                    update(urlParameter);
                 }
                 event.preventDefault();
 
             });
         };
 
-        var init = function() {
-            applyListeners();
+        var init = function(urlParameter) {
+            applyListeners(urlParameter);
         };
 
         return {

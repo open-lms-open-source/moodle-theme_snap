@@ -17,7 +17,7 @@ import {MoodleRes} from "../moodle.res";
           <div class="snap-media-object feeditem {{feedItem.extraClasses}}" *ngFor="let feedItem of feedItems" [attr.data-from-cache]="feedItem.fromCache">
               <img *ngIf="feedItem.iconUrl !== ''" src="{{feedItem.iconUrl}}" alt="{{feedItem.iconDesc}}" [className]="feedItem.iconClass">
               <div class="snap-media-body">
-                  <a href="{{feedItem.actionUrl}}">
+                  <a [attr.href]="feedItem.urlParameter ? feedItem.actionUrl + '&snapfeedsclicked=on' : feedItem.actionUrl">
                       <h3>
                           {{feedItem.title}}
                           <small [attr.data-from-cache]="feedItem.fromCache">
