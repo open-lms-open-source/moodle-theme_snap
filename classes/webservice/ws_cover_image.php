@@ -35,8 +35,8 @@ class ws_cover_image extends \external_api {
     public static function service_parameters() {
         $parameters = [
             'params' => new \external_single_structure([
-                'imagedata' => new \external_value(PARAM_TEXT, 'Image data', VALUE_REQUIRED),
                 'imagefilename' => new \external_value(PARAM_TEXT, 'Image filename', VALUE_REQUIRED),
+                'fileid' => new \external_value(PARAM_INT, 'File ID', VALUE_REQUIRED),
                 'categoryid' => new \external_value(PARAM_INT, 'Category Id', VALUE_OPTIONAL),
                 'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_OPTIONAL),
             ], 'Params wrapper - just here to accommodate optional values', VALUE_REQUIRED),
@@ -82,7 +82,7 @@ class ws_cover_image extends \external_api {
         }
         self::validate_context($context);
 
-        $coverimage = $service->setcoverimage($context, $params['imagedata'], $params['imagefilename']);
+        $coverimage = $service->setcoverimage($context, $params['imagefilename'], $params['fileid']);
         return $coverimage;
     }
 }

@@ -2047,4 +2047,50 @@ JS;
     public function i_open_the_user_menu() {
         $this->execute('behat_general::i_click_on', ['.usermenu', 'css_element']);
     }
+
+    /**
+     * Normalise the fixture file path relative to the dirroot.
+     *
+     * @param string $filepath
+     * @return string
+     */
+    protected function normalise_fixture_filepath(string $filepath): string {
+        global $CFG;
+
+        $filepath = str_replace('/', DIRECTORY_SEPARATOR, $filepath);
+        if (!is_readable($filepath)) {
+            $filepath = $CFG->dirroot . DIRECTORY_SEPARATOR . $filepath;
+            if (!is_readable($filepath)) {
+                throw new ExpectationException('The file to be uploaded does not exist.', $this->getSession());
+            }
+        }
+
+        return $filepath;
+    }
+
+    /**
+     * Upload a file in the file picker using the browse repository button.
+     *
+     * @Given /^I upload "(?P<filepath_string>(?:[^"]|\\")*)" to the file picker for Snap/
+     */
+    public function i_upload_a_file_in_the_filepicker(string $filepath): void {
+
+        $filepicker = $this->find('dialogue', get_string('filepicker', 'core_repository'));
+
+        $this->execute('behat_general::i_click_on_in_the', [
+            get_string('pluginname', 'repository_upload'), 'link',
+            $filepicker, 'NodeElement',
+        ]);
+
+        $reporegion = $filepicker->find('css', '.fp-repo-items');
+        $fileinput = $this->find('field', get_string('attachment', 'core_repository'), false, $reporegion);
+
+        $filepath = $this->normalise_fixture_filepath($filepath);
+
+        $fileinput->attachFile($filepath);
+        $this->execute('behat_general::i_click_on_in_the', [
+            get_string('upload', 'repository'), 'button',
+            $reporegion, 'NodeElement',
+        ]);
+    }
 }

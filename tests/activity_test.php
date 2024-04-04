@@ -79,7 +79,7 @@ class activity_test extends snap_base_test {
      * @param int $courseid
      * @param int $duedate
      * @param array $opts
-     * @return quiz
+     * @return \mod_quiz\quiz_settings
      */
     protected function create_quiz($courseid, $duedate = null, $opts = []) {
         global $USER, $CFG;
@@ -114,7 +114,7 @@ class activity_test extends snap_base_test {
         $USER = $origuser;
 
         [$course, $cm] = get_course_and_cm_from_instance($instance->id, 'quiz');
-        return new \quiz($instance, $cm, $course);
+        return new \mod_quiz\quiz_settings($instance, $cm, $course);
     }
 
     /**

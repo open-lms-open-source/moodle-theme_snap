@@ -458,3 +458,7 @@ $string['snapfootertxtcolor'] = 'Footer text color';
 $string['enableblockmyoverviewwarning'] = 'The Course overview block is disabled. In order to display the courses, please enable the block.';
 $string['collapseicon'] = 'Collapse the content of';
 $string['expandicon'] = 'Expand the content of';
+$string['imageproperties'] = 'Image properties';
+$string['coverimagedesc'] = 'Select the image to feature on the course cover, ensuring it is in either .jpeg, .png, or .gif format. It should not exceed the site level maximum allowed file size ({$a}). For optimal display, aim for an aspect ratio of 4:3 (1024x768 pixels). Additionally, consider color combinations that adhere to WCAG 2.0 guidelines, especially in relation to the white title of the course, for an enhanced user experience.';
+$string['browserepositories'] = 'Browse repositories';
+$string['saveimage'] = 'Save image';
