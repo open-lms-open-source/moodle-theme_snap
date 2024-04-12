@@ -1378,8 +1378,8 @@ footer #moodle-footer
         }
 
         .dropdown-item.carousel-navigation-link::after {
-            font-family: FontAwesome;
-            content: "\f0da";
+            @extend .fa-solid;
+            content: fa-content($fa-var-caret-right);
             font-size: 1rem;
             right: 0.75rem;
             position: absolute;
@@ -1891,15 +1891,20 @@ header#page-header
         margin: 0 auto;
         bottom: -10px;
         z-index: auto;
+        position: absolute;
+        bottom: 2em;
         button {
-            background-color: $snap-carousel-buttons;
+            background-color: $brand-primary;
             width: 35px;
             height: 5px;
             margin-right: 0.5em;
             border: none;
+            opacity: 65%;
+            border: 1px solid $brand-primary;
         }
         .active {
-            background-color: $brand-primary;
+            opacity: 100%;
+            border: none;
         }
     }
 
@@ -1917,7 +1922,7 @@ header#page-header
     .anim-play-resume-buttons {
         margin-left: 100px;
         position: absolute;
-        bottom: 2em;
+        bottom: 3em;
         z-index: 1;
         #play-button,
         #pause-button,
@@ -1940,6 +1945,19 @@ header#page-header
 
     .carouselhidecontrols {
         display: none;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        opacity: 1;
+    }
+
+    .carousel-control-prev-icon {
+        background-image: none;
+    }
+
+    .carousel-control-next-icon {
+        background-image: none;
     }
 }
 
@@ -2073,6 +2091,24 @@ header#page-header
     outline: 0;
 }
 
+@include media-breakpoint-down(xl) {
+    .news-article:not(.state-expanded) {
+        .news-article-image {
+            width: 100%;
+            object-fit: cover;
+            object-position: top;
+            padding: 0;
+            height: 150px;
+        }
+        .snap-animated-image {
+            width: 100%;
+            img {
+                border-radius: 0;
+            }
+        }
+    }
+}
+
 @include media-breakpoint-up(md) {
     .news-article {
         margin-bottom: 0;
@@ -2125,6 +2161,21 @@ header#page-header
             .news-article-image,
             .news-article-inner {
                 float: right;
+            }
+        }
+    }
+    .news-article:not(.state-expanded) {
+        height: 300px;
+        .news-article-image {
+            height: 100%;
+            width: 50%;
+            object-fit: cover;
+            object-position: top;
+        }
+        .snap-animated-image {
+            width: 50%;
+            img {
+                border-radius: 0;
             }
         }
     }

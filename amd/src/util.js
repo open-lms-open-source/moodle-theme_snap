@@ -109,7 +109,7 @@ define(['jquery', 'core/templates', 'core/str'], function($, templates, str) {
             if (indexPage.length || coursePage.length) {
                 gifs.each(function() {
                     if (!$(this).parent().hasClass('snap-animated-image')) {
-                        $(this).wrap('<div class="snap-animated-image" tabindex="0"></div>');
+                        $(this).wrap('<div class="snap-animated-image"></div>');
                         let animImage = $(this).parent();
                         (function() {
                             return str.get_strings([

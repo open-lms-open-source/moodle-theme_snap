@@ -1300,12 +1300,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $message    = file_rewrite_pluginfile_urls($discussion->message,
                           'pluginfile.php', $context->id, 'mod_forum', 'post', $discussion->id);
 
-            $imagestyle = '';
+            $imageurl = '';
 
             $imgarr = \theme_snap\local::extract_first_image($message);
             if ($imgarr) {
                 $imageurl   = s($imgarr['src']);
-                $imagestyle = " style=\"background-image:url('$imageurl')\"";
             }
 
             $name    = format_string($discussion->name, true, ['context' => $context]);
@@ -1319,22 +1318,22 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
             $preview = '';
             $newsimage = '';
-            if (!$imagestyle) {
+            if (!$imageurl) {
                 $preview = html_to_text($message, 0, false);
                 $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
                 <p class='text-right'>".$readmorebtn."</p></div>";
             } else {
-                $newsimage = "<div class='news-article-image toggle' tabindex='0' role='button'
-                aria-expanded='false' aria-controls='news-article-message-id-{$counter}'".$imagestyle.' title="'.
-                    get_string('readmore', 'theme_snap').'"></div>';
+                $newsimage = "<img class='news-article-image toggle' tabindex='0' role='button'".
+                'alt="'. get_string('readmore', 'theme_snap').'" src="'. $imageurl.'">';
             }
             $close = get_string('closebuttontitle', 'moodle');
 
             $newsinner = <<<HTML
     <div class="news-article-inner">
         <div class="news-article-content">
-            <h3 class='toggle' aria-expanded="false" aria-controls="news-article-message-id-{$counter}">
-                <a role="button" tabindex='0' href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">{$name}</a>
+            <h3 class='toggle'>
+                <a role="button" tabindex='0' aria-expanded="false" aria-controls="news-article-message-id-{$counter}"
+                href="$CFG->wwwroot/mod/forum/discuss.php?d=$discussion->discussion">{$name}</a>
             </h3>
             <em class="news-article-date">{$date}</em>
         </div>
@@ -1350,12 +1349,11 @@ HTML;
             $arialabelnews = get_string('arialabelnewsarticle', 'theme_snap');
 
             $output .= <<<HTML
-<div class="news-article clearfix" role="group" tabindex="0" aria-label="$arialabelnews">
+<div class="news-article clearfix" role="group" aria-label="$arialabelnews">
     {$newsordered}
     <div id="news-article-message-id-{$counter}" class="news-article-message" tabindex="-1">
         {$message}
-        <div><hr><a role="button" tabindex='0' aria-expanded="false" aria-controls="news-article-message-id-{$counter}"
-            class="snap-action-icon snap-icon-close toggle" href="#">
+        <div><hr><a role="button" tabindex='0' class="snap-action-icon snap-icon-close toggle" href="#">
         <small>{$close}</small></a></div>
     </div>
 </div>
@@ -1670,7 +1668,7 @@ HTML;
         }
 
         // Title with link.
-        $linktitle = '<a ' .$target. ' class="snap-feature-link h5" href="' .s($link). '">' .s($title). '</a>';
+        $linktitle = '<h3><a ' .$target. ' class="snap-feature-link h5" href="' .s($link). '">' .s($title). '</a></h3>';
         // Title without link.
         $nolinktitle = '<h3 class="snap-feature-title h5">' .s($title). '</h3>';
         // Content text for feature spots.

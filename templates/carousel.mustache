@@ -43,25 +43,16 @@
 
 <section id="snap-site-carousel" class="carousel slide" data-ride="carousel" aria-label="{{covercarousellabel}}">
     <span class="sr-only">{{carouselsronlytext}}</span>
-    <!-- Pause/resume button. -->
-    <div id="carousel-play-resume-buttons" class="{{carouselhidecontrols}}">
-        <button id="play-button" role="button" class="btn btn-default btn-xs" aria-label="{{carouselplaybutton}}">
-            <span class="icon fa fa-play fa-fw"></span>
-        </button>
-        <button id="pause-button" role="button" class="btn btn-default btn-xs" aria-label="{{carouselpausebutton}}">
-            <span class="icon fa fa-pause fa-fw"></span>
-        </button>
-    </div>
 
     <div class="carousel-inner" id="snap-carousel-container">
         <!-- Previous and next buttons. -->
         <div class="carousel-controls">
             <a class="carousel-control-prev" href="#snap-site-carousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <i class="carousel-control-prev-icon fa-solid fa-circle-arrow-left" aria-hidden="true"></i>
                 <span class="sr-only">Previous slide</span>
             </a>
             <a class="carousel-control-next" href="#snap-site-carousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <i class="carousel-control-next-icon fa-solid fa-circle-arrow-right" aria-hidden="true"></i>
                 <span class="sr-only">Next slide</span>
             </a>
         </div>
@@ -77,6 +68,17 @@
             </div>
         {{/slides}}
     </div>
+
+    <!-- Pause/resume button. -->
+        <div id="carousel-play-resume-buttons" class="{{carouselhidecontrols}}">
+            <button id="play-button" role="button" class="btn btn-default btn-xs" aria-label="{{carouselplaybutton}}">
+                <span class="icon fa fa-play fa-fw"></span>
+            </button>
+            <button id="pause-button" role="button" class="btn btn-default btn-xs" aria-label="{{carouselpausebutton}}">
+                <span class="icon fa fa-pause fa-fw"></span>
+            </button>
+        </div>
+
     <div class="carousel-indicators js-only">
         {{#slides}}
             <button data-target="#snap-site-carousel" data-slide-to="{{index}}" class="{{active}}" aria-label="slide-{{index}}"></button>

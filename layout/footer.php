@@ -108,7 +108,7 @@ if (!empty($custommenu)) {
 $tittle = get_string('totop', 'theme_snap');
 echo
     '<div id="goto-top-link">
-        <a class="btn btn-light" role="button" href="javascript:void(0)">
+        <a class="btn btn-light" role="button" href="javascript:void(0)" aria-label = "' . $tittle .'">
             <i class="icon fa fa-arrow-up fa-fw" title="' . $tittle .'" aria-label="'. $tittle .'"></i>
         </a>
     </div>'

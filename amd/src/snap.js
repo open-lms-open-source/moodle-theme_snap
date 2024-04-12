@@ -638,29 +638,34 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
             $(document).on('click', '.news-article .toggle', function(e) {
                 var $news = $(this).closest('.news-article');
                 var $newstoggle = $(this);
-                var $newsclose = $news.find('.news-article-message > div > a[role="button"]');
                 util.scrollToElement($news);
                 $('.news-article').not($news).removeClass('state-expanded');
-                $('.news-article .toggle').not($newstoggle).attr('aria-expanded', 'false');
-                $('.news-article-message > div > a[role="button"]').not($newsclose).attr('aria-expanded', 'false');
+                $('.news-article a.toggle:not(.snap-icon-close), .news-article h3.toggle a')
+                    .not($newstoggle).attr('aria-expanded', 'false');
                 $('.news-article-message').css('display', 'none');
 
                 $news.toggleClass('state-expanded');
                 if (!$news.attr('state-expanded')) {
                     $news.focus();
-                    $newstoggle.attr('aria-expanded', 'false');
-                    $newsclose.attr('aria-expanded', 'false');
+                    if (!$newstoggle.hasClass( "news-article-image")
+                        && !$newstoggle.hasClass( "snap-icon-close")) {
+                        $newstoggle.find( "a" ).attr('aria-expanded', 'false');
+                    }
                 }
                 $('.state-expanded').find('.news-article-message').slideDown("fast", function() {
                     // Animation complete.
                     if ($news.is('.state-expanded')) {
                         $news.find('.news-article-message').focus();
-                        $newstoggle.attr('aria-expanded', 'true');
-                        $newsclose.attr('aria-expanded', 'true');
+                        if (!$newstoggle.hasClass( "news-article-image")
+                            && !$newstoggle.hasClass( "snap-icon-close")) {
+                            $newstoggle.find( "a" ).attr('aria-expanded', 'true');
+                        }
                     } else {
                         $news.focus();
-                        $newstoggle.attr('aria-expanded', 'false');
-                        $newsclose.attr('aria-expanded', 'false');
+                        if (!$newstoggle.hasClass( "news-article-image")
+                            && !$newstoggle.hasClass( "snap-icon-close")) {
+                            $newstoggle.find( "a" ).attr('aria-expanded', 'false');
+                        }
                     }
                     $(document).trigger('snapContentRevealed');
                 });
