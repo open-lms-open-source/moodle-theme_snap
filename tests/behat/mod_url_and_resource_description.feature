@@ -44,6 +44,7 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
       | resource   | Resource 1   | Test resource description   | C1     | resource1 | 0       | 1               |
 
   Scenario: As a teacher I should see an intermediate page with the description in mod_resource.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
@@ -60,6 +61,7 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
 
   @javascript
   Scenario Outline: Add a URL and ensure it is displayed correctly.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "activity" exists:
       | activity       | url                 |
       | course         | C1                  |

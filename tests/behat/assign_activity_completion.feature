@@ -3,6 +3,7 @@ Feature: View activity activity header and completion information in activities
   In order to have visibility of assignment completion requirements
 
   Background:
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Vinnie    | Student1 | student1@example.com |

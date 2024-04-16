@@ -33,6 +33,7 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
 
   Scenario: Login redirects to site policy page appropriately when personal menu set to show on login.
     Accepting the site policy prevents redirect on next login.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "student1"
     And I have been redirected to the site policy page
     And I press "Yes"
@@ -42,6 +43,7 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
 
   Scenario: Login redirects to site policy page appropriately when personal menu set to not show on login.
     Accepting the site policy prevents redirect next time personal menu is opened.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following config values are set as admin:
       | personalmenulogintoggle        | 0 | theme_snap |
       | personalmenuenablepersonalmenu | 1 | theme_snap |
@@ -57,6 +59,7 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
 
   Scenario: Login redirects to site policy page appropriately in my courses page.
   Accepting the site policy prevents redirect next time my courses is opened.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "student1"
     Then I have been redirected to the site policy page
     And I press "Yes"

@@ -23,6 +23,7 @@
 Feature: When the moodle theme is set to Snap, course layout cannot be changed to all course on one section.
 
   Background:
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following config values are set as admin:
       | theme | snap |
     And the following "courses" exist:

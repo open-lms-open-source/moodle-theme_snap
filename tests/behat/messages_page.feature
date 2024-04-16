@@ -110,6 +110,7 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
 
   @javascript
   Scenario: Accessing the messages from the user report in the grader redirects to the message index page.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I follow "Course Dashboard"

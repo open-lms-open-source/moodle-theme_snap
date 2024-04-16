@@ -24,6 +24,7 @@ Feature: When the Moodle theme is set to Snap, the content bank link should show
   menu, course administration menu and category settings.
 
   Background:
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |

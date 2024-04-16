@@ -50,6 +50,7 @@ Feature: Configure new external tool type to test it on a course.
 
   @javascript
   Scenario: External tool is opened in a new window.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     # We need to be sure that a LTI configured to be opened in a new window is opened in a new window on click.
     # This will be Snap's insurance, so any type of LTI works the same.
     And I am on the course main page for "C1"

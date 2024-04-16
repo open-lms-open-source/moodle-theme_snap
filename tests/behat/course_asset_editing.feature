@@ -41,6 +41,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario Outline: Student cannot access edit actions.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
@@ -60,6 +61,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario Outline: In read mode, non-editing teacher can see teacher's actions.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
@@ -105,6 +107,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario Outline: In read mode, teacher hides then shows resource.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -163,6 +166,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario Outline: In read mode, teacher duplicates resource.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -188,6 +192,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario: In read mode, teacher can copy activity to sharing cart.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1|

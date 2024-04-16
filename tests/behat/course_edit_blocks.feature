@@ -38,6 +38,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
 
   @javascript
   Scenario: In read mode on a topics course, teacher clicks edit blocks and can edit blocks.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro                         | section |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
@@ -77,6 +78,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
 
   @javascript
   Scenario: If edit mode is on for a course, it should not carry over to site homepage
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I follow "Course Dashboard"

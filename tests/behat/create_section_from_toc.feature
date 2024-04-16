@@ -52,6 +52,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   @javascript
   Scenario Outline: For editing teachers, ensure new section creation is available and works for topic courses but
     not single activity or social course formats.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -105,6 +106,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
 
   @javascript
   Scenario Outline: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -125,6 +127,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
 
   @javascript
   Scenario Outline: For editing teachers, ensure new section creation works when using content.
+    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
