@@ -158,22 +158,21 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Core renderer has not $output attribute, but code checker requires it.
         global $OUTPUT, $CFG;
         $text = get_string($langstring, 'theme_snap');
-        $iconurl = $OUTPUT->image_url($iconname, 'theme');
-        $icon = '<img class="svg-icon" role="presentation" src="' .$iconurl. '" alt="'.$text.'">';
+        $svgicon = file_get_contents($CFG->dirroot.'/theme/snap/pix/'.$iconname.'.svg');
         $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
         if ($location == 'snapfeedsmenu') {
             if ($snapfeedsurlparam) {
                 if (str_contains($langstring, 'viewmessaging') || str_contains($langstring, 'viewmyfeedback')) {
-                    $link = '<a class="snap-feeds-menu-more" href="' .$url. '?snapfeedsclicked=on" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
+                    $link = '<a class="snap-feeds-menu-more" href="' .$url. '?snapfeedsclicked=on" title="'.$text.'"><small>' .$text. '</small>' .$svgicon. '</a>';
                 } else {
-                    $link = '<a class="snap-feeds-menu-more" href="' .$url. '&snapfeedsclicked=on" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
+                    $link = '<a class="snap-feeds-menu-more" href="' .$url. '&snapfeedsclicked=on" title="'.$text.'"><small>' .$text. '</small>' .$svgicon. '</a>';
                 }
             } else {
-                $link = '<a class="snap-feeds-menu-more" href="' .$url. '" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
+                $link = '<a class="snap-feeds-menu-more" href="' .$url. '" title="'.$text.'"><small>' .$text. '</small>' .$svgicon. '</a>';
             }
 
         } else {
-            $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$icon. '</a>';
+            $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$svgicon. '</a>';
         }
         return $link;
         // @codingStandardsIgnoreEnd
@@ -347,7 +346,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $url = new moodle_url('/message/');
-        $o .= $this->column_header_icon_link('viewmessaging', 'messages', $url, $location);
+        $o .= $this->column_header_icon_link('viewmessaging', 'messages-new', $url, $location);
         return $o;
     }
 
@@ -380,7 +379,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $url = new moodle_url('/mod/forum/user.php', ['id' => $USER->id]);
-        $o .= $this->column_header_icon_link('viewforumposts', 'forumposts', $url, $location);
+        $o .= $this->column_header_icon_link('viewforumposts', 'forumposts-new', $url, $location);
         return $o;
     }
 
@@ -559,6 +558,54 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $data;
     }
 
+    /**
+     * Render mobile Snap Feeds Menu
+     * @return string
+     * @throws \moodle_exception
+     */
+    protected function render_snap_feeds_mobile() {
+        global $OUTPUT;
+
+        $data = [];
+
+        $data['intelliboard'] = [
+            'enable' => (bool)get_config('local_intelliboard'),
+            'icon' => $OUTPUT->image_url('intelliboard-new', 'theme'),
+            'alt' => 'Intelliboard',
+            'content' => $this->render_intelliboard('snapfeedsmenu') . $this->render_intellicart('snapfeedsmenu'),
+        ];
+
+        $data['deadlines'] = [
+            'enable' => $this->feedback_toggle_enabled(),
+            'icon' => $OUTPUT->image_url('calendar-new', 'theme'),
+            'alt' => get_string('deadlines', 'theme_snap'),
+            'content' => $this->render_deadlines('snapsfeedsmenu'),
+        ];
+
+        $data['grading'] = [
+            'enable' => $this->feedback_toggle_enabled(),
+            'icon' => $OUTPUT->image_url('grading-new', 'theme'),
+            'alt' => get_string('grading', 'theme_snap'),
+            'content' => $this->render_grading('snapfeedsmenu'),
+        ];
+
+        $data['messages'] = [
+            'enable' => !empty($this->page->theme->settings->messagestoggle),
+            'icon' => $OUTPUT->image_url('messages-new', 'theme'),
+            'alt' => get_string('messages', 'theme_snap'),
+            'content' => $this->render_messages('snapfeedsmenu'),
+        ];
+
+        $data['forumposts'] = [
+            'enable' => !empty($this->page->theme->settings->forumpoststoggle),
+            'icon' => $OUTPUT->image_url('forumposts-new', 'theme'),
+            'alt' => get_string('forumposts', 'theme_snap'),
+            'content' => $this->render_forumposts('snapfeedsmenu'),
+        ];
+
+        return $this->render_from_template('theme_snap/snap_feeds_mobile_menu', $data);
+    }
+
 
     /**
      * Is feedback toggle enabled?
@@ -657,7 +704,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $url = new moodle_url('/grade/report/mygrades.php');
-        $o .= $this->column_header_icon_link('viewmyfeedback', 'tick', $url, $location);
+        $o .= $this->column_header_icon_link('viewmyfeedback', 'grading-new', $url, $location);
         return $o;
     }
 
@@ -689,7 +736,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $calurl = $CFG->wwwroot.'/calendar/view.php?view=month';
-        $o .= $this->column_header_icon_link('viewcalendar', 'calendar', $calurl, $location);
+        $o .= $this->column_header_icon_link('viewcalendar', 'calendar-new', $calurl, $location);
         return $o;
     }
 
@@ -2484,6 +2531,7 @@ HTML;
 
         $data = (object) [
             'updates' => $this->render_callstoaction($location),
+            'mobileupdates' => $this->render_snap_feeds_mobile(),
             'location' => $updatesid,
             'urlparameter' => $snapfeedsurlparam,
         ];

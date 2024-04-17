@@ -122,6 +122,16 @@ define(['jquery', 'core/log','theme_snap/util', 'theme_snap/ajax_notification'],
                 event.preventDefault();
 
             });
+
+            // Mobile menu tabs
+            $('.snap-feeds-mobile-menu .nav-item').on('click', function() {
+                $('.snap-feeds-mobile-menu .nav-item').removeClass('active');
+                $(this).addClass('active');
+
+                $('.snap-feeds-mobile-menu .snap-feeds-mobile-sections > div').removeClass('active');
+                let target = $(this).data('target');
+                $('.snap-feeds-mobile-menu #snap-feeds-section-' + target).addClass('active');
+            });
         };
 
         var init = function(urlParameter) {
