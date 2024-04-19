@@ -10048,6 +10048,10 @@ li.section:focus {
     background-image: url([[pix:core|i/marked]]);
 }
 
+.snap-section-editing .snap-duplicate:after {
+    background-image: url([[pix:core|t/copy]]);
+}
+
 .snap-section-editing .loadingstat {
     margin-left: 1em;
 }

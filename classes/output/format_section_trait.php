@@ -33,6 +33,7 @@ use html_writer;
 use moodle_url;
 use stdClass;
 use theme_snap\output\core\course_renderer;
+use theme_snap\renderables\course_action_section_duplicate;
 use theme_snap\renderables\course_action_section_move;
 use theme_snap\renderables\course_action_section_visibility;
 use theme_snap\renderables\course_action_section_delete;
@@ -209,6 +210,9 @@ trait format_section_trait {
 
         $highlightaction = new course_action_section_highlight($course, $section, $onsectionpage);
         $controls[] = $this->render($highlightaction);
+
+        $duplicateaction = new course_action_section_duplicate($course, $section, $onsectionpage);
+        $controls[] = $this->render($duplicateaction);
 
         return $controls;
     }
@@ -808,6 +812,16 @@ trait format_section_trait {
      * @throws \moodle_exception
      */
     public function render_course_action_section_delete(course_action_section_delete $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_duplicate $action
+     * @return mixed
+     * @throws \moodle_exception
+     */
+    public function render_course_action_section_duplicate(course_action_section_duplicate $action) {
         $data = $action->export_for_template($this);
         return $this->render_from_template('theme_snap/course_action_section', $data);
     }
