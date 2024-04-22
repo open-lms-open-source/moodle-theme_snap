@@ -44,6 +44,8 @@ trait format_section_trait {
 
     use general_section_trait;
 
+     static $SECTION_ACTIONS_BEFORE_MENU = 2;
+
     /**
      * Renders HTML to display one course module for display within a section.
      *
@@ -200,21 +202,47 @@ trait format_section_trait {
         $controls = array();
 
         $moveaction = new course_action_section_move($course, $section, $onsectionpage);
-        $controls[] = $this->render($moveaction);
-
         $visibilityaction = new course_action_section_visibility($course, $section, $onsectionpage);
-        $controls[] = $this->render($visibilityaction);
-
         $deleteaction = new course_action_section_delete($course, $section, $onsectionpage);
-        $controls[] = $this->render($deleteaction);
-
         $highlightaction = new course_action_section_highlight($course, $section, $onsectionpage);
-        $controls[] = $this->render($highlightaction);
-
         $duplicateaction = new course_action_section_duplicate($course, $section, $onsectionpage);
-        $controls[] = $this->render($duplicateaction);
+
+        $actions = array(
+            $moveaction,
+            $visibilityaction,
+            $deleteaction,
+            $highlightaction,
+            $duplicateaction,
+        );
+
+        foreach($actions as $action) {
+            $controls[] = $this->render($action);
+        }
+
+        if(count($controls) > self::$SECTION_ACTIONS_BEFORE_MENU) {
+            $newcontrols = array_slice($controls, 0, self::$SECTION_ACTIONS_BEFORE_MENU);
+            $actionstomenu = array_slice($actions, self::$SECTION_ACTIONS_BEFORE_MENU);
+            foreach ($actionstomenu as $action) {
+                $action->isinmenu = true;
+            }
+            $menu = $this->section_edit_control_items_menued($actionstomenu, $section);
+            $newcontrols[] = $menu;
+            $controls = $newcontrols;
+        }
 
         return $controls;
+    }
+
+    /**
+     * Generate the dropdown to display the extra options.
+     * @param $items
+     */
+    protected function section_edit_control_items_menued($actions, $section) {
+        $data = [
+            'actions' => $actions,
+            'sectionid' => $section->section
+        ];
+        return $this->render_from_template('theme_snap/course_action_section_menu', $data);
     }
 
     /**
@@ -822,6 +850,16 @@ trait format_section_trait {
      * @throws \moodle_exception
      */
     public function render_course_action_section_duplicate(course_action_section_duplicate $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_extra_menu $action
+     * @return mixed
+     * @throws \moodle_exception
+     */
+    public function render_course_action_section_extra_menu(course_action_section_extra_menu $action) {
         $data = $action->export_for_template($this);
         return $this->render_from_template('theme_snap/course_action_section', $data);
     }

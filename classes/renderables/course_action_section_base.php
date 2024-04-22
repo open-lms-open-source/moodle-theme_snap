@@ -54,6 +54,12 @@ abstract class course_action_section_base implements \renderable, \templatable {
      */
     public $arialabel;
 
+    /**
+     * Variable to know if the action is inside a dropdown menu.
+     * @var string
+     */
+    public $isinmenu;
+
     abstract public function __construct($course, section_info $section, $onsectionpage = false);
 
 }

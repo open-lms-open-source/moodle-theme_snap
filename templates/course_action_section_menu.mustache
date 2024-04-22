@@ -15,22 +15,17 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
- @package   theme_snap
- @copyright Copyright (c) 2017 Open LMS (https://www.openlms.net)
- @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-}}
-{{#isinmenu}}
-    {{#url}}
-        <a class="dropdown-item" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}>
-            <div class="d-inline-block menu-icon {{{class}}}" {{{ariapressed}}}>
-                {{{title}}}
-            </div>
-        </a>
-    {{/url}}
-{{/isinmenu}}
+    @template theme_snap/course_action_section_menu
 
-{{^isinmenu}}
-    {{#url}}
-        <a title="{{{title}}}" class="{{class}}" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}></a>
-    {{/url}}
-{{/isinmenu}}
+    Extra menu for the course action sections
+}}
+<div class="dropdown extra-actions-menu">
+    <a class="btn btn-link" id="extra-actions-dropdown-{{{sectionid}}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="text-black-50 fa fa-ellipsis-v align-middle" title="Actions for course size s1" aria-hidden="true"></i>
+    </a>
+    <div class="dropdown-menu" id="drop-down-menu-extra-actions">
+        {{#actions}}
+            {{> theme_snap/course_action_section }}
+        {{/actions}}
+    </div>
+</div>

@@ -314,7 +314,8 @@ li.section:focus {
     padding: 0;
     margin: 0 auto;
     float: none;
-    display: block;
+    display: inline-flex;
+    gap: 0.3em;
     text-align: left;
     margin-top: -1em;
 
@@ -333,7 +334,7 @@ li.section:focus {
         }
     }
 
-    a:after {
+    a:after{
         content: ' ';
         width: 100%;
         display: inline-block;
@@ -343,37 +344,53 @@ li.section:focus {
         background-size: 70%;
     }
 
-    .snap-move:after {
-        background-image: url([[pix:theme|move]]);
-        background-size: 100%;
+    .snap-move {
+        &:after, &:before {
+            background-image: url([[pix:theme|move]]);
+            background-size: 100%;
+        }
     }
 
-    .snap-visibility.snap-show:after {
-        background-image: url([[pix:core|i/show]]);
+    .snap-visibility.snap-show {
+        &:after, &:before {
+            background-image: url([[pix:core|i/show]]);
+        }
     }
 
-    .snap-visibility.snap-hide:after {
-        background-image: url([[pix:core|i/hide]]);
+    .snap-visibility.snap-hide {
+        &:after, &:before {
+            background-image: url([[pix:core|i/hide]]);
+        }
     }
 
-    .snap-delete:after {
-        background-image: url([[pix:core|t/delete]]);
+    .snap-delete {
+        &:after, &:before {
+            background-image: url([[pix:core|t/delete]]);
+        }
     }
 
-    .snap-highlight[aria-pressed="false"]:after {
-        background-image: url([[pix:core|i/marker]]);
+    .snap-highlight {
+        &[aria-pressed="false"]:after, &[aria-pressed="false"]:before {
+            background-image: url([[pix:core|i/marker]]);
+        }
     }
 
-    .snap-highlight[aria-pressed="true"]:after {
-        background-image: url([[pix:core|i/marked]]);
+    .snap-highlight {
+        &[aria-pressed="true"]:after, &[aria-pressed="true"]:before {
+            background-image: url([[pix:core|i/marked]]);
+        }
     }
 
-    .snap-sharing-cart:after {
-        background-image: url([[pix:core|t/backup]]);
+    .snap-sharing-cart {
+        &:after, &:before {
+            background-image: url([[pix:core|t/backup]]);
+        }
     }
 
-    .snap-duplicate:after {
-        background-image: url([[pix:core|t/copy]]);
+    .snap-duplicate {
+        &:after, &:before {
+            background-image: url([[pix:core|t/copy]]);
+        }
     }
 
     a.ajaxing:after {
@@ -387,6 +404,43 @@ li.section:focus {
         margin-left: 1em;
     }
 
+    .extra-actions-menu {
+        .dropdown-menu {
+            z-index: 20;
+        }
+        .dropdown-item {
+            display: block;
+            border-radius: initial;
+            width: auto;
+            height: auto;
+
+            &.snap-show,
+            &[aria-pressed="true"] {
+                background-color: initial;
+            }
+
+            &:hover,
+            &:focus {
+                background-color: $brand-primary;
+                color: white;
+            }
+        }
+    }
+
+    .menu-icon {
+        width: 0.75em;
+        height: 1em;
+        &:before {
+            content: ' ';
+            width: 100%;
+            display: inline-block;
+            min-height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            vertical-align: -0.15em;
+        }
+    }
 }
 
 #snap-modchooser-modal {

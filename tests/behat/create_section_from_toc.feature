@@ -157,7 +157,8 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I should see "Introduction"
     And I follow "Topic 4"
     # Make Topic 4 the current section.
-    And I click on "#section-4 a.snap-highlight" "css_element"
+    And I click on "#extra-actions-dropdown-4" "css_element"
+    And I click on "#section-4 .snap-highlight" "css_element"
     # Go to a different topic than the highlighted one and open the create a new section form.
     And I follow "Topic 1"
     And I follow "Create a new section"

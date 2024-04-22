@@ -60,12 +60,14 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
 
     And I follow "Topic one"
     Then "#section-1" "css_element" should exist
-    When I click on "#section-1 .snap-section-editing.actions a.snap-delete" "css_element"
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    When I click on "#section-1 .snap-section-editing.actions .snap-delete" "css_element"
     Then I should see section delete dialog
     And I cancel dialog
     Then I should not see section delete dialog
     And I should see "Topic one"
-    When I click on "#section-1 .snap-section-editing.actions a.snap-delete" "css_element"
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    When I click on "#section-1 .snap-section-editing.actions .snap-delete" "css_element"
     Then I should see section delete dialog
     When I press "Delete Section"
     Then I should not see "Topic one" in the "li[id^='section-']" "css_element"
@@ -85,7 +87,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     And I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
-    Then "#section-1 .snap-section-editing.actions a.snap-delete" "css_element" should not exist
+    Then "#section-1 .snap-section-editing.actions .snap-delete" "css_element" should not exist
     Examples:
       | Option     |
       | 0          |
@@ -114,7 +116,8 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     And I wait until the page is ready
     Then "#section-1 .content .sectionname .sectionnumber" "css_element" <titlenumber> exist
     Then I should see "<beforetitle>" in the "#section-1 .content .sectionname" "css_element"
-    When I click on "#section-1 .snap-section-editing.actions a.snap-delete" "css_element"
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    When I click on "#section-1 .snap-section-editing.actions .snap-delete" "css_element"
     Then I should see section delete dialog
     When I press "Delete Section"
     And I wait until the page is ready

@@ -1066,8 +1066,15 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
              */
             var sectionActionListener = function(action, onComplete) {
 
-                $('#region-main').on('click', '.snap-section-editing.actions .snap-' + action, function(e) {
-
+                let selector = '.snap-section-editing.actions .snap-' + action;
+                if ($('.snap-section-editing.actions .snap-' + action).parents('.dropdown-item').length > 0) {
+                    selector = '.snap-section-editing.actions .dropdown-item:has(.snap-' + action + ')';
+                }
+                $('#region-main').on('click', selector, function(e) {
+                    const activeDropdownSel = '#extra-actions-dropdown-' + parentSectionNumber(this);
+                    if($(activeDropdownSel).dropdown().parent().hasClass('show')) {
+                        $(activeDropdownSel).dropdown('toggle');
+                    }
                     e.stopPropagation();
                     e.preventDefault();
 
@@ -1142,10 +1149,19 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                         $(trigger).removeClass('ajaxing');
                     }).done(function(response) {
                         // Update section action and then reload TOC.
+                        // Checking if action is inside the menu.
+                        if ($(actionSelector).parents('.dropdown-item').length > 0) {
+                            response.actionmodel.isinmenu = true;
+                        }
                         return templates.render('theme_snap/course_action_section', response.actionmodel)
                         .then(function(result) {
-                            $(actionSelector).replaceWith(result);
-                            $(actionSelector).focus();
+                            // Checking if action is inside the menu.
+                            if ($(actionSelector).parents('.dropdown-item').length > 0) {
+                                $(actionSelector).parent().replaceWith(result);
+                            } else {
+                                $(actionSelector).replaceWith(result);
+                                $(actionSelector).focus();
+                            }
                             // Update TOC.
                             if (!loadModules) {
                                 if (moduleCache && moduleCache.length > 0 && response.toc.modules.length === 0) {
@@ -1221,8 +1237,18 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                     $notCurrent.each(function() {
                         var highlighter = $(this).find('.snap-highlight');
                         var sectionNumber = parentSectionNumber(highlighter);
-                        var newLink = $(highlighter).attr('href').replace(/(marker=)[0-9]+/ig, '$1' + sectionNumber);
-                        $(highlighter).attr('href', newLink).attr('aria-pressed', 'false');
+                        let highlighterref = '';
+                        if ($(highlighter).parents('.dropdown-item').length > 0) {
+                            highlighterref = $(highlighter).parent()
+                                .attr('href')
+                                .replace(/(marker=)[0-9]+/ig, '$1' + sectionNumber);
+                            $(highlighter).parent().attr('href', highlighterref).attr('aria-pressed', 'false');
+                        } else {
+                            highlighterref = $(highlighter)
+                                .attr('href')
+                                .replace(/(marker=)[0-9]+/ig, '$1' + sectionNumber);
+                            $(highlighter).attr('href', highlighterref).attr('aria-pressed', 'false');
+                        }
                     });
                 });
             };

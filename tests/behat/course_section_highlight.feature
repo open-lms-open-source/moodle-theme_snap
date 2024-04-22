@@ -48,7 +48,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I follow "Topic 2"
     Then "#section-2" "css_element" should exist
     And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
-
+    And I click on "#extra-actions-dropdown-2" "css_element"
     And I click on "#section-2 .snap-highlight" "css_element"
     And I wait until "#section-2 .snap-highlight" "css_element" exists
     # Note: nth-of-type(3) corresponds to the second section in the TOC.
@@ -62,6 +62,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 2"
+    And I click on "#extra-actions-dropdown-2" "css_element"
     Given I click on "#section-2 .snap-highlight" "css_element"
     And I wait until "#section-2 .snap-highlight" "css_element" exists
     Then I should not see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
@@ -86,6 +87,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
+    And I click on "#extra-actions-dropdown-1" "css_element"
     And I click on "#section-1 .snap-highlight" "css_element"
     # Shame to have a 1 second pause here but this fails on CI intermittently without this pause.
     And I wait "1" seconds
@@ -98,6 +100,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
+    And I click on "#extra-actions-dropdown-1" "css_element"
     And "#section-1 .snap-highlight" "css_element" should not exist
 
   @javascript
