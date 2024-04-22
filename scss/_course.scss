@@ -3199,3 +3199,57 @@ body[id^='page-mod-data'] {
     }
 
 }
+.snap-header-card-icons {
+    .snap-groups-mode-actions {
+        .snap-groups-more {
+            background-color: transparent;
+            border: none;
+        }
+        #snap-groups-menu {
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+            border: 0;
+            padding: 10px 0;
+            border-radius: 0.5em;
+            min-width: 16.1rem;
+            margin-right: 3em;
+            margin-top: 0.2em;
+            .dropdown-item-outline {
+                .option-select-indicator,
+                .option-icon {
+                    margin-right: 0.5em;
+                }
+                .option-name {
+                    a {
+                        font-size: .8em;
+                    }
+                }
+            }
+        }
+    }
+    #snap-asset-menu {
+        #groups-menu {
+            position: absolute;
+            top: 1.8em;
+            right: auto;
+            left: auto;
+            margin-top: 0;
+            margin-right: .125rem;
+            min-width: 22rem;
+            @include media-breakpoint-up(md) {
+                top: 0;
+                right: 16em;
+            }
+            .dropdown-item-outline {
+                .option-select-indicator,
+                .option-icon {
+                    margin-right: 0.5em;
+                }
+                .option-name {
+                    a {
+                        font-size: .8em;
+                    }
+                }
+            }
+        }
+    }
+}
