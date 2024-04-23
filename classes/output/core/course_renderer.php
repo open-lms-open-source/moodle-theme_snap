@@ -519,15 +519,6 @@ class course_renderer extends \core_course_renderer {
         // Resources cannot have groups/groupings.
         if ($mod->modname !== 'resource') {
             $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
-            if ($canmanagegroups && $mod->effectivegroupmode != NOGROUPS) {
-                if ($mod->effectivegroupmode == VISIBLEGROUPS) {
-                    $groupinfo = get_string('groupsvisible');
-                } else if ($mod->effectivegroupmode == SEPARATEGROUPS) {
-                    $groupinfo = get_string('groupsseparate');
-                }
-                $groupmeta .= '<div class="snap-group-tag">'.$groupinfo.'</div>';
-            }
-
             // This will show a grouping (group of groups) name against a module if one has been assigned to the module instance.
             if ($canmanagegroups && !empty($mod->groupingid)) {
                 // Grouping label.
@@ -576,10 +567,16 @@ class course_renderer extends \core_course_renderer {
         $snapmenu = '';
         $snapmenu .= $this->course_section_menu_actions($mod);
 
+        // Group modes.
+        $groupsmenu = '';
+        $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
+        if ($canmanagegroups && $mod->modname !== 'resource') {
+            $groupsmenu .= $this->activity_groups_menu_actions($mod);
+        }
         // Build output.
         $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
         $content = '<div class="snap-asset-content">'.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.'</div>';
-        $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.$coursetoolsicon.$snapmenu.'</div>';
+        $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.$coursetoolsicon.$groupsmenu.$snapmenu.'</div>';
         $output .= '<div class="snap-header-card">'.$assetlink.$cardicons.'</div>'.$content;
 
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
@@ -1892,6 +1889,29 @@ class course_renderer extends \core_course_renderer {
                 "'><i class='icon fa fa-user-circle fa-fw'></i>$str->roles</a></li>";
         }
 
+        // Group modes.
+        $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
+        if ($canmanagegroups && $mod->modname !== 'resource') {
+
+            $courseformat = course_get_format($mod->get_course());
+            $sectioninfo = $mod->get_section_info();
+            $groupmodeclass = $courseformat->get_output_classname('content\\cm\\groupmode');
+            $groupmode = new $groupmodeclass($courseformat, $sectioninfo, $mod);
+            $groupoptions = $groupmode->get_choice_list();
+            $grouprender = $this->output->render($groupoptions);
+
+            $data = (object) [
+                'toggleclass' => 'groups-dropdown',
+                'toggleariacontrols' => 'groups-menu',
+                'spancontent' => get_string('groups'),
+                'dropdownmenuid' => 'groups-menu',
+                'dropdownmenuclasses' => 'groups-dropdown-menu',
+                'dropdownoptions' => $grouprender,
+            ];
+
+            $actionsadvanced[] = $this->render_from_template('theme_snap/activity_sub_panel', $data);
+        }
+
         // Give local plugins a chance to add icons.
         $localplugins = [];
         foreach (get_plugin_list_with_function('local', 'extend_module_editing_buttons') as $function) {
@@ -1942,6 +1962,67 @@ class course_renderer extends \core_course_renderer {
                 get_string('courseactionslabel', 'theme_snap') . "'>";
             $output .= $advancedactions;
             $output .= "</div>";
+        }
+        return $output;
+    }
+
+    /**
+     * Renders HTML for displaying the group modes for each activity.
+     *
+     * @param cm_info $mod The module we are displaying groups for.
+     * @return string
+     *
+     */
+    public function activity_groups_menu_actions($mod) {
+
+        global $OUTPUT;
+
+        if ($mod->effectivegroupmode == VISIBLEGROUPS) {
+            $groupiconurl = $OUTPUT->image_url('i/groupv');
+            $groupalt = get_string('groupsvisible', 'group');
+            $groupicon = \html_writer::img($groupiconurl, $groupalt);
+        } else if ($mod->effectivegroupmode == SEPARATEGROUPS) {
+            $groupiconurl = $OUTPUT->image_url('i/groups');
+            $groupalt = get_string('groupsseparate', 'group');
+            $groupicon = \html_writer::img($groupiconurl, $groupalt);
+        } else {
+            $groupiconurl = $OUTPUT->image_url('i/groupn');
+            $groupalt = get_string('groupsnone', 'group');
+            $groupicon = \html_writer::img($groupiconurl, $groupalt);
+        }
+
+        $courseformat = course_get_format($mod->get_course());
+        $sectioninfo = $mod->get_section_info();
+        $groupmodeclass = $courseformat->get_output_classname('content\\cm\\groupmode');
+        $groupmode = new $groupmodeclass($courseformat, $sectioninfo, $mod);
+        $groupoptions = $groupmode->get_choice_list();
+        $render = $this->output->render($groupoptions);
+
+        $groupsdropdownebutton = \html_writer::tag('button', $groupicon,
+            array(
+                'class' => 'snap-groups-more',
+                'data-toggle' => 'dropdown',
+                'data-boundary' => 'window',
+                'aria-expanded' => 'false',
+                'aria-controls' => '#snap-groups-menu',
+                ));
+        $groupsdropdownlist = \html_writer::tag('ul', $render,
+            array(
+                'class' => 'dropdown-menu groups-edit-menu',
+                'id' => 'snap-groups-menu',
+            ));
+        $groupsdropdownelement = \html_writer::tag('div',
+            $groupsdropdownebutton.$groupsdropdownlist ,
+            array('class' => 'dropdown snap-activity-groups-dropdown'));
+
+        $output = '';
+        if ($groupoptions) {
+            $output .= \html_writer::tag('div',
+                $groupsdropdownelement,
+                array(
+                    'class' => 'js-only snap-groups-mode-actions',
+                    'role' => 'region'
+                ));
         }
         return $output;
     }

@@ -334,7 +334,10 @@ EOF;
             'showoncoursepage',
             'switchrolereturn',
             'show',
-            'hide'
+            'hide',
+            'groupsseparate',
+            'groupsvisible',
+            'groupsnone'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([

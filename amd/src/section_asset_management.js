@@ -1059,6 +1059,112 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             };
 
             /**
+             * Listen for group mode actions.
+             */
+            var groupModeListeners = function() {
+                $('#snap-groups-menu .dropdown-item-outline, .groups-dropdown-menu .dropdown-item-outline')
+                    .on('click', function(e) {
+                        e.preventDefault();
+                        const cmIds = [];
+                        let courseId = self.courseConfig.id;
+                        let dataId = $(this).find('.option-name a').attr('data-id');
+                        let dataAction = $(this).find('.option-name a').attr('data-action');
+                        let dataOptionNumber = $(this).attr('data-optionnumber');
+                        let actionText = '';
+                        if (dataAction === 'cmNoGroups') {
+                            dataAction = 'cm_nogroups';
+                            actionText = M.util.get_string('groupsnone', 'moodle');
+                        } else if (dataAction === 'cmSeparateGroups') {
+                            dataAction = 'cm_separategroups';
+                            actionText = M.util.get_string('groupsseparate', 'moodle');
+                        } else if (dataAction === 'cmVisibleGroups') {
+                            dataAction = 'cm_visiblegroups';
+                            actionText = M.util.get_string('groupsvisible', 'moodle');
+                        }
+                        cmIds.push(dataId);
+                        ajax.call([
+                            {
+                                methodname: 'core_courseformat_update_course',
+                                args: {action: dataAction, courseid: courseId, ids: cmIds},
+                                done: function() {
+                                    let acitivityCard = $('#module-'+dataId);
+
+                                    let selectedIconUrl = $(acitivityCard).find(
+                                        '[data-optionnumber='+dataOptionNumber+'] .option-icon img'
+                                    ).attr('src');
+
+                                    $(acitivityCard).find(
+                                        '.snap-activity-groups-dropdown .snap-groups-more img'
+                                    ).attr('src', selectedIconUrl);
+
+                                    $(acitivityCard).find(
+                                        '.snap-activity-groups-dropdown .snap-groups-more img'
+                                    ).attr('alt', actionText);
+
+                                    $(acitivityCard).find(
+                                        '#snap-groups-menu .border.bg-primary-light.selected,' +
+                                        '.groups-dropdown-menu .border.bg-primary-light.selected'
+                                    ).removeClass('border bg-primary-light selected');
+                                    $(acitivityCard).find(
+                                        '#snap-groups-menu a.selected,' +
+                                        '.groups-dropdown-menu a.selected'
+                                    ).removeClass('selected');
+                                    $(acitivityCard).find(
+                                        '.option-select-indicator [data-for="checkedIcon"]'
+                                    ).addClass('d-none');
+                                    $(acitivityCard).find(
+                                        '.option-select-indicator [data-for="uncheckedIcon"]'
+                                    ).removeClass('d-none');
+
+                                    $(acitivityCard).find(
+                                        '[data-optionnumber='+dataOptionNumber+']'
+                                    ).addClass('border bg-primary-light selected');
+                                    $(acitivityCard).find(
+                                        '.groups-dropdown-menu a[data-id='+dataId+'], ' +
+                                        '#snap-groups-menu a.selected'
+                                    ).addClass('selected');
+                                    $(acitivityCard).find(
+                                        '[data-optionnumber='+dataOptionNumber+'] ' +
+                                        '.option-select-indicator [data-for="checkedIcon"]'
+                                    ).removeClass('d-none');
+                                    $(acitivityCard).find(
+                                        '[data-optionnumber='+dataOptionNumber+'] ' +
+                                        '.option-select-indicator  [data-for="uncheckedIcon"]'
+                                    ).addClass('d-none');
+                                },
+                            }
+                        ]);
+                    });
+            };
+
+            /**
+             * Listen for sub dropdowns changes.
+             */
+            var subPanelListeners = function() {
+                var subPanelElement = $('.dropdown-subpanel');
+                $(subPanelElement).on('click', function(e) {
+                    e.stopPropagation();
+                    $('.dropdown-subpanel').not(this).find('.dropdown-subpanel-content').hide();
+                    $('.dropdown-subpanel').not(this).find('.dropdown-toggle').removeClass('active');
+                    if ($(this).find('.dropdown-toggle').hasClass('active')) {
+                        $(this).find('.dropdown-subpanel-content').hide();
+                        $(this).find('.dropdown-toggle').removeClass('active');
+                    } else {
+                        $(this).find('.dropdown-subpanel-content').show();
+                        $(this).find('.dropdown-toggle').addClass('active');
+                    }
+                });
+
+                // If we click outside the subpanel element.
+                $(document).on('click', function(event) {
+                    if (!subPanelElement.is(event.target) && !subPanelElement.has(event.target).length) {
+                        $('#snap-asset-menu .dropdown-subpanel-content').hide();
+                        $('#snap-asset-menu .dropdown-toggle').removeClass('active');
+                    }
+                });
+            };
+
+            /**
              * Generic section action handler.
              *
              * @param {string} action visibility, highlight
@@ -1474,6 +1580,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 assetMoveListener();
                 movePlaceListener();
                 assetEditListeners();
+                groupModeListeners();
+                subPanelListeners();
                 addAfterDrops();
                 if (courseLib.courseConfig.partialrender) {
                     setCourseSectionObervers();
