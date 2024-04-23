@@ -407,12 +407,16 @@ li.section:focus {
     .extra-actions-menu {
         .dropdown-menu {
             z-index: 20;
+            min-width: 11rem;
+            border: 0;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
         }
         .dropdown-item {
             display: block;
             border-radius: initial;
             width: auto;
             height: auto;
+            padding: 0.5em;
 
             &.snap-show,
             &[aria-pressed="true"] {
@@ -428,7 +432,7 @@ li.section:focus {
     }
 
     .menu-icon {
-        width: 0.75em;
+        width: 1em;
         height: 1em;
         &:before {
             content: ' ';
@@ -439,6 +443,8 @@ li.section:focus {
             background-repeat: no-repeat;
             background-size: 100%;
             vertical-align: -0.15em;
+            margin-right: 0.5em;
+            margin-left: 0.2em;
         }
     }
 }
