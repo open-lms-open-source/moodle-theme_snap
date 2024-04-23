@@ -5669,8 +5669,16 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
                 float: right;
             }
             .block_myoverview {
-
                 border: 0 !important;
+
+                input[name="search"]{
+                    border-color: $brand-primary;
+                    border-radius: 0.25rem !important;
+
+                    &::placeholder {
+                        color: $brand-primary;
+                    }
+                }
 
                 .card-title {
                     font-weight: bold;
@@ -5710,6 +5718,41 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
     #page-header #page-mast {
         h1 {
             float: left;
+        }
+    }
+
+    // My courses - Mobile view.
+    @media screen and (max-width: 576px) {
+        #page-header {
+            #page-mast {
+                margin-left: -10px;
+                margin-right: -10px;
+            }
+        }
+
+        #region-main {
+            padding: 0 1.1rem 0 0;
+            margin: 0 !important;
+
+            .block_myoverview {
+                width: 100%;
+
+                .card-body.p-3 {
+                    padding: 0.5rem !important;
+                }
+            }
+
+            .block_myoverview_column {
+                padding-right: 0;
+                margin: 0;
+
+                .snap-page-my-courses-options {
+                    position: absolute;
+                    z-index: 1;
+                    right: 12px;
+                    top: -8px;
+                }
+            }
         }
     }
 }
