@@ -334,7 +334,7 @@ li.section:focus {
         }
     }
 
-    a:after{
+    a:after {
         content: ' ';
         width: 100%;
         display: inline-block;
@@ -391,6 +391,13 @@ li.section:focus {
         &:after, &:before {
             background-image: url([[pix:core|t/copy]]);
         }
+    }
+
+    .snap-permalink {
+      &:after, &:before {
+        background-image: url([[pix:core|i/link]]);
+        filter: opacity(0.5);
+      }
     }
 
     a.ajaxing:after {

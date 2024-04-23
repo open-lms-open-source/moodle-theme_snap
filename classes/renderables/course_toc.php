@@ -239,6 +239,7 @@ class course_toc implements \renderable, \templatable {
                 $chapter->url = '#section-'.$section;
             }
             $chapter->section = $section;
+            $chapter->sectionid = $thissection->id;
 
             // Empty default progress.
             $chapter->progress = (object) [

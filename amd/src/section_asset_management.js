@@ -19,10 +19,34 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/notification',
-    'theme_snap/util', 'theme_snap/ajax_notification', 'theme_snap/footer_alert',
-    'core_filters/events', 'core/fragment'],
-    function($, log, ajax, str, templates, notification, util, ajaxNotify, footerAlert, Event, fragment) {
+define(
+    [
+        'jquery',
+        'core/log',
+        'core/ajax',
+        'core/str',
+        'core/templates',
+        'core/notification',
+        'theme_snap/util',
+        'theme_snap/ajax_notification',
+        'theme_snap/footer_alert',
+        'core_filters/events',
+        'core/fragment',
+        'core/modal_copy_to_clipboard'
+    ],
+    function(
+        $,
+        log,
+        ajax,
+        str,
+        templates,
+        notification,
+        util, ajaxNotify,
+        footerAlert,
+        Event,
+        fragment,
+        ModalCopyToClipboard
+    ) {
 
         var self = this;
 
@@ -1369,6 +1393,19 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
             };
 
             /**
+             * Show section permalink on click.
+             */
+            var permalinkSectionListener = function() {
+                $(document).on('click', '.snap-section-editing.actions .snap-permalink', function(e) {
+                    e.preventDefault();
+                    ModalCopyToClipboard.create({
+                            text: this.parentNode.getAttribute('href'),
+                        }, str.get_string('sectionlink', 'course')
+                    );
+                });
+            };
+
+            /**
              * Toggle section visibility on click.
              */
             var toggleSectionListener = function() {
@@ -1577,6 +1614,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/str', 'core/templates', 'core/n
                 toggleSectionListener();
                 highlightSectionListener();
                 deleteSectionListener();
+                permalinkSectionListener();
                 assetMoveListener();
                 movePlaceListener();
                 assetEditListeners();

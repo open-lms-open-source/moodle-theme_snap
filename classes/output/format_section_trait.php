@@ -38,6 +38,7 @@ use theme_snap\renderables\course_action_section_move;
 use theme_snap\renderables\course_action_section_visibility;
 use theme_snap\renderables\course_action_section_delete;
 use theme_snap\renderables\course_action_section_highlight;
+use theme_snap\renderables\course_action_section_permalink;
 use theme_snap\renderables\course_section_navigation;
 
 trait format_section_trait {
@@ -206,6 +207,7 @@ trait format_section_trait {
         $deleteaction = new course_action_section_delete($course, $section, $onsectionpage);
         $highlightaction = new course_action_section_highlight($course, $section, $onsectionpage);
         $duplicateaction = new course_action_section_duplicate($course, $section, $onsectionpage);
+        $permalinkaction = new course_action_section_permalink($course, $section, $onsectionpage);
 
         $actions = array(
             $moveaction,
@@ -213,6 +215,7 @@ trait format_section_trait {
             $deleteaction,
             $highlightaction,
             $duplicateaction,
+            $permalinkaction,
         );
 
         foreach($actions as $action) {
@@ -293,9 +296,12 @@ trait format_section_trait {
 
         // SHAME - the tabindex is intefering with moodle js.
         // SHAME - Remove tabindex when editing menu is shown.
-        $sectionarrayvars = array('id' => 'section-'.$section->section,
-        'class' => 'section main clearfix'.$sectionstyle,
-        'aria-label' => get_section_name($course, $section), );
+        $sectionarrayvars = array(
+            'id' => 'section-'.$section->section,
+            'class' => 'section main clearfix'.$sectionstyle,
+            'aria-label' => get_section_name($course, $section),
+            'data-id' => $section->id,
+            );
         if (!$PAGE->user_is_editing()) {
             $sectionarrayvars['tabindex'] = '-1';
         }
@@ -327,9 +333,10 @@ trait format_section_trait {
         $testemptytitle = get_string('topic').' '.$section->section;
         $leftnav = get_config('theme_snap', 'leftnav');
         $leftnavtop = $leftnav === 'top';
+        $sectionid = "sectionid-{$section->id}-title";
         if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $o .= "<h2 class='sectionname'>";
+            $o .= "<h2 id='{$sectionid}' class='sectionname' data-id='{$section->id}'>";
             if ($section->section != 0 && $leftnavtop != 0 ) {
                 $o .= "<span class='sectionnumber'></span>";
             }
@@ -339,7 +346,15 @@ trait format_section_trait {
             if ($section->section != 0 && $leftnavtop != 0 ) {
                 $sectiontitle = '<span class=\'sectionnumber\'></span>' . $sectiontitle;
             }
-            $o .= "<div>" . $output->heading($sectiontitle, 2, 'sectionname' . $classes) . "</div>";
+            $htmlheading = html_writer::tag(
+                'h' . 2,
+                $sectiontitle,
+                array(
+                    'id' => $sectionid,
+                    'class' => 'sectionname',
+                    'data-id' => $section->id
+                ));
+            $o .= "<div>" . $htmlheading . "</div>";
         }
 
         // Section drop zone.
@@ -860,6 +875,16 @@ trait format_section_trait {
      * @throws \moodle_exception
      */
     public function render_course_action_section_extra_menu(course_action_section_extra_menu $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_permalink $action
+     * @return mixed
+     * @throws \moodle_exception
+     */
+    public function render_course_action_section_permalink(course_action_section_permalink $action) {
         $data = $action->export_for_template($this);
         return $this->render_from_template('theme_snap/course_action_section', $data);
     }

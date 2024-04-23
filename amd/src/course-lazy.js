@@ -106,6 +106,22 @@ define(
                 section = urlParams[0],
                 mod = urlParams[1] || null;
 
+            var sectionId = false;
+            if (section.indexOf('#sectionid') != -1) {
+                sectionId = section.match(/#sectionid-(\d+)-title/)[1];
+            }
+
+            // Check if we are using permalinks like #sectionid-{id}-title.
+            if (sectionId) {
+                // Search element with section-id.
+                var $chapter = $('.chapters .chapter-title[section-id="' + sectionId + '"]');
+                if ($chapter.length > 0) {
+                    // Get the section-number associated.
+                    section = $chapter.attr('section-number');
+                    section = '#section-' + section;
+                }
+            }
+
             // We are done here. H5P will handle the section shown within its iframe.
             if (section.startsWith('#h5pbook')) {
                 return;
@@ -271,14 +287,28 @@ define(
             var hash = $(location).attr('hash');
             var params = hash.replace('#', '').split('&');
             var section = false;
+            var sectionId = false;
             var mod = 0;
+
             $.each(params, function(idx, param) {
-                if (param.indexOf('section') != -1) {
+                if (param.indexOf('sectionid') != -1) {
+                    sectionId = param.match(/sectionid-(\d+)-title/)[1];
+                } else if (param.indexOf('section') != -1) {
                     section = param.split('section-')[1];
                 } else if (param.indexOf('module') != -1) {
                     mod = param.split('module-')[1];
                 }
             });
+
+            // Check if we are using permalinks like #sectionid-{id}-title.
+            if (sectionId) {
+                // Search element with section-id.
+                var $chapter = $('.chapters .chapter-title[section-id="' + sectionId + '"]');
+                if ($chapter.length > 0) {
+                    // Get the section-number associated.
+                    section = $chapter.attr('section-number');
+                }
+            }
 
             if (!section) {
                 var qs = location.search.substring(1);

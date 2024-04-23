@@ -24,10 +24,10 @@
     <h3>
     <li class="{{classes}}">
         {{#outputlink}}
-            <a class="chapter-title" section-number="{{section}}" href="{{url}}">{{{title}}}</a>
+            <a class="chapter-title" section-id="{{sectionid}}" section-number="{{section}}" href="{{url}}">{{{title}}}</a>
         {{/outputlink}}
         {{^outputlink}}
-            <span class="chapter-title" section-number="{{section}}">{{title}}</span>
+            <span class="chapter-title" section-id="{{sectionid}}" section-number="{{section}}">{{title}}</span>
         {{/outputlink}}
         {{#iscurrent}}
             <span class="text text-success">
