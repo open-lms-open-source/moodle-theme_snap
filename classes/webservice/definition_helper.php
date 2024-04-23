@@ -162,6 +162,10 @@ class definition_helper {
             $allownull = true;
         }
 
+        if (!$required) {
+            $required = VALUE_OPTIONAL;
+        }
+
         $extval = new external_value($type, $description, $required, null, $allownull);
         return $extval;
     }
@@ -453,6 +457,10 @@ class definition_helper {
 
             // Do we have a @wsrequired to define the required status of this property?
             $wsreq = $this->get_wsdoc($comment, ['@wsrequired']);
+
+            if (!$wsreq) {
+                $wsreq = VALUE_OPTIONAL;
+            }
 
             // Do we have a @wsallownull?
             $wsallownull = $this->get_wsdoc($comment, ['@wsallownull']);

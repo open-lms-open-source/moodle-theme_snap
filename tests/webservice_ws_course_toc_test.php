@@ -30,7 +30,6 @@ class webservice_ws_course_toc_test extends \advanced_testcase {
     }
 
     public function test_service_returns() {
-        $this->markTestSkipped('To be reviewed INT-19441');
         $returns = \theme_snap\webservice\ws_course_sections::service_returns();
         $this->assertTrue($returns instanceof \external_single_structure);
     }
