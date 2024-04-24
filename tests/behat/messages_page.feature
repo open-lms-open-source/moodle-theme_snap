@@ -42,7 +42,7 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#snap_feeds_side_menu_trigger" "css_element"
-    And I click on "//a[@title='View my messages']//img" "xpath_element"
+    And I click on "//a[@title='View my messages']/*[local-name()='svg']" "xpath_element"
     And ".message-app.main" "css_element" should be visible
     # A message drawer floating div gets renderer but outside of the window
     Then ".drawer .message-app" "css_element" should not be visible

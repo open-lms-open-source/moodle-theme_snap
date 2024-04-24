@@ -568,11 +568,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $data = [];
 
+        $intelliContent = $this->render_intelliboard('snapfeedsmenu') . $this->render_intellicart('snapfeedsmenu');
         $data['intelliboard'] = [
-            'enable' => (bool)get_config('local_intelliboard'),
+            'enable' => !empty($intelliContent),
             'icon' => $OUTPUT->image_url('intelliboard-new', 'theme'),
             'alt' => 'Intelliboard',
-            'content' => $this->render_intelliboard('snapfeedsmenu') . $this->render_intellicart('snapfeedsmenu'),
+            'content' => $intelliContent,
         ];
 
         $data['deadlines'] = [
@@ -1583,9 +1584,9 @@ HTML;
         if ($continue instanceof single_button) {
             $continue->primary = true;
         } else if (is_string($continue)) {
-            $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post', true);
+            $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post', single_button::BUTTON_PRIMARY);
         } else if ($continue instanceof moodle_url) {
-            $continue = new \single_button($continue, get_string('continue'), 'post', true);
+            $continue = new \single_button($continue, get_string('continue'), 'post', single_button::BUTTON_PRIMARY);
         } else {
             throw new coding_exception(
                 'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) '
