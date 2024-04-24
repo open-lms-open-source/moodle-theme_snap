@@ -1083,11 +1083,73 @@ define(
             };
 
             /**
+             * Listen for availability actions, hide, show, stealth.
+             */
+            var availabilityListeners = function() {
+                $(document).on('click', '#availability-menu .choicelist div[data-optionnumber]',
+                    function(e) {
+                        e.preventDefault();
+                        const cmIds = [];
+                        let courseId = self.courseConfig.id;
+                        let dataId = $(this).find('.option-name a').attr('data-id');
+                        let dataAction = $(this).find('.option-name a').attr('data-action');
+
+                        if (dataAction === 'cmShow') {
+                            dataAction = 'cm_show';
+                        } else if (dataAction === 'cmHide') {
+                            dataAction = 'cm_hide';
+                        } else if (dataAction === 'cmStealth') {
+                            dataAction = 'cm_stealth';
+                        }
+                        cmIds.push(dataId);
+
+                        ajax.call([
+                            {
+                                methodname: 'core_courseformat_update_course',
+                                args: {action: dataAction, courseid: courseId, ids: cmIds},
+                                done: function(res) {
+                                    res = JSON.parse(res);
+                                    let cmid = res[0].fields.id;
+                                    let module = $('#module-' + cmid);
+                                    module.find('#availability-menu .selected .option-select-indicator [data-for="checkedIcon"]')
+                                        .addClass('d-none');
+                                    module.find('#availability-menu .selected .option-select-indicator [data-for="uncheckedIcon"]')
+                                        .removeClass('d-none');
+                                    module.find('#availability-menu .selected').removeClass('border bg-primary-light selected');
+                                    if (res[0].fields.visible) {
+                                        if (res[0].fields.stealth) {
+                                            module.addClass('stealth');
+                                            module.removeClass('draft');
+                                            var selected = module.find('#availability-menu a[data-action="cmStealth"]');
+                                        } else {
+                                            module.removeClass('stealth');
+                                            module.removeClass('draft');
+                                            var selected = module.find('#availability-menu a[data-action="cmShow"]');
+                                        }
+                                    } else {
+                                        module.addClass('draft');
+                                        module.removeClass('stealth');
+                                        var selected = module.find('#availability-menu a[data-action="cmHide"]');
+                                    }
+                                    selected.parents('div[data-optionnumber][data-selected]')
+                                        .addClass('border bg-primary-light selected');
+                                    let indicator = selected.parent().siblings('.option-select-indicator');
+                                    indicator.find('span[data-for="checkedIcon"]').removeClass('d-none');
+                                    indicator.find('span[data-for="uncheckedIcon"]').addClass('d-none');
+                                }
+                            }
+                        ]);
+                    }
+                );
+            };
+
+            /**
              * Listen for group mode actions.
              */
             var groupModeListeners = function() {
-                $('#snap-groups-menu .dropdown-item-outline, .groups-dropdown-menu .dropdown-item-outline')
-                    .on('click', function(e) {
+                $(document).on('click',
+                    '#snap-groups-menu .dropdown-item-outline, .groups-dropdown-menu .dropdown-item-outline',
+                        function(e) {
                         e.preventDefault();
                         const cmIds = [];
                         let courseId = self.courseConfig.id;
@@ -1111,47 +1173,47 @@ define(
                                 methodname: 'core_courseformat_update_course',
                                 args: {action: dataAction, courseid: courseId, ids: cmIds},
                                 done: function() {
-                                    let acitivityCard = $('#module-'+dataId);
+                                    let activityCard = $('#module-'+dataId);
 
-                                    let selectedIconUrl = $(acitivityCard).find(
+                                    let selectedIconUrl = $(activityCard).find(
                                         '[data-optionnumber='+dataOptionNumber+'] .option-icon img'
                                     ).attr('src');
 
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '.snap-activity-groups-dropdown .snap-groups-more img'
                                     ).attr('src', selectedIconUrl);
 
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '.snap-activity-groups-dropdown .snap-groups-more img'
                                     ).attr('alt', actionText);
 
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '#snap-groups-menu .border.bg-primary-light.selected,' +
                                         '.groups-dropdown-menu .border.bg-primary-light.selected'
                                     ).removeClass('border bg-primary-light selected');
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '#snap-groups-menu a.selected,' +
                                         '.groups-dropdown-menu a.selected'
                                     ).removeClass('selected');
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '.option-select-indicator [data-for="checkedIcon"]'
                                     ).addClass('d-none');
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '.option-select-indicator [data-for="uncheckedIcon"]'
                                     ).removeClass('d-none');
 
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '[data-optionnumber='+dataOptionNumber+']'
                                     ).addClass('border bg-primary-light selected');
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '.groups-dropdown-menu a[data-id='+dataId+'], ' +
                                         '#snap-groups-menu a.selected'
                                     ).addClass('selected');
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '[data-optionnumber='+dataOptionNumber+'] ' +
                                         '.option-select-indicator [data-for="checkedIcon"]'
                                     ).removeClass('d-none');
-                                    $(acitivityCard).find(
+                                    $(activityCard).find(
                                         '[data-optionnumber='+dataOptionNumber+'] ' +
                                         '.option-select-indicator  [data-for="uncheckedIcon"]'
                                     ).addClass('d-none');
@@ -1165,8 +1227,7 @@ define(
              * Listen for sub dropdowns changes.
              */
             var subPanelListeners = function() {
-                var subPanelElement = $('.dropdown-subpanel');
-                $(subPanelElement).on('click', function(e) {
+                $(document).on('click', '.dropdown-subpanel', function(e) {
                     e.stopPropagation();
                     $('.dropdown-subpanel').not(this).find('.dropdown-subpanel-content').hide();
                     $('.dropdown-subpanel').not(this).find('.dropdown-toggle').removeClass('active');
@@ -1181,6 +1242,7 @@ define(
 
                 // If we click outside the subpanel element.
                 $(document).on('click', function(event) {
+                    var subPanelElement = $('.dropdown-subpanel');
                     if (!subPanelElement.is(event.target) && !subPanelElement.has(event.target).length) {
                         $('#snap-asset-menu .dropdown-subpanel-content').hide();
                         $('#snap-asset-menu .dropdown-toggle').removeClass('active');
@@ -1618,6 +1680,7 @@ define(
                 assetMoveListener();
                 movePlaceListener();
                 assetEditListeners();
+                availabilityListeners();
                 groupModeListeners();
                 subPanelListeners();
                 addAfterDrops();

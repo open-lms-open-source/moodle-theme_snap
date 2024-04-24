@@ -569,8 +569,9 @@ class course_renderer extends \core_course_renderer {
 
         // Group modes.
         $groupsmenu = '';
+        $courseformat = course_get_format($mod->get_course());
         $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
-        if ($canmanagegroups && $mod->modname !== 'resource') {
+        if ($canmanagegroups && $courseformat->show_groupmode($mod)) {
             $groupsmenu .= $this->activity_groups_menu_actions($mod);
         }
         // Build output.
@@ -1836,40 +1837,25 @@ class course_renderer extends \core_course_renderer {
 
         // Hide/Show.
         if (has_capability('moodle/course:activityvisibility', $modcontext)) {
-            $ariacbaction = get_string('hideandshowactioncb', 'theme_snap');
-            $actions .= '<input class="sr-only" type="checkbox" aria-label="'.$ariacbaction.'">';
-            $hideaction = '<li><a href="'.new moodle_url($baseurl, ['hide' => $mod->id]);
-            $hideaction .= '" data-action="hide" role="button" class="dropdown-item editing_hide js_snap_hide">'.
-                '<i class="icon fa fa-eye fa-fw "></i>'.$str->hide.'</a></li>';
-            $actionsadvanced[] = $hideaction;
-            $showaction = '<li><a href="'.new moodle_url($baseurl, ['show' => $mod->id]);
-            $showaction .= '" data-action="show" role="button" class="dropdown-item editing_show js_snap_show">'.
-                '<i class="icon fa fa-eye-slash fa-fw "></i>'.$str->show.'</a></li>';
-            $actionsadvanced[] = $showaction;
-
-            // Stealth action.
             $courseformat = course_get_format($mod->get_course());
+            $sectioninfo = $mod->get_section_info();
+            $availabilityclass = $courseformat->get_output_classname('content\\cm\\visibility');
+            /** @var core_courseformat\output\local\content\cm\visibility */
+            $availability = new $availabilityclass($courseformat, $sectioninfo, $mod);
+            $availabilitychoice = $availability->get_choice_list();
+            $availabilityrender = $this->output->render($availabilitychoice);
 
-            $makeunavailable = '<li><a href="'.new moodle_url($baseurl, ['hide' => $mod->id]);
-            $makeunavailable .= '" data-action="hide" role="button" class="dropdown-item editing_makeunavailable js_snap_hide">' .
-                '<i class="icon fa fa-commenting fa-fw "></i>'.$str->makeunavailable . '</a></li>';
-            $actionsadvanced[] = $makeunavailable;
+            $data = (object) [
+                'toggleclass' => 'availability-dropdown',
+                'toggleariacontrols' => 'availability-menu',
+                'spanicon' => 'fa-eye',
+                'spancontent' => get_string('availability'),
+                'dropdownmenuid' => 'availability-menu',
+                'dropdownmenuclasses' => 'availability-dropdown-menu',
+                'dropdownoptions' => $availabilityrender,
+            ];
 
-            if (!empty($CFG->allowstealth) && $mod->has_view()) {
-                $action = 'stealth';
-                $actionstealth = '<li><a href="'.new moodle_url($baseurl, [$action => $mod->id]);
-                $actionstealth .= '" data-action="' . $action . '"
-                    role="button" class="dropdown-item editing_makeavailable js_snap_stealth">' .
-                    '<i class="icon fa fa-ban fa-fw "></i>'.$str->makeavailable.'</a></li>';
-                $actionsadvanced[] = $actionstealth;
-
-                $action = 'show';
-                $actionstealthshow = '<li><a href="'.new moodle_url($baseurl, [$action => $mod->id]);
-                $actionstealthshow .= '" data-action="' . $action .
-                    '" role="button" class="dropdown-item editing_makeavailable js_snap_stealthshow">' .
-                    '<i class="icon fa fa-ban fa-fw "></i>'.$str->makeavailable.'</a></li>';
-                $actionsadvanced[] = $actionstealthshow;
-            }
+            $actionsadvanced[] = $this->render_from_template('theme_snap/activity_sub_panel', $data);
         }
 
         // Duplicate.
@@ -1891,9 +1877,8 @@ class course_renderer extends \core_course_renderer {
 
         // Group modes.
         $canmanagegroups = has_capability('moodle/course:managegroups', context_course::instance($mod->course));
-        if ($canmanagegroups && $mod->modname !== 'resource') {
-
-            $courseformat = course_get_format($mod->get_course());
+        $courseformat = course_get_format($mod->get_course());
+        if ($canmanagegroups && $courseformat->show_groupmode($mod)) {
             $sectioninfo = $mod->get_section_info();
             $groupmodeclass = $courseformat->get_output_classname('content\\cm\\groupmode');
             $groupmode = new $groupmodeclass($courseformat, $sectioninfo, $mod);
@@ -1904,6 +1889,7 @@ class course_renderer extends \core_course_renderer {
                 'toggleclass' => 'groups-dropdown',
                 'toggleariacontrols' => 'groups-menu',
                 'spancontent' => get_string('groups'),
+                'spanicon' => 'fa-user-circle',
                 'dropdownmenuid' => 'groups-menu',
                 'dropdownmenuclasses' => 'groups-dropdown-menu',
                 'dropdownoptions' => $grouprender,
