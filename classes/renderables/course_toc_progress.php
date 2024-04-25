@@ -31,12 +31,12 @@ class course_toc_progress {
      * @wsparam {
      *     "complete": {
      *         "type": PARAM_INT,
-     *         "required": true,
+     *         "required": VALUE_OPTIONAL,
      *         "description": "Number of items completed"
      *     },
      *     "total": {
      *         "type": PARAM_INT,
-     *         "required": true,
+     *         "required": VALUE_OPTIONAL,
      *         "description": "Total items to complete"
      *     }
      * };
