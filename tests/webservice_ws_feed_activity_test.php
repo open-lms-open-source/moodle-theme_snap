@@ -21,6 +21,8 @@ use theme_snap\webservice\ws_feed;
  * @author    Oscar Nadjar <oscar.nadjar@openlms.net>
  * @copyright Copyright (c) 2020 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * 
+ * @runTestsInSeparateProcesses
  */
 class webservice_ws_feed_activity_test extends \advanced_testcase {
 

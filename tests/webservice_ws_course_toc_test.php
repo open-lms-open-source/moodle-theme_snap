@@ -21,6 +21,8 @@ use theme_snap\webservice\ws_course_sections;
  * @author    Sebastian Gracia
  * @copyright Copyright (c) 2020 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * 
+ * @runTestsInSeparateProcesses
  */
 class webservice_ws_course_toc_test extends \advanced_testcase {
 
