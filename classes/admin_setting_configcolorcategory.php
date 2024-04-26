@@ -128,7 +128,7 @@ class admin_setting_configcolorcategory extends \admin_setting_configtext {
      */
     private function validate_text($data) {
         $temp = $data;
-        $symbols = array('{', '}', '"');
+        $symbols = ['{', '}', '"'];
         foreach ($symbols as $symbol) {
             $temp = str_replace($symbol, '', $temp);
         }

@@ -131,7 +131,7 @@ class behat_theme_snap_behat_general extends behat_general {
                 // If all the found nodes are hidden we are happy.
                 return true;
             },
-            array('nodes' => $nodes, 'text' => $text, 'element' => $element, 'selectortype' => $selectortype),
+            ['nodes' => $nodes, 'text' => $text, 'element' => $element, 'selectortype' => $selectortype],
             behat_base::get_reduced_timeout(),
             false,
             true
@@ -375,7 +375,7 @@ class behat_theme_snap_behat_general extends behat_general {
         $roles = get_assignable_roles($context, ROLENAME_SHORT, false);
         $roleid = array_search($role, $roles);
 
-        $user = $DB->get_record('user', array('username' => $user), '*', MUST_EXIST);
+        $user = $DB->get_record('user', ['username' => $user], '*', MUST_EXIST);
 
         role_assign($roleid, $user->id, $context->id);
     }

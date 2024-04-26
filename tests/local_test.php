@@ -131,7 +131,7 @@ class local_test extends snap_base_test {
     }
 
     public function test_simpler_time() {
-        $testcases = array (
+        $testcases = [
             1 => 1,
             22 => 22,
             33 => 33,
@@ -145,7 +145,7 @@ class local_test extends snap_base_test {
             150 => 180,
             151 => 180,
             1234567 => 1234560,
-        );
+        ];
 
         foreach ($testcases as $input => $expected) {
             $actual = local::simpler_time($input);
@@ -155,12 +155,12 @@ class local_test extends snap_base_test {
 
     public function test_relative_time() {
 
-        $timetag  = array(
+        $timetag  = [
             'tag' => 'time',
-            'attributes' => array(
+            'attributes' => [
                 'is' => 'relative-time',
-            ),
-        );
+            ],
+        ];
 
         $actual = local::relative_time(time());
         $this->assertTag($timetag + ['content' => 'now'], $actual);
@@ -263,7 +263,7 @@ class local_test extends snap_base_test {
         global $USER;
 
         $actual = local::get_user_messages($USER->id);
-        $expected = array();
+        $expected = [];
         $this->assertSame($actual, $expected);
 
         $actual = local::messages();
@@ -446,14 +446,14 @@ class local_test extends snap_base_test {
 
         $syscontext = \context_system::instance();
 
-        $filerecord = array(
+        $filerecord = [
             'contextid' => $syscontext->id,
             'component' => 'theme_snap',
             'filearea'  => 'poster',
             'itemid'    => 0,
             'filepath'  => '/',
             'filename'  => $filename,
-        );
+        ];
 
         $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$filename;
 
@@ -552,14 +552,14 @@ class local_test extends snap_base_test {
     protected function fake_course_image_setting_upload($filename, $context) {
         global $CFG;
 
-        $filerecord = array(
+        $filerecord = [
             'contextid' => $context->id,
             'component' => 'theme_snap',
             'filearea'  => 'coverimage',
             'itemid'    => 0,
             'filepath'  => '/',
             'filename'  => $filename,
-        );
+        ];
 
         $filepath = $CFG->dirroot.'/theme/snap/tests/fixtures/'.$filename;
 
@@ -641,13 +641,13 @@ class local_test extends snap_base_test {
         $teacher = $generator->create_user();
 
         // Enrol teacher as teacher on course1.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
         $this->getDataGenerator()->enrol_user($teacher->id,
             $course1->id,
             $teacherrole->id);
 
         // Enrol teacher as student on course2.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $this->getDataGenerator()->enrol_user($teacher->id,
             $course2->id,
             $studentrole->id);
@@ -692,7 +692,7 @@ class local_test extends snap_base_test {
         // We want to make sure we can get the local path whilst moodle is in a subpath of the url.
 
         $this->resetAfterTest();
-        $PAGE->set_url('/course/view.php', array('id' => 1));
+        $PAGE->set_url('/course/view.php', ['id' => 1]);
         $urlpath = $PAGE->url->get_path();
         $expected = '/moodle/course/view.php';
         $this->assertEquals($expected, $urlpath);
@@ -836,7 +836,7 @@ class local_test extends snap_base_test {
         $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($student->id, $course->id, $studentrole->id);
         $teacher = $generator->create_user();
-        $editingteacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
+        $editingteacherrole = $DB->get_record('role', ['shortname' => 'editingteacher']);
         $generator->enrol_user($teacher->id, $course->id, $editingteacherrole->id);
 
         $this->setUser($student);
@@ -880,10 +880,10 @@ class local_test extends snap_base_test {
         $DB->set_field('course_modules', 'completiongradeitemnumber', 0, ['id' => $cm->id]);
         $assign = new \assign($cm->context, $cm, $course);
         $gradeitem = $assign->get_grade_item();
-        \grade_object::set_properties($gradeitem, array('gradepass' => 50.0));
+        \grade_object::set_properties($gradeitem, ['gradepass' => 50.0]);
         $gradeitem->update();
         $assignrow = $assign->get_instance();
-        $grades = array();
+        $grades = [];
         $grades[$student->id] = (object) [
             'rawgrade' => 60,
             'userid' => $student->id,
@@ -903,7 +903,7 @@ class local_test extends snap_base_test {
         // Assert completion does update for current user when they grade their own assignment.
         // Note, we need to stay as a teacher because if we logged out to test as student it would invalidate the
         // cache and we are testing for cache invalidation here!!!!
-        $grades = array();
+        $grades = [];
         $grades[$teacher->id] = (object) [
             'rawgrade' => 60,
             'userid' => $teacher->id,
@@ -993,10 +993,10 @@ class local_test extends snap_base_test {
         // Assert feedback available does not update for current user when grading someone else's assignment.
         $assign = new \assign($cm->context, $cm, $course);
         $gradeitem = $assign->get_grade_item();
-        \grade_object::set_properties($gradeitem, array('gradepass' => 50.0));
+        \grade_object::set_properties($gradeitem, ['gradepass' => 50.0]);
         $gradeitem->update();
         $assignrow = $assign->get_instance();
-        $grades = array();
+        $grades = [];
         $grades[$student2->id] = (object) [
             'rawgrade' => 60,
             'userid' => $student2->id,
@@ -1013,10 +1013,10 @@ class local_test extends snap_base_test {
         // required for this test.
         $assign = new \assign($cm->context, $cm, $course);
         $gradeitem = $assign->get_grade_item();
-        \grade_object::set_properties($gradeitem, array('gradepass' => 50.0));
+        \grade_object::set_properties($gradeitem, ['gradepass' => 50.0]);
         $gradeitem->update();
         $assignrow = $assign->get_instance();
-        $grades = array();
+        $grades = [];
         $grades[$student->id] = (object) [
             'rawgrade' => 60,
             'userid' => $student->id,
@@ -1327,7 +1327,7 @@ class local_test extends snap_base_test {
 
         // Unenrolment causes indexes to be recalculated.
         $menrol = enrol_get_plugin('manual');
-        $enrol = $DB->get_record('enrol', array('courseid' => $course->id, 'enrol' => 'manual'), '*', MUST_EXIST);
+        $enrol = $DB->get_record('enrol', ['courseid' => $course->id, 'enrol' => 'manual'], '*', MUST_EXIST);
         $menrol->unenrol_user($enrol, $teacher->id);
 
         $this->assertFalse($avatarcache->get($context->id));
@@ -1442,7 +1442,7 @@ class local_test extends snap_base_test {
             $course = $generator->create_course((object) ['enablecompletion' => 1]);
             $studentrole = $DB->get_record('role', ['shortname' => 'student']);
             $generator->enrol_user($student->id, $course->id, $studentrole->id);
-            $editingteacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
+            $editingteacherrole = $DB->get_record('role', ['shortname' => 'editingteacher']);
             $generator->enrol_user($teacher->id, $course->id, $editingteacherrole->id);
 
             $this->setUser($student);
@@ -1463,10 +1463,10 @@ class local_test extends snap_base_test {
             $DB->set_field('course_modules', 'completiongradeitemnumber', 0, ['id' => $cm->id]);
             $assign = new \assign($cm->context, $cm, $course);
             $gradeitem = $assign->get_grade_item();
-            \grade_object::set_properties($gradeitem, array('gradepass' => 50.0));
+            \grade_object::set_properties($gradeitem, ['gradepass' => 50.0]);
             $gradeitem->update();
             $assignrow = $assign->get_instance();
-            $grades = array();
+            $grades = [];
             $grades[$student->id] = (object) [
                 'rawgrade' => 60,
                 'userid' => $student->id,
@@ -1474,7 +1474,7 @@ class local_test extends snap_base_test {
             $assignrow->cmidnumber = null;
             assign_grade_item_update($assignrow, $grades);
             $generator->enrol_user($teacher->id, $course->id, $studentrole->id);
-            $grades = array();
+            $grades = [];
             $grades[$teacher->id] = (object) [
                 'rawgrade' => 60,
                 'userid' => $teacher->id,

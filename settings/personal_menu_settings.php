@@ -149,6 +149,6 @@ $settings->add($snapsettings);
 // Personalmenuadvancedfeedsperpage and personalmenuadvancedfeedslifetime depends on personalmenuadvancedfeedsenable.
 $PAGE->requires->js_call_amd('theme_snap/hide_settings',
     'hideDependingOnChecked',
-    array('personalmenuadvancedfeedsenable',
+    ['personalmenuadvancedfeedsenable',
     $advancedfeedsdependencies,
-    array('personalmenuadvancedfeedsperpage', 'personalmenuadvancedfeedslifetime')));
+    ['personalmenuadvancedfeedsperpage', 'personalmenuadvancedfeedslifetime']]);
