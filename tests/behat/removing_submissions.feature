@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, a student can remove a submitted file assignment.
 
   Background:
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode |
       | Course 1 | C1        | 0        | 1         |
@@ -94,14 +93,14 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     Then I should see "Remove submission"
     # Chcek if submission has online text.
     And I press "Edit submission"
-    And I should see "I'm the student online text submission"
+    And "I'm the student online text submission" "text" should exist
     And I press "Cancel"
     Then I press "Remove submission"
     And I should see "Are you sure you want to remove your submission?"
     And I press "Continue"
     Then I wait until the page is ready
     And I press "Add submission"
-    And I should not see "I'm the student online text submission"
+    And "I'm the student online text submission" "text" should not exist
 
   @javascript
   Scenario: User sees remove submission button and can remove submission with mixed content
@@ -124,7 +123,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     Then I should see "Remove submission"
     # Check if submission has file and online text.
     And I press "Edit submission"
-    And I should see "I'm the student online text submission"
+    And "I'm the student online text submission" "text" should exist
     And "//img[contains(@title, \"empty.txt\")]" "xpath_element" should exist
     And I press "Cancel"
     Then I press "Remove submission"
@@ -132,5 +131,5 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     And I press "Continue"
     Then I wait until the page is ready
     And I press "Add submission"
-    And I should not see "I'm the student online text submission"
+    And "I'm the student online text submission" "text" should not exist
     And "//img[contains(@title, \"empty.txt\")]" "xpath_element" should not exist

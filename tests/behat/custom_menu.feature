@@ -24,7 +24,7 @@
 Feature: When the Moodle theme is set to Snap, custom menu should exist for the site.
 
   Background:
-    Given I skip because "It will be reviewed on the ticket INT-19878"
+    Given I skip because "It will be reviewed on the ticket INT-19930"
     Given the following config values are set as admin:
       | linkadmincategories | 0 |
     And I log in as "admin"

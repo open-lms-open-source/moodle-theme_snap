@@ -38,7 +38,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
 
   @javascript
   Scenario Outline: In read mode, teacher toggles section as current and student sees appropriate status.
-    Given I skip because "It will be reviewed on the ticket INT-19878"
+    Given I skip because "It will be reviewed on the ticket INT-19716"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -81,7 +81,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
   # not related to a session time out / the user being logged out.
   Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
   highlight section.
-    Given I skip because "It will be reviewed on the ticket INT-19878"
+    Given I skip because "It will be reviewed on the ticket INT-19716"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And the editing teacher role is removed from course "C1" for "teacher1"
@@ -105,7 +105,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
 
   @javascript
   Scenario Outline: Student cannot mark section current.
-    Given I skip because "It will be reviewed on the ticket INT-19878"
+    Given I skip because "It will be reviewed on the ticket INT-19716"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |

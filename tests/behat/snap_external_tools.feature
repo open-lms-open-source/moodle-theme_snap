@@ -50,14 +50,12 @@ Feature: Configure new external tool type to test it on a course.
 
   @javascript
   Scenario: External tool is opened in a new window.
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     # We need to be sure that a LTI configured to be opened in a new window is opened in a new window on click.
     # This will be Snap's insurance, so any type of LTI works the same.
     And I am on the course main page for "C1"
     And I click on "button.section-modchooser-link" "css_element"
-    And I follow "External tool"
+    And I follow "Teaching Tool 1"
     And I set the field "Activity name" to "External tool test"
-    And I set the field "Preconfigured tool" to "Teaching Tool 1"
     And I press "Save and return to course"
     And I click on "li.modtype_lti a.mod-link" "css_element"
     And The document should open in a new tab

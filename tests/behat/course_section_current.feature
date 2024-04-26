@@ -38,7 +38,6 @@ Feature: Entering a Snap course without specifying a section will take you to th
 
   @javascript
   Scenario Outline: Before a topic is highlighted, section 0 is the default
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -53,7 +52,6 @@ Feature: Entering a Snap course without specifying a section will take you to th
 
   @javascript
   Scenario Outline: Once a topic is highlighted, that section is shown on entering the course
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -74,7 +72,6 @@ Feature: Entering a Snap course without specifying a section will take you to th
 
   @javascript
   Scenario Outline: If the teacher highlights a hidden section, the default section 0 is displayed
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -99,7 +96,6 @@ Feature: Entering a Snap course without specifying a section will take you to th
 
   @javascript
   Scenario Outline: Conditionally restricted section will not be shown on load, default to section 0
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |

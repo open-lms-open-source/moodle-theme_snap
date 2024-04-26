@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   course section from a simple file input element in either read or edit mode.
 
   Background:
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "courses" exist:
       | fullname | shortname | category | format | maxbytes | enablecompletion |
       | Course 1 | C1        | 0        | topics | 500000   | 1                |
@@ -98,10 +97,14 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I am on "Course 1" course homepage
     And I add a "File" to section "1"
     And I expand all fieldsets
+    And I set the field "Students must manually mark the activity as done" to "1"
     And I click on "id_completionexpected_enabled" "checkbox"
     And I set the following fields to these values:
-      | Name                      | Myfile                                               |
-      | Expect completed on       | ##tomorrow##                                         |
+      | Name                          | Myfile                  |
+      | id_completionexpected_enabled | 1                       |
+      | id_completionexpected_day     | ##tomorrow##%d##        |
+      | id_completionexpected_month   | ##tomorrow##%B##        |
+      | id_completionexpected_year    | ##tomorrow##%Y##        |
     And I upload "theme/snap/tests/fixtures/400KB_file.txt" file to "Select files" filemanager
     And I press "Save and return to course"
     And I log out

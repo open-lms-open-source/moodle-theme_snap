@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, grading activities are shown only if user have grading capabilities.
 
   Background:
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given I log in as "admin"
     And I navigate to "Users > Permissions > Define roles" in current page administration
     And I click on "Add a new role" "button"

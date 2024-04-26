@@ -23,7 +23,6 @@ Feature: When a user clicks on next or previous month link in the calendar block
   the page redirects and the calendar block must be visible.
 
   Background:
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "courses" exist:
       | fullname               | shortname     | category | groupmode | format         |
       | Course 1               | course_topics | 0        | 1         | topics         |
@@ -33,6 +32,9 @@ Feature: When a user clicks on next or previous month link in the calendar block
     And the following "course enrolments" exist:
       | user     | course        | role           |
       | teacher1 | course_topics | editingteacher |
+    And the following "blocks" exist:
+      | blockname         | contextlevel | reference | pagetypepattern | defaultregion |
+      | calendar_month    | Course       | course_topics        | course-view-*   | side-pre      |
 
   @javascript
   Scenario: Ensure that on the redirection the calendar is being display on the page when a user clicks on the next month link
@@ -40,9 +42,6 @@ Feature: When a user clicks on next or previous month link in the calendar block
     Given I log in as "teacher1"
     And I am on the course main page for "course_topics"
     Then I follow "Course Dashboard"
-    And I follow "Edit blocks"
-    And I set the field with xpath "//select[@class = 'custom-select singleselect']" to "Calendar"
-    And I wait until the page is ready
     And I should see "Calendar"
     And I click on ".arrow_link.next" "css_element"
     Then I should see "Calendar"
@@ -53,9 +52,6 @@ Feature: When a user clicks on next or previous month link in the calendar block
     Given I log in as "teacher1"
     Then I am on the course main page for "course_topics"
     Then I follow "Course Dashboard"
-    And I follow "Edit blocks"
-    And I set the field with xpath "//select[@class = 'custom-select singleselect']" to "Calendar"
-    And I wait until the page is ready
     And I should see "Calendar"
     And I follow "Previous month"
     Then I should see "Calendar"

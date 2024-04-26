@@ -3,7 +3,6 @@ Feature: View activity activity header and completion information in activities
   In order to have visibility of assignment completion requirements
 
   Background:
-    Given I skip because "It will be reviewed on the ticket INT-19878"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Vinnie    | Student1 | student1@example.com |
@@ -16,23 +15,24 @@ Feature: View activity activity header and completion information in activities
       | student1 | C1     | student        |
       | teacher1 | C1     | editingteacher |
     And the following "activity" exists:
-      | activity                 | assign        |
-      | course                   | C1            |
-      | idnumber                 | mh1           |
-      | name                     | Music history |
-      | section                  | 1             |
-      | completion               | 1             |
-      | grade[modgrade_type]     | point         |
-      | grade[modgrade_point]    | 100           |
+      | activity                            | assign        |
+      | course                              | C1            |
+      | idnumber                            | mh1           |
+      | name                                | Music history |
+      | section                             | 1             |
+      | completion                          | 1             |
+      | assignsubmission_onlinetext_enabled | 1              |
+      | grade[modgrade_type]                | point         |
+      | grade[modgrade_point]               | 100           |
 
   Scenario: View automatic completion items as a teacher
     Given I am on the "Music history" "assign activity editing" page logged in as teacher1
     And I expand all fieldsets
+    And I set the field "Add requirements" to "1"
     And I set the following fields to these values:
-      | Completion tracking | Show activity as complete when conditions are met |
-      | Require view        | 1                                                 |
-      | completionusegrade  | 1                                                 |
-      | completionsubmit    | 1                                                 |
+      | completionview        | 1                                                 |
+      | completionusegrade    | 1                                                 |
+      | completionsubmit      | 1                                                 |
     And I press "Save and display"
     Then ".activity-header" "css_element" should exist
     And "Music history" should have the "View" completion condition
@@ -43,12 +43,11 @@ Feature: View activity activity header and completion information in activities
   Scenario: View automatic completion items as a student
     Given I am on the "Music history" "assign activity editing" page logged in as teacher1
     And I expand all fieldsets
+    And I set the field "Add requirements" to "1"
     And I set the following fields to these values:
-      | assignsubmission_onlinetext_enabled | 1                                                 |
-      | Completion tracking                 | Show activity as complete when conditions are met |
-      | Require view                        | 1                                                 |
-      | completionusegrade                  | 1                                                 |
-      | completionsubmit                    | 1                                                 |
+      | completionview        | 1                                                 |
+      | completionusegrade    | 1                                                 |
+      | completionsubmit      | 1                                                 |
     And I press "Save and display"
     And I log out
     And I am on the "Music history" "assign activity" page logged in as student1
