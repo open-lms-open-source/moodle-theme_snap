@@ -43,7 +43,7 @@ class core_renderer_test extends \advanced_testcase {
         $COURSE->id = SITEID; // Simulate site level.
 
         $PAGE = new \moodle_page();
-        $PAGE->set_url('/user/view.php', array('id' => $user->id, 'course' => $COURSE->id));
+        $PAGE->set_url('/user/view.php', ['id' => $user->id, 'course' => $COURSE->id]);
         $PAGE->set_context(\context_user::instance($user->id));
         $PAGE->set_pagelayout('standard');
 
@@ -67,7 +67,7 @@ class core_renderer_test extends \advanced_testcase {
         $COURSE->id = SITEID; // Simulate site level.
 
         $PAGE = new \moodle_page();
-        $PAGE->set_url('/user/view.php', array('id' => $user->id, 'course' => $COURSE->id));
+        $PAGE->set_url('/user/view.php', ['id' => $user->id, 'course' => $COURSE->id]);
         $PAGE->set_context(\context_user::instance($user->id));
         $PAGE->set_pagelayout('mypublic');
 
@@ -91,7 +91,7 @@ class core_renderer_test extends \advanced_testcase {
         $COURSE = $this->getDataGenerator()->create_course();
 
         $PAGE = new \moodle_page();
-        $PAGE->set_url('/user/view.php', array('id' => $user->id, 'course' => $COURSE->id));
+        $PAGE->set_url('/user/view.php', ['id' => $user->id, 'course' => $COURSE->id]);
         $PAGE->set_context(\context_user::instance($user->id));
         $PAGE->set_pagelayout('mypublic');
         $PAGE->set_heading($COURSE->fullname);
@@ -174,7 +174,7 @@ class core_renderer_test extends \advanced_testcase {
         $pagebreadcrumbs = $corerenderer->remove_duplicated_breadcrumbs($pagebreadcrumbs);
 
         // Get text value from object array.
-        $pagebreadcrumbsarray = array();
+        $pagebreadcrumbsarray = [];
         foreach ($pagebreadcrumbs as $item) {
             array_push($pagebreadcrumbsarray, $item->text);
         }

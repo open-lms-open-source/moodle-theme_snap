@@ -38,19 +38,19 @@ class mod_folder_renderer extends \mod_folder_renderer {
         $content = '';
         $id = 'folder_tree'. ($treecounter);
         $content .= '<div id="'.$id.'" class="filemanager">';
-        $content .= $this->htmllize_tree($tree, array('files' => array(), 'subdirs' => array($tree->dir)));
+        $content .= $this->htmllize_tree($tree, ['files' => [], 'subdirs' => [$tree->dir]]);
         $content .= '</div>';
 
         // Replace the span tag with the H3 tag to avoid a violation in the header structure for accessibility.
-        $replace = html_writer::tag('h3', s($tree->folder->name), array('class' => 'fp-filename'));
-        $search = html_writer::tag('span', s($tree->folder->name), array('class' => 'fp-filename'));
+        $replace = html_writer::tag('h3', s($tree->folder->name), ['class' => 'fp-filename']);
+        $search = html_writer::tag('span', s($tree->folder->name), ['class' => 'fp-filename']);
         $content = str_replace($search, $replace, $content);
 
         $showexpanded = true;
         if (empty($tree->folder->showexpanded)) {
             $showexpanded = false;
         }
-        $this->page->requires->js_init_call('M.mod_folder.init_tree', array($id, $showexpanded));
+        $this->page->requires->js_init_call('M.mod_folder.init_tree', [$id, $showexpanded]);
         return $content;
     }
 }

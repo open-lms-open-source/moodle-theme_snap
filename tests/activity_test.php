@@ -324,7 +324,7 @@ class activity_test extends snap_base_test {
 
         usleep(1); // We have to sleep for 1 microsecond so that the cache can be invalidated.
 
-        $DB->delete_records('assign_overrides', array ('userid' => $userid, 'assignid' => $assignid));
+        $DB->delete_records('assign_overrides', ['userid' => $userid, 'assignid' => $assignid]);
 
         assign_update_events($assignobj);
 
@@ -347,7 +347,7 @@ class activity_test extends snap_base_test {
 
         usleep(1); // We have to sleep for 1 microsecond so that the cache can be invalidated.
 
-        $DB->delete_records('quiz_overrides', array ('userid' => $userid, 'quiz' => $quizid));
+        $DB->delete_records('quiz_overrides', ['userid' => $userid, 'quiz' => $quizid]);
 
         quiz_update_events($quiz);
 
@@ -650,8 +650,8 @@ class activity_test extends snap_base_test {
         $this->assertEquals($ovdgroupdue, $dates1->timeclose);
 
         // Second group override.
-        $group2 = $this->getDataGenerator()->create_group(array('courseid' => $course->id));
-        $this->getDataGenerator()->create_group_member(array('userid' => $student, 'groupid' => $group2->id));
+        $group2 = $this->getDataGenerator()->create_group(['courseid' => $course->id]);
+        $this->getDataGenerator()->create_group_member(['userid' => $student, 'groupid' => $group2->id]);
 
         $ovdgroup2open = $timeclose1 + (2 * DAYSECS);
         $ovdgroup2due = $timeclose1 + (7 * DAYSECS);
@@ -1211,7 +1211,7 @@ class activity_test extends snap_base_test {
         global $USER;
 
         $actual = activity::upcoming_deadlines($USER->id)->events;
-        $expected = array();
+        $expected = [];
         $this->assertSame($actual, $expected);
     }
 
@@ -1276,7 +1276,7 @@ class activity_test extends snap_base_test {
         $courses = [$course1, $course2];
 
         // Enrol teacher on both courses.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
         foreach ([$course1, $course2] as $course) {
             $this->getDataGenerator()->enrol_user($teacher->id,
                 $course->id,
@@ -1285,7 +1285,7 @@ class activity_test extends snap_base_test {
         }
 
         // Enrol student on both courses.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         foreach ($courses as $course) {
             $generator->enrol_user($student->id,
                 $course->id,
@@ -1323,7 +1323,7 @@ class activity_test extends snap_base_test {
         $student = $generator->create_user();
 
         // Enrol student on with an expired enrolment.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($student->id,
             $course->id,
             $studentrole->id,
@@ -1372,7 +1372,7 @@ class activity_test extends snap_base_test {
         $student = $generator->create_user();
 
         // Enrol student.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($student->id,
             $course->id,
             $studentrole->id
@@ -1414,7 +1414,7 @@ class activity_test extends snap_base_test {
         $group2 = $generator->create_group((object)['courseid' => $course->id, 'name' => 'group2']);
 
         // Enrol students.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         foreach ([$student1, $student2] as $student) {
             $generator->enrol_user($student->id,
                 $course->id,
@@ -1423,7 +1423,7 @@ class activity_test extends snap_base_test {
         }
 
         // Enrol teacher.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
         $generator->enrol_user($teacher->id,
             $course->id,
             $teacherrole->id);
@@ -1485,14 +1485,14 @@ class activity_test extends snap_base_test {
         $student = $generator->create_user();
 
         // Enrol teacher.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
         $this->getDataGenerator()->enrol_user($teacher->id,
             $course->id,
             $teacherrole->id
         );
 
         // Enrol student.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($student->id,
             $course->id,
             $studentrole->id
@@ -1536,7 +1536,7 @@ class activity_test extends snap_base_test {
         $courses = [$course1, $course2];
 
         // Enrol teacher on both courses.
-        $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
+        $teacherrole = $DB->get_record('role', ['shortname' => 'teacher']);
         foreach ([$course1, $course2] as $course) {
             $this->getDataGenerator()->enrol_user($teacher->id,
                 $course->id,
@@ -1544,7 +1544,7 @@ class activity_test extends snap_base_test {
         }
 
         // Enrol student on both courses.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         foreach ($courses as $course) {
             $generator->enrol_user($student->id,
                 $course->id,
@@ -1583,7 +1583,7 @@ class activity_test extends snap_base_test {
         $student = $generator->create_user();
 
         // Enrol student on with an expired enrolment.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($student->id,
             $course->id,
             $studentrole->id,
@@ -1622,7 +1622,7 @@ class activity_test extends snap_base_test {
         $student = $generator->create_user();
 
         // Enrol student.
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($student->id,
             $course->id,
             $studentrole->id

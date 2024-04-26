@@ -116,24 +116,24 @@ trait format_section_trait {
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
         || !$course->hiddensections;
 
-        $links = array('previous' => '', 'next' => '');
+        $links = ['previous' => '', 'next' => ''];
         $back = $sectionno - 1;
         while ($back > -1 && empty($links['previous'])) {
             if ($canviewhidden
             || $sections[$back]->uservisible
             || $sections[$back]->availableinfo) {
-                $params = array();
+                $params = [];
                 if (!$sections[$back]->visible) {
-                    $params = array('class' => 'dimmed_text');
+                    $params = ['class' => 'dimmed_text'];
                 }
 
-                $previouslink = html_writer::tag('span', $OUTPUT->larrow(), array('class' => 'larrow'));
+                $previouslink = html_writer::tag('span', $OUTPUT->larrow(), ['class' => 'larrow']);
                 $previouslink .= get_section_name($course, $sections[$back]);
                 if ($back > 0 ) {
                     $courseurl = course_get_url($course, $back);
                 } else {
                     // We have to create the course section url manually if its 0.
-                    $courseurl = new moodle_url('/course/view.php', array('id' => $course->id, 'section' => $back));
+                    $courseurl = new moodle_url('/course/view.php', ['id' => $course->id, 'section' => $back]);
                 }
                 $links['previous'] = html_writer::link($courseurl, $previouslink, $params);
             }
@@ -146,12 +146,12 @@ trait format_section_trait {
             if ($canviewhidden
             || $sections[$forward]->uservisible
             || $sections[$forward]->availableinfo) {
-                $params = array();
+                $params = [];
                 if (!$sections[$forward]->visible) {
-                    $params = array('class' => 'dimmed_text');
+                    $params = ['class' => 'dimmed_text'];
                 }
                 $nextlink = get_section_name($course, $sections[$forward]);
-                $nextlink .= html_writer::tag('span', $OUTPUT->rarrow(), array('class' => 'rarrow'));
+                $nextlink .= html_writer::tag('span', $OUTPUT->rarrow(), ['class' => 'rarrow']);
                 $links['next'] = html_writer::link(course_get_url($course, $forward), $nextlink, $params);
             }
             $forward++;
@@ -200,7 +200,7 @@ trait format_section_trait {
         }
         $baseurl->param('sesskey', sesskey());
 
-        $controls = array();
+        $controls = [];
 
         $moveaction = new course_action_section_move($course, $section, $onsectionpage);
         $visibilityaction = new course_action_section_visibility($course, $section, $onsectionpage);
@@ -209,14 +209,14 @@ trait format_section_trait {
         $duplicateaction = new course_action_section_duplicate($course, $section, $onsectionpage);
         $permalinkaction = new course_action_section_permalink($course, $section, $onsectionpage);
 
-        $actions = array(
+        $actions = [
             $moveaction,
             $visibilityaction,
             $deleteaction,
             $highlightaction,
             $duplicateaction,
             $permalinkaction,
-        );
+        ];
 
         foreach($actions as $action) {
             $controls[] = $this->render($action);
@@ -243,7 +243,7 @@ trait format_section_trait {
     protected function section_edit_control_items_menued($actions, $section) {
         $data = [
             'actions' => $actions,
-            'sectionid' => $section->section
+            'sectionid' => $section->section,
         ];
         return $this->render_from_template('theme_snap/course_action_section_menu', $data);
     }
@@ -296,18 +296,18 @@ trait format_section_trait {
 
         // SHAME - the tabindex is intefering with moodle js.
         // SHAME - Remove tabindex when editing menu is shown.
-        $sectionarrayvars = array(
+        $sectionarrayvars = [
             'id' => 'section-'.$section->section,
             'class' => 'section main clearfix'.$sectionstyle,
             'aria-label' => get_section_name($course, $section),
             'data-id' => $section->id,
-            );
+            ];
         if (!$PAGE->user_is_editing()) {
             $sectionarrayvars['tabindex'] = '-1';
         }
 
         $o .= html_writer::start_tag('li', $sectionarrayvars);
-        $o .= html_writer::start_tag('div', array('class' => 'content'));
+        $o .= html_writer::start_tag('div', ['class' => 'content']);
 
         // When not on a section page, we display the section titles except the general section if null.
         $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
@@ -335,7 +335,7 @@ trait format_section_trait {
         $leftnavtop = $leftnav === 'top';
         $sectionid = "sectionid-{$section->id}-title";
         if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
-            $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
+            $url = new moodle_url('/course/editsection.php', ['id' => $section->id, 'sr' => $sectionreturn]);
             $o .= "<h2 id='{$sectionid}' class='sectionname' data-id='{$section->id}'>";
             if ($section->section != 0 && $leftnavtop != 0 ) {
                 $o .= "<span class='sectionnumber'></span>";
@@ -349,11 +349,11 @@ trait format_section_trait {
             $htmlheading = html_writer::tag(
                 'h' . 2,
                 $sectiontitle,
-                array(
+                [
                     'id' => $sectionid,
                     'class' => 'sectionname',
                     'data-id' => $section->id
-                ));
+                ]);
             $o .= "<div>" . $htmlheading . "</div>";
         }
 
@@ -371,11 +371,11 @@ trait format_section_trait {
         if (has_capability('moodle/course:update', $context)) {
             if (!empty($sectiontoolsarray)) {
                 $sectiontools = implode(' ', $sectiontoolsarray);
-                $o .= html_writer::tag('div', $sectiontools, array(
+                $o .= html_writer::tag('div', $sectiontools, [
                     'class' => 'js-only snap-section-editing actions',
                     'role' => 'region',
                     'aria-label' => get_string('topicactions', 'theme_snap'),
-                ));
+                ]);
             }
         }
         // Draft message.
@@ -438,7 +438,7 @@ trait format_section_trait {
 
         $o .= $summarytext;
         if ($canupdatecourse) {
-            $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
+            $url = new moodle_url('/course/editsection.php', ['id' => $section->id, 'sr' => $sectionreturn]);
             $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="';
             $icon .= $this->output->image_url('pencil', 'theme').'" /><br/>';
             $o .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
@@ -595,11 +595,11 @@ trait format_section_trait {
             return '';
         }
 
-        $url = new moodle_url('/theme/snap/index.php', array(
+        $url = new moodle_url('/theme/snap/index.php', [
             'sesskey'  => sesskey(),
             'action' => 'addsection',
             'contextid' => $context->id,
-        ));
+        ]);
 
         $required = '';
         $defaulttitle = get_string('title', 'theme_snap');
@@ -628,10 +628,10 @@ trait format_section_trait {
         $heading = get_string('addanewsection', 'theme_snap');
         $output = "<section id='snap-add-new-section' class='clearfix' tabindex='-1'>
         <h3>$heading</h3>";
-        $output .= html_writer::start_tag('form', array(
+        $output .= html_writer::start_tag('form', [
             'method' => 'post',
             'action' => $url->out_omit_querystring(),
-        ));
+        ]);
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="form-group">';
         $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
@@ -645,33 +645,33 @@ trait format_section_trait {
         $output .= '<div class="form-group">';
         $output .= '<label for="summary">'.get_string('contents', 'theme_snap').'</label>';
 
-        $options = array(
+        $options = [
             'subdirs' => 0,
             'maxbytes' => 0,
             'maxfiles' => EDITOR_UNLIMITED_FILES,
             'context' => $context,
-        );
+        ];
         $draftitemid = file_get_submitted_draft_itemid('summary');
         $currenttext = file_prepare_draft_area($draftitemid, $context->id, 'course', 'section', null, $options);
 
         $output .= $this->print_editor('summary', 'summary-editor', $currenttext, $draftitemid, $options);
-        $output .= html_writer::empty_tag('input', array(
+        $output .= html_writer::empty_tag('input', [
             'type' => 'hidden',
             'name' => 'draftitemid',
             'value' => $draftitemid,
-        ));
+        ]);
 
         $output .= '</div>';
-        $output .= html_writer::empty_tag('input', array(
+        $output .= html_writer::empty_tag('input', [
             'type' => 'submit',
             'class' => 'btn btn-primary',
             'name' => 'addtopic',
             'value' => get_string('createsection', 'theme_snap'),
-        ));
+        ]);
 
-        $courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
+        $courseurl = new moodle_url('/course/view.php', ['id' => $course->id]);
         $message = get_string('cancel');
-        $attr = array('class' => 'btn btn-secondary', 'id' => 'cancel-new-section');
+        $attr = ['class' => 'btn btn-secondary', 'id' => 'cancel-new-section'];
         $output .= html_writer::link($courseurl, $message, $attr);
 
         $output .= html_writer::end_tag('form');
@@ -697,7 +697,7 @@ trait format_section_trait {
         $editor->set_text($currenttext);
 
         $args = new stdClass();
-        $args->accepted_types = array('image');
+        $args->accepted_types = ['image'];
         $args->return_types = (FILE_INTERNAL | FILE_EXTERNAL);
         $args->context = $options['context'];
         $args->env = 'filepicker';
@@ -709,7 +709,7 @@ trait format_section_trait {
         $imageoptions->env = 'editor';
         $imageoptions->itemid = $draftitemid;
 
-        $args->accepted_types = array('video', 'audio');
+        $args->accepted_types = ['video', 'audio'];
         $mediaoptions = initialise_filepicker($args);
         $mediaoptions->context = $options['context'];
         $mediaoptions->client_id = uniqid();
@@ -755,7 +755,7 @@ trait format_section_trait {
      *     option 'inblock' => true, suggesting to display controls vertically
      * @return string
      */
-    public function course_section_add_cm_control($course, $section, $sectionreturn = null, $displayoptions = array()) {
+    public function course_section_add_cm_control($course, $section, $sectionreturn = null, $displayoptions = []) {
         global $OUTPUT;
         // Check to see if user can add menus and there are modules to add.
         if (!has_capability('moodle/course:manageactivities', context_course::instance($course->id))
@@ -908,14 +908,14 @@ trait format_section_trait {
         if (ismoving($course->id)) {
             $url = new moodle_url(
                 '/course/mod.php',
-                array(
+                [
                     'sesskey' => sesskey(),
                     'cancelcopy' => true,
                     'sr' => $sectionno,
-                )
+                ]
             );
 
-            $o .= html_writer::start_tag('div', array('class' => 'clipboard'));
+            $o .= html_writer::start_tag('div', ['class' => 'clipboard']);
             $o .= strip_tags(get_string('activityclipboard', '', $USER->activitycopyname));
             $o .= ' (' . html_writer::link($url, get_string('cancel')) . ')';
             $o .= html_writer::end_tag('div');

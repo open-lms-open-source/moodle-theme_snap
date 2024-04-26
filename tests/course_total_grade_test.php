@@ -232,7 +232,7 @@ class course_total_grade_Test extends \advanced_testcase {
                 if (!isset($courseassignments[$c])) {
                     $this->courseassignments[$c] = [];
                 }
-                $record = array('course' => $course);
+                $record = ['course' => $course];
                 $instance = $assigngen->create_instance($record);
 
                 $cm = get_coursemodule_from_instance('assign', $instance->id);
@@ -243,7 +243,7 @@ class course_total_grade_Test extends \advanced_testcase {
                 \grade_object::set_properties($gradeitem, $gradeitemsetting);
                 $gradeitem->update();
                 $assignrow = $assign->get_instance();
-                $grades = array();
+                $grades = [];
 
                 // Do grading.
                 foreach ($this->users as $user) {
@@ -316,10 +316,10 @@ class course_total_grade_Test extends \advanced_testcase {
         // Get course grade_item.
         $courseitem = \grade_item::fetch_course_item($course->id);
         // Get the stored grade.
-        $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
+        $coursegrade = new \grade_grade(['itemid' => $courseitem->id, 'userid' => $USER->id]);
         $coursegrade->grade_item =& $courseitem;
 
-        $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+        $feedbackurl = new \moodle_url('/grade/report/user/index.php', ['id' => $course->id]);
         // Default feedbackobj.
         $feedbackobj = (object)[
             'feedbackurl' => $feedbackurl->out(),
@@ -328,11 +328,11 @@ class course_total_grade_Test extends \advanced_testcase {
 
         if (!$coursegrade->is_hidden() || $canviewhidden) {
             // Use user grade report to get course total - this is to take hidden grade settings into account.
-            $gpr = new \grade_plugin_return(array(
+            $gpr = new \grade_plugin_return([
                     'type' => 'report',
                     'plugin' => 'user',
                     'courseid' => $course->id,
-                    'userid' => $USER->id, )
+                    'userid' => $USER->id, ]
             );
             $report = new \gradereport_user\report\user($course->id, $gpr, $coursecontext, $USER->id);
             $report->fill_table();

@@ -950,7 +950,7 @@ class course_renderer extends \core_course_renderer {
 
         $pmcontextattribute = 'data-pagemodcontext="'.$mod->context->id.'"';
         $expandpagebutton = "
-            <button 
+            <button
                 class='btn collapsed w-100 pagemod-readmore readmore-button snap-action-icon'
                 {$pmcontextattribute}
                 aria-expanded='false'>
@@ -1985,30 +1985,30 @@ class course_renderer extends \core_course_renderer {
         $render = $this->output->render($groupoptions);
 
         $groupsdropdownebutton = \html_writer::tag('button', $groupicon,
-            array(
+            [
                 'class' => 'snap-groups-more',
                 'data-toggle' => 'dropdown',
                 'data-boundary' => 'window',
                 'aria-expanded' => 'false',
                 'aria-controls' => '#snap-groups-menu',
-                ));
+                ]);
         $groupsdropdownlist = \html_writer::tag('ul', $render,
-            array(
+            [
                 'class' => 'dropdown-menu groups-edit-menu',
                 'id' => 'snap-groups-menu',
-            ));
+            ]);
         $groupsdropdownelement = \html_writer::tag('div',
             $groupsdropdownebutton.$groupsdropdownlist ,
-            array('class' => 'dropdown snap-activity-groups-dropdown'));
+            ['class' => 'dropdown snap-activity-groups-dropdown']);
 
         $output = '';
         if ($groupoptions) {
             $output .= \html_writer::tag('div',
                 $groupsdropdownelement,
-                array(
+                [
                     'class' => 'js-only snap-groups-mode-actions',
-                    'role' => 'region'
-                ));
+                    'role' => 'region',
+                ]);
         }
         return $output;
     }

@@ -92,7 +92,7 @@ class message implements \renderable {
      */
     protected $fromuser;
 
-    public function __construct($options = array()) {
+    public function __construct($options = array[]) {
         $this->set_options($options);
     }
 
@@ -122,7 +122,7 @@ class message implements \renderable {
                 throw new \coding_exception('The message useridfrom is not set');
             }
             $this->set_fromuser(
-                $DB->get_record('user', array('id' => $this->useridfrom), \core_user\fields::for_userpic()
+                $DB->get_record('user', ['id' => $this->useridfrom], \core_user\fields::for_userpic()
                     ->get_sql('', false, '', '', false)->selects, MUST_EXIST)
             );
         }

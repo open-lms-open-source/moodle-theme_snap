@@ -126,24 +126,24 @@ class course {
                 return ['success' => false, 'warning' => get_string('coursesummaryfilesunsuitable', 'theme_snap')];
             }
 
-            $fileinfo = array(
+            $fileinfo = [
                 'contextid' => $context->id,
                 'component' => 'course',
                 'filearea' => 'overviewfiles',
                 'itemid' => 0,
                 'filepath' => '/',
-                'filename' => $newfilename, );
+                'filename' => $newfilename, ];
 
             // Remove any old course summary image files for this context.
             $fs->delete_area_files($context->id, $fileinfo['component'], $fileinfo['filearea']);
         } else if ($context->contextlevel === CONTEXT_SYSTEM || $context->contextlevel === CONTEXT_COURSECAT) {
-            $fileinfo = array(
+            $fileinfo = [
                 'contextid' => $context->id,
                 'component' => 'theme_snap',
                 'filearea' => 'poster',
                 'itemid' => 0,
                 'filepath' => '/',
-                'filename' => $newfilename, );
+                'filename' => $newfilename, ];
 
             // Remove everything from poster area for this context.
             $fs->delete_area_files($context->id, 'theme_snap', 'poster');
@@ -385,8 +385,8 @@ class course {
         // If the course format is different from topics or weeks then the $toc would have some empty values.
         $validformats = ['weeks', 'topics'];
         if (!in_array($course->format, $validformats)) {
-            $toc->chapters = array('chapters' => []);
-            $toc->footer = array('footer' => []);
+            $toc->chapters = ['chapters' => []];
+            $toc->footer = ['footer' => []];
         }
 
         return [

@@ -29,7 +29,7 @@ $snapsettings->add($setting);
 $name = 'theme_snap/poster';
 $title = new lang_string('poster', 'theme_snap');
 $description = new lang_string('posterdesc', 'theme_snap');
-$opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+$opts = ['accepted_types' => ['.png', '.jpg', '.gif', '.webp', '.svg']];
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'poster', 0, $opts);
 $setting->set_updatedcallback('theme_snap_process_site_coverimage');
 $snapsettings->add($setting);
@@ -51,21 +51,21 @@ $snapsettings->add($setting);
 $name = 'theme_snap/slide_one_image';
 $title = new lang_string('coverimage', 'theme_snap');
 $description = '';
-$opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+$opts = ['accepted_types' => ['.png', '.jpg', '.gif', '.webp', '.svg']];
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'slide_one_image', 0, $opts);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/slide_two_image';
 $title = new lang_string('coverimage', 'theme_snap');
 $description = '';
-$opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+$opts = ['accepted_types' => ['.png', '.jpg', '.gif', '.webp', '.svg']];
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'slide_two_image', 0, $opts);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/slide_three_image';
 $title = new lang_string('coverimage', 'theme_snap');
 $description = '';
-$opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg'));
+$opts = ['accepted_types' => ['.png', '.jpg', '.gif', '.webp', '.svg']];
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'slide_three_image', 0, $opts);
 $snapsettings->add($setting);
 
