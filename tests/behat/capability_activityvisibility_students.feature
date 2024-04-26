@@ -61,8 +61,8 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    When I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
-    And I wait until ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" is not visible
+    And I click on ".dropdown .availability-dropdown" "css_element"
+    When I click on ".snap-activity[data-type='Assignment'] a[data-action='cmHide']" "css_element"
 
   @javascript
   Scenario: Student should not be able to hide an activity if the course doesn't have course:activityvisibility for students

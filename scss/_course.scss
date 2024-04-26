@@ -3240,7 +3240,7 @@ body[id^='page-mod-data'] {
         }
     }
     #snap-asset-menu {
-        #groups-menu {
+        #groups-menu, #availability-menu {
             position: absolute;
             top: 1.8em;
             right: auto;
@@ -3261,6 +3261,28 @@ body[id^='page-mod-data'] {
                     a {
                         font-size: .8em;
                     }
+                }
+            }
+        }
+        .dropdown-toggle.availability-dropdown::after, .dropdown-toggle.groups-dropdown::after {
+            @include media-breakpoint-up(md) {
+                content: "";
+            }
+        }
+        a.availability-dropdown, a.groups-dropdown {
+            @include media-breakpoint-down(md) {
+                &::after {
+                    @extend .fa-solid;
+                    content: fa-content($fa-var-chevron-down);
+                }
+            }
+            @include media-breakpoint-up(md) {
+                &::before {
+                    @extend .fa-solid;
+                    content: fa-content($fa-var-chevron-left);
+                    position: absolute;
+                    top: 50%;
+                    transform: translate(-150%, -50%);
                 }
             }
         }

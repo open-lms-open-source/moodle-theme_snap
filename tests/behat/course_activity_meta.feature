@@ -511,3 +511,28 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And ".snap-groups-more img[alt='No groups']" "css_element" should not exist in the ".snap-activity.assign" "css_element"
     And ".snap-groups-more img[alt='Visible groups']" "css_element" should exist in the ".snap-activity.assign" "css_element"
 
+	@javascript
+  Scenario: Show availability modes in activity cards
+    Given the following "activities" exist:
+      | activity   | name              | course    | idnumber     |
+      | assign     | Test Assignment 1 | C1        | assign1      |
+
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage
+
+    # Check availability action submenu.
+    And I click on ".snap-activity.assign .snap-asset-actions" "css_element"
+    And I click on ".dropdown .availability-dropdown" "css_element"
+
+    Then I should see "Show on course page"
+    Then I should see "Hide on course page"
+
+    # Check Show on course page output.
+    And I click on ".snap-activity.assign #availability-menu a[data-action='cmShow']" "css_element"
+    Then I should not see "Not published to students"
+
+    # Check Hide on course page output.
+    And I click on ".dropdown .availability-dropdown" "css_element"
+    And I click on ".snap-activity.assign #availability-menu a[data-action='cmHide']" "css_element"
+
+    Then I should see "Not published to students"
