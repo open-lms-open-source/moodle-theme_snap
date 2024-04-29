@@ -21,8 +21,15 @@ use theme_snap\webservice\ws_course_card;
  * @author    diego casas
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * 
+ * @runTestsInSeparateProcesses
  */
 class webservice_ws_course_card_data_test extends \advanced_testcase {
+
+    protected function setUp(): void {
+        global $CFG;
+        require_once("{$CFG->libdir}/externallib.php");
+    }
 
     public function test_service_parameters() {
         $params = \theme_snap\webservice\ws_course_cards_data::service_parameters();

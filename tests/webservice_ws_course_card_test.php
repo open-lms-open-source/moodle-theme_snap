@@ -21,6 +21,8 @@ use theme_snap\webservice\ws_course_card;
  * @author    gthomas2
  * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * 
+ * @runTestsInSeparateProcesses
  */
 class webservice_ws_course_card_test extends \advanced_testcase {
 
