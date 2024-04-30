@@ -162,9 +162,7 @@ class definition_helper {
             $allownull = true;
         }
 
-        if (!$required) {
-            $required = VALUE_OPTIONAL;
-        }
+        $required = $required ? VALUE_REQUIRED : VALUE_OPTIONAL;
 
         $extval = new external_value($type, $description, $required, null, $allownull);
         return $extval;
@@ -327,8 +325,9 @@ class definition_helper {
             if (empty($obj->description)) {
                 throw new coding_exception($this->param_error('Missing description for', $name));
             }
-            $required = !empty($obj->required);
-            return new external_value($obj->type, $obj->description, $required);
+
+            $required = !empty($obj->required) ? VALUE_REQUIRED : VALUE_OPTIONAL;
+            return new external_value($obj->type, $obj->description, $required, !empty($obj->required) ? 0 : null);
         } else {
             // @codingStandardsIgnoreStart
             // The comment is defining an object - i.e. StdClass - e.g:.
@@ -457,10 +456,7 @@ class definition_helper {
 
             // Do we have a @wsrequired to define the required status of this property?
             $wsreq = $this->get_wsdoc($comment, ['@wsrequired']);
-
-            if (!$wsreq) {
-                $wsreq = VALUE_OPTIONAL;
-            }
+            $wsreq = $wsreq ? VALUE_REQUIRED : VALUE_OPTIONAL;
 
             // Do we have a @wsallownull?
             $wsallownull = $this->get_wsdoc($comment, ['@wsallownull']);
