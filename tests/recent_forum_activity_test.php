@@ -84,7 +84,7 @@ class recent_forum_activity_test extends \advanced_testcase {
      * Pre-requisites for tests.
      * @throws \coding_exception
      */
-    public function setUp():void {
+    public function setUp(): void {
         global $CFG, $DB;
 
         require_once($CFG->dirroot . '/mod/forum/lib.php');

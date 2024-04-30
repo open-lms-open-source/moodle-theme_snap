@@ -67,28 +67,28 @@ echo $OUTPUT->custom_menu_spacer();
         <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->snapnavbar($mastimage); ?></div>
     <?php }
         if ($carousel) {
-            // Front page carousel.
-            echo $carousel;
+        // Front page carousel.
+        echo $carousel;
         } else {
-            // Front page banner image.
+        // Front page banner image.
     ?>
         <div id="page-mast">
-        <?php
-            echo $OUTPUT->page_heading();
-            echo $OUTPUT->course_header();
-            // Content bank for Snap.
-            if ($PAGE->pagetype === 'contentbank') {
-                echo $OUTPUT->snap_content_bank();
+    <?php
+        echo $OUTPUT->page_heading();
+        echo $OUTPUT->course_header();
+        // Content bank for Snap.
+        if ($PAGE->pagetype === 'contentbank') {
+            echo $OUTPUT->snap_content_bank();
             }
         ?>
         </div>
         <?php
-            if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
-                echo $OUTPUT->cover_image_selector();
+        if ($this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
+            echo $OUTPUT->cover_image_selector();
             }
         } // End else.
         if ($PAGE->pagetype == 'admin-search') {
-            echo implode('', $PAGE->get_header_actions());
+        echo implode('', $PAGE->get_header_actions());
         }
         ?>
 </div>

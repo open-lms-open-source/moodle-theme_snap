@@ -36,7 +36,7 @@ class course_action_section_duplicate extends course_action_section_base {
      * course_action_section_duplicate constructor.
      * @param \stdClass $course
      * @param section_info $section
-     * @param bool $onsectionpage 
+     * @param bool $onsectionpage
      */
     public function __construct($course, section_info $section, $onsectionpage = false) {
         if ($onsectionpage) {

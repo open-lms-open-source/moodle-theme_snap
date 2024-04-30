@@ -29,7 +29,7 @@ class urls_and_strings_check_test extends \advanced_testcase {
     /**
      * Setup for each test.
      */
-    protected function setUp():void {
+    protected function setUp(): void {
         $this->resetAfterTest();
     }
 
@@ -102,7 +102,7 @@ class urls_and_strings_check_test extends \advanced_testcase {
         ];
     }
 
-    public function test_edit_button () {
+    public function test_edit_button() {
         global $PAGE;
 
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);

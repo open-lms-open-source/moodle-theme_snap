@@ -1434,7 +1434,7 @@ class local_test extends snap_base_test {
      * @throws \dml_exception
      */
 
-    public function completion_activity_helper ($student, $teacher, $courses) {
+    public function completion_activity_helper($student, $teacher, $courses) {
         global $DB;
         $generator = $this->getDataGenerator();
         $courseids = [];
