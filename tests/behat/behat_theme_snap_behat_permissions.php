@@ -87,7 +87,7 @@ class behat_theme_snap_behat_permissions extends behat_permissions {
      * Sets a specific capability for a student inside a course.
      * @param string $capability
      */
-    public function i_set_activityvisibility_capability_to_student ($capability) {
+    public function i_set_activityvisibility_capability_to_student($capability) {
         global $DB;
 
         $DB->insert_record('role_capabilities', array(
