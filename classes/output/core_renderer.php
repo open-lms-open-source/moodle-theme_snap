@@ -500,15 +500,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $deadlines = $this->render_deadlines($location);
         if (!empty($deadlines)) {
             $columns[] = $deadlines;
-            $mobilemenu .= $this->mobile_menu_link('deadlines', 'calendar', $this->get_calltoaction_url('deadlines'));
+            $mobilemenu .= $this->mobile_menu_link('deadlines', 'calendar-new', $this->get_calltoaction_url('deadlines'));
         }
 
         $graded = $this->render_graded($location);
         $grading = $this->render_grading($location);
         if (empty($grading)) {
-            $gradebookmenulink = $this->mobile_menu_link('recentfeedback', 'grading', $this->get_calltoaction_url('graded'));
+            $gradebookmenulink = $this->mobile_menu_link('recentfeedback', 'grading-new', $this->get_calltoaction_url('graded'));
         } else {
-            $gradebookmenulink = $this->mobile_menu_link('grading', 'grading', $this->get_calltoaction_url('grading'));
+            $gradebookmenulink = $this->mobile_menu_link('grading', 'grading-new', $this->get_calltoaction_url('grading'));
         }
         if (!empty($grading)) {
             $columns[] = $grading;
@@ -521,13 +521,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $messages = $this->render_messages($location);
         if (!empty($messages)) {
             $columns[] = $messages;
-            $mobilemenu .= $this->mobile_menu_link('messages', 'messages', $this->get_calltoaction_url('messages'));
+            $mobilemenu .= $this->mobile_menu_link('messages', 'messages-new', $this->get_calltoaction_url('messages'));
         }
 
         $forumposts = $this->render_forumposts($location);
         if (!empty($forumposts)) {
             $columns[] = $forumposts;
-            $mobilemenu .= $this->mobile_menu_link('forumposts', 'forumposts', $this->get_calltoaction_url('forumposts'));
+            $mobilemenu .= $this->mobile_menu_link('forumposts', 'forumposts-new', $this->get_calltoaction_url('forumposts'));
         }
 
         $mobilemenu .= '</div>';

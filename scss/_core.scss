@@ -1199,6 +1199,11 @@ footer #moodle-footer
     }
     position: fixed;
     width: 100vw;
+
+    @media (max-width: 991px) {
+        width: calc(100vw - 4%);
+    }
+
     z-index: 23;
     background-color: $nav-bg;
     top: 0;
@@ -1325,6 +1330,10 @@ footer #moodle-footer
 
     .pull-right.js-only.row, .float-right.js-only.row {
         margin-top: 1em;
+
+        @media (max-width: 768px) {
+            margin-top: 0.6em;
+        }
     }
 
     #snap-home:not(.logo) {
