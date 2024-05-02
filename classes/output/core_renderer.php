@@ -1636,6 +1636,7 @@ HTML;
             if ($this->page->user_is_editing()) {
                 $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap#themesnapfeaturespots']);
                 $link = html_writer::link($url, get_string('featurespotsedit', 'theme_snap'), ['class' => 'btn btn-primary']);
+                $link = rawurldecode($link);
                 $fsedit = '<p class="text-center">'.$link.'</p>';
             }
 
