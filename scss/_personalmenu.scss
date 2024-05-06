@@ -132,7 +132,7 @@ body.snap-pm-open {
         width: 700vw;
 
         section {
-            width: 100vw !important;
+            width: calc(100vw - 2em) !important;
             float: left;
             padding: 0 2em;
             margin-bottom: 60px; // For the menu.
