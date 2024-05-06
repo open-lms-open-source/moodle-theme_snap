@@ -442,6 +442,8 @@ define(
                 $('.snap-asset a').removeAttr('tabindex');
                 $('.snap-asset button').removeAttr('disabled');
                 $('.js-snap-asset-move').removeAttr('checked');
+                $('.snap-asset-move-input').prop('checked', false);
+                $('.readmore-container').removeAttr('hidden');
                 movingObjects = [];
                 if (self.courseConfig.partialrender) {
                     $('.snap-drop.section-drop').addClass('partial-render');
@@ -520,7 +522,8 @@ define(
                                 if (params.class === 'resource') {
                                     // Only stop moving for resources, sections handle this later once the TOC is reloaded.
                                     stopMoving();
-                                    $(movingObject).find('label.snap-asset-move > input.js-snap-asset-move').focus();
+                                    $('.snap-asset-move-wrapper').attr('hidden', 'hidden');
+                                    $(movingObject).find('label.snap-asset-move-label > input.js-snap-asset-move').focus();
                                 }
                             }
                         }
@@ -1506,6 +1509,7 @@ define(
                 footerAlert.show(function(e) {
                     e.preventDefault();
                     stopMoving();
+                    $('.snap-asset-move-wrapper').attr('hidden', 'hidden');
                     if (focusEl !== null) {
                         focusEl.focus();
                     }
@@ -1588,6 +1592,9 @@ define(
                     if (movingObjects.length === 0) {
                         // Moving asset - activity or resource.
                         // Initiate move.
+                        $('.snap-asset-move-wrapper').removeAttr('hidden');
+                        $('.readmore-container').attr('hidden', 'hidden');
+
                         var assetname = $(asset).find('.snap-asset-link .instancename').html();
 
                         log.debug('Moving this asset', assetname);

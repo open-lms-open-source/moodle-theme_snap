@@ -1189,6 +1189,10 @@ body.snap-resource-card li.snap-resource:not(.label) {
         font-size: small;
         padding-top: 0.5em;
     }
+
+    .snap-asset-move-label {
+        left: 20px;
+    }
 }
 
 // -----------------------------------------------------------
@@ -2416,6 +2420,17 @@ form.togglecompletion {
         input.sr-only[type="checkbox"] {
             display: inherit;
         }
+    }
+}
+
+.snap-asset-move-wrapper .snap-asset-move-label {
+    position: absolute;
+    left: 0;
+    text-align: center;
+    width: 8%;
+    cursor: pointer;
+    .snap-asset-move-input {
+        accent-color: $brand-primary;
     }
 }
 
