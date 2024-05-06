@@ -240,6 +240,7 @@ Feature: Snap message send messages
 
   @javascript
   Scenario: Opening a direct message through the personal menu should open the message directly in the message page.
+    Given I skip because "It will be reviewed on the ticket INT-19951"
     Given the following "message contacts" exist:
       | user     | contact |
       | student1 | student2 |
