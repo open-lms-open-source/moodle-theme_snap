@@ -4709,12 +4709,6 @@ section#region-main {
     margin-left: 0.313em;
 }
 
-// This z-index value allows the moodle dialogue (Image and file repository window) be usable
-// for both Atto and TinyMCE html editors.
-#page-local-pld-view .moodle-dialogue-base .moodle-dialogue {
-    z-index: 300005 !important;
-}
-
 #page-local-pld-view .mform .form-inline .form-control,
 .mform .form-inline .custom-select #id_config_text {
     width: 56em !important;
