@@ -1359,11 +1359,6 @@ body.format-tiles.editing {
         }
     }
 
-    // Fix resource margin.
-    .modtype_resource:not(.subtile) {
-        margin: 1em 1%;
-    }
-
     // Prevent section buttons to overlap activities.
     .sectionbuttons {
         top: 0 !important;

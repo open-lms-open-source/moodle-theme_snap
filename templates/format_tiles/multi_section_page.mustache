@@ -99,8 +99,6 @@
 {{/showinitialpageloadingicon}}
 
 <ul class="tiles" id="multi_section_tiles">
-    {{> format_tiles/section_zero}}
-
     {{#tiles}}
         {{^editing}}
             {{> format_tiles/multi_section_tile}}
@@ -123,7 +121,7 @@
         {{!moveable sections for JS to add content to and move around (one relating to each tile)}}
         {{#tiles}}
             <li class="section main moveablesection" style="display: none;" id="section-{{tileid}}"
-                data-section="{{tileid}}"></li>
+                data-section="{{tileid}}" data-sectionid="{{secid}}"></li>
         {{/tiles}}
     {{/editing}}
 </ul>

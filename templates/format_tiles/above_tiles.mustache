@@ -23,7 +23,7 @@
         "section_zero_show": "1",
         "is_multi_section": "1",
         "has_filter_buttons": "1",
-        "fiternumberedbuttons": [{
+        "filternumberedbuttons": [{
             "id": 12345,
             "buttonnum": 2,
             "sections": [3,4,5],
@@ -31,12 +31,39 @@
         }]
     }
 }}
+
+{{#editorwarnings}}
+    <div class="alert alert-{{class}} alert-block fade show"><i class="icon fa fa-{{icon}}"></i>{{{text}}}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">{{#str}}dismissnotification, core{{/str}}</span>
+        </button>
+    </div>
+{{/editorwarnings}}
+
+<div id="section-zero-container" class="{{^usingjsnav}}format-tiles-no-js{{/usingjsnav}}{{^section_zero_show}} section-zero-empty{{/section_zero_show}}">
+
+    {{! on xs devices, show buttons separately at top }}
+    <div class="d-block d-sm-none">{{>format_tiles/above_tiles_buttons}}</div>
+    <div class="row">
+        <div class="col-sm-11">{{> format_tiles/section_zero}}</div>
+        <div class="col-sm-1 d-none d-sm-block" id="buttonhidesec0">
+            {{! on sm and larger devices, show buttons to right of sec zero }}
+            {{>format_tiles/above_tiles_buttons}}
+        </div>
+    </div>
+
+
+</div>
+{{! Open LMS patch. }}
 {{#has_filter_buttons}}
     <div id="snap-tiles-with-filter-buttons">
 {{/has_filter_buttons}}
-{{^editing}}
-    <div id="abovetiles"
-         class="{{#has_filter_buttons}}justify-content-between{{/has_filter_buttons}}{{^has_filter_buttons}}justify-content-end{{/has_filter_buttons}}">
+{{! Open LMS patch end.}}
+{{^editing}}{{#usingjsnav}}
+        <div id="abovetiles"
+             class="{{#has_filter_buttons}}justify-content-between{{/has_filter_buttons}}{{^has_filter_buttons}}justify-content-end{{/has_filter_buttons}} tilestyle-{{tilestyle}}{{^section_zero_show}} section-zero-empty{{/section_zero_show}}">
+        {{! Open LMS patch. }}
         <div id="headerabovetiles" class="headerabovetiles" aria-hidden="true">
         <div id="snap-course-dashboard">
             <a href="{{urlcoursetools}}" id="snap-course-tools" class="tiles-dashboard">
@@ -50,59 +77,39 @@
                 </a>
             </div>
         {{/has_edit_capability}}
+        {{! Open LMS patch end. }}
         {{#is_multi_section}}
             {{#has_filter_buttons}}
                 <div id="filterbuttons">
-                        <span id="filterintro">
-                            {{#pix}}filter, format_tiles{{/pix}}
-                        </span>
-                    {{#fiternumberedbuttons}}
+                    <span id="filterintro">
+                        {{#pix}}filter, format_tiles, {{#str}}filters, format_tiles{{/str}}{{/pix}}
+                    </span>
+                    {{#filternumberedbuttons}}
                         {{> format_tiles/filterbutton}}
-                    {{/fiternumberedbuttons}}
-                    {{#fiteroutcomebuttons}}
+                    {{/filternumberedbuttons}}
+                    {{#filteroutcomebuttons}}
                         {{> format_tiles/filterbutton}}
-                    {{/fiteroutcomebuttons}}
+                    {{/filteroutcomebuttons}}
                     <div id="filterbutton-all" class="filterbutton" data-buttonid="all" data-sections="[all]">
                         {{#str}}all, format_tiles{{/str}}
                     </div>
                 </div>
             {{/has_filter_buttons}}
-            <div>
-                <span class="mr-1">
-                    {{#overall_progress_indicator}}
-                        {{> format_tiles/progress}}
-                    {{/overall_progress_indicator}}
-                </span>
-                {{#jsnavadminallowed}}
-                    <div class="btn-group">
-                        <button type="button" class="tiles-top-button align-top" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{#pix}}i/settings, core, {{#str}}settings{{/str}}{{/pix}}
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{{config.wwwroot}}}/course/view.php?id={{courseid}}&stopjsnav=1">
-                                {{#jsnavuserenabled}}
-                                    {{#pix}}toggle-on, format_tiles, {{#str}}jsactivate, format_tiles{{/str}}{{/pix}}{{#str}}jsactivate, format_tiles{{/str}}
-                                {{/jsnavuserenabled}}
-                                {{^jsnavuserenabled}}
-                                    {{#pix}}toggle-off, format_tiles, {{#str}}jsdeactivate, format_tiles{{/str}}{{/pix}}{{#str}}jsdeactivate, format_tiles{{/str}}
-                                {{/jsnavuserenabled}}
-                            </a>
-                        </div>
-                    </div>
-                {{/jsnavadminallowed}}
-                {{^editing}}{{#section_zero_show}}
-                    <button class="tiles-top-button buttonhidesec0 open align-top" id="buttonhidesec0"></button>
-                {{/section_zero_show}}{{/editing}}
+            <div id="tiles-overall-progress-outer" class="ml-auto mr-1 mb-2 pt-1 d-none d-sm-block">
+                {{#overall_progress_indicator}}
+                    {{> format_tiles/progress}}
+                {{/overall_progress_indicator}}
             </div>
         {{/is_multi_section}}
         {{^is_multi_section}}
             {{^editing}}{{#section_zero_show}}
-                <div class="buttonhidesec0 open" id="buttonhidesec0"></div>
+                <div class="buttonhidesec0 open ml-1" id="buttonhidesec0"></div>
             {{/section_zero_show}}{{/editing}}
         {{/is_multi_section}}
+    </div>
+    {{! Open LMS patch. }}
+    {{#has_filter_buttons}}
         </div>
-    </div>
-{{/editing}}
-{{#has_filter_buttons}}
-    </div>
-{{/has_filter_buttons}}
+    {{/has_filter_buttons}}
+    {{! Open LMS patch end. }}
+{{/usingjsnav}}{{/editing}}

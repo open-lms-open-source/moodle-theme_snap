@@ -49,8 +49,10 @@
                                     "hasname": "true"
                                 },
                                 "id": 3,
+                                "cmid": 3,
                                 "module": "forum",
-                                "extraclasses": "newmessages"
+                                "extraclasses": "newmessages",
+                                "anchor": "module-3"
                             }
                         }
                     ],
@@ -77,9 +79,11 @@
                                     "cmname": "<a class=\"aalink\" href=\"#\"><span class=\"instancename\">Another forum</span></a>",
                                     "hasname": "true"
                                 },
-                                "id": 3,
+                                "id": 4,
+                                "cmid": 4,
                                 "module": "forum",
-                                "extraclasses": "newmessages"
+                                "extraclasses": "newmessages",
+                                "anchor": "module-4"
                             }
                         }
                     ],
@@ -106,8 +110,10 @@
                                     "hasname": "true"
                                 },
                                 "id": 5,
+                                "cmid": 5,
                                 "module": "forum",
-                                "extraclasses": "newmessages"
+                                "extraclasses": "newmessages",
+                                "anchor": "module-5"
                             }
                         }
                     ],
@@ -145,8 +151,8 @@
         },
         "sectionreturn": 1,
         "singlesection": {
-            "num": 1,
-            "id": 35,
+            "num": 5,
+            "id": 37,
             "header": {
                 "name": "Single Section Example",
                 "url": "#"
@@ -159,9 +165,11 @@
                                 "cmname": "<a class=\"aalink\" href=\"#\"><span class=\"instancename\">Assign example</span></a>",
                                 "hasname": "true"
                             },
-                            "id": 4,
+                            "id": 6,
+                            "cmid": 6,
                             "module": "assign",
-                            "extraclasses": ""
+                            "extraclasses": "",
+                            "anchor": "module-6"
                         }
                     }
                 ],
@@ -174,7 +182,8 @@
         }
     }
 }}
-<div id="{{uniqid}}-course-format">
+<div id="course-format-{{uniqid}}">
+    {{! Open LMS patch. }}
     <div id="snap-course-dashboard">
         <a href="{{urlcoursetools}}" id="snap-course-tools" class="tiles-dashboard">
             <img src="{{imgurltools}}" class="svg-icon" alt="" />{{#str}}coursetools, theme_snap{{/str}}
@@ -187,6 +196,7 @@
         </a>
     </div>
     {{/has_edit_capability}}
+    {{! Open LMS patch end. }}
     <h2 class="accesshide">{{{title}}}</h2>
     {{{completionhelp}}}
     {{#editoradvice}}
@@ -197,6 +207,7 @@
             </button>
         </div>
     {{/editoradvice}}
+
     <ul class="{{format}}" data-for="course_sectionlist">
         {{#initialsection}}
             {{$ format_tiles/local/content/section }}
@@ -230,6 +241,13 @@
             {{/sectionselector}}
         </div>
     {{/hasnavigation}}
+    {{^ismoodle41minus}}
+        {{#bulkedittools}}
+            {{$ core_courseformat/local/content/bulkedittools}}
+                {{> core_courseformat/local/content/bulkedittools}}
+            {{/ core_courseformat/local/content/bulkedittools}}
+        {{/bulkedittools}}
+    {{/ismoodle41minus}}
 </div>
 
 {{{ course_tools }}}
@@ -237,6 +255,6 @@
 
 {{#js}}
     require(['core_courseformat/local/content'], function(component) {
-    component.init('{{uniqid}}-course-format', {}, {{sectionreturn}});
+    component.init('course-format-{{uniqid}}', {}, {{sectionreturn}});
     });
 {{/js}}

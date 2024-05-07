@@ -75,11 +75,10 @@
 }}
 
 <div class="single-section">
-
+    {{^from_ajax}}
+        {{> format_tiles/above_tiles}}
+    {{/from_ajax}}
     <ul id="single_section_tiles">
-        {{^from_ajax}}
-            {{> format_tiles/section_zero}}
-        {{/from_ajax}}
         {{! single_section is a separate template as it is also called directly from JS without this other stuff}}
         {{>format_tiles/single_section}}
 
