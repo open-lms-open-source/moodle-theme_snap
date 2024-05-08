@@ -1467,3 +1467,12 @@ body.format-tiles.editing .section .snap-asset .actions {
         padding-top: 8em;
     }
 }
+
+// Styles for mod_data plugin.
+.theme-snap#page-mod-data-view .whitebutton .btn-secondary,
+.theme-snap#page-mod-data-field- .whitebutton .btn-secondary,
+.theme-snap#page-mod-data-templates .whitebutton .btn-secondary {
+    color: $brand-primary;
+    border-color: $brand-primary;
+    background-color: transparent;
+}
