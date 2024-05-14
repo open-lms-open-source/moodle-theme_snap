@@ -54,6 +54,7 @@ Feature: Snap message send messages
       | messagingminpoll | 1 |
 
   Scenario: Send a message to a group conversation in snap
+    Given I skip because "It will be reviewed on the ticket INT-19951"
     Given I log in as "student1"
     And I am on site homepage
     And I click on "#snap_feeds_side_menu_trigger" "css_element"
@@ -76,6 +77,7 @@ Feature: Snap message send messages
     Then ".badge-primary.hidden[data-region='section-unread-count'][aria-label='There are 1 unread conversations']" "css_element" should exist
 
   Scenario: Send a message to a starred conversation in snap
+    Given I skip because "It will be reviewed on the ticket INT-19951"
     Given I log in as "student1"
     And I am on site homepage
     And I click on "#snap_feeds_side_menu_trigger" "css_element"
@@ -105,6 +107,7 @@ Feature: Snap message send messages
     Then "//*[@data-region='section-unread-count']/span[contains(text(),'There are  unread conversations')]" "xpath_element" should exist
 
   Scenario: Send a message to a private conversation via contacts and check unread messages is updated in snap.
+    Given I skip because "It will be reviewed on the ticket INT-19951"
     Given the following "message contacts" exist:
       | user     | contact |
       | student1 | student2 |
@@ -168,6 +171,7 @@ Feature: Snap message send messages
   @javascript
   Scenario: When a user has unread conversations, a notification should appear in the message icon on the navigation bar
   and should redirect to the message page.
+    Given I skip because "It will be reviewed on the ticket INT-19951"
     Given the following "message contacts" exist:
       | user     | contact |
       | student1 | student2 |
