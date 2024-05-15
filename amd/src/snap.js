@@ -559,6 +559,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         $(snapFeedsTrigger).removeClass('active');
                         $(hrefSnapFeeds).removeClass('state-visible');
                         $('#page').toggleClass('offcanvas');
+                        if ($('#sticky-footer').length != 0) {
+                            $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
+                        }
                     }
                 }
                 var href = this.getAttribute('href');
@@ -574,6 +577,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 if ($('.message-app.main').length === 0) {
                     document.dispatchEvent(new Event("messages-drawer:toggle"));
                 }
+
+                // Code for mod_data sticky footer.
+                if ($('#sticky-footer').length != 0) {
+                    $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
+                }
             });
 
             // Onclick for toggle of state-visible of snap feeds side menu.
@@ -586,6 +594,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         $(adminSettingsTrigger).removeClass('active');
                         $(hrefAdminSettings).removeClass('state-visible');
                         $('#page').toggleClass('offcanvas');
+                        if ($('#sticky-footer').length != 0) {
+                            $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
+                        }
                     }
                 }
 
@@ -609,6 +620,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 }
                 $(href).toggleClass('state-visible').focus();
                 e.preventDefault();
+
+                // Code for mod_data sticky footer.
+                if ($('#sticky-footer').length != 0) {
+                    $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
+                }
             });
 
             // Mobile menu button.

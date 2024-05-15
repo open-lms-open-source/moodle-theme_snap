@@ -1476,3 +1476,13 @@ body.format-tiles.editing .section .snap-asset .actions {
     border-color: $brand-primary;
     background-color: transparent;
 }
+
+.theme-snap#page-mod-data-view,
+.theme-snap#page-mod-data-field-,
+.theme-snap#page-mod-data-templates {
+    @media (min-width: 768px) {
+        .snap-mod-data-sticky-footer {
+            margin-right: $drawer-width;
+        }
+    }
+}
