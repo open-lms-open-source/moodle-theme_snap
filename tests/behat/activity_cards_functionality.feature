@@ -98,7 +98,7 @@ Feature: Check functionality in activity cards.
 
   @javascript
   Scenario Outline: For activity cards, folder activity should always display "Folder" activity type when content is displayed inline or not.
-    Given I skip because "It will be reviewed on the ticket INT-19716"
+    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |
@@ -119,7 +119,7 @@ Feature: Check functionality in activity cards.
 
   @javascript
   Scenario Outline: For activity cards, when content is displayed inline the tree needs to start with a H3 tag
-    Given I skip because "It will be reviewed on the ticket INT-19716"
+    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |

@@ -23,7 +23,7 @@
 Feature: When the moodle theme is set to Snap, activity restriction tags are shown.
 
   Background:
-    And I skip because "I will be fixed on INT-19716"
+    And I skip because "I will be fixed on INT-19953"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -55,7 +55,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
-    And I click on "//a[i[contains(@title, 'Test assignment1')]]" "xpath_element"
+    And I click on "//a[contains(@title, 'Test assignment1')]" "xpath_element"
     And I wait until the page is ready
     And I click on "//fieldset[@id=\"id_availabilityconditionsheader\"]" "xpath_element"
     And I click on "//button[text()=\"Add restriction...\"]" "xpath_element"

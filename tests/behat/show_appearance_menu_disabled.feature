@@ -23,7 +23,7 @@
 Feature: When the moodle theme is set to Snap and there is a page resource, appearance options should not appear.
 
   Background:
-    And I skip because "I will be fixed on INT-19716"
+    And I skip because "I will be fixed on INT-19999"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | theme |
       | Course 1 | C1 | 0 | 1 | |

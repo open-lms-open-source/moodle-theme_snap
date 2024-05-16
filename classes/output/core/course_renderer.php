@@ -589,9 +589,9 @@ class course_renderer extends \core_course_renderer {
         // Allow moving and rearranging multiple activities at once.
         if (has_capability('moodle/course:manageactivities', context_module::instance($mod->id))) {
             $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
-            $moveactivity = '<label class="snap-asset-move-label" for="snap-move-mod-' . $mod->id . 'role="button"">';
+            $moveactivity = '<label class="snap-asset-move-label" aria-label="' . $movealt . '" for="snap-move-mod-' . $mod->id . 'role="button"">';
             $moveactivity .= '<input class="snap-asset-move-input js-snap-asset-move" id="snap-move-mod-' . $mod->id . '"
-                                role="button" aria-label="' . $movealt . '" type="checkbox">';
+                                role="button" type="checkbox">';
             $moveactivity .= '<span class="sr-only">' . $movealt . '</span></label>';
             $output .= "<div hidden class='snap-asset-move-wrapper js-only' role='region' aria-label='" .
                             get_string('courseactionslabel', 'theme_snap') . "'>" . $moveactivity . "</div>";
@@ -1838,9 +1838,9 @@ class course_renderer extends \core_course_renderer {
                 '<i class="icon fa fa-pencil fa-fw "></i>'.$str->editsettings.'</a></li>';
             // Move button.
             $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
-            $actionsadvanced[] = '<li><a><label role="button" class="snap-asset-move dropdown-item" for="snap-move-mod-'
-                .$mod->id.'"><input id="snap-move-mod-'.$mod->id.'" aria-label="'.$movealt.
-                '"class="js-snap-asset-move sr-only" role="button" type="checkbox">'.
+            $actionsadvanced[] = '<li><a><label role="button" class="snap-asset-move dropdown-item" aria-label="'
+                .$movealt.'" for="snap-move-mod-'.$mod->id.'"><input id="snap-move-mod-'.$mod->id.'" 
+                class="js-snap-asset-move sr-only" role="button" type="checkbox">'.
                 '<i class="icon fa fa-arrows fa-fw "></i>'.$str->move.'</label></a></li>';
             // Delete button.
             $actionsadvanced[] = '<li><a href="'.new moodle_url($baseurl, ['delete' => $mod->id]).
@@ -1946,6 +1946,7 @@ class course_renderer extends \core_course_renderer {
             $advancedactions = '<div class="dropdown snap-edit-more-dropdown">';
             $advancedactions .= '<button class="snap-edit-asset-more" ';
             $advancedactions .= 'data-toggle="dropdown" data-boundary="window" data-offset="-10,12"';
+            $advancedactions .= 'title=\''.get_string('moreoptionslabel', 'theme_snap').' "'.$mod->get_formatted_name().'"\'';
             $advancedactions .= 'aria-label="' . get_string('moreoptionslabel', 'theme_snap') . '" aria-expanded="false"';
             $advancedactions .= 'aria-controls="#snap-asset-menu">'.$moreicons.'</button>';
             $advancedactions .= '<ul id="snap-asset-menu" class="dropdown-menu asset-edit-menu">';

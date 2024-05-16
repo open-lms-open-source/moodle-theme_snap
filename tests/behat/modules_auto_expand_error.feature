@@ -23,7 +23,7 @@
 Feature: When setting an erroneous field in settings, snap auto-expands area.
 
   Background:
-    And I skip because "I will be fixed on INT-19716"
+    And I skip because "I will be fixed on INT-19999"
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion |
       | Course 1 | C1        | topics | 0        | 1         | 1                |
