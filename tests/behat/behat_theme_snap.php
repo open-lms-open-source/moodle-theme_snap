@@ -279,8 +279,8 @@ class behat_theme_snap extends behat_base {
         $this->execute('behat_general::i_change_window_size_to', ['window', 'medium']);
         $javascript = "document.querySelector('button.tiny_image_urlentrysubmit').click()";
         $this->getSession()->executeScript($javascript);
-
-        $this->execute('behat_general::i_click_on', ['Create section', 'button']);
+        $javascript = "document.querySelector('input[type=\"submit\"].btn.btn-primary[name=\"addtopic\"][value=\"Create section\"]').click();";
+        $this->getSession()->executeScript($javascript);
         $USER = $origuser;
     }
 
