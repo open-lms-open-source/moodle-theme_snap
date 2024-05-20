@@ -28,7 +28,7 @@
 Feature: Check that the correct tab order and focus exists for the page.
 
   Background:
-    And I skip because "I will be fixed on INT-19716"
+    And I skip because "I will be fixed on INT-19999"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -68,5 +68,6 @@ Feature: Check that the correct tab order and focus exists for the page.
     Given I change window size to "658x852"
     And I log in as "admin"
     And I am on "Course 1" course homepage
-    And I follow "Edit \"assignment1\""
+    And I click on "button.snap-edit-asset-more" "css_element"
+    And I follow "Edit settings"
     Then "div[role=main] .mform div.snap-form-advanced > div.form-group.fitem [data-fieldtype='group']" "css_element" should appear after the "div[role=main] .mform div.snap-form-advanced div.collapsible-actions" "css_element"

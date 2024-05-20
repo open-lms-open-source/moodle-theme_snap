@@ -23,7 +23,7 @@
 Feature: When the moodle theme is set to Snap, the user can manipulate the files through the file manager.
 
   Background:
-    And I skip because "I will be fixed on INT-19716"
+    And I skip because "I will be fixed on INT-19999"
     Given the following "courses" exist:
       | fullname | shortname | format |
       | Course 1 | C1        | topics |
