@@ -1887,6 +1887,9 @@ HTML;
 
         if ($item->key === 'courseadmin') {
             $this->add_switchroleto_navigation_node($item);
+            if ($this->can_add_communication_node($context)){
+                $this->add_communication_navigation_node($item, $context->id, $COURSE->id);
+            }
         }
 
         $content = parent::render_navigation_node($item);
@@ -2630,5 +2633,40 @@ HTML;
         }
         $output .= html_writer::tag('div', $feeds, ['id' => 'snap_feeds_side_menu']);
         return $output;
+    }
+
+    /**
+     * Adds a link for configuring communication.
+     *
+     * @param navigation_node $item
+     * @param int $contextid
+     * @param int $courseid
+     */
+    private function add_communication_navigation_node(navigation_node $item, $contextid, $courseid) {
+        $url = new moodle_url('/communication/configure.php', [
+            'contextid' => $contextid,
+            'instanceid' => $courseid,
+            'instancetype' => 'coursecommunication',
+            'component' => 'core_course',
+        ]);
+        $node = $item->create(
+            get_string('communication', 'communication'), $url,
+            navigation_node::TYPE_SETTING,
+            null,
+            'communication',
+            new \pix_icon('t/messages-o','')
+        );
+        $item->add_node($node, 'filtermanagement'); // Put it before the Filters option.
+    }
+
+    /**
+     * Checks if the communication configuration can be added.
+     * 
+     * @param $context
+     * @return bool
+     */
+    private function can_add_communication_node($context): bool {
+        return \core_communication\api::is_available() &&
+            has_capability('moodle/course:configurecoursecommunication', $context);
     }
 }

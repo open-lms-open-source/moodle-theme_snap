@@ -13,6 +13,21 @@
     .snap-media-object {
         font-weight: normal;
     }
+
+    .btn-footer-communication {
+        background-color: $brand-primary !important;
+        margin-bottom: 1em;
+        z-index: 1;
+
+        i.icon {
+            color: unset;
+        }
+    }
+
+    .btn-footer-popover {
+        display: none
+    }
+
 }
 
 #snap-course-footer-recent-activity,
