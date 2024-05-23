@@ -1216,6 +1216,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (strpos($pagetype, 'grade-report-') === 0 || strpos($pagetype, 'grade-edit-') === 0) {
             // If we are in a Gradebook page set default header.
             $heading = parent::context_header();
+            $heading = $this->snap_make_coursename_link($heading);
         }
 
         return $heading;
@@ -2583,5 +2584,21 @@ HTML;
         }
         $output .= html_writer::tag('div', $feeds, ['id' => 'snap_feeds_side_menu']);
         return $output;
+    }
+
+    /**
+     * Utility function to replace the course name with
+     * a link.
+     * 
+     * @param $element: Should contain the course fullname
+     * @return string
+     */
+    protected function snap_make_coursename_link($element) {
+        global $COURSE;
+        $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
+        $coursename = format_string($COURSE->fullname);
+        $namelink = html_writer::link($courseurl, $coursename);
+        $replacedname = str_replace($coursename, $namelink, $element);
+        return $replacedname;
     }
 }
