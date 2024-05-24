@@ -1816,6 +1816,7 @@ class local {
 	                     WHERE (cm1.groupmode <> :sepgps2a OR (gm1.userid IS NOT NULL $fgpsql))
 	                       AND fp1.userid <> :user2a
                            AND fp1.modified > $since
+                           AND fd1.timestart < " . time() . "
                       ORDER BY fp1.modified DESC
                                $limitsql
                         )
