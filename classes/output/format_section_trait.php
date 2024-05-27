@@ -368,7 +368,7 @@ trait format_section_trait {
         // Section editing commands.
         $sectiontoolsarray = $this->section_edit_control_items($course, $section, $sectionreturn);
 
-        if (has_capability('moodle/course:update', $context)) {
+        if (has_capability('moodle/course:update', $context) || has_capability('moodle/course:activityvisibility', $context)) {
             if (!empty($sectiontoolsarray)) {
                 $sectiontools = implode(' ', $sectiontoolsarray);
                 $o .= html_writer::tag('div', $sectiontools, array(
