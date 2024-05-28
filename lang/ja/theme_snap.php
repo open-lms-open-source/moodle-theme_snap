@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2023 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2024 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -54,8 +54,7 @@ $string['categoryedit'] = 'カテゴリを編集する';
 $string['category_color'] = 'カテゴリの色';
 $string['category_color_description'] = 'コースカテゴリの色。子コースは最も近い親カテゴリの設定を使用します';
 $string['category_color_palette'] = 'カラーパレット';
-$string['category_color_palette_description'] = '指定された色に対応する16進値を参照してください。これは
-すべての設定に影響を与えるわけではなく、ユーザが設定値を作成する上でのサンプルです。';
+$string['category_color_palette_description'] = '指定された色に対応する16進値を参照してください。これはすべての設定に影響を与えるわけではなく、ユーザが設定値を作成する上でのサンプルです。';
 $string['changecoverimage'] = 'カバーイメージを変更する';
 $string['changefullname'] = 'サイト名を変更する';
 $string['chapters'] = '章';
@@ -76,10 +75,12 @@ $string['coursepartialrender'] = 'コースセクションの遅延読み込み�
 $string['coursepartialrenderdesc'] = '有効にした場合、コースセクションの読み込みは、学生が選択したときにオンデマンドで行われます。これにより、コンテンツが大量にあるコースの読み込みが速くなります。';
 $string['coursenavigation'] = 'コースナビゲーション';
 $string['coursesummaryfilesunsuitable'] = 'カバーイメージを変更する前に、コース概要ファイルを空にしてください';
+$string['courseactionslabel'] = 'アクション';
 $string['courseactivitieslabel'] = 'セクションのアクティビティ';
 $string['coursetools'] = 'コースダッシュボード';
 $string['coverdisplay'] = 'カバー表示';
 $string['covercarousel'] = 'カバーカルーセル';
+$string['covercarousellabel'] = 'カルーセル';
 $string['covercarouselon'] = 'カバーカルーセルを使用する';
 $string['covercarouseldescription'] = '<p>カルーセルは回転バナーのセット、またはスライドショーです。カバーイメージの代わりにサイトのホームページに表示されます。</p>
 <p>最大3つの画像、各スライドのタイトル、オプションのサブタイトルを追加します。1200 x 600ピクセルの画像が最適です。</p>';
@@ -102,8 +103,7 @@ $string['deadlines'] = '期限';
 $string['deadlinestoggle'] = '期限';
 $string['deadlinestoggledesc'] = 'ユーザに対して、登録済みコースの今後のアクティビティの終了日時が表示されます。';
 $string['defaultsummary'] = 'この領域では、テキスト、画像、音声、動画を使用してこのトピックを説明します。';
-$string['defaultintrosummary'] = '新しいコース {$a} へようこそ。
-<br>テキスト、画像、音声、動画を使用して、コースについて説明します。';
+$string['defaultintrosummary'] = '新しいコース {$a} へようこそ。<br>テキスト、画像、音声、動画を使用して、コースについて説明します。';
 $string['defaulttopictitle'] = '無題のトピック';
 $string['debugerrors'] = 'デバッグエラー';
 $string['deleteassetconfirm'] = '{$a} を削除する';
@@ -144,7 +144,8 @@ $string['favorited'] = 'お気に入りとしてマーク {$a}';
 $string['featurespots'] = '注目スポット';
 $string['featurespotsedit'] = '注目スポットを編集する';
 $string['featurespotshelp'] = '<p>既存および潜在的ユーザに主なメリットを強調するため、サイトのフロントページに最大3つの注目スポットを追加します。</p>
-<p>それぞれの注目スポットのタイトル、内容、オプションの画像を追加します。画像は四角形で、サイズは最大200px x 200pxとします。</p>';
+<p>注目スポットごとに画像、タイトル、コンテンツの説明を追加できます。注目スポットをフロントページに掲載するには、タイトルを入力する必要があります。画像とコンテンツの説明セクションはオプションです。</p>
+<p>推奨される画像サイズは正方形で、200 x 200ピクセル以下です。</p>';
 $string['featurespotsheading'] = '注目スポットのヘッダ';
 $string['featureonetitle'] = '注目スポット1のタイトル';
 $string['featuretwotitle'] = '注目スポット2のタイトル';
@@ -177,11 +178,16 @@ $string['featuredcourseeight'] = '注目コース8';
 $string['featuredcoursesedit'] = '注目コースを編集する';
 $string['featuredcoursesbrowseall'] = 'すべてのコースを参照する';
 $string['featuredcoursesbrowsealldesc'] = 'すべてのコースを参照するリンクを追加';
+$string['feature_spot_background_color'] = '背景色';
+$string['feature_spot_title_color'] = 'タイトルテキストの色';
+$string['feature_spot_description_color'] = '説明テキストの色';
+$string['feature_spot_title_color_lower'] = 'タイトルテキストの色';
+$string['feature_spot_description_color_lower'] = '説明テキストの色';
 $string['feedbackavailable'] = 'フィードバックを利用できます';
 $string['feedbacktoggle'] = '最新のフィードバック';
 $string['feedbacktoggledesc'] = '学習者に最新のフィードバックを、教育者に最新の提出物で要評定のものを表示します。';
 $string['footnote'] = 'サイトフッタ';
-$string['footnotedesc'] = 'フッタはサイト全体にわたって表示されます。ヘルプ、サポート、および学習者や教育者と共有したい組織所有のその他のサイト (ライブラリやメールアドレスなど) へのリンクを配置するのに最適な場所です。';
+$string['footnotedesc'] = 'サイト情報をHTMLとして追加し、リンク、画像、イベントリストを含めることができます。';
 $string['forcepwdwarningpersonalmenu'] = 'パーソナルメニューを使用する前に、<a href="{$a}">パスワードを変更する</a>必要があります。';
 $string['forumauthor'] = '著者';
 $string['forumlastpost'] = '最新の投稿';
@@ -201,6 +207,7 @@ $string['headingfont'] = '見出しのフォント';
 $string['headingfont_desc'] = 'このサンセリフフォントは、サイト全体の見出し（h1～h6エレメント）で使用されます。カスタムウェブフォントを含める場合は、Moodle追加HTMLに追加してください。他のエレメントのフォントを変更する場合は、カスタムCSSオプションを使用してください。この方法の例については、<a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">ドキュメント</a>を参照してください。';
 $string['helpwithlogin'] = 'ログインのヘルプ';
 $string['helpwithloginandguest'] = 'ログイン/ゲストアクセスのヘルプ';
+$string['loginrequiredmessage'] = '* 必須フィールドを示します';
 $string['hiddencoursestoggle'] = '非表示のコース';
 $string['highlightedsection'] = '反転表示';
 $string['home'] = 'ホーム';
@@ -210,15 +217,7 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'あなたのInstagramアカウントのURLです。';
 $string['introduction'] = 'イントロダクション';
 $string['jsontext'] = 'JSONテキスト';
-$string['jsontextdescription'] = 'テキストエリアは指定されたJSONを検証するため、既存のカテゴリのみが許可され、
-IDレコード（カテゴリレコード）の数値のみが検証され、16進値のみが色として処理されます。
-例を示します。<br>
-{"1":"#FAAFFF",<br>
-"45":"#AFF",<br>
-"65":"#FFF228",<br>
-"12":"#CC0084",<br>
-"56":"#CC0087",<br>
-"89":"#CCF084"}';
+$string['jsontextdescription'] = 'テキストエリアは指定されたJSONを検証するため、既存のカテゴリのみが許可され、IDレコード（カテゴリレコード）としての数値のみが有効で、16進値のみを色として受け付けます。以下に例を示します。<br>{"1":"#FAAFFF",<br>"45":"#AFF",<br>"65":"#FFF228",<br>"12":"#CC0084",<br>"56":"#CC0087",<br>"89":"#CCF084"}';
 $string['knowledgebase'] = 'Open LMSナレッジベース';
 $string['list'] = '一覧から選ぶ';
 $string['linkedin'] = 'LinkedIn';
@@ -237,9 +236,10 @@ $string['menu'] = 'マイコース';
 $string['messageread'] = '既読メッセージ';
 $string['messages'] = 'メッセージ';
 $string['messagestoggle'] = 'メッセージ';
-$string['messagestoggledesc'] = '過去12週に受信した最新メッセージが表示されます。';
+$string['messagestoggledesc'] = '過去12週間に受信した最新のメッセージをユーザに表示します。このオプションを有効にするには、高度な機能ページでメッセージング機能が有効になっていることを確認します。';
 $string['more'] = '詳細';
 $string['morenews'] = 'その他のニュース';
+$string['moreoptionslabel'] = 'その他のオプション';
 $string['movingstartedhelp'] = 'セクション "{$a}" を配置したい場所に移動します';
 $string['movingdropsectionhelp'] = 'セクション "{$a->moving}" をセクション "{$a->before}" の前に配置します';
 $string['moving'] = '"{$a}" を移動しています';
@@ -264,7 +264,9 @@ $string['notcontributed'] = '未寄稿';
 $string['notpublished'] = '学生には非公開';
 $string['notsubmitted'] = '未提出';
 $string['overdue'] = '期限切れ';
+$string['pausegraphicsanim'] = 'GIFアニメーションを一時停止します。';
 $string['personalmenu'] = 'パーソナルメニュー';
+$string['personalmenuandsnapfeeds'] = 'パーソナルメニューとスナップフィード';
 $string['personalmenufeatures'] = 'パーソナルメニュー機能';
 $string['personalmenulogintoggle'] = 'ログイン時に個人用メニューを表示する';
 $string['personalmenulogintoggledesc'] = 'ログイン後は個人用メニューを開く';
@@ -276,13 +278,18 @@ $string['personalmenuadvancedfeedslifetime'] = '高度なフィードの有効�
 $string['personalmenuadvancedfeedslifetimedesc'] = 'ログイン後にフィードがブラウザにキャッシュされる時間を選択します。0を選択するとフィードはブラウザにキャッシュされません。';
 $string['personalmenurefreshdeadlines'] = 'スケジュールタスクを使用して終了日時をリフレッシュします。';
 $string['personalmenurefreshdeadlinesdesc'] = 'タスクを実行したときに、終了日時データはより速いページロード時間でリフレッシュされます。';
+$string['personalmenuenablepersonalmenu'] = 'パーソナルメニューを有効にする';
+$string['personalmenuenablepersonalmenuheading'] = 'パーソナルメニュー';
+$string['personalmenuenablepersonalmenuheadingdesc'] = '注意：パーソナルメニューが無効になっている場合は、マイコースページからコースにアクセスできます。コースの概要ブロックが有効になっており、コースがページに表示されることを確認してください。';
+$string['personalmenuenablepersonalmenudesc'] = 'マイコースリンクでパーソナルメニューを開きます。無効になっている場合、マイコースページにリダイレクトされます。';
+$string['mycoursessnapfeedsheading'] = 'スナップフィード';
+$string['mycoursessnapfeedsdesc'] = '注意：[<strong>高度なフィード</strong>]は、[<strong>期限</strong>]、[<strong>フィードバックと評定</strong>]、[<strong>メッセージ</strong>]、または[<strong>フォーラム投稿</strong>]のオプションのうち少なくとも1つが選択されている場合にのみ使用可能になります。';
+$string['refreshdeadlinestasksettingheading'] = 'スケジュール済みタスクで期限をリフレッシュする';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
-$string['poweredbyrunby'] = '<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>で構築された
-<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベース製品。<br>
-Copyright © {$a->year} Open LMS, All Rights Reserved.';
+$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品である<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>を使用して構築されています。<br>Copyright © {$a->year} Open LMS, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ユーザがお気に入りとしてマークしたコースのコースID';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'コースをお気に入りにマークしたユーザのユーザID';
@@ -290,7 +297,7 @@ $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'ユー�
 $string['privacy:metadata:theme_snap_course_favorites'] = 'Snapのユーザのコースのお気に入りを保存します';
 $string['problemsfound'] = '問題が見つかりました。';
 $string['progress'] = '進捗';
-$string['readmore'] = '詳細を表示 »';
+$string['readmore'] = '詳細を表示 »';
 $string['recentactivity'] = '最近のアクティビティ';
 $string['recentfeedback'] = 'フィードバック';
 $string['region-main'] = 'メイン';
@@ -302,8 +309,9 @@ $string['released'] = 'リリース済み：{$a}';
 $string['reopened'] = '再オープン';
 $string['resourcedisplay'] = 'リソース表示';
 $string['resourcedisplayhelp'] = '添付ファイルとリンクをコースにどのように表示するか選択します。Snapテーマでは、小さいアクティビティとリソースカードの説明にあるマルチメディアファイルをサポートしていません。';
+$string['resumegraphicsanim'] = 'GIFアニメーションを再開します。';
 $string['displaydescription'] = '説明を表示する';
-$string['displaydescriptionhelp'] = '選択すると、最初に新しいページにリソースとURLアクティビティの説明が表示されます。学生は、説明からコンテンツにアクセスします。';
+$string['displaydescriptionhelp'] = '選択すると、最初に新しいページにリソースアクティビティの説明が表示されます。学生は、説明からコンテンツにアクセスします。';
 $string['search'] = 'コンテンツを検索する';
 $string['showcoursegradepersonalmenu'] = '成績';
 $string['showcoursegradepersonalmenudesc'] = 'パーソナルメニューのコースカードにユーザの評定を表示します';
@@ -322,8 +330,8 @@ $string['topbarlinkcolor'] = 'ナビゲーションバーのリンクとアイ�
 $string['topbarbuttoncolor'] = 'マイコースの背景';
 $string['togglenavigation'] = 'ナビゲーションに切り替える';
 $string['topicactions'] = 'トピックアクション';
-$string['twitter'] = 'Twitter';
-$string['twitterdesc'] = 'あなたのTwitterアカウントのURLです。';
+$string['xakatwitter'] = '𝕏';
+$string['xakatwitterdesc'] = 'あなたの𝕏アカウントのURLです。';
 $string['unenrolme'] = '登録抹消する';
 $string['enrolme'] = '受講登録する';
 $string['unread'] = '未読';
@@ -349,12 +357,9 @@ $string['showallsectionsdisabled'] = 'デザイン言語のため、Snapでは�
 $string['disabled'] = '無効';
 $string['showappearancedisabled'] = 'Snapの設計言語は"アピアランス"設定の変更を防ぎます。';
 $string['pbb'] = 'プロファイルベースのブランディング';
-$string['pbb_description'] = '[<strong>プロファイルベースのブランディング</strong>]を有効にすると、選択したユーザプロファイルフィールドに基づいて、特定のユーザのグループのブランドエクスペリエンスをカスタマイズできます。
-<ul><li>ユーザのフィールド値は<em>スラッグ化</em>され、すべての文字が小文字に変換され、ダッシュ（-）で分割されます。</li>
+$string['pbb_description'] = '[<strong>プロファイルベースのブランディング</strong>]を有効にすると、選択したユーザプロファイルフィールドに基づいて、特定のユーザのグループのブランドエクスペリエンスをカスタマイズできます。<ul><li>ユーザのフィールド値は<em>スラッグ化</em>され、すべての文字が小文字に変換され、ダッシュ（-）で分割されます。</li>
 <li>文字列<code>snap-pbb-</code>が先頭に追加されます</li>
-<li>このクラスは、<code>body</code> Htmlタグに追加されます。</li></ul>
-たとえば、ユーザフィールド値<em>Blueberry Extravaganza</em>は、<code>snap-pbb-blueberry-extravaganza</code>のようにスラッグ化されます。<br /><br />
-この機能はカスタムCSSと組み合わせて使用されます。このため、<a class="snap-settings-tab-link" href="#themesnapbranding">基本</a>セクションで新しいクラスを使用して、CSSセレクタを追加する必要があります。';
+<li>このクラスは、<code>body</code> Htmlタグに追加されます。</li></ul>たとえば、ユーザフィールド値<em>Blueberry Extravaganza</em>は、<code>snap-pbb-blueberry-extravaganza</code>のようにスラッグ化されます。<br /><br />この機能はカスタムCSSと組み合わせて使用されます。このため、<a class="snap-settings-tab-link" href="#themesnapbranding">基本</a>セクションで新しいクラスを使用して、CSSセレクタを追加する必要があります。';
 $string['pbb_enable'] = 'プロファイルベースのブランディングを有効にする';
 $string['pbb_enable_description'] = 'アクティブな場合、bodyタグへのクラスの追加のみ行います。';
 $string['pbb_field'] = '使用するユーザフィールド';
@@ -372,12 +377,10 @@ $string['gotocalendarsnap'] = 'サイトカレンダーに移動します。';
 $string['quizattemptswarn'] = '一時停止ユーザの受験を除外する';
 $string['quizfeedback'] = 'フィードバック';
 $string['validratio'] = 'この色の組み合わせは、WCAG 2.0の最小比率値4.5:1に準拠しています';
-$string['invalidratio'] = 'この色の組み合わせは、
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません。値：「{$a}」';
+$string['invalidratio'] = 'この色の組み合わせは、<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません。値：「{$a}」';
 $string['imageinvalidratio'] = 'このイメージは、WCAG 2.0の最小比率値4.5:1に準拠していないため、コントラストに問題がある可能性があります。平均ピクセル値：「{$a}」';
-$string['catinvalidratio'] = '次の色のカテゴリは、
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません。
-サイトの背景色（白）に対して：「{$a->white}」。バーの背景色に対して：「{$a->custombar}」。[マイコース]ボタンの背景色に対して：「{$a->customnav}」';
+$string['catinvalidratio'] = '以下の色のカテゴリは、<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません：サイトの背景色 (白) に対して：「{$a->white}」。ナビゲーションバーの背景色に対して：「{$a->custombar}」。[マイコース]ボタンの背景色に対して：「{$a->customnav}」';
+$string['spotinvalidratio'] = '背景色は、<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません。{$a->name} に対する現在の値：{$a->value}。';
 $string['imageinvalidratiocategory'] = 'このイメージは、WCAG 2.0最小比率値4.5:1に準拠していないため、テーマの色とのコントラストに問題がある可能性があります。平均ピクセル値：「{$a}」';
 $string['lazyload_mod_page'] = 'ページリソースのデフォルトの遅延読み込みを有効にする';
 $string['lazyload_mod_page_description'] = '有効にした場合、この設定は、大量のページがあるコースページの読み込み時間を大幅に短縮します。';
@@ -395,8 +398,6 @@ $string['moodleloginfirst'] = '最初にMoodleログインを表示する';
 $string['alternativeloginfirst'] = '最初に代替ログインオプションを表示する';
 $string['alternativeloginoptions'] = '代替ログインオプション';
 $string['openmessagedrawer'] = 'メッセージングドロワーを開きます。';
-$string['design_mod_page'] = 'ページリソースの以前のデザインを有効にする';
-$string['design_mod_page_description'] = '有効にすると、ページリソースのコンテンツが、同じページ、コース、またはフロントページに表示されます。';
 $string['refreshdeadlinestask'] = '終了日時のキャッシュされたデータをリフレッシュします。これはすべてのユーザがログインする前に実行される必要があります。';
 $string['resetdeadlinesquerycounttask'] = '期限のクエリ数をリセットする';
 $string['refreshdeadlinestaskoff'] = '投入するデータを検索しませんでした。Snapの個人メニュー設定の「スケジュール済みタスクを使用して期限をリフレッシュ」設定をオンにし、このタスクが期限キャッシュデータを投入できるようにします。';
@@ -419,3 +420,17 @@ $string['classic_template'] = 'クラシックテンプレート';
 $string['loginbgimg'] = 'ログイン時の背景画像';
 $string['loginbgimgdesc'] = 'ログインページの背景に表示される画像を選択します。表示される画像を適切に動作させるには、アスペクト比16:9（解像度720pまたはサイズ1280x720ピクセル）のファイルをアップロードしてください。適切に表示されるようにするために、アップロードした画像は同じサイズにする必要があります。';
 $string['stylish_template'] = 'スタイリッシュなテンプレート';
+$string['activityedit'] = 'アクティビティを編集する';
+$string['snapfeedsblocktitle'] = 'スナップフィード';
+$string['tiktok'] = 'TikTok';
+$string['tiktokdesc'] = 'あなたのtiktokアカウントのURLです。';
+$string['snapfootersettings'] = 'スナップフッタ';
+$string['snapfootercustomization'] = 'フッタのカスタマイズ';
+$string['snapfootercustomizationdesc'] = 'スナップを使用すると、サイト全体に表示されるテーマのフッタをカスタマイズできます。学習者や教育者と共有したい組織に関する便利なリンク、サポートリソース、その他の貴重な情報を追加して、ユーザエクスペリエンスを強化します。';
+$string['snapfootercolors'] = 'サイトフッタ色';
+$string['snapfootercolorsdesc'] = 'フッタの色は変更できます。背景色やテキストの色を変更するには、次のカラーピッカーで選択します。';
+$string['snapfooterbgcolor'] = 'フッタの背景色';
+$string['snapfootertxtcolor'] = 'フッタの文字色';
+$string['enableblockmyoverviewwarning'] = 'コースの概要ブロックが無効になっています。コースを表示するには、ブロックを有効にしてください。';
+$string['collapseicon'] = 'コンテンツを折りたたむ';
+$string['expandicon'] = 'コンテンツを展開する';
