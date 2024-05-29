@@ -54,8 +54,7 @@ $string['categoryedit'] = 'Kategoriyi düzenle';
 $string['category_color'] = 'Kategori rengi';
 $string['category_color_description'] = 'Ders Kategorisi rengi. Alt dersler, en yakın üst kategori yapılandırmasını alır';
 $string['category_color_palette'] = 'Renk paleti';
-$string['category_color_palette_description'] = 'Verilen renk için ilgili on altılık değere bakın. Bu işlem
-herhangi bir yapılandırmayı etkilemez. Sadece kullanıcıların yapılandırma değerini anlaması için bir örnektir.';
+$string['category_color_palette_description'] = 'Verilen renk için ilgili onaltılık değere bakın. Bu işlem, herhangi bir yapılandırmayı etkilemez. Sadece kullanıcıların yapılandırma değerini anlaması için bir örnektir.';
 $string['changecoverimage'] = 'Kapak görüntüsünü değiştir';
 $string['changefullname'] = 'Site adını değiştir';
 $string['chapters'] = 'Bölümler';
@@ -76,10 +75,12 @@ $string['coursepartialrender'] = 'Ders bölümleri için yavaş yüklemeyi etkin
 $string['coursepartialrenderdesc'] = 'Etkinleştirildiğinde, ders bölümleri bir kullanıcı tarafından seçildiğinde istek üzerine yüklenir. Bu, büyük miktarda içeriğe sahip derslerin daha hızlı yüklenmesine yardımcı olur.';
 $string['coursenavigation'] = 'Ders gezintisi';
 $string['coursesummaryfilesunsuitable'] = 'Kapak resmini değiştirmeden önce lütfen ders özeti dosyalarınızı boşaltın';
+$string['courseactionslabel'] = 'eylemler';
 $string['courseactivitieslabel'] = 'Bölüm etkinlikleri';
 $string['coursetools'] = 'Ders Panosu';
 $string['coverdisplay'] = 'Kapak görüntüsü';
 $string['covercarousel'] = 'Kapak atlıkarıncası';
+$string['covercarousellabel'] = 'Kayar menü';
 $string['covercarouselon'] = 'Kapak atlıkarıncası kullan';
 $string['covercarouseldescription'] = '<p>Atlıkarınca, sitenizin ana sayfasında kapak resmi yerine görüntülenen bir dizi dönen başlık ya da bir slayt gösterisidir.</p>
 <p>3 taneye kadar resim, her slayt için bir başlık ve isteğe bağlı olarak altyazı ekleyin. 1200 x 600 piksel büyüklüğündeki resimler en iyi sonucu verir.</p>';
@@ -143,7 +144,8 @@ $string['favorited'] = 'Sık kullanılanlara eklenen {$a}';
 $string['featurespots'] = 'Özellik noktaları';
 $string['featurespotsedit'] = 'Özellik noktalarını düzenle';
 $string['featurespotshelp'] = '<p>Mevcut ve potansiyel kullanıcılar için temel faydaları vurgulamak üzere sitenizin ön sayfasına 3 adede kadar özellik noktası ekleyin.</p>
-<p>Her özellik için bir başlık, içerik ve isteğe bağlı olarak bir görsel ekleyin. Görseller kare şeklinde olmalı ve 200 x 200 pikselden büyük olmamalıdır.</p>';
+<p>Her özelliğe bir görüntü, başlık ve içerik açıklaması ekleyebilirsiniz. Özelliği ön sayfada görmek için bir başlık girmeniz gerekir. Görüntü ve içerik açıklaması bölümleri isteğe bağlıdır.</p>
+<p>Önerilen görüntü boyutu karedir ve 200 piksele 200 pikselden büyük değildir.</p>';
 $string['featurespotsheading'] = 'Özellik noktaları başlığı';
 $string['featureonetitle'] = 'Özellik 1 başlığı';
 $string['featuretwotitle'] = 'Özellik 2 başlığı';
@@ -176,11 +178,16 @@ $string['featuredcourseeight'] = 'Öne çıkan ders 8';
 $string['featuredcoursesedit'] = 'Öne çıkan dersleri düzenle';
 $string['featuredcoursesbrowseall'] = 'Tüm derslere gözat';
 $string['featuredcoursesbrowsealldesc'] = 'Tüm derslere gözat bağlantısı ekle';
+$string['feature_spot_background_color'] = 'Arka plan rengi';
+$string['feature_spot_title_color'] = 'Başlık metni rengi';
+$string['feature_spot_description_color'] = 'Açıklama metni rengi';
+$string['feature_spot_title_color_lower'] = 'başlık metni rengi';
+$string['feature_spot_description_color_lower'] = 'açıklama metni rengi';
 $string['feedbackavailable'] = 'Geri bildirim mevcut';
 $string['feedbacktoggle'] = 'Geri bildirim ve not verme';
 $string['feedbacktoggledesc'] = 'Öğrencilere en son geri bildirimlerini ve eğitmenlere not verilmesi gereken en son gönderileri göster.';
 $string['footnote'] = 'Site altbilgisi';
-$string['footnotedesc'] = 'Altbilgi tüm site boyunca görüntülenir. Öğrenciler ve eğitmenlerle paylaşmak istediğiniz yardım, destek ve organizasyonunuza ait diğer sitelerin bağlantılarını koymak için en uygun yer burasıdır. Örneğin kütüphane veya bir e-posta adresi.';
+$string['footnotedesc'] = 'Site bilgilerinizi HTML olarak ekleyebilir ve bağlantılar, görüntüler veya olay listeleri verebilirsiniz.';
 $string['forcepwdwarningpersonalmenu'] = 'Kişisel menünüzü kullanmaya başlamadan önce <a href="{$a}">parolanızı değiştirmelisiniz</a>.';
 $string['forumauthor'] = 'Yazar';
 $string['forumlastpost'] = 'Son gönderi';
@@ -200,6 +207,7 @@ $string['headingfont'] = 'Başlık yazı tipi';
 $string['headingfont_desc'] = 'Bu tırnaksız yazı tipi sitenizdeki başlıklarda (h1-h6 öğeleri) kullanılır. Özel bir web yazı tipi ekliyorsanız bunu Moodle ek HTML\'sine eklemeyi unutmayın. Diğer öğelerin yazı tiplerini değiştirmek isterseniz lütfen Özel CSS seçeneğini kullanın. Bunu nasıl yapacağınızla ilgili örnekler için lütfen bu <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">belgeye</a> göz atın.';
 $string['helpwithlogin'] = 'Oturum açma yardımı';
 $string['helpwithloginandguest'] = 'Oturum açma / konuk erişimi yardımı';
+$string['loginrequiredmessage'] = '* gerekli bir alanı belirtir';
 $string['hiddencoursestoggle'] = 'Gizli dersler';
 $string['highlightedsection'] = 'vurgulanan';
 $string['home'] = 'ana sayfa';
@@ -209,15 +217,7 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Instagram hesabınızın url\'si.';
 $string['introduction'] = 'Giriş';
 $string['jsontext'] = 'JSON Metni';
-$string['jsontextdescription'] = 'Metin alanı verilen JSON\'u doğrular, böylece yalnızca mevcut kategorilere izin verilir,
-yalnızca kimlik kaydı (kategori kayıtları) olarak sayısal değerler geçerlidir ve renkler için yalnızca on altılık değerler kabul edilir.
-Bir örnekle devam edelim:<br>
-{"1":"#FAAFFF",<br>
-"45":"#AFF",<br>
-"65":"#FFF228",<br>
-"12":"#CC0084",<br>
-"56":"#CC0087",<br>
-"89":"#CCF084"}';
+$string['jsontextdescription'] = 'Metin alanı verilen JSON\'u doğrular, bu nedenle yalnızca mevcut kategorilere izin verilir, kimlik kayıtları (kategori kayıtları) olarak yalnızca sayısal değerler geçerlidir ve renkler olarak yalnızca onaltılık değerler kabul edilir. Bir örnek:<br>{"1":"#FAAFFF",<br>"45":"#AFF",<br>"65":"#FFF228",<br>"12":"#CC0084",<br>"56":"#CC0087",<br>"89":"#CCF084"}';
 $string['knowledgebase'] = 'Blackboard Open LMS Bilgi Bankası';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
@@ -236,9 +236,10 @@ $string['menu'] = 'Derslerim';
 $string['messageread'] = 'Okunmuş İletiler';
 $string['messages'] = 'İletiler';
 $string['messagestoggle'] = 'İletiler';
-$string['messagestoggledesc'] = 'Son 12 ay içinde alınan en son iletileri kullanıcılara gösterin.';
+$string['messagestoggledesc'] = 'Kullanıcılara son 12 hafta içinde aldıkları en son mesajları gösterin. Bu seçeneği etkinleştirmek için Gelişmiş Özellikler sayfasındaki mesajlaşma özelliğinin etkinleştirildiğinden emin olun.';
 $string['more'] = 'Daha Fazla';
 $string['morenews'] = 'Daha fazla haber';
+$string['moreoptionslabel'] = 'Daha Fazla Seçenek';
 $string['movingstartedhelp'] = '"{$a}" bölümünü yerleştirmek istediğiniz yere gidin';
 $string['movingdropsectionhelp'] = '"{$a->moving}" bölümünü "{$a->before}" bölümünün önüne yerleştirin';
 $string['moving'] = '"{$a}" taşınıyor';
@@ -263,7 +264,9 @@ $string['notcontributed'] = 'Katkıda bulunulmayan';
 $string['notpublished'] = 'Öğrencilere yayımlanmayan';
 $string['notsubmitted'] = 'Teslim edilmeyen';
 $string['overdue'] = 'Süresi geçmiş';
+$string['pausegraphicsanim'] = 'GIF animasyonunu duraklatın.';
 $string['personalmenu'] = 'Kişisel menü';
+$string['personalmenuandsnapfeeds'] = 'Kişisel menü ve Snap akışları';
 $string['personalmenufeatures'] = 'Kişisel menü özellikleri';
 $string['personalmenulogintoggle'] = 'Oturum açma sonrasında kişisel menüyü göster';
 $string['personalmenulogintoggledesc'] = 'Oturum açılır açılmaz kişisel menüyü açar';
@@ -275,13 +278,18 @@ $string['personalmenuadvancedfeedslifetime'] = 'Gelişmiş akış kullanım sür
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Akışların oturum açma sonrasında tarayıcıda ne kadar süreyle önbellekte tutulacağını seçin. "0" değeri atandığında akışlar tarayıcıda önbellekte tutulmaz.';
 $string['personalmenurefreshdeadlines'] = 'Zamanlanmış görev kullanarak bitiş tarihlerini yenile';
 $string['personalmenurefreshdeadlinesdesc'] = 'Görev çalıştığında daha hızlı sayfa yükleme süreleri için bitiş tarihi verileri yenilenecektir.';
+$string['personalmenuenablepersonalmenu'] = 'Kişisel menüyü etkinleştirin';
+$string['personalmenuenablepersonalmenuheading'] = 'Kişisel menü';
+$string['personalmenuenablepersonalmenuheadingdesc'] = 'Not: Kişisel Menü devre dışı bırakılırsa Kurslarım sayfasından kurslarınıza erişebilirsiniz. Kursların sayfada görülebilmesi için lütfen Kursa genel bakış blokunun etkinleştirildiğinden emin olun.';
+$string['personalmenuenablepersonalmenudesc'] = 'Kurslarım bağlantısı kişisel menüyü açar. Devre dışı bırakılırsa Kurslarım sayfasına yönlendirilir.';
+$string['mycoursessnapfeedsheading'] = 'Snap akışları';
+$string['mycoursessnapfeedsdesc'] = 'Not: <strong>Gelişmiş Beslemeler</strong> yalnızca <strong>Son Tarihler</strong>, <strong>Geri Bildirim ve not verme</strong>, <strong>Mesajlar</strong> veya <strong>Forum gönderileri</strong> seçeneklerinden en az biri seçildiğinde kullanılabilir hale gelir.';
+$string['refreshdeadlinestasksettingheading'] = 'Zamanlanmış bitiş tarihleri görevini yenile';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kapak görüntüsü';
 $string['posterdesc'] = 'Sitenizin ön sayfası için büyük bir başlık görüntüsü. Yatay yönlendirilmiş (1200 x600 piksel) veya daha büyük resimler en iyisidir.';
-$string['poweredbyrunby'] = '<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Moodle</a> tabanlı bir ürün olan
-<a href="https://moodle.com/" target="_blank" rel="noopener">Open LMS</a> ile üretilmiştir.<br>
-Telif hakları © {$a->year} Open LMS, Tüm Hakları Saklıdır.';
+$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a> tabanlı bir ürün olan <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">OpenLMS</a> ile üretilmiştir.<br>Telif hakları © {$a->year} Open LMS, Tüm Hakları Saklıdır.';
 $string['previoussection'] = 'Bir önceki bölüm';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Kullanıcının sık kullanılanlara eklediği dersin kimliği';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Dersi sık kullanılanlara ekleyen kullanıcının kullanıcı kimliği';
@@ -289,7 +297,7 @@ $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'Kullan�
 $string['privacy:metadata:theme_snap_course_favorites'] = 'Kullanıcının Snap için sık kullanılanlara eklediği dersleri depolar';
 $string['problemsfound'] = 'Bulunan Sorunlar';
 $string['progress'] = 'İlerleme';
-$string['readmore'] = 'Devamını oku »';
+$string['readmore'] = 'Devamını oku »';
 $string['recentactivity'] = 'En Son Etkinlik';
 $string['recentfeedback'] = 'Geri bildirim';
 $string['region-main'] = 'Ana';
@@ -301,8 +309,9 @@ $string['released'] = 'Yayımlanma tarihi: {$a}';
 $string['reopened'] = 'Yeniden açıldı';
 $string['resourcedisplay'] = 'Kaynak görüntüsü';
 $string['resourcedisplayhelp'] = 'Dersinizde eklerin ve bağlantıların nasıl göründüğünü seçin. Snap teması, küçük etkinlik ve kaynak kartlarının açıklamasındaki multimedya dosyalarını desteklemez.';
+$string['resumegraphicsanim'] = 'GIF animasyonunu sürdürün.';
 $string['displaydescription'] = 'Açıklamayı göster';
-$string['displaydescriptionhelp'] = 'Önce yeni bir sayfada kaynak ve URL etkinliklerinin açıklamasını göstermek için bunu seçin. Öğrenciler içeriğe açıklamadan erişirler.';
+$string['displaydescriptionhelp'] = 'Önce yeni bir sayfada kaynak etkinliklerinin açıklamasını göstermek için bunu seçin. Öğrenciler içeriğe açıklama üzerinden erişirler.';
 $string['search'] = 'İçeriği ara';
 $string['showcoursegradepersonalmenu'] = 'Notlar';
 $string['showcoursegradepersonalmenudesc'] = 'Kullanıcılara kişisel menü içindeki ders kartlarında notlarını göster';
@@ -321,8 +330,7 @@ $string['topbarlinkcolor'] = 'Gezinti çubuğu bağlantı ve simge rengi';
 $string['topbarbuttoncolor'] = 'Derslerim\'in arka planı';
 $string['togglenavigation'] = 'Gezintiyi aç kapa';
 $string['topicactions'] = 'Konu eylemleri';
-$string['twitter'] = 'Twitter';
-$string['twitterdesc'] = 'Twitter hesabınızın url\'si.';
+$string['xakatwitterdesc'] = 'hesabınızın url\'si.';
 $string['unenrolme'] = 'Kaydımı sil';
 $string['enrolme'] = 'Beni kaydet';
 $string['unread'] = 'okunmamış';
@@ -348,12 +356,9 @@ $string['showallsectionsdisabled'] = 'Tasarım dili nedeniyle "Tüm bölümleri 
 $string['disabled'] = 'Devre dışı';
 $string['showappearancedisabled'] = 'Snap\'in tasarım dili "Görünüm" ayarlarının değiştirilmesini önler.';
 $string['pbb'] = 'Profil tabanlı markalama';
-$string['pbb_description'] = '<strong>Profil tabanlı markalamayı</strong> etkinleştirerek, seçilen kullanıcı profili alanına göre belirli kullanıcı grupları için markalama deneyimini özelleştirebilirsiniz.
-<ul><li>Kullanıcı alanı değeri tüm karakterleri küçük harfe dönüştürülerek ve tire (-) ile ayrılarak <em>dizileştirilir</em></li>
+$string['pbb_description'] = '<strong>Profil tabanlı markalamayı</strong> etkinleştirerek, seçilen kullanıcı profili alanına göre belirli kullanıcı grupları için markalama deneyimini özelleştirebilirsiniz.<ul><li>Kullanıcı alanı değeri tüm karakterleri küçük harfe dönüştürülerek ve tire (-) ile ayrılarak <em>dizileştirilir</em></li>
 <li>Başına <code>snap-pbb-</code> dizesi eklenir</li>
-<li>Bu sınıf <code>body</code> HTML etiketine eklenir</li></ul>
-Örneğin, <em>Blueberry Extravaganza</em> kullanıcı alanı değeri <code>snap-pbb-blueberry-extravaganza</code> olarak dizileştirilir<br /><br />
-Bu özellik Özel CSS ile birlikte kullanılır. Bunun için <a class="snap-settings-tab-link" href="#themesnapbranding">Temel Bilgiler</a> bölümündeki yeni sınıfları kullanarak CSS seçicileri eklemeniz gerekir.';
+<li>Bu sınıf <code>body</code> HTML etiketine eklenir</li></ul>Örneğin, <em>Blueberry Extravaganza</em> kullanıcı alanı değeri <code>snap-pbb-blueberry-extravaganza</code> olarak dizileştirilir<br /><br />Bu özellik Özel CSS ile birlikte kullanılır. Bunun için <a class="snap-settings-tab-link" href="#themesnapbranding">Temel Bilgiler</a> bölümündeki yeni sınıfları kullanarak CSS seçicileri eklemeniz gerekir.';
 $string['pbb_enable'] = 'Profil tabanlı markalamayı etkinleştir';
 $string['pbb_enable_description'] = 'Etkinse body etiketine yalnızca sınıfı ekler.';
 $string['pbb_field'] = 'Kullanılacak kullanıcı alanı';
@@ -371,12 +376,10 @@ $string['gotocalendarsnap'] = 'site takvimine gidin.';
 $string['quizattemptswarn'] = 'Askıya alınan kullanıcılara ait denemeleri hariç tutar';
 $string['quizfeedback'] = 'Geri bildirim';
 $string['validratio'] = 'Bu renk kombinasyonu WCAG 2.0 minimum oran değeri 4.5:1\'e uygun değil';
-$string['invalidratio'] = 'Bu renk kombinasyonu şununla uyumlu değil:
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>. Değer: "{$a}"';
+$string['invalidratio'] = 'Bu renk kombinasyonu <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. Değer: "{$a}"';
 $string['imageinvalidratio'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
-$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri şununla uyumlu değil
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>:
-Site arka plan renginin (beyaz) üzerinde: "{$a->white}". Gezinti çubuğu arka plan renginin üzerinde: "{$a->custombar}". Kurslarım düğmesi arka plan renginin üzerinde: "{$a->customnav}"';
+$string['catinvalidratio'] = 'Aşağıdaki renk kategorileri, Site arka plan rengine (beyaz) karşı: "{$a->white}". Gezinti çubuğu arka plan rengine karşı: "{$a->custombar}". Kurslarım düğmesi arka plan rengine karşı: "{$a->customnav}" içeren <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil.';
+$string['spotinvalidratio'] = 'Arka plan rengi WCAG<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank"> 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. {$a->name} değerine karşı geçerli değer: {$a->value}.';
 $string['imageinvalidratiocategory'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde tema rengiyle kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
 $string['lazyload_mod_page'] = 'Sayfa kaynakları için varsayılan yavaş yüklemeyi etkinleştir';
 $string['lazyload_mod_page_description'] = 'Etkinleştirildiğinde, bu ayar çok sayfalı dersler için ders sayfası yükleme sürelerini önemli ölçüde kısaltır.';
@@ -394,11 +397,9 @@ $string['moodleloginfirst'] = 'Önce Moodle oturumunu görüntüle';
 $string['alternativeloginfirst'] = 'Önce alternatif oturum açma seçeneklerini görüntüle';
 $string['alternativeloginoptions'] = 'Alternatif oturum açma seçenekleri';
 $string['openmessagedrawer'] = 'Mesajlaşma çekmecesini aç.';
-$string['design_mod_page'] = 'Sayfa kaynakları için önceki tasarımı etkinleştir';
-$string['design_mod_page_description'] = 'Bu ayar etkinleştirilirse sayfa kaynağı içeriği; aynı sayfa, kurs veya ön sayfa içerisinde görüntülenir.';
 $string['refreshdeadlinestask'] = 'Bitiş tarihlerinin önbellek verilerini yenile. Bu, tüm kullanıcılar oturum açmadan önce çalıştırılmalıdır.';
 $string['resetdeadlinesquerycounttask'] = 'Teslim tarihlerini sorgulama sayımını sıfırla';
-$string['refreshdeadlinestaskoff'] = 'Doldurmak için veri aranmadı. Önbelleğe alınmış son tarih verilerini doldurmak için lütfen Snap’in Kişisel menü ayarlarındaki “Son tarihleri planlanan görevi kullanarak yenile” ayarını açın.';
+$string['refreshdeadlinestaskoff'] = 'Doldurmak için veri aranmadı. Önbelleğe alınmış son tarih verilerini doldurmak için lütfen Snap\'in Kişisel menü ayarlarındaki “Son tarihleri planlanan görevi kullanarak yenile” ayarını açın.';
 $string['activityrestriction'] = 'Etkinlik kısıtlama';
 $string['hideandshowactioncb'] = 'Etkinlik onay kutusu eylemini gizle ve göster';
 $string['retryfeed'] = 'Bu akış şu anda kullanılamıyor, lütfen daha sonra tekrar kontrol edin. Akış: {$a}';
@@ -418,3 +419,17 @@ $string['classic_template'] = 'Klasik şablon';
 $string['loginbgimg'] = 'Oturum açma sayfası arka plan görseli';
 $string['loginbgimgdesc'] = 'Oturum açma sayfasının arka planında görüntülenecek görselleri seçin. Daha iyi bir görsel deneyim için lütfen 16:9 en/boy oranına sahip dosyalar yükleyin (720 p çözünürlükte veya 1280x720 piksel boyutlarında). Doğru bir görselleştirme için yüklenen görüntülerin aynı boyutlarda olması gerekir.';
 $string['stylish_template'] = 'Şık şablon';
+$string['activityedit'] = 'Etkinliği düzenle';
+$string['snapfeedsblocktitle'] = 'Snap akışları';
+$string['tiktok'] = 'TikTok';
+$string['tiktokdesc'] = 'TikTok hesabınızın url\'si.';
+$string['snapfootersettings'] = 'Snap altbilgisi';
+$string['snapfootercustomization'] = 'Altbilgi özelleştirme';
+$string['snapfootercustomizationdesc'] = 'Snap, temanın site genelinde görüntülenen altbilgisinin özelleştirilmesine olanak tanır. Yararlı bağlantılar, destek kaynakları veya kuruluşunuz hakkında öğrenciler ve eğitimcilerle paylaşmak istediğiniz diğer değerli bilgileri ekleyerek kullanıcı deneyimini geliştirin.';
+$string['snapfootercolors'] = 'Site altbilgi renkleri';
+$string['snapfootercolorsdesc'] = 'Altbilginin renkleri değiştirilebilir: Arka plan rengini ve/veya metin rengini değiştirmek için bunları aşağıdaki renk seçicilerden seçin.';
+$string['snapfooterbgcolor'] = 'Altbilgi arka plan rengi';
+$string['snapfootertxtcolor'] = 'Altbilgi metin rengi';
+$string['enableblockmyoverviewwarning'] = 'Ders özeti bloku devre dışı bırakıldı. Kursları görüntülemek için lütfen engeli etkinleştirin.';
+$string['collapseicon'] = 'Şunun içeriğini daraltın:';
+$string['expandicon'] = 'Şunun içeriğini genişletin:';

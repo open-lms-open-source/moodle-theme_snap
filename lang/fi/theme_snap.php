@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2023 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2024 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -54,8 +54,7 @@ $string['categoryedit'] = 'Muokkaa kategoriaa';
 $string['category_color'] = 'Kategorian väri';
 $string['category_color_description'] = 'Kurssikategorian väri. Alakurssit omaksuvat lähimmän yläkategorian määritykset';
 $string['category_color_palette'] = 'Väripaletti';
-$string['category_color_palette_description'] = 'Katso väriä vastaava heksadesimaaliarvo. Tämä ei vaikuta
-määrityksiin, sillä se on vain esimerkki, jonka avulla käyttäjät voivat luoda määritysarvon.';
+$string['category_color_palette_description'] = 'Katso väriä vastaava heksadesimaaliarvo. Tämä ei vaikuta määrityksiin, sillä kyseessä on vain esimerkki, jonka avulla käyttäjät voivat luoda määritysarvon.';
 $string['changecoverimage'] = 'Vaihda kansikuva';
 $string['changefullname'] = 'Muuta sivuston nimeä';
 $string['chapters'] = 'Luvut';
@@ -76,10 +75,12 @@ $string['coursepartialrender'] = 'Ota kurssiosioiden valikoiva lataus käyttöö
 $string['coursepartialrenderdesc'] = 'Jos tämä on käytössä, kurssiosiot ladataan vasta, kun käyttäjä valitsee niitä. Tämä nopeuttaa paljon sisältöä sisältävien kurssien latautumista.';
 $string['coursenavigation'] = 'Kurssin siirtymisvalinnat';
 $string['coursesummaryfilesunsuitable'] = 'Tyhjennä kurssin kuvauksen tiedostot, ennen kuin yrität vaihtaa kansikuvaa';
+$string['courseactionslabel'] = 'toimintoa';
 $string['courseactivitieslabel'] = 'Osion aktiviteetit';
 $string['coursetools'] = 'Kurssin koontinäyttö';
 $string['coverdisplay'] = 'Kansinäyttö';
 $string['covercarousel'] = 'Kansikaruselli';
+$string['covercarousellabel'] = 'Karuselli';
 $string['covercarouselon'] = 'Käytä kurssikaruselliä';
 $string['covercarouseldescription'] = '<p>Karuselli on joukko vaihtuvia bannereita tai diaesitys, joka näytetään aloitussivulla kansikuvan sijaan.</p>
 <p>Voit lisätä enintään kolme kuvaa, otsikon kullekin dialle ja haluamasi tekstityksen. Parhaiten toimivat kuvat, joiden koko on 1200 x 600 pikseliä.</p>';
@@ -102,8 +103,7 @@ $string['deadlines'] = 'Määräajat';
 $string['deadlinestoggle'] = 'Määräajat';
 $string['deadlinestoggledesc'] = 'Näytä käyttäjille rekisteröityneiden kurssien tulevien aktiviteettien määräajat.';
 $string['defaultsummary'] = 'Lisää aiheen kuvaus tälle alueelle tekstin, kuvien, äänen ja videoiden avulla.';
-$string['defaultintrosummary'] = 'Tervetuloa uudelle kurssille {$a}.
-<br>Aloita kuvailemalla kurssin sisältöä käyttämällä tekstiä, kuvia, ääntä ja videoita.';
+$string['defaultintrosummary'] = 'Tervetuloa uudelle kurssille {$a}.<br>Aloita kuvailemalla kurssin sisältöä käyttämällä tekstiä, kuvia, ääntä ja videoita.';
 $string['defaulttopictitle'] = 'Nimetön aihe';
 $string['debugerrors'] = 'Virheenkorjaus';
 $string['deleteassetconfirm'] = 'Poista {$a}';
@@ -144,7 +144,8 @@ $string['favorited'] = 'Lisätty suosikkeihin: {$a}';
 $string['featurespots'] = 'Toimintomainokset';
 $string['featurespotsedit'] = 'Muokkaa toimintomainoksia';
 $string['featurespotshelp'] = '<p>Voit lisätä sivustosi etusivulle enintään kolme toimintomainosta, joilla voit esitellä sivuston hyödyllisiä toimintoja nykyisille ja mahdollisille käyttäjille.</p>
-<p>Lisää kullekin toiminnolle otsikko, sisältö ja kuva (vapaaehtoinen). Kuvien tulisi olla neliönmuotoisia ja kooltaan enintään 200 x 200 pikseliä.</p>';
+<p>Voit lisätä kullekin toiminnolle kuvan, otsikon ja sisällön kuvauksen. Otsikko on lisättävä, jotta toiminto näkyy etusivulla. Kuva ja sisällön kuvauksen osiot ovat valinnaisia.</p>
+<p>Suositeltu kuva on neliö, jonka koko on enintään 200 x 200 pikseliä.</p>';
 $string['featurespotsheading'] = 'Toimintomainosten otsikko';
 $string['featureonetitle'] = 'Toiminnon 1 otsikko';
 $string['featuretwotitle'] = 'Toiminnon 2 otsikko';
@@ -177,11 +178,16 @@ $string['featuredcourseeight'] = 'Esitelty kurssi 8';
 $string['featuredcoursesedit'] = 'Muokkaa esiteltyjä kursseja';
 $string['featuredcoursesbrowseall'] = 'Selaa kaikkia kursseja';
 $string['featuredcoursesbrowsealldesc'] = 'Lisää Selaa kaikkia kursseja -linkki';
+$string['feature_spot_background_color'] = 'Taustaväri';
+$string['feature_spot_title_color'] = 'Otsikon tekstin väri';
+$string['feature_spot_description_color'] = 'Kuvauksen tekstin väri';
+$string['feature_spot_title_color_lower'] = 'otsikon tekstin väri';
+$string['feature_spot_description_color_lower'] = 'kuvauksen tekstin väri';
 $string['feedbackavailable'] = 'Palaute saatavilla';
 $string['feedbacktoggle'] = 'Palaute ja arviointi';
 $string['feedbacktoggledesc'] = 'Näytä opiskelijoille heidän viimeisin palautteensa ja opettajille viimeisimmät palautukset, jotka täytyy arvioida.';
 $string['footnote'] = 'Sivuston alatunniste';
-$string['footnotedesc'] = 'Alatunniste näytetään kaikkialla sivustossa. Se on paras paikka lisätä linkkejä ohjeisiin, tukeen ja muihin organisaation sivustoihin, jotka haluat jakaa opiskelijoiden ja opettajien kanssa (voit lisätä siihen esimerkiksi kirjaston tai sähköpostiosoitteen).';
+$string['footnotedesc'] = 'Voit lisätä sivuston tiedot HTML-muodossa ja sisällyttää linkkejä, kuvia tai tapahtumaluetteloita.';
 $string['forcepwdwarningpersonalmenu'] = 'Sinun täytyy <a href="{$a}">vaihtaa salasanasi</a> ennen henkilökohtaisen valikon käyttöä.';
 $string['forumauthor'] = 'Tekijä';
 $string['forumlastpost'] = 'Viimeisin viesti';
@@ -201,6 +207,7 @@ $string['headingfont'] = 'Otsikon fontti';
 $string['headingfont_desc'] = 'Tätä päätteetöntä kirjasinta käytetään otsikoissa (elementeissä h1–h6) koko sivustossa. Jos sisällytät mukautetun verkkokirjasimen, muista lisätä se Moodlen lisättävään HTML-koodiin. Jos haluat muokata muiden elementtien kirjasimia, käytä Mukautettu CSS -valintaa. Esimerkkejä on tässä <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">ohjeessa</a>.';
 $string['helpwithlogin'] = 'Apua kirjautumiseen';
 $string['helpwithloginandguest'] = 'Apua kirjautumiseen / vierailijakäyttöön';
+$string['loginrequiredmessage'] = '* tarkoittaa pakollista kenttää';
 $string['hiddencoursestoggle'] = 'Piilotetut kurssit';
 $string['highlightedsection'] = 'korostettu';
 $string['home'] = 'etusivu';
@@ -210,15 +217,7 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'Tämä on Instagram-tilisi URL-osoite.';
 $string['introduction'] = 'Johdanto';
 $string['jsontext'] = 'JSON-teksti';
-$string['jsontextdescription'] = 'Tekstialue tarkistaa annetun JSON-kohteen, joten vain olemassa olevat kategoriat sallitaan,
-tietueiden tunnistamiseen (kategoriatietueiksi) kelpaavat vain numeeriset arvot ja väreille hyväksytään vain heksadesimaaliarvot.
-Tässä on esimerkki:<br>
-{"1":"#FAAFFF",<br>
-"45":"#AFF",<br>
-"65":"#FFF228",<br>
-"12":"#CC0084",<br>
-"56":"#CC0087",<br>
-"89":"#CCF084"}';
+$string['jsontextdescription'] = 'Tekstialue vahvistaa annetun JSON:n, joten vain olemassa olevat kategoriat sallitaan, vain numeeriset arvot tunnustietueina (kategoriatietueet) kelpaavat ja väreinä hyväksytään vain heksadesimaaliarvot. Esimerkki:<br>{"1":"#FAAFFF",<br>"45":"#AFF",<br>"65":"#FFF228",<br>"12":"#CC0084",<br>"56":"#CC0087",<br>"89":"#CCF084"}';
 $string['knowledgebase'] = 'Open LMS -tietämyskanta';
 $string['list'] = 'Luettelo';
 $string['linkedin'] = 'LinkedIn';
@@ -237,9 +236,10 @@ $string['menu'] = 'Omat kurssini';
 $string['messageread'] = 'Viesti luettu';
 $string['messages'] = 'Viestit';
 $string['messagestoggle'] = 'Viestit';
-$string['messagestoggledesc'] = 'Näytä käyttäjille heidän viimeisimmät saamansa viestit edellisen 12 viikon ajalta.';
+$string['messagestoggledesc'] = 'Näytä käyttäjille heidän uusimmat viestinsä, jotka on vastaanotettu viimeisten 12 viikon aikana. Jotta voit ottaa tämän asetuksen käyttöön, varmista, että edistyneiden toimintojen sivulla oleva viestitoiminto on otettu käyttöön.';
 $string['more'] = 'Lisää';
 $string['morenews'] = 'Lisää uutisia';
+$string['moreoptionslabel'] = 'Lisää asetuksia';
 $string['movingstartedhelp'] = 'Siirry kohtaan, johon haluat sijoittaa osion {$a}';
 $string['movingdropsectionhelp'] = 'Sijoita osio {$a->moving} ennen osiota {$a->before}';
 $string['moving'] = 'Siirretään {$a}';
@@ -264,7 +264,9 @@ $string['notcontributed'] = 'Ei osallistuttu';
 $string['notpublished'] = 'Ei julkaistu opiskelijoille';
 $string['notsubmitted'] = 'Ei palautettu';
 $string['overdue'] = 'Olisi jo pitänyt palauttaa';
+$string['pausegraphicsanim'] = 'Keskeytä GIF-animaatio.';
 $string['personalmenu'] = 'Henkilökohtainen valikko';
+$string['personalmenuandsnapfeeds'] = 'Henkilökohtainen valikko ja Snap-syötteet';
 $string['personalmenufeatures'] = 'Henkilökohtaisen valikon toiminnot';
 $string['personalmenulogintoggle'] = 'Näytä henkilökohtainen valikko kirjauduttaessa';
 $string['personalmenulogintoggledesc'] = 'Avaa henkilökohtaisen valikon heti kirjautumisen jälkeen';
@@ -276,13 +278,18 @@ $string['personalmenuadvancedfeedslifetime'] = 'Kehittyneiden syötteiden elinik
 $string['personalmenuadvancedfeedslifetimedesc'] = 'Valitse, kuinka pitkäksi aikaa syötteet tallennetaan selaimen välimuistiin kirjautumisen jälkeen. Jos annat arvoksi 0, syötteitä ei tallenneta selaimen välimuistiin.';
 $string['personalmenurefreshdeadlines'] = 'Päivitä määräpäivät ajastetun tehtävän avulla.';
 $string['personalmenurefreshdeadlinesdesc'] = 'Kun tehtävä suoritetaan, määräpäivätiedot päivitetään nopeampien sivun latausaikojen saamiseksi.';
+$string['personalmenuenablepersonalmenu'] = 'Ota henkilökohtainen valikko käyttöön';
+$string['personalmenuenablepersonalmenuheading'] = 'Henkilökohtainen valikko';
+$string['personalmenuenablepersonalmenuheadingdesc'] = 'Huomautus: Jos henkilökohtainen valikko on poistettu käytöstä, voit käyttää kurssejasi Omat kurssini -sivulta. Varmista, että Kurssin yhteenveto -lohko on otettu käyttöön, jotta kurssit näkyvät sivulla.';
+$string['personalmenuenablepersonalmenudesc'] = 'Omat kurssini -linkki avaa henkilökohtaisen valikon. Jos se on poistettu käytöstä, sinut ohjataan uudelleen Omat kurssini -sivulle.';
+$string['mycoursessnapfeedsheading'] = 'Snap-syötteet';
+$string['mycoursessnapfeedsdesc'] = 'Huomautus: <strong>Kehittyneet syötteet</strong> tulee saataville vasta kun vähintään yksi seuraavista valitaan: <strong>Määräajat</strong>, <strong>Palaute ja arviointi</strong>, <strong>Viestit</strong> tai <strong>Keskustelualueen viestit</strong>.';
+$string['refreshdeadlinestasksettingheading'] = 'Päivitä määräpäivät ajastetun tehtävän avulla';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Kansikuva';
 $string['posterdesc'] = 'Tämä on sivuston etusivulla näytettävä suuri ylätunnistekuva. Parhaiten toimivat vaakasuuntaiset kuvat, joiden koko on vähintään 1 200 x 600 pikseliä.';
-$string['poweredbyrunby'] = 'Luotu <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS:llä</a>,
-joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-pohjainen tuote.<br>
-Copyright © {$a->year} Open LMS. Kaikki oikeudet pidätetään.';
+$string['poweredbyrunby'] = 'Luotu <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS:llä</a>, joka on <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-pohjainen tuote.<br>Copyright © {$a->year} Open LMS. Kaikki oikeudet pidätetään.';
 $string['previoussection'] = 'Edellinen osio';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'Käyttäjän suosikkeihin lisäämän kurssin tunnus';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'Suosikkeihin kurssin lisänneen käyttäjän käyttäjätunnus';
@@ -290,7 +297,7 @@ $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'Aikalei
 $string['privacy:metadata:theme_snap_course_favorites'] = 'Tallentaa käyttäjän kurssisuosikit Snapissa';
 $string['problemsfound'] = 'Löydetyt ongelmat';
 $string['progress'] = 'Eteneminen';
-$string['readmore'] = 'Lue lisää »';
+$string['readmore'] = 'Lue lisää »';
 $string['recentactivity'] = 'Viimeisin toiminta';
 $string['recentfeedback'] = 'Palautteet';
 $string['region-main'] = 'Pääalue';
@@ -302,8 +309,9 @@ $string['released'] = 'Julkaistu: {$a}';
 $string['reopened'] = 'Avattu uudelleen';
 $string['resourcedisplay'] = 'Aineistonäyttö';
 $string['resourcedisplayhelp'] = 'Valitse, miten liitteet ja linkit näytetään kurssilla. Snap-teema ei tue multimediatiedostoja pienissä aktiviteeteissa ja aineistokorttien kuvauksissa.';
+$string['resumegraphicsanim'] = 'Jatka GIF-animaatiota.';
 $string['displaydescription'] = 'Näytä kuvaus';
-$string['displaydescriptionhelp'] = 'Jos haluat näyttää aineiston kuvauksen ja URL-aktiviteetit ensin uudella sivulla, valitse tämä. Opiskelijat käyttävät sisältöä kuvauksesta.';
+$string['displaydescriptionhelp'] = 'Jos haluat näyttää aineiston aktiviteettien kuvauksen ensin uudella sivulla, valitse tämä. Opiskelijat käyttävät sisältöä kuvauksesta.';
 $string['search'] = 'Etsi sisältöä';
 $string['showcoursegradepersonalmenu'] = 'Arvioinnit';
 $string['showcoursegradepersonalmenudesc'] = 'Näyttää käyttäjille heidän arvosanansa henkilökohtaisen valikon kurssikorteissa';
@@ -322,8 +330,8 @@ $string['topbarlinkcolor'] = 'Siirtymispalkin linkki- ja kuvakeväri';
 $string['topbarbuttoncolor'] = 'Omien kurssien tausta';
 $string['togglenavigation'] = 'Vaihda siirtymistilaa';
 $string['topicactions'] = 'Aiheen toiminnot';
-$string['twitter'] = 'Twitter';
-$string['twitterdesc'] = 'Tämä on Twitter-tilisi URL-osoite.';
+$string['xakatwitter'] = '𝕏';
+$string['xakatwitterdesc'] = 'Tämä on 𝕏-tilisi URL-osoite.';
 $string['unenrolme'] = 'Poista rekisteröityminen';
 $string['enrolme'] = 'Rekisteröi minut';
 $string['unread'] = 'lukematta';
@@ -349,12 +357,9 @@ $string['showallsectionsdisabled'] = 'Design-kielen takia "Näytä kaikki osiot 
 $string['disabled'] = 'Pois käytöstä';
 $string['showappearancedisabled'] = 'Snapin suunnittelukieli estää muutokset ulkoasuasetuksiin.';
 $string['pbb'] = 'Profiiliperusteinen brändäys';
-$string['pbb_description'] = 'Ottamalla käyttöön <strong>Profiiliperusteinen brändäys</strong> -asetuksen voit mukauttaa tietyn käyttäjäryhmän brändäyskokemusta valitun käyttäjäprofiilikentän perusteella.
-<ul><li>Käyttäjäkentän merkkijono muutetaan <em>pieniksi kirjaimiksi</em> ja erotellaan väliviivalla.</li>
+$string['pbb_description'] = 'Ottamalla käyttöön <strong>Profiiliperusteinen brändäys</strong> -asetuksen voit mukauttaa tietyn käyttäjäryhmän brändäyskokemusta valitun käyttäjäprofiilikentän perusteella.<ul><li>Käyttäjäkentän merkkijono muutetaan <em>pieniksi kirjaimiksi</em> ja erotellaan väliviivalla.</li>
 <li>Merkkijonon alkuun lisätään <code>snap-pbb-</code>.</li>
-<li>Tämä luokka lisätään HTML-koodin <code>body</code>-tunnisteeseen.</li></ul>
-Esimerkiksi käyttäjäkentän arvo <em>Blueberry Extravaganza</em> muunnetaan muotoon <code>snap-pbb-blueberry-extravaganza</code>.<br /><br />
-Tätä ominaisuutta käytetään Mukautettu CSS -asetuksen kanssa, ja sinun on lisättävä CSS-valitsimet käyttämällä <a class="snap-settings-tab-link" href="#themesnapbranding">Perusteet</a>-osion uusia luokkia.';
+<li>Tämä luokka lisätään HTML-koodin <code>body</code>-tunnisteeseen.</li></ul>Esimerkiksi käyttäjäkentän arvo <em>Blueberry Extravaganza</em> muunnetaan muotoon <code>snap-pbb-blueberry-extravaganza</code>.<br /><br />Tätä ominaisuutta käytetään Mukautettu CSS -asetuksen kanssa, ja sinun on lisättävä CSS-valitsimet käyttämällä <a class="snap-settings-tab-link" href="#themesnapbranding">Perusteet</a>-osion uusia luokkia.';
 $string['pbb_enable'] = 'Ota profiiliperusteinen brändäys käyttöön';
 $string['pbb_enable_description'] = 'Lisää luokan body-tunnisteeseen vain, jos aktiivinen.';
 $string['pbb_field'] = 'Käytettävä käyttäjäkenttä';
@@ -372,12 +377,10 @@ $string['gotocalendarsnap'] = 'siirry sivuston kalenteriin.';
 $string['quizattemptswarn'] = 'Jättää pois jäädytettyjen käyttäjien suorituskerrat';
 $string['quizfeedback'] = 'Palautteet';
 $string['validratio'] = 'Tämä väriyhdistelmä ei noudata WCAG 2.0:n minimisuhdearvoa 4.5:1';
-$string['invalidratio'] = 'Tämä väriyhdistelmä ei noudata
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0:n minimisuhdearvoa 4.5:1</a>. Arvo: {$a}';
+$string['invalidratio'] = 'Tämä väriyhdistelmä ei noudata <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0:n minimisuhdearvoa 4.5:1</a>. Arvo: {$a}';
 $string['imageinvalidratio'] = 'Tässä kuvassa saattaa olla kontrastiongelmia, jotka johtuvat poikkeamisesta WCAG 2.0:n vähimmäismittasuhdearvosta 4.5:1.Keskimääräinen pikseliarvo: {$a}';
-$string['catinvalidratio'] = 'Seuraavat värikategoriat eivät noudata
-<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0:n minimisuhdearvoa 4.5:1</a>:
-Sivuston taustaväriä (valkoinen) vasten: {$a->white}. Siirtymispalkin taustaväriä vasten: {$a->custombar}. Omat kurssit -painikkeen taustaväriä vasten: {$a->customnav}';
+$string['catinvalidratio'] = 'Seuraavat värikategoriat eivät noudata <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0:n minimisuhdearvoa 4.5:1</a>: Sivun taustaväriä (valkoinen) vasten: {$a->white}. Siirtymispalkin taustaväriä vasten: {$a->custombar}. Omat kurssit -painikkeen taustaväriä vasten: {$a->customnav}';
+$string['spotinvalidratio'] = 'Taustaväri ei noudata <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0:n minimisuhdearvoa 4.5:1</a>. Nykyinen arvo väriä {$a->name} vasten: {$a->value}.';
 $string['imageinvalidratiocategory'] = 'Tässä kuvassa voi olla kontrastiongelmia teeman väriä vasten johtuen siitä, ettei se noudata WCAG 2.0:n minimimittasuhdearvoa 4.5:1. Keskimääräinen pikseliarvo: {$a}';
 $string['lazyload_mod_page'] = 'Ota sivuaineistojen valikoiva lataus käyttöön';
 $string['lazyload_mod_page_description'] = 'Jos tämä asetus on käytössä, se nopeuttaa merkittävästi sivujen latausaikoja kursseilla, joilla on monia sivuja.';
@@ -395,8 +398,6 @@ $string['moodleloginfirst'] = 'Näytä Moodle-kirjautuminen ensimmäisenä';
 $string['alternativeloginfirst'] = 'Näytä vaihtoehtoiset kirjautumistavat ensin';
 $string['alternativeloginoptions'] = 'Vaihtoehtoiset kirjautumistavat';
 $string['openmessagedrawer'] = 'Avaa viestintävalikko.';
-$string['design_mod_page'] = 'Ota käyttöön sivuaineistojen vanha ulkoasu';
-$string['design_mod_page_description'] = 'Jos tämä on käytössä, sivuaineistojen sisältö näytetään samalla sivulla, kurssilla tai etusivulla.';
 $string['refreshdeadlinestask'] = 'Päivitä määräpäivien välimuistissa olevat tiedot. Tämä pitää suorittaa ennen kuin kaikki käyttäjät kirjautuvat sisään.';
 $string['resetdeadlinesquerycounttask'] = 'Nollaa määräaikojen kyselymäärä';
 $string['refreshdeadlinestaskoff'] = 'Ei etsitty tietoja täytettäväksi. Kytke päälle asetus ”Päivitä määräajat käyttäen ajoitettuja tehtäviä” Snapin henkilökohtaisen valikon asetuksissa, jotta tämä tehtävä voi täyttää määräaikojen välimuistiin tallennetut tiedot.';
@@ -419,3 +420,17 @@ $string['classic_template'] = 'Classic-mallipohja';
 $string['loginbgimg'] = 'Kirjautumisen taustakuva';
 $string['loginbgimgdesc'] = 'Valitse kuvat, jotka näkyvät kirjautumissivun taustalla. Saat kuville paremman käyttökokemuksen lataamalla tiedostoja, joiden kuvasuhde on 16:9 (tarkkuus 720p tai koko 1280 x 720 pikseliä). Ladatuilla kuvilla on oltava sama koko, jotta ne näytetään oikein.';
 $string['stylish_template'] = 'Tyylikäs mallipohja';
+$string['activityedit'] = 'Muokkaa aktiviteettia';
+$string['snapfeedsblocktitle'] = 'Snap-syötteet';
+$string['tiktok'] = 'TikTok';
+$string['tiktokdesc'] = 'Tämä on TikTok-tilisi URL-osoite.';
+$string['snapfootersettings'] = 'Snap-alatunniste';
+$string['snapfootercustomization'] = 'Alatunnisteen mukautus';
+$string['snapfootercustomizationdesc'] = 'Snap sallii mukauttaa teeman alatunnistetta, joka näytetään kaikkialla sivustossa. Paranna käyttökokemusta lisäämällä hyödyllisiä linkkejä, tukiresursseja tai muita tärkeitä organisaation tietoja, jotka haluat jakaa opiskelijoille ja opettajille.';
+$string['snapfootercolors'] = 'Sivuston alatunnisteen värit';
+$string['snapfootercolorsdesc'] = 'Alatunnisteen värejä voi muuttaa: voit vaihtaa taustavärin ja/tai tekstin värin valitsemalla ne seuraavista värinvalitsimista.';
+$string['snapfooterbgcolor'] = 'Alatunnisteen taustaväri';
+$string['snapfootertxtcolor'] = 'Alatunnisteen tekstin väri';
+$string['enableblockmyoverviewwarning'] = 'Kurssin yhteenveto -lohko on poistettu käytöstä. Ota lohko käyttöön, jotta kurssit näkyvät.';
+$string['collapseicon'] = 'Tiivistä sisältö:';
+$string['expandicon'] = 'Laajenna sisältö:';
