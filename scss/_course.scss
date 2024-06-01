@@ -627,7 +627,6 @@ li.section:focus {
     }
 
     div[data-internal="assign"] .modicon_assign,
-    div[data-internal="assignment"] .modicon_assignment,
     div[data-internal="workshop"] .modicon_workshop,
     div[data-internal="journal"] .modicon_journal,
     div[data-internal="hvp"] .modicon_hvp,
@@ -1611,7 +1610,6 @@ body.snap-resource-card {
         }
 
         &.modtype_assign,
-        &.modtype_assignment,
         &.modtype_workshop,
         &.modtype_journal,
         &.modtype_attendance,
