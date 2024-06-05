@@ -1254,6 +1254,9 @@ body.snap-resource-card {
                     height: 16px;
                     margin-right: 6px;
                 }
+                #groups-menu img.icon {
+                    opacity: (0.5);
+                }
             }
         }
     }
@@ -3305,6 +3308,10 @@ body[id^='page-mod-data'] {
         .snap-groups-more {
             background-color: transparent;
             border: none;
+            display: flex;
+            img {
+                opacity:(0.5);
+            }
         }
         #snap-groups-menu {
             box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
@@ -3358,6 +3365,9 @@ body[id^='page-mod-data'] {
             }
         }
         a.availability-dropdown, a.groups-dropdown {
+            &:hover ::before {
+                opacity: unset;
+            }
             @include media-breakpoint-down(md) {
                 &::after {
                     @extend .fa-solid;
