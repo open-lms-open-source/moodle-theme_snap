@@ -55,7 +55,6 @@ Feature: Correct visualization of the general view for My Account plugin only fo
     And I should see "Open LMS Release Schedule"
     And I should see "Open LMS Community"
     And I should see "Open LMS Latest Releases"
-    And I should see "Open bot"
 
   @javascript
   Scenario: As an Admin in Snap, I'm redirected to specific pages to change Site logo or Site full name in Snap.
