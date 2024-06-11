@@ -1801,7 +1801,7 @@ class behat_theme_snap extends behat_base {
      */
     public function meta_assign_not_overdue($name) {
         $xpath = $this->meta_assign_xpath($name);
-        $xpath .= "/a[contains(@class, 'snap-due-date')][contains(@class, 'tag-success')]";
+        $xpath .= "/a[contains(@class, 'snap-due-date')][contains(@class, 'tag-warning')]";
         $this->ensure_element_is_visible($xpath, 'xpath_element');
         $xpath = $this->meta_assign_xpath($name);
         $xpath .= "/a[contains(@class, 'snap-due-date')][contains(@class, 'tag-danger')]";

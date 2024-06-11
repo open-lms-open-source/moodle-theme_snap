@@ -462,3 +462,5 @@ $string['imageproperties'] = 'Image properties';
 $string['coverimagedesc'] = 'Select the image to feature on the course cover, ensuring it is in either .jpeg, .png, or .gif format. It should not exceed the site level maximum allowed file size ({$a}). For optimal display, aim for an aspect ratio of 4:3 (1024x768 pixels). Additionally, consider color combinations that adhere to WCAG 2.0 guidelines, especially in relation to the white title of the course, for an enhanced user experience.';
 $string['browserepositories'] = 'Browse repositories';
 $string['saveimage'] = 'Save image';
+$string['opens'] = 'Opens {$a}';
+$string['opened'] = 'Opened {$a}';

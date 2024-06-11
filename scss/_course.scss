@@ -2186,7 +2186,6 @@ body.snap-resource-card {
 .snap-grouping-tag {
     text-align: right;
     font-size: $font-size-sm;
-    margin-bottom: 0.5em;
 
     a {
         padding: 0.5em;
@@ -2203,10 +2202,12 @@ body.snap-resource-card {
 }
 
 // Activity dues date.
-.snap-due-date {
+.snap-due-date, .snap-open-date, .snap-opened-date {
     font-size: inherit;
     font-weight: normal;
     border-radius: 1em;
+    margin-left: 1em;
+    margin-bottom: 1em;
 }
 
 

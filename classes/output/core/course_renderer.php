@@ -806,7 +806,8 @@ class course_renderer extends \core_course_renderer {
                 ];
                 $url = new moodle_url("/mod/{$mod->modname}/view.php", $params);
 
-                $content .= html_writer::link($url, $engagementstr);
+                $link = html_writer::link($url, $engagementstr);
+                $content .= html_writer::tag('p', $link);
             }
             $suspended = \theme_snap\local::suspended_participant_count($COURSE->id, $mod->id);
             if ($suspended) {
@@ -828,14 +829,26 @@ class course_renderer extends \core_course_renderer {
                 }
             }
 
-            // If submissions are not allowed, return the content.
-            if (!empty($meta->timeopen) && $meta->timeopen > time()) {
-                // TODO - spit out a 'submissions allowed from' tag.
-                return $content;
-            }
             // @codingStandardsIgnoreLine
             /* @var cm_info $mod */
             $content .= self::submission_cta($mod, $meta);
+        }
+
+        $modstoshowactivityopendate = ['data', 'quiz', 'scorm', 'workshop', 'assign'];
+
+        // Activity open date.
+         if (!empty($meta->timeopen) && in_array($mod->modname, $modstoshowactivityopendate)) {
+            $dateformat = get_string('strftimedate', 'langconfig');
+            $url = new moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
+            $pastopen = $meta->timeopen < time();
+            $labeltext = $pastopen ? get_string('opened', 'theme_snap', userdate($meta->timeopen, $dateformat)) :
+                get_string('opens', 'theme_snap', userdate($meta->timeopen, $dateformat));
+            $dateclass = $pastopen ? 'snap-opened-date' : 'snap-open-date';
+            $content .= html_writer::link($url, $labeltext,
+                [
+                    'class' => 'tag tag-success ' . $dateclass,
+                    'data-from-cache' => $meta->timesfromcache ? 1 : 0,
+                ]);
         }
 
         // Activity due date.
@@ -849,7 +862,7 @@ class course_renderer extends \core_course_renderer {
             $labeltext = get_string('due', 'theme_snap', userdate($meta->$field, $dateformat));
             $pastdue = $meta->$field < time();
             $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
-            $dateclass = $pastdue ? 'tag-danger' : 'tag-success';
+            $dateclass = $pastdue ? 'tag-danger' : 'tag-warning';
             $content .= html_writer::link($url, $labeltext,
                     [
                         'class' => 'snap-due-date tag '.$dateclass,
