@@ -314,6 +314,38 @@ class activity {
     }
 
     /**
+     * Get scorm module meta data
+     *
+     * @param cm_info $modinst - module instance
+     * @return string
+     */
+    public static function scorm_meta(\cm_info $modinst) {
+        $meta = new activity_meta();
+        $courseid = $modinst->course;
+        $activitydates = self::instance_activity_dates($courseid, $modinst, 'timeopen', 'timeclose');
+        $meta->timeopen = $activitydates->timeopen;
+        $meta->timeclose = $activitydates->timeclose;
+        $meta->timesfromcache = !empty($activitydates->fromcache);
+        return $meta;
+    }
+
+    /**
+     * Get workshop module meta data
+     *
+     * @param cm_info $modinst - module instance
+     * @return string
+     */
+    public static function workshop_meta(\cm_info $modinst) {
+        $meta = new activity_meta();
+        $courseid = $modinst->course;
+        $activitydates = self::instance_activity_dates($courseid, $modinst, 'submissionstart', 'submissionend');
+        $meta->timeopen = $activitydates->timeopen;
+        $meta->timeclose = $activitydates->timeclose;
+        $meta->timesfromcache = !empty($activitydates->fromcache);
+        return $meta;
+    }
+
+    /**
      * Get all assignments (for all courses) waiting to be graded.
      *
      * @param array $courseids
