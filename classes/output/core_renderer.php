@@ -2438,6 +2438,39 @@ HTML;
             if ($preferencesposition) {
                 $additionallinks = [];
 
+                // My courses link.
+                if (empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
+                    $mycourses = new stdClass();
+                    $mycourses->itemtype = 'link';
+                    $mycourses->url = new moodle_url('/my/courses.php');
+                    $mycourses->link = $mycourses->itemtype == 'link';
+                    $mycourses->title = get_string('menu', 'theme_snap');
+                    $mycourses->titleidentifier = 'menu,theme_snap';
+                    $additionallinks[] = $mycourses;
+                }
+
+                // My programs link.
+                if (is_callable('mr_on') && mr_on('myprograms', '_MR_BLOCKS')) {
+                    $myprograms = new stdClass();
+                    $myprograms->itemtype = 'link';
+                    $myprograms->url = new moodle_url( '/enrol/programs/my/index.php');
+                    $myprograms->link = $myprograms->itemtype == 'link';
+                    $myprograms->title = get_string('pluginname', 'block_myprograms');
+                    $myprograms->titleidentifier = 'pluginname,block_myprograms';
+                    $additionallinks[] = $myprograms;
+                }
+
+                // My reports link.
+                if (is_callable('mr_on') && mr_on('reportbuilder', '_MR_LOCAL')) {
+                    $reportbuilder = new stdClass();
+                    $reportbuilder->itemtype = 'link';
+                    $reportbuilder->url = new moodle_url( '/local/reportbuilder/myreports.php');
+                    $reportbuilder->link = $reportbuilder->itemtype == 'link';
+                    $reportbuilder->title = get_string('myreports', 'local_reportbuilder');
+                    $reportbuilder->titleidentifier = 'myreports,local_reportbuilder';
+                    $additionallinks[] = $reportbuilder;
+                }
+
                 // My account link.
                 if ((has_capability('moodle/site:config', context_system::instance())) &&
                     (\core_component::get_component_directory('local_myaccount') !== null) &&
@@ -2454,6 +2487,10 @@ HTML;
                     $myaccount->titleidentifier = 'myaccount,local_myaccount';
                     $additionallinks[] = $myaccount;
                 }
+
+                $divider = new stdClass();
+                $divider->divider = true;
+                $additionallinks[] = $divider;
 
                 // Dashboard link.
                 $dashboardlink = new stdClass();
@@ -2483,26 +2520,6 @@ HTML;
                     $programs->title = get_string('catalogue', 'enrol_programs');
                     $programs->titleidentifier = 'catalogue,enrol_programs';
                     $additionallinks[] = $programs;
-                }
-                // My programs link.
-                if (is_callable('mr_on') && mr_on('myprograms', '_MR_BLOCKS')) {
-                    $myprograms = new stdClass();
-                    $myprograms->itemtype = 'link';
-                    $myprograms->url = new moodle_url( '/enrol/programs/my/index.php');
-                    $myprograms->link = $myprograms->itemtype == 'link';
-                    $myprograms->title = get_string('pluginname', 'block_myprograms');
-                    $myprograms->titleidentifier = 'pluginname,block_myprograms';
-                    $additionallinks[] = $myprograms;
-                }
-                // My reports link.
-                if (is_callable('mr_on') && mr_on('reportbuilder', '_MR_LOCAL')) {
-                    $reportbuilder = new stdClass();
-                    $reportbuilder->itemtype = 'link';
-                    $reportbuilder->url = new moodle_url( '/local/reportbuilder/myreports.php');
-                    $reportbuilder->link = $reportbuilder->itemtype == 'link';
-                    $reportbuilder->title = get_string('myreports', 'local_reportbuilder');
-                    $reportbuilder->titleidentifier = 'myreports,local_reportbuilder';
-                    $additionallinks[] = $reportbuilder;
                 }
 
                 if (count($additionallinks)) {
