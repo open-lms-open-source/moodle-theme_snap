@@ -562,14 +562,7 @@ EOF;
             }
             // Generate linkhtml.
             $attributes = $item->attributes ?? null;
-
-            if (stripos($item->link, "newpld")) {
-                // If the link is the New PLD link, include new class to add custom background
-                // with the "New" word to the card.
-                $o .= '<li class="newpldcard">';
-            } else {
-                $o .= '<li>';
-            }
+            $o .= '<li>';
             $o .= html_writer::link($item->link, $item->title, $attributes);
             $o .= '</li>';
         }
@@ -623,19 +616,6 @@ EOF;
                         break;
                     }
                 }
-            }
-        }
-
-        // Personalised Learning Designer new design.
-        if (!empty($CFG->local_pld_experimental)) {
-            if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
-                $iconurl = $OUTPUT->image_url('pldnew', 'theme');
-                $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-                $pldname = get_string('pldexperimental', 'local_pld');
-                $links[] = array(
-                    'link' => 'local/pld/view.php?newpld=1&courseid='.$COURSE->id,
-                    'title' => $pldicon.$pldname
-                );
             }
         }
 
@@ -742,10 +722,23 @@ EOF;
         }
 
         // Personalised Learning Designer.
+        if (!empty($CFG->local_pld_experimental)) {
+            if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
+                $iconurl = $OUTPUT->image_url('pldnew', 'theme');
+                $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                $pldname = get_string('pldinitials', 'local_pld');
+                $links[] = array(
+                    'link' => 'local/pld/view.php?newpld=1&courseid='.$COURSE->id,
+                    'title' => $pldicon.$pldname
+                );
+            }
+        }
+
+        // Personalised Learning Designer (Legacy).
         if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
             $iconurl = $OUTPUT->image_url('pld', 'theme');
             $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-            $pldname = get_string('pld', 'theme_snap');
+            $pldname = get_string('pldlegacy', 'local_pld');
             $links[] = array(
                 'link' => 'local/pld/view.php?courseid='.$COURSE->id,
                 'title' => $pldicon.$pldname
