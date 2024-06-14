@@ -203,15 +203,6 @@ body[class^="format-"].theme-snap {
                 font-size: inherit;
             }
         }
-
-        /* New PLD card with custom background that has "New" word */
-        &.newpldcard {
-            background-image: url([[pix:theme|new]]);
-            background-repeat: no-repeat;
-            background-size: 15%;
-            background-position-x: right;
-            background-position-y: top;
-        }
     }
 }
 
