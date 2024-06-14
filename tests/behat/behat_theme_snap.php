@@ -1182,6 +1182,14 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Click on an element using javascript.
+     * @When I use js to click on :selector
+     */
+    public function i_use_js_to_click_on($selector) {
+        $this->getSession()->executeScript("document.querySelector(`$selector`).click();");
+    }
+
+    /**
      * Check navigation in section matches link title and href.
      * @param string $type "next" / "previous"
      * @param int $section

@@ -1262,12 +1262,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         blocksEditingOnButton.classList.add("hidden");
                     }
 
-                    // Hide edit button for main page in Grade report single view.
-                    const editingButton = $('#page-grade-report-singleview-index .grade_report_edit_button');
-                    if (editingButton.length && !$('.search-widget.dropdown').length) {
-                        editingButton.addClass("hidden");
-                    }
-
                     // Code for Tiles particular loading, needed before other scripts but after the document is ready.
                     var targetTilesSect = document.querySelector('section#tiles-section');
                     if (targetTilesSect) {
