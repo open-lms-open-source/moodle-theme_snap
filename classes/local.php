@@ -1801,7 +1801,7 @@ class local {
                                0 AS forumanonymous, f1.course, f1.name AS forumname,
                                u1.firstnamephonetic, u1.lastnamephonetic, u1.middlename, u1.alternatename, u1.firstname,
                                u1.lastname, u1.picture, u1.imagealt, u1.email,
-                               c.shortname AS courseshortname, c.fullname AS coursefullname
+                               c.shortname AS courseshortname, c.fullname AS coursefullname, fd1.timestart, fd1.timeend
 	                      FROM {forum_posts} fp1
 	                      JOIN {user} u1 ON u1.id = fp1.userid
                           JOIN {forum_discussions} fd1 ON fd1.id = fp1.discussion
@@ -1853,7 +1853,7 @@ class local {
                                f2.anonymous AS forumanonymous, f2.course, f2.name AS forumname,
                                u2.firstnamephonetic, u2.lastnamephonetic, u2.middlename, u2.alternatename, u2.firstname,
                                u2.lastname, u2.picture, u2.imagealt, u2.email,
-                               c.shortname AS courseshortname, c.fullname AS coursefullname
+                               c.shortname AS courseshortname, c.fullname AS coursefullname, fd2.timestart, fd2.timeend
                           FROM {hsuforum_posts} fp2
                           JOIN {user} u2 ON u2.id = fp2.userid
                           JOIN {hsuforum_discussions} fd2 ON fd2.id = fp2.discussion
@@ -1907,23 +1907,28 @@ class local {
                     ), $post);
                 }
 
-                $activities[] = (object)[
-                    'type' => $post->type,
-                    'cmid' => $post->cmid,
-                    'name' => $post->subject,
-                    'courseshortname' => $post->courseshortname,
-                    'coursefullname' => format_string($post->coursefullname),
-                    'forumname' => $post->forumname,
-                    'sectionnum' => null,
-                    'timestamp' => $post->modified,
-                    'content' => (object)[
-                        'id' => $post->postid,
-                        'discussion' => $post->discussion,
-                        'subject' => $post->subject,
-                        'parent' => $post->parent,
-                    ],
-                    'user' => $postuser,
-                ];
+                $hasstarted = $post->timestart < time();
+                $hasended = $post->timeend < time();
+                // Checking if the post is visible
+                if($hasstarted && (!$hasended || empty($post->timeend))) {
+                    $activities[] = (object)[
+                        'type' => $post->type,
+                        'cmid' => $post->cmid,
+                        'name' => $post->subject,
+                        'courseshortname' => $post->courseshortname,
+                        'coursefullname' => format_string($post->coursefullname),
+                        'forumname' => $post->forumname,
+                        'sectionnum' => null,
+                        'timestamp' => $post->modified,
+                        'content' => (object)[
+                            'id' => $post->postid,
+                            'discussion' => $post->discussion,
+                            'subject' => $post->subject,
+                            'parent' => $post->parent,
+                        ],
+                        'user' => $postuser,
+                    ];
+                }
             }
         }
 
