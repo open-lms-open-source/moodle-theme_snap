@@ -306,6 +306,7 @@ body.path-site .block.block_settings {
                 bottom: 0;
                 width: 100%;
                 background: white;
+                flex-wrap: nowrap;
 
                 .nav-item {
                     opacity: 0.4;
@@ -316,12 +317,12 @@ body.path-site .block.block_settings {
                         background: $brand-primary;
                         mask-repeat: no-repeat !important;
                         mask-position: center !important;
-                        mask-size: 28px !important;
+                        mask-size: 50px !important;
 
                         padding-bottom: 0;
 
                         &.ib {
-                            mask-size: 40px !important;
+                            mask-size: 30px !important;
                         }
 
                         img {
@@ -339,8 +340,6 @@ body.path-site .block.block_settings {
                         opacity: 1;
                         padding-top: 0;
                         border-top: 4px solid $brand-primary;
-                        border-top-left-radius: 4px;
-                        border-top-right-radius: 4px;
 
                         small {
                             visibility: visible;
@@ -356,6 +355,7 @@ body.path-site .block.block_settings {
 
                 &.active {
                     display: block;
+                    margin-bottom: 2em;
                 }
 
                 background: white;
@@ -364,6 +364,7 @@ body.path-site .block.block_settings {
 
                 h2 {
                     font-size: 1.3rem;
+                    font-weight: 700;
                 }
 
                 .snap-feeds-refresh-icon {
@@ -379,11 +380,11 @@ body.path-site .block.block_settings {
                 .snap-feeds-menu-more, .snap-personal-menu-more {
                     * {
                         display: inline-block;
-                        transform: translate(20px, 28px);
+                        transform: translate(8px, 16px);
                     }
 
                     i, svg {
-                        width: 16px;
+                        width: 34px;
                     }
                 }
             }
@@ -393,7 +394,7 @@ body.path-site .block.block_settings {
 
 .snap-personal-menu-more, .snap-feeds-menu-more {
     svg path{
-        fill: $brand-primary;
+        fill: $brand-primary !important; // !important needed to override svg fills.
     }
 }
 
@@ -405,6 +406,7 @@ body.path-site .block.block_settings {
 .snap-feeds-menu-more svg, .snap-feeds-mobile-sections svg {
     width: 20px;
     margin-left: 8px;
+    margin-right: -8px;
 }
 
 // Admin block link.

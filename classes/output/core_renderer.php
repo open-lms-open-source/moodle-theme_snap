@@ -568,12 +568,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $data = [];
 
-        $intelliContent = $this->render_intelliboard('snapfeedsmenu') . $this->render_intellicart('snapfeedsmenu');
+        $intelliboardContent = $this->render_intelliboard('snapfeedsmenu');
         $data['intelliboard'] = [
-            'enable' => !empty($intelliContent),
+            'enable' => !empty($intelliboardContent),
             'icon' => $OUTPUT->image_url('intelliboard-new', 'theme'),
             'alt' => 'Intelliboard',
-            'content' => $intelliContent,
+            'content' => $intelliboardContent,
+        ];
+        
+        $intellicartContent = $this->render_intellicart('snapfeedsmenu');
+        $data['intellicart'] = [
+            'enable' => !empty($intellicartContent),
+            'icon' => $OUTPUT->image_url('intelliboard-new', 'theme'),
+            'alt' => 'Intelliboard',
+            'content' => $intellicartContent,
         ];
 
         $data['deadlines'] = [
