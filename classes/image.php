@@ -178,13 +178,13 @@ class image {
         \imagecopybicubic($newimage, $im, 0, 0, 0, 0, $newwidth, $newheight, $imageinfo->width, $imageinfo->height);
 
         $fs = \get_file_storage();
-        $newimageparams = array(
+        $newimageparams = [
             'contextid' => $contextid,
             'component' => $component,
             'filearea' => $filearea,
             'itemid' => $itemid,
             'filepath' => '/',
-        );
+        ];
 
         \ob_start();
         if ($imagefnc == 'imagejpeg') {

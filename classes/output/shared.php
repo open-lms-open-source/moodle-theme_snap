@@ -63,7 +63,7 @@ class shared extends \renderer_base {
         }
 
         // Generate array with count of activities in this section.
-        $sectionmods = array();
+        $sectionmods = [];
         $total = 0;
         $complete = 0;
         $cancomplete = isloggedin() && !isguestuser();
@@ -117,12 +117,12 @@ class shared extends \renderer_base {
             $o .= "</div>";
         }
 
-        $retobj = (object) array (
+        $retobj = (object) [
             'output' => $o,
             'progress' => $a,
             'complete' => $complete,
-            'total' => $total
-        );
+            'total' => $total,
+        ];
 
         return $retobj;
     }
@@ -179,16 +179,16 @@ EOF;
             'actionchoice',
             'servererror',
             'upload',
-            'cancel'
+            'cancel',
         ], 'moodle');
         $PAGE->requires->strings_for_js([
-            'modulename'
+            'modulename',
         ], 'mod_label');
-        $vars = array(
-            array('courseid' => $course->id,
+        $vars = [
+            ['courseid' => $course->id,
                 'maxbytes' => $maxbytes,
-                'showstatus' => $showstatus)
-        );
+                'showstatus' => $showstatus, ],
+        ];
 
         $PAGE->requires->js('/course/dndupload.js');
         $PAGE->requires->js_call_amd('theme_snap/dndupload-lazy', 'init', $vars);
@@ -208,7 +208,7 @@ EOF;
      *          * pageparams    Additional parameters to pass through in the post
      * @return bool
      */
-    protected static function include_course_ajax($course, $usedmodules = array(), $enabledmodules = null, $config = null) {
+    protected static function include_course_ajax($course, $usedmodules = [], $enabledmodules = null, $config = null) {
         global $CFG, $PAGE, $COURSE;
 
         // Only include course AJAX for supported formats.
@@ -242,7 +242,7 @@ EOF;
             'totopofsection',
             'unknownerror',
             'ok',
-            'cancel'
+            'cancel',
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
@@ -258,15 +258,15 @@ EOF;
             'error:failedtotoc',
             'deleteassetconfirm',
             'deletesectionconfirm',
-            'deletingsection'
+            'deletingsection',
         ], 'theme_snap');
 
         // Include section-specific strings for formats which support sections.
         if (course_format_uses_sections($course->format)) {
-            $PAGE->requires->strings_for_js(array(
+            $PAGE->requires->strings_for_js([
                 'showfromothers',
                 'hidefromothers',
-            ), 'format_' . $course->format);
+            ], 'format_' . $course->format);
         }
 
         // For confirming resource deletion we need the name of the module in question.
@@ -293,7 +293,7 @@ EOF;
 
         $PAGE->requires->jquery();
         $PAGE->requires->js_amd_inline("require(['theme_boost/loader']);");
-        $PAGE->requires->strings_for_js(array(
+        $PAGE->requires->strings_for_js([
             'coursecontacts',
             'debugerrors',
             'problemsfound',
@@ -319,8 +319,8 @@ EOF;
             'imageproperties',
             'coverimagedesc',
             'browserepositories',
-            'saveimage'
-        ), 'theme_snap');
+            'saveimage',
+        ], 'theme_snap');
 
         $PAGE->requires->strings_for_js([
             'ok',
@@ -337,15 +337,15 @@ EOF;
             'hide',
             'groupsseparate',
             'groupsvisible',
-            'groupsnone'
+            'groupsnone',
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([
-            'printbook'
+            'printbook',
         ], 'booktool_print');
 
         $PAGE->requires->strings_for_js([
-            'progresstotal'
+            'progresstotal',
         ], 'completion');
 
         // Are we viewing /course/view.php - note, this is different from just checking the page type.
@@ -467,7 +467,7 @@ EOF;
         if ((has_capability('moodle/course:changesummary', context_course::instance($COURSE->id))) ||
             (has_capability('moodle/category:manage', context_course::instance($COURSE->id)))) {
             $args = new stdClass();
-            $args->accepted_types = array('.jpeg', '.png', '.gif');
+            $args->accepted_types = ['.jpeg', '.png', '.gif'];
             $args->return_types = 2;
             initialise_filepicker($args);
         }
@@ -520,7 +520,7 @@ EOF;
         // Find all enabled reports.
         $reports = core_component::get_plugin_list('gradereport');
         foreach (array_keys($reports) as $report) {
-            if (!component_callback('gradereport_'.$report, 'is_enabled', array(), true)) {
+            if (!component_callback('gradereport_'.$report, 'is_enabled', [], true)) {
                 unset($reports[$report]);
             }
         }
@@ -632,10 +632,10 @@ EOF;
                 $iconurl = $OUTPUT->image_url('pldnew', 'theme');
                 $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
                 $pldname = get_string('pldexperimental', 'local_pld');
-                $links[] = array(
+                $links[] = [
                     'link' => 'local/pld/view.php?newpld=1&courseid='.$COURSE->id,
-                    'title' => $pldicon.$pldname
-                );
+                    'title' => $pldicon.$pldname,
+                ];
             }
         }
 
@@ -648,10 +648,10 @@ EOF;
             }
             $settingsicon = '<img src="'.$iconurl.'" class="snap-cover-icon svg-icon" alt="" role="presentation">';
 
-            $links[] = array(
+            $links[] = [
                 'link' => 'course/edit.php?id='.$COURSE->id,
                 'title' => $settingsicon.get_string('editcoursesettings', 'theme_snap'),
-            );
+            ];
         }
 
         $iconurl = $OUTPUT->image_url('joule_grader', 'theme');
@@ -662,10 +662,10 @@ EOF;
             if (has_capability('local/joulegrader:grade', $coursecontext)
                 || has_capability('local/joulegrader:view', $coursecontext)
             ) {
-                $links[] = array(
+                $links[] = [
                     'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
                     'title' => $gradebookicon.'Open Grader',
-                );
+                ];
             }
         }
 
@@ -674,10 +674,10 @@ EOF;
             $iconurl = $OUTPUT->image_url('gradebook', 'theme');
             $gradebookicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
             // Gradebook.
-            $links[] = array(
+            $links[] = [
                 'link' => 'grade/index.php?id='.$COURSE->id,
-                'title' => $gradebookicon.get_string('gradebook', 'grades')
-            );
+                'title' => $gradebookicon.get_string('gradebook', 'grades'),
+            ];
         }
 
         // Participants.
@@ -705,10 +705,10 @@ EOF;
             }
 
             $participanticons = '<div class="snap-participant-icons">'.$participanticons.'</div>';
-            $links[] = array(
+            $links[] = [
                 'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
-                'title' => $participanticons.$usercount.' '.get_string('participants')
-            );
+                'title' => $participanticons.$usercount.' '.get_string('participants'),
+            ];
         }
 
         // Joule reports if installed.
@@ -718,10 +718,10 @@ EOF;
             if (has_capability('block/reports:viewown', $coursecontext, null, false)
                 || has_capability('block/reports:view', $coursecontext)
             ) {
-                $links[] = array(
+                $links[] = [
                     'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
-                    'title' => $reportsicon.'Open Reports'
-                );
+                    'title' => $reportsicon.'Open Reports',
+                ];
             }
         }
 
@@ -733,11 +733,11 @@ EOF;
             if (has_capability('block/reports:viewown', $coursecontext, null, false)
                 || has_capability('block/reports:view', $coursecontext)
             ) {
-                $links[] = array(
+                $links[] = [
                     'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboardce&courseid='.$COURSE->id,
                     'title' => $reportsicon.'Open Reports ('.get_string('experimental',
-                            'block_reports').')'
-                );
+                            'block_reports').')',
+                ];
             }
         }
 
@@ -746,20 +746,20 @@ EOF;
             $iconurl = $OUTPUT->image_url('pld', 'theme');
             $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
             $pldname = get_string('pld', 'theme_snap');
-            $links[] = array(
+            $links[] = [
                 'link' => 'local/pld/view.php?courseid='.$COURSE->id,
-                'title' => $pldicon.$pldname
-            );
+                'title' => $pldicon.$pldname,
+            ];
         }
 
         // Competencies if enabled.
         if (get_config('core_competency', 'enabled') && has_capability('moodle/competency:competencyview', $coursecontext)) {
             $iconurl = $OUTPUT->image_url('competencies', 'theme');
             $competenciesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-            $links[] = array(
+            $links[] = [
                 'link'  => 'admin/tool/lp/coursecompetencies.php?courseid='.$COURSE->id,
-                'title' => $competenciesicon.get_string('competencies', 'core_competency')
-            );
+                'title' => $competenciesicon.get_string('competencies', 'core_competency'),
+            ];
         }
 
         // Outcomes if enabled.
@@ -768,18 +768,18 @@ EOF;
             $outcomesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
 
             if (has_capability('moodle/grade:edit', $coursecontext)) {
-                $links[] = array(
+                $links[] = [
                     'link'  => 'outcome/course.php?contextid='.$coursecontext->id,
                     'title' => $outcomesicon.get_string('outcomes', 'outcome'),
-                );
+                ];
             } else if (!is_guest($coursecontext)) {
                 $outcomesets = new \core_outcome\model\outcome_set_repository();
                 if ($outcomesets->course_has_any_outcome_sets($COURSE->id)) {
-                    $links[] = array(
+                    $links[] = [
                         'link'  => 'outcome/course.php?contextid='.$coursecontext->id.
                             '&action=report_course_user_performance_table',
                         'title' => $outcomesicon.get_string('outcomes', 'outcome'),
-                    );
+                    ];
                 }
             }
         }
@@ -787,7 +787,7 @@ EOF;
         // Course badges.
         if (!empty($CFG->enablebadges) && !empty($CFG->badges_allowcoursebadges)) {
             // Match capabilities used by badges subsystem.
-            $badgecaps = array(
+            $badgecaps = [
                 'moodle/badges:earnbadge',
                 'moodle/badges:viewbadges',
                 'moodle/badges:viewawarded',
@@ -796,15 +796,15 @@ EOF;
                 'moodle/badges:configuremessages',
                 'moodle/badges:configuredetails',
                 'moodle/badges:deletebadge',
-            );
+            ];
             $canviewbadges = has_any_capability($badgecaps, $coursecontext);
             if (!is_guest($coursecontext) && $canviewbadges) {
                 $iconurl = $OUTPUT->image_url('badges', 'theme');
                 $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-                $links[] = array(
+                $links[] = [
                     'link' => 'badges/view.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
-                    'title' => $badgesicon.get_string('badges', 'badges')
-                );
+                    'title' => $badgesicon.get_string('badges', 'badges'),
+                ];
             }
         }
 
@@ -817,25 +817,25 @@ EOF;
             require_once($CFG->dirroot . "/mod/mediasite/mediasitesite.php");
             $iconurl = $OUTPUT->image_url('icon', 'mediasite');
             $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-            $courseconfig = $DB->get_record('mediasite_course_config', array('course' => $COURSE->id));
+            $courseconfig = $DB->get_record('mediasite_course_config', ['course' => $COURSE->id]);
             if (!empty($courseconfig->mediasite_courses_enabled) && $courseconfig->mediasite_site) {
                 $site = new \Sonicfoundry\MediasiteSite($courseconfig->mediasite_site);
                 $url = new moodle_url(
                     '/mod/mediasite/courses7.php',
-                    array('id' => $COURSE->id, 'siteid' => $courseconfig->mediasite_site)
+                    ['id' => $COURSE->id, 'siteid' => $courseconfig->mediasite_site]
                 );
-                $links[] = array(
+                $links[] = [
                     'link' => $url->out_as_local_url(false),
-                    'title' => $badgesicon . $site->get_integration_catalog_title()
-                );
+                    'title' => $badgesicon . $site->get_integration_catalog_title(),
+                ];
             } else {
                 require_once($CFG->dirroot.'/mod/mediasite/navigation.php');
                 foreach (get_mediasite_sites(true, false) as $site) {
-                    $url = new moodle_url('/mod/mediasite/courses7.php', array('id' => $COURSE->id, 'siteid' => $site->id));
-                    $links[] = array(
+                    $url = new moodle_url('/mod/mediasite/courses7.php', ['id' => $COURSE->id, 'siteid' => $site->id]);
+                    $links[] = [
                         'link' => $url->out_as_local_url(false),
-                        'title' => $badgesicon . $site->integration_catalog_title
-                    );
+                        'title' => $badgesicon . $site->integration_catalog_title,
+                    ];
                 }
             }
         }
@@ -859,7 +859,7 @@ EOF;
             $links[] = [
                 'link' => $url->out_as_local_url(false),
                 'title' => $allyicon . get_string('coursereport', 'report_allylti'),
-                'attributes' => ['target' => '_blank']
+                'attributes' => ['target' => '_blank'],
             ];
         }
 
@@ -1077,7 +1077,7 @@ EOF;
             $link = [
                 'link' => $linkattr->url,
                 'title' => $iconurl . $linkattr->displaystring,
-                'attributes' => $linkattr->elementattributes
+                'attributes' => $linkattr->elementattributes,
             ];
         }
         return $link;

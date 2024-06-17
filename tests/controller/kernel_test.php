@@ -46,13 +46,13 @@ class kernel_test extends \basic_testcase {
     }
 
     public function test_resolve_controller_callback() {
-        $controller = $this->createPartialMock('\theme_snap\controller\controller_abstract', array(
+        $controller = $this->createPartialMock('\theme_snap\controller\controller_abstract', [
             'init',
             'test_action',
             'require_capability',
-        ));
+        ]);
 
-        $router = $this->createPartialMock('\theme_snap\controller\router', array('route_action'));
+        $router = $this->createPartialMock('\theme_snap\controller\router', ['route_action']);
         $router->expects($this->once())->method('route_action')->will($this->returnValue([$controller, 'test_action']));
 
         $kernel = new kernel($router);
@@ -68,18 +68,18 @@ class kernel_test extends \basic_testcase {
     public function test_execute_callback_with_return() {
         $this->expectOutputString('return phpunit');
         $kernel = new kernel(new router());
-        $kernel->execute_callback(array($this, 'return_string_callback'));
+        $kernel->execute_callback([$this, 'return_string_callback']);
     }
 
     public function test_execute_callback_with_echo() {
         $this->expectOutputString('echo phpunit');
         $kernel = new kernel(new router());
-        $kernel->execute_callback(array($this, 'echo_string_callback'));
+        $kernel->execute_callback([$this, 'echo_string_callback']);
     }
 
     public function test_execute_callback_with_both() {
         $kernel = new kernel(new router());
         $this->expectException(\coding_exception::class);
-        $kernel->execute_callback(array($this, 'both_string_callback'));
+        $kernel->execute_callback([$this, 'both_string_callback']);
     }
 }

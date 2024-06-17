@@ -121,18 +121,18 @@ class behat_theme_snap_category_colors extends behat_base {
         }
         $hex = $match[1];
         if (strlen($match[1]) == 6) {
-            list($r, $g, $b) = array($hex[0].$hex[1], $hex[2].$hex[3], $hex[4].$hex[5]);
+            list($r, $g, $b) = [$hex[0].$hex[1], $hex[2].$hex[3], $hex[4].$hex[5]];
         } else if (strlen($match[1]) == 3) {
-            list($r, $g, $b) = array($hex[0].$hex[0], $hex[1].$hex[1], $hex[2].$hex[2]);
+            list($r, $g, $b) = [$hex[0].$hex[0], $hex[1].$hex[1], $hex[2].$hex[2]];
         } else if (strlen($match[1]) == 2) {
-            list($r, $g, $b) = array($hex[0].$hex[1], $hex[0].$hex[1], $hex[0].$hex[1]);
+            list($r, $g, $b) = [$hex[0].$hex[1], $hex[0].$hex[1], $hex[0].$hex[1]];
         } else if (strlen($match[1]) == 1) {
-            list($r, $g, $b) = array($hex.$hex, $hex.$hex, $hex.$hex);
+            list($r, $g, $b) = [$hex.$hex, $hex.$hex, $hex.$hex];
         } else {
             return false;
         }
 
-        $color = array();
+        $color = [];
         $color['r'] = hexdec($r);
         $color['g'] = hexdec($g);
         $color['b'] = hexdec($b);
@@ -156,7 +156,7 @@ class behat_theme_snap_category_colors extends behat_base {
         if (!isset($vals[1])) {
             return false;
         }
-        $color = array();
+        $color = [];
         $color['r'] = intval($vals[1]);
         $color['g'] = intval($vals[2]);
         $color['b'] = intval($vals[3]);

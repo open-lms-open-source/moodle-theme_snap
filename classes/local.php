@@ -56,11 +56,11 @@ class local {
      * @return bool
      */
     public static function item_has_grade_or_feedback($item) {
-        $typekeys = array ('grade', 'feedback');
+        $typekeys = ['grade', 'feedback'];
         foreach ($typekeys as $typekey) {
             if (!empty($item[$typekey]['content'])) {
                 // Set grade content to null string if it contents - or a blank space.
-                $item[$typekey]['content'] = str_ireplace(array('-', '&nbsp;'), '', $item[$typekey]['content']);
+                $item[$typekey]['content'] = str_ireplace(['-', '&nbsp;'], '', $item[$typekey]['content']);
             }
             // Is there an error message in the content (can't check on message as it is localized,
             // so check on the class for gradingerror.
@@ -118,10 +118,10 @@ class local {
         // Get course grade_item.
         $courseitem = \grade_item::fetch_course_item($course->id);
         // Get the stored grade.
-        $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
+        $coursegrade = new \grade_grade(['itemid' => $courseitem->id, 'userid' => $USER->id]);
         $coursegrade->grade_item =& $courseitem;
 
-        $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+        $feedbackurl = new \moodle_url('/grade/report/user/index.php', ['id' => $course->id]);
         // Default feedbackobj.
         $feedbackobj = (object) [
             'feedbackurl' => $feedbackurl->out(),
@@ -130,11 +130,11 @@ class local {
 
         if (!$coursegrade->is_hidden() || $canviewhidden) {
             // Use overview grade report to get course total - this is to take hidden grade settings into account.
-            $gpr = new \grade_plugin_return(array(
+            $gpr = new \grade_plugin_return([
                     'type' => 'report',
                     'plugin' => 'overview',
                     'courseid' => $course->id,
-                    'userid' => $USER->id, )
+                    'userid' => $USER->id, ]
             );
 
             // Create a report instance.
@@ -169,7 +169,7 @@ class local {
         }
 
         $categories = [];
-        $category = $DB->get_record('course_categories', array('id' => $course->category));
+        $category = $DB->get_record('course_categories', ['id' => $course->category]);
         if (!$category) {
             throw new \moodle_exception('unknowncategory');
         }
@@ -204,7 +204,7 @@ class local {
         global $CFG, $USER, $SESSION, $COURSE;
 
         if (empty($CFG->themeorder)) {
-            $themeorder = array('course', 'category', 'session', 'user', 'site');
+            $themeorder = ['course', 'category', 'session', 'user', 'site'];
         } else {
             $themeorder = $CFG->themeorder;
             // Just in case, make sure we always use the site theme if nothing else matched.
@@ -456,7 +456,7 @@ class local {
     public static function courseinfo($courseids) {
         global $CFG;
 
-        $courseinfo = array();
+        $courseinfo = [];
 
         $courses = enrol_get_my_courses(['enablecompletion', 'showgrades']);
 
@@ -482,10 +482,10 @@ class local {
             }
             $course = $courses[$courseid];
 
-            $courseinfo[$courseid] = (object) array(
+            $courseinfo[$courseid] = (object) [
                 'course' => $courseid,
                 'completion' => self::course_completion_progress($course),
-            );
+            ];
 
             if (!empty($showgrades)) {
                 $feedback = self::course_grade($course);
@@ -508,7 +508,7 @@ class local {
      * @return int
      */
     public static function course_participant_count($courseid, $modname = null) {
-        static $participantcount = array();
+        static $participantcount = [];
 
         if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
             $participantcount = [];
@@ -594,7 +594,7 @@ class local {
 
         $sqlgroupsjoin = '';
         $sqlgroupswhere = '';
-        $params = array();
+        $params = [];
 
         $course = get_course($context->instanceid);
         $groupmode = groups_get_course_groupmode($course);
@@ -681,16 +681,16 @@ class local {
                $lastmessage
           ORDER BY m.timecreated DESC";
 
-        $params = array(
+        $params = [
             'userid' => $userid,
             'fromdate' => $since,
             'actiondeleted' => \core_message\api::MESSAGE_ACTION_DELETED,
             'actionread' => \core_message\api::MESSAGE_ACTION_READ,
-        );
+        ];
 
         $records = $DB->get_records_sql($sql, $params, $limitfrom, $limitnum);
 
-        $messages = array();
+        $messages = [];
         foreach ($records as $record) {
             $message = new message($record);
             $message->set_fromuser(\user_picture::unalias($record, null, 'useridfrom', 'fromuser'));
@@ -742,9 +742,9 @@ class local {
         foreach ($messages as $message) {
             // This URL will be to redirect the user to an unread message through the personal menu feed and open
             // the specific message in the message index page.
-            $url = new \moodle_url('/message/index.php', array(
+            $url = new \moodle_url('/message/index.php', [
                 'viewing' => 'unread',
-                'user2' => $message->useridfrom, )
+                'user2' => $message->useridfrom, ]
             );
 
             if (!$renderhtml) {
@@ -814,9 +814,9 @@ class local {
             $relativetext = get_string('ago', 'message', $relativetext);
         }
         $datetime = date(\DateTime::W3C, $timeinpast);
-        return html_writer::tag('time', $relativetext, array(
+        return html_writer::tag('time', $relativetext, [
             'is' => 'relative-time',
-            'datetime' => $datetime, )
+            'datetime' => $datetime, ]
         );
     }
 
@@ -891,7 +891,7 @@ class local {
             $releasedon = isset($grade->timemodified) ? $grade->timemodified : $grade->timecreated;
             $meta = get_string('released', 'theme_snap', $output->friendly_datetime($releasedon));
 
-            $grade = new \grade_grade(array('itemid' => $grade->itemid, 'userid' => $USER->id));
+            $grade = new \grade_grade(['itemid' => $grade->itemid, 'userid' => $USER->id]);
 
             $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
 
@@ -1071,7 +1071,7 @@ class local {
         $courseids = self::gradeable_courseids($userid);
 
         if (empty($courseids)) {
-            return array();
+            return [];
         }
 
         if ($since === null) {
@@ -1090,7 +1090,7 @@ class local {
             }
         }
 
-        usort($grading, array('self', 'sort_graded'));
+        usort($grading, ['self', 'sort_graded']);
 
         return $grading;
     }
@@ -1178,7 +1178,7 @@ class local {
         if ($imagetags->item(0)) {
             $src = $imagetags->item(0)->getAttribute('src');
             $alt = $imagetags->item(0)->getAttribute('alt');
-            return array('src' => $src, 'alt' => $alt);
+            return ['src' => $src, 'alt' => $alt];
         } else {
             return false;
         }
@@ -1288,14 +1288,14 @@ class local {
             if ($cardimage) {
                 return $cardimage;
             }
-            $filespec = array(
+            $filespec = [
                 'contextid' => $context->id,
                 'component' => 'theme_snap',
                 'filearea' => 'coursecard',
                 'itemid' => 0,
                 'filepath' => '/',
                 'filename' => 'course-card-'.$id.'-'.$filename,
-            );
+            ];
             $coursecardimage = $fs->create_file_from_storedfile($filespec, $originalfile);
             $coursecardimage = image::resize($coursecardimage, false, round($coursecardwidth));
             return $coursecardimage;
@@ -1557,14 +1557,14 @@ class local {
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $newfilename .= '.'.$extension;
 
-        $filespec = array(
+        $filespec = [
             'contextid' => $context->id,
             'component' => 'theme_snap',
             'filearea' => 'coverimage',
             'itemid' => 0,
             'filepath' => '/',
             'filename' => $newfilename,
-        );
+        ];
 
         $newfile = $fs->create_file_from_storedfile($filespec, $originalfile);
         $finfo = $newfile->get_imageinfo();
@@ -1594,7 +1594,7 @@ class local {
         $sql = "SELECT * FROM {course_modules} cm
                   JOIN {page} p ON p.id = cm.instance
                 WHERE cm.id = ?";
-        $page = $DB->get_record_sql($sql, array($mod->id));
+        $page = $DB->get_record_sql($sql, [$mod->id]);
         $page->cmid = $mod->id;
 
         $context = \context_module::instance($mod->id);
@@ -1900,11 +1900,11 @@ class local {
                 ];
 
                 if ($post->type === 'hsuforum') {
-                    $postuser = hsuforum_anonymize_user($postuser, (object)array(
+                    $postuser = hsuforum_anonymize_user($postuser, (object)[
                         'id' => $post->forum,
                         'course' => $post->course,
                         'anonymous' => $post->forumanonymous,
-                    ), $post);
+                    ], $post);
                 }
 
                 $activities[] = (object)[

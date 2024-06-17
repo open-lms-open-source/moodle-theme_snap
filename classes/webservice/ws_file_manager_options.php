@@ -44,7 +44,7 @@ class ws_file_manager_options extends \external_api {
      */
     public static function service_returns() {
         return new \external_single_structure([
-            'fpoptions'    => new \external_value(PARAM_TEXT, 'JSON with file manager data')
+            'fpoptions'    => new \external_value(PARAM_TEXT, 'JSON with file manager data'),
         ]);
     }
 
@@ -59,7 +59,7 @@ class ws_file_manager_options extends \external_api {
         $PAGE->set_context($context);
 
         $args = new stdClass();
-        $args->accepted_types = array('.jpeg', '.png', '.gif');
+        $args->accepted_types = ['.jpeg', '.png', '.gif'];
         $args->return_types = 2;
         $args->context = $context;
         $args->env = 'filepicker';
@@ -74,7 +74,7 @@ class ws_file_manager_options extends \external_api {
 
         $optionsencoded = json_encode($fpoptions);
 
-        $data = array();
+        $data = [];
         $data['fpoptions'] = $optionsencoded;
         return $data;
     }

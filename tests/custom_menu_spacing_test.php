@@ -35,7 +35,7 @@ class custom_menu_spacing_test extends \advanced_testcase {
     /**
      * Setup for each test.
      */
-    protected function setUp():void {
+    protected function setUp(): void {
         global $CFG;
         $CFG->theme = 'snap';
         $this->resetAfterTest(true);

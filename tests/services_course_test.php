@@ -74,7 +74,7 @@ class services_course_test extends \advanced_testcase {
         $this->user1 = $this->getDataGenerator()->create_user();
 
         // Enrol user to all courses.
-        $sturole = $DB->get_record('role', array('shortname' => 'student'));
+        $sturole = $DB->get_record('role', ['shortname' => 'student']);
 
         foreach ($this->courses as $course) {
             $this->getDataGenerator()->enrol_user($this->user1->id,
@@ -196,14 +196,14 @@ class services_course_test extends \advanced_testcase {
         ], ['createsections' => true]);
 
         // Enrol user to completion tracking course.
-        $sturole = $DB->get_record('role', array('shortname' => 'student'));
+        $sturole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($this->user1->id,
             $course->id,
             $sturole->id);
 
         // Create page with completion marked on view.
-        $page1 = $generator->create_module('page', array('course' => $course->id, 'name' => 'page1 complete on view'),
-            array('completion' => 2, 'completionview' => 1));
+        $page1 = $generator->create_module('page', ['course' => $course->id, 'name' => 'page1 complete on view'],
+            ['completion' => 2, 'completionview' => 1]);
         $modinfo = get_fast_modinfo($course);
         $page1cm = $modinfo->get_cm($page1->cmid);
 
@@ -274,7 +274,7 @@ class services_course_test extends \advanced_testcase {
             'format' => 'topics',
             'numsections' => 10,
         ], ['createsections' => true]);
-        $page = $generator->create_module('page', array('course' => $course->id, 'name' => 'test page'));
+        $page = $generator->create_module('page', ['course' => $course->id, 'name' => 'test page']);
 
         $toc = $this->courseservice->course_toc('testlistlarge');
         $this->assertTrue($toc->modules[0] instanceof \theme_snap\renderables\course_toc_module);
@@ -330,7 +330,7 @@ class services_course_test extends \advanced_testcase {
         ], ['createsections' => true]);
 
         // Get section names for course.
-        $coursesections = $DB->get_records('course_sections', array('course' => $course->id));
+        $coursesections = $DB->get_records('course_sections', ['course' => $course->id]);
 
         // Modify section names.
         $t = 0;
@@ -429,7 +429,7 @@ class services_course_test extends \advanced_testcase {
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
-        $params = array('userid' => $this->user1->id, 'component' => 'core_course');
+        $params = ['userid' => $this->user1->id, 'component' => 'core_course'];
         $favorites = $DB->get_records('favourite', $params);
         $this->assertNotEmpty($favorites);
         delete_user($this->user1);
@@ -443,7 +443,7 @@ class services_course_test extends \advanced_testcase {
         $service = $this->courseservice;
         $service->setfavorite($this->courses[0]->shortname, true, $this->user1->id);
         $service->setfavorite($this->courses[1]->shortname, true, $this->user1->id);
-        $params = array('userid' => $this->user1->id, 'component' => 'core_course');
+        $params = ['userid' => $this->user1->id, 'component' => 'core_course'];
         $favorites = $DB->count_records('favourite', $params);
         $this->assertEquals(2, $favorites);
         $this->assertNotEmpty($favorites);
@@ -505,7 +505,7 @@ class services_course_test extends \advanced_testcase {
         ], ['createsections' => true]);
 
         // Enrol user to completion tracking course.
-        $sturole = $DB->get_record('role', array('shortname' => 'student'));
+        $sturole = $DB->get_record('role', ['shortname' => 'student']);
         $generator->enrol_user($this->user1->id,
             $course->id,
             $sturole->id);
@@ -513,8 +513,8 @@ class services_course_test extends \advanced_testcase {
         $this->setUser($this->user1);
 
         // Create page with completion marked manually.
-        $page1 = $generator->create_module('page', array('course' => $course->id, 'name' => 'page1 complete manually'),
-            array('completion' => 1, 'completionview' => 0));
+        $page1 = $generator->create_module('page', ['course' => $course->id, 'name' => 'page1 complete manually'],
+            ['completion' => 1, 'completionview' => 0]);
         $modinfo = get_fast_modinfo($course);
         $page1cm = $modinfo->get_cm($page1->cmid);
         $completion = new \completion_info($course);
@@ -551,10 +551,10 @@ class services_course_test extends \advanced_testcase {
         global $CFG, $DB;
         require_once($CFG->dirroot .'/theme/snap/lib.php');
         $topics = $this->getDataGenerator()->create_course(
-            array('numsections' => 5, 'format' => 'topics'),
-            array('createsections' => true));
-        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
-        $teacherole = $DB->get_record('role', array('shortname' => 'editingteacher'));
+            ['numsections' => 5, 'format' => 'topics'],
+            ['createsections' => true]);
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $teacherole = $DB->get_record('role', ['shortname' => 'editingteacher']);
 
         $student = $this->getDataGenerator()->create_user();
         $teacher = $this->getDataGenerator()->create_user();

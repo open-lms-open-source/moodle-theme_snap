@@ -77,7 +77,7 @@ function theme_snap_set_category_colors($css, $theme) {
     $dbcustommenutextcolor = get_config("theme_snap", "custommenutext");
     $dbcustommenutextcoloractive = get_config("theme_snap", "customisecustommenu");
     // Get category colors from database.
-    $categorycolors = array();
+    $categorycolors = [];
     $dbcategorycolors = get_config("theme_snap", "category_color");
     if (!empty($dbcategorycolors) && $dbcategorycolors != '0') {
         $categorycolors = json_decode($dbcategorycolors, true);
@@ -111,7 +111,7 @@ function theme_snap_set_category_colors($css, $theme) {
                 'nav-login-bg' => $colors[$category->id],
                 'nav-login-color' => '#FFFFFF',
                 'custom-menu-text-color' => $dbcustommenutextcoloractive ? $dbcustommenutextcolor : '#FFFFFF',
-                'gray-light' => '#6a737b'
+                'gray-light' => '#6a737b',
             ]);
 
             try {
@@ -208,7 +208,7 @@ function theme_snap_send_file($context, $filearea, $args, $forcedownload, $optio
  * @param array $options
  * @return bool
  */
-function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
 
     $coverimagecontexts = [CONTEXT_SYSTEM, CONTEXT_COURSE, CONTEXT_COURSECAT];
 
@@ -222,7 +222,7 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         'slide_one_image',
         'slide_two_image',
         'slide_three_image',
-        'loginbgimg'
+        'loginbgimg',
     ];
 
     if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, $sysfileareas)) {
@@ -404,17 +404,17 @@ function theme_snap_output_fragment_section($args) {
                     [['add_method' => get_config('block_sharing_cart', 'add_to_sharing_cart')], [$sectionsjs], true]
                 );
                 $PAGE->requires->strings_for_js(
-                    array('yes', 'no', 'ok', 'cancel', 'error', 'edit', 'move', 'delete', 'movehere'),
+                    ['yes', 'no', 'ok', 'cancel', 'error', 'edit', 'move', 'delete', 'movehere'],
                     'moodle'
                 );
 
                 $PAGE->requires->strings_for_js(
-                    array('copyhere', 'notarget', 'backup', 'restore', 'movedir', 'clipboard',
+                    ['copyhere', 'notarget', 'backup', 'restore', 'movedir', 'clipboard',
                         'confirm_backup', 'confirm_backup_section', 'confirm_userdata',
                         'confirm_delete', 'clicktomove', 'folder_string',
                         'activity_string', 'delete_folder', 'modal_checkbox',
                         'modal_confirm_backup', 'modal_confirm_delete', 'backup_heavy_load_warning_message',
-                        'snap_dialog_restore'),
+                        'snap_dialog_restore'],
                     'block_sharing_cart'
                 );
             }
@@ -424,11 +424,11 @@ function theme_snap_output_fragment_section($args) {
             }
             $html = $formatrenderer->course_section($course, $section, $modinfo);
             $PAGE->requires->js('/course/dndupload.js');
-            $vars = array(
-                array('courseid' => $course->id,
+            $vars = [
+                ['courseid' => $course->id,
                     'maxbytes' => $maxbytes,
-                    'showstatus' => false)
-            );
+                    'showstatus' => false],
+            ];
             $PAGE->requires->js_call_amd('theme_snap/dndupload-lazy', 'init', $vars);
             return $html;
         }
@@ -461,11 +461,11 @@ function theme_snap_before_footer() {
 
     $paths = [];
     $paths['theme_snap/snapce'] = [
-        $CFG->wwwroot . '/pluginfile.php/' . $PAGE->context->id . '/theme_snap/vendorjs/snap-custom-elements/snap-ce'
+        $CFG->wwwroot . '/pluginfile.php/' . $PAGE->context->id . '/theme_snap/vendorjs/snap-custom-elements/snap-ce',
     ];
 
     $PAGE->requires->js_call_amd('theme_snap/wcloader', 'init', [
-        'componentPaths' => json_encode($paths)
+        'componentPaths' => json_encode($paths),
     ]);
 }
 
@@ -539,8 +539,8 @@ function snap_print_course_request_buttons($context) {
     }
     // Print a button to manage pending requests.
     if (has_capability('moodle/site:approvecourse', $context)) {
-        $disabled = !$DB->record_exists('course_request', array());
+        $disabled = !$DB->record_exists('course_request', []);
         echo $OUTPUT->single_button(new moodle_url('/course/pending.php'), get_string('coursespending'),
-            'get', array('disabled' => $disabled));
+            'get', ['disabled' => $disabled]);
     }
 }

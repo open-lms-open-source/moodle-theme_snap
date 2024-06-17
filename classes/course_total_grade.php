@@ -72,10 +72,10 @@ class course_total_grade extends \grade_report_overview {
         $this->context = \context_course::instance($course->id);
         $this->gradebookroles = $CFG->gradebookroles;
 
-        $this->showtotalsifcontainhidden = array();
+        $this->showtotalsifcontainhidden = [];
 
-        $this->studentcourseids = array();
-        $this->teachercourses = array();
+        $this->studentcourseids = [];
+        $this->teachercourses = [];
         $roleids = explode(',', get_config('moodle', 'gradebookroles'));
 
         $this->showtotalsifcontainhidden[$course->id] = grade_get_setting($course->id,
@@ -106,7 +106,7 @@ class course_total_grade extends \grade_report_overview {
         global $USER;
 
         // Default 'empty' output.
-        $output = array("value" => '-', "percentage" => '-');
+        $output = ["value" => '-', "percentage" => '-'];
 
         if ($studentcoursesonly && !$this->isstudent) {
             return $output;
@@ -128,13 +128,13 @@ class course_total_grade extends \grade_report_overview {
         $courseitem = grade_item::fetch_course_item($this->course->id);
 
         // Get the stored grade.
-        $coursegrade = new grade_grade(array('itemid' => $courseitem->id, 'userid' => $this->user->id));
+        $coursegrade = new grade_grade(['itemid' => $courseitem->id, 'userid' => $this->user->id]);
         $coursegrade->grade_item =& $courseitem;
         $finalgrade = $coursegrade->finalgrade;
 
         // Return error when grade needs updating.
         if ($coursegrade->grade_item->needsupdate) {
-            return array("value" => get_string('error'), "percentage" => '-');
+            return ["value" => get_string('error'), "percentage" => '-'];
         }
 
         $canviewhidden = has_capability('moodle/grade:viewhidden', $this->context);
@@ -172,6 +172,6 @@ class course_total_grade extends \grade_report_overview {
             true, GRADE_DISPLAY_TYPE_PERCENTAGE);
 
         $value = grade_format_gradevalue(unformat_float($finalgrade), $coursegrade->grade_item);
-        return array("value" => $value, "percentage" => $percentage);
+        return ["value" => $value, "percentage" => $percentage];
     }
 }
