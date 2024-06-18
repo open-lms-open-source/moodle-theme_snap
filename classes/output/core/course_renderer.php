@@ -1901,9 +1901,11 @@ class course_renderer extends \core_course_renderer {
         // Move, Edit, Delete.
         if (has_capability('moodle/course:manageactivities', $modcontext)) {
             // Update button.
-            $actionsadvanced[] = '<li><a href="'.new moodle_url($baseurl, ['update' => $mod->id]).
-                '" data-action="update" role="button" class="snap-edit-asset dropdown-item" role="button">'.
-                '<i class="icon fa fa-pencil fa-fw "></i>'.$str->editsettings.'</a></li>';
+            $editalt = get_string('activityedit', 'theme_snap');
+            $actionsadvanced[] = '<li><a href="'.new moodle_url($baseurl, ['update' => $mod->id]).'" aria-label="'
+                .$editalt.' '.$mod->get_formatted_name().'" data-action="update" role="button" '.
+                'class="snap-edit-asset dropdown-item" role="button"><i class="icon fa fa-pencil fa-fw "></i>'
+                .$str->editsettings.'</a></li>';
             // Move button.
             $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
             $actionsadvanced[] = '<li><a><label role="button" class="snap-asset-move dropdown-item" aria-label="'
