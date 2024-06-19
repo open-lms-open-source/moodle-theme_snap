@@ -58,7 +58,7 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
     And I should not see "Test resource description"
     And "resource1.txt" "link" should not exist
 
-  @javascript
+  @javascript @_switch_window
   Scenario Outline: Add a URL and ensure it is displayed correctly.
     Given the following "activity" exists:
       | activity       | url                 |
