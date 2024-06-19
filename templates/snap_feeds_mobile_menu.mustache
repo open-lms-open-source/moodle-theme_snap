@@ -16,7 +16,7 @@
 }}
 {{!
 
- @template my/courses/feeds/mobile
+ @template theme_snap/snap_feeds_mobile_menu
 
  @package   theme_snap
  @copyright Copyright (c) 202 Open LMS
@@ -41,6 +41,12 @@
                 {{{intelliboard.content}}}
             </div>
         {{/intelliboard.enable}}
+
+        {{#intellicart.enable}}
+            <div class="feed-section active" id="snap-feeds-section-intelliboard">
+                {{{intellicart.content}}}
+            </div>
+        {{/intellicart.enable}}
 
         {{#deadlines.enable}}
             <div class="feed-section" id="snap-feeds-section-deadlines">

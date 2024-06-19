@@ -3,10 +3,11 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
 <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 viewBox="0 0 512 512"  xml:space="preserve">
+	 viewBox="-250 -250 1012 1012"  xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#000000;}
+	.st0{fill:#999;}
 </style>
+<rect x="-250" y="-250" width="1012" height="1012" fill="none"/>
 <g>
 	<path class="st0" d="M92.574,294.24V124.336H43.277C19.449,124.336,0,144.213,0,168.467v206.44
 		c0,24.254,19.449,44.133,43.277,44.133h62v45.469c0,3.041,1.824,5.777,4.559,6.932c2.736,1.154,5.957,0.486,8.023-1.641
