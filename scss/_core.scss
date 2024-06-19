@@ -3367,6 +3367,9 @@ table#user-grades tr.avg td.cell {
     }
     .table-responsive {
         white-space: break-spaces; // Needed for dropdowns to take up space without scrolling.
+        tr {
+            white-space: normal;
+        }
     }
 }
 #page-local-joulegrader-view {
