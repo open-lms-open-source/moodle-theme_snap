@@ -39,7 +39,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
 
   @javascript
   Scenario Outline: In read mode, teacher hides section.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -129,7 +128,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
   @javascript
   Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
   hide section.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And the editing teacher role is removed from course "C1" for "teacher1"
@@ -141,7 +139,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
   @javascript
   Scenario: Teacher loses teacher capability whilst course open and when rendering using the fragment api the edition
   button should not appear.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | 1 | theme_snap |
@@ -155,7 +152,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
 
   @javascript
   Scenario Outline: In read mode, student cannot hide section.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |

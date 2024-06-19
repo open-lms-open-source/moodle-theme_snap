@@ -88,7 +88,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                         }
                     }
                     util.whenTrue(function() {
-                        var isvisible = $('.moodle-dialogue-base').is(':visible');
+                        var isvisible = $('.modal-dialog').is(':visible');
                         return isvisible;
                     }, function() {
                         endfd.resolve(true);
@@ -118,8 +118,7 @@ define(['jquery', 'core/notification', 'core/ajax', 'core/templates', 'core/str'
                 }
 
                 if (typeof response === 'undefined') {
-                    // We don't know what the error was so don't show a useless unknown error dialog.
-                    return false;
+                    return dfd.resolve(false).promise();
                 }
 
                 if (response.errorcode && response.errorcode === "sitepolicynotagreed") {
