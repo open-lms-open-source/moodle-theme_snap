@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,20 +14,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme plugin version definition.
+ * Javascript to initialise the myoverview block.
  *
- * @package   theme_snap
- * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright Copyright (c) 2024 Open LMS (https://www.openlms.net)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+import * as View from 'theme_snap/block_myoverview/block_myoverview_view';
+import * as ViewNav from 'theme_snap/block_myoverview/block_myoverview_view_nav';
 
-$plugin->version   = 2024061702;
-$plugin->requires  = 2023100900;
-$plugin->release   = '4.3.4';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'theme_snap';
-$plugin->dependencies = [
-    'theme_boost' => '2020110900',
-];
+/**
+ * Initialise all of the modules for the overview block.
+ *
+ * @param {object} root The root element for the overview block.
+ */
+export const init = (root) => {
+    // Initialise the course navigation elements.
+    ViewNav.init(root);
+    // Initialise the courses view modules.
+    View.init(root);
+};

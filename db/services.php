@@ -123,4 +123,13 @@ $functions = [
         'loginrequired'   => true,
         'readonlysession' => true, // We don't modify the session.
     ],
+    'theme_snap_block_myoverview_filters'              => [
+        'classname'       => 'theme_snap\\webservice\\ws_block_myoverview',
+        'methodname'      => 'service',
+        'description'     => 'Returns the list of courses from the filters applied in the course overview block',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
+    ],
 ];

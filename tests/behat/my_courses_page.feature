@@ -24,7 +24,6 @@
 Feature: Users can access to the My Courses page in Snap.
 
   Background:
-    And I skip because "I will be fixed on INT-19999"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | student1  | Student    | 1         | student1@example.com  |
@@ -72,11 +71,10 @@ Feature: Users can access to the My Courses page in Snap.
     And I should see "Request a course"
     And I follow "Request a course"
     And I should see "Details of the course you are requesting"
-    And I log in as "admin"
     And the following config values are set as admin:
       | enablecourserequests | 0 |
-    And I log out
-    And I log in as "student1"
+    Then I am on site homepage
+    And I follow "My Courses"
     And I should see "Course overview"
     Then ".block_myoverview" "css_element" should exist
     And ".snap-page-my-courses-options .btn-group" "css_element" should not exist
@@ -112,7 +110,7 @@ Feature: Users can access to the My Courses page in Snap.
     And I follow "Plugins"
     And I follow "Category: Blocks"
     And I follow "Manage blocks"
-    And I click on "Hide" "icon" in the "Course overview" "table_row"
+    And I click on "Disable Course overview" "icon" in the "Course overview" "table_row"
     And I follow "My Courses"
     Then ".block_myoverview" "css_element" should not exist
     And I should see "The Course overview block is disabled"
@@ -121,7 +119,74 @@ Feature: Users can access to the My Courses page in Snap.
     And I follow "Plugins"
     And I follow "Category: Blocks"
     And I follow "Manage blocks"
-    And I click on "Show" "icon" in the "Course overview" "table_row"
+    And I click on "Enable Course overview" "icon" in the "Course overview" "table_row"
     And I follow "My Courses"
     Then ".block_myoverview" "css_element" should exist
     And I should not see "The Course overview block is disabled"
+
+  @javascript
+  Scenario: User can use the year filter in the Course overview block in Snap.
+    Given I log in as "teacher1"
+    And I should see "Course overview"
+    And "#yeardropdown" "css_element" should not exist
+    And the following "courses" exist:
+      | fullname | shortname | category | startdate     | enddate      |
+      | Course 2 | C2        | 0        | ##-1 years##  | ##+1 years## |
+      | Course 3 | C3        | 0        | ##-1 years##  | ##+2 years## |
+    And the following "course enrolments" exist:
+      | user      | course  | role            |
+      | teacher1 | C2       | editingteacher  |
+      | teacher1 | C3       | editingteacher  |
+    Then I am on site homepage
+    And I follow "My Courses"
+    And I should see "Course overview"
+    And "#yeardropdown" "css_element" should exist
+    And I click on "#yeardropdown" "css_element"
+    And "ul[aria-labelledby='yeardropdown'] :nth-child(1)" "css_element" should exist
+    And "ul[aria-labelledby='yeardropdown'] :nth-child(2)" "css_element" should exist
+    And "ul[aria-labelledby='yeardropdown'] :nth-child(3)" "css_element" should not exist
+    And I click on "ul[aria-labelledby='yeardropdown'] :nth-child(1)" "css_element"
+    And I should see "Course 2"
+    And I should not see "Course 3"
+    And I click on "#yeardropdown" "css_element"
+    And I click on "ul[aria-labelledby='yeardropdown'] :nth-child(2)" "css_element"
+    And I should see "Course 3"
+    And I should not see "Course 2"
+
+  @javascript
+  Scenario: User can use the completion filter in the Course overview block in Snap.
+    Given the following "courses" exist:
+      | fullname | shortname | category | enablecompletion |
+      | Course 2 | C2        | 0        | 1                |
+      | Course 3 | C3        | 0        | 1                |
+    And the following "course enrolments" exist:
+      | user      | course  | role            |
+      | teacher1  | C2      | editingteacher  |
+      | student1  | C2      | student         |
+      | student1  | C3      | student         |
+    And the following "activities" exist:
+      | activity    | name          | intro                       | course | idnumber   | section |
+      | assign      | Assignment 1  | Test assign description 1   | C2     | assign1    | 0       |
+    Then I log in as "teacher1"
+    And I am on "Course 2" course homepage
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
+    Then I follow "Edit settings"
+    And I expand all fieldsets
+    And I set the field "Students must manually mark the activity as done" to "1"
+    And I press "Save and return to course"
+    Then I log in as "student1"
+    And I am on "Course 2" course homepage
+    And I click on ".snap-activity.assign .mod-link" "css_element"
+    When I press "Mark as done"
+    And I wait until "Done" "button" exists
+    And I follow "My Courses"
+    And I click on "#progressdropdown" "css_element"
+    And I follow "Completed"
+    And I should see "Course 2"
+    And I should not see "Course 1"
+    And I should not see "Course 3"
+    And I click on "#progressdropdown" "css_element"
+    And I follow "Not completed"
+    And I should not see "Course 2"
+    And I should see "Course 1"
+    And I should see "Course 3"
