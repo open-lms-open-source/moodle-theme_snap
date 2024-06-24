@@ -38,7 +38,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
 
   @javascript
   Scenario Outline: In read mode, teacher toggles section as current and student sees appropriate status.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -81,7 +80,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
   # not related to a session time out / the user being logged out.
   Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
   highlight section.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And the editing teacher role is removed from course "C1" for "teacher1"
@@ -89,23 +87,22 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     Then "#section-1" "css_element" should exist
     And I click on "#extra-actions-dropdown-1" "css_element"
     And I click on "#section-1 .snap-highlight" "css_element"
-    # Shame to have a 1 second pause here but this fails on CI intermittently without this pause.
-    And I wait "1" seconds
-    And I should see "Failed to highlight section"
+    Then ".modal.show .modal-dialog" "css_element" should exist
+    And I should see "Failed to highlight section" in the ".modal-dialog" "css_element"
     Then I log out
     And I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | 1 | theme_snap |
     And I log out
     And I log in as "teacher1"
-    And I am on the course main page for "C1"
+    Given I am on the course main page for "C1"
     And I follow "Topic 1"
-    And I click on "#extra-actions-dropdown-1" "css_element"
+    Then "#section-1" "css_element" should exist
+    And "#extra-actions-dropdown-1" "css_element" should not exist
     And "#section-1 .snap-highlight" "css_element" should not exist
 
   @javascript
   Scenario Outline: Student cannot mark section current.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
