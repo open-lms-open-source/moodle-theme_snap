@@ -49,7 +49,7 @@ $attrs = array(
 );
 
 if (!empty($PAGE->theme->settings->logo)) {
-    $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname).'</span>';
+    $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname). ' ' .get_string('homepage', 'theme_snap').'</span>';
     $attrs['class'] = 'logo';
 }
 
