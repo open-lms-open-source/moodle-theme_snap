@@ -1334,6 +1334,10 @@ footer #moodle-footer
         @media (max-width: 768px) {
             margin-top: 0.6em;
         }
+
+        @include media-breakpoint-down(xs) {
+            gap: 0.3em;
+        }
     }
 
     #snap-home:not(.logo) {
@@ -1351,9 +1355,26 @@ footer #moodle-footer
         }
     }
 
+    #user-action-menu a[href*="my/courses.php"] {
+        display: none;
+    }
+
+    @include media-breakpoint-down(xs) {
+        .snap-my-courses-link span {
+            display: none;
+        }
+
+        #user-action-menu a[href*="my/courses.php"] {
+            display: block;
+        }
+    }
+
     .usermenu {
         #user-menu-toggle {
             padding-top: 0.15em;
+            @include media-breakpoint-down(md) {
+                padding: 0;
+            }
         }
 
         .userpicture,
@@ -1471,6 +1492,10 @@ footer #moodle-footer
         background-repeat: no-repeat;
         background-size: contain;
         background-position: left center;
+
+        @include media-breakpoint-down(md) {
+            height: 40px;
+        }
     }
 }
 
@@ -1511,6 +1536,8 @@ footer #moodle-footer
 @include media-breakpoint-down(md) {
     #snap-header {
         .pull-right.js-only.row, .float-right.js-only.row {
+            padding-top: 0;
+            margin-top: 0;
             #snap-pm-trigger.js-snap-pm-trigger {
                 span.hidden-xs-down {
                     display: none;

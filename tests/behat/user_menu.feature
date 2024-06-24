@@ -74,3 +74,15 @@ Feature: When the moodle theme is set to Snap and can open the user menu from th
     Then I should see "Preferences"
     Then I should see "Switch role to..."
     Then I should see "Log out"
+
+  @javascript
+  Scenario: My Courses option works responsively
+    Given I am logged in as "teacher1"
+    And I change window size to "570x800"
+    And I click on ".usermenu .dropdown-toggle" "css_element"
+    And I should not see "My Courses" in the ".snap-my-courses-link" "css_element"
+    And I should see "My Courses" in the "#user-action-menu" "css_element"
+    Then I change window size to "800x600"
+    And I click on ".usermenu .dropdown-toggle" "css_element"
+    And I should see "My Courses" in the ".snap-my-courses-link" "css_element"
+    And I should not see "My Courses" in the "#user-action-menu" "css_element"
