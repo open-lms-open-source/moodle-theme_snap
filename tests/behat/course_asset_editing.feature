@@ -210,3 +210,15 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I follow "Topic 1"
     And ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" should not exist
     Then I should not see "Copy to Sharing Cart"
+
+  @javascript
+  Scenario: In the frontpage, an admin duplicates an activity.
+    Given the following "activities" exist:
+      | activity | course               | section | name        | intro                  | idnumber |
+      | assign   | Acceptance test site | 1       | Assignment1 | Assignment description | assign1  |
+    Then I log in as "admin"
+    And I am on site homepage
+
+    When I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
+    Then I wait until ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" exists

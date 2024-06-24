@@ -139,7 +139,7 @@ class course_renderer extends \core_course_renderer {
             list($snapmodtype, $mimetype) = $this->get_mod_type($mod);
 
             if ($mod->modname === 'resource') {
-                // Default for resources/attatchments e.g. pdf, doc, etc.
+                // Default for resources/attachments e.g. pdf, doc, etc.
                 $modclasses = ['snap-resource', 'snap-mime-'.$mimetype, 'snap-resource-long'];
                 $resourcedisplayincourse = true;
                 $modresourceneoptions = [

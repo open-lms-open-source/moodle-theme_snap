@@ -26,9 +26,9 @@
  * Main snap initialising function.
  */
 define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
-        'theme_snap/cover_image', 'theme_snap/progressbar', 'core/templates', 'core/str', 'theme_snap/accessibility',
+        'theme_snap/cover_image', 'theme_snap/progressbar', 'core/templates', 'core/str', 'core/ajax', 'theme_snap/accessibility',
         'theme_snap/messages', 'theme_snap/scroll'],
-    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str, accessibility, messages, Scroll) {
+    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str, ajax, accessibility, messages, Scroll) {
 
         'use strict';
 
@@ -831,7 +831,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                     // Add a class to the body to show js is loaded.
                     $('body').addClass('snap-js-loaded');
-                    // Apply progressbar.js for circluar progress display.
+
+                    // Apply progressbar.js for circular progress display.
                     progressbarcircle();
                     // Course footer recent updates dom fixes.
                     recentUpdatesFix();
@@ -1270,6 +1271,34 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             util.processAnimatedImages();
                         });
                         observerTilesSect.observe(targetTilesSect, configTilesSect);
+                    }
+
+                    // Snapify format site on the front page if needed.
+                    // TODO: Maybe remove this whole piece if MDL-82188 ever gets resolved in our favor.
+                    if ($('body#page-site-index.format-site').length) {
+                        var frontPageActivities = document.querySelector('div[role="main"] ul.section');
+                        var frontPageActObserver = new MutationObserver(function() {
+                            $('div[role="main"] ul.section > li[id^="module"]').each(function() {
+                                if (!$(this).hasClass('snap-activity') && !$(this).hasClass('snap-asset')) {
+                                    let id = $(this).attr('id');
+                                    let moduleid = id.match(/\d+$/)[0];
+                                    $(this).hide(); // Hide it while we finish.
+
+                                    ajax.call([
+                                        {
+                                            methodname: 'theme_snap_course_module',
+                                            args: {cmid: moduleid},
+                                            done: function(response) {
+                                                let html = $.parseHTML(response.html);
+                                                $('#' + id).replaceWith(html[0]);
+                                            }
+                                        }
+                                    ]);
+                                }
+                            });
+                        });
+                        var frontPageActConfig = {childList: true};
+                        frontPageActObserver.observe(frontPageActivities, frontPageActConfig);
                     }
 
                     waitForFullScreenButton();
