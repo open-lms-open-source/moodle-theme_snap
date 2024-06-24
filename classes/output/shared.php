@@ -722,27 +722,27 @@ EOF;
         }
 
         // Personalised Learning Designer.
-        if (!empty($CFG->local_pld_experimental)) {
-            if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
-                $iconurl = $OUTPUT->image_url('pldnew', 'theme');
-                $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-                $pldname = get_string('pldinitials', 'local_pld');
-                $links[] = array(
-                    'link' => 'local/pld/view.php?newpld=1&courseid='.$COURSE->id,
-                    'title' => $pldicon.$pldname
-                );
-            }
+        if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
+            $iconurl = $OUTPUT->image_url('pldnew', 'theme');
+            $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $pldname = get_string('pldinitials', 'local_pld');
+            $links[] = array(
+                'link' => 'local/pld/view.php?newpld=1&courseid='.$COURSE->id,
+                'title' => $pldicon.$pldname
+            );
         }
 
         // Personalised Learning Designer (Legacy).
-        if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
-            $iconurl = $OUTPUT->image_url('pld', 'theme');
-            $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-            $pldname = get_string('pldlegacy', 'local_pld');
-            $links[] = array(
-                'link' => 'local/pld/view.php?courseid='.$COURSE->id,
-                'title' => $pldicon.$pldname
-            );
+        if ((!isset($CFG->local_pld_legacy) || $CFG->local_pld_legacy)) {
+            if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
+                $iconurl = $OUTPUT->image_url('pld', 'theme');
+                $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                $pldname = get_string('pldlegacy', 'local_pld');
+                $links[] = array(
+                    'link' => 'local/pld/view.php?courseid='.$COURSE->id,
+                    'title' => $pldicon.$pldname
+                );
+            }
         }
 
         // Competencies if enabled.
