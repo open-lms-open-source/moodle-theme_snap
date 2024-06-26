@@ -464,3 +464,4 @@ $string['browserepositories'] = 'Browse repositories';
 $string['saveimage'] = 'Save image';
 $string['opens'] = 'Opens {$a}';
 $string['opened'] = 'Opened {$a}';
+$string['year'] = 'Year';
