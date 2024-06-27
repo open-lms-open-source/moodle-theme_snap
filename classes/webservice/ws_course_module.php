@@ -55,7 +55,7 @@ class ws_course_module extends \external_api {
 
         $courserenderer = $PAGE->get_renderer('core', 'course');
         $completioninfo = new \completion_info($COURSE);
-        $format = course_get_format($COURSE);
+        $format = \core_courseformat\base::instance($COURSE);
         $modinfo = $format->get_modinfo();
         $mod = $modinfo->cms[$cmid];
 
