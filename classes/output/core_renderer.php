@@ -312,7 +312,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '<div class="badge-count-container">
                         <a class="snap-message-count" aria-label="'.$ariaopenmessagedrawer.$unreadconversationsstr.'" +
                          href="'.$url.'" title="'.$ariaopenmessagedrawer.$unreadconversationsstr.'">
-                            <i class="icon fa fa-comment fa-fw">
+                            <i class="icon fa-regular fa-comment fa-fw">
                                 <div class="conversation_badge_count hidden"></div>
                             </i>
                         </a>
