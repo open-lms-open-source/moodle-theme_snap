@@ -187,7 +187,6 @@ body.path-site .block.block_settings {
     overflow-x: hidden;
     z-index: 13;
     right: -100%;
-    border-left: 1px solid #eee;
     transition: right 0.4s ease-in-out;
     width: 320px;
     position: fixed;
@@ -310,7 +309,7 @@ body.path-site .block.block_settings {
 
                 .nav-item {
                     opacity: 0.4;
-                    min-width: 72px;
+                    min-width: 64px;
                     padding-top: 4px;
 
                     .nav-link {
