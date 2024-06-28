@@ -569,6 +569,9 @@ body.path-site .block.block_settings {
         @include media-breakpoint-down(md) {
             margin-top: 0;
         }
+        @media (max-width: 425px) {
+            margin-top: 4rem;
+        }
     }
 }
 
