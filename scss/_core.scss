@@ -1201,7 +1201,10 @@ footer #moodle-footer
     width: 100vw;
 
     @media (max-width: 991px) {
-        width: calc(100vw - 4%);
+        width: 100%;
+        .float-right.js-only.row {
+            margin-right: 0.2rem;
+        }
     }
 
     z-index: 23;
@@ -1343,6 +1346,10 @@ footer #moodle-footer
     #snap-home:not(.logo) {
         margin-top: 1em;
         margin-bottom: 1em;
+        @include media-breakpoint-down(md) {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
     }
 
     .snap-my-courses-link {
@@ -1494,7 +1501,7 @@ footer #moodle-footer
         background-position: left center;
 
         @include media-breakpoint-down(md) {
-            height: 40px;
+            height: 45px;
         }
     }
 }

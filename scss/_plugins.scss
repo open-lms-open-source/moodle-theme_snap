@@ -97,6 +97,20 @@
 
 }
 
+#nav-intellicart-popover-container,
+#nav-notification-popover-container {
+    @media (max-width: 600px) {
+        .popover-region-container {
+            position: fixed;
+            top: 6.5rem !important;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            width: auto;
+        }
+    }
+}
+
 /**
  * Intellicart plugin shopping cart.
  */
