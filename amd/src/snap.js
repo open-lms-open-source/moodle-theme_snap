@@ -965,6 +965,25 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
                         // Add expand all to advanced column.
                         $(".snap-form-advanced").append($(".collapsible-actions"));
+
+                        // Adding additional events to handle collapse/expanse same as lib/form/amd/src/collapsesections.js
+                        const formContainers = $('.snap-form-advanced > fieldset > .fcontainer');
+                        const collapsemenu = $(".collapsible-actions > .collapsemenu")[0];
+                        $('.snap-form-advanced > fieldset > .fcontainer').on('hidden.bs.collapse', () => {
+                            const allCollapsed = [...formContainers].every(container => !container.classList.contains('show'));
+                            if (allCollapsed) {
+                                collapsemenu.classList.add('collapsed');
+                                collapsemenu.setAttribute('aria-expanded', false);
+                            }
+                        });
+                        $('.snap-form-advanced > fieldset > .fcontainer').on('shown.bs.collapse', () => {
+                            const allExpanded = [...formContainers].every(container => container.classList.contains('show'));
+                            if (allExpanded) {
+                                collapsemenu.classList.remove('collapsed');
+                                collapsemenu.setAttribute('aria-expanded', true);
+                            }
+                        });
+
                         // Add collapsed to all fieldsets in advanced, except on course edit page.
                         if (!$('#page-course-edit').length) {
                             $(".snap-form-advanced fieldset").addClass('collapsed');
