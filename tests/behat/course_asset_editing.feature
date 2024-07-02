@@ -24,8 +24,8 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   Background:
     Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
+      | fullname | shortname | category | format | showcompletionconditions | enablecompletion |
+      | Course 1 | C1        | 0        | topics | 1                        | 1                |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -222,3 +222,14 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     When I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
     Then I wait until ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" exists
+
+  @javascript
+  Scenario: In the frontpage, an admin can edit completions conditions
+    Given the following "activities" exist:
+      | activity | name              | course | idnumber | gradepass | completion | completionusegrade |
+      | quiz     | Activity sample 1 | C1     | quiz1    | 5.00      | 2          | 1                  |
+    When I am on the "C1" "Course" page logged in as "admin"
+    And I click on "More Options" "button"
+    Then I click on "Edit conditions Activity sample 1" "button"
+    And ".snap-form-required > fieldset" "css_element" should not be visible
+    But ".snap-form-advanced > fieldset#id_activitycompletionheader" "css_element" should be visible

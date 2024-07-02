@@ -1929,6 +1929,15 @@ class course_renderer extends \core_course_renderer {
                 .$editalt.' '.$mod->get_formatted_name().'" data-action="update" role="button" '.
                 'class="snap-edit-asset dropdown-item" role="button"><i class="icon fa fa-pencil fa-fw "></i>'
                 .$str->editsettings.'</a></li>';
+            // Edit conditions button.
+            $editconditionsalt = get_string('editconditions', 'completion');
+            $actionsadvanced[] = '<li><a href="' . new moodle_url(
+                '/course/modedit.php',
+                ['update' => $mod->id, 'showonly' => 'activitycompletionheader']
+                ) . '" aria-label="'
+                . $editconditionsalt . ' ' . $mod->get_formatted_name() . '" data-action="update" role="button" ' .
+                'class="snap-edit-conditions-asset dropdown-item" role="button"><i class="icon fa fa-pencil fa-fw "></i>'
+                . $editconditionsalt . '</a></li>';
             // Move button.
             $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
             $actionsadvanced[] = '<li><a><label role="button" class="snap-asset-move dropdown-item" aria-label="'
