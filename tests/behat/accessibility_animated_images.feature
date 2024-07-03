@@ -26,7 +26,6 @@
 Feature: Animated images should be accessible.
 
   Background:
-    And I skip because "I will be fixed on INT-19667"
     Given the following "courses" exist:
       | fullname | shortname | category | format | maxbytes | enablecompletion |
       | Course 1 | C1        | 0        | topics | 500000   | 1                |

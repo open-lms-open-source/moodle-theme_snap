@@ -33,14 +33,13 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
 
   @javascript
   Scenario: Go to Snap settings page and put a wrong JSON text in it.
-    And I skip because "I will be fixed on INT-19668"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -55,14 +54,13 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
 
   @javascript
   Scenario: Go to Snap settings page and put a valid JSON text in it.
-    And I skip because "I will be fixed on INT-19668"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -78,14 +76,13 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
 
   @javascript
   Scenario: Go to Snap settings page and put a valid JSON text in it but with no existing categories.
-    And I skip because "I will be fixed on INT-19668"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -100,14 +97,13 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
 
   @javascript
   Scenario: Go to Snap settings page and put a not valid color in the JSON text.
-    And I skip because "I will be fixed on INT-19668"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -122,14 +118,13 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
 
   @javascript
   Scenario: Go to Snap settings page and put a wrong JSON text with duplicated IDs.
-    And I skip because "I will be fixed on INT-19668"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"

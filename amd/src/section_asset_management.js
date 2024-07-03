@@ -1611,6 +1611,7 @@ define(
                         $('.snap-asset button').attr('disabled','disabled');
                         $(asset).find('button').removeAttr('disabled');
                         $('.snap-asset .snap-asset-content a').attr('tabindex','-1');
+                        $('.snap-asset .mod-link').attr('tabindex','-1');
                         $(asset).find('a').removeAttr('tabindex');
 
                         $(asset).find('.js-snap-asset-move').prop('checked', 'checked');

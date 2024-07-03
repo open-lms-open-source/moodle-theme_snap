@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
 
   @javascript
   Scenario: Go to Snap Navigation bar settings page and set colors for My Courses and Login button.
-    And I skip because "I will be fixed on INT-19649"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories            | 0 |            |
@@ -34,7 +33,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I should see "Navigation bar"
     And I click on "Navigation bar" "link"
     And I should see "Change My Courses button colors"
@@ -54,7 +53,6 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
 
   @javascript
   Scenario: Go to Snap Navigation bar settings page, set colors for My Courses and Login button, and see contrast message.
-    And I skip because "I will be fixed on INT-19649"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |
@@ -63,7 +61,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I should see "Navigation bar"
     And I click on "Navigation bar" "link"
     And I should see "Change My Courses button colors"
