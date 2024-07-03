@@ -36,6 +36,8 @@ use coursecat;
 use stdClass;
 use theme_snap\activity;
 use theme_snap\activity_meta;
+use core\output\local\dropdown\dialog as dropdown_dialog;
+use core_completion\cm_completion_details;
 
 require_once($CFG->dirroot . "/mod/book/locallib.php");
 require_once($CFG->libdir . "/gradelib.php");
@@ -416,8 +418,29 @@ class course_renderer extends \core_course_renderer {
                 // In auto mode, the icon is just an image.
                 $completionpixicon = new \pix_icon('i/completion-'.$completionicon, $imgalt, '',
                     ['title' => $imgalt]);
-                $output .= html_writer::tag('span', $this->output->render($completionpixicon),
+                $span = html_writer::tag('span', $this->output->render($completionpixicon),
                     ['class' => 'autocompletion']);
+                $showcompletionconditions = $course->showcompletionconditions == COMPLETION_SHOW_CONDITIONS;
+                $completiondetails = cm_completion_details::get_instance($mod, $USER->id, $showcompletionconditions);
+                $showcompletioninfo = $completiondetails->has_completion() &&
+                    ($showcompletionconditions || $completiondetails->show_manual_completion());
+                $data = (object) [
+                    'istrackeduser' => true,
+                    'hasconditions' => true,
+                    'completiondetails' => $completiondetails
+                ];
+                $dialogcontent = $this->output->render_from_template('core_courseformat/local/content/cm/completion_dialog', $data);
+                $dialog = new dropdown_dialog(
+                    $this->output->render($completionpixicon),
+                    $this->get_completion_dialog_content($mod),
+                    [
+                        'classes' => 'completion-dropdown',
+                        'buttonclasses' => 'btn btn-icon',
+                        'dropdownposition' => dropdown_dialog::POSITION['end'],
+                    ]
+                );
+                $dialog = $this->output->render($dialog);
+                $output .= $dialog;
             }
         }
         return $output;
@@ -1906,6 +1929,15 @@ class course_renderer extends \core_course_renderer {
                 .$editalt.' '.$mod->get_formatted_name().'" data-action="update" role="button" '.
                 'class="snap-edit-asset dropdown-item" role="button"><i class="icon fa fa-pencil fa-fw "></i>'
                 .$str->editsettings.'</a></li>';
+            // Edit conditions button.
+            $editconditionsalt = get_string('editconditions', 'completion');
+            $actionsadvanced[] = '<li><a href="' . new moodle_url(
+                '/course/modedit.php',
+                ['update' => $mod->id, 'showonly' => 'activitycompletionheader']
+                ) . '" aria-label="'
+                . $editconditionsalt . ' ' . $mod->get_formatted_name() . '" data-action="update" role="button" ' .
+                'class="snap-edit-conditions-asset dropdown-item" role="button"><i class="icon fa fa-pencil fa-fw "></i>'
+                . $editconditionsalt . '</a></li>';
             // Move button.
             $movealt = s(get_string('move', 'theme_snap', $mod->get_formatted_name()));
             $actionsadvanced[] = '<li><a><label role="button" class="snap-asset-move dropdown-item" aria-label="'
@@ -2095,5 +2127,17 @@ class course_renderer extends \core_course_renderer {
                 ));
         }
         return $output;
+    }
+
+    private function get_completion_dialog_content($mod) {
+        global $COURSE;
+
+        $courseformat = course_get_format($mod->get_course());
+        $section = $mod->get_section_info();
+        $completionclass = $courseformat->get_output_classname('content\\cm\\completion');
+        $completion = new $completionclass($courseformat, $section, $mod);
+        $templatedata = $completion->export_for_template($this->output);
+
+        return $templatedata->completiondialog['dialogcontent'];
     }
 }

@@ -1257,6 +1257,20 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     }
 
+                    // Checking if the snap form required fieldset is not being displayed.
+                    const snapFormFsRequired = $('.snap-form-required > fieldset');
+                    if(snapFormFsRequired && snapFormFsRequired.hasClass('d-none')){
+                        // Now its safe to remove  the columns class from the form so the visible fieldset takes the full space.
+                        const visibleFieldset = $('.snap-form-advanced > fieldset').not('.d-none');
+                        $(visibleFieldset).parent().removeClass('col-md-4');
+
+                        // Making sure that the save buttons are displayed.
+                        const notificationCheck = document.getElementById('id_coursecontentnotification')
+                            .closest(".form-group.fitem");
+                        $('.snap-form-advanced').append(notificationCheck);
+                        $('.snap-form-advanced').append(savebuttonsformrequired);
+                    }
+
                     // Hide Blocks editing on button from the Intelliboard Dashboard page in Snap.
                     if ( $('#page-home.theme-snap .intelliboard-page').length && $('.snap-page-heading-button').length) {
                         const blocksEditingOnButton = document.getElementsByClassName('snap-page-heading-button')[0];

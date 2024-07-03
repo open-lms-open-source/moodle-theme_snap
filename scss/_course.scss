@@ -935,6 +935,10 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
             overflow-y: auto;
             position: static;
             padding: 0.5em 1em;
+
+            &:has(.completion-dropdown) {
+                overflow: visible;
+            }
         }
 
         .snap-assettype {
@@ -1290,8 +1294,22 @@ body.snap-resource-card {
                 .autocompletion {
                     display: flex;
                 }
-                div {
+                div:not(.completion-dropdown div) {
                     display: flex;
+                }
+
+                .completion-dropdown {
+                    .dropdown-menu {
+                        min-width: 15em;
+                    }
+
+                    .completion-dialog .icon { // Copying the sizes from Boost.
+                        font-size: 0.8203125rem;
+                        width: 0.8203125rem;
+                        height: 0.8203125rem;
+                        margin-right: 0.25rem;
+                        max-width: unset;
+                    }
                 }
             }
         }
