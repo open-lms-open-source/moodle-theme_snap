@@ -977,9 +977,33 @@ a.yui3-button,
     }
 }
 
+// Styles for #page-report-competency-index.
 #page-report-competency-index .header-button-group {
     padding-top: 10px;
     padding-left: 5px;
+}
+
+#page-report-competency-index .table-bordered {
+    td.alert.alert-info,
+    td.alert.alert-success,
+    td.alert.alert-danger,
+    td.alert.alert-warning, {
+        border-left: none;
+        padding-left: 4em;
+    }
+    td.alert.alert-info::before,
+    td.alert.alert-success::before,
+    td.alert.alert-danger::before,
+    td.alert.alert-warning::before, {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        border-left: 3em solid;
+        padding-left: 4em;
+    }
 }
 
 #page-badges-award .recipienttable tr td.actions .actionbutton {

@@ -1335,6 +1335,14 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     }
 
                     waitForFullScreenButton();
+
+                    // Reassess the competency report user table.
+                    if ($('body#page-report-competency-index').length > 0) {
+                        const userCompetency = $('.user-competency-course-navigation');
+                        if (userCompetency.length > 0) {
+                            userCompetency.parent().addClass('ml-4');
+                        }
+                    }
                 });
                 accessibility.snapAxInit();
                 messages.init();
