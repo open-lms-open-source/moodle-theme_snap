@@ -75,3 +75,43 @@ Feature: View activity activity header and completion information in activities
     Then the "View" completion condition of "Music history" is displayed as "done"
     And the "Make a submission" completion condition of "Music history" is displayed as "done"
     And the "Receive a grade" completion condition of "Music history" is displayed as "done"
+
+    @javascript
+    Scenario: Student should see the automatic completion criterias statuses of activities with completion grade
+    Given the following "activities" exist:
+      | activity   | name              | course | idnumber | gradepass | completion | completionusegrade |
+      | quiz       | Activity sample 1 | C1     | quiz1    | 5.00      | 2          | 1                  |
+      | quiz       | Activity sample 2 | C1     | quiz2    | 5.00      | 2          | 1                  |
+    And the following "question categories" exist:
+      | contextlevel | reference | name           |
+      | Course       | C1        | Test questions |
+    And the following "questions" exist:
+      | questioncategory | qtype     | name           | questiontext              |
+      | Test questions   | truefalse | First question | Answer the first question |
+    And quiz "Activity sample 1" contains the following questions:
+      | question       | page |
+      | First question | 1    |
+    And quiz "Activity sample 2" contains the following questions:
+      | question       | page |
+      | First question | 1    |
+    When I am on the "C1" "Course" page logged in as "student1"
+    Then I click on "[id^='dropwdownbutton']" "css_element" in the "Activity sample 1" "activity"
+    And "Receive a grade" "text" should exist in the "Activity sample 1" "activity"
+    Then I click on "[id^='dropwdownbutton']" "css_element" in the "Activity sample 2" "activity"
+    And "Receive a grade" "text" should exist in the "Activity sample 2" "activity"
+    # Pass grade.
+    And user "student1" has attempted "Activity sample 1" with responses:
+      | slot | response |
+      | 1    | True    |
+    # Fail grade.
+    And user "student1" has attempted "Activity sample 2" with responses:
+      | slot | response |
+      | 1    | False    |
+    # After receiving a grade, the completion criteria dropdown should display "Done" instead of "To do", regardless of pass/fail.
+    And I am on the "Course 1" course page
+    Then "img[title='Not completed: Activity sample 1']" "css_element" should not exist in the "Activity sample 1" "activity"
+    Then I click on "[id^='dropwdownbutton']" "css_element" in the "Activity sample 1" "activity"
+    And "Receive a grade" "text" should exist in the "Activity sample 1" "activity"
+    Then "img[title='Not completed: Activity sample 2']" "css_element" should not exist in the "Activity sample 2" "activity"
+    And I click on "[id^='dropwdownbutton']" "css_element" in the "Activity sample 2" "activity"
+    And "Receive a grade" "text" should exist in the "Activity sample 2" "activity"
