@@ -465,3 +465,4 @@ $string['saveimage'] = 'Save image';
 $string['opens'] = 'Opens {$a}';
 $string['opened'] = 'Opened {$a}';
 $string['year'] = 'Year';
+$string['homepage'] = 'Homepage';

@@ -119,10 +119,10 @@
                         placeholder="{{^canloginbyemail}}{{#cleanstr}}username{{/cleanstr}}{{/canloginbyemail}}{{#canloginbyemail}}{{#cleanstr}}usernameemail{{/cleanstr}}{{/canloginbyemail}}*">
                 <label for="username">
                     {{^canloginbyemail}}
-                        {{#str}} username {{/str}}
+                        {{#str}} username {{/str}}*
                     {{/canloginbyemail}}
                     {{#canloginbyemail}}
-                        {{#str}} usernameemail {{/str}}
+                        {{#str}} usernameemail {{/str}}*
                     {{/canloginbyemail}}
                 </label>
             </div>
@@ -130,7 +130,7 @@
                 <input type="password" name="password" id="password" autocomplete="current-password" value="" required
                        class="form-control"
                        placeholder="{{#cleanstr}}password{{/cleanstr}}*">
-                <label for="password" class="sr-only">{{#str}} password {{/str}}</label>
+                <label for="password" class="sr-only">{{#str}} password {{/str}}*</label>
             </div>
             <a class="small btn btn-link btn-block" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
             <button type="submit" class="btn btn-primary btn-block" id="loginbtn">{{#str}}login{{/str}}</button>
