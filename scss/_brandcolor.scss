@@ -1072,12 +1072,12 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: white;
         }
 
-        button.btn.btn-secondary:hover, button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split{
+        .btn.btn-secondary:hover, .btn.btn-secondary.dropdown-toggle.dropdown-toggle-split{
             background-color: $brand-primary;
             border-color: $brand-primary;
             color: white;
         }
-        button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split {
+        .btn.btn-secondary.dropdown-toggle.dropdown-toggle-split {
             min-width: 0;
         }
         .btn.btn-secondary, .btn.btn-secondary:focus, .btn.btn-secondary:focus:not(:disabled) {
@@ -1117,6 +1117,23 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                     display: inline-block;
                     width: 1.5em;
                     padding-left: 0.5em;
+                }
+            }
+        }
+    }
+
+    .openlms-custom-elements,
+    .modal.show {
+        .btn.btn-secondary.btn-left.text-filter {
+            color: $brand-primary;
+            background: white;
+            &:hover,
+            &:focus,
+            &:active {
+                .dropdown-toggle {
+                    background-color: $brand-primary;
+                    border-color: $brand-primary;
+                    color: white;
                 }
             }
         }
