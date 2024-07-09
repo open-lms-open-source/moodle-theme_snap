@@ -1122,6 +1122,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+
+    // VPAT PLD dropdowns styles.
     .openlms-custom-elements,
     .modal.show {
         .btn.btn-secondary.btn-left.text-filter {
@@ -1136,6 +1138,19 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                     color: white;
                 }
             }
+        }
+    }
+
+    li.dropdown-item {
+        &.active,
+        &:active,
+        &:hover,
+        &.selected,
+        &:focus,
+        &:focus-within {
+            background-color: $brand-primary;
+            border-color: $brand-primary;
+            color: white;
         }
     }
 
