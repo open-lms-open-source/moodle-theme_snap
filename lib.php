@@ -229,7 +229,7 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         $theme = theme_config::load('snap');
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
     } else if (in_array($context->contextlevel, $coverimagecontexts)
-            && $filearea == 'coverimage' || $filearea == 'coursecard') {
+            && $filearea == 'coverimage' || $filearea == 'coursecard'|| $filearea == 'croppedimage') {
         theme_snap_send_file($context, $filearea, $args, $forcedownload, $options);
     } else if ($filearea === 'vendorjs') {
         $pluginpath = __DIR__.'/';

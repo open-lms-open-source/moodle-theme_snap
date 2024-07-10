@@ -3290,7 +3290,8 @@ body[id^='page-mod-data'] {
 }
 
 .snap_cover_image_dialogue {
-    .snap_cover_image_description {
+    .snap_cover_image_description,
+    .snap_cover_image_cropper_description {
         font-size: small;
     }
     .snap_cover_image_save {

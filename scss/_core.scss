@@ -4271,6 +4271,7 @@ table th img.iconhelp {
     margin-bottom: 1em;
     @include bg-cover;
     @include alakazam;
+    background-position: center;
 
     &:hover {
         transform: scale(1.03);

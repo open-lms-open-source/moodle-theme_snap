@@ -318,8 +318,9 @@ EOF;
             'snapfeedsblocktitle',
             'imageproperties',
             'coverimagedesc',
+            'coverimagecropperdesc',
             'browserepositories',
-            'saveimage'
+            'selectimage'
         ), 'theme_snap');
 
         $PAGE->requires->strings_for_js([

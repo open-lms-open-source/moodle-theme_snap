@@ -9406,7 +9406,7 @@ div.editor_atto_toolbar div.atto_group {
     position: relative;
     background-color: #ccc;
     margin-bottom: 1em;
-    background-position: center top;
+    background-position: center;
     background-size: cover;
     transition: all 0.4s ease-in-out;
 }

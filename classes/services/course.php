@@ -90,6 +90,60 @@ class course {
     }
 
     /**
+     * @param string $croppedimagedata
+     */
+    public function savecroppedimage($context, $croppedimagedata, $ext = null, $originalimageurl = null) {
+
+        $image_parts = explode(";base64,", $croppedimagedata);
+        $image_base64 = base64_decode($image_parts[1]);
+        if (empty($ext)) {
+            $fs = get_file_storage();
+            $originalfile = $fs->get_area_files($context->id, 'theme_snap', 'coverimage', 0, "itemid, filepath, filename", false);
+            if ($originalfile) {
+                $originalfilename = reset($originalfile)->get_filename();
+                $ext = strtolower(pathinfo($originalfilename, PATHINFO_EXTENSION));
+            } else if ($originalimageurl !== null) {
+                $ext = strtolower(pathinfo($originalimageurl, PATHINFO_EXTENSION));
+            }
+        }
+
+        if ($context->contextlevel === CONTEXT_COURSE) {
+            $filerecord = [
+                'contextid' => $context->id,
+                'component' => 'theme_snap',
+                'filearea'  => 'croppedimage',
+                'itemid'    => 0,
+                'filepath'  => '/',
+                'filename'  => 'course-image-cropped.'.$ext,
+            ];
+        } else if ($context->contextlevel === CONTEXT_COURSECAT) {
+            $filerecord = [
+                'contextid' => $context->id,
+                'component' => 'theme_snap',
+                'filearea'  => 'croppedimage',
+                'itemid'    => 0,
+                'filepath'  => '/',
+                'filename'  => 'category-image-cropped.'.$ext,
+            ];
+        } else if ($context->contextlevel === CONTEXT_SYSTEM) {
+            $filerecord = [
+                'contextid' => $context->id,
+                'component' => 'theme_snap',
+                'filearea'  => 'croppedimage',
+                'itemid'    => 0,
+                'filepath'  => '/',
+                'filename'  => 'site-image-cropped.'.$ext,
+            ];
+        }
+
+        // Copy file to temp directory.
+        $tmpimage = tempnam(sys_get_temp_dir(), 'tmpimg');
+        file_put_contents($tmpimage, $image_base64);
+        $fs = get_file_storage();
+        $fs->create_file_from_pathname($filerecord, $tmpimage);
+    }
+
+    /**
      * @param \context $context
      * @param string $data
      * @param string $filename
@@ -97,7 +151,7 @@ class course {
      * @throws \file_exception
      * @throws \stored_file_creation_exception
      */
-    public function setcoverimage(\context $context, $filename, $fileid) {
+    public function setcoverimage(\context $context, $filename, $fileid, $croppedimagedata) {
 
         global $CFG, $USER;
 
@@ -157,8 +211,20 @@ class course {
         if ($context->contextlevel === CONTEXT_SYSTEM) {
             set_config('poster', $newfilename, 'theme_snap');
             local::process_coverimage($context);
+            $this->savecroppedimage($context, $croppedimagedata, $ext);
+            $coverimageurl = local::site_coverimage_url();
+            $coverimageurl = "url($coverimageurl);";
         } else if ($context->contextlevel === CONTEXT_COURSE || $context->contextlevel === CONTEXT_COURSECAT) {
             local::process_coverimage($context, $storedfile);
+            $this->savecroppedimage($context, $croppedimagedata, $ext);
+            if ($context->contextlevel === CONTEXT_COURSE) {
+                $coverimageurl = local::course_coverimage_url($context->instanceid);
+                $coverimageurl = "url($coverimageurl);";
+            } else {
+                $coverimageurl = local::course_cat_coverimage_url($context->instanceid);
+                $coverimageurl = "url($coverimageurl);";
+            }
+
 
             $finfo = $storedfile->get_imageinfo();
             $imagemaincolor = color_contrast::calculate_image_main_color($storedfile, $finfo);
@@ -177,16 +243,16 @@ class course {
                 }
                 $catcontrast = color_contrast::evaluate_color_contrast($imagemaincolor, $themecolor);
                 if ($catcontrast < 4.5) {
-                    return ['success' => true, 'contrast' => get_string('imageinvalidratiocategory',
-                        'theme_snap', number_format((float)$catcontrast, 2)), ];
+                    return ['success' => true,'imageurl'=> $coverimageurl, 'contrast' => get_string('imageinvalidratiocategory',
+                        'theme_snap', number_format((float)$catcontrast, 2))];
                 }
             }
             if ($contrast < 4.5) {
-                return ['success' => true, 'contrast' => get_string('imageinvalidratio',
-                    'theme_snap', number_format((float)$contrast, 2)), ];
+                return ['success' => true,'imageurl'=> $coverimageurl, 'contrast' => get_string('imageinvalidratio',
+                    'theme_snap', number_format((float)$contrast, 2)),];
             }
         }
-        return ['success' => $success];
+        return ['success' => $success, 'imageurl'=> $coverimageurl];
     }
 
     /**

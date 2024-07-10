@@ -1333,7 +1333,7 @@ class local {
      * @return bool|stored_file
      * @throws \coding_exception
      */
-    public static function coverimage($context) {
+    public static function coverimage($context, $featuredcourses = false) {
         $contextid = $context->id;
         $fs = get_file_storage();
 
@@ -1342,8 +1342,14 @@ class local {
                 return false;
             }
         }
-
-        $files = $fs->get_area_files($contextid, 'theme_snap', 'coverimage', 0, "itemid, filepath, filename", false);
+        if ($featuredcourses) {
+            $files = $fs->get_area_files($contextid, 'theme_snap', 'coverimage', 0, "itemid, filepath, filename", false);
+        } else {
+            $files = $fs->get_area_files($contextid, 'theme_snap', 'croppedimage', 0, "itemid, filepath, filename", false);
+            if (!$files) {
+                $files = $fs->get_area_files($contextid, 'theme_snap', 'coverimage', 0, "itemid, filepath, filename", false);
+            }
+        }
         if (!$files) {
             return false;
         }
@@ -1371,9 +1377,9 @@ class local {
      * @param $courseid
      * @return stored_file|bool
      */
-    public static function course_coverimage($courseid) {
+    public static function course_coverimage($courseid, $featuredcourses = false) {
         $context = \context_course::instance($courseid);
-        return (self::coverimage($context));
+        return (self::coverimage($context, $featuredcourses));
     }
 
     /**
@@ -1396,8 +1402,8 @@ class local {
      *
      * @return bool|moodle_url
      */
-    public static function course_coverimage_url($courseid) {
-        $file = self::course_coverimage($courseid);
+    public static function course_coverimage_url($courseid, $featuredcourses = false) {
+        $file = self::course_coverimage($courseid, $featuredcourses);
         if (!$file) {
             $file = self::process_coverimage(\context_course::instance($courseid));
         }
@@ -1539,6 +1545,7 @@ class local {
 
         $fs = get_file_storage();
         $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
+        $fs->delete_area_files($context->id, 'theme_snap', 'croppedimage');
 
         if (!$originalfile) {
             return false;

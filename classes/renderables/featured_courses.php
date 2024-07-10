@@ -116,7 +116,7 @@ class featured_courses implements \renderable, \templatable {
         foreach ($orderedcourses as $course) {
             $i ++;
             $url = new moodle_url('/course/view.php?id=' .$course->id);
-            $coverimageurl = local::course_coverimage_url($course->id);
+            $coverimageurl = local::course_coverimage_url($course->id, true);
             $coverimageurl = $coverimageurl ?: null;
             $this->cards[] = new featured_course($url, $coverimageurl, $course->fullname, $i, $this->colclass);
         }
