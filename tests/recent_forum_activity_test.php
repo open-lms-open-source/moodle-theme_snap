@@ -47,7 +47,12 @@ class recent_forum_activity_test extends \advanced_testcase {
     /**
      * @var stdClass
      */
-    protected $teacher;
+    protected $teacher1;
+
+    /**
+     * @var stdClass
+     */
+    protected $teacher2;
 
     /**
      * @var stdClass

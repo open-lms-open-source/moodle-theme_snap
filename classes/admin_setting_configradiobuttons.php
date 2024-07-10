@@ -25,6 +25,9 @@ namespace theme_snap;
  */
 
 class admin_setting_configradiobuttons extends \admin_setting {
+
+    public $radios;
+
     /**
      * Constructor
      * @param string $name Unique ascii name, either 'mysetting' for settings that in config or
