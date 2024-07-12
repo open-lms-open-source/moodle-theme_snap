@@ -15,6 +15,7 @@
  * along with Moodle. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package
+ * @module    theme_snap/accessibility
  * @author    Oscar Nadjar oscar.nadjar@openlms.net
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -23,8 +24,8 @@
 /**
  * JS code to assign attributes and expected behavior for elements in the Dom regarding accessibility.
  */
-define(['jquery', 'core/str', 'core/event'],
-    function($, str, Event) {
+define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitizer', 'theme_boost/popover'],
+    function($, str, Event, { DefaultWhitelist }) {
         return {
             snapAxInit: function(localJouleGrader, allyReport, blockReports, localCatalogue) {
 
@@ -373,6 +374,33 @@ define(['jquery', 'core/str', 'core/event'],
                             feedback.hide();
                         }
                     }
+                });
+            },
+
+            /**
+             * Override the options from theme_boost/loader::enablePopovers to enhance accesibility (VPAT).
+             */
+            setManualPopovers: function() {
+                const btnSelector = '.iconhelp.btn';
+                $('body').popover({
+                    container: $(btnSelector).parent(),
+                    selector: '[data-toggle="popover"]',
+                    trigger: 'click',
+                    whitelist: Object.assign(DefaultWhitelist, {
+                        table: [],
+                        thead: [],
+                        tbody: [],
+                        tr: [],
+                        th: [],
+                        td: [],
+                    }),
+                });
+                $(btnSelector).on('shown.bs.popover', function () {
+                    $(this).attr('aria-controls', $(this).data('bs.popover').tip.id);
+                    $(this).attr('aria-expanded', true);
+                });
+                $(btnSelector).on('hidden.bs.popover', function () {
+                    $(this).attr('aria-expanded', false);
                 });
             }
         };

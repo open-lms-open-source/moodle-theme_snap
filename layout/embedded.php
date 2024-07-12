@@ -23,6 +23,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+$PAGE->requires->jquery();
+$PAGE->requires->js_amd_inline("require(['theme_boost/loader']);");
 
 echo $OUTPUT->doctype() ?>
 <html <?php echo $OUTPUT->htmlattributes(); ?>>
