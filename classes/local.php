@@ -1081,7 +1081,7 @@ class local {
             }
         }
 
-        usort($grading, array('self', 'sort_graded'));
+        usort($grading, [self::class, 'sort_graded']);
 
         return $grading;
     }
