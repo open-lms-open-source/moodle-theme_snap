@@ -1096,6 +1096,7 @@ define(
                         let courseId = self.courseConfig.id;
                         let dataId = $(this).find('.option-name a').attr('data-id');
                         let dataAction = $(this).find('.option-name a').attr('data-action');
+                        let url = $(this).find('.option-name a').attr('href');
 
                         if (dataAction === 'cmShow') {
                             dataAction = 'cm_show';
@@ -1139,7 +1140,15 @@ define(
                                     let indicator = selected.parent().siblings('.option-select-indicator');
                                     indicator.find('span[data-for="checkedIcon"]').removeClass('d-none');
                                     indicator.find('span[data-for="uncheckedIcon"]').addClass('d-none');
-                                }
+                                },
+                                fail: function(reason) {
+                                    if (reason.errorcode === 'nopermissions') {
+                                        // Open the availability URL like Boost does for non Admin users.
+                                        window.open(url, "_self");
+                                    } else {
+                                        ajaxNotify.ifErrorShowBestMsg(reason);
+                                    }
+                                },
                             }
                         ]);
                     }
