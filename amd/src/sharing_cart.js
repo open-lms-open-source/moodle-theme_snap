@@ -97,6 +97,7 @@ export default class SharingCartForSnap {
         this.courseSections.forEach(function(section) {
             var urlArray = {
                 'directory': restore_targets.is_directory,
+                'target': id,
                 'course'   : course.id,
                 'section'  : section.num,
                 'sesskey'  : M.cfg.sesskey
