@@ -1637,7 +1637,7 @@ HTML;
      * @return string
      */
     public function feature_spot_cards() {
-        $fsnames = ["fs_one", "fs_two", "fs_three"];
+        $fsnames = ["fs_one", "fs_two", "fs_three", "fs_four", "fs_five", "fs_six"];
         $features = [];
         // Note - we are using underscores in the settings to make easier to read.
 
@@ -1669,36 +1669,57 @@ HTML;
         if ($fscount > 0) {
             $fstitle = '';
             if (!empty($this->page->theme->settings->fs_heading)) {
-                $fstitle = '<h2 class="snap-feature-spots-heading">' .s($this->page->theme->settings->fs_heading). '</h2>';
+                $fstitle = '<h2 class="snap-feature-spots-heading">' . s($this->page->theme->settings->fs_heading) . '</h2>';
             }
 
-            $colclass = '';
+            $colclass = 'col-sm-12'; // Default
             if ($fscount === 2) {
                 $colclass = 'col-sm-6'; // Two cards = 50%.
-            }
-            if ($fscount === 3) {
+            } elseif ($fscount === 3) {
                 $colclass = 'col-sm-4'; // Three cards = 33.3%.
+            } else {
+                $colclass = 'col-sm-4'; // Default for more than 3 cards.
+            }
+
+            $extraClass = '';
+            if ($fscount === 4) {
+                $extraClass = 'col-sm-6'; // Fourth card = 50% when there are 4 cards.
+            } elseif ($fscount === 5) {
+                $extraClass = 'col-sm-6'; // Fourth and fifth cards = 50% when there are 5 cards.
+            } elseif ($fscount === 6) {
+                $extraClass = 'col-sm-4'; // Fourth, fifth, and sixth cards = 33.3% when there are 6 cards.
             }
 
             $cards = '';
-            $i = 1;
-            foreach ($features as $feature) {
-                $cards .= '<div class="' .$colclass. '" id="snap-feature-' .$i. '">' .$feature. '</div>';
-                $i++;
+            for ($i = 1; $i <= $fscount; $i++) {
+                $feature = $features[$i - 1];
+                // Open a new row every three cards.
+                if ($i % 3 == 1) {
+                    if ($i > 1) {
+                        $cards .= '</div>'; // Close the previous row.
+                    }
+                    $cards .= '<div class="row py-4 justify-content-center">'; // Open a new row.
+                }
+                $currentcolclass = $colclass;
+                if ($i > 3) {
+                    $currentcolclass = $extraClass; // Apply the special class for the fourth, fifth, and sixth cards.
+                }
+                $cards .= '<div class="' . $currentcolclass . '" id="snap-feature-' . $i . '">' . $feature . '</div>';
             }
+            $cards .= '</div>'; // Close the last row.
 
             $fsedit = '';
             if ($this->page->user_is_editing()) {
                 $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap#themesnapfeaturespots']);
                 $link = html_writer::link($url, get_string('featurespotsedit', 'theme_snap'), ['class' => 'btn btn-primary']);
                 $link = rawurldecode($link);
-                $fsedit = '<p class="text-center">'.$link.'</p>';
+                $fsedit = '<p class="text-center">' . $link . '</p>';
             }
 
             // Build feature spots.
             $featurespots = '<div id="snap-feature-spots">';
             $featurespots .= $fstitle;
-            $featurespots .= '<div class="row">' .$cards. '</div>';
+            $featurespots .= $cards;
             $featurespots .= $fsedit;
             $featurespots .= '</div>';
 
@@ -1726,7 +1747,7 @@ HTML;
         }
 
         // Title with link.
-        $linktitle = '<h3><a ' .$target. ' class="snap-feature-link h5" href="' .s($link). '">' .s($title). '</a></h3>';
+        $linktitle = '<h3><a ' .$target. ' class="snap-feature-link h5 stretched-link" href="' .s($link). '">' .s($title). '</a></h3>';
         // Title without link.
         $nolinktitle = '<h3 class="snap-feature-title h5">' .s($title). '</h3>';
         // Content text for feature spots.
