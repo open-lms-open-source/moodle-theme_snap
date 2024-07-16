@@ -416,14 +416,17 @@ class course_renderer extends \core_course_renderer {
                 $output .= html_writer::end_tag('form');
             } else {
                 // In auto mode, the icon is just an image.
+                $showcompletionconditions = $course->showcompletionconditions == COMPLETION_SHOW_CONDITIONS;
+                $completiondetails = cm_completion_details::get_instance($mod, $USER->id, $showcompletionconditions);
+                $showcompletioninfo = $completiondetails->has_completion() &&
+                ($showcompletionconditions || $completiondetails->show_manual_completion());
+                if (!$showcompletioninfo) {
+                    return $output;
+                }
                 $completionpixicon = new \pix_icon('i/completion-'.$completionicon, $imgalt, '',
                     ['title' => $imgalt]);
                 $span = html_writer::tag('span', $this->output->render($completionpixicon),
                     ['class' => 'autocompletion']);
-                $showcompletionconditions = $course->showcompletionconditions == COMPLETION_SHOW_CONDITIONS;
-                $completiondetails = cm_completion_details::get_instance($mod, $USER->id, $showcompletionconditions);
-                $showcompletioninfo = $completiondetails->has_completion() &&
-                    ($showcompletionconditions || $completiondetails->show_manual_completion());
                 $data = (object) [
                     'istrackeduser' => true,
                     'hasconditions' => true,
