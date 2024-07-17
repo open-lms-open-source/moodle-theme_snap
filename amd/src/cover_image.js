@@ -22,8 +22,9 @@
 define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax_notification', './cropper'],
     function($, log, ajax, notification, ajaxNotify, Cropper) {
 
+        var savedImageURL = $('#page-header').css("background-image");
+        var temporalImageURL = 'none';
         var cropper = null;
-        var originalImageURL = '';
         var cropperRatio = 6/1;
         if ($('#page-site-index').length) {
             cropperRatio = 6/2;
@@ -63,13 +64,19 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
          * First state - image selection button visible.
          */
         var state1 = function() {
-            $('#snap-changecoverimageconfirmation .ok').removeClass('ajaxing');
+            temporalImageURL = 'none';
+            $('#page-header').css('background-image', savedImageURL);
+            if (savedImageURL === "none") {
+                $('.path-course-view #page-header').removeClass('mast-image');
+                $('.path-course-view #page-header .breadcrumb-item a').removeClass('mast-breadcrumb');
+            }
             $('#snap-alert-cover-image-size').remove();
             $('#snap-alert-cover-image-bytes').remove();
-            $('label[for="snap-coverfiles"]').removeClass('ajaxing');
-            $('#snap-changecoverimageconfirmation').removeClass('state-visible');
-            $('label[for="snap-coverfiles"]').addClass('state-visible');
             $('#snap-coverfiles').val('');
+            $('#snap-changecoverimageconfirmation .ok').removeClass('ajaxing');
+            $('#snap-changecoverimageconfirmation').removeClass('state-visible');
+            $('label[for="snap-coverfiles"]').removeClass('ajaxing');
+            $('label[for="snap-coverfiles"]').addClass('state-visible');
             $('body').removeClass('cover-image-change');
         };
 
@@ -118,12 +125,12 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
          * Load current image.
          */
         var loadCurrentImage = function() {
-            var currentImageUrl = $('#page-header').css("background-image");
+            var currentImageUrl = savedImageURL;
             if (currentImageUrl === "none") {
-                $('.snap_cover_image_save_button').attr("disabled", true);
+                $('.snap_cover_image_save_button').addClass("d-none");
                 return "";
             }
-            $('.snap_cover_image_save_button').prop("disabled", false);
+            $('.snap_cover_image_save_button').removeClass("d-none");
             currentImageUrl = getOriginalImageURL(currentImageUrl);
             return currentImageUrl;
         };
@@ -139,12 +146,19 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             var maxbytesstr = humanFileSize(siteMaxBytes);
             let title = M.util.get_string('imageproperties', 'theme_snap');
             let coverImageDesc = M.util.get_string('coverimagedesc', 'theme_snap', maxbytesstr);
-            let coverImageCropperDesc = M.util.get_string('coverimagecropperdesc', 'theme_snap', maxbytesstr);
+            let coverImageCropperDesc = M.util.get_string('coverimagecropperdesc', 'theme_snap');
+            let coverImageSettingsWarning = M.util.get_string('coverimagesettingswarning', 'theme_snap');
             let browseRepositories = M.util.get_string('browserepositories', 'theme_snap');
             let selectImageString = M.util.get_string('selectimage', 'theme_snap');
+            let deleteImageString = M.util.get_string('deleteimage', 'theme_snap');
             let previewDisplay = "'display:none'";
-            let currentImageURL = loadCurrentImage();
-            originalImageURL = currentImageURL;
+            let currentImageURL = '';
+            if (temporalImageURL !== 'none') {
+                currentImageURL = temporalImageURL;
+            } else {
+                currentImageURL = loadCurrentImage();
+                temporalImageURL = currentImageURL;
+            }
             if (currentImageURL !== "") {
                  previewDisplay = "'display:block'";
             }
@@ -153,9 +167,13 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 '<div class="mb-1 snap_cover_image_dialogue">' +
                     '<p class="snap_cover_image_description">' + coverImageDesc + '</p>' +
                     '<p class="snap_cover_image_cropper_description d-none">' + coverImageCropperDesc + '</p>' +
-                    '<div class="input-group input-append w-100 snap_cover_image_browser_options">' +
+                    '<p class="snap_cover_image_cropper_description d-none">' + coverImageSettingsWarning + '</p>' +
+                    '<div class="input-group input-append w-100 snap_cover_image_options">' +
                         '<button class="btn btn-secondary snap_cover_image_browser" id="id_snap_cover_image_browser">' +
                         browseRepositories + '</button>' +
+                        '<button class="btn btn-secondary snap_cover_image_delete_image_button d-none" ' +
+                        'id="id_snap_cover_image_delete_image">' +
+                        deleteImageString + '</button>' +
                     '</div>' +
                 // Add the image preview.
                 '<div class="mdl-align">' +
@@ -167,8 +185,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 '</div>' +
                 // Add the save button.
                 '<div class="snap_cover_image_save">' +
-                        '<button class="btn btn-secondary snap_cover_image_save_button" id="id_snap_cover_image_save_button" ' +
-                        'disabled>' +
+                        '<button class="btn btn-primary snap_cover_image_save_button d-none" ' +
+                        'id="id_snap_cover_image_save_button">' +
                          selectImageString + '</button>' +
                     '</div>' +
                 '</div>';
@@ -176,7 +194,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             var dialogue = new M.core.dialogue({
                 headerContent: title,
                 bodyContent: content,
-                width: '600px',
+                width: '800px',
                 modal: true,
                 visible: false,
                 render: true,
@@ -184,13 +202,14 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             });
             dialogue.show();
 
+            if (savedImageURL !== 'none') {
+                $('.snap_cover_image_delete_image_button').removeClass('d-none');
+            }
+
             // Preview the original image in the modal.
             if (currentImageURL !== "") {
-                $('.snap_cover_image_save_button').prop("disabled", false);
-                if (cropper) {
-                    cropper.destroy();
-                }
-                // Initialize cover image cropper.
+                $('.snap_cover_image_save_button').removeClass("d-none");
+                // Initialize preview image cropper for the current saved image.
                 var imageToCrop = document.getElementById('id_snap_cover_image_preview');
                 cropper = new Cropper(imageToCrop, {
                     viewMode: 3,
@@ -200,11 +219,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                     minCropBoxWidth: 300,
                 });
                 $('.snap_cover_image_cropper_description').removeClass('d-none');
-                $('#id_snap_cover_image_browser').click(function() {
-                    if (cropper) {
-                        cropper.destroy();
-                    }
-                });
                 $('#id_snap_cover_image_save_button').click(function() {
                     if (cropper.getCroppedCanvas() !== null) {
                         var croppedImage = cropper.getCroppedCanvas().toDataURL("image/png");
@@ -219,6 +233,79 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 });
             }
 
+            // Delete image option.
+            $('.snap_cover_image_delete_image_button').click(function(e) {
+                e.preventDefault();
+                cropper = null;
+                let cancelString = M.util.get_string('cancel', 'moodle');
+                let confirmString = M.util.get_string('yes', 'moodle');
+                let confirmDeleteString = M.util.get_string('confirmdeletefile', 'theme_snap');
+                var cancelButton = '<button id="delete_image_cancel_button" class="btn btn-secondary">' +
+                    cancelString + '</button>';
+                var confirmButton = '<button id="delete_image_confirm_button" ' +
+                    'class="btn btn-primary">' + confirmString + '</button>';
+                dialogue.hide();
+
+                let deleteDialogueContent =
+                    '<div class="mb-1 snap_cover_image_delete_dialogue">' +
+                        '<p class="snap_cover_image_delete_description">' + confirmDeleteString + '</p>' +
+                        // Add the delete confirmation buttons.
+                        '<div class="snap_cover_image_delete_confirmation">' + cancelButton + confirmButton + '</div>' +
+                    '</div>';
+
+                var confirmationDialogue = new M.core.dialogue({
+                    headerContent: title,
+                    bodyContent: deleteDialogueContent,
+                    width: '600px',
+                    modal: true,
+                    visible: false,
+                    render: true,
+                    additionalBaseClass: 'snap_cover_image_delete_image_dialogue',
+                });
+                confirmationDialogue.show();
+                confirmationDialogue.after("visibleChange", function() {
+                    if (!confirmationDialogue.get('visible')) {
+                        state1();
+                        confirmationDialogue.destroy(true);
+                    }
+                });
+
+                $('#delete_image_cancel_button').click(function(e) {
+                    e.preventDefault();
+                    confirmationDialogue.hide();
+                });
+                $('#delete_image_confirm_button').click(function(e) {
+                    e.preventDefault();
+                    var ajaxParams = {};
+                    if (categoryId !== null) {
+                        ajaxParams.categoryid = categoryId;
+                    } else if (courseShortName !== null) {
+                        ajaxParams.courseshortname = courseShortName;
+                    }
+                    ajaxParams.deleteimage = true;
+                    ajax.call([
+                        {
+                            methodname: 'theme_snap_cover_image',
+                            args: {params: ajaxParams},
+                            done: function() {
+                                temporalImageURL = 'none';
+                                savedImageURL = 'none';
+                                cropper = null;
+                                state1();
+                                $('#page-header').removeClass('mast-image');
+                                $('#page-header .breadcrumb-item a').removeClass('mast-breadcrumb');
+                                $('#page-header').data('servercoverfile', 'none');
+                                $('#page-header').css('background-image', 'none');
+                                confirmationDialogue.hide();
+                            },
+                            fail: function(response) {
+                                ajaxNotify.ifErrorShowBestMsg(response);
+                            }
+                        }
+                    ], true, true);
+                });
+            });
+
             $('body').addClass('cover-image-change');
             $('label[for="snap-coverfiles"]').addClass('ajaxing');
 
@@ -230,6 +317,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 dialogue.hide();
             });
             $('.snap_cover_image_dialogue .closebutton, .moodle-dialogue-lightbox').click(function() {
+                cropper = null;
                 state1();
             });
             dialogue.after("visibleChange", function() {
@@ -262,7 +350,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 input = document.getElementById('id_snap_cover_image_preview');
                 input.setAttribute('src', params.url);
                 input.setAttribute('style', 'display:block');
-                $('.snap_cover_image_save_button').prop("disabled", false);
+                $('.snap_cover_image_save_button').removeClass("d-none");
 
                 // Warn if image resolution is too small.
                 if (imageWidth < 1024) {
@@ -278,8 +366,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 if (cropper !== null) {
                     cropper.replace(params.url);
                 } else {
-                    // Initialize cover image cropper.
+                    // Initialize preview image cropper for the uploaded image.
                     var imageToCrop = document.getElementById('id_snap_cover_image_preview');
+                    temporalImageURL = params.url;
                     cropper = new Cropper(imageToCrop, {
                         viewMode: 3,
                         aspectRatio: cropperRatio,
@@ -289,11 +378,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                     });
                 }
                 $('.snap_cover_image_cropper_description').removeClass('d-none');
-                $('#id_snap_cover_image_browser').click(function() {
-                    if (cropper) {
-                        cropper.destroy();
-                    }
-                });
                 $('#id_snap_cover_image_save_button').click(function() {
                     var croppedImage = cropper.getCroppedCanvas().toDataURL("image/png");
                     // Ensure that the page-header in courses has the mast-image class.
@@ -319,6 +403,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
         var filepickerCallback = function(courseShortName, categoryId) {
             return function(params) {
             if (params.url !== '') {
+                temporalImageURL = params.url;
                 // Load the preview image.
                 loadPreviewImage(params, courseShortName, categoryId);
                 }
@@ -339,7 +424,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 M.core_filepicker.show(Y, options);
             });
             $('.filepicker .closebutton').click(function() {
-                dialogue.destroy(true);
+                dialogue.hide();
                 state1();
             });
         };
@@ -379,7 +464,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 if (params.url !== undefined) {
                     ajaxParams.originalimageurl = params.url;
                 } else {
-                    ajaxParams.originalimageurl = originalImageURL;
+                    ajaxParams.originalimageurl = '';
                 }
 
                 cropper.getCroppedCanvas().toBlob((blob) => {
@@ -403,7 +488,11 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                                         addCoverImageAlert('snap-alert-cover-image-upload-failed', response.warning);
                                     }
                                     var newUrl = getCroppedImageURL(response.imageurl);
-                                    $('#page-header').css('background-image', 'url(' + newUrl + ')');
+                                    savedImageURL = 'url(' + newUrl + ')';
+                                    temporalImageURL = 'none';
+                                    $('#page-header').css('background-image', savedImageURL);
+                                    $('#page-header').addClass('mast-image');
+                                    $('#page-header .breadcrumb-item a').addClass('mast-breadcrumb');
                                     $('#page-header').data('servercoverfile', $('#page-header').css('background-image'));
                                     $('#snap-changecoverimageconfirmation .ok').off("click");
 
@@ -417,20 +506,6 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                     };
                 });
 
-            });
-
-            $('#snap-changecoverimageconfirmation .cancel').click(function() {
-
-                if ($(this).parent().hasClass('disabled')) {
-                    return;
-                }
-                $('#page-header').css('background-image', $('#page-header').data('servercoverfile'));
-                if ($('#page-header').data('servercoverfile') === "none") {
-                    $('.path-course-view #page-header').removeClass('mast-image');
-                    $('.path-course-view #page-header .breadcrumb-item a').removeClass('mast-breadcrumb');
-                }
-                state1();
-                params = {};
             });
         };
 
@@ -457,6 +532,10 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                         $('#page-header').data('servercoverfile', $('#page-header').css('background-image'));
                         $('#snap-coverimagecontrol').addClass('snap-js-enabled');
                         $('#snap-coverfiles').click(function() {
+                            moodledialogue(courseShortName, categoryId, fpoptions, siteMaxBytes);
+                        });
+                        // Cancel button listener
+                        $('#snap-changecoverimageconfirmation .cancel').click(function() {
                             moodledialogue(courseShortName, categoryId, fpoptions, siteMaxBytes);
                         });
                     },

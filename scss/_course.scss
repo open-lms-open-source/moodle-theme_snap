@@ -3293,12 +3293,17 @@ body[id^='page-mod-data'] {
     }
 }
 
-.snap_cover_image_dialogue {
-    .snap_cover_image_description,
-    .snap_cover_image_cropper_description {
-        font-size: small;
+.cover-image-change {
+    .moodle-dialogue-base .moodle-dialogue-lightbox {
+        pointer-events: none;
     }
-    .snap_cover_image_save {
+}
+
+.snap_cover_image_dialogue,
+.snap_cover_image_delete_dialogue {
+    padding: 1em;
+    .snap_cover_image_save,
+    .snap_cover_image_delete_confirmation {
         margin-top: 2em;
         text-align: right;
     }
@@ -3308,17 +3313,20 @@ body[id^='page-mod-data'] {
             width: 450px;
         }
     }
-    .snap_cover_image_browser_options {
+    .snap_cover_image_options {
         margin-top: 2em;
         margin-bottom: 2em;
         text-align: center;
         display: block;
-    }
-    .snap_cover_image_dialogue {
-        padding: 1em;
+        button {
+            margin: 0.5rem;
+        }
     }
     .snap_cover_image_preview {
         border-radius: 0.5rem;
+    }
+    .snap_cover_image_delete_confirmation button {
+        margin-right: 0.5rem;
     }
 
 }

@@ -320,7 +320,10 @@ EOF;
             'coverimagedesc',
             'coverimagecropperdesc',
             'browserepositories',
-            'selectimage'
+            'selectimage',
+            'deleteimage',
+            'confirmdeletefile',
+            'coverimagesettingswarning',
         ), 'theme_snap');
 
         $PAGE->requires->strings_for_js([
