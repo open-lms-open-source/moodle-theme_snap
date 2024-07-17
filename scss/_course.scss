@@ -1170,6 +1170,10 @@ body.snap-resource-card li.snap-resource:not(.label) {
     background-position: 50% 70%;
     background-size: 33px auto;
 
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+
     &:hover {
         background-size: 50px auto;
     }
