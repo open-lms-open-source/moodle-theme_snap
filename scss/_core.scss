@@ -4184,6 +4184,9 @@ table th img.iconhelp {
     text-align: center;
     .snap-feature {
         background-color: $feature-spot-background-color;
+        @media screen and (max-width: 576px) {
+            margin-top: 1em;
+        }
     }
     .snap-feature-text {
         color: $feature-spot-description-color;
