@@ -74,14 +74,14 @@
     </div>
 
     <ul class="nav justify-content-around text-center">
-        {{#intelliboard.enable}}
+        {{#intellienabled}}
             <li class="nav-item d-flex flex-column active" data-target="intelliboard">
                 <a class="nav-link ib" href="#" style="mask: url('{{intelliboard.icon}}')">
                     <img alt="{{intelliboard.alt}}" src="{{intelliboard.icon}}">
                 </a>
                 <small>{{intelliboard.alt}}</small>
             </li>
-        {{/intelliboard.enable}}
+        {{/intellienabled}}
 
         {{#deadlines.enable}}
             <li class="nav-item d-flex flex-column" data-target="deadlines">

@@ -575,7 +575,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'alt' => 'Intelliboard',
             'content' => $intelliboardContent,
         ];
-        
+
         $intellicartContent = $this->render_intellicart('snapfeedsmenu');
         $data['intellicart'] = [
             'enable' => !empty($intellicartContent),
@@ -584,11 +584,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'content' => $intellicartContent,
         ];
 
+        $data['intellienabled'] = $data['intelliboard']['enable'] || $data['intellicart']['enable'];
+
+        $deadlinesContent = $this->render_deadlines('snapsfeedsmenu');
         $data['deadlines'] = [
-            'enable' => $this->feedback_toggle_enabled(),
+            'enable' => !empty($deadlinesContent),
             'icon' => $OUTPUT->image_url('calendar-new', 'theme'),
             'alt' => get_string('deadlines', 'theme_snap'),
-            'content' => $this->render_deadlines('snapsfeedsmenu'),
+            'content' => $deadlinesContent,
         ];
 
         $data['grading'] = [
