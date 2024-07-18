@@ -383,7 +383,6 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
             setManualPopovers: function() {
                 const btnSelector = '.iconhelp.btn';
                 $('body').popover({
-                    container: $(btnSelector).parent(),
                     selector: '[data-toggle="popover"]',
                     trigger: 'click',
                     whitelist: Object.assign(DefaultWhitelist, {
@@ -396,8 +395,11 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
                     }),
                 });
                 $(btnSelector).on('shown.bs.popover', function () {
-                    $(this).attr('aria-controls', $(this).data('bs.popover').tip.id);
+                    const popover = $(this).data('bs.popover').tip;
+                    $(this).attr('aria-controls', popover.id);
                     $(this).attr('aria-expanded', true);
+                    $(popover).insertAfter($(this));
+                    $(popover).popover('update');
                 });
                 $(btnSelector).on('hidden.bs.popover', function () {
                     $(this).attr('aria-expanded', false);
