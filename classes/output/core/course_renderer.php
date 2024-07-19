@@ -959,17 +959,9 @@ class course_renderer extends \core_course_renderer {
 
         $page = \theme_snap\local::get_page_mod($mod);
 
-        $imgarr = \theme_snap\local::extract_first_image($page->content);
-
-        $thumbnail = '';
-
         $preview = $page->summary;
 
-        // Check that the image is not a TeX equation.
-        if ($imgarr && (strpos($imgarr['src'], "filter/tex/pix.php") == false)) {
-            $img = html_writer::img($imgarr['src'], $imgarr['alt']);
-            $thumbnail = "<div class=summary-figure>$img</div>";
-        } else if (!$page->intro) {
+        if (!$page->intro) {
             $preview = shorten_text($page->content, 200);
         }
 
@@ -1011,7 +1003,6 @@ class course_renderer extends \core_course_renderer {
         ";
         $o = "
         <div class='summary-container'>
-            {$thumbnail}
             <div class='summary-text'>
                 {$preview}
             </div>
