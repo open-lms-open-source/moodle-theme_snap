@@ -34,7 +34,8 @@ define(['jquery', 'core/log','theme_snap/util', 'theme_snap/ajax_notification'],
                 var loadAjaxInfo = function(type) {
                     // Target for data to be displayed on screen.
                     var container = $('#snap-feeds-menu-' + type);
-                    if ($(container).length) {
+                    var mobileContainer = $('#snap-feeds-section-' + type);
+                    if ($(container).length || $(mobileContainer).length) {
                         var cacheKey = M.cfg.sesskey + 'snap-feeds-menu-' + type;
                         try {
                             // Display old content while waiting
@@ -42,6 +43,7 @@ define(['jquery', 'core/log','theme_snap/util', 'theme_snap/ajax_notification'],
                                 log.info('using locally stored ' + type);
                                 var html = window.sessionStorage[cacheKey];
                                 $(container).html(html);
+                                $(mobileContainer).html(html);
                             }
                             log.info('fetching ' + type);
                             $.ajax({
@@ -62,11 +64,14 @@ define(['jquery', 'core/log','theme_snap/util', 'theme_snap/ajax_notification'],
                                             // attribute populated immediately so things like behat can utilise it.
                                             // .data just sets the value in memory, not the dom.
                                             $(container).attr('data-content-loaded', '1');
+                                            $(mobileContainer).attr('data-content-loaded', '1');
                                             if (urlParameter) {
                                                 let modifiedHTML = modifyHTML(data.html);
                                                 $(container).html(modifiedHTML);
+                                                $(mobileContainer).html(modifiedHTML);
                                             } else {
                                                 $(container).html(data.html);
+                                                $(mobileContainer).html(data.html);
                                             }
                                         }
                                     });
