@@ -89,7 +89,7 @@ class activity {
         if (get_string_manager()->string_exists($mod->modname.'draft', 'theme_snap')) {
             $meta->draftstr = get_string($mod->modname.'draft', 'theme_snap');
         } else {
-            $meta->drafstr = get_string('draft', 'theme_snap');
+            $meta->draftstr = get_string('draft', 'theme_snap');
         }
 
         if (get_string_manager()->string_exists($mod->modname.'reopened', 'theme_snap')) {

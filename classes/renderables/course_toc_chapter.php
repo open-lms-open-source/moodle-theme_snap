@@ -65,4 +65,14 @@ class course_toc_chapter implements \renderable {
      */
     public $url;
 
+    /**
+     * @var string
+     */
+    public $section;
+
+    /**
+     * @var int
+     */
+    public $sectionid;
+
 }

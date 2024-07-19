@@ -36,6 +36,11 @@ class message implements \renderable {
     public $useridto;
 
     /**
+     * @var int
+     */
+    public $uniqueid;
+
+    /**
      * @var string
      */
     public $subject;
