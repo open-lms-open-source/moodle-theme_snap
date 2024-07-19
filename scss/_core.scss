@@ -1782,6 +1782,15 @@ header#page-header
     }
 }
 
+[id*="page-grade"].theme-snap.path-grade #page-header.mast-image #page-mast .page-context-header .page-header-headings > {
+    h1,
+    h1 a,
+    h1 a:hover {
+        color: white;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+    }
+}
+
 .path-course-view .mast-image {
     min-height: 250px;
 }
