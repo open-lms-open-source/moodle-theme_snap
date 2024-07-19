@@ -1334,6 +1334,7 @@ class local {
      * @throws \coding_exception
      */
     public static function coverimage($context, $featuredcourses = false) {
+        global $DB;
         $contextid = $context->id;
         $fs = get_file_storage();
 
@@ -1353,12 +1354,19 @@ class local {
         if (!$files) {
             return false;
         }
+        $coverimagefile = end($files);
         if (count($files) > 1) {
-            // Note this is a coding exception and not a moodle exception because there should never be more than one
-            // file in this area, where as the course summary files area can in some circumstances have more than on file.
-            throw new \coding_exception('Multiple files found in course coverimage area (context '.$contextid.')');
+            //There should never be more than one file in this area. We are deleting all but the first.
+            array_pop($files);
+            foreach ($files as $file) {
+                $fileid = $file->get_id();
+                $filerecord = $DB->get_record('files', array('id' => $fileid));
+                if ($filerecord) {
+                    $fs->get_file_instance($filerecord)->delete();
+                }
+            }
         }
-        return (end($files));
+        return ($coverimagefile);
     }
 
     /**
