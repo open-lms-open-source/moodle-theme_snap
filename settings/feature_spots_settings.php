@@ -166,23 +166,6 @@ $opts = array('accepted_types' => array('.png', '.jpg', '.gif', '.webp', '.svg')
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'fs_six_image', 0, $opts);
 $snapsettings->add($setting);
 
-
-$name = 'theme_snap/fs_four_text';
-$description = '';
-$title = new lang_string('featurefourtext', 'theme_snap');
-$setting = new admin_setting_configtextarea($name, $title, $description, '');
-$snapsettings->add($setting);
-
-$name = 'theme_snap/fs_five_text';
-$title = new lang_string('featurefivetext', 'theme_snap');
-$setting = new admin_setting_configtextarea($name, $title, $description, '');
-$snapsettings->add($setting);
-
-$name = 'theme_snap/fs_six_text';
-$title = new lang_string('featuresixtext', 'theme_snap');
-$setting = new admin_setting_configtextarea($name, $title, $description, '');
-$snapsettings->add($setting);
-
 $name = 'theme_snap/fs_four_title';
 $title = new lang_string('featurefourtitle', 'theme_snap');
 $description = '';
@@ -234,6 +217,22 @@ $name = 'theme_snap/fs_six_title_link_cb';
 $title = new lang_string('featuresixtitlecb', 'theme_snap');
 $description = new lang_string('featuretitlecbdesc', 'theme_snap');
 $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+$snapsettings->add($setting);
+
+$name = 'theme_snap/fs_four_text';
+$description = '';
+$title = new lang_string('featurefourtext', 'theme_snap');
+$setting = new admin_setting_configtextarea($name, $title, $description, '');
+$snapsettings->add($setting);
+
+$name = 'theme_snap/fs_five_text';
+$title = new lang_string('featurefivetext', 'theme_snap');
+$setting = new admin_setting_configtextarea($name, $title, $description, '');
+$snapsettings->add($setting);
+
+$name = 'theme_snap/fs_six_text';
+$title = new lang_string('featuresixtext', 'theme_snap');
+$setting = new admin_setting_configtextarea($name, $title, $description, '');
 $snapsettings->add($setting);
 
 $settings->add($snapsettings);

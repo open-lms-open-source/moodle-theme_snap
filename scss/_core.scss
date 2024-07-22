@@ -4184,6 +4184,10 @@ table th img.iconhelp {
     text-align: center;
     .snap-feature {
         background-color: $feature-spot-background-color;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: center;
         @media screen and (max-width: 576px) {
             margin-top: 1em;
         }
@@ -4200,6 +4204,7 @@ table th img.iconhelp {
         object-fit: contain;
         margin-left: auto;
         margin-right: auto;
+        border-radius: 10px;
     }
 
     a.snap-feature-link {
