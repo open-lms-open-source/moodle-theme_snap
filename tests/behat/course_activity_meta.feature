@@ -532,6 +532,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     Then I should not see "Not published to students"
 
     # Check Hide on course page output.
+    And I click on ".snap-activity.assign .snap-asset-actions" "css_element"
     And I click on ".dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity.assign #availability-menu a[data-action='cmHide']" "css_element"
 
