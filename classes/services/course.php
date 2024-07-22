@@ -190,6 +190,8 @@ class course {
 
             // Remove any old course summary image files for this context.
             $fs->delete_area_files($context->id, $fileinfo['component'], $fileinfo['filearea']);
+            // Purge course image cache in case image has been updated.
+            \cache::make('core', 'course_image')->delete($context->instanceid);
         } else if ($context->contextlevel === CONTEXT_SYSTEM || $context->contextlevel === CONTEXT_COURSECAT) {
             $fileinfo = array(
                 'contextid' => $context->id,
@@ -201,6 +203,8 @@ class course {
 
             // Remove everything from poster area for this context.
             $fs->delete_area_files($context->id, 'theme_snap', 'poster');
+            // Purge course image cache in case image has been updated.
+            \cache::make('core', 'course_image')->delete($context->instanceid);
         } else {
             throw new coding_exception('Unsupported context level '.$context->contextlevel);
         }

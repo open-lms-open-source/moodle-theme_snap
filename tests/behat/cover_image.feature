@@ -51,7 +51,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I should not see cover image in page header
     And I click on "#snap-coverimagecontrol label" "css_element"
     And ".cropper-container" "css_element" should not exist
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_small.png" to the file picker for Snap
     And ".cropper-container" "css_element" should exist
     And I click on "#id_snap_cover_image_save_button" "css_element"
@@ -59,11 +59,10 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I wait until ".btn.cancel" "css_element" is visible
     And I click on ".btn.cancel" "css_element"
     Then I should not see cover image in page header
-    And I should see "Change cover image"
+    And ".snap_cover_image_dialogue" "css_element" should be visible
+    And ".cropper-container" "css_element" should exist
     # Test confirming upload
-    And I click on "#snap-coverimagecontrol label" "css_element"
-    And ".cropper-container" "css_element" should not exist
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_small.png" to the file picker for Snap
     And I click on "Overwrite" "button"
     And I click on "#id_snap_cover_image_save_button" "css_element"
@@ -78,7 +77,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     # Test changing the image again
     And I click on "#snap-coverimagecontrol label" "css_element"
     And ".cropper-container" "css_element" should exist
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/bpd_bikes_1280px.jpg" to the file picker for Snap
     And ".cropper-container" "css_element" should exist
     And I click on "#id_snap_cover_image_save_button" "css_element"
@@ -93,14 +92,23 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I should see course card image in personal menu
     And I close the personal menu
     # Test deleting cover image
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Settings" in current page administration
-    And I scroll to the base of id "id_overviewfiles_filemanager_fieldset"
-    And I click on ".filemanager-container .fp-file > a" "css_element"
-    And I click on "div.moodle-dialogue-focused button.fp-file-delete.btn" "css_element"
-    And I click on ".modal-footer button[data-action='save']" "css_element"
-    And I press "Save and display"
+    And I click on "#snap-coverimagecontrol label" "css_element"
+    And I click on "Delete cover image" "button" in the "Image properties" "dialogue"
+    And ".snap_cover_image_delete_image_dialogue" "css_element" should be visible
+    And I click on "#delete_image_cancel_button" "css_element"
+    Then I should see cover image in page header
+    And I click on "#snap-coverimagecontrol label" "css_element"
+    And I click on "Delete cover image" "button" in the "Image properties" "dialogue"
+    And ".snap_cover_image_delete_image_dialogue" "css_element" should be visible
+    And I click on "#delete_image_confirm_button" "css_element"
     Then I should not see cover image in page header
+    Then I log in as "admin"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I expand "Site administration" node
+    And I expand "Development" node
+    And I follow "Purge caches"
+    And I press "Purge all caches"
+    Then I should see "All caches were purged"
     And I reload the page
     And I open the personal menu
     And I should not see course card image in personal menu
@@ -136,10 +144,10 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I click on "#snap-coverimagecontrol label" "css_element"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_lt1024px.png" to the file picker for Snap
     Then I should see "For best quality, we recommend a larger image of at least 1024px width"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_small.png" to the file picker for Snap
     Then I should not see "For best quality, we recommend a larger image of at least 1024px width"
 
@@ -156,17 +164,17 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I click on "#snap-coverimagecontrol label" "css_element"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_small.png" to the file picker for Snap
     And I click on "#id_snap_cover_image_save_button" "css_element"
     # Test cancelling upload
     And I wait until ".btn.cancel" "css_element" is visible
     And I click on ".btn.cancel" "css_element"
     Then I should not see cover image in page header
-    And I should see "Change cover image"
+    And ".snap_cover_image_dialogue" "css_element" should be visible
+    And ".cropper-container" "css_element" should exist
     # Test confirming upload
-    And I click on "#snap-coverimagecontrol label" "css_element"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_small.png" to the file picker for Snap
     And I click on "Overwrite" "button"
     And I click on "#id_snap_cover_image_save_button" "css_element"
@@ -176,19 +184,15 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I reload the page
     Then I should see cover image in page header
     # Test deleting cover image
-    And the following config values are set as admin:
-      | linkadmincategories | 0 |
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
-    And I follow "Cover display"
-    And I click on ".filemanager-container .fp-file > a" "css_element"
-    And I click on "div.moodle-dialogue-focused button.fp-file-delete.btn" "css_element"
-    And I click on ".modal-footer button[data-action='save']" "css_element"
-    And I press "Save changes"
-    And I am on site homepage
+    And I click on "#snap-coverimagecontrol label" "css_element"
+    And I click on "Delete cover image" "button" in the "Image properties" "dialogue"
+    And ".snap_cover_image_delete_image_dialogue" "css_element" should be visible
+    And I click on "#delete_image_cancel_button" "css_element"
+    Then I should see cover image in page header
+    And I click on "#snap-coverimagecontrol label" "css_element"
+    And I click on "Delete cover image" "button" in the "Image properties" "dialogue"
+    And ".snap_cover_image_delete_image_dialogue" "css_element" should be visible
+    And I click on "#delete_image_confirm_button" "css_element"
     Then I should not see cover image in page header
     # Test non admin user can't change site image.
     And I log out
@@ -209,17 +213,17 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I click on "#snap-coverimagecontrol label" "css_element"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_small.png" to the file picker for Snap
     And I click on "#id_snap_cover_image_save_button" "css_element"
     # Test cancelling upload
     And I wait until ".btn.cancel" "css_element" is visible
     And I click on ".btn.cancel" "css_element"
     Then I should not see cover image in page header
-    And I should see "Change cover image"
+    And ".snap_cover_image_dialogue" "css_element" should be visible
+    And ".cropper-container" "css_element" should exist
     # Test confirming upload
-    And I click on "#snap-coverimagecontrol label" "css_element"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_small.png" to the file picker for Snap
     And I click on "Overwrite" "button"
     And I click on "#id_snap_cover_image_save_button" "css_element"
@@ -250,14 +254,14 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I click on "#snap-coverimagecontrol label" "css_element"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_small.png" to the file picker for Snap
     And I click on "#id_snap_cover_image_save_button" "css_element"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
     Then I should see "This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1."
     And I click on "#snap-coverimagecontrol label" "css_element"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/black_cover.jpg" to the file picker for Snap
     And I click on "#id_snap_cover_image_save_button" "css_element"
     And I wait until ".btn.ok" "css_element" is visible
@@ -280,14 +284,14 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I click on "#snap-coverimagecontrol label" "css_element"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/testpng_small.png" to the file picker for Snap
     And I click on "#id_snap_cover_image_save_button" "css_element"
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
     Then I should see "This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1"
     And I click on "#snap-coverimagecontrol label" "css_element"
-    And I click on "Browse repositories" "button" in the "Image properties" "dialogue"
+    And I click on "Upload a new image" "button" in the "Image properties" "dialogue"
     And I upload "/theme/snap/tests/fixtures/black_cover.jpg" to the file picker for Snap
     And I click on "#id_snap_cover_image_save_button" "css_element"
     And I wait until ".btn.ok" "css_element" is visible
