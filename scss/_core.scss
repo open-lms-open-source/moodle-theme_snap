@@ -5466,7 +5466,7 @@ body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navit
 }
 
 // Remove margin so element is clickable.
-#mod_book-chaptersnavigation .tertiary-navigation .row .navitem {
+#page-mod-book-view #region-main #mod_book-chaptersnavigation .tertiary-navigation .row .navitem {
     margin-right: unset;
 }
 
