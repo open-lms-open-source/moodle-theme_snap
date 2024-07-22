@@ -148,8 +148,8 @@ $string['favorite'] = 'Favorite {$a}';
 $string['favorited'] = 'Favorited {$a}';
 $string['featurespots'] = 'Feature spots';
 $string['featurespotsedit'] = 'Edit feature spots';
-$string['featurespotshelp'] = '<p>Add up to 3 feature spots to your site&#8217;s front page to highlight the main benefits to current and potential users.</p>
-<p>You can add an image, a title, and a content description to each feature. In order to see the feature in the front page, you must enter a title. The image and the content description sections are optional.</p>
+$string['featurespotshelp'] = '<p>Add up to 6 feature spots to your site&#8217;s front page to highlight the main benefits to current and potential users.</p>
+<p>You can add an image, a title, and a content description to each feature. <strong>In order to see the feature in the front page, you must enter a title.</strong> The image and the content description sections are optional.</p>
 <p>Recommended image size is a square and no larger than 200px by 200px.</p>';
 $string['featurespotsheading'] = 'Feature spots heading';
 $string['featureonetitle'] = 'Feature 1 title';
