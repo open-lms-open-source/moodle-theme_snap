@@ -464,8 +464,10 @@ EOF;
         $allyreport = (\core_component::get_component_directory('report_allylti') !== null);
         $localcatalogue = array_key_exists('catalogue', $localplugins);
 
-        if ((has_capability('moodle/course:changesummary', context_course::instance($COURSE->id))) ||
-            (has_capability('moodle/category:manage', context_course::instance($COURSE->id)))) {
+        // Loading Filepicker for the "Change cover image" feature.
+        if (($PAGE->pagelayout == 'coursecategory' || $PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'frontpage') &&
+            (has_capability('moodle/course:changesummary', context_course::instance($COURSE->id)) ||
+            has_capability('moodle/category:manage', context_course::instance($COURSE->id)))) {
             $args = new stdClass();
             $args->accepted_types = array('.jpeg', '.png', '.gif');
             $args->return_types = 2;
