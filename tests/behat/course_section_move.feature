@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
   having to enter edit mode.
 
   Background:
-    And I skip because "I will be fixed on INT-19999"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1 | 0 | topics |
@@ -129,7 +128,8 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And "#snap-footer-alert" "css_element" should not exist
     And I follow "Topic 1"
     Then "#section-1" "css_element" should exist
-    And I click on ".snap-activity.modtype_assign .snap-asset-move i[title='Move \"Test assignment1\"']" "css_element"
+    And I click on ".snap-activity.modtype_assign .snap-edit-asset-more" "css_element"
+    And I click on ".snap-activity.modtype_assign .snap-asset-move" "css_element"
     Then I should see "Moving \"Test assignment1\""
     And "#snap-footer-alert" "css_element" should exist
     And I click on "li#section-1 li.snap-drop.asset-drop div.asset-wrapper a" "css_element"

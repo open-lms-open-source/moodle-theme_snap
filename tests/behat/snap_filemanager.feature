@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, the user can manipulate the files through the file manager.
 
   Background:
-    And I skip because "I will be fixed on INT-19999"
     Given the following "courses" exist:
       | fullname | shortname | format |
       | Course 1 | C1        | topics |
@@ -32,7 +31,8 @@ Feature: When the moodle theme is set to Snap, the user can manipulate the files
       | folder   | Test folder name 1 | Test folder description | C1     | folder1  | 1       | 1            |
     Given I log in as "admin"
     And I am on the course main page for "C1"
-    And I click on ".modtype_folder a.snap-edit-asset" "css_element"
+    And I click on ".snap-edit-asset-more" "css_element"
+    And I click on ".snap-edit-asset" "css_element"
     And I upload "lib/tests/fixtures/empty.txt" file to "Files" filemanager
     And I press "Save and return to course"
 
@@ -40,7 +40,8 @@ Feature: When the moodle theme is set to Snap, the user can manipulate the files
   Scenario: When a Filemanager is select Display folder with file details option, the files can be deleted
   with a button.
     Given I am on the course main page for "C1"
-    And I click on ".modtype_folder a.snap-edit-asset" "css_element"
+    And I click on ".snap-edit-asset-more" "css_element"
+    And I click on ".snap-edit-asset" "css_element"
     Then ".filemanager .filemanager-toolbar" "css_element" should exist
     And I click on "button#displaydetailsbtn" "css_element"
     And I wait until "div.fp-tableview" "css_element" exists
@@ -49,5 +50,5 @@ Feature: When the moodle theme is set to Snap, the user can manipulate the files
     And I click on "input[data-fullname=\"empty.txt\"]" "css_element"
     And I click on "button#deletebtn" "css_element"
     Then I should see "Are you sure you want to delete the selected"
-    And I click on "button.fp-dlg-butconfirm" "css_element"
+    And I click on "Yes" "button"
     Then I should not see "empty.txt"

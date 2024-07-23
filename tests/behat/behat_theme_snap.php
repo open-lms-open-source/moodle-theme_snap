@@ -619,7 +619,10 @@ class behat_theme_snap extends behat_base {
     public function i_restrict_asset_by_completion($asset1, $asset2) {
         /** @var behat_general $helper */
         $helper = behat_context_helper::get('behat_general');
-        $helper->i_click_on('i[alt=\'Edit "' . $asset1 . '"\']', 'css_element');
+        $xpathassetmore = "//p[contains(@class, 'instancename')][contains(text(), '$asset1')]/ancestor::div[contains(@class, 'activityinstance')]//button[contains(@class, 'snap-edit-asset-more')]";
+        $helper->i_click_on($xpathassetmore, 'xpath_element');
+        $xpathedit = "//p[contains(@class, 'instancename')][contains(text(), '$asset1')]/ancestor::div[contains(@class, 'activityinstance')]//a[contains(@class, 'snap-edit-asset')]";
+        $helper->i_click_on($xpathedit, 'xpath_element');
         $this->apply_completion_restriction($asset2, 'Save and return to course');
     }
 
@@ -634,7 +637,10 @@ class behat_theme_snap extends behat_base {
     public function i_restrict_asset_by_belong_to_group($asset1, $group1) {
         /** @var behat_general $helper */
         $helper = behat_context_helper::get('behat_general');
-        $helper->i_click_on('i[alt=\'Edit "' . $asset1 . '"\']', 'css_element');
+        $xpathassetmore = "//p[contains(@class, 'instancename')][contains(text(), '$asset1')]/ancestor::div[contains(@class, 'activityinstance')]//button[contains(@class, 'snap-edit-asset-more')]";
+        $helper->i_click_on($xpathassetmore, 'xpath_element');
+        $xpathedit = "//p[contains(@class, 'instancename')][contains(text(), '$asset1')]/ancestor::div[contains(@class, 'activityinstance')]//a[contains(@class, 'snap-edit-asset')]";
+        $helper->i_click_on($xpathedit, 'xpath_element');
         $this->apply_group_restriction($group1, 'Save and return to course');
     }
 
@@ -1759,8 +1765,8 @@ class behat_theme_snap extends behat_base {
      * @return string
      */
     private function meta_assign_xpath($name) {
-        $xpath = "//p[contains(@class, 'instancename')][contains(text(), '$name')]/parent::a/parent::h3".
-        "/parent::div//div[contains(@class, 'snap-completion-meta')]";
+        $xpath = "//p[contains(@class, 'instancename')][contains(text(), '$name')]/ancestor::".
+            "div[contains(@class, 'activityinstance')]"."//div[contains(@class, 'snap-completion-meta')]";
         return $xpath;
     }
 
@@ -2099,5 +2105,19 @@ JS;
             get_string('upload', 'repository'), 'button',
             $reporegion, 'NodeElement',
         ]);
+    }
+
+    /**
+     * @codingStandardsIgnoreStart
+     * @Given /^I purge all caches in Snap$/
+     * @codingStandardsIgnoreEnd
+     */
+    public function i_purge_all_caches_in_snap() {
+        $generalcontext = behat_context_helper::get('behat_general');
+        $this->execute('behat_general::i_click_on', ['#admin-menu-trigger', 'css_element']);
+        $this->execute("behat_navigation::i_expand_node", 'Site administration');
+        $this->execute("behat_navigation::i_expand_node", 'Development');
+        $this->execute('behat_general::click_link', ['Purge caches']);
+        $this->execute('behat_general::click_link', ['Purge all caches']);
     }
 }

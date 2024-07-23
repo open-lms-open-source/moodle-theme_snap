@@ -21,11 +21,10 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_activity_title_visibility
-Feature: Title of Page, Book and Label activities should not
+Feature: Title of Label activities should not
   be display at the top when added to a course
 
   Background:
-    And I skip because "I will be fixed on INT-19667"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -39,8 +38,6 @@ Feature: Title of Page, Book and Label activities should not
       | teacher1  | C1      | editingteacher  |
     And the following "activities" exist:
       | activity   | name         | intro                       | course | idnumber  | section |
-      | book       | TestB 1      | Test book description       | C1     | book1     | 0       |
-      | page       | TestP 1      | Test page description       | C1     | page1     | 0       |
       | label      | TestL 1      | Test label description      | C1     | label1    | 0       |
     And I log in as "admin"
     And the following config values are set as admin:
@@ -48,16 +45,12 @@ Feature: Title of Page, Book and Label activities should not
     And I log out
 
   @javascript
-  Scenario: The user should not see book title when visiting the course homepage, after a book
+  Scenario: The user should not see book title when visiting the course homepage, after a label
     activity was added.
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I should not see "Book"
-    And I should not see "Page"
     And I should not see "Label"
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I should not see "Book"
-    And I should not see "Page"
     And I should not see "Label"

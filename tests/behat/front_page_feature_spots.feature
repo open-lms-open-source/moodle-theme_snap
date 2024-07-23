@@ -66,7 +66,6 @@ Feature: Correct functionality of feature spots in the front page with every pos
     And the "target" attribute of "//div[@class='snap-feature-block']//a[contains(text(), 'Title for spot 1')]" "xpath_element" should contain "_blank"
   @javascript
   Scenario: Snap Feature spots settings page validate that the links exists as links, internal and external.
-    And I skip because "I will be fixed on INT-19670"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |
@@ -75,7 +74,7 @@ Feature: Correct functionality of feature spots in the front page with every pos
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I follow "Feature spots"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fs_one_title_link']" to "testnolink"
     And I press "Save changes"

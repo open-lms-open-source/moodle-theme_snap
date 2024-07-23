@@ -47,13 +47,12 @@ Feature: Setting for mod_book should not appear on Snap.
 
   @javascript
   Scenario: As a teacher I should see the setting Subcharter.
-    And I skip because "I will be fixed on INT-19672"
     Given I log in as "teacher1"
     And the following "activities" exist:
       | activity   | name         | intro                       | course | idnumber  | section |
       | book       | Book 1       | Test book description       | C1     | book1     | 0       |
     And I am on "Course 1" course homepage
-    And I click on "//h3/a/p[contains(text(),'Book 1')]" "xpath_element"
+    And I click on ".modtype_book .mod-link" "css_element"
     And I set the following fields to these values:
       | Chapter title | Dummy first chapter |
       | Content       | Dummy content       |

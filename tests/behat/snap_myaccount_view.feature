@@ -58,7 +58,6 @@ Feature: Correct visualization of the general view for My Account plugin only fo
 
   @javascript
   Scenario: As an Admin in Snap, I'm redirected to specific pages to change Site logo or Site full name in Snap.
-    Given I skip because "I will be fixed on INT-20079"
     Given I am using Open LMS
     And I log in as "admin"
     And I open the user menu

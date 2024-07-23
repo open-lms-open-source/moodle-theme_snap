@@ -41,7 +41,6 @@ Feature: With a discussion created, the heading levels structure should be corre
 
   @javascript
   Scenario: Heading levels should be correct.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I click on "li.modtype_hsuforum a.mod-link" "css_element"

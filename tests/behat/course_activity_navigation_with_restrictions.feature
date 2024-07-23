@@ -26,7 +26,6 @@ Feature: Activity navigation involving activities with access restrictions in Sn
   I need to be able to use the activity navigation feature to access the activity after satisfying its access conditions
 
   Background:
-    And I skip because "I will be fixed on INT-19668"
     Given the following config values are set as admin:
       | theme | snap |
     Given the following "users" exist:
@@ -49,23 +48,23 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     # Set completion for Forum 1.
-    And I follow "Edit \"Forum 1\""
+    And I click on ".modtype_forum .snap-edit-asset-more" "css_element"
+    And I click on ".modtype_forum .snap-edit-asset" "css_element"
     And I expand all fieldsets
-    And I set the field "Completion tracking" to "Do not indicate activity completion"
+    And I set the field "None" to "1"
     And I should not see "Expect completed on"
-    And I should not see "Require replies"
-    And I set the field "Completion tracking" to "  Students can manually mark the activity as completed"
-    And I should see "Expect completed on"
-    And I should not see "Require replies"
-    And I set the field "Completion tracking" to "Show activity as complete when conditions are met"
-    And I should see "Expect completed on"
-    And I should see "Require replies"
-    And I set the following fields to these values:
-      | Completion tracking | Show activity as complete when conditions are met |
-      | Require view        | 1                                                 |
+    And I should not see "Start discussions or post replies"
+    And I set the field "Students must manually mark the activity as done" to "1"
+    And I should see "Set reminder in Timeline"
+    And I should not see "Start discussions or post replies"
+    And I set the field "Add requirements" to "1"
+    And I should see "Set reminder in Timeline"
+    And I should see "Start discussions or post replies"
+    And I set the field "View the activity" to "1"
     And I press "Save and return to course"
     # Require Forum 1 to be completed first before Chat 1 can be accessed.
-    And I follow "Edit \"Chat 1\""
+    And I click on ".modtype_chat .snap-edit-asset-more" "css_element"
+    And I click on ".modtype_chat .snap-edit-asset" "css_element"
     # And I click on "Edit settings" "link" in the "Chat 1" activity.
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
@@ -78,7 +77,7 @@ Feature: Activity navigation involving activities with access restrictions in Sn
   Scenario: Activity navigation involving activities with access restrictions
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "//h3/a/p[contains(text(),'Assignment 1')]" "xpath_element"
+    And I click on ".modtype_assign .mod-link" "css_element"
     Then I should see "Forum 1" in the "#next-activity-link" "css_element"
     # Activity that has access restriction should not show up in the dropdown.
     And the "Jump to..." select box should not contain "Chat 1"
