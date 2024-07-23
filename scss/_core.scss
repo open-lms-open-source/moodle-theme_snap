@@ -3789,7 +3789,7 @@ body.hascontinuecancel.path-site #page {
     &.chooserdialogue,
     &.filepicker {
         min-width: 90%;
-        height: 100%;
+        height: calc(100% - 10px);
     }
     video#player {
         max-height: 50vh;
