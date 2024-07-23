@@ -403,7 +403,9 @@
         div.form-inline.felement {
             display: inline-block;
         }
-
+    }
+    #page-content [data-region="grade-panel"] .mform:not(.unresponsive) #fitem_id_grade.fitem .felement {
+        float: none;
     }
 }
 
