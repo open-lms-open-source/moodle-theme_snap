@@ -1591,6 +1591,7 @@ body.snap-resource-card {
     &.launch-tiles-standard,
     &.launch-tiles-module-modal,
     &.launch-tiles-resource-modal,
+    &.launch-tiles-url-modal,
     &.activity-wrapper,
     &.snap-asset {
         margin: 1em 1%;
@@ -1661,10 +1662,19 @@ body.snap-resource-card {
 
         &.modtype_survey,
         &.modtype_questionnaire,
-        &.modtype_lesson {
+        &.modtype_lesson,
+        &.modtype_imscp,
+        &.modtype_scorm {
             border-top-color: $color-questionnaire;
             .activityiconcontainer {
                 background-color: $color-questionnaire;
+            }
+        }
+
+        &.modtype_lightboxgallery {
+            border-top-color: $color-lightbox;
+            .activityiconcontainer {
+                background-color: $color-lightbox;
             }
         }
 
@@ -1981,92 +1991,194 @@ body.snap-resource-card {
     width: 100%;
 }
 
-.format-tiles .section li {
-    list-style: none;
-    .activityiconcontainer.smaller {
-        width: 50px;
-        height: 50px;
-    }
-    // Tiles grid based on Boost.
-    .activity-actions {
-        grid-area: actions;
-    }
-    .activity-icon {
-        grid-area: icon;
-    }
-    .activity-dates {
-        grid-area: dates;
-    }
-    .activity-name-area {
-        grid-area: name;
-    }
-    .activity-completion {
-        grid-area: completion;
-    }
-    .activity-groupmode-info {
-        grid-area: groupmode;
-    }
-    .activity-badges {
-        grid-area: visibility;
-    }
-    .activity-altcontent {
-        grid-area: altcontent;
-    }
-    .activity-availability {
-        grid-area: availability;
-    }
-    .activity-afterlink {
-        grid-area: afterlink;
-    }
-    .activity-item .activity-grid {
-        display: grid;
-        align-items: center;
-        grid-template-columns: min-content 1fr min-content min-content min-content;
-        grid-template-rows: 1fr repeat(5, min-content);
-        grid-template-areas: "icon          name          groupmode      completion    actions" "icon          visibility    groupmode      completion    actions" "icon          dates         groupmode      completion    actions" "altcontent    altcontent    altcontent     altcontent    altcontent" "afterlink     afterlink     afterlink      afterlink     afterlink" "availability  availability  availability   availability  availability";
-    }
-    @media (max-width: 575.98px) {
-        .activity-item .activity-grid {
-            grid-template-columns: min-content 1fr min-content min-content min-content;
-            grid-template-rows: 1fr repeat(4, min-content);
-            grid-template-areas: "icon          name          actions" "icon          visibility    actions" "dates         dates         dates" "groupmode     groupmode     groupmode" "completion    completion    completion" "altcontent    altcontent    altcontent" "afterlink     afterlink     afterlink" "availability  availability  availability";
-        }
-    }
-    .activity-item .activity-grid.noname-grid {
-        grid-template-columns: min-content 1fr min-content min-content;
-        grid-template-areas: "visibility    groupmode        completion    actions" "altcontent    altcontent       altcontent    altcontent" "afterlink     afterlink        afterlink     afterlink" "availability  availability     availability  availability";
-    }
-    @media (max-width: 575.98px) {
-        .activity-item .activity-grid.noname-grid {
-            grid-template-columns: 1fr min-content;
-            grid-template-areas: "visibility    actions" "altcontent    altcontent" "groupmode     groupmode" "afterlink     afterlink" "completion    completion" "availability  availability";
-        }
-    }
+// Tiles course format styles.
+.format-tiles {
+    .section {
+        li {
+            &:hover {
+                background-color: #f9f9f9;
+                .cm_action_menu.actions {
+                    background-color: #f9f9f9;
+                }
+            }
+            list-style: none;
+            .activityiconcontainer.smaller {
+                width: 50px;
+                height: 50px;
+            }
+             //Tiles grid based on Boost.
+            .activity-actions {
+                grid-area: actions;
+            }
+            .activity-icon {
+                grid-area: icon;
+            }
+            .activity-dates {
+                grid-area: dates;
+            }
+            .activity-name-area {
+                grid-area: name;
+            }
+            .activity-completion {
+                grid-area: completion;
+            }
+            .activity-groupmode-info {
+                grid-area: groupmode;
+            }
+            .activity-badges {
+                grid-area: visibility;
+            }
+            .activity-altcontent {
+                grid-area: altcontent;
+            }
+            .activity-availability {
+                grid-area: availability;
+            }
+            .activity-afterlink {
+                grid-area: afterlink;
+            }
+            .activity-item .activity-grid {
+                display: grid;
+                align-items: center;
+                grid-template-columns: min-content 1fr min-content min-content min-content;
+                grid-template-rows: 1fr repeat(5, min-content);
+                grid-template-areas: "icon          name          groupmode      completion    actions" "icon          visibility    groupmode      completion    actions" "icon          dates         groupmode      completion    actions" "altcontent    altcontent    altcontent     altcontent    altcontent" "afterlink     afterlink     afterlink      afterlink     afterlink" "availability  availability  availability   availability  availability";
+            }
+            @media (max-width: 575.98px) {
+                .activity-item .activity-grid {
+                    grid-template-columns: min-content 1fr min-content min-content min-content;
+                    grid-template-rows: 1fr repeat(4, min-content);
+                    grid-template-areas: "icon          name          actions" "icon          visibility    actions" "dates         dates         dates" "groupmode     groupmode     groupmode" "completion    completion    completion" "altcontent    altcontent    altcontent" "afterlink     afterlink     afterlink" "availability  availability  availability";
+                }
+            }
+            .activity-item .activity-grid.noname-grid {
+                grid-template-columns: min-content 1fr min-content min-content;
+                grid-template-areas: "visibility    groupmode        completion    actions" "altcontent    altcontent       altcontent    altcontent" "afterlink     afterlink        afterlink     afterlink" "availability  availability     availability  availability";
+            }
+            @media (max-width: 575.98px) {
+                .activity-item .activity-grid.noname-grid {
+                    grid-template-columns: 1fr min-content;
+                    grid-template-areas: "visibility    actions" "altcontent    altcontent" "groupmode     groupmode" "afterlink     afterlink" "completion    completion" "availability  availability";
+                }
+            }
 
-    &.launch-tiles-standard,
-    &.launch-tiles-module-modal,
-    &.activity-wrapper,{
+            &.launch-tiles-standard,
+            &.launch-tiles-module-modal,
+            &.activity-wrapper,
+            &.launch-tiles-resource-modal,
+            &.launch-tiles-url-modal {
 
-        &.modtype_label {
-            padding-left: 1em;
-            border: none;
-        }
+                &.modtype_label {
+                    padding-left: 1em;
+                    border: none;
+                }
 
-        .activityiconcontainer,
-        .instancename {
-            margin-right: 1rem;
-            padding: 0.3rem;
-            display: inline-flex !important;
-            .activityicon {
-                margin-top: -2px !important;
-                margin-right: 0 !important;
-                height: fit-content;
-                width: 34px;
-                filter: none;
+                .activityiconcontainer,
+                .instancename {
+                    margin-right: 1rem;
+                    padding: 0.3rem;
+                    display: inline-flex !important;
+                    .activityicon {
+                        margin-top: -2px !important;
+                        margin-right: 0 !important;
+                        height: fit-content;
+                        width: 34px;
+                        filter: none;
+                    }
+                    img[src*="snap/core"] {
+                        filter: brightness(0) invert(1);
+                    }
+                }
+            }
+            .activity.subtile.tileiconcontainer.activityiconcontainer {
+                margin: 25px 0 0 0;
+                img.icon {
+                    padding: unset;
+                }
             }
         }
     }
-
+    img[src*="snap/core"] {
+        filter: brightness(0) invert(1);
+    }
+    #region-main {
+        max-width: 95%;
+    }
+    #headerabovetiles {
+        min-height: 42px;
+    }
+    .tileiconcontainer.activityiconcontainer .tile-icon img.icon {
+        filter: unset;
+        padding: unset;
+    }
+    span.badge.badge-info {
+        border-radius: 10px;
+    }
+    .section.main .summary {
+        padding: unset;
+    }
+    // For new subtiles display.
+    #region-main .course-content .activity.subtile {
+        .tileiconcontainer.activityiconcontainer {
+            margin: 25px 0 0 0;
+            img.icon {
+                padding: unset;
+            }
+        }
+        // Tiles completion.
+        .completioncheckbox {
+            border: 3px solid #ababab;
+        }
+    }
+    // General Tiles activities styles.
+    .section li.activity.activity-wrapper {
+        border: 2px solid lightgray;
+        border-radius: 1rem;
+        padding: 1rem;
+        .activitytitle {
+            border: none;
+        }
+        .activity-altcontent {
+            margin-top: 1rem;
+        }
+        .activity-badges{
+            margin-left: unset;
+        }
+        .cm_action_menu {
+            display: flex;
+            align-items: center;
+        }
+        .dropdown-menu.show {
+            border-radius: 1rem;
+        }
+        .groupmode-information.btn {
+            img.icon {
+                filter: none;
+            }
+            span.groupmode-icon-info {
+                display: none;
+            }
+        }
+    }
+    .course-section-header {
+        .dropdown-menu.show {
+            border-radius: 1rem;
+        }
+    }
+    // Fix navigation.
+    .single-section {
+        margin-top: 2em !important;
+    }
+    .navigationtitle {
+        width: 100%;
+        position: absolute;
+        margin-top: -2em;
+    }
+    // Fix Filters.
+    #filterbuttons {
+        clear: both;
+        width: fit-content;
+    }
 }
 
 // --------------------------------------------------------------------

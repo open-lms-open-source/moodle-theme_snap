@@ -403,7 +403,9 @@
         div.form-inline.felement {
             display: inline-block;
         }
-
+    }
+    #page-content [data-region="grade-panel"] .mform:not(.unresponsive) #fitem_id_grade.fitem .felement {
+        float: none;
     }
 }
 
@@ -1387,14 +1389,6 @@ body.format-tiles.editing {
     // Show modal in the back of the header.
     .modal-backdrop.fade.in {
         z-index: 10;
-    }
-
-    // Hide border in activities.
-    .section li {
-        &.activity,
-        .activitytitle {
-            border-bottom: none;
-        }
     }
     #abovetiles {
         display: block;
