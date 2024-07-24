@@ -96,6 +96,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I click on ".dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a[data-action='cmHide']" "css_element"
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" exists
+    And I click on ".snap-activity.assign .snap-asset-actions" "css_element"
     And I click on ".dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a[data-action='cmShow']" "css_element"
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist

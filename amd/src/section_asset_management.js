@@ -1244,6 +1244,9 @@ define(
                     $('.dropdown-subpanel').not(this).find('.dropdown-subpanel-content').hide();
                     $('.dropdown-subpanel').not(this).find('.dropdown-toggle').removeClass('active');
                     if ($(this).find('.dropdown-toggle').hasClass('active')) {
+                        // Closing the parent dropdown.
+                        $(this).parent().parent().click();
+                        $(this).parent().parent().blur();
                         $(this).find('.dropdown-subpanel-content').hide();
                         $(this).find('.dropdown-toggle').removeClass('active');
                     } else {
