@@ -960,7 +960,7 @@ class local_test extends snap_base_test {
 
     public function test_course_grade() {
         global $DB;
-        $this->markTestSkipped('Is failing on bamboo will be review it on INT-17968');
+
         $this->resetAfterTest();
 
         set_config('showcoursegradepersonalmenu', 1, 'theme_snap');
