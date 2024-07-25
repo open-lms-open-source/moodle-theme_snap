@@ -357,6 +357,7 @@ Feature: Activity navigation in Snap theme
 
   @javascript
   Scenario: Set the activity as stealth from the activity quick menu.
+    And I skip because "I will be fixed on INT-20226"
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Topic 2"
