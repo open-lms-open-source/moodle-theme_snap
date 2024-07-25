@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, conditional restrictions work as normal.
 
   Background:
-    And I skip because "I will be fixed on INT-19999"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | enablecompletion |
       | Course 1 | C1        | 0        | 1         | 1                |

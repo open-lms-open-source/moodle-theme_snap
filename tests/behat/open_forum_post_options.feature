@@ -26,7 +26,6 @@ Feature: In Open forums while using Snap, the student should see the options
   unsubscribe from the post.
 
   Background:
-    And I skip because "I will be fixed on INT-19672"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
@@ -46,7 +45,7 @@ Feature: In Open forums while using Snap, the student should see the options
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on "//h3/a/p[contains(text(),'Test forum name')]" "xpath_element"
+    And I click on ".modtype_hsuforum .mod-link" "css_element"
     And I add a new discussion to "Test forum name" Open Forum with:
       | Subject | Forum discussion 1                    |
       | Message | How awesome is this forum discussion? |
@@ -68,7 +67,7 @@ Feature: In Open forums while using Snap, the student should see the options
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on "//h3/a/p[contains(text(),'Test forum name')]" "xpath_element"
+    And I click on ".modtype_hsuforum .mod-link" "css_element"
     And I should see "Subscribe to this forum"
     And I click on "li.subscribeforum-url a" "css_element"
     And I should see "Subscribe to this forum"

@@ -76,7 +76,7 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
 
   @javascript
   Scenario: As teacher you can switch between edit mode on and edit mode off.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
+    Given I skip because "It will be reviewed on the ticket INT-20224"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And "Edit content" "link" should be visible
@@ -116,7 +116,7 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
 
   @javascript
   Scenario: Users can see blocks in Course Dashboard.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
+    Given I skip because "It will be reviewed on the ticket INT-20224"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     When I click on "Course Dashboard" "link"

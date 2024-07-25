@@ -56,7 +56,7 @@ Feature: Elements for Snap should have the proper aria attributes.
   @javascript
   # This is a scenario for a core view.
   Scenario: All calendar's anchors must contain the aria-label attribute
-    And I skip because "I will be fixed on INT-19649"
+    And I skip because "I will be fixed on INT-20226"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
@@ -69,7 +69,7 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript @accessibility
   Scenario: Elements in front page must comply with the accessibility standards.
-    And I skip because "I will be fixed on INT-19649"
+    And I skip because "I will be fixed on INT-20226"
     Given I log in as "admin"
     And the following config values are set as admin:
     | linkadmincategories | 0 |
@@ -92,7 +92,7 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript @accessibility
   Scenario: Elements in personal menu must comply with the accessibility standards.
-    And I skip because "I will be fixed on INT-19729"
+    And I skip because "I will be fixed on INT-20226"
     Given the following config values are set as admin:
       | personalmenuenablepersonalmenu | 1 | theme_snap |
     And I log in as "admin"
@@ -104,7 +104,7 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript @accessibility
   Scenario: Elements in course main view must comply with the accessibility standards.
-    And I skip because "I will be fixed on INT-19649"
+    And I skip because "I will be fixed on INT-20226"
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And the page should meet "cat.aria, wcag412" accessibility standards
@@ -112,7 +112,7 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript @accessibility
   Scenario: Elements in course dashboard must comply with the accessibility standards.
-    And I skip because "I will be fixed on INT-19649"
+    And I skip because "I will be fixed on INT-20226"
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I follow "Course Dashboard"
@@ -121,7 +121,7 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript @accessibility
   Scenario: When an activity have a restriction, the lock icon should have the needed aria attributes.
-    And I skip because "I will be fixed on INT-19649"
+    And I skip because "I will be fixed on INT-20226"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Topic 1"
@@ -139,7 +139,7 @@ Feature: Elements for Snap should have the proper aria attributes.
 
   @javascript @accessibility
   Scenario: Check accessibility on the Snap settings page.
-    And I skip because "I will be fixed on INT-19649"
+    And I skip because "I will be fixed on INT-20226"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |

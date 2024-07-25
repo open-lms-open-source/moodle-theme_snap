@@ -23,7 +23,6 @@
 
 Feature: When the moodle theme is set to Snap, core forums displays correctly.
   Background:
-    And I skip because "I will be fixed on INT-19999"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -59,7 +58,6 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I follow "Topic 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And "#region-main .action-menu-trigger" "css_element" should <exist>
-    And I log out
     Examples:
       | user     | exist     |
       | student1 | exist     |

@@ -29,14 +29,15 @@ Feature: When the moodle theme is set to Snap, the custom snap login form should
 
   @javascript
   Scenario: The login template must change when the Stylish template is selected.
-    And I skip because "I will be fixed on INT-19670"
     Given I log in as "admin"
+    And the following config values are set as admin:
+      | linkadmincategories | 0 |
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I click on "Category: Themes" "link"
-    And I follow "Snap"
+    And I expand "Themes" node
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I click on "Login page" "link"
     And I should see "Stylish template"
     And I set the field with xpath "//select[@id='id_s_theme_snap_loginpagetemplate']" to "Stylish"

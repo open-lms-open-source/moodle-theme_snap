@@ -94,7 +94,7 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript @accessibility
   Scenario: Check category colors from nearest parent in hierarchy.
-    And I skip because "I will be fixed on INT-19670"
+    And I skip because "I will be fixed on INT-20226"
     Given the following config values are set as admin:
       | category_color | {"5":"#00FF00","10":"#FF0000"} | theme_snap |
     Given I log in as "admin"

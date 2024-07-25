@@ -35,7 +35,6 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
 
   @javascript
   Scenario: Admin sets a footer and it should be visible in the platform for other users.
-    And I skip because "I will be fixed on INT-19670"
     Given I log in as "admin"
     And I am on site homepage
     And "iframe" "css_element" should not be visible
@@ -44,7 +43,7 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     Then I click on "Snap footer" "link"
     Then I should see "Site footer"
     And I set the following fields to these values:
@@ -94,7 +93,6 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
 
   @javascript
   Scenario: Go to Snap footer settings page, set colors for footer background color and footer text color, and see contrast message.
-    And I skip because "I will be fixed on INT-19670"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |
@@ -103,7 +101,7 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     Then I click on "Snap footer" "link"
     And I should see "Snap footer"
     And I should see "Footer customization"

@@ -25,7 +25,6 @@ Feature: A student should not see any recent forum activity
   on his personal menu if he is not part of the posted group
 
   Background:
-    And I skip because "I will be fixed on INT-19673"
     Given the following "users" exist:
       | username | firstname | lastname | email                 |
       | teacher1 | Teacher   | 1        | teacher1@example.com  |
@@ -62,7 +61,7 @@ Feature: A student should not see any recent forum activity
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on "//h3/a/p[contains(text(),'Test forum name')]" "xpath_element"
+    And I click on ".modtype_forum .mod-link" "css_element"
     And I wait "2" seconds
     And I add a new discussion to "Test forum name" forum with:
       | Subject | Discussion 1      |
@@ -70,7 +69,7 @@ Feature: A student should not see any recent forum activity
       | Group   | Group 1           |
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on "//h3/a/p[contains(text(),'Test hsuforum name')]" "xpath_element"
+    And I click on ".modtype_hsuforum .mod-link" "css_element"
     And I wait "2" seconds
     And I add a new discussion to "Test hsuforum name" Open Forum with:
       | Subject | Open forum         |

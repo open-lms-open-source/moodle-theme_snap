@@ -28,7 +28,7 @@
 Feature: Check that the correct tab order and focus exists for the page.
 
   Background:
-    And I skip because "I will be fixed on INT-19999"
+    And I skip because "I will be fixed on INT-20226"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |

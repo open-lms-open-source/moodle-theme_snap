@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
   resource inline.
 
   Background:
-    And I skip because "I will be fixed on INT-19999"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | enablecompletion |
       | Course 1 | C1        | 0        | 1         | 1                |
@@ -46,10 +45,12 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_mp3_file.mp3" to section 1
     Then ".snap-resource[data-type='mp3']" "css_element" should exist
+    And I click on ".snap-edit-asset-more" "css_element"
     And I click on ".snap-edit-asset" "css_element"
+    And I expand all fieldsets
+    And I set the field "Add requirements" to "1"
+    And I set the field "View the activity" to "1"
     And I set the following fields to these values:
-      | Completion tracking | 2 |
-      | Student must view this activity to complete it | 1 |
       | Display | 5 |
     And I click on "#id_submitbutton2" "css_element"
     And "span.autocompletion img[title='The system marks this item complete according to conditions: test mp3 file']" "css_element" should exist
@@ -70,6 +71,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_mp3_file.mp3" to section 1
     Then ".snap-resource[data-type='mp3']" "css_element" should exist
+    And I click on ".snap-edit-asset-more" "css_element"
     And I click on ".snap-edit-asset" "css_element"
     And I set the following fields to these values:
       | Description                                    | Description text for MP3 file |

@@ -42,7 +42,7 @@ Feature: Check functionality in activity cards.
 
   @javascript @accessibility
   Scenario: Add an image to an activity card, student and teacher should not see the image in the content.
-    And I skip because "I will be fixed on INT-19667"
+    And I skip because "I will be fixed on INT-20226"
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I add a "Folder" to section "1" and I fill the form with:
@@ -50,7 +50,8 @@ Feature: Check functionality in activity cards.
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
-    Then I click on "//a[@class='snap-edit-asset']" "xpath_element"
+    And I click on ".snap-edit-asset-more" "css_element"
+    And I click on ".snap-edit-asset" "css_element"
     And I wait until the page is ready
     And I set the following fields to these values:
       | Display description on course page | 1 |
@@ -66,7 +67,7 @@ Feature: Check functionality in activity cards.
 
   @javascript @accessibility
   Scenario Outline: Add an image to an activity card, student and teacher should see the image in the content, when activity display is set as list in Snap settings.
-    And I skip because "I will be fixed on INT-19667"
+    And I skip because "I will be fixed on INT-20226"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |
@@ -78,7 +79,8 @@ Feature: Check functionality in activity cards.
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
-    Then I click on "//a[@class='snap-edit-asset']" "xpath_element"
+    And I click on ".snap-edit-asset-more" "css_element"
+    And I click on ".snap-edit-asset" "css_element"
     And I wait until the page is ready
     And I set the following fields to these values:
       | Display description on course page | 1 |
@@ -98,7 +100,6 @@ Feature: Check functionality in activity cards.
 
   @javascript
   Scenario Outline: For activity cards, folder activity should always display "Folder" activity type when content is displayed inline or not.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |
@@ -119,7 +120,7 @@ Feature: Check functionality in activity cards.
 
   @javascript
   Scenario Outline: For activity cards, when content is displayed inline the tree needs to start with a H3 tag
-    Given I skip because "It will be reviewed on the ticket INT-19999"
+    Given I skip because "It will be reviewed on the ticket INT-20226"
     Given I log in as "admin"
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |
@@ -139,13 +140,12 @@ Feature: Check functionality in activity cards.
 
   @javascript
   Scenario: For activity cards, when the activity is a lesson the card should not display feedback link.
-    Given I skip because "This is failing randomly while accessing the activity as a student, to be fixed in INT-15909"
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I add a "Lesson" to section "0" and I fill the form with:
       | Name | Test lesson |
       | Description | Test lesson description |
-    And I click on "//h3/a/p[contains(text(),'Test lesson')]" "xpath_element"
+    And I click on ".modtype_lesson .mod-link" "css_element"
     And I follow "Add a question page"
     And I set the field "Select a question type" to "Short answer"
     And I press "Add a question page"
@@ -162,7 +162,7 @@ Feature: Check functionality in activity cards.
     And I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "//h3/a[@class='mod-link']" "xpath_element"
+    And I click on ".modtype_lesson .mod-link" "css_element"
     And I set the following fields to these values:
       | id_answer | True |
     And I press "Submit"
