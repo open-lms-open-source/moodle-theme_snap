@@ -42,7 +42,7 @@ if (!empty($coverimagecss)) {
     <!--
     ////////////////////////// MAIN  ///////////////////////////////
     -->
-        <main id="moodle-page" class="clearfix">
+        <div id="moodle-page" class="clearfix">
         <div id="page-header" class="clearfix snap-category-header <?php echo $mastimage; ?>">
         <div class="breadcrumb-nav" aria-label="breadcrumb"><?php echo $OUTPUT->snapnavbar($mastimage); ?></div>
             <div id="page-mast">
@@ -105,7 +105,7 @@ if (!empty($coverimagecss)) {
             echo $OUTPUT->main_content();
             ?>
         </section>
-        </main>
+        </div>
         <?php
         echo $OUTPUT->custom_block_region('side-pre');
         echo $OUTPUT->snap_feeds_side_menu();

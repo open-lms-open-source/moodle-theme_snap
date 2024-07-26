@@ -76,7 +76,7 @@ if (!($PAGE->pagetype === 'login-signup')) {
 <!--
 ////////////////////////// MAIN  ///////////////////////////////
 -->
-<main id="moodle-page" class="clearfix">
+<div id="moodle-page" class="clearfix">
 <div id="page-header" class="clearfix">
 </div>
 
@@ -91,7 +91,7 @@ if ($PAGE->title === get_string('restoredaccount')) {
 }
 ?>
 </section>
-</main>
+</div>
 </div>
 <?php
 if (!empty(get_config('theme_snap', 'loginbgimg'))) {

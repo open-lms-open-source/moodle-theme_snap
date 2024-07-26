@@ -51,7 +51,7 @@ $pathurl = $OUTPUT->get_path_hiddentoc($pathurl);
 <!--
 ////////////////////////// MAIN  ///////////////////////////////
 -->
-<main id="moodle-page" class="clearfix">
+<div id="moodle-page" class="clearfix">
 <?php
 echo $OUTPUT->custom_menu_spacer();
 ?>
@@ -117,7 +117,7 @@ if ($coursemainpage) {
         <?php
     }
 } ?>
-</main>
+</div>
 
 </div>
 </div>

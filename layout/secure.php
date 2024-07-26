@@ -56,7 +56,7 @@ echo $OUTPUT->doctype() ?>
 <div id="page">
 <div id="page-content">
 
-<main id="moodle-page" class="clearfix">
+<div id="moodle-page" class="clearfix">
     <section id="region-main">
         <?php echo $OUTPUT->main_content(); ?>
     </section>
@@ -64,7 +64,7 @@ echo $OUTPUT->doctype() ?>
     <?php echo $OUTPUT->blocks('side-pre'); ?>
     </div>
     <?php echo $OUTPUT->standard_end_of_body_html() ?>
-</main>
+</div>
 
 </div>
 </div>
