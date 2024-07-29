@@ -929,9 +929,15 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
         background-color: $brand-primary;
     }
 
+    #myaccount-general-links {
+        gap: 1rem;
+    }
+
     .myaccount-iconlinks {
         max-width: 11em;
         width: 11em;
+        height: 100%;
+        margin: 0;
         &:hover,
         &:focus-within {
             background-color: $brand-primary;
