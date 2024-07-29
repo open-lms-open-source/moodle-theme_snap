@@ -110,3 +110,40 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     Then I should see "Course 1"
     Then I should see "Test forum name"
     Then I should see "Test forum description"
+
+  @javascript
+  Scenario: Unread forum posts label is displayed in the Snap course.
+    Given I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    And I click on ".forum .instancename:contains('Test forum name')" "css_element"
+    And I add a new discussion to "Test forum name" forum with:
+      | Subject | Discussion 1 |
+      | Message | Discussion contents 1, first message |
+    And I add a new discussion to "Test forum name" forum with:
+      | Subject | Discussion 2 |
+      | Message | Discussion contents 2, first message |
+    And I log out
+    And I log in as "student1"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should not see "2 unread post"
+    And I open the user menu
+    And I follow "Preferences"
+    And I click on "Forum preference" "link"
+    And I set the following fields to these values:
+      | Forum tracking| 1 |
+    And I press "Save changes"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "2 unread post"
+    And I click on ".forum .instancename:contains('Test forum name')" "css_element"
+    And I click on "Discussion 1" "link"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should see "1 unread post"
+    And I click on ".forum .instancename:contains('Test forum name')" "css_element"
+    And I click on "Discussion 2" "link"
+    And I am on "Course 1" course homepage
+    And I follow "Topic 1"
+    Then I should not see "1 unread post"
