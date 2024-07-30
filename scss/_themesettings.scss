@@ -34,15 +34,10 @@
         }
     }
     // Shortname on small screen.
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(lg) {
         .form-shortname {
             display: none;
         }
-    }
-
-    // Fix position for panels in the page.
-    #adminsettings div.row {
-        flex-wrap: nowrap;
     }
 }
 
@@ -120,6 +115,7 @@
         // Size is set with a style tag so need to !important to override.
         height: 35px !important;
         width: 35px !important;
+        position: static;
         border-radius: 100%;
         border: thin solid #eee;
         margin-left: 0;
