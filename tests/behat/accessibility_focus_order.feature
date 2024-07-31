@@ -28,7 +28,6 @@
 Feature: Check that the correct tab order and focus exists for the page.
 
   Background:
-    And I skip because "I will be fixed on INT-20226"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -65,9 +64,12 @@ Feature: Check that the correct tab order and focus exists for the page.
 
   @javascript
   Scenario: On mobile view, submit buttons should appear after the advance form at the bottom of the form.
-    Given I change window size to "658x852"
+    Given I change window size to "520x2400"
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I click on "button.snap-edit-asset-more" "css_element"
     And I follow "Edit settings"
-    Then "div[role=main] .mform div.snap-form-advanced > div.form-group.fitem [data-fieldtype='group']" "css_element" should appear after the "div[role=main] .mform div.snap-form-advanced div.collapsible-actions" "css_element"
+    And I expand all fieldsets
+    And I follow "Collapse all"
+    And I scroll to the bottom
+    Then "#fgroup_id_buttonar" "css_element" should appear after the "div.collapsible-actions" "css_element"

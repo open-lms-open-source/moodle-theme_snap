@@ -42,7 +42,7 @@ $snapsettings->add($setting);
 $name = 'theme_snap/footerbg';
 $title = new lang_string('snapfooterbgcolor', 'theme_snap');
 $description = '';
-$default = '#565656';
+$default = '#474747';
 $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);

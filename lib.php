@@ -356,7 +356,7 @@ function theme_snap_get_pre_scss($theme) {
         $theme->settings->feature_spot_description_color : '#565656';
 
     $settings['snap-footer-bg-color'] = !empty($theme->settings->footerbg) ?
-        $theme->settings->footerbg : '#565656';
+        $theme->settings->footerbg : '#474747';
 
     $settings['snap-footer-txt-color'] = !empty($theme->settings->footertxt) ?
         $theme->settings->footertxt : '#ffffff';

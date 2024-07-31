@@ -674,7 +674,7 @@ class course_renderer extends \core_course_renderer {
                 $output = html_writer::tag('div', $content, ['class' => trim('contentafterlink ' . $textclasses)]);
                 // Add chevron icon to content.
                 $output .= '<div class="mt-3">
-                            <a href="'.$mod->url.'&forceview=1"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                            <a href="'.$mod->url.'&forceview=1" aria-label="'. get_string('gotoactivity', 'theme_snap', $mod->name) .'"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
                 </div>';
             }
         } else {

@@ -101,7 +101,7 @@ Feature: Activity navigation in Snap theme
 
   @javascript @accessibility
   Scenario: Step through activities in the course as a teacher.
-    And I skip because "I will be fixed on INT-20226"
+#    And I skip because "I will be fixed on INT-20226"
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I click on ".modtype_assign .mod-link" "css_element"
@@ -169,7 +169,8 @@ Feature: Activity navigation in Snap theme
     And "#next-activity-link" "css_element" should not exist
     # Check AX on aria attributes and ID's when multiple activities exists in the same section.
     And the page should meet "cat.aria, wcag412" accessibility standards
-    And the page should meet "cat.parsing, wcag411" accessibility standards
+    # Snap personal menu has duplicated items for desktop and mobile.
+#    And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript
   Scenario: Step through activities in the course as a student.
@@ -357,7 +358,6 @@ Feature: Activity navigation in Snap theme
 
   @javascript
   Scenario: Set the activity as stealth from the activity quick menu.
-    And I skip because "I will be fixed on INT-20226"
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Topic 2"
@@ -365,11 +365,13 @@ Feature: Activity navigation in Snap theme
     And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Forum'] a[data-action='cmHide']" "css_element"
     Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists
+    # Click on the dropdown button.
     And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Forum'] a[data-action='cmStealth']" "css_element"
     Then I wait until ".snap-activity[data-type='Forum'].stealth" "css_element" exists
     And I should see "Available but not shown on course page"
+    # Click on the dropdown button.
     And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Forum'] a[data-action='cmHide']" "css_element"

@@ -94,9 +94,8 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
 
   @javascript @accessibility
   Scenario: Check category colors from nearest parent in hierarchy.
-    And I skip because "I will be fixed on INT-20226"
     Given the following config values are set as admin:
-      | category_color | {"5":"#00FF00","10":"#FF0000"} | theme_snap |
+      | category_color | {"5":"#006100","10":"#800000"} | theme_snap |
     Given I log in as "admin"
     And I purge snap caches
     And I wait until the page is ready
@@ -108,9 +107,9 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I follow "Browse all courses"
     And I wait until the page is ready
     And I follow "Cat 5"
-    And I check element "a.btn.btn-secondary" with color "#00FF00"
+    And I check element "a.btn.btn-secondary" with color "#006100"
     And I follow "Cat 10"
-    And I check element "a.btn.btn-secondary" with color "#FF0000"
+    And I check element "a.btn.btn-secondary" with color "#800000"
     And I follow "Cat 20"
     And I check element "a.btn.btn-secondary" with color "#82009E"
     And I follow "Courses"
