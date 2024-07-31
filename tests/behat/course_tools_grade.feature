@@ -318,7 +318,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I should not see "Turn editing off"
     And I log out
 
-  @javascript @ricardo
+  @javascript
   Scenario: From Grader report button, single view should have an edit button.
     Given I log in as "admin"
     When I am on "Course 1" course homepage

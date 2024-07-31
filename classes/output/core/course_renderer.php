@@ -2113,7 +2113,7 @@ class course_renderer extends \core_course_renderer {
             array('class' => 'dropdown snap-activity-groups-dropdown'));
 
         $output = '';
-        if ($groupoptions) {
+        if ($groupoptions && !$this->is_resource($mod)) {
             $output .= \html_writer::tag('div',
                 $groupsdropdownelement,
                 array(
@@ -2151,5 +2151,9 @@ class course_renderer extends \core_course_renderer {
             }
         }
         return $forumposts;
+    }
+
+    private function is_resource(\cm_info $cm): bool {
+        return in_array($cm->modname, ['resource', 'scorm']) || plugin_supports('mod', $cm->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE;
     }
 }

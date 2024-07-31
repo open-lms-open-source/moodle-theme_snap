@@ -365,10 +365,12 @@ Feature: Activity navigation in Snap theme
     And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Forum'] a[data-action='cmHide']" "css_element"
     Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists
+    And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Forum'] a[data-action='cmStealth']" "css_element"
     Then I wait until ".snap-activity[data-type='Forum'].stealth" "css_element" exists
     And I should see "Available but not shown on course page"
+    And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Forum'] a[data-action='cmHide']" "css_element"
     Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists

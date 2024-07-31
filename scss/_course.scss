@@ -971,6 +971,7 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
                 display: flex;
                 font-size: 1em;
                 margin: 0;
+                overflow: hidden;
                 @include alakazam;
 
                 img.activityicon {
@@ -1462,9 +1463,8 @@ body.snap-resource-card {
         }
 
         .snap-asset-link {
-            max-width: 80%;
             .snap-header-container {
-                max-width: 65%;
+                overflow: hidden;
             }
             .snap-assettype {
                 text-overflow: ellipsis;
