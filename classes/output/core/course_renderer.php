@@ -601,7 +601,8 @@ class course_renderer extends \core_course_renderer {
             $groupsmenu .= $this->activity_groups_menu_actions($mod);
         }
         // Build output.
-        $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.'</div>';
+        $forumposts = '<div class="badge badge-secondary">'.$this->get_forum_unread_posts($mod).'</div>';
+        $postcontent = '<div class="snap-asset-meta" data-cmid="'.$mod->id.'">'.$assetmeta.$mod->afterlink.$forumposts.'</div>';
         $content = '<div class="snap-asset-content">'.$postcontent.$contentpart.$snapcompletionmeta.$groupmeta.'</div>';
         $cardicons = '<div class="snap-header-card-icons">'.$completiontracking.$coursetoolsicon.$groupsmenu.$snapmenu.'</div>';
         $output .= '<div class="snap-header-card">'.$assetlink.$cardicons.'</div>'.$content;
@@ -2133,5 +2134,22 @@ class course_renderer extends \core_course_renderer {
         $templatedata = $completion->export_for_template($this->output);
 
         return $templatedata->completiondialog['dialogcontent'];
+    }
+
+    private function get_forum_unread_posts($mod) {
+        global $CFG;
+        require_once($CFG->dirroot . '/mod/forum/lib.php');
+
+        $forumposts = '';
+        if (forum_tp_can_track_forums()) {
+            if ($unread = forum_tp_count_forum_unread_posts($mod, $mod->get_course())) {
+                if ($unread == 1) {
+                    $forumposts = get_string('unreadpostsone', 'forum');
+                } else {
+                    $forumposts = get_string('unreadpostsnumber', 'forum', $unread);
+                }
+            }
+        }
+        return $forumposts;
     }
 }
