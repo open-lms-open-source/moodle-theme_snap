@@ -35,7 +35,7 @@ define(['jquery', 'core/log','theme_snap/util', 'theme_snap/ajax_notification'],
                     // Target for data to be displayed on screen.
                     var container = $('#snap-feeds-menu-' + type);
                     var mobileContainer = $('#snap-feeds-section-' + type);
-                    if ($(container).length || $(mobileContainer).length) {
+                    if ($(container).length) {
                         var cacheKey = M.cfg.sesskey + 'snap-feeds-menu-' + type;
                         try {
                             // Display old content while waiting
