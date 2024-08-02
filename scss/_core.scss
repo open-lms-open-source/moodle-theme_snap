@@ -5025,6 +5025,11 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     .snap-page-heading-button div {
         float: right;
     }
+    .discussion-list {
+        .hasunread .lead a {
+            color: #fff;
+        }
+    }
 }
 
 
