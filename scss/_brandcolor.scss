@@ -1195,28 +1195,29 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         .snap-edit-asset-more:focus {
             outline: 3px solid $brand-primary;
         }
-        .snap-edit-more-dropdown .dropdown-item {
-            &.groups-dropdown::before,
-            &.availability-dropdown::before {
-                opacity: (0.5);
-            }
-            &.active,
-            &:active,
-            &:hover,
-            &:focus,
-            &:focus-within {
-                background-color: $brand-primary;
+    }
+
+    .dropdown-item {
+        &.groups-dropdown::before,
+        &.availability-dropdown::before {
+            opacity: (0.5);
+        }
+        &.active,
+        &:active,
+        &:hover,
+        &:focus,
+        &:focus-within {
+            background-color: $brand-primary;
+            color: white;
+            i {
                 color: white;
-                i {
-                    color: white;
-                }
-                img {
-                    filter: brightness(0) invert(1);
-                }
-                &::before {
-                    opacity: unset;
-                    color: white;
-                }
+            }
+            img {
+                filter: brightness(0) invert(1);
+            }
+            &::before {
+                opacity: unset;
+                color: white;
             }
         }
     }
