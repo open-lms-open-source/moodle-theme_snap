@@ -19,6 +19,7 @@ footer,
 header,
 hgroup,
 main,
+div#moodle-page,
 menu,
 nav,
 section,
@@ -6168,7 +6169,7 @@ body
 nav #mr-nav
 #page (for mdl js)
 	#page-content (for mdl js)
-		main #moodle-page
+		div #moodle-page
 		header #page-header
 		section #region-main
 footer #moodle-footer

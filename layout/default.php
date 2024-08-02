@@ -58,7 +58,7 @@ if ($PAGE->pagetype == "mod-lightboxgallery-view" && $PAGE->user_allowed_editing
 <!--
 ////////////////////////// MAIN  ///////////////////////////////
 -->
-<main id="moodle-page" class="clearfix">
+<div id="moodle-page" class="clearfix">
 <?php
 echo $OUTPUT->custom_menu_spacer();
 ?>
@@ -183,7 +183,7 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 require(__DIR__.'/moodle-blocks.php');
 echo $OUTPUT->snap_feeds_side_menu();
 ?>
-</main>
+</div>
 
 </div>
 </div>
