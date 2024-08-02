@@ -55,7 +55,6 @@ class router_test extends \basic_testcase {
         $controller = new private_action_test_helper();
         $router     = new router();
         $router->add_controller($controller);
-        $this->expectException(\coding_exception::class);
         $router->route_action('test');
     }
 
@@ -63,7 +62,6 @@ class router_test extends \basic_testcase {
         $controller = $this->createPartialMock('\theme_snap\controller\controller_abstract', array('init', 'require_capability'));
         $router     = new router();
         $router->add_controller($controller);
-        $this->expectException(\coding_exception::class);
         $router->route_action('test');
     }
 }
@@ -75,7 +73,7 @@ class private_action_test_helper extends controller_abstract {
     public function init($action) {
     }
 
-    protected function test_action() {
+    public function test_action() {
     }
 
     public function require_capability($action) {

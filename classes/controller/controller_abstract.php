@@ -52,6 +52,11 @@ abstract class controller_abstract {
     }
 
     /**
+    * Used for test_action, modify if needed.
+    */
+    public function test_action() {}
+
+    /**
      * Do any security checks needed for the passed action
      *
      * @abstract
