@@ -101,7 +101,6 @@ Feature: Activity navigation in Snap theme
 
   @javascript @accessibility
   Scenario: Step through activities in the course as a teacher.
-#    And I skip because "I will be fixed on INT-20226"
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I click on ".modtype_assign .mod-link" "css_element"
@@ -169,8 +168,8 @@ Feature: Activity navigation in Snap theme
     And "#next-activity-link" "css_element" should not exist
     # Check AX on aria attributes and ID's when multiple activities exists in the same section.
     And the page should meet "cat.aria, wcag412" accessibility standards
-    # Snap personal menu has duplicated items for desktop and mobile.
-#    And the page should meet "cat.parsing, wcag411" accessibility standards
+    # Snap personal menu has duplicated items for desktop and mobile. To be reviewed in INT-19663.
+    # And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript
   Scenario: Step through activities in the course as a student.

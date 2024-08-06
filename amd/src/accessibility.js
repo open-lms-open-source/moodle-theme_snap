@@ -93,8 +93,6 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
                         .attr("id", "ct-course-settings");
                     $('section#coursetools ul#coursetools-list a:contains("' + ctparticipantsnumber[1] + '")')
                         .attr("id", "ct-participants-number");
-                    $('section#coursetools ul#coursetools-list a:contains("' + stringsjs[12] + '")')
-                        .attr("id", "ct-pld");
                     $('section#coursetools ul#coursetools-list a:contains("' + stringsjs[13] + '")')
                         .attr("id", "ct-competencies");
                     $('section#coursetools ul#coursetools-list a:contains("' + stringsjs[14] + '")')

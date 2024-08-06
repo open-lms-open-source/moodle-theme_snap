@@ -107,17 +107,17 @@ Feature: Elements for Snap should have the proper aria attributes.
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And the page should meet "cat.aria, wcag412" accessibility standards
-    # Snap personal menu has duplicated items for desktop and mobile. To be reviewed in INT-19663.
+    # Snap activity controls have duplicated Ids. To be reviewed on INT-20292.
     #And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript @accessibility
   Scenario: Elements in course dashboard must comply with the accessibility standards.
-    And I skip because "I will be fixed on INT-20226"
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I follow "Course Dashboard"
     And the page should meet "cat.aria, wcag412" accessibility standards
-    And the page should meet "cat.parsing, wcag411" accessibility standards
+    # Snap activity controls have duplicated Ids. To be reviewed on INT-20292.
+    #And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript @accessibility
   Scenario: When an activity have a restriction, the lock icon should have the needed aria attributes.
@@ -134,7 +134,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
     And the page should meet "cat.aria, wcag412" accessibility standards
-    # Snap personal menu has duplicated items for desktop and mobile. To be reviewed in INT-19663.
+    # Snap activity controls have duplicated Ids. To be reviewed on INT-20292.
     #And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript @accessibility

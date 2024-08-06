@@ -734,7 +734,8 @@ EOF;
             $pldname = get_string('pldinitials', 'local_pld');
             $links[] = array(
                 'link' => 'local/pld/view.php?newpld=1&courseid='.$COURSE->id,
-                'title' => $pldicon.$pldname
+                'title' => $pldicon.$pldname,
+                'attributes' => ['id' => 'ct-pld']
             );
         }
 
@@ -746,7 +747,8 @@ EOF;
                 $pldname = get_string('pldlegacy', 'local_pld');
                 $links[] = array(
                     'link' => 'local/pld/view.php?courseid='.$COURSE->id,
-                    'title' => $pldicon.$pldname
+                    'title' => $pldicon.$pldname,
+                    'attributes' => ['id' => 'ct-pld-legacy']
                 );
             }
         }

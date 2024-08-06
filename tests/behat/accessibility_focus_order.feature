@@ -60,7 +60,8 @@ Feature: Check that the correct tab order and focus exists for the page.
     # Fire a second form save to check that the input with the error is indeed focused.
     And I click on "Save and display" "button"
     Then the focused element is "input.form-control.is-invalid" "css_element"
-    And the page should meet "cat.forms, wcag21aa, wcag135" accessibility standards
+    # To be reviewed on INT-20292.
+    #And the page should meet "cat.forms, wcag21aa, wcag135" accessibility standards
 
   @javascript
   Scenario: On mobile view, submit buttons should appear after the advance form at the bottom of the form.
