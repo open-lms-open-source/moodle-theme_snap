@@ -171,6 +171,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 $link = '<a class="snap-feeds-menu-more" href="' .$url. '" title="'.$text.'"><small>' .$text. '</small>' .$svgicon. '</a>';
             }
 
+        } else if ($location == 'mycourses') {
+            $link = '<a class="snap-personal-menu-more browseallcourses" href="' .$url. '"><small>' .$text. '</small>' .$svgicon. '</a>';
         } else {
             $link = '<a class="snap-personal-menu-more" href="' .$url. '"><small>' .$text. '</small>' .$svgicon. '</a>';
         }
