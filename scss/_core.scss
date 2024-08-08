@@ -2103,7 +2103,7 @@ header#page-header
 #page-site-index #site-news-forum {
     margin: 0 auto;
     padding: 0 4% 4em;
-    background-color: #f1f0ee;
+    background-color: #eef0f6;
     @include clearfix;
     .text-center {
         .btn-secondary {
@@ -4216,6 +4216,13 @@ table th img.iconhelp {
         padding-top: 0;
         margin-top: 0;
     }
+    @media screen and (max-width: 768px) {
+        [id^="snap-feature-"] {
+            margin-top: 1em;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
 
     .snap-feature-image {
         object-fit: contain;
@@ -4259,44 +4266,50 @@ table th img.iconhelp {
     }
 }
 
-/* Featured courses section. */
-@include media-breakpoint-up(md) {
-    #snap-featured-courses .row div {
-        /* Center and restrict width for when only one course */
-        max-width: 50%;
-        margin: 0 auto;
+/* Featured categories and courses section. */
+@media screen and (max-width: 768px) {
+    #snap-featured-categories .row div.col-sm-3 ,
+    #snap-featured-courses .row div.col-sm-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 }
 
-/* Featured course container. */
+/* Featured categories and courses container. */
+#snap-featured-categories,
 #snap-featured-courses {
     width: 100%;
     padding: 1em 4%;
+    background-color: $snap-featured-cards-bg;
+    margin-bottom: 1em;
 }
+.snap-featured-categories-heading,
 .snap-featured-courses-heading {
     padding: 1em 0;
 }
-
-#snap-featured-courses {
-    background-color: $snap-featured-courses;
-}
+#snap-featured-categories a.snap-featured-category,
 #snap-featured-courses a.snap-featured-course {
-    border-radius: 4px;
+    border-radius: 0.5rem;
 }
+#snap-featured-categories .snap-featured-category-title,
 #snap-featured-courses .snap-featured-course-title {
     border-radius: 0 0 4px 4px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 2.4em;
 }
 
-/* Featured course link. */
+/* Featured category and course link. */
+.snap-featured-category,
 .snap-featured-course {
     display: block;
     height: 300px;
     position: relative;
-    background-color: #ccc;
     margin-bottom: 1em;
-    @include bg-cover;
     @include alakazam;
-    background-position: center;
 
     &:hover {
         transform: scale(1.03);
@@ -4305,19 +4318,33 @@ table th img.iconhelp {
             0 3px 1px -2px rgba(0, 0, 0, 0.2),
             0 1px 5px 0 rgba(0, 0, 0, 0.12);
 
+        .snap-featured-category-title,
         .snap-featured-course-title {
             text-decoration: underline;
         }
     }
 }
+/* Featured category and course cover image. */
+.snap-featured-category-image,
+.snap-featured-course-image {
+    background-color: $brand-primary;
+    @include bg-cover;
+    background-position: center;
+    margin: unset;
+    padding: unset;
+    min-width: 100%;
+    min-height: 75%;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
 
-/* Featured course title. */
+/* Featured category and course title. */
+.snap-featured-category-title,
 .snap-featured-course-title {
     display: block;
     min-height: 25%;
     width: 100%;
     background-color: white;
-    position: absolute;
     bottom: 0;
     padding: 0.5em 4%;
     max-height: 15.2em;

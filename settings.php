@@ -33,7 +33,7 @@ if ($ADMIN->fulltree) {
     require('settings/cover_settings.php');
     require('settings/personal_menu_settings.php');
     require('settings/feature_spots_settings.php');
-    require('settings/featured_courses_settings.php');
+    require('settings/featured_categories_and_courses_settings.php');
     require('settings/course_settings.php');
     require('settings/social_media_settings.php');
     require('settings/navigation_bar_settings.php');

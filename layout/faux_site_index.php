@@ -27,6 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\renderables\featured_courses;
+use theme_snap\renderables\featured_categories;
 
 if (isloggedin() && !isguestuser() && isset($CFG->frontpageloggedin)) {
     $frontpagelayout = $CFG->frontpageloggedin;
@@ -46,6 +47,9 @@ if (substr_compare($maincontent, $lastclosetag, -strlen($lastclosetag)) !== 0) {
 
 // Snap feature spots.
 echo $this->feature_spot_cards();
+
+// Snap featured categories.
+echo $OUTPUT->render(new featured_categories());
 
 // Snap featured courses.
 echo $OUTPUT->render(new featured_courses());

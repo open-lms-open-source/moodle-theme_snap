@@ -1333,7 +1333,7 @@ class local {
      * @return bool|stored_file
      * @throws \coding_exception
      */
-    public static function coverimage($context, $featuredcourses = false) {
+    public static function coverimage($context, $featuredcards = false) {
         global $DB;
         $contextid = $context->id;
         $fs = get_file_storage();
@@ -1343,7 +1343,7 @@ class local {
                 return false;
             }
         }
-        if ($featuredcourses) {
+        if ($featuredcards) {
             $files = $fs->get_area_files($contextid, 'theme_snap', 'coverimage', 0, "itemid, filepath, filename", false);
         } else {
             $files = $fs->get_area_files($contextid, 'theme_snap', 'croppedimage', 0, "itemid, filepath, filename", false);
@@ -1385,9 +1385,9 @@ class local {
      * @param $courseid
      * @return stored_file|bool
      */
-    public static function course_coverimage($courseid, $featuredcourses = false) {
+    public static function course_coverimage($courseid, $featuredcards = false) {
         $context = \context_course::instance($courseid);
-        return (self::coverimage($context, $featuredcourses));
+        return (self::coverimage($context, $featuredcards));
     }
 
     /**
@@ -1410,12 +1410,37 @@ class local {
      *
      * @return bool|moodle_url
      */
-    public static function course_coverimage_url($courseid, $featuredcourses = false) {
-        $file = self::course_coverimage($courseid, $featuredcourses);
+    public static function course_coverimage_url($courseid, $featuredcards = false) {
+        $file = self::course_coverimage($courseid, $featuredcards);
         if (!$file) {
             $file = self::process_coverimage(\context_course::instance($courseid));
         }
         return self::snap_pluginfile_url($file);
+    }
+
+    /**
+     * Get cover image url for category.
+     * @param int $categoryid
+     *
+     * @return bool|moodle_url
+     */
+    public static function category_coverimage_url($categoryid, $featuredcards = false) {
+        $file = self::category_coverimage($categoryid, $featuredcards);
+        if (!$file) {
+            $file = self::process_coverimage(\context_coursecat::instance($categoryid));
+        }
+        return self::snap_pluginfile_url($file);
+    }
+
+    /**
+     * Get processed category cover image.
+     *
+     * @param $categoryid
+     * @return stored_file|bool
+     */
+    public static function category_coverimage($categoryid, $featuredcards) {
+        $context = \context_coursecat::instance($categoryid);
+        return (self::coverimage($context, $featuredcards));
     }
 
     /**
