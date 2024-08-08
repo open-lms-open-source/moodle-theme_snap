@@ -68,7 +68,13 @@ class block_myoverview_renderer extends \block_myoverview\output\renderer {
             ksort($coursesyears);
         }
         if (!empty($coursesyears)) {
-            $yearslist = '';
+            $allyearslink = html_writer::tag('a', get_string('allyears', 'theme_snap'),[
+                'class' => 'dropdown-item',
+                'href' => '#',
+                'data-filter' => 'year',
+                'data-value' => 'all'
+            ]);
+            $yearslist = $allyearslink;
             foreach ($coursesyears as $year => $yearlistitem) {
                 $yearslist .= $yearlistitem->$year;
             }
