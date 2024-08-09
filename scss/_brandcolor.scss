@@ -293,9 +293,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         // Imitate btn.btn-secondary CSS for buttons without proper
         // Bootstrap classes applied to them, and override colors for
         // btn-secondary, btn-default.
-        color: $brand-primary;
-        border-color: $brand-primary;
-        background-color: transparent;
+        color: $brand-primary !important;
+        border-color: $brand-primary !important;
+        background: transparent !important;
 
         &:hover:not(:disabled),
         &:focus:not(:disabled),
