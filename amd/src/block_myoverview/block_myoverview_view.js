@@ -685,16 +685,22 @@ const initializePagedContent = (root, promiseFunction, inputValue = null) => {
     const pagingLimit = parseInt(root.find(SELECTORS.courseView.region).attr('data-paging'), 10);
     let itemsPerPage = itemsPerPageFunc(pagingLimit, root);
 
-    const filters = getFilterValues(root);
-    // Open LMS change: If we use the year of progress filters, we are not using pagination.
-    if (filters.yeardata != undefined || filters.progress != undefined) {
+    const config = {...{}, ...DEFAULT_PAGED_CONTENT_CONFIG};
+    config.eventNamespace = namespace;
+
+    // Open LMS change: If we use the year of progress filters, we are not using pagination because we apply the
+    // additional filters to the result of the Core filters. That result is calculated using the pagination, so our
+    // filters will be applied only to the first 24 courses in case that the pagination is selected to 24 and so on.
+    const additionalFilters = getFilterValues(root);
+    let yearFilterData = additionalFilters.yeardata;
+    let progressFilterData = additionalFilters.progress;
+    if ((yearFilterData != undefined && yearFilterData != "all") ||
+        (progressFilterData != undefined && progressFilterData != "all")) {
         itemsPerPage = {
             value: 0,
             active: true
         };
     }
-    const config = {...{}, ...DEFAULT_PAGED_CONTENT_CONFIG};
-    config.eventNamespace = namespace;
 
     const pagedContentPromise = PagedContentFactory.createWithLimit(
         itemsPerPage,
@@ -726,6 +732,9 @@ const initializePagedContent = (root, promiseFunction, inputValue = null) => {
                         limit *= 2;
                     }
                 }
+
+                // Get the current applied filters.
+                const filters = getFilterValues(root);
 
                 // Call the curried function that'll handle the course promise and any manipulation of it.
                 promiseFunction(filters, currentPage, pageData, actions, root, promises, limit, inputValue);

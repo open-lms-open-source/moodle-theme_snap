@@ -28,6 +28,11 @@
         </button>
         <ul class="dropdown-menu" role="menu" data-show-active-item data-skip-active-class="true" aria-labelledby="progressdropdown">
             <li>
+                <a class="dropdown-item" href="#" data-filter="progress" data-value="all" aria-label="{{#str}} all, moodle {{/str}}" role="menuitem">
+                    {{#str}} all, moodle {{/str}}
+                </a>
+            </li>
+            <li>
                 <a class="dropdown-item" href="#" data-filter="progress" data-value="completed" aria-label="{{#str}} completed, moodle {{/str}}" role="menuitem" {{#completed}}aria-current="true"{{/completed}}>
                     {{#str}} completed, moodle {{/str}}
                 </a>

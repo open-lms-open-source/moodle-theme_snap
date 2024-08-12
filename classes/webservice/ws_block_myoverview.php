@@ -114,7 +114,7 @@ class ws_block_myoverview extends external_api {
             $searchvalue
         );
 
-        if ($params['yeardata'] != null) {
+        if ($params['yeardata'] != null && $params['yeardata'] != "all") {
             $filteredbyyearcourses = [];
             foreach ($mainFiltersResult["courses"] as $course) {
                 $endyear = userdate($course->enddate, '%Y');
@@ -125,22 +125,23 @@ class ws_block_myoverview extends external_api {
             $mainFiltersResult["courses"] = $filteredbyyearcourses;
         }
 
-        $filteredbycompleted = [];
-        $filteredbynotcompleted = [];
-        foreach ($mainFiltersResult["courses"] as $course) {
-            if ($course->progress == 100) {
-                $filteredbycompleted[] = $course;
-            } else {
-                $filteredbynotcompleted[] = $course;
+        if ($params['progress'] != "all") {
+            $filteredbycompleted = [];
+            $filteredbynotcompleted = [];
+            foreach ($mainFiltersResult["courses"] as $course) {
+                if ($course->progress == 100) {
+                    $filteredbycompleted[] = $course;
+                } else {
+                    $filteredbynotcompleted[] = $course;
+                }
+            }
+
+            if ($params['progress'] == 'completed') {
+                $mainFiltersResult["courses"] = $filteredbycompleted;
+            } elseif ($params['progress'] == 'notcompleted') {
+                $mainFiltersResult["courses"] = $filteredbynotcompleted;
             }
         }
-
-        if ($params['progress'] == 'completed') {
-            $mainFiltersResult["courses"] = $filteredbycompleted;
-        } elseif ($params['progress'] == 'notcompleted') {
-            $mainFiltersResult["courses"] = $filteredbynotcompleted;
-        }
-
         return $mainFiltersResult;
     }
 }

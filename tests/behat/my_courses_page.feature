@@ -144,14 +144,19 @@ Feature: Users can access to the My Courses page in Snap.
     And I click on "#yeardropdown" "css_element"
     And "ul[aria-labelledby='yeardropdown'] :nth-child(1)" "css_element" should exist
     And "ul[aria-labelledby='yeardropdown'] :nth-child(2)" "css_element" should exist
-    And "ul[aria-labelledby='yeardropdown'] :nth-child(3)" "css_element" should not exist
-    And I click on "ul[aria-labelledby='yeardropdown'] :nth-child(1)" "css_element"
+    And "ul[aria-labelledby='yeardropdown'] :nth-child(3)" "css_element" should exist
+    And "ul[aria-labelledby='yeardropdown'] :nth-child(4)" "css_element" should not exist
+    And I click on "ul[aria-labelledby='yeardropdown'] :nth-child(2)" "css_element"
     And I should see "Course 2"
     And I should not see "Course 3"
     And I click on "#yeardropdown" "css_element"
-    And I click on "ul[aria-labelledby='yeardropdown'] :nth-child(2)" "css_element"
+    And I click on "ul[aria-labelledby='yeardropdown'] :nth-child(3)" "css_element"
     And I should see "Course 3"
     And I should not see "Course 2"
+    And I click on "#yeardropdown" "css_element"
+    And I click on "ul[aria-labelledby='yeardropdown'] :nth-child(1)" "css_element"
+    And I should see "Course 2"
+    And I should see "Course 3"
 
   @javascript
   Scenario: User can use the completion filter in the Course overview block in Snap.
@@ -189,4 +194,9 @@ Feature: Users can access to the My Courses page in Snap.
     And I follow "Not completed"
     And I should not see "Course 2"
     And I should see "Course 1"
+    And I should see "Course 3"
+    And I click on "#progressdropdown" "css_element"
+    And I click on "ul[aria-labelledby='progressdropdown'] :nth-child(1)" "css_element"
+    And I should see "Course 1"
+    And I should see "Course 2"
     And I should see "Course 3"

@@ -486,3 +486,4 @@ $string['opens'] = 'Opens {$a}';
 $string['opened'] = 'Opened {$a}';
 $string['year'] = 'Year';
 $string['homepage'] = 'Homepage';
+$string['allyears'] = 'All years';
