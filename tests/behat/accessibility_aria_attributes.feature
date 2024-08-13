@@ -79,7 +79,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I expand "Appearance" node
     And I expand "Themes" node
     And I follow "Snap"
-    And I follow "Featured courses"
+    And I follow "Featured categories and courses"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_one']" to "1"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_two']" to "2"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_three']" to "3"
@@ -159,8 +159,8 @@ Feature: Elements for Snap should have the proper aria attributes.
     # Feature spots.
     And I follow "Feature spots"
     And the page should meet "cat.aria, wcag412" accessibility standards
-    # Featured courses.
-    And I follow "Featured courses"
+    # Featured categories and courses.
+    And I follow "Featured categories and courses"
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Course display.
     And I follow "Course display"

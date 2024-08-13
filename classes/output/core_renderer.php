@@ -44,6 +44,7 @@ use theme_snap\renderables\genius_dashboard_link;
 use theme_snap\renderables\course_card;
 use theme_snap\renderables\course_toc;
 use theme_snap\renderables\featured_courses;
+use theme_snap\renderables\featured_categories;
 use lang_string;
 use core_course_category;
 use core\navigation\output\primary;
@@ -1785,6 +1786,21 @@ HTML;
         }
 
         return $this->render_from_template('theme_snap/featured_courses', $fc);
+    }
+
+    /**
+     * Return featured courses html.
+     * There are intentionally no checks for hidden course status
+     * OR current users enrolment status.
+     *
+     * @return string
+     */
+    public function render_featured_categories(featured_categories $fcat) {
+        if (empty($fcat->cards)) {
+            return '';
+        }
+
+        return $this->render_from_template('theme_snap/featured_categories', $fcat);
     }
 
     /**

@@ -18,13 +18,13 @@ namespace theme_snap\renderables;
 use moodle_url;
 
 /**
- * Featured course renderable
+ * Featured Category renderable
  *
- * @author    Guy Thomas
- * @copyright Copyright (c) 2017 Open LMS
+ * @author    Bryan Cruz <bryan.cruz@openlms.net>
+ * @copyright Copyright (c) 2024 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class featured_course implements \renderable, \templatable {
+class featured_category implements \renderable, \templatable {
 
     use trait_exportable;
 
@@ -49,7 +49,7 @@ class featured_course implements \renderable, \templatable {
     public $number;
 
     /**
-     * featured_course constructor.
+     * featured_category constructor.
      * @param \moodle_url $url
      * @param \moodle_url $coverimageurl
      * @param string $title

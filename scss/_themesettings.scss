@@ -288,9 +288,9 @@
 }
 
 // -------------------------
-// Tab - Featured courses.
+// Tab - Featured categories and courses.
 // -------------------------
-#themesnapfeaturedcourses.active {
+#themesnapfeaturedcategoriesandcourses.active {
 
     .formsettingheading {
         font-family: $font-family-sans-serif;
@@ -299,12 +299,6 @@
     .form-defaultinfo,
     .form-shortname {
         display: none;
-    }
-
-    #admin-fc_heading {
-        input {
-            font-size: $h4-font-size;
-        }
     }
 
     #admin-fc_one,
@@ -320,7 +314,21 @@
         padding: 1em;
     }
 
-    #admin-fc_browse_all {
+    #admin-fcat_one,
+    #admin-fcat_two,
+    #admin-fcat_three,
+    #admin-fcat_four,
+    #admin-fcat_five,
+    #admin-fcat_six,
+    #admin-fcat_seven,
+    #admin-fcat_eight {
+        width: 25%;
+        float: left;
+        padding: 1em;
+    }
+
+    #admin-fc_browse_all,
+    #admin-fcat_browse_all {
         clear: both;
     }
 }

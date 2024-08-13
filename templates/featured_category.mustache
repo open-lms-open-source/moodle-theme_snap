@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_snap/featured_course
+    @template theme_snap/featured_category
 
 
     Example context (json):
@@ -23,13 +23,13 @@
         "number" : "1",
         "url" : "http://someurl.local",
         "coverimageurl" : "http://someurl.local",
-        "title" : "Super cool course!"
+        "title" : "Super cool category!"
     }
 }}
-<div class="col-sm-3" id="snap-featured-course-{{number}}">
-    <a href="{{url}}" class="snap-featured-course">
+<div class="col-sm-3" id="snap-featured-category-{{number}}">
+    <a href="{{url}}" class="snap-featured-category">
         <!--Card content-->
-        <div class="snap-featured-course-image" style="background-image: url({{coverimageurl}});"></div>
-        <span class="snap-featured-course-title">{{title}}</span>
+        <div class="snap-featured-category-image" style="background-image: url({{coverimageurl}});"></div>
+        <span class="snap-featured-category-title" title="{{title}}">{{title}}</span>
     </a>
 </div>

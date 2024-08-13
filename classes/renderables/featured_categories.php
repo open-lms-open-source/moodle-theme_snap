@@ -20,18 +20,18 @@ use theme_snap\local;
 use moodle_url;
 
 /**
- * Featured courses renderable.
+ * Featured categories renderable.
  *
- * @author    Guy Thomas
- * @copyright Copyright (c) 2017 Open LMS
+ * @author    Bryan Cruz <bryan.cruz@openlms.net>
+ * @copyright Copyright (c) 2024 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class featured_courses implements \renderable, \templatable {
+class featured_categories implements \renderable, \templatable {
 
     use trait_exportable;
 
     /**
-     * @var featured_course[];
+     * @var featured_category[];
      */
     public $cards = [];
 
@@ -55,13 +55,13 @@ class featured_courses implements \renderable, \templatable {
 
         $config = get_config('theme_snap');
 
-        // Featured courses title.
-        if (!empty($config->fc_heading)) {
-            $this->heading = $config->fc_heading;
+        // Featured categories title.
+        if (!empty($config->fcat_heading)) {
+            $this->heading = $config->fcat_heading;
         }
 
-        if (!empty($config->fc_browse_all)) {
-            $url = new moodle_url('/my/courses.php');
+        if (!empty($config->fcat_browse_all)) {
+            $url = new moodle_url('/course/');
             $this->browseallurl = $url;
         }
 
@@ -70,41 +70,41 @@ class featured_courses implements \renderable, \templatable {
             $this->editurl = $url;
         }
 
-        // Build array of course ids to display.
-        $ids = ["fc_one", "fc_two", "fc_three", "fc_four", "fc_five", "fc_six", "fc_seven", "fc_eight"];
-        $courseids = [];
+        // Build array of category ids to display.
+        $ids = ["fcat_one", "fcat_two", "fcat_three", "fcat_four", "fcat_five", "fcat_six", "fcat_seven", "fcat_eight"];
+        $categoryids = [];
         $config = get_config('theme_snap');
         foreach ($ids as $id) {
             if (!empty($config->$id)) {
-                $courseids[] = $config->$id;
+                $categoryids[] = $config->$id;
             }
         }
 
-        // Get DB records for course ids.
-        if (count($courseids)) {
-            list ($coursesql, $params) = $DB->get_in_or_equal($courseids);
-            $sql = "SELECT * FROM {course} WHERE id $coursesql";
-            $courses = $DB->get_records_sql($sql, $params);
+        // Get DB records for category ids.
+        if (count($categoryids)) {
+            list ($categorysql, $params) = $DB->get_in_or_equal($categoryids);
+            $sql = "SELECT * FROM {course_categories} WHERE id $categorysql";
+            $categories = $DB->get_records_sql($sql, $params);
         } else {
             return;
         }
 
         // Order records to match order input.
-        $orderedcourses = [];
-        foreach ($courseids as $courseid) {
-            if (!empty($courses[$courseid])) {
-                $orderedcourses[] = $courses[$courseid];
+        $orderedcategories = [];
+        foreach ($categoryids as $categoryid) {
+            if (!empty($categories[$categoryid])) {
+                $orderedcategories[] = $categories[$categoryid];
             }
         }
 
-        // Build featured course card renderables.
+        // Build featured category card renderables.
         $i = 0;
-        foreach ($orderedcourses as $course) {
+        foreach ($orderedcategories as $category) {
             $i ++;
-            $url = new moodle_url('/course/view.php?id=' .$course->id);
-            $coverimageurl = local::course_coverimage_url($course->id, true);
+            $url = new moodle_url('/course/index.php?categoryid=' .$category->id);
+            $coverimageurl = local::category_coverimage_url($category->id, true);
             $coverimageurl = $coverimageurl ?: null;
-            $this->cards[] = new featured_course($url, $coverimageurl, $course->fullname, $i);
+            $this->cards[] = new featured_category($url, $coverimageurl, $category->name, $i);
         }
     }
 }
