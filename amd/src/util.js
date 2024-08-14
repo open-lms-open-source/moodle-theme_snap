@@ -102,7 +102,7 @@ define(['jquery', 'core/templates', 'core/str'], function($, templates, str) {
          */
         processAnimatedImages: function() {
             // Put animated images in a wrap if necessary.
-            let gifs = $('img[src$=".gif"]:not(.texrender)');
+            let gifs = $('img[src$=".gif"]:not(.texrender):not(.snap-feature-image)');
             // Use main page and course page.
             const indexPage = $('#page-site-index');
             const coursePage = $('.path-course-view');
