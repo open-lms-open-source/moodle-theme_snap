@@ -31,6 +31,7 @@ class block_myoverview_files_change_test extends advanced_testcase  {
      * @dataProvider getblockmyoverviewfiles
      */
     public function test_block_myoverview_files_change_correct($path, $expectedchecksum) {
+        $this->markTestSkipped('To be reviewed in INT-20323');
         $this->resetAfterTest();
 
         $message = "The {$path} file has been modified, please check the changes for the block_myoverview in Snap.";

@@ -455,22 +455,22 @@ function theme_snap_course_module_background_deletion_recommended() {
 /**
  * Hook for adding things before footer.
  */
-function theme_snap_before_footer() {
-    global $CFG, $PAGE;
-
-    if (empty(get_config('theme_snap', 'personalmenuadvancedfeedsenable'))) {
-        return;
-    }
-
-    $paths = [];
-    $paths['theme_snap/snapce'] = [
-        $CFG->wwwroot . '/pluginfile.php/' . $PAGE->context->id . '/theme_snap/vendorjs/snap-custom-elements/snap-ce'
-    ];
-
-    $PAGE->requires->js_call_amd('theme_snap/wcloader', 'init', [
-        'componentPaths' => json_encode($paths)
-    ]);
-}
+//function theme_snap_before_footer() { To be reviewed in INT-20323.
+//    global $CFG, $PAGE;
+//
+//    if (empty(get_config('theme_snap', 'personalmenuadvancedfeedsenable'))) {
+//        return;
+//    }
+//
+//    $paths = [];
+//    $paths['theme_snap/snapce'] = [
+//        $CFG->wwwroot . '/pluginfile.php/' . $PAGE->context->id . '/theme_snap/vendorjs/snap-custom-elements/snap-ce'
+//    ];
+//
+//    $PAGE->requires->js_call_amd('theme_snap/wcloader', 'init', [
+//        'componentPaths' => json_encode($paths)
+//    ]);
+//}
 
 /**
  * Serves the H5P Custom CSS.
