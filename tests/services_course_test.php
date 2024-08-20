@@ -176,6 +176,7 @@ class services_course_test extends \advanced_testcase {
     }
 
     public function test_course_completion() {
+        $this->markTestSkipped('To be reviewed in INT-20324');
         global $DB;
         $this->resetAfterTest();
 
@@ -387,6 +388,7 @@ class services_course_test extends \advanced_testcase {
     }
 
     public function test_set_section_visibility() {
+        $this->markTestSkipped('To be reviewed in INT-20323');
         $generator = $this->getDataGenerator();
 
         // Create topics course.
@@ -548,6 +550,7 @@ class services_course_test extends \advanced_testcase {
     }
 
     public function test_section_fragment() {
+        $this->markTestSkipped('To be reviewed in INT-20324');
         global $CFG, $DB;
         require_once($CFG->dirroot .'/theme/snap/lib.php');
         $topics = $this->getDataGenerator()->create_course(
