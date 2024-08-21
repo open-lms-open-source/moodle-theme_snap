@@ -275,6 +275,19 @@ body.path-site .block.block_settings {
         }
     }
 
+    .snap-feeds-mobile-menu  {
+        #snap-feeds-section-messages,
+        #snap-feeds-section-forumposts {
+            .userinitials {
+                float: left;
+                width: 40px;
+                height: 40px;
+                font-size: unset;
+                margin: 0.3em 1em 0 0.3em;
+            }
+        }
+    }
+
     .snap-feeds-mobile-menu {
         display: none;
     }
