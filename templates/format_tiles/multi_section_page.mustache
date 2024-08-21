@@ -59,6 +59,11 @@
 }}
 
 <section id="tiles-section" class="clearfix" tabindex="-1"> {{! Open LMS patch for INT-17879. }}
+
+{{^from_ajax}}
+    {{> format_tiles/above_tiles}}
+{{/from_ajax}}
+
 {{^jsnavuserenabled}}
     <div id="jswarning" class="alert alert-secondary">
         {{#str}}jsdeactivated, format_tiles{{/str}}
@@ -84,10 +89,6 @@
         {{/jsSessionDisabled}}
     </noscript>
 {{/jsnavuserenabled}}
-
-{{^from_ajax}}
-    {{> format_tiles/above_tiles}}
-{{/from_ajax}}
 
 {{#showinitialpageloadingicon}}
     <a id="page-loading-icon" href="{{config.wwwroot}}/course/view.php?id={{courseid}}&skipcheck=1">
