@@ -996,7 +996,7 @@ class course_renderer extends \core_course_renderer {
         $pmcontextattribute = 'data-pagemodcontext="'.$mod->context->id.'"';
         $expandpagebutton = "
             <button 
-                class='btn collapsed w-100 pagemod-readmore readmore-button snap-action-icon'
+                class='btn collapsed pagemod-readmore readmore-button snap-action-icon btn-outline-primary p-2'
                 {$pmcontextattribute}
                 aria-expanded='false'>
                 <i aria-hidden='true' class='icon fa fa-chevron-down fa-fw' title='{$expand} {$page->name}'></i>
@@ -1008,17 +1008,19 @@ class course_renderer extends \core_course_renderer {
                 {$preview}
             </div>
         </div>
-        <div class='readmore-container'>
+        <div class='readmore-container d-flex justify-content-center'>
             {$expandpagebutton}
         </div>
         <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
             <div id='pagemod-content-container'>
                 {$content}
             </div>
-            <div class='d-block'><a  class='snap-action-icon' href='#' role='button' aria-expanded='true' title='{$close} {$page->name}'>
-            <i class='fa fa-chevron-up' aria-hidden=''true'></i></a></div>
+            <div class='d-flex justify-content-center w-100 pt-3'>
+                <button class='snap-action-icon btn btn-outline-primary p-2 d-inline-flex' aria-expanded='true' title='{$close} {$page->name}'>
+                    <i aria-hidden='true' class='icon fa fa-chevron-up fa-fw m-0' title='{$expand} {$page->name}'></i>
+                </button>
+            </div>
         </div>";
-
         return $o;
     }
 
