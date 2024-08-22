@@ -1925,7 +1925,7 @@ class course_renderer extends \core_course_renderer {
                 'class="snap-edit-asset dropdown-item" role="button"><i class="icon fa fa-pencil fa-fw "></i>'
                 .$str->editsettings.'</a></li>';
             // Edit conditions button.
-            if($COURSE->enablecompletion) {
+            if($COURSE->enablecompletion && $CFG->enablecompletion) {
                 $editconditionsalt = get_string('editconditions', 'completion');
                 $actionsadvanced[] = '<li><a href="' . new moodle_url(
                     '/course/modedit.php',

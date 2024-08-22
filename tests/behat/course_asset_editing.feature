@@ -234,3 +234,13 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     Then I click on "Edit conditions Activity sample 1" "button"
     And ".snap-form-required > fieldset" "css_element" should not be visible
     But ".snap-form-advanced > fieldset#id_activitycompletionheader" "css_element" should be visible
+
+  @javascript
+  Scenario: In the frontpage, an admin should not see the Edit conditions option if Enable completion is disabled in the site
+    Given I disable site completion tracking
+    And the following "activities" exist:
+      | activity | name              | course | idnumber | gradepass | completion | completionusegrade |
+      | quiz     | Activity sample 1 | C1     | quiz1    | 5.00      | 2          | 1                  |
+    When I am on the "C1" "Course" page logged in as "admin"
+    And I click on "More Options" "button"
+    Then I should not see "Edit conditions" in the "#snap-asset-menu" "css_element"

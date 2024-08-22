@@ -2120,4 +2120,13 @@ JS;
         $this->execute('behat_general::click_link', ['Purge caches']);
         $this->execute('behat_general::click_link', ['Purge all caches']);
     }
+
+    /**
+     * Disable completion tracking at site level.
+     *
+     * @Given /^I disable site completion tracking$/
+     */
+    public function disable_site_completion_tracking(): void {
+        set_config('enablecompletion', 0);
+    }
 }
