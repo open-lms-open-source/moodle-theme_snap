@@ -1243,8 +1243,8 @@ class course_renderer extends \core_course_renderer {
         $snapmodtype = $this->get_mod_type($mod)[0];
         $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
 
+        $output .= $activityimg;
         if ($mod->uservisible) {
-            $output .= $activityimg;
             $output .= "<div class='snap-header-container'>"
                              .$assettype.
                             "<a $target $onclicklti $resourceonclick class='mod-link' href='$url' title='$instancename'>".
@@ -1255,7 +1255,10 @@ class course_renderer extends \core_course_renderer {
         } else {
             // We may be displaying this just in order to show information
             // about visibility, without the actual link ($mod->uservisible).
-            $output .= "<div>$activityimg $instancename</div> $groupinglabel";
+            $output .= "<div class='snap-header-container'>".
+                            $assettype.
+                            "<p class='instancename'>$instancename</p>".
+                        "</div> $groupinglabel";
         }
 
         return $output;
@@ -2093,6 +2096,7 @@ class course_renderer extends \core_course_renderer {
         $groupmodeclass = $courseformat->get_output_classname('content\\cm\\groupmode');
         $groupmode = new $groupmodeclass($courseformat, $sectioninfo, $mod);
         $groupoptions = $groupmode->get_choice_list();
+        $resourcedisplay = get_config('theme_snap', 'resourcedisplay');
         $render = $this->output->render($groupoptions);
 
         $groupsdropdownebutton = \html_writer::tag('button', $groupicon,
@@ -2113,7 +2117,7 @@ class course_renderer extends \core_course_renderer {
             array('class' => 'dropdown snap-activity-groups-dropdown'));
 
         $output = '';
-        if ($groupoptions && !$this->is_resource($mod)) {
+        if ($groupoptions && !($resourcedisplay == 'card' && $this->is_resource($mod))) {
             $output .= \html_writer::tag('div',
                 $groupsdropdownelement,
                 array(

@@ -1667,9 +1667,13 @@ body.contains-snap-custom_menu-spacer {
 
 #region-main {
     max-width: 60.5em;
-    padding: 1em 0;
+    padding-top: 1em;
     float: none;
     border: none;
+}
+
+#page-course-view-topics #region-main, #page-course-view-weeks #region-main {
+    padding: 1em 0;
 }
 
 // Pages that need as much width as they can get as they
