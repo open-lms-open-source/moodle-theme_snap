@@ -1041,6 +1041,9 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     flex: none;
     max-width: 100%;
 }
+.theme-snap.format-tiles #section-zero-container.format-tiles-no-js {
+    min-height: unset;
+}
 body.format-tiles.editing {
     li.activity-wrapper {
         .editing_move {
@@ -1076,6 +1079,7 @@ body.format-tiles.editing {
 #page-course-view-tiles {
     // Styles for Dashboard, progress indicator, filter buttons and edit course content link.
     #headerabovetiles {
+        margin-bottom: 1em;
         & > div:nth-child(1) {
             float: left;
         }
