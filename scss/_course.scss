@@ -971,6 +971,7 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
                 display: flex;
                 font-size: 1em;
                 margin: 0;
+                width: fit-content;
                 overflow: hidden;
                 @include alakazam;
 
@@ -1271,6 +1272,9 @@ body.snap-resource-card {
     .snap-header-card {
         padding-top: 1em;
         .snap-header-card-icons {
+            a {
+                min-width: fit-content;
+            }
             a[id^="snap-restriction-"] {
                 padding: 0;
                 float: right;
