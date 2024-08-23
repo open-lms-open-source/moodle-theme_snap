@@ -1287,6 +1287,7 @@ body.snap-resource-card {
                 img {
                     width: 20px;
                     height: 20px;
+                    max-width: none;
                     float: right;
                 }
                 &:active {
