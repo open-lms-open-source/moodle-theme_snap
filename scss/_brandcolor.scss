@@ -310,7 +310,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
     .btn.btn-secondary {
         .icon {
-            color: $brand-primary;
+            color: $brand-primary !important;
         }
 
         &:hover:not(:disabled),
@@ -726,12 +726,11 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
-    #snap-coverimagecontrol > label.btn-secondary.btn-sm {
-        background-color: rgba(255, 255, 255, 0.7);
-
+    #snap-coverimagecontrol > label.btn-outline-primary.btn-sm {
+        background-color: white !important;
         &:hover {
             background-color: $brand-primary !important;
-            color: #fff;
+            color: #fff !important;
         }
     }
 
