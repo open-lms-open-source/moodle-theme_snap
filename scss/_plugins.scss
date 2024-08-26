@@ -1135,6 +1135,10 @@ body.format-tiles.editing {
         }
     }
 
+    #snap-editmode {
+        clear: both;
+    }
+
     #snap-tiles-with-filter-buttons {
         min-height: 110px;
         @media (max-width: 600px) {
@@ -1410,7 +1414,9 @@ body.format-tiles.editing {
     .tiles[data-for="course_sectionlist"] {
         float: left;
     }
-
+    .alert-block {
+        display: inline-block;
+    }
 }
 
 // Styles on section Actions for format Tiles.
