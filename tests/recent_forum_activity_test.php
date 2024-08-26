@@ -279,11 +279,6 @@ class recent_forum_activity_test extends \advanced_testcase {
             $this->markTestSkipped('Skipped test, mod_hsuforum is not installed.');
         }
 
-        // Disabled for general use.
-        $this->markTestIncomplete(
-            'This test has to be enabled manually in code.'
-        );
-
         $forums = [];
 
         // Teacher count.
@@ -411,20 +406,6 @@ class recent_forum_activity_test extends \advanced_testcase {
         $timeu2nl = microtime(true) - $startu2nl;
 
         $end = microtime(true);
-
-        if (get_class($this) === "theme_snap\\tests\\theme_snap_recent_forum_activity_test") {
-            mtrace('Recent '.$ftype.' activity test - sql mode');
-        } else {
-            mtrace('Recent '.$ftype.' activity test - non-sql mode');
-        }
-        mtrace('Teacher (limited to 10 posts) time = '.round($timetchl10, 2).' seconds');
-        mtrace('User1 (limited to 10 posts) time = '.round($timeu1l10, 2).' seconds');
-        mtrace('User2 (limited to 10 posts) time = '.round($timeu2l10, 2).' seconds');
-        mtrace('Teacher (limited to '.$xteacherc.' posts) time = '.round($timetchnl, 2).' seconds');
-        mtrace('User1 (limited to '.$xuser1c.' posts) time = '.round($timeu1nl, 2).' seconds');
-        mtrace('User2 (limited to '.$xuser2c.' posts) time = '.round($timeu2nl, 2).' seconds');
-        mtrace('High volume time = '.round(($end - $start), 2).' seconds');
-        mtrace('Total posts made = '.$teacherc);
     }
 
     public function test_hsuforum_high_volume_posts() {

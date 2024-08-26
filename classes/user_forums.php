@@ -171,23 +171,16 @@ class user_forums {
      * @param int $limit
      * @return array
      */
-    protected function forumids_by_lastpost($limit) {
+    protected function forumids_by_lastpost($forumids, $limit) {
         global $DB;
 
-        $params = [$this->user->id];
+        $sql = 'SELECT fd.forum, MAX(fd.timemodified) lastpost
+              FROM {forum_discussions} fd
+             WHERE fd.forum IN '.$forumids.'
+          GROUP BY fd.forum
+          ORDER BY lastpost desc';
 
-        $sql = 'SELECT fd.forum, MAX(fp.modified) lastpost
-                  FROM {forum_posts} fp
-                  JOIN {forum_discussions} fd
-                    ON fd.id = fp.discussion
-                  JOIN {enrol} e
-                    ON e.courseid = fd.course
-                  JOIN {user_enrolments} ue ON ue.enrolid = e.id
-                 WHERE ue.userid = ?
-              GROUP BY fd.forum
-              ORDER BY lastpost desc';
-
-        return $DB->get_records_sql($sql, $params, 0, $limit);
+        return $DB->get_records_sql($sql, null, 0, $limit);
     }
 
     /**
@@ -196,25 +189,16 @@ class user_forums {
      * @param int $limit
      * @return array
      */
-    protected function hsuforumids_by_lastpost($limit) {
+    protected function hsuforumids_by_lastpost($forumids,$limit) {
         global $DB;
 
-        $params = [$this->user->id];
-
-        $sql = 'SELECT fd.forum, MAX(fp.modified) lastpost
-                  FROM {hsuforum_posts} fp
-                  JOIN {hsuforum_discussions} fd
-                    ON fd.id = fp.discussion
-                  JOIN {hsuforum} f
-                    ON f.id = fd.forum
-                  JOIN {enrol} e
-                    ON e.courseid = f.course
-                  JOIN {user_enrolments} ue ON ue.enrolid = e.id
-                 WHERE ue.userid = ?
+        $sql = 'SELECT fd.forum, MAX(fd.timemodified) lastpost
+                  FROM {hsuforum_discussions} fd
+                 WHERE fd.forum IN '.$forumids.'
               GROUP BY fd.forum
               ORDER BY lastpost desc';
 
-        return $DB->get_records_sql($sql, $params, 0, $limit);
+        return $DB->get_records_sql($sql, null, 0, $limit);
     }
 
     /**
@@ -230,10 +214,16 @@ class user_forums {
 
         if (count($forums) > self::$forumlimit) {
             // Get forum ids by postid (ordered by most recently posted).
+            $forumids = '(';
+            foreach ($forums as $forum) {
+                $forumids .= $forum->id.',';
+            }
+            $forumids = rtrim($forumids, ',');
+            $forumids .= ')';
             if (!$hsuforum) {
-                $forumidsbypost = $this->forumids_by_lastpost(self::$forumlimit);
+                $forumidsbypost = $this->forumids_by_lastpost($forumids, self::$forumlimit);
             } else {
-                $forumidsbypost = $this->hsuforumids_by_lastpost(self::$forumlimit);
+                $forumidsbypost = $this->hsuforumids_by_lastpost($forumids, self::$forumlimit);
             }
 
             $tmpforums = [];
