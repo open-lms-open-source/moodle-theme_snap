@@ -2164,4 +2164,85 @@ class course_renderer extends \core_course_renderer {
     private function is_resource(\cm_info $cm): bool {
         return in_array($cm->modname, ['resource', 'scorm']) || plugin_supports('mod', $cm->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE;
     }
+
+    /**
+     * Override course render for course and category box in home page.
+     *
+     * This is an internal function, to display an information about just one course
+     * please use {@link core_course_renderer::course_info_box()}
+     *
+     * @param coursecat_helper $chelper various display options
+     * @param core_course_list_element|stdClass $course
+     * @param string $additionalclasses additional classes to add to the main <div> tag (usually
+     *    depend on the course position in list - first/last/even/odd)
+     * @return string
+     */
+    protected function coursecat_coursebox(\coursecat_helper $chelper, $course, $additionalclasses = '') {
+        global $CFG;
+        if (!isset($this->strings->summary)) {
+            $this->strings->summary = get_string('summary');
+        }
+        if ($chelper->get_show_courses() <= self::COURSECAT_SHOW_COURSES_COUNT) {
+            return '';
+        }
+        if ($course instanceof stdClass) {
+            $course = new \core_course_list_element($course);
+        }
+        $content = '';
+        $cardcontent = '';
+        if ($chelper->get_show_courses() < self::COURSECAT_SHOW_COURSES_EXPANDED) {
+            $classes = trim('coursebox clearfix '. $additionalclasses);
+
+            $cardcontent .= html_writer::start_tag('div', array('class' => 'info'));
+            $cardcontent .= $this->course_name($chelper, $course);
+            $cardcontent .= $this->course_enrolment_icons($course);
+            $cardcontent .= html_writer::end_tag('div');
+            $cardcontent .= html_writer::start_tag('div', array('class' => 'content'));
+            $cardcontent .= $this->coursecat_coursebox_content($chelper, $course);
+            $cardcontent .= html_writer::end_tag('div');
+        } else {
+            $contentimages = '';
+            $url = '';
+            foreach ($course->get_course_overviewfiles() as $file) {
+                $isimage = $file->is_valid_image();
+                $url = moodle_url::make_file_url("$CFG->wwwroot/pluginfile.php",
+                    '/' . $file->get_contextid() . '/' . $file->get_component() . '/' .
+                    $file->get_filearea() . $file->get_filepath() . $file->get_filename(), !$isimage);
+            }
+            $contentimages .= html_writer::tag('div','',
+                [
+                    'class' => 'snap-home-courses-image',
+                    'style' => 'background-image: url('.$url.');'
+                ]);
+
+            $classes = trim('col-sm-3 coursebox clearfix '. $additionalclasses);
+
+            $cardcontent .= html_writer::start_tag('a',
+                [
+                    'href' => new moodle_url('/course/view.php', ['id' => $course->id]),
+                    'class' => 'snap-home-course',
+                    'title' => $chelper->get_course_formatted_name($course)
+                ]);
+            $cardcontent .= $contentimages;
+            $cardcontent .= html_writer::tag('span', $chelper->get_course_formatted_name($course), [
+                'class' => 'snap-home-course-title'
+            ]);
+            $cardcontent .= html_writer::end_tag('a');
+        }
+
+        if ($chelper->get_show_courses() < self::COURSECAT_SHOW_COURSES_EXPANDED) {
+            $classes .= ' collapsed';
+        }
+
+        $content .= html_writer::start_tag('div', array(
+            'class' => $classes,
+            'data-courseid' => $course->id,
+            'data-type' => self::COURSECAT_TYPE_COURSE,
+        ));
+        $content .= $cardcontent;
+        $content .= html_writer::end_tag('div');
+
+        return $content;
+    }
+
 }

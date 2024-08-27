@@ -4281,7 +4281,8 @@ table th img.iconhelp {
 
 /* Featured categories and courses container. */
 #snap-featured-categories,
-#snap-featured-courses {
+#snap-featured-courses,
+#frontpage-course-list {
     width: 100%;
     padding: 1em 4%;
     background-color: $snap-featured-cards-bg;
@@ -4292,11 +4293,15 @@ table th img.iconhelp {
     padding: 1em 0;
 }
 #snap-featured-categories a.snap-featured-category,
-#snap-featured-courses a.snap-featured-course {
+#snap-featured-courses a.snap-featured-course,
+.frontpage-course-list-all a.snap-home-course,
+.frontpage-course-list-enrolled a.snap-home-course {
     border-radius: 0.5rem;
 }
 #snap-featured-categories .snap-featured-category-title,
-#snap-featured-courses .snap-featured-course-title {
+#snap-featured-courses .snap-featured-course-title,
+.frontpage-course-list-all .snap-home-course-title,
+.frontpage-course-list-enrolled .snap-home-course-title {
     border-radius: 0 0 4px 4px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -4305,10 +4310,23 @@ table th img.iconhelp {
     text-overflow: ellipsis;
     max-height: 2.4em;
 }
+.frontpage-course-list-enrolled,
+.frontpage-course-list-all {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    text-align: center;
+    .coursebox {
+        padding-right: 15.3px;
+        padding-left: 15.3px;
+    }
+}
 
 /* Featured category and course link. */
 .snap-featured-category,
-.snap-featured-course {
+.snap-featured-course,
+.snap-home-course {
     display: block;
     height: 300px;
     position: relative;
@@ -4323,14 +4341,16 @@ table th img.iconhelp {
             0 1px 5px 0 rgba(0, 0, 0, 0.12);
 
         .snap-featured-category-title,
-        .snap-featured-course-title {
+        .snap-featured-course-title,
+        .snap-home-course-title {
             text-decoration: underline;
         }
     }
 }
 /* Featured category and course cover image. */
 .snap-featured-category-image,
-.snap-featured-course-image {
+.snap-featured-course-image,
+.snap-home-courses-image {
     background-color: $brand-primary;
     @include bg-cover;
     background-position: center;
@@ -4344,7 +4364,8 @@ table th img.iconhelp {
 
 /* Featured category and course title. */
 .snap-featured-category-title,
-.snap-featured-course-title {
+.snap-featured-course-title,
+.snap-home-course-title {
     display: block;
     min-height: 25%;
     width: 100%;
