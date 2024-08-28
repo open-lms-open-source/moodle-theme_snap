@@ -3564,7 +3564,8 @@ table#user-grades tr.avg td.cell {
                 border-color: $table-border-color #f5f5f5;
             }
 
-            tr.odd td.cell {
+            tr.odd td.cell,
+            tr.even td.cell {
                 background-color: $table-bg-accent;
 
                 &.overridden,
