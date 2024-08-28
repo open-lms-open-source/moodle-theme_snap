@@ -21,16 +21,20 @@
 }}
 {{#isinmenu}}
     {{#url}}
-        <a class="dropdown-item" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}>
-            <div class="d-inline-block menu-icon {{{class}}}" {{{ariapressed}}}>
-                {{{title}}}
-            </div>
-        </a>
+        <li>
+            <a class="dropdown-item" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}>
+                <div class="d-inline-block menu-icon {{{class}}}" {{{ariapressed}}}>
+                    {{{title}}}
+                </div>
+            </a>
+        </li>
     {{/url}}
 {{/isinmenu}}
 
 {{^isinmenu}}
     {{#url}}
-        <a title="{{{title}}}" class="{{class}}" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}></a>
+        <li>
+            <a title="{{{title}}}" class="{{class}}" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}></a>
+        </li>
     {{/url}}
 {{/isinmenu}}

@@ -63,6 +63,12 @@
             margin-right: 15px;
         }
     }
+    li {
+        list-style: none;
+        .title {
+            display: contents;
+        }
+    }
 }
 
 // -------------------------

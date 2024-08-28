@@ -367,6 +367,11 @@ trait format_section_trait {
 
         // Section editing commands.
         $sectiontoolsarray = $this->section_edit_control_items($course, $section, $sectionreturn);
+        if (!empty($sectiontoolsarray)) {
+            // Wrap into a list
+            $sectiontoolsarray[0] = '<ul>' . $sectiontoolsarray[0];
+            $sectiontoolsarray[count($sectiontoolsarray) - 1] .= '</ul>';
+        }
 
         if (has_capability('moodle/course:update', $context) || has_capability('moodle/course:activityvisibility', $context)) {
             if (!empty($sectiontoolsarray)) {

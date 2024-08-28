@@ -1365,18 +1365,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     }
                 }
 
-                // Check Toggle Completion to force redirect to URL.
-                const toggleCompletion = '.togglecompletion';
-                const delay = 1500;
-                $(toggleCompletion).on('submit', function() {
-                    var shouldReload = $(toggleCompletion).hasClass('forcereload');
-                    if (shouldReload === true) {
-                        setTimeout(function() {
-                            location.reload(true);
-                        }, delay);
-                    }
-                });
-
                 // Inherit transparent background color for divs containing non-default mod_url icons.
                 if (!document.body.classList.contains('snap-resource-card')) { // Only for Snap Resource display List.
                     document.querySelectorAll('.activityiconcontainer.url').forEach(urlDiv => {
