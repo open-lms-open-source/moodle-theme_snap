@@ -4273,7 +4273,9 @@ table th img.iconhelp {
 /* Featured categories and courses section. */
 @media screen and (max-width: 768px) {
     #snap-featured-categories .row div.col-sm-3 ,
-    #snap-featured-courses .row div.col-sm-3 {
+    #snap-featured-courses .row div.col-sm-3,
+    .frontpage-course-list-all div.col-sm-3,
+    .frontpage-course-list-enrolled div.col-sm-3 {
         flex: 0 0 100%;
         max-width: 100%;
     }
@@ -4332,6 +4334,10 @@ table th img.iconhelp {
     position: relative;
     margin-bottom: 1em;
     @include alakazam;
+
+    @media screen and (max-width: 768px) {
+        height: 210px;
+    }
 
     &:hover {
         transform: scale(1.03);
