@@ -2107,9 +2107,6 @@ body.snap-resource-card {
             }
         }
     }
-    img[src*="snap/core"] {
-        filter: brightness(0) invert(1);
-    }
     #region-main {
         max-width: 95%;
     }
