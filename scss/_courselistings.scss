@@ -41,12 +41,14 @@
     }
     .content .courseimage {
         overflow: hidden;
-        width: 300px;
+        width: 100%;
+        max-width: max-content;
         margin-right: 1.5rem;
 
         img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: initial;
+            height: initial;
+            width: 300px;
         }
     }
     .teachers {
