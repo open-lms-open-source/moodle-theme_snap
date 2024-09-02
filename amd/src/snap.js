@@ -1253,8 +1253,8 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     });
 
-                    // Unpin headroom when url has #course-detail-title.
-                    if (window.location.hash === '#course-detail-title') {
+                    // Unpin headroom when url has #course-detail-title or #mod_book-chapter.
+                    if (window.location.hash === '#course-detail-title' || window.location.hash === '#mod_book-chapter') {
                         $('#mr-nav').removeClass('headroom--pinned').addClass('headroom--unpinned');
                     }
 
