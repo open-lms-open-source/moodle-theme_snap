@@ -2382,6 +2382,7 @@ SQL;
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
 
         $res = [];
+        $id= 1;
         foreach ($events as $event) {
             if (!empty($event->modulename)) {
                 list ($course, $cm) = get_course_and_cm_from_instance(
@@ -2433,7 +2434,7 @@ SQL;
                     $metalink = $activitymeta == new activity_meta() ? '' :
                         \theme_snap\output\core\course_renderer::submission_cta($cm, $activitymeta);
 
-                    $meta .= '<div class="snap-completion-meta">' . $metalink .
+                    $meta .= '<div class="snap-completion-meta event-'.$id.'">' . $metalink .
                         '</div>';
                 }
                 $url = !empty($event->actionurl) && ($event->actionurl instanceof \moodle_url) ?
@@ -2462,6 +2463,7 @@ SQL;
                     'urlParameter'    => $snapfeedsurlparam,
                 ];
             }
+            $id++;
         }
         return $res;
     }
