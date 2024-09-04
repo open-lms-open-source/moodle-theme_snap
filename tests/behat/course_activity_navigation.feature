@@ -382,7 +382,7 @@ Feature: Activity navigation in Snap theme
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Topic 4"
-    And I click on "li#section-4 div.snap-section-editing > a.snap-visibility.snap-hide" "css_element"
+    And I click on "li#section-4 div.snap-section-editing a.snap-visibility.snap-hide" "css_element"
     And "li.draft.snap-visible-section span.text.text-warning small.published-status" "css_element" should exist
     And I click on ".snap-activity[data-type='External tool'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='External tool'] .dropdown .availability-dropdown" "css_element"

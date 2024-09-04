@@ -92,7 +92,7 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I wait until the page is ready
-    And I click on "//a[contains(text(),\"Teacher 1\")]/following-sibling::small/a" "xpath_element"
+    And I click on "//a[h3[contains(text(),\"Teacher 1\")]]/following-sibling::small/a" "xpath_element"
     And ".message-app.main" "css_element" should be visible
     # A message drawer floating div gets renderer but outside of the window
     Then ".drawer .message-app" "css_element" should not be visible

@@ -92,7 +92,7 @@ Feature: Open page module inline
     # Note: nth-of-type(2) corresponds to the second section in the TOC.
     And I should see "Conditional" in the "#chapters h3:nth-of-type(2)" "css_element"
     And I should see "Conditional" in the "#chapters h3:nth-of-type(3)" "css_element"
-    And "img[title*='Not completed: Page completion']" "css_element" should exist
+    And "img[alt*='Not completed: Page completion']" "css_element" should exist
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     And I should see "Not available unless: The activity Page completion is marked complete"
     And I follow "Topic 1"
@@ -109,17 +109,17 @@ Feature: Open page module inline
     And I should see "Progress: 1 / 1" in the "#chapters h3:nth-of-type(1)" "css_element"
     And "#chapters h3:nth-of-type(1) li.snap-visible-section" "css_element" should exist
     And ".snap-conditional-tag[data-content*='Page completion']" "css_element" should not exist
-    And "img[title='Completed: Page completion. Select to mark as not complete.']" "css_element" should exist
+    And "img[alt='Completed: Page completion. Select to mark as not complete.']" "css_element" should exist
     And I follow "Topic 1"
     # Make sure topic 1 does not show section availability info.
     Then I should not see availability info "Not available unless: The activity Page completion is marked complete"
     And I should see "Page completion 2"
-    And "img[title*='Not completed: Page completion 2']" "css_element" should exist
+    And "img[alt*='Not completed: Page completion 2']" "css_element" should exist
     And I click on "li[aria-label='Topic 1']" "css_element"
     And I click on "//p[contains(text(), 'Page completion 2')]/ancestor::div[contains(@class, 'activityinstance')]//button[contains(@class, 'pagemod-readmore')]" "xpath_element"
     And I wait until "#section-1 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
-    Then "img[title*='Not completed: Page completion 2']" "css_element" should not exist
-    And "img[title='Completed: Page completion 2. Select to mark as not complete.']" "css_element" should exist
+    Then "img[alt*='Not completed: Page completion 2']" "css_element" should not exist
+    And "img[alt='Completed: Page completion 2. Select to mark as not complete.']" "css_element" should exist
     And "#chapters h3:nth-of-type(2) li.snap-visible-section" "css_element" should exist
     And I should not see "Conditional" in the "#chapters h3:nth-of-type(3)" "css_element"
     Examples:

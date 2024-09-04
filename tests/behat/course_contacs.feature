@@ -40,30 +40,28 @@ Feature: A teacher should not see the link to message him/herself
     And the following config values are set as admin:
       | theme_snap_coursefootertoggle | 1 |
 
-  @javascript
   Scenario: As a teacher i should not see a link to message myself
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I should see "Course Contacts"
-    And I should see "Teacher 1" in the "#snap-course-footer .snap-media-object" "css_element"
-    And I should see "Teacher 2" in the "#snap-course-footer .snap-media-object:nth-child(3)" "css_element"
-    And I should not see "message" in the "#snap-course-footer .snap-media-object" "css_element"
-    And I should see "message" in the "#snap-course-footer .snap-media-object:nth-child(3)" "css_element"
+    And I should see "Teacher 1" in the "#snap-course-footer li" "css_element"
+    And I should see "Teacher 2" in the "#snap-course-footer li:nth-child(3)" "css_element"
+    And I should not see "message" in the "#snap-course-footer li" "css_element"
+    And I should see "message" in the "#snap-course-footer li:nth-child(3)" "css_element"
     Then I log out
     And I log in as "teacher2"
     And I am on the course main page for "C1"
     And I should see "Course Contacts"
-    And I should see "Teacher 1" in the "#snap-course-footer .snap-media-object" "css_element"
-    And I should see "Teacher 2" in the "#snap-course-footer .snap-media-object:nth-child(3)" "css_element"
-    And I should see "message" in the "#snap-course-footer .snap-media-object" "css_element"
-    And I should not see "message" in the "#snap-course-footer .snap-media-object:nth-child(3)" "css_element"
+    And I should see "Teacher 1" in the "#snap-course-footer li" "css_element"
+    And I should see "Teacher 2" in the "#snap-course-footer li:nth-child(3)" "css_element"
+    And I should see "message" in the "#snap-course-footer li" "css_element"
+    And I should not see "message" in the "#snap-course-footer li:nth-child(3)" "css_element"
 
-  @javascript
   Scenario: As a student i should see a link to message any teacher
     Given I log in as "student1"
     And I am on the course main page for "C1"
     And I should see "Course Contacts"
-    And I should see "Teacher 1" in the "#snap-course-footer .snap-media-object" "css_element"
-    And I should see "Teacher 2" in the "#snap-course-footer .snap-media-object:nth-child(3)" "css_element"
-    And I should see "message" in the "#snap-course-footer .snap-media-object" "css_element"
-    And I should see "message" in the "#snap-course-footer .snap-media-object:nth-child(3)" "css_element"
+    And I should see "Teacher 1" in the "#snap-course-footer li" "css_element"
+    And I should see "Teacher 2" in the "#snap-course-footer li:nth-child(3)" "css_element"
+    And I should see "message" in the "#snap-course-footer li" "css_element"
+    And I should see "message" in the "#snap-course-footer li:nth-child(3)" "css_element"

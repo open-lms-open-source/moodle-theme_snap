@@ -310,6 +310,21 @@ li.section:focus {
     text-align: left;
     margin-top: -1em;
 
+    ul {
+        margin: unset;
+        padding: unset;
+        li {
+            list-style: none;
+        }
+    }
+    .dropdown-menu.show ul {
+        margin: unset;
+    }
+
+    > ul {
+        display: flex;
+    }
+
     a {
         display: inline-block;
         border-radius: 100%;
@@ -411,6 +426,7 @@ li.section:focus {
             min-width: 11rem;
             border: 0;
             box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+            border-radius: 0.5rem;
         }
         .dropdown-item {
             display: block;
@@ -1271,6 +1287,9 @@ body.snap-resource-card {
     // Modify restriction icon size and position for course cards.
     .snap-header-card {
         padding-top: 1em;
+        .snap-header-container {
+            padding: 0.3rem;
+        }
         .snap-header-card-icons {
             a {
                 min-width: fit-content;
@@ -2614,7 +2633,7 @@ form.togglecompletion {
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
         border: 0;
         padding: 10px 0;
-        border-radius: 0.5em;
+        border-radius: 0.5rem;
         min-width: 16.1rem;
         a {
             font-weight: inherit;

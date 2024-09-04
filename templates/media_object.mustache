@@ -23,10 +23,11 @@ Example context (json):
         "content": "<p>hello, is it tea your looking for?</p>"
     }
 }}
-
-<div class="snap-media-object {{class}}" {{{attributes}}}>
-{{{image}}}
-<div class="snap-media-body">
-{{{content}}}
-</div>
-</div>
+<li>
+    <div role="group" aria-label="contact" class="snap-media-object {{class}}" {{{attributes}}}>
+        {{{image}}}
+        <div class="snap-media-body">
+        {{{content}}}
+        </div>
+    </div>
+</li>

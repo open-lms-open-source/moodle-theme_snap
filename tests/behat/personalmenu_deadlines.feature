@@ -57,8 +57,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I log in as "student1"
     And I open the personal menu
     And I <waitclause>
-    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:nth-of-type(2)" "css_element"
+    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
+    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-2" "css_element"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I wait until "#section-1" "css_element" is visible
@@ -73,9 +73,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I wait until the page is ready
     And I open the personal menu
     And I <waitclause>
-    And I should see "Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should not see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:nth-of-type(2)" "css_element"
+    And I should see "Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
+    And I should not see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
+    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-2" "css_element"
     And Activity "assign" "Test assignment1" is deleted
     And Activity "assign" "Test assignment2" is deleted
     Examples:
@@ -95,8 +95,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I wait until the page is ready
     And I open the personal menu
     And I wait until the page is ready
-    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:nth-of-type(2)" "css_element"
+    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
+    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-2" "css_element"
     And I am on "Course 1" course homepage
     And I follow "Topic 1"
     And I wait until "#section-1" "css_element" is visible
@@ -111,9 +111,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I wait until the page is ready
     And I open the personal menu
     And I <waitclause>
-    And I should see "Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should not see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:nth-of-type(2)" "css_element"
+    And I should see "Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
+    And I should not see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
+    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-2" "css_element"
     And Activity "assign" "Test assignment1" is deleted
     And Activity "assign" "Test assignment2" is deleted
     Examples:
@@ -132,10 +132,8 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I log in as "teacher1"
     And I <waitclause>
     And I open the personal menu
-    And I should not see "Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should not see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should not see "Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:nth-of-type(2)" "css_element"
-    And I should not see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:nth-of-type(2)" "css_element"
+    And "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element" should not exist
+    And "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-2" "css_element" should not exist
     And Activity "assign" "Test assignment1" is deleted
     And Activity "assign" "Test assignment2" is deleted
     Examples:
@@ -167,9 +165,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I press "Continue"
     And I <waitclause>
     And I open the personal menu
-    And I should see "Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should not see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element"
-    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object:nth-of-type(2)" "css_element"
+    And I should see "Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
+    And I should not see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
+    And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-2" "css_element"
     And Activity "assign" "Test assignment1" is deleted
     And Activity "assign" "Test assignment2" is deleted
     Examples:
@@ -290,7 +288,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I log in as "student1"
     And I <waitclause>
     And I open the personal menu
-    And "#snap-personal-menu-<selectorstr> div.snap-media-object:first-of-type" "css_element" should not exist
+    And "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element" should not exist
     Examples:
       | enadvfeeds | selectorstr     | waitclause                                          |
       | 0          | deadlines       | wait until the page is ready                        |
