@@ -5778,6 +5778,11 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
             margin-top: 1rem;
         }
     }
+
+    #region-main {
+        padding-inline: 4%;
+    }
+
     .breadcrumb-nav {
         @include media-breakpoint-up(md) {
             margin-top: -.75em;

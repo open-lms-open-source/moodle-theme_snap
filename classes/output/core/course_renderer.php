@@ -1393,13 +1393,17 @@ class course_renderer extends \core_course_renderer {
             }
         }
         $output .= '<div class="row">';
-        $output .= '<div class="col-sm-4">';
+        $output .= '<div class="d-flex flex-wrap">';
+        // Add cat select box if available.
+        if(!empty($categoryselector)){
+            $output .= '<div class="px-3">';
+            $output .= $categoryselector;
+            $output .= '</div>';
+        }
+        $output .= '<div class="px-3">';
         // Add course search form.
         $output .= $this->course_search_form();
         $output .= '</div>';
-        // Add cat select box if available.
-        $output .= '<div class="col-sm-8 text-right">';
-        $output .= $categoryselector;
         $output .= '</div>';
 
         $chelper = new \coursecat_helper();
@@ -1445,27 +1449,6 @@ class course_renderer extends \core_course_renderer {
 
         // Add action buttons.
         $context = get_category_or_system_context($coursecat->id);
-        if (has_capability('moodle/course:create', $context)) {
-            // Print link to create a new course, for the 1st available category.
-            if ($coursecat->id) {
-                $url = new moodle_url('/course/edit.php', ['category' => $coursecat->id, 'returnto' => 'category']);
-            } else {
-                $url = new moodle_url('/course/edit.php', ['category' => $CFG->defaultrequestcategory, 'returnto' => 'topcat']);
-            }
-            $output .= '<div class="add-course-btn-container"><a class="btn btn-secondary" href="'.$url.'">'.
-                get_string('addnewcourse', 'moodle').'</a></div>';
-        }
-
-        $output .= $this->container_start('buttons');
-        ob_start();
-        if (\core_course_category::is_simple_site() == 1) {
-            snap_print_course_request_buttons(\context_system::instance());
-        } else {
-            snap_print_course_request_buttons($context);
-        }
-        $output .= ob_get_contents();
-        ob_end_clean();
-        $output .= $this->container_end();
 
         return $output;
     }
@@ -2167,7 +2150,10 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function coursecat_coursebox(\coursecat_helper $chelper, $course, $additionalclasses = '') {
-        global $CFG;
+        global $CFG, $PAGE;
+        if ($PAGE->pagetype !== 'site-index') {
+            return \core_course_renderer::coursecat_coursebox($chelper, $course, $additionalclasses);
+        }
         if (!isset($this->strings->summary)) {
             $this->strings->summary = get_string('summary');
         }

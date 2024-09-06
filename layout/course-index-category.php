@@ -63,7 +63,7 @@ if (!empty($coverimagecss)) {
                     $editcatagory = '';
                     if (can_edit_in_category($catid)) {
                         $editurl = new moodle_url('/course/editcategory.php', ['id' => $catid]);
-                        $editcatagory = '<div><a href=" '.$editurl.' " class="btn btn-secondary btn-sm">'
+                        $editcatagory = '<div class="ml-3"><a href=" '.$editurl.' " class="btn btn-secondary">'
                                 .get_string('categoryedit', 'theme_snap').'</a></div>';
                     }
 
@@ -75,11 +75,7 @@ if (!empty($coverimagecss)) {
                             'pluginfile.php', $content->id, 'coursecat', 'description', null);
                         $options = array('noclean' => true, 'overflowdiv' => false);
                         $catsummary = '<div class="snap-category-description">'
-                            .format_text($catdescription, $cat->descriptionformat, $options).
-                            $editcatagory.'</div>';
-                    } else {
-                        // No summary, output edit link.
-                        $catsummary = $editcatagory;
+                            .format_text($catdescription, $cat->descriptionformat, $options).'</div>';
                     }
                     echo '<h1>' . html_to_text(s($catname)) . '</h1>';
                     echo $catsummary;
@@ -97,13 +93,57 @@ if (!empty($coverimagecss)) {
             </div>
         </div>
         <section id="region-main">
-            <?php
-            if ($manageurl) {
-                echo '<p><a class="btn btn-secondary btn-sm" href="' . $manageurl . '">';
-                echo get_string('managecourses', 'moodle') . '</a></p>';
-            }
-            echo $OUTPUT->main_content();
-            ?>
+            <div class="d-inline-flex">
+                <?php
+                global $OUTPUT;
+                $context = get_category_or_system_context(empty($cat) ? 0 : $cat->id);
+                if($iscoursecat) {
+                    if (has_capability('moodle/course:create', $context)) {
+                        // Print link to create a new course, for the 1st available category.
+                        if ($cat->id) {
+                            $url = new moodle_url('/course/edit.php', ['category' => $cat->id, 'returnto' => 'category']);
+                        } else {
+                            $url = new moodle_url('/course/edit.php', ['category' => $CFG->defaultrequestcategory, 'returnto' => 'topcat']);
+                        }
+                        echo '<div><a class="btn btn-secondary" href="' . $url . '">' .
+                            get_string('addnewcourse', 'moodle') . '</a></div>';
+                    }
+                    if (has_capability('moodle/category:manage', $context)) {
+                        $addsubcaturl = new moodle_url('/course/editcategory.php', array('parent' => $cat->id));
+                        echo '<div><a class="btn btn-secondary ml-3" href="' . $addsubcaturl . '">' .
+                            get_string('addsubcategory', 'moodle') . '</a></div>';
+                    }
+                    if ($manageurl) {
+                        echo '<p><a class="btn btn-secondary ml-3" href="' . $manageurl . '">';
+                        echo get_string('managecourses', 'moodle') . '</a></p>';
+                    }
+                    if (!empty($editcatagory)) {
+                        echo $editcatagory;
+                    }
+                    echo $OUTPUT->container_start('buttons ml-3');
+                    if (\core_course_category::is_simple_site() == 1) {
+                        snap_print_course_request_buttons(\context_system::instance());
+                    } else {
+                        snap_print_course_request_buttons($context);
+                    }
+                    echo $OUTPUT->container_end();
+                    echo "</div>";
+                }else {
+                    if ($manageurl) {
+                        echo '<p><a class="btn btn-secondary" href="' . $manageurl . '">';
+                        echo get_string('managecourses', 'moodle') . '</a></p>';
+                    }
+                    if (has_capability('moodle/course:create', $context)) {
+                        // Print link to create a new course, for the 1st available category.
+                        $url = new moodle_url('/course/edit.php', ['category' => $CFG->defaultrequestcategory, 'returnto' => 'topcat']);
+                        echo '<div><a class="btn btn-secondary ml-3" href="' . $url . '">' .
+                            get_string('addnewcourse', 'moodle') . '</a></div>';
+                    }
+                    echo "</div>";
+                }
+                
+                echo $OUTPUT->main_content();
+                ?>
         </section>
         </div>
         <?php
