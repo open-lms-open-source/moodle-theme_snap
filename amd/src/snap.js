@@ -1334,6 +1334,19 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         frontPageActObserver.observe(frontPageActivities, frontPageActConfig);
                     }
 
+                    // Move My courses button to be centered in the home page.
+                    if ($('body#page-site-index.theme-snap .frontpage-course-list-enrolled .paging-morelink').length) {
+                        var moreCoursesButton = document.querySelector('.frontpage-course-list-enrolled .paging-morelink');
+                        const newParentElement = moreCoursesButton.parentNode.parentNode;
+                        newParentElement.appendChild(moreCoursesButton);
+                    }
+                    // Move All courses button to be centered in the home page.
+                    if ($('body#page-site-index.theme-snap .frontpage-course-list-all .paging-morelink').length) {
+                        var moreCoursesButton = document.querySelector('.frontpage-course-list-all .paging-morelink');
+                        const newParentElement = moreCoursesButton.parentNode.parentNode;
+                        newParentElement.appendChild(moreCoursesButton);
+                    }
+
                     waitForFullScreenButton();
 
                     // Reassess the competency report user table.

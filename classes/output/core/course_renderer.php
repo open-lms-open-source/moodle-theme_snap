@@ -2150,7 +2150,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function coursecat_coursebox(\coursecat_helper $chelper, $course, $additionalclasses = '') {
-        global $CFG, $PAGE;
+        global $CFG, $PAGE, $OUTPUT;;
         if ($PAGE->pagetype !== 'site-index') {
             return \core_course_renderer::coursecat_coursebox($chelper, $course, $additionalclasses);
         }
@@ -2177,16 +2177,27 @@ class course_renderer extends \core_course_renderer {
             $cardcontent .= html_writer::end_tag('div');
         } else {
             $contentimages = '';
-            $url = '';
+            $url = $OUTPUT->get_generated_image_for_id($course->id);
             foreach ($course->get_course_overviewfiles() as $file) {
                 $isimage = $file->is_valid_image();
                 $url = moodle_url::make_file_url("$CFG->wwwroot/pluginfile.php",
                     '/' . $file->get_contextid() . '/' . $file->get_component() . '/' .
                     $file->get_filearea() . $file->get_filepath() . $file->get_filename(), !$isimage);
             }
+            $isvisible = $course->visible;
+            $hiddeninfobadge = '';
+            $imageclasses = 'snap-home-courses-image';
+            if (!$isvisible) {
+                $hiddeninfobadge = html_writer::tag('span',get_string('hiddenfromstudents'),
+                    [
+                        'class' => 'badge badge-info hiddenbadge'
+                    ]);
+                $imageclasses .= ' hiddencourse';
+            }
+            $contentimages .= $hiddeninfobadge;
             $contentimages .= html_writer::tag('div','',
                 [
-                    'class' => 'snap-home-courses-image',
+                    'class' => $imageclasses,
                     'style' => 'background-image: url('.$url.');'
                 ]);
 
@@ -2200,7 +2211,7 @@ class course_renderer extends \core_course_renderer {
                 ]);
             $cardcontent .= $contentimages;
             $cardcontent .= html_writer::tag('span', $chelper->get_course_formatted_name($course), [
-                'class' => 'snap-home-course-title'
+                'class' => 'snap-home-course-title overflow-hidden'
             ]);
             $cardcontent .= html_writer::end_tag('a');
         }

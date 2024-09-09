@@ -4323,6 +4323,7 @@ table th img.iconhelp {
     .coursebox {
         padding-right: 15.3px;
         padding-left: 15.3px;
+        border-bottom: unset;
     }
 }
 
@@ -4353,6 +4354,25 @@ table th img.iconhelp {
             text-decoration: underline;
         }
     }
+    .hiddenbadge {
+        position: relative;
+        z-index: 1;
+        float: left;
+        margin-top: 9.5em;
+        margin-left: 5%;
+        padding: 0.25em 0.1em;
+        font-size: 90%;
+        @media screen and (max-width: 940px) {
+            margin-top: 12em;
+            font-size: 75%;
+            margin-left: 2%;
+        }
+        @media screen and (max-width: 768px) {
+            margin-top: 9.5em;
+            font-size: 90%;
+            margin-left: 5%;
+        }
+    }
 }
 /* Featured category and course cover image. */
 .snap-featured-category-image,
@@ -4367,6 +4387,9 @@ table th img.iconhelp {
     min-height: 75%;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
+    &.hiddencourse {
+        opacity: 0.4;
+    }
 }
 
 /* Featured category and course title. */
