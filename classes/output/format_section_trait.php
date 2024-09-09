@@ -469,7 +469,7 @@ trait format_section_trait {
      * @return string
      */
     public function course_section($course, $section, $modinfo) {
-        global $PAGE;
+        global $PAGE, $USER;
 
         $output = $this->section_header($section, $course, false, 0);
 
@@ -477,11 +477,102 @@ trait format_section_trait {
         // Otherwise you can see them, click on them and it takes you to an error page complaining that they
         // are restricted!
         if ($section->uservisible) {
-            $output .= $this->courserenderer->course_section_cm_list($course, $section, 0);
+            // Call to course_section_cm_list.
+            $format = course_get_format($course);
+            $modinfo = $format->get_modinfo();
+            if (is_object($section)) {
+                $section = $modinfo->get_section_info($section->section);
+            } else {
+                $section = $modinfo->get_section_info($section);
+            }
+            $completioninfo = new \completion_info($course);
+            // TODO: review what happened with completion info.
+
+            // check if we are currently in the process of moving a module with JavaScript disabled
+            $ismoving = $format->show_editor() && ismoving($course->id);
+
+            if ($ismoving) {
+                $strmovefull = strip_tags(get_string("movefull", "", "'$USER->activitycopyname'"));
+            }
+
+            // Get the list of modules visible to user (excluding the module being moved if there is one)
+            $moduleshtml = [];
+            if (!empty($modinfo->sections[$section->section])) {
+                foreach ($modinfo->sections[$section->section] as $modnumber) {
+                    $mod = $modinfo->cms[$modnumber];
+
+                    if ($ismoving and $mod->id == $USER->activitycopy) {
+                        // do not display moving mod
+                        continue;
+                    }
+
+                    // Call to course_section_cm_list_item.
+                    // $modulehtml = $this->course_section_cm_list_item($course,
+                    // $completioninfo, $mod, null, []);
+
+                    // Call to course_section_cm()
+                    // $modulehtml = $this->course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions);
+
+                    if (!$mod->is_visible_on_course_page()) {
+                        return '';
+                    }
+
+                        $format = course_get_format($course);
+                        $modinfo = $format->get_modinfo();
+                    // Output renderers works only with real section_info objects.
+                    //if ($sectionreturn) {
+                    //    $format->set_section_number($sectionreturn);
+                    //}
+                    $section = $modinfo->get_section_info($format->get_sectionnum() ??  0);
+
+                    $cmclass = $format->get_output_classname('content\\cm');
+                    $cm = new $cmclass($format, $section, $mod, []);
+                    // The course outputs works with format renderers, not with course renderers.
+                    $renderer = $format->get_renderer($this->page);
+                    $data = $cm->export_for_template($renderer);
+                    $modulehtml = $this->output->render_from_template('core_courseformat/local/content/cm', $data);
+                    // End of call to course_section_cm().
+                    if ($modulehtml) {
+                        $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses;
+                        $output .= html_writer::tag('li', $modulehtml, array('class' => $modclasses, 'id' => 'module-' . $mod->id));
+                    }
+                    // End of call course_section_cm_list_item.
+                    if ($modulehtml) {
+                        $moduleshtml[$modnumber] = $modulehtml;
+                    }
+                }
+            }
+
+            $sectionoutput = '';
+            if (!empty($moduleshtml) || $ismoving) {
+                foreach ($moduleshtml as $modnumber => $modulehtml) {
+                    if ($ismoving) {
+                        $movingurl = new moodle_url('/course/mod.php', array('moveto' => $modnumber, 'sesskey' => sesskey()));
+                        $sectionoutput .= html_writer::tag('li',
+                            html_writer::link($movingurl, '', array('title' => $strmovefull, 'class' => 'movehere')),
+                            array('class' => 'movehere'));
+                    }
+
+                    $sectionoutput .= $modulehtml;
+                }
+
+                if ($ismoving) {
+                    $movingurl = new moodle_url('/course/mod.php', array('movetosection' => $section->id, 'sesskey' => sesskey()));
+                    $sectionoutput .= html_writer::tag('li',
+                        html_writer::link($movingurl, '', array('title' => $strmovefull, 'class' => 'movehere')),
+                        array('class' => 'movehere'));
+                }
+            }
+
+            // Always output the section module list.
+            $output .= html_writer::tag('ul', $sectionoutput, array('class' => 'section img-text'));
+            // End of course_section_cm_list.
+
             // SLamour Aug 2015 - make add asset visible without turning editing on
             // N.B. this function handles the can edit permissions.
             $output .= $this->course_section_add_cm_control($course, $section->section, 0);
         }
+        // TODO: Test editing mode.
         if (!$PAGE->user_is_editing()) {
             $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $section->section));
         }
@@ -569,9 +660,61 @@ trait format_section_trait {
                     // This is not stealth section or it is empty.
                     continue;
                 }
-                echo $this->stealth_section_header($section);
+//                echo $this->stealth_section_header($section); Call to deprecated function.
+                $o = '';
+                $o .= html_writer::start_tag('li', [
+                    'id' => 'section-' . $section,
+                    'class' => 'section main clearfix orphaned hidden',
+                    'data-sectionid' => $section
+                ]);
+                $o .= html_writer::tag('div', '', array('class' => 'left side'));
+                $course = course_get_format($this->page->course)->get_course();
+                $section = course_get_format($this->page->course)->get_section($section);
+//                $rightcontent = $this->section_right_content($section, $course, false); call to deprecated function.
+                $rightcontent = $this->output->spacer();
+                $controls = $this->section_edit_control_items($course, $section, false);
+
+                if (!empty($controls)) {
+                    $menu = new \action_menu();
+                    $menu->set_menu_trigger(get_string('edit'));
+                    $menu->attributes['class'] .= ' section-actions';
+                    foreach ($controls as $value) {
+                        $url = empty($value['url']) ? '' : $value['url'];
+                        $icon = empty($value['icon']) ? '' : $value['icon'];
+                        $name = empty($value['name']) ? '' : $value['name'];
+                        $attr = empty($value['attr']) ? array() : $value['attr'];
+                        $class = empty($value['pixattr']['class']) ? '' : $value['pixattr']['class'];
+                        $al = new \action_menu_link_secondary(
+                            new moodle_url($url),
+                            new \pix_icon($icon, '', null, array('class' => "smallicon " . $class)),
+                            $name,
+                            $attr
+                        );
+                        $menu->add($al);
+                    }
+
+                    $o .= html_writer::div(
+                        $this->render($menu),
+                        'section_action_menu',
+                        array('data-sectionid' => $section->id)
+                    );
+                }
+
+                $o .= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
+                $o .= html_writer::start_tag('div', array('class' => 'content'));
+                $o .= $this->output->heading(
+                    get_string('orphanedactivitiesinsectionno', '', $section),
+                    3,
+                    'sectionname'
+                );
+                echo $o;
+
                 // Don't print add resources/activities of 'stealth' sections.
-                echo $this->stealth_section_footer();
+                //echo $this->stealth_section_footer();
+                $o = html_writer::end_tag('div');
+                $o .= html_writer::end_tag('li');
+                echo $o;
+
             }
         }
         echo $this->end_section_list();
