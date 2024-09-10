@@ -113,7 +113,7 @@ if ($tocformat && $leftnav) {
 if ($coursemainpage) {
     $coursefooter = $output->course_footer();
     if (!empty($coursefooter)) { ?>
-        <footer role="contentinfo" id="snap-course-footer"><?php echo $coursefooter ?></footer>
+        <div id="snap-course-footer"><?php echo $coursefooter ?></div>
         <?php
     }
 } ?>

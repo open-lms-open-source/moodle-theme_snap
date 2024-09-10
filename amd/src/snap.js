@@ -234,6 +234,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     $(this).attr('action', $(this).attr('action') + '#coursetools');
                 }
             });
+
+            // Additional coursetools manipulations.
+            document.querySelectorAll('#coursetools li div.snap-participant-icons span.userinitials').forEach(function(el) {
+                el.setAttribute('aria-hidden', 'true');
+            });
         };
 
         /**

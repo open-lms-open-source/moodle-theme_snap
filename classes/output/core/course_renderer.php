@@ -1632,7 +1632,10 @@ class course_renderer extends \core_course_renderer {
 
         $userpicture = new \user_picture($user);
         $userpicture->link = false;
-        $userpicture->alttext = false;
+        $userpicture->alttext = true;
+        if (empty($userpicture->user->imagealt)) {
+            $userpicture->user->imagealt = format_string(fullname($user));
+        }
         $userpicture->size = 100;
         $picture = $this->render($userpicture);
 
