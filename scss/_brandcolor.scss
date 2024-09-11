@@ -627,15 +627,12 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: $brand-primary;
     }
 
-    .frontpage-course-list-enrolled,
-    .frontpage-course-list-all {
-        .paging-morelink .btn {
+    #frontpage-course-list .paging-morelink .btn {
             color: #fff !important;
             background-color: $brand-primary !important;
             border-color: $brand-primary !important;
-        }
-
     }
+
 
     // -------------------------
     // Navigation bar

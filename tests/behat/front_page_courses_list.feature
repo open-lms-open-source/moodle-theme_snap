@@ -97,3 +97,24 @@ Feature: Correct functionality of enrolled courses and available courses in the 
     And I should see "Course 2"
     And I should see "Course 3"
     And I log out
+
+  @javascript
+  Scenario: Hidden courses are displayed correctly in front page in Snap in My Courses and Available courses section.
+    Given I log in as "admin"
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Settings" in current page administration
+    And I set the field with xpath "//select[@id='id_s__frontpageloggedin0']" to "List of courses"
+    And I set the field with xpath "//select[@id='id_s__frontpageloggedin1']" to "Enrolled courses"
+    And I press "Save changes"
+    And I am on site homepage
+    And "Hidden from students" "text" should not exist in the "#frontpage-course-list" "css_element"
+    And I am on the course main page for "C1"
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Settings" in current page administration
+    And I set the field with xpath "//select[@id = 'id_visible']" to "Hide"
+    Then I press "Save and display"
+    And I am on site homepage
+    And "Hidden from students" "text" should exist in the "#frontpage-course-list" "css_element"
+
+

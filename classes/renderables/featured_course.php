@@ -51,11 +51,11 @@ class featured_course implements \renderable, \templatable {
     /**
      * featured_course constructor.
      * @param \moodle_url $url
-     * @param \moodle_url $coverimageurl
+     * @param string $coverimageurl
      * @param string $title
      * @param int $number
      */
-    public function __construct(\moodle_url $url, \moodle_url $coverimageurl = null, $title, $number) {
+    public function __construct(\moodle_url $url, $coverimageurl, $title, $number) {
         $this->url = $url;
         $this->coverimageurl = $coverimageurl;
         $this->title = $title;
