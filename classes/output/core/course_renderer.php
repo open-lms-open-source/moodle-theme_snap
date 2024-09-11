@@ -1393,7 +1393,7 @@ class course_renderer extends \core_course_renderer {
             }
         }
         $output .= '<div class="row">';
-        $output .= '<div class="d-flex flex-wrap">';
+        $output .= '<div class="d-flex flex-wrap row-gap-1">';
         // Add cat select box if available.
         if(!empty($categoryselector)){
             $output .= '<div class="px-3">';

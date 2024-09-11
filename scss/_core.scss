@@ -5913,3 +5913,19 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
 .simplesearchform #searchform-navbar.show {
     height: 93px;
 }
+
+.row-gap-1 {
+    row-gap: 1rem;
+}
+
+.singleselect {
+    border-radius: 0.25rem;
+}
+
+.input-group {
+    input {
+        // !important because we need to be sure that the border radius is set.
+        border-bottom-left-radius: 0.25rem !important;
+        border-top-left-radius: 0.25rem !important;
+    }
+}
