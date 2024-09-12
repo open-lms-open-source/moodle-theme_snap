@@ -40,6 +40,7 @@
         }
     }
     .content .courseimage {
+        flex: none;
         overflow: hidden;
         width: 100%;
         max-width: max-content;
@@ -49,6 +50,7 @@
             max-width: initial;
             height: initial;
             width: 300px;
+            border-radius: 0.5rem;
         }
     }
     .teachers {
@@ -105,6 +107,7 @@
         max-width: 43.5em;
         padding: 2%;
         background-color: white;
+        border-radius: 0.5rem;
     }
     // Layout for search, select cat and expand/collapse.
     #switchcategory select {
