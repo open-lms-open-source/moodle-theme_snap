@@ -444,7 +444,7 @@ trait format_section_trait {
         $o .= $summarytext;
         if ($canupdatecourse) {
             $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="';
+            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" alt="" src="';
             $icon .= $this->output->image_url('pencil', 'theme').'" /><br/>';
             $o .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
         }
