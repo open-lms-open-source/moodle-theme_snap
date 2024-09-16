@@ -438,7 +438,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
          */
         var saveImage = function(params, courseShortName, categoryId, cropper) {
 
-            $('#snap-changecoverimageconfirmation .ok').click(function() {
+            $('#snap-changecoverimageconfirmation .ok').off('click').click(function() {
                 var ajaxParams = {};
 
                 if (categoryId !== null) {
