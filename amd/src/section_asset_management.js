@@ -1364,9 +1364,9 @@ define(
                         .then(function(result) {
                             // Checking if action is inside the menu.
                             if ($(actionSelector).parents('.dropdown-item').length > 0) {
-                                $(actionSelector).parent().replaceWith(result);
+                                $(actionSelector).parent().parent('li').replaceWith(result);
                             } else {
-                                $(actionSelector).replaceWith(result);
+                                $(actionSelector).parent('li').replaceWith(result);
                                 $(actionSelector).focus();
                             }
                             // Update TOC.
