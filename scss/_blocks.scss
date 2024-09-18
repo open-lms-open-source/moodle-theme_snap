@@ -651,7 +651,7 @@ body.path-site .block.block_settings {
 /* My overview block */
 .block-myoverview {
     @media (min-width: 1100px) {
-        .dashboard-card-deck:not(.fixed-width-cards) .dashboard-card {
+        .dashboard-card-deck:not(.fixed-width-cards) .theme-card {
             width: calc(33.33% - #{$card-gutter});
         }
     }

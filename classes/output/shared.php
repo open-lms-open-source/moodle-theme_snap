@@ -230,8 +230,8 @@ EOF;
             'groupsvisible',
             'groupsseparate',
             'hide',
-            'markthistopic',
-            'markedthistopic',
+            //'markthistopic',TODO: Review how to address this string deprecation.
+            //'markedthistopic', TODO: Review how to address this string deprecation.
             'moveleft',
             'movesection',
             'movecoursemodule',
