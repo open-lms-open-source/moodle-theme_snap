@@ -110,7 +110,7 @@ class course_renderer extends \core_course_renderer {
                     "<br /><br />";
             }
 
-            $output .= $this->course_section_cm_list($SITE, $section);
+            $output .= $this->course_section_cm_list_snap($SITE, $section);
 
             $output .= $this->course_section_add_cm_control($SITE, $section->section);
             $output .= $this->box_end();
@@ -130,7 +130,7 @@ class course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return String
      */
-    public function course_section_cm_list_item($course,
+    public function course_section_cm_list_item_snap($course,
     &$completioninfo,
     cm_info $mod,
     $sectionreturn,
@@ -1520,7 +1520,7 @@ class course_renderer extends \core_course_renderer {
                 $coursesummary = '<h4 class="h5">'.get_string('aboutcourse', 'theme_snap').'</h4>';
             }
             $coursesummary .= '<br><a id="edit-summary" class="btn btn-outline-secondary btn-sm"
-            href="'.$CFG->wwwroot.'/course/edit.php?id='.$COURSE->id.'#id_descriptionhdr">'.get_string('editsummary').'</a>';
+            href="'.$CFG->wwwroot.'/course/edit.php?id='.$COURSE->id.'#id_descriptionhdr">'.get_string('edit').'</a>';
         }
 
         // Get recent activities on mods in the course.
@@ -1728,7 +1728,7 @@ class course_renderer extends \core_course_renderer {
      * @return void
      */
 
-    public function course_section_cm_list($course, $section, $sectionreturn = null, $displayoptions = []) {
+    public function course_section_cm_list_snap($course, $section, $sectionreturn = null, $displayoptions = []) {
         global $USER;
         $output = '';
 
@@ -1760,7 +1760,7 @@ class course_renderer extends \core_course_renderer {
                     continue;
                 }
 
-                if ($modulehtml = $this->course_section_cm_list_item($course,
+                if ($modulehtml = $this->course_section_cm_list_item_snap($course,
                     $completioninfo, $mod, $sectionreturn, $displayoptions)) {
                     $moduleshtml[$modnumber] = $modulehtml;
                 }
