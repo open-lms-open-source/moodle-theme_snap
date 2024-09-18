@@ -1147,7 +1147,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
-    li.dropdown-item {
+    li.dropdown-item,
+    .snap-section-editing .extra-actions-menu .dropdown-item[aria-pressed="true"] {
         &.active,
         &:active,
         &:hover,
