@@ -58,6 +58,7 @@ Feature: Snap managing contacts
     And I click on "Search" "field"
     And I set the field with xpath "//*[@data-region='search-input']" to "Student 4"
     And I click on ".btn-submit[data-action='search']" "css_element"
+    And I wait until "span.matchtext" "css_element" is visible
     And I click on "span.matchtext" "css_element"
     And I click on "conversation-actions-menu-button" "button"
     And I click on "Add to contacts" "link" in the "//div[@data-region='header-container']" "xpath_element"
@@ -70,6 +71,7 @@ Feature: Snap managing contacts
     And I click on "Search" "field"
     And I set the field with xpath "//*[@data-region='search-input']" to "Student 4"
     And I click on ".btn-submit[data-action='search']" "css_element"
+    And I wait until "span.matchtext" "css_element" is visible
     And I click on "span.matchtext" "css_element"
     And I click on "conversation-actions-menu-button" "button"
     And I click on "Add to contacts" "link" in the "//div[@data-region='header-container']" "xpath_element"
@@ -103,6 +105,7 @@ Feature: Snap managing contacts
     And I click on "Search" "field"
     And I set the field with xpath "//*[@data-region='search-input']" to "Student 3"
     And I click on ".btn-submit[data-action='search']" "css_element"
+    And I wait until "span.matchtext" "css_element" is visible
     And I click on "span.matchtext" "css_element"
     And I click on "conversation-actions-menu-button" "button"
     And I click on "Add to contacts" "link" in the "//div[@data-region='header-container']" "xpath_element"

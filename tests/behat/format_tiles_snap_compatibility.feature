@@ -76,7 +76,6 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
 
   @javascript
   Scenario: As teacher you can switch between edit mode on and edit mode off.
-    Given I skip because "It will be reviewed on the ticket INT-20224"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And "Edit content" "link" should be visible
@@ -116,7 +115,6 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
 
   @javascript
   Scenario: Users can see blocks in Course Dashboard.
-    Given I skip because "It will be reviewed on the ticket INT-20224"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     When I click on "Course Dashboard" "link"
@@ -154,3 +152,20 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I expand all fieldsets
     And I set the field with xpath "//select[@name='displayfilterbar']" to "Show buttons based on course outcomes"
     And I press "Save and display"
+
+  @javascript
+  Scenario: Users can change activity visibility and group settings using Tiles in Snap.
+    Given I log in as "admin"
+    And I am on "Course Test" course homepage
+    When I click on "Edit content" "link"
+    And I wait until the page is ready
+    And I click on ".modtype_quiz .moodle-actionmenu" "css_element"
+    Then I should see "Availability"
+    And I should see "Group mode"
+    Then I click on ".modtype_quiz .moodle-actionmenu [aria-label='Availability']" "css_element"
+    And I click on ".modtype_quiz .moodle-actionmenu  [data-value='hide']" "css_element"
+    Then I should see "Hidden from students"
+    And I click on ".modtype_quiz .moodle-actionmenu" "css_element"
+    And I click on ".modtype_quiz .moodle-actionmenu [aria-label='Group mode']" "css_element"
+    And I click on ".modtype_quiz .moodle-actionmenu  [data-action='cmVisibleGroups']" "css_element"
+    Then ".modtype_quiz .icon[alt='Visible groups']" "css_element" should be visible

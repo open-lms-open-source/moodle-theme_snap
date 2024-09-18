@@ -2208,6 +2208,46 @@ body.snap-resource-card {
         clear: both;
         width: fit-content;
     }
+
+    .action-menu .menu .dropdown-subpanel {
+        &.dropleft .dropdown-toggle {
+            padding-left: 3%;
+        }
+        .dropdown-subpanel-content {
+            &.show {
+                display: block !important;
+            }
+            .option-icon {
+                margin-right: .5em;
+                .icon {
+                    max-width: unset;
+                    width: 16px;
+                    height: 16px;
+                    opacity: .5;
+                }
+            }
+
+        }
+    }
+    .activity-groupmode-info {
+        .option-icon {
+            margin-right: .5em;
+            .icon {
+                max-width: unset;
+                width: 16px;
+                height: 16px;
+                opacity: .5;
+            }
+        }
+        div.groupmode-information {
+            .icon {
+                margin-right: 1em;
+            }
+            .groupmode-icon-info {
+                display: none;
+            }
+        }
+    }
 }
 
 // --------------------------------------------------------------------
