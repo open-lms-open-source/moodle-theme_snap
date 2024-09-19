@@ -176,6 +176,7 @@
 // Fixes for Inherited boost styles for the message app page.
 // Message background #E6E6E6 to better AX over the message view.
 .message-app {
+    padding-bottom: 0.5rem;
     .message {
         &.send .tail {
             border-bottom-color: #e6e6e6 !important;
@@ -204,6 +205,12 @@
     label.custom-control-label.text-muted::before {
         background-color: transparent;
     }
+
+    img.rounded-circle {
+        max-width: 38px;
+        height: 38px;
+        width: 38px;
+    }
 }
 
 // Hide the message drawer when in profile view.
@@ -216,9 +223,6 @@ body#page-user-profile .drawer .message-app {
     #page-message-index #region-main div[role="main"] {
         div.alert.alert-warning.alert-block.fade.in {
             margin-top: 4em;
-        }
-        .message-app.main {
-            margin-top: 3em;
         }
     }
 }
@@ -234,7 +238,10 @@ body#page-user-profile .drawer .message-app {
         margin-top: 0;
     }
     #page-content {
-        height: 90%;
+        height: 100%;
+        @media (min-width: 992px) {
+            height: 90%;
+        }
     }
     #region-main-box {
         height: 100%;

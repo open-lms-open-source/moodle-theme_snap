@@ -98,17 +98,30 @@ define(['jquery', 'core/pubsub'],
                             }
                         }
                     }).bind();
-                // Listener for the page user profile to load messages URL.
-                } else if ($('#page-user-profile').length != 0 || $('.userprofile #message-user-button').length != 0
-                    || $('#page-grade-report-user-index').length != 0) {
-                    $('#page-grade-report-user-index [id^="drawer-"].drawer[role="region"]').css('display', 'none');
-                    PubSub.subscribe("message-drawer-create-conversation-with-user", function (args) {
-                        redirectToMessage(args);
+                } else {
+
+                    // The pages or selectors in this array will redirect to the message page without showing the drawer.
+                    const redirectPagesForMessages = [
+                        '#page-user-profile',
+                        '.userprofile #message-user-button',
+                        '#page-grade-report-user-index',
+                        '#page-grade-report-overview-index',
+                    ];
+
+                    const isPageMatched = redirectPagesForMessages.some(function(selector) {
+                        return $(selector).length != 0;
                     });
-                    // The drawer in snap will always open in a new window
-                    PubSub.subscribe("message-drawer-show-conversation", function (args) {
-                        redirectToMessage(args);
-                    });
+
+                    if (isPageMatched) {
+                        $('[id^="drawer-"].drawer[role="region"]').css('display', 'none');
+                        PubSub.subscribe("message-drawer-create-conversation-with-user", function (args) {
+                            redirectToMessage(args);
+                        });
+                        // The drawer in snap will always open in a new window
+                        PubSub.subscribe("message-drawer-show-conversation", function (args) {
+                            redirectToMessage(args);
+                        });
+                    }
                 }
                 var redirectToMessage = function(args) {
                     let processedId = '';
