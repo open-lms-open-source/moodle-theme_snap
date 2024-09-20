@@ -24,6 +24,7 @@
 
 namespace theme_snap\output;
 
+use core_courseformat\base as course_format;
 use format_tiles\output\renderer;
 use theme_snap\output\format_tiles\content\tiles_content;
 
@@ -76,5 +77,15 @@ class format_tiles_renderer extends renderer {
         $data->edit_mode = shared::render_edit_mode($course->id, 'tiles', $this->page->pagetype);
 
         return $this->output->render_from_template($templatename, $data);
+    }
+
+    /**
+     * Render the enable bulk editing button.
+     * @param course_format $format the course format
+     * @return string|null the enable bulk button HTML (or null if no bulk available).
+     */
+    public function bulk_editing_button(course_format $format): ?string {
+        // Snap modifications to course formats do not support this feature.
+        return '';
     }
 }

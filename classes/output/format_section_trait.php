@@ -77,6 +77,16 @@ trait format_section_trait {
     }
 
     /**
+     * Render the enable bulk editing button.
+     * @param course_format $format the course format
+     * @return string|null the enable bulk button HTML (or null if no bulk available).
+     */
+    public function bulk_editing_button(course_format $format): ?string {
+        // Snap modifications to course formats do not support this feature.
+        return '';
+    }
+
+    /**
      * New moodle 4.0 render_content function.
      * @param renderable $widget
      */
