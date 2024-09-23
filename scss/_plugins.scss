@@ -29,7 +29,16 @@
         &:before {
             content: "\f0a2";
         }
+
+        &:hover {
+            @extend .fa-shake;
+            font-weight: bolder;
+
+            --fa-animation-duration: 1.5s;
+            --fa-animation-iteration-count: 1;
+        }
     }
+
     .popover-region-toggle {
         padding: 0.5em;
         // Hide arrow on the top of the popover.
@@ -118,8 +127,12 @@
     display: inline-block;
     float: none;
     width: 2.35em;
+    
 
     .icon.fa-shopping-cart {
+        &:hover {
+            @extend .fa-beat;
+        }
         font-size: 24px;
         width: auto;
         height: auto;

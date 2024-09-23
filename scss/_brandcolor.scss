@@ -146,9 +146,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     }
 
     #admin-menu-trigger {
-        &:hover,
         &:focus {
-            outline: 0;
+            outline: 3px solid $brand-primary;
             border-color: $brand-primary;
         }
     }
@@ -655,6 +654,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
         .icon.fa-search {
             color: $nav-color;
+            
+            &:hover {
+                --fa-animation-duration: 0.5s;
+                --fa-animation-iteration-count: 1;
+
+                -webkit-text-stroke-width: 1px;
+            }
         }
 
         .popover-region-notifications > div > .icon {
@@ -683,7 +689,17 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         #nav-intellicart-popover-container {
             // Intellicart shopping icon.
             .icon.fa-shopping-cart {
-                color: $nav-color;
+                color: transparent;
+                -webkit-text-stroke-width: 2px;
+                -webkit-text-stroke-color: $nav-color;
+                &:hover {
+                    --fa-animation-duration: 0.5s;
+                    --fa-animation-iteration-count: 1;
+
+                    font-size: 24px;
+                    color: $nav-color;
+                    -webkit-text-stroke-width: 1px;
+                }
             }
         }
 
