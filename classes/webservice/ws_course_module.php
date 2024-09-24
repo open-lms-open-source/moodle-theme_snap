@@ -59,7 +59,7 @@ class ws_course_module extends \external_api {
         $modinfo = $format->get_modinfo();
         $mod = $modinfo->cms[$cmid];
 
-        $returnhtml = $courserenderer->course_section_cm_list_item($COURSE, $completioninfo, $mod, null);
+        $returnhtml = $courserenderer->course_section_cm_list_item_snap($COURSE, $completioninfo, $mod, null);
         $result = ['html' => $returnhtml];
         return $result;
     }
