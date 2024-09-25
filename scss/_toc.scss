@@ -58,9 +58,16 @@
     }
 
     /* Section currently displayed. */
-    .snap-visible-section a {
-        color: $body-color;
-        text-decoration: none;
+    .snap-visible-section {
+        border-bottom-right-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        padding-left: 0.5em;
+        color: #fff;
+        a,
+        span {
+            color: #fff;
+            text-decoration: none;
+        }
     }
 
     /* Completed section icon. */

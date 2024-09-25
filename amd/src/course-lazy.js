@@ -78,9 +78,15 @@ define(
         this.setTOCVisibleSection = function() {
             var sectionIdSel = '.section.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible';
             var currentSectionId = $(sectionIdSel).attr('id');
+
+            // Remove snap-visible-section class and reset aria-current to false for all chapters
             $('#chapters li').removeClass('snap-visible-section');
-            $('#chapters a[href$="' + currentSectionId + '"]').parent('li').addClass('snap-visible-section');
-            $(document).trigger('snapContentRevealed');
+            $('#chapters li a').attr('aria-current', 'false');
+
+            // Find the correct chapter link and update class and aria-current
+            var visibleSectionLink = $('#chapters a[href$="' + currentSectionId + '"]');
+            visibleSectionLink.parent('li').addClass('snap-visible-section');
+            visibleSectionLink.attr('aria-current', 'true');
         };
 
         /**

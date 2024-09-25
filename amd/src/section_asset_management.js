@@ -323,8 +323,12 @@ define(
             }
 
             $('#course-toc #chapters li').removeClass('snap-visible-section');
+            $('#course-toc #chapters li a').attr("aria-current", "false");
             // Set link as current.
-            $('#course-toc .chapter-title[href="#section-'+ section +'"]').parent('li').addClass('snap-visible-section');
+            var visibleSectionLink = $('#course-toc .chapter-title[href="#section-' + section + '"]');
+            visibleSectionLink.parent('li').addClass('snap-visible-section');
+            visibleSectionLink.attr('aria-current', 'true');
+
             $(id).find('ul.section').append(
                 '<li class="snap-drop asset-drop">' +
                 '<div class="asset-wrapper">' +

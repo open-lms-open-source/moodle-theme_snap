@@ -1749,8 +1749,13 @@ header#page-header
 // -------------------------
 
 .breadcrumb-nav {
-    padding: .5em 0;
     float: none;
+    margin-top: 1.75em;
+    background-color: white;
+    width: fit-content;
+    padding: 0 1em;
+    border-radius: 0.5rem;
+    font-weight: 700;
     @include media-breakpoint-up(md) {
         margin-top: 1.75em;
     }
@@ -1791,16 +1796,6 @@ header#page-header
 
 // If the page has an image - courses & categories.
 .mast-image {
-    .breadcrumb {
-        li,
-        li:before,
-        > li + li:before,
-        a {
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-            color: white;
-        }
-    }
-
     #page-mast > {
         h1,
         h1 a,
