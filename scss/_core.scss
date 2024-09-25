@@ -1228,6 +1228,13 @@ footer #moodle-footer
             .nav-link {
                 padding: .5rem .5rem;
             }
+
+            a:focus, div[tabindex]:focus {
+                border-radius: .5rem !important; // !important to override a possible .rounded-0 like in the search btn.
+                outline-style: solid;
+                box-shadow: none;
+            }
+
         }
     }
     position: fixed;
@@ -1387,7 +1394,7 @@ footer #moodle-footer
 
     .snap-my-courses-link {
         padding-bottom: 0.5rem;
-        align-self: center;
+        align-content: center;
         font-weight: bold;
         span {
             position: relative;
@@ -1473,6 +1480,7 @@ footer #moodle-footer
     // we want to maintain the position along the Intellicart or notification icons when
     // these icons don't exists in the Snap header.
     a.snap-message-count {
+        border-radius: .5rem;
         padding: .5rem .5rem;
         display: block;
     }
@@ -1484,6 +1492,14 @@ footer #moodle-footer
 
         &:before {
             content: "\f0e5";
+        }
+
+        &:hover {
+            @extend .fa-beat;
+            --fa-animation-duration: 0.5s;
+            --fa-animation-iteration-count: 1;
+
+            font-weight: bolder;
         }
     }
     .conversation_badge_count {
@@ -1592,6 +1608,10 @@ footer #moodle-footer
                     padding-right: 0;
                     i.fa-search {
                         font-size: 1.6rem;
+                        
+                        &:hover {
+                            @extend .fa-beat;
+                        }
                     }
                 }
             }
@@ -1839,9 +1859,7 @@ header#page-header
 // Admin block link.
 #admin-menu-trigger {
     width: 30px;
-    height: 30px;
-    margin-top: .3em;
-    margin-left: .4em;
+    padding-top: .3em;
 }
 
 #page-report-outline-user .section {

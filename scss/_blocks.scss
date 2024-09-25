@@ -425,8 +425,24 @@ body.path-site .block.block_settings {
 #snap_feeds_side_menu_trigger {
     text-align: center;
     width: 2.35em;
+
+    .hover-visible {
+        opacity: 0;
+    }
+
+    svg:hover {
+        @extend .fa-bounce;
+        --fa-animation-duration: 1s;
+        --fa-animation-iteration-count: 1;
+
+        .hover-visible {
+            opacity: 1;
+        }
+    }
+
     svg {
         margin-top: 0.4em;
+
         path {
             stroke: currentColor;
         }
