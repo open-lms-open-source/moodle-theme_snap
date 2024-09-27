@@ -1980,7 +1980,7 @@ class local {
         // We save both types of forums in the array $groupsid.
         $groupsid['forum'] = $DB->get_records_sql($sqlforum, $params);
 
-        if (!get_config('hsuforum')) {
+        if (!get_config('hsuforum', 'version')) {
             $groupsid['hsuforum'] = [];
         } else {
             // SQL for hsuforums.
