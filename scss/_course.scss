@@ -976,6 +976,9 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
                 height: auto;
                 margin-right: 0.5em;
                 @include alakazam;
+                &[src*="snap/core"] {
+                    filter: brightness(0) invert(1);
+                }
             }
 
             .snap-resource-card-fadeout {

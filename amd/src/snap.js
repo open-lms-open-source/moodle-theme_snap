@@ -1382,16 +1382,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         $(noneditingblocks[block]).removeClass('editing');
                     }
                 }
-
-                // Inherit transparent background color for divs containing non-default mod_url icons.
-                if (!document.body.classList.contains('snap-resource-card')) { // Only for Snap Resource display List.
-                    document.querySelectorAll('.activityiconcontainer.url').forEach(urlDiv => {
-                        if (urlDiv.querySelector('img[src*="/theme/image.php/snap/core/"][src*="/f/"]')) {
-                            urlDiv.style.backgroundColor = 'inherit';
-                        }
-                    });
-                }
-
             }
         };
     }
