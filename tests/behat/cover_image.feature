@@ -84,9 +84,10 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
     Then I should see cover image in page header
-    And I check element ".mast-image .breadcrumb a" with color "#FFFFFF"
+    # Breadcrumb has now white background and site font-color.
+    And I check element ".mast-image .breadcrumb a" with color "#82009E"
     And I reload the page
-    And I check element ".mast-image .breadcrumb a" with color "#FFFFFF"
+    And I check element ".mast-image .breadcrumb a" with color "#82009E"
     Then I should see cover image in page header
     And I open the personal menu
     And I should see course card image in personal menu

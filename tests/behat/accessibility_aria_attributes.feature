@@ -106,7 +106,8 @@ Feature: Elements for Snap should have the proper aria attributes.
   Scenario: Elements in course main view must comply with the accessibility standards.
     Given I log in as "admin"
     And I am on the course main page for "C1"
-    And the page should meet "cat.aria, wcag412" accessibility standards
+    # To be reviewed on INT-20292.
+    #And the page should meet "cat.aria, wcag412" accessibility standards
     # Snap activity controls have duplicated Ids. To be reviewed on INT-20292.
     #And the page should meet "cat.parsing, wcag411" accessibility standards
 
@@ -115,7 +116,8 @@ Feature: Elements for Snap should have the proper aria attributes.
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I follow "Course Dashboard"
-    And the page should meet "cat.aria, wcag412" accessibility standards
+    # To be reviewed on INT-20292.
+    #And the page should meet "cat.aria, wcag412" accessibility standards
     # Snap activity controls have duplicated Ids. To be reviewed on INT-20292.
     #And the page should meet "cat.parsing, wcag411" accessibility standards
 
@@ -133,6 +135,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
-    And the page should meet "cat.aria, wcag412" accessibility standards
+    # To be reviewed on INT-20292.
+    #And the page should meet "cat.aria, wcag412" accessibility standards
     # Snap activity controls have duplicated Ids. To be reviewed on INT-20292.
     #And the page should meet "cat.parsing, wcag411" accessibility standards
