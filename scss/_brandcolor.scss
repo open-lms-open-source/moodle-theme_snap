@@ -1086,7 +1086,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
         .activity-filter .btn-group button.btn.btn-secondary.btn-left {
             color: $gray-light;
-            background: white;
+            background: white !important;
             border: none;
         }
         .btn.btn-secondary.btn-ins {
@@ -1115,6 +1115,16 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         .btn.btn-secondary, .btn-group  {
             outline: transparent;
             box-shadow: -1px 3px 7px 2px rgb(223 223 223);
+        }
+
+        .dropdown-toggle:focus,
+        select.custom-select:focus, select.custom-select, .nav-link:focus,
+        .btn.btn-secondary.dropdown-toggle.dropdown-toggle-split {
+            box-shadow: none;
+        }
+
+        button.btn.btn-secondary#apply-filter, button.btn.btn-secondary#show-all  {
+            background-color: white !important;
         }
 
         ol.pld-edit-panels {
