@@ -490,7 +490,7 @@ trait format_section_trait {
             $output .= $renderer->course_section_cm_list_snap($course, $section, 0);
             // SLamour Aug 2015 - make add asset visible without turning editing on
             // N.B. this function handles the can edit permissions.
-            $output .= $renderer->course_section_add_cm_control($course, $section->section, 0);
+            $output .= $this->course_section_add_cm_control_snap($course, $section->section, 0);
         }
         // TODO: Test editing mode.
         if (!$PAGE->user_is_editing()) {
@@ -823,7 +823,7 @@ trait format_section_trait {
      *     option 'inblock' => true, suggesting to display controls vertically
      * @return string
      */
-    public function course_section_add_cm_control($course, $section, $sectionreturn = null, $displayoptions = array()) {
+    public function course_section_add_cm_control_snap($course, $section, $sectionreturn = null, $displayoptions = array()) {
         global $OUTPUT;
         // Check to see if user can add menus and there are modules to add.
         if (!has_capability('moodle/course:manageactivities', context_course::instance($course->id))
