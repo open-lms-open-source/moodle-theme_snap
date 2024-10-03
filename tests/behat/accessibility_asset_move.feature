@@ -32,8 +32,8 @@ Feature: When the Moodle theme is set to Snap, on moving assets some links shoul
       | Include a topic section | 1 |
     And I log out
     And the following "courses" exist:
-      | fullname | shortname | category | format | enablecompletion |
-      | Course 1 | C1        | 0        | topics | 1                |
+      | fullname | shortname | category | format | enablecompletion | initsections |
+      | Course 1 | C1        | 0        | topics | 1                |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -65,7 +65,7 @@ Feature: When the Moodle theme is set to Snap, on moving assets some links shoul
   Scenario: In read mode, on course, when teacher try move an activity, anchor links tabindex attribute should exists and value is -1 and button disabled.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And I click on "button.snap-edit-asset-more[title='More Options \"Test assignment2\"']" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-asset-move[aria-label='Move \"Test assignment2\"']" "css_element"

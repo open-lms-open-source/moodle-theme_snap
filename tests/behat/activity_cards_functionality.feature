@@ -33,8 +33,8 @@ Feature: Check functionality in activity cards.
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
       | student1  | Student    | 1         | student1@example.com  |
     And the following "courses" exist:
-      | fullname | shortname | format |
-      | Course 1 | C1        | topics |
+      | fullname | shortname | format | initsections |
+      | Course 1 | C1        | topics |      1       |
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
@@ -48,7 +48,7 @@ Feature: Check functionality in activity cards.
       | Name         | Test Page        |
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-edit-asset-more" "css_element"
     And I click on ".snap-edit-asset" "css_element"
     And I wait until the page is ready
@@ -59,7 +59,7 @@ Feature: Check functionality in activity cards.
     And I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And "img.img-responsive atto_image_button_text-bottom" "css_element" should not exist
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Snap personal menu has duplicated items for desktop and mobile. To be reviewed in INT-19663.
@@ -77,7 +77,7 @@ Feature: Check functionality in activity cards.
       | Name         | Test Page        |
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-edit-asset-more" "css_element"
     And I click on ".snap-edit-asset" "css_element"
     And I wait until the page is ready
@@ -88,7 +88,7 @@ Feature: Check functionality in activity cards.
     And I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And "img.img-responsive.atto_image_button_text-bottom" "css_element" should exist
     And the page should meet "cat.aria, wcag412" accessibility standards
     # Snap personal menu has duplicated items for desktop and mobile. To be reviewed in INT-19663.

@@ -28,8 +28,8 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | teacher1 | Teacher   | 1        | teacher1@example.com |
       | student1 | Student   | 1        | student1@example.com |
     And the following "courses" exist:
-      | fullname | shortname | category |
-      | Course 1 | C1        | 0        |
+      | fullname | shortname | category | initsections |
+      | Course 1 | C1        | 0        |      1       |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
@@ -55,7 +55,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
   Scenario Outline: Settings option is shown correctly
     Given I log in as "<user>"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And "#region-main .action-menu-trigger" "css_element" should <exist>
     Examples:
@@ -67,7 +67,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
   Scenario Outline: Settings option in discussions is shown correctly for experimental ui in different screen sizes
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And I add a new discussion to "Test forum name" forum with:
       | Subject | Discussion 1 |
@@ -90,7 +90,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
   Scenario: Grading Buttons are usable for teachers.
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And I add a new discussion to "Test forum name" forum with:
       | Subject | Discussion 1 |
@@ -98,7 +98,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And I click on "Grade users" "button"
     And I should see "The grade to award the student"
@@ -115,7 +115,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
   Scenario: Unread forum posts label is displayed in the Snap course.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And I add a new discussion to "Test forum name" forum with:
       | Subject | Discussion 1 |
@@ -126,7 +126,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should not see "2 unread post"
     And I open the user menu
     And I follow "Preferences"
@@ -135,15 +135,15 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | Forum tracking| 1 |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "2 unread post"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And I click on "Discussion 1" "link"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "1 unread post"
     And I click on ".forum .instancename:contains('Test forum name')" "css_element"
     And I click on "Discussion 2" "link"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should not see "1 unread post"

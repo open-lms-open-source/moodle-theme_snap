@@ -30,6 +30,7 @@ Feature: When the moodle theme is set to Snap, teachers can see permalink modal.
             | category         | 0        |
             | enablecompletion | 1        |
             | numsections      | 4        |
+            | initsections     | 1        |
         And the following "activities" exist:
             | activity | name              | intro                       | course | idnumber | section |
             | assign   | Activity sample 1 | Test assignment description | C1     | sample1  | 1       |
@@ -40,7 +41,7 @@ Feature: When the moodle theme is set to Snap, teachers can see permalink modal.
     @javascript
     Scenario: Create a permalink
         Given I am on the course main page for "C1"
-        And I follow "Topic 1"
+        And I follow "Section 1"
         And I click on "#extra-actions-dropdown-1" "css_element"
         And I click on "#section-1 .snap-permalink" "css_element"
         And I should see "Permalink"

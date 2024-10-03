@@ -25,8 +25,8 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
 
   Background:
     Given the following "courses" exist:
-      | fullname | shortname | category | format | maxbytes | enablecompletion |
-      | Course 1 | C1        | 0        | topics | 500000   | 1                |
+      | fullname | shortname | category | format | maxbytes | enablecompletion | initsections |
+      | Course 1 | C1        | 0        | topics | 500000   | 1                |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -40,7 +40,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   Scenario: In read mode, teacher uploads file.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" to section 1
@@ -57,14 +57,14 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   Scenario: Student cannot upload file.
     Given I log in as "student1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#snap-drop-file" "css_element" should not exist
 
   @javascript
   Scenario: A teacher with the capability should be able to upload a file with any size.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "400KB_file.txt" to section 1
@@ -83,7 +83,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "600KB_file.mp3" to section 1
@@ -140,7 +140,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".mod-link" "css_element"
     And I switch to the <window> window
     Then "Myfile" "text" <exist>
@@ -168,7 +168,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".mod-link" "css_element"
     And I switch to a second window
     Then "This is just some test text" "text" <exist>

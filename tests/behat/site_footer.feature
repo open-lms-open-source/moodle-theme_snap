@@ -30,8 +30,8 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
       | username | firstname | lastname | email |
       | user1    | User1     | 1        | user1@example.com |
     And the following "courses" exist:
-      | fullname | shortname | format |
-      | Course 1 | C1        | topics |
+      | fullname | shortname | format | initsections |
+      | Course 1 | C1        | topics |      1       |
 
   @javascript
   Scenario: Admin sets a footer and it should be visible in the platform for other users.
@@ -81,14 +81,14 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
     And "#goto-top-link" "css_element" should exist
     And "#goto-top-link" "css_element" should not be visible
     And I should see "Welcome to your new course"
-    And I follow "Topic 1"
-    And I should see "Untitled Topic"
+    And I follow "Section 1"
+    And I should see "Untitled Section"
     And I should not see "Welcome to your new course"
     And I scroll to the bottom
     And "#goto-top-link" "css_element" should be visible
     And I click on "#goto-top-link > a" "css_element"
     And I wait until "#goto-top-link" "css_element" is not visible
-    And I should see "Untitled Topic"
+    And I should see "Untitled Section"
     And I should not see "Welcome to your new course"
 
   @javascript

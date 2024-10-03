@@ -25,8 +25,8 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
 
   Background:
     Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
+      | fullname | shortname | category | format | initsections |
+      | Course 1 | C1        | 0        | topics |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -81,7 +81,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     And I log out
     Then I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     When I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
@@ -112,7 +112,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     And I log out
     Then I log in as "student1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" should not exist
     And ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element" should not exist
     Examples:

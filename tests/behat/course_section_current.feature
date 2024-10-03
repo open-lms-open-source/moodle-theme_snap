@@ -24,8 +24,8 @@ Feature: Entering a Snap course without specifying a section will take you to th
 
   Background:
     Given the following "courses" exist:
-      | fullname | shortname | category | format | hiddensections|
-      | Course 1 | C1        | 0        | topics |     0         |
+      | fullname | shortname | category | format | hiddensections| initsections |
+      | Course 1 | C1        | 0        | topics |     0         |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -60,10 +60,10 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And "#chapters h3:nth-of-type(1) li.snap-visible-section" "css_element" should exist
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I highlight section 1
     And I am on the course main page for "C1"
-    And I should see "Untitled Topic" in the ".section.state-visible" "css_element"
+    And I should see "Untitled Section" in the ".section.state-visible" "css_element"
     And "#chapters h3:nth-of-type(2) li.snap-visible-section" "css_element" should exist
     Examples:
       | Option     |
@@ -79,9 +79,9 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I highlight section 1
-    And I follow "Hide topic"
+    And I follow "Hide"
     And I am on the course main page for "C1"
     Then I should see "Introduction" in the ".section.state-visible" "css_element"
     And I log out

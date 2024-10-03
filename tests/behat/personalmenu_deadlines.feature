@@ -27,9 +27,9 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     Given the following config values are set as admin:
       | allowcoursethemes | 1 |
     And the following "courses" exist:
-      | fullname | shortname | category | groupmode | theme | enablecompletion |
-      | Course 1 | C1        | 0        | 1         |       | 0                 |
-      | Course 2 | C2        | 0        | 1         | snap  | 1                 |
+      | fullname | shortname | category | groupmode | theme | enablecompletion | initsections |
+      | Course 1 | C1        | 0        | 1         |       | 0                |      1       |
+      | Course 2 | C2        | 0        | 1         | snap  | 1                |      1       |
 
     And the following "users" exist:
       | username | firstname | lastname | email |
@@ -60,7 +60,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
     And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-2" "css_element"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And I am on activity "assign" "Test assignment1" page
@@ -98,7 +98,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
     And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-1" "css_element"
     And I should see "Not Submitted" in the "#snap-personal-menu-<selectorstr> div.snap-media-object .snap-completion-meta.event-2" "css_element"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And I am on activity "assign" "Test assignment1" page
@@ -153,7 +153,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
       | personalmenuadvancedfeedsenable | <enadvfeeds> | theme_snap |
     And I log in as "student1"
     And I am on "Course 2" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And I am on activity "assign" "Test assignment1" page

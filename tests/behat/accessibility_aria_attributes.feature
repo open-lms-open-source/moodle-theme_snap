@@ -31,16 +31,16 @@ Feature: Elements for Snap should have the proper aria attributes.
     Given the following config values are set as admin:
       | enableglobalsearch | true |
     Given the following "courses" exist:
-      | fullname | shortname | category | format | enablecompletion |
-      | Course 1 | C1        | 0        | topics | 1                |
-      | Course 2 | C2        | 0        | topics | 1                |
-      | Course 3 | C3        | 0        | topics | 1                |
-      | Course 4 | C4        | 0        | topics | 1                |
-      | Course 5 | C5        | 0        | topics | 1                |
-      | Course 6 | C6        | 0        | topics | 1                |
-      | Course 7 | C7        | 0        | topics | 1                |
-      | Course 8 | C8        | 0        | topics | 1                |
-      | Course 9 | C9        | 0        | topics | 1                |
+      | fullname | shortname | category | format | enablecompletion | initsections |
+      | Course 1 | C1        | 0        | topics | 1                |      1       |
+      | Course 2 | C2        | 0        | topics | 1                |      1       |
+      | Course 3 | C3        | 0        | topics | 1                |      1       |
+      | Course 4 | C4        | 0        | topics | 1                |      1       |
+      | Course 5 | C5        | 0        | topics | 1                |      1       |
+      | Course 6 | C6        | 0        | topics | 1                |      1       |
+      | Course 7 | C7        | 0        | topics | 1                |      1       |
+      | Course 8 | C8        | 0        | topics | 1                |      1       |
+      | Course 9 | C9        | 0        | topics | 1                |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -58,7 +58,7 @@ Feature: Elements for Snap should have the proper aria attributes.
   Scenario: All calendar's anchors must contain the aria-label attribute
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And I click on "li#section-1 ul.section li:first-child .snap-edit-asset-more" "css_element"
     And I click on ".snap-asset .snap-edit-asset" "css_element"
@@ -123,7 +123,7 @@ Feature: Elements for Snap should have the proper aria attributes.
   Scenario: When an activity have a restriction, the lock icon should have the needed aria attributes.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-activity.modtype_assign .snap-edit-asset-more[title='More Options \"Test assignment1\"']" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-edit-asset[aria-label='Edit activity Test assignment1']" "css_element"
     And I wait until the page is ready

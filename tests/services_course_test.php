@@ -411,7 +411,7 @@ class services_course_test extends \advanced_testcase {
 
         // Check that action model has toggled after section hidden.
         $this->assertEquals('snap-visibility snap-show', $actionmodel->class);
-        $this->assertEquals('Show topic', $actionmodel->title);
+        $this->assertEquals('Show', $actionmodel->title);
         $this->assertStringContainsString('show=3', $actionmodel->url);
 
         // Unhide the section.
@@ -421,7 +421,7 @@ class services_course_test extends \advanced_testcase {
 
         // Check that action model now corresponds to unhighlighted state.
         $this->assertEquals('snap-visibility snap-hide', $actionmodel->class);
-        $this->assertEquals('Hide topic', $actionmodel->title);
+        $this->assertEquals('Hide', $actionmodel->title);
         $this->assertStringContainsString('hide=3', $actionmodel->url);
     }
 
@@ -554,7 +554,7 @@ class services_course_test extends \advanced_testcase {
         global $CFG, $DB;
         require_once($CFG->dirroot .'/theme/snap/lib.php');
         $topics = $this->getDataGenerator()->create_course(
-            array('numsections' => 5, 'format' => 'topics'),
+            array('numsections' => 5, 'format' => 'topics', 'initsections' => '1'),
             array('createsections' => true));
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
         $teacherole = $DB->get_record('role', array('shortname' => 'editingteacher'));
@@ -572,7 +572,7 @@ class services_course_test extends \advanced_testcase {
         $params = ['courseid' => $topics->id, 'section' => 1];
         $this->setUser($student);
         $section = theme_snap_output_fragment_section($params);
-        $this->assertStringContainsString('aria-label="Topic 1"', $section);
+        $this->assertStringContainsString('aria-label="Section 1"', $section);
         // Section doesn't have the modchooser div.
         $this->assertStringNotContainsString('snap-modchooser', $section);
         $this->assertStringContainsString('Section Assign', $section);

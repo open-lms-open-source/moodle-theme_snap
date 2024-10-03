@@ -24,8 +24,8 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
 
   Background:
     Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
+      | fullname | shortname | category | format | initsections |
+      | Course 1 | C1        | 0        | topics |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -53,7 +53,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I log out
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-activity.modtype_assign .snap-edit-asset-more[title='More Options \"Test assignment1\"']" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-edit-asset[aria-label='Edit activity Test assignment1']" "css_element"
     And I wait until the page is ready
@@ -78,7 +78,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I log out
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-activity.modtype_assign .snap-edit-asset-more[title='More Options \"Test assignment1\"']" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-edit-asset[aria-label='Edit activity Test assignment1']" "css_element"
     And I wait until the page is ready
@@ -108,7 +108,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I log out
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-activity.modtype_assign .snap-edit-asset-more[title='More Options \"Test assignment1\"']" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-edit-asset[aria-label='Edit activity Test assignment1']" "css_element"
     And I wait until the page is ready

@@ -340,7 +340,7 @@ trait format_section_trait {
         }
 
         // Untitled topic title.
-        $testemptytitle = get_string('topic').' '.$section->section;
+        $testemptytitle = get_string('section').' '.$section->section;
         $leftnav = get_config('theme_snap', 'leftnav');
         $leftnavtop = $leftnav === 'top';
         $sectionid = "sectionid-{$section->id}-title";
@@ -351,7 +351,7 @@ trait format_section_trait {
                 $o .= "<span class='sectionnumber'></span>";
             }
             $o .= "<a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>";
-            $o .= get_string('defaulttopictitle', 'theme_snap')."</a></h2>";
+            $o .= get_string('defaultsectiontitle', 'theme_snap')."</a></h2>";
         } else {
             if ($section->section != 0 && $leftnavtop != 0 ) {
                 $sectiontitle = '<span class=\'sectionnumber\'></span>' . $sectiontitle;

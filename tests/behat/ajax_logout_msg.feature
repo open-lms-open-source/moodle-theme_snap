@@ -47,15 +47,15 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
   @javascript
   Scenario: Teacher get's login status warning when trying to manage sections if logged out.
     Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
+      | fullname | shortname | category | format | initsections |
+      | Course 1 | C1        | 0        | topics |      1       |
     And the following "course enrolments" exist:
       | user    | course | role           |
       | teacher | C1     | editingteacher |
     # Test logout msg when changing section visibility
     And I log in as "teacher"
     And I am on the course main page for "C1"
-    When I follow "Topic 2"
+    When I follow "Section 2"
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
     When I click on "#section-2 .snap-visibility.snap-hide" "css_element"
@@ -63,7 +63,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     # Test logout msg when highlighting section
     And I log in as "teacher"
     And I am on the course main page for "C1"
-    When I follow "Topic 2"
+    When I follow "Section 2"
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
     And I highlight section 2
@@ -71,19 +71,19 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     # Test logout msg when moving section
     And I log in as "teacher"
     And I am on the course main page for "C1"
-    When I follow "Topic 2"
-    And I follow "Move \"Topic 2\""
-    Then I should see "Moving \"Untitled Topic\"" in the "#snap-footer-alert" "css_element"
-    And I follow "Topic 4"
+    When I follow "Section 2"
+    And I follow "Move \"Section 2\""
+    Then I should see "Moving \"Section 2\"" in the "#snap-footer-alert" "css_element"
+    And I follow "Section 4"
     And I log out via a separate window
-    When I follow "Place section \"Untitled Topic\" before section \"Topic 4\""
+    When I follow "Place section \"Section 2\" before section \"Section 4\""
     Then I should see "You are logged out"
 
   @javascript
   Scenario: Teacher get's login status warning when trying to manage assets if logged out.
     Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
+      | fullname | shortname | category | format | initsections |
+      | Course 1 | C1        | 0        | topics |      1       |
     And the following "course enrolments" exist:
       | user    | course | role           |
       | teacher | C1     | editingteacher |
@@ -93,7 +93,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     # Test logout msg when changing asset visibility
     Given I log in as "teacher"
     And I am on the course main page for "C1"
-    When I follow "Topic 1"
+    When I follow "Section 1"
     And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I log out via a separate window
     And I click on ".dropdown .availability-dropdown" "css_element"
@@ -102,7 +102,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     # Test logout msg when attempting to duplicate asset
     Given I log in as "teacher"
     And I am on the course main page for "C1"
-    When I follow "Topic 1"
+    When I follow "Section 1"
     And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I log out via a separate window
     And I wait until the page is ready
@@ -111,7 +111,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     # Test logout msg when attempting to move asset
     Given I log in as "teacher"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And I click on ".snap-activity.modtype_assign .snap-edit-asset-more" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-asset-move" "css_element"

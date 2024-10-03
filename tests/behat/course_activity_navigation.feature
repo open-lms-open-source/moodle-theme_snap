@@ -38,9 +38,9 @@ Feature: Activity navigation in Snap theme
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
       | student1  | Student    | 1         | student1@example.com  |
     And the following "courses" exist:
-      | fullname | shortname | format |
-      | Course 1 | C1        | topics |
-      | Course 2 | C2        | topics |
+      | fullname | shortname | format | initsections |
+      | Course 1 | C1        | topics |      1       |
+      | Course 2 | C2        | topics |      1       |
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | student1  | C1      | student         |
@@ -74,7 +74,7 @@ Feature: Activity navigation in Snap theme
     And I reset session storage
     And I am on "Course 1" course homepage
     # Stealth activity.
-    And I follow "Topic 2"
+    And I follow "Section 2"
     And I click on ".modtype_forum .snap-edit-asset-more" "css_element"
     And I click on ".modtype_forum .snap-edit-asset" "css_element"
     And I expand all fieldsets
@@ -86,7 +86,7 @@ Feature: Activity navigation in Snap theme
     And I click on ".snap-activity[data-type='Glossary'] .dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Glossary'] a[data-action='cmHide']" "css_element"
     # Hidden section.
-    And I follow "Topic 5"
+    And I follow "Section 5"
     And I wait until the page is ready
     And I click on "#section-5 a.snap-visibility.snap-hide" "css_element"
     # Set up book.
@@ -345,7 +345,7 @@ Feature: Activity navigation in Snap theme
       | TF2      | 1    | 3.0     |
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "Topic 4" "text"
+    And I click on "Section 4" "text"
     And I click on ".modtype_quiz .mod-link" "css_element"
     And "#prev-activity-link" "css_element" should be visible
     And "#next-activity-link" "css_element" should be visible
@@ -359,7 +359,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Set the activity as stealth from the activity quick menu.
     And I log in as "admin"
     And I am on "Course 1" course homepage
-    And I follow "Topic 2"
+    And I follow "Section 2"
     And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Forum'] a[data-action='cmHide']" "css_element"
@@ -378,10 +378,10 @@ Feature: Activity navigation in Snap theme
     And I should see "Not published to students"
 
   @javascript
-  Scenario: Set the activity as stealth from the activity quick menu when topic is hidden.
+  Scenario: Set the activity as stealth from the activity quick menu when Section is hidden.
     And I log in as "admin"
     And I am on "Course 1" course homepage
-    And I follow "Topic 4"
+    And I follow "Section 4"
     And I click on "li#section-4 div.snap-section-editing a.snap-visibility.snap-hide" "css_element"
     And "li.draft.snap-visible-section span.text.text-warning small.published-status" "css_element" should exist
     And I click on ".snap-activity[data-type='External tool'] button.snap-edit-asset-more" "css_element"

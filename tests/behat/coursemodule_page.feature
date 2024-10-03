@@ -26,8 +26,8 @@ Feature: Open page module inline
 
   Background:
     Given the following "courses" exist:
-      | fullname | shortname | format | category | groupmode | enablecompletion |
-      | Course 1 | C1        | topics | 0        | 1         | 1                |
+      | fullname | shortname | format | category | groupmode | enablecompletion | initsections |
+      | Course 1 | C1        | topics | 0        | 1         | 1                |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
@@ -77,13 +77,13 @@ Feature: Open page module inline
     # Restrict the second page module to only be accessible after the first page module is marked complete.
     And I restrict course asset "Page restricted" by completion of "Page completion"
     # Restrict section one of the course to only be accessible after the first page module is marked complete.
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "#section-1 .edit-summary" "css_element"
-    And I set the section name to "Topic 1"
+    And I set the section name to "Section 1"
     And I apply asset completion restriction "Page completion" to section
-    And I follow "Topic 2"
+    And I follow "Section 2"
     And I click on "#section-2 .edit-summary" "css_element"
-    And I set the section name to "Topic 2"
+    And I set the section name to "Section 2"
     And I apply asset completion restriction "Page completion 2" to section
     And I log out
     And I log in as "student1"
@@ -95,9 +95,9 @@ Feature: Open page module inline
     And "img[alt*='Not completed: Page completion']" "css_element" should exist
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     And I should see "Not available unless: The activity Page completion is marked complete"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And "#chapters h3:nth-of-type(2) li.snap-visible-section" "css_element" should exist
-    # Make sure topic 1 show section availability info.
+    # Make sure Section 1 show section availability info.
     Then I should see availability info "Not available unless: The activity Page completion is marked complete"
     And I follow "Introduction"
     And I click on "li .contentafterlink .pagemod-readmore" "css_element"
@@ -110,12 +110,12 @@ Feature: Open page module inline
     And "#chapters h3:nth-of-type(1) li.snap-visible-section" "css_element" should exist
     And ".snap-conditional-tag[data-content*='Page completion']" "css_element" should not exist
     And "img[alt='Completed: Page completion. Select to mark as not complete.']" "css_element" should exist
-    And I follow "Topic 1"
-    # Make sure topic 1 does not show section availability info.
+    And I follow "Section 1"
+    # Make sure Section 1 does not show section availability info.
     Then I should not see availability info "Not available unless: The activity Page completion is marked complete"
     And I should see "Page completion 2"
     And "img[alt*='Not completed: Page completion 2']" "css_element" should exist
-    And I click on "li[aria-label='Topic 1']" "css_element"
+    And I click on "li[aria-label='Section 1']" "css_element"
     And I click on "//p[contains(text(), 'Page completion 2')]/ancestor::div[contains(@class, 'activityinstance')]//button[contains(@class, 'pagemod-readmore')]" "xpath_element"
     And I wait until "#section-1 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     Then "img[alt*='Not completed: Page completion 2']" "css_element" should not exist

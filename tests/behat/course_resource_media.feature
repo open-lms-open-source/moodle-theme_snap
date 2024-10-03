@@ -25,8 +25,8 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
 
   Background:
     Given the following "courses" exist:
-      | fullname | shortname | category | groupmode | enablecompletion |
-      | Course 1 | C1        | 0        | 1         | 1                |
+      | fullname | shortname | category | groupmode | enablecompletion | initsections |
+      | Course 1 | C1        | 0        | 1         | 1                |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -40,7 +40,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
   Scenario: MP3 opens inline, teacher cannot complete activity.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_mp3_file.mp3" to section 1
@@ -66,7 +66,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
   Scenario: MP3 opens inline with its description.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_mp3_file.mp3" to section 1
