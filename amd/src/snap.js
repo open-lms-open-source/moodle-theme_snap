@@ -637,6 +637,14 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 $('#course-toc').removeClass('state-visible');
             });
 
+            // Check compatibility Mode in Snap.
+            var isQuirksMode = document.compatMode !== 'CSS1Compat';
+            if (isQuirksMode) {
+                log.error('The document is rendering in "quirks mode". This may cause issues with the site\'s' +
+                    ' functionality. Please ensure that the DOCTYPE declaration is present and correctly placed ' +
+                    'at the very start of the HTML document.');
+            }
+
             // Reset videos, when changing section (INT-18208).
             $(document).on("click", ".section_footer a, .chapter-title, .toc-footer a", function() {
                 const videos = $('[title="watch"], .video-js, iframe:not([id])');
