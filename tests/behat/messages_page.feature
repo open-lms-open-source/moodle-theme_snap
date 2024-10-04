@@ -117,6 +117,17 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "User report" in current page administration
     And I set the field with xpath "//*[@data-region='input']" to "Student"
-    And I follow "Student 1"
+    And I click on "li[aria-label='Student 1']" "css_element"
     And I click on "#message-user-button" "css_element"
     Then "body#page-message-index" "css_element" should exist
+
+  @javascript
+  Scenario: Messages drawer is not visible in Snap general views.
+    Given I log in as "admin"
+    And I am on site homepage
+    And ".snap-drawer-headroom" "css_element" should not be visible
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Settings" in current page administration
+    And ".snap-drawer-headroom" "css_element" should not be visible
+    And I follow "My Courses"
+    And ".snap-drawer-headroom" "css_element" should not be visible
