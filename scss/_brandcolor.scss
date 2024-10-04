@@ -1089,6 +1089,12 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             background: white !important;
             border: none;
         }
+
+        #history-filters .btn-group button.btn.btn-secondary.btn-left {
+            background: white !important;
+            border: none;
+        }
+
         .btn.btn-secondary.btn-ins {
             background: $brand-primary;
             color: white;
