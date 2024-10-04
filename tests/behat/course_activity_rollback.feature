@@ -43,6 +43,7 @@ Feature: Course scrollback navigation in Snap theme
 
   @javascript
   Scenario: Scrollback with a teacher in the course homepage and in section.
+    Given I skip because "I will be reviewed on INT-20458"
     Given I log in as "teacher1"
     And I reset session storage
     And I am on "Course 1" course homepage

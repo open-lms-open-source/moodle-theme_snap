@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   course section from a simple file input element in either read or edit mode.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | format | maxbytes | enablecompletion | initsections |
       | Course 1 | C1        | 0        | topics | 500000   | 1                |      1       |

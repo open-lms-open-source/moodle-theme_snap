@@ -103,7 +103,7 @@ class course_renderer extends \core_course_renderer {
             $output .= format_text($summarytext, $section->summaryformat, $summaryformatoptions);
 
             if ($editing && has_capability('moodle/course:update', $context)) {
-                $streditsummary = get_string('editsummary');
+                $streditsummary = get_string('edit');
                 $editsectionurl = new moodle_url('/course/editsection.php', ['id' => $section->id]);
                 $attributes = ['title' => $streditsummary, 'aria-label' => $streditsummary];
                 $output .= html_writer::link($editsectionurl, $this->pix_icon('t/edit', ''), $attributes) .

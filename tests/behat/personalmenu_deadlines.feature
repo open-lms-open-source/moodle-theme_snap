@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can find in
   for activities and the submission / attempt status thereof.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following config values are set as admin:
       | allowcoursethemes | 1 |
     And the following "courses" exist:

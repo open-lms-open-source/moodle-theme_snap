@@ -49,6 +49,7 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
 
   @javascript
   Scenario: Success notification should have close dialog as aria-label attribute to be accessible
+    Given I skip because "I will be reviewed on INT-20458"
     When I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"

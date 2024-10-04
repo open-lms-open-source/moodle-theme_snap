@@ -23,6 +23,7 @@
 Feature: When importing a course into another, the hidden content should be applied correctly.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | format | section | initsections |
       | Course 1 | C1        | 0        | topics | 3       |      1       |

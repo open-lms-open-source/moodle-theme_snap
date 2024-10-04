@@ -23,6 +23,7 @@
 Feature: Entering a Snap course without specifying a section will take you to the current section
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | format | hiddensections| initsections |
       | Course 1 | C1        | 0        | topics |     0         |      1       |

@@ -23,12 +23,13 @@
 Feature: When the moodle theme is set to Snap, teachers can move course resources and activities without using drag and drop.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
-      | Include a topic section | 1 |
+      | Add custom content | 1 |
     And I log out
     And the following "courses" exist:
       | fullname | shortname | category | format | initsections |

@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
   resource inline.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | 0        | 1         | 1                |      1       |

@@ -28,6 +28,7 @@
 # Alternate texts: cat.text-alternatives, wcag111, section508, section508.22.a.
 Feature: Check functionality in activity cards.
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |

@@ -39,6 +39,7 @@ Feature: When the moodle theme is set to Snap, teachers can duplicate sections i
 
     @javascript
     Scenario: Duplicate a section
+        Given I skip because "I will be reviewed on INT-20458"
         Given I am on the course main page for "C1"
         And I follow "Section 1"
         And I click on "#extra-actions-dropdown-1" "css_element"

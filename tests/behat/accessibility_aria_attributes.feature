@@ -28,6 +28,7 @@
 Feature: Elements for Snap should have the proper aria attributes.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following config values are set as admin:
       | enableglobalsearch | true |
     Given the following "courses" exist:

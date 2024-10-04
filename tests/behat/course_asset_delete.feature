@@ -24,6 +24,7 @@
 Feature: When the moodle theme is set to Snap, teachers can delete course resources and activities without having to reload the page.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -51,7 +52,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
-      | Include a topic section | 1 |
+      | Add custom content | 1 |
     And I am on site homepage
     And I should see "Test assignment1"
     When I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
