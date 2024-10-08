@@ -256,7 +256,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     }
 
     .button-group > button.default,
-    .btn.btn-primary {
+    .btn.btn-primary,
+    .btn.btn-outline-dark {
         color: #fff;
         background-color: $brand-primary;
         border-color: $brand-primary;
@@ -269,6 +270,14 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             border-color: darken($brand-primary, 10%);
             outline: 3px auto $brand-primary;
         }
+    }
+
+    .btn-outline-dark:focus {
+        box-shadow: inset 0 0 0 2px #fff;
+    }
+
+    .btn-outline-dark:not(:disabled):not(.disabled):active:focus {
+        box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5);
     }
 
     .btn.btn-default,
