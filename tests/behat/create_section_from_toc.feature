@@ -125,7 +125,6 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
 
   @javascript
   Scenario Outline: For editing teachers, ensure new section creation works when using content.
-    Given I skip because "It will be reviewed on the ticket INT-19999"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |

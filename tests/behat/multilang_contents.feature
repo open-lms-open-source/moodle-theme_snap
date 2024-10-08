@@ -38,8 +38,8 @@ Feature: The site displays only the language that user has selected for multilan
     And I expand "Plugins" node
     And I expand "Filters" node
     And I follow "Manage filters"
-    And I click on "On" "option" in the "Multi-Language Content" "table_row"
-    And I click on "Content and headings" "option" in the "Multi-Language Content" "table_row"
+    And I click on "On" "option" in the "#activemultilang" "css_element"
+    And I click on "Content and headings" "option" in the "#applytomultilang" "css_element"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Settings" in current page administration
@@ -49,7 +49,6 @@ Feature: The site displays only the language that user has selected for multilan
 
   @javascript
   Scenario: Site news on front page displays only in english.
-    Given I skip because "It will be fixed in INT-18296"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "//div/a[contains(text(),'Add a new topic')]" "xpath_element"
@@ -59,17 +58,18 @@ Feature: The site displays only the language that user has selected for multilan
     And I am on site homepage
     And ".news-article.clearfix" "css_element" should exist
     And I click on "//div/p/a[contains(text(),'Read more')]" "xpath_element"
-    And "//div[contains(text(),'English text')]" "xpath_element" should exist
+    And I should see "English text"
+    And I should not see "Italian text"
     And I log out
 
   @javascript
   Scenario: Language is changed site footer displays in only english.
-    Given I skip because "It will be fixed in INT-18296"
     Given the following config values are set as admin:
       | footnote | <span lang="en" class="multilang">English text</span><span lang="it" class="multilang">Italian text</span> | theme_snap |
     When I log in as "admin"
     Then "#snap-footer-content" "css_element" should exist
-    Then "//div[contains(text(),'English text')]" "xpath_element" should exist
+    And I should see "English text"
+    And I should not see "Italian text"
     And I log out
 
   @javascript
@@ -79,5 +79,6 @@ Feature: The site displays only the language that user has selected for multilan
       | 0        | <span lang="en" class="multilang">English text</span><span lang="it" class="multilang">Italian text</span> | 1        | 1         |
     When I log in as "admin"
     And I am on course index
-    Then "//div/h3/a[contains(text(),'English text')]" "xpath_element" should exist
+    And I should see "English text"
+    And I should not see "Italian text"
     And I log out
