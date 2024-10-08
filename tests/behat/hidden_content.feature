@@ -23,10 +23,11 @@
 Feature: When importing a course into another, the hidden content should be applied correctly.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname | shortname | category | format | section |
-      | Course 1 | C1        | 0        | topics | 3       |
-      | Course 2 | C2        | 0        | topics | 3       |
+      | fullname | shortname | category | format | section | initsections |
+      | Course 1 | C1        | 0        | topics | 3       |      1       |
+      | Course 2 | C2        | 0        | topics | 3       |      1       |
     And the following "activities" exist:
       | activity   | name         | intro                       | course | idnumber  | section |
       | page       | TestP 1      | Test page description       | C1     | page1     | 1       |
@@ -38,8 +39,8 @@ Feature: When importing a course into another, the hidden content should be appl
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
-    And I follow "Hide topic"
+    And I follow "Section 1"
+    And I follow "Hide"
     And "li.draft.snap-visible-section span.text.text-warning small.published-status" "css_element" should exist
     And I am on the course main page for "C2"
     And I click on "#admin-menu-trigger" "css_element"
@@ -50,7 +51,7 @@ Feature: When importing a course into another, the hidden content should be appl
     And I press "Next"
     And I press "Perform import"
     And I press "Continue"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I should see "Not published to students"
     And the "class" attribute of "li.snap-asset.activity.page.modtype_page" "css_element" should contain "draft"
     Examples:

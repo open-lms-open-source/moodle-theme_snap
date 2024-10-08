@@ -24,9 +24,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
   having to enter edit mode.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1 | 0 | topics |
+      | fullname | shortname | category | format | initsections |
+      | Course 1 |     C1    |     0    | topics |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -48,29 +49,29 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
-    And I follow "Untitled Topic"
-    And I set the section name to "My & < > Topic"
+    And I follow "Section 1"
+    And I follow "Untitled Section"
+    And I set the section name to "My & < > Section"
     And I press "Save changes"
-    And I follow "Move \"My & < > Topic\""
-    Then I should see "Moving \"My & < > Topic\"" in the "#snap-footer-alert" "css_element"
-    When I follow "Topic 4"
-    And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""
-    Then I should see "My & < > Topic" in the "#section-3 .sectionname" "css_element"
+    And I follow "Move \"My & < > Section\""
+    Then I should see "Moving \"My & < > Section\"" in the "#snap-footer-alert" "css_element"
+    When I follow "Section 4"
+    And I follow "Place section \"My & < > Section\" before section \"Section 4\""
+    Then I should see "My & < > Section" in the "#section-3 .sectionname" "css_element"
     And "#chapters h3:nth-of-type(4) li.snap-visible-section" "css_element" should exist
     # Check that navigation is also updated.
     # Note that "4th" refers to section-3 as section-0 is the "introduction" section in the TOC.
     When I click on the "4th" link in the TOC
-    Then I should see "My & < > Topic" in the "#section-3 .sectionname" "css_element"
-    Then the previous navigation for section "3" is for "Topic 2" linking to "#section-2"
-    And the next navigation for section "3" is for "Topic 4" linking to "#section-4"
-    And I follow "Topic 4"
-    And the previous navigation for section "4" is for "My & < > Topic" linking to "#section-3"
-    When I follow "Topic 2"
-    And the next navigation for section "2" is for "My & < > Topic" linking to "#section-3"
+    Then I should see "My & < > Section" in the "#section-3 .sectionname" "css_element"
+    Then the previous navigation for section "3" is for "Section 2" linking to "#section-2"
+    And the next navigation for section "3" is for "Section 4" linking to "#section-4"
+    And I follow "Section 4"
+    And the previous navigation for section "4" is for "My & < > Section" linking to "#section-3"
+    When I follow "Section 2"
+    And the next navigation for section "2" is for "My & < > Section" linking to "#section-3"
     # The data-section attribute of the moved section module link should match the section number.
     # This is done so activities are created in the correct section.
-    When I follow "My & < > Topic"
+    When I follow "My & < > Section"
     And "//button[contains(text(),'Create learning activity') and @data-sectionid=3]" "xpath" should be visible
     Examples:
       | Option     |
@@ -87,15 +88,15 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
-    And I follow "Untitled Topic"
-    And I set the section name to "My & < > Topic"
+    And I follow "Section 1"
+    And I follow "Untitled Section"
+    And I set the section name to "My & < > Section"
     And I press "Save changes"
-    And I follow "Move \"My & < > Topic\""
-    Then I should see "Moving \"My & < > Topic\"" in the "#snap-footer-alert" "css_element"
-    When I follow "Topic 4"
+    And I follow "Move \"My & < > Section\""
+    Then I should see "Moving \"My & < > Section\"" in the "#snap-footer-alert" "css_element"
+    When I follow "Section 4"
     And the editing teacher role is removed from course "C1" for "teacher1"
-    And I follow "Place section \"My & < > Topic\" before section \"Topic 4\""
+    And I follow "Place section \"My & < > Section\" before section \"Section 4\""
     Then I should see "Sorry, but you do not currently have permissions to do that (Move sections)"
     Examples:
       | Option     |
@@ -110,7 +111,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "a[title=Move section]" "css_element" should not exist
     Examples:
       | Option     |
@@ -126,7 +127,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And "#snap-footer-alert" "css_element" should not exist
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And I click on ".snap-activity.modtype_assign .snap-edit-asset-more" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-asset-move" "css_element"

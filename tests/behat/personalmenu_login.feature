@@ -57,8 +57,8 @@ Feature: When the moodle theme is set to Snap,
     Given the following config values are set as admin:
       | personalmenulogintoggle | 1 | theme_snap |
     And the following "courses" exist:
-      | fullname | shortname |
-      | Course 1 | C1        |
+      | fullname | shortname | initsections |
+      | Course 1 | C1        |      1       |
     And the following "course enrolments" exist:
       | user      | course | role           |
       | teacher1  | C1     | editingteacher |
@@ -70,7 +70,7 @@ Feature: When the moodle theme is set to Snap,
     And I am on "Course 1" course homepage
     And I follow "Introduction"
     And "#section-0" "css_element" should be visible
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And "#section-1" "css_element" should be visible
     And I follow "My Courses"
     Then "#snap-pm" "css_element" should be visible

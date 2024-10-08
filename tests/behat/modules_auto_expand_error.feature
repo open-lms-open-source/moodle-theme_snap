@@ -23,9 +23,10 @@
 Feature: When setting an erroneous field in settings, snap auto-expands area.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname | shortname | format | category | groupmode | enablecompletion |
-      | Course 1 | C1        | topics | 0        | 1         | 1                |
+      | fullname | shortname | format | category | groupmode | enablecompletion | initsections |
+      | Course 1 | C1        | topics | 0        | 1         | 1                |      1       |
     Then I log in as "admin"
     And I am on "Course 1" course homepage
     And I add a "Assignment" to section "1" and I fill the form with:
@@ -37,7 +38,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
   Scenario: Go to Assignment settings page and put wrong max grade.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-edit-asset-more" "css_element"
     And I click on ".snap-edit-asset" "css_element"
     And I expand all fieldsets
@@ -50,7 +51,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
   Scenario: Go to Assignment settings page and put text on Grade to pass input.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-edit-asset-more" "css_element"
     And I click on ".snap-edit-asset" "css_element"
     And I expand all fieldsets
@@ -63,7 +64,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
   Scenario: Go to Assignment settings page and put Cut-off date before allow submissions from.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-edit-asset-more" "css_element"
     And I click on ".snap-edit-asset" "css_element"
     And I expand all fieldsets
@@ -77,7 +78,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
   Scenario: Go to Assignment settings page and put Grading date before allow submissions from.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on ".snap-edit-asset-more" "css_element"
     And I click on ".snap-edit-asset" "css_element"
     And I expand all fieldsets

@@ -38,8 +38,7 @@ Feature: When the moodle theme is set to Snap, users can link back to the course
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Edit section"
-    # Note the double space between "of" and "General" below is necessary.
-    And I should see "Summary of  General"
+    And I should see "Edit section settings"
     And I follow the page heading course link
     Then I should see "Contents"
     And I should see "Introduction"

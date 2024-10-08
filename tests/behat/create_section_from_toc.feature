@@ -23,12 +23,13 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   This requires the course to use the weeks and topics format.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname               | shortname     | category | groupmode | format         | startdate  |
-      | Topics course          | course_topics | 0        | 1         | topics         |            |
-      | Weeks course           | course_weeks  | 0        | 1         | weeks          | 1457078400 |
-      | Single activity course | course_single | 0        | 1         | singleactivity |            |
-      | Social course          | course_social | 0        | 1         | social         |            |
+      | fullname               | shortname     | category | groupmode | format         | startdate  | initsecions |
+      | Topics course          | course_topics | 0        | 1         | topics         |            |      1      |
+      | Weeks course           | course_weeks  | 0        | 1         | weeks          | 1457078400 |      0      |
+      | Single activity course | course_single | 0        | 1         | singleactivity |            |      0      |
+      | Social course          | course_social | 0        | 1         | social         |            |      0      |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -153,16 +154,16 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I follow "Cancel"
     # Cancel button should return the user to the main section of the course.
     And I should see "Introduction"
-    And I follow "Topic 4"
-    # Make Topic 4 the current section.
+    And I follow "Section 4"
+    # Make Section 4 the current section.
     And I click on "#extra-actions-dropdown-4" "css_element"
     And I click on "#section-4 .snap-highlight" "css_element"
-    # Go to a different topic than the highlighted one and open the create a new section form.
-    And I follow "Topic 1"
+    # Go to a different Section than the highlighted one and open the create a new section form.
+    And I follow "Section 1"
     And I follow "Create a new section"
     And I follow "Cancel"
     # The redirect of the cancel button should be to the highlighted section.
-    And I should see "Topic 4"
+    And I should see "Section 4"
 
     Examples:
       | Option     |

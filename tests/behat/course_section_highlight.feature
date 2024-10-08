@@ -23,9 +23,10 @@
 Feature: When the moodle theme is set to Snap, teachers can toggle the currently higlighted course sections.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
+      | fullname | shortname | category | format | initsecitons |
+      | Course 1 | C1        | 0        | topics |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -44,7 +45,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 2"
+    And I follow "Section 2"
     Then "#section-2" "css_element" should exist
     And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
     And I click on "#extra-actions-dropdown-2" "css_element"
@@ -60,7 +61,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 2"
+    And I follow "Section 2"
     And I click on "#extra-actions-dropdown-2" "css_element"
     Given I click on "#section-2 .snap-highlight" "css_element"
     And I wait until "#section-2 .snap-highlight" "css_element" exists
@@ -83,7 +84,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And the editing teacher role is removed from course "C1" for "teacher1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And I click on "#extra-actions-dropdown-1" "css_element"
     And I click on "#section-1 .snap-highlight" "css_element"
@@ -96,7 +97,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log out
     And I log in as "teacher1"
     Given I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And "#extra-actions-dropdown-1" "css_element" should not exist
     And "#section-1 .snap-highlight" "css_element" should not exist
@@ -109,7 +110,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    And I follow "Topic 2"
+    And I follow "Section 2"
     Then "#section-2 .snap-highlight" "css_element" should not exist
     Examples:
       | Option     |

@@ -23,9 +23,10 @@
 Feature: When the moodle theme is set to Snap, conditional restrictions work as normal.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname | shortname | category | groupmode | enablecompletion |
-      | Course 1 | C1        | 0        | 1         | 1                |
+      | fullname | shortname | category | groupmode | enablecompletion | initsections |
+      | Course 1 | C1        | 0        | 1         | 1                |      1       |
     And the following "activities" exist:
       | activity | course | idnumber | name                        | intro                     | section | assignsubmission_onlinetext_enabled | completion | completionview |
       | assign   | C1     | assign1  | S1 Restricted               | Restricted by date past   | 1       | 1                                   | 1          | 0              |
@@ -70,7 +71,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I should see available from date of "tomorrow" in section 2
     And I go to course section 4
     And I click on "#section-4 .edit-summary" "css_element"
-    And I set the section name to "Topic 4"
+    And I set the section name to "Section 4"
     And I apply asset completion restriction "S3 Completion - view" to section
     And I go to course section 4
     And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"

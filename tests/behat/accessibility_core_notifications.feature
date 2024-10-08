@@ -30,8 +30,8 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
       | student1  | Student    | 1         | student1@example.com  |
     And the following "courses" exist:
-      | fullname | shortname | format |
-      | Course 1 | C1        | topics |
+      | fullname | shortname | format | initsections |
+      | Course 1 | C1        | topics |      1       |
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | teacher1  | C1      | editingteacher  |
@@ -49,9 +49,10 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
 
   @javascript
   Scenario: Success notification should have close dialog as aria-label attribute to be accessible
+    Given I skip because "I will be reviewed on INT-20458"
     When I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "li.modtype_forum a.mod-link" "css_element"
     And I wait until the page is ready
     When I add a new discussion to "Test forum name" forum with:

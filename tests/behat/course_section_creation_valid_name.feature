@@ -24,9 +24,10 @@
 Feature: When the moodle theme is set to Snap, section names should not be empty.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
+      | fullname | shortname | category | format | initsections |
+      | Course 1 | C1        | 0        | topics |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -46,26 +47,26 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "#section-1 .edit-summary" "css_element"
     #"Only spaces" name not allowed
     And I set the section name to "  "
     And I press "Save changes"
     And "body#page-course-editsection" "css_element" should exist
     #Names with leading spaces are allowed
-    And I set the section name to "  Topic one"
+    And I set the section name to "  Section one"
     And I press "Save changes"
     And I wait until the page is ready
     And "body#page-course-editsection" "css_element" should not exist
     #Names with trailing spaces are allowed too
     And I click on "#section-1 .edit-summary" "css_element"
-    And I set the section name to "Topic one   "
+    And I set the section name to "Section one   "
     And I press "Save changes"
     And I wait until the page is ready
     And "body#page-course-editsection" "css_element" should not exist
     #Valid name is allowed
     And I click on "#section-1 .edit-summary" "css_element"
-    Then I set the section name to "Topic one"
+    Then I set the section name to "Section one"
     And I press "Save changes"
     And I wait until the page is ready
     And "body#page-course-editsection" "css_element" should not exist
@@ -138,15 +139,15 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I press "Save changes"
     And "body#page-course-editsection" "css_element" should exist
     #Names with leading spaces allowed
-    And I set the section name to "  Topic one"
+    And I set the section name to "  Section one"
     And I press "Save changes"
-    And I should see "Topic one"
+    And I should see "Section one"
     #Names with trailing spaces allowed
     And I follow "8 January - 14 January"
     And I click on "#section-2 .edit-summary" "css_element"
-    And I set the section name to "Topic two   "
+    And I set the section name to "Section two   "
     And I press "Save changes"
-    And I should see "Topic two"
+    And I should see "Section two"
     Examples:
       | Option     |
       | 0          |

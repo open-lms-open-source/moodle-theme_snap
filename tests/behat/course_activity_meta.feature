@@ -23,12 +23,13 @@
 Feature: When the moodle theme is set to Snap, students see meta data against course activities.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following config values are set as admin:
       | enableoutcomes | 1 |
       | theme | snap |
     And the following "courses" exist:
-      | fullname | shortname | category | groupmode | theme |
-      | Course 1 | C1 | 0 | 1 | |
+      | fullname | shortname | category | groupmode | theme | initsections |
+      | Course 1 |    C1     |    0     |     1     |       |       1      |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -53,7 +54,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And assignment entitled "Test assignment1" shows as not submitted in metadata
@@ -74,7 +75,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I press "Submit assignment"
     And I press "Continue"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And assignment entitled "Test assignment1" shows as submitted in metadata
     And assignment entitled "Test assignment2" shows as not submitted in metadata
     And assignment entitled "Test assignment3" shows as not submitted in metadata
@@ -89,7 +90,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
     And assignment entitled "Test assignment1" has feedback metadata
@@ -129,7 +130,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     # Create assignment 1.
     And I add a "Assignment" to section "1" and I fill the form with:
       | Assignment name                  | Test assign  |
@@ -142,7 +143,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assign"
     And assignment entitled "Test assign" shows as not submitted in metadata
@@ -153,13 +154,13 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | Online text | I'm the student submission |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And assignment entitled "Test assign" shows as submitted in metadata
     And I log out
     # Now we login as student2 and it must appear as submitted since is in the same group with student1.
     And I log in as "student2"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assign"
     And assignment entitled "Test assign" shows as submitted in metadata
@@ -206,7 +207,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
     And I reload the page
     And I press "Add submission"
@@ -216,7 +217,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "student2"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
     And I reload the page
     When I press "Add submission"
@@ -226,7 +227,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "//a[@class='mod-link']//p[text()='Test assignment name']" "xpath_element"
     And I follow "View all submissions"
     And I click on "Grade" "link" in the "Student 1" "table_row"
@@ -245,12 +246,12 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And assignment entitled "Test assignment name" has feedback metadata
     And I log out
     And I log in as "student2"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And assignment entitled "Test assignment name" does not have feedback metadata
     Examples:
       | Option     |
@@ -297,7 +298,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     # Login as student from group 1 to submit an assignment.
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I should see "A1"
     And I am on activity "assign" "A1" page
     And I reload the page
@@ -309,7 +310,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     #Log as student from group 2 to submit an assignment.
     And I log in as "student2"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I should see "A1"
     And I am on activity "assign" "A1" page
     And I reload the page
@@ -326,7 +327,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I should see "2 of 3 Submitted, 2 Ungraded"
     And I log out
     Given I log in as "admin"
@@ -337,7 +338,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "1 of 2 Submitted, 1 Ungraded"
 
   @javascript
@@ -359,7 +360,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 January 2000"
     Then I should see "Due 2 January 2000"
     And I log out
@@ -381,7 +382,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | student2 | G2   |
     And I log in as "admin"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 January 2000"
     And I should see "Due 2 January 2000"
     And I should see "Due 3 January 2000"
@@ -405,19 +406,19 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | Due date               | ##2 December 2000 08:00## |
     And I press "Save"
     Then I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I should see "Due 1 January 2000"
     And I should see "Due 2 January 2000"
     And I should see "Due 3 January 2000"
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 December 2000"
     And I should see "Due 2 December 2000"
     And I should see "Due 3 January 2000"
     And I log in as "student2"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 January 2000"
     And I should see "Due 2 January 2000"
     And I should see "Due 3 January 2000"
@@ -429,19 +430,19 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I set the following fields to these values:
       | Due date               | disabled |
     And I press "Save and return to course"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 January 2000"
     And I should not see "Due 2 January 2000"
     And I should see "Due 3 January 2000"
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 December 2000"
     And I should see "Due 2 December 2000"
     And I should see "Due 3 January 2000"
     And I log in as "student2"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 January 2000"
     And I should not see "Due 2 January 2000"
     And I should see "Due 3 January 2000"
@@ -454,19 +455,19 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | Due date               | ##5 January 2000 08:00## |
     And I press "Save and return to course"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 January 2000"
     And I should see "Due 5 January 2000"
     And I should see "Due 3 January 2000"
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 December 2000"
     And I should see "Due 2 December 2000"
     And I should see "Due 3 January 2000"
     And I log in as "student2"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then I should see "Due 1 January 2000"
     And I should see "Due 5 January 2000"
     And I should see "Due 3 January 2000"

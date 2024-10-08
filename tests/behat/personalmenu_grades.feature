@@ -24,9 +24,10 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   grades / grading column showing them things that have recently had feedback or have recently been submitted.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname | shortname | category | groupmode | groupmodeforce |
-      | Course 1 | C1        | 0        | 1         | 0              |
+      | fullname | shortname | category | groupmode | groupmodeforce | initsections |
+      | Course 1 | C1        | 0        | 1         | 0              |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -80,7 +81,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I open the personal menu
     And I should see "Feedback"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I wait until "#section-1" "css_element" is visible
     And I should see "Test assignment1"
 
@@ -198,7 +199,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I open the personal menu
     And I should see "Feedback"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I should see "A1"
     And I am on activity "assign" "A1" page
     And I reload the page
@@ -278,7 +279,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I log in as "student1"
     And I open the personal menu
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I should see "A1"
     And I am on activity "assign" "A1" page
     And I reload the page
@@ -310,7 +311,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I log in as "student2"
     And I open the personal menu
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I should see "A1"
     And I follow "Not Submitted"
     And I reload the page

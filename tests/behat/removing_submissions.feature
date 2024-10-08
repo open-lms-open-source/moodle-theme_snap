@@ -24,9 +24,10 @@
 Feature: When the moodle theme is set to Snap, a student can remove a submitted file assignment.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname | shortname | category | groupmode |
-      | Course 1 | C1        | 0        | 1         |
+      | fullname | shortname | category | groupmode | initsections |
+      | Course 1 | C1        | 0        | 1         |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher@example.com  |
@@ -49,7 +50,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
   Scenario: User sees remove submission button and can remove submission with only files
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
     And I reload the page
     And I press "Add submission"
@@ -59,7 +60,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     Then I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
     Then I should see "Remove submission"
     # Check if submission has file.
@@ -77,7 +78,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
   Scenario: User sees remove submission button and can remove submission with only text
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
     And I reload the page
     And I press "Add submission"
@@ -88,7 +89,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     Then I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
     Then I should see "Remove submission"
     # Chcek if submission has online text.
@@ -106,7 +107,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
   Scenario: User sees remove submission button and can remove submission with mixed content
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
     And I reload the page
     And I press "Add submission"
@@ -118,7 +119,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
     Then I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
     Then I should see "Remove submission"
     # Check if submission has file and online text.

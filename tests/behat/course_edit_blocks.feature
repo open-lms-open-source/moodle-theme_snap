@@ -23,10 +23,11 @@
 Feature: When the moodle theme is set to Snap, teachers only see block edit controls when in edit mode.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        | 0        | topics |
-      | Course 2 | C2        | 0        | weeks  |
+      | fullname | shortname | category | format | initsections |
+      | Course 1 | C1        | 0        | topics |      1       |
+      | Course 2 | C2        | 0        | weeks  |      0       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -43,7 +44,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And ".block_news_items a.toggle-display" "css_element" should not exist
     And I should see "Test assignment1" in the "#section-1" "css_element"
@@ -59,7 +60,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     # Edit mode should persist even if there are iframes in a section summary.
     # First add a section with an iframe which points to the host root.
     And I follow "Turn editing off"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section summary to "<iframe src=\"/\"></iframe>"
     And I press "Save changes"

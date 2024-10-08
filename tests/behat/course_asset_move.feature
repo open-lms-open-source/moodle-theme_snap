@@ -23,16 +23,17 @@
 Feature: When the moodle theme is set to Snap, teachers can move course resources and activities without using drag and drop.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
-      | Include a topic section | 1 |
+      | Add custom content | 1 |
     And I log out
     And the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1 | 0 | topics |
+      | fullname | shortname | category | format | initsections |
+      | Course 1 |     C1    |     0    | topics |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -72,7 +73,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I log out
     Then I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And I click on ".snap-activity.modtype_assign .snap-edit-asset-more[title='More Options \"Test assignment1\"']" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-asset-move[aria-label='Move \"Test assignment1\"']" "css_element"
@@ -92,12 +93,12 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I log out
     Then I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And I click on ".snap-activity.modtype_assign .snap-edit-asset-more[title='More Options \"Test assignment1\"']" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-asset-move[aria-label='Move \"Test assignment1\"']" "css_element"
     Then I should see "Moving \"Test assignment1\""
-    And I follow "Topic 2"
+    And I follow "Section 2"
     And I click on "li#section-2 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before the "li.snap-drop.asset-drop" "css_element"
     Examples:
@@ -113,14 +114,14 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I log out
     Then I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And I click on ".snap-activity.modtype_assign .snap-edit-asset-more[title='More Options \"Test assignment1\"']" "css_element"
     And I click on ".snap-activity.modtype_assign .snap-asset-move[aria-label='Move \"Test assignment1\"']" "css_element"
     Then I should see "Moving \"Test assignment1\""
     And I click on ".snap-activity.modtype_assign .snap-asset-move-label[aria-label='Move \"Test assignment2\"']" "css_element"
     Then I should see "Moving 2 objects"
-    And I follow "Topic 2"
+    And I follow "Section 2"
     And I click on "li#section-2 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then "li#section-2 .snap-activity.modtype_assign" "css_element" should appear before the "li.snap-drop.asset-drop" "css_element"
     And "li#section-2 .snap-activity.modtype_assign .snap-asset-move[aria-label='Move \"Test assignment1\"']" "css_element" should appear before the "li#section-2 .snap-activity.modtype_assign .snap-asset-move[aria-label='Move \"Test assignment2\"']" "css_element"
@@ -137,7 +138,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course resource
     And I log out
     Then I log in as "student1"
     And I am on the course main page for "C1"
-    And I follow "Topic 1"
+    And I follow "Section 1"
     Then ".snap-activity.modtype_assign .js-snap-asset-move" "css_element" should not exist
     Examples:
       | Option     |

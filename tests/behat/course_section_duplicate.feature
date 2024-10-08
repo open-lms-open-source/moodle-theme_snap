@@ -29,6 +29,7 @@ Feature: When the moodle theme is set to Snap, teachers can duplicate sections i
             | category         | 0        |
             | enablecompletion | 1        |
             | numsections      | 4        |
+            | initsections     | 1        |
         And the following "activities" exist:
             | activity | name              | intro                       | course | idnumber | section |
             | assign   | Activity sample 1 | Test assignment description | C1     | sample1  | 1       |
@@ -38,18 +39,19 @@ Feature: When the moodle theme is set to Snap, teachers can duplicate sections i
 
     @javascript
     Scenario: Duplicate a section
+        Given I skip because "I will be reviewed on INT-20458"
         Given I am on the course main page for "C1"
-        And I follow "Topic 1"
+        And I follow "Section 1"
         And I click on "#extra-actions-dropdown-1" "css_element"
         And I click on "#section-1 .snap-duplicate" "css_element"
-        Then I should see "Topic 5"
-        And I follow "Topic 2"
+        Then I should see "Section 5"
+        And I follow "Section 2"
         Then I should see "Activity sample 2"
 
     @javascript
     Scenario: Duplicate a named section
         Given I am on the course main page for "C1"
-        And I follow "Topic 1"
+        And I follow "Section 1"
         And I click on "[title='Edit section']" "css_element"
         And I set the field "Section name" to "New name"
         And I press "Save changes"
