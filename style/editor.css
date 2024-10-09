@@ -6478,10 +6478,6 @@ header#page-header
     font-size: 13px;
 }
 
-.moodle-dialogue.filepicker .form-group {
-    margin-left: 0;
-    margin-right: 0;
-}
 
 @media screen and (min-width: 768px) {
     .form-horizontal .control-label {

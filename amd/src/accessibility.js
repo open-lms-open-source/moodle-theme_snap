@@ -54,8 +54,8 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
                     {key: 'experimental', component: 'block_reports'}
                 ]).done(function(stringsjs) {
                     if ($("#page-mod-forum-discuss")) {
-                        $("div[data-content='forum-discussion'] div.singleselect form.form-inline " +
-                            "select.custom-select.singleselect").attr("aria-label", stringsjs[0]);
+                        $("div[data-content='forum-discussion'] select.custom-select.singleselect")
+                        .attr("aria-label", stringsjs[0]);
                         $("div[data-content='forum-discussion'] div.movediscussionoption " +
                             "select.custom-select.urlselect").attr("aria-label", stringsjs[1]);
                     }

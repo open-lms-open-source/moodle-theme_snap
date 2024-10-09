@@ -701,7 +701,7 @@ trait format_section_trait {
             'action' => $url->out_omit_querystring(),
         ));
         $output .= html_writer::input_hidden_params($url);
-        $output .= '<div class="form-group">';
+        $output .= '<div class="mb-3">';
         $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
         if ($course->format === 'topics') {
             $output .= '<input id="newsection" type="text" maxlength="250" name="newsection" '.$required;
@@ -710,7 +710,7 @@ trait format_section_trait {
             $output .= '<h3>'.$defaulttitle.': '.$datesection.'</h3>';
         }
         $output .= '</div>';
-        $output .= '<div class="form-group">';
+        $output .= '<div class="mb-3">';
         $output .= '<label for="summary">'.get_string('contents', 'theme_snap').'</label>';
 
         $options = array(

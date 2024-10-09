@@ -2193,7 +2193,7 @@ class course_renderer extends \core_course_renderer {
             if (!$isvisible) {
                 $hiddeninfobadge = html_writer::tag('span',get_string('hiddenfromstudents'),
                     [
-                        'class' => 'badge badge-info hiddenbadge'
+                        'class' => 'badge bg-info text-white hiddenbadge'
                     ]);
                 $imageclasses .= ' hiddencourse';
             }

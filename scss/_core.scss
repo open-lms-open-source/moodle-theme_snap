@@ -4842,14 +4842,6 @@ section#region-main {
 // Fixes for course cards in the user dashboard.
 #page-my-index {
 
-    .card-footer.dashboard-card-footer.border-0.bg-white {
-        background-color: transparent !important;
-    }
-
-    .dashboard-card-deck .dashboard-card a {
-        margin: 0 0.1em;
-    }
-
     #moodle-blocks {
         padding: 0;
         .block_myoverview .block-cards {
@@ -4872,19 +4864,6 @@ section#region-main {
                 border-right: 1px solid rgba(0, 0, 0, .125);
                 border-left: 1px solid rgba(0, 0, 0, .125);
             }
-        }
-    }
-}
-
-.dashboard-card-deck {
-    @media (min-width: 576px) {
-        .dashboard-card {
-            width: calc(50% - #{$card-gutter});
-        }
-    }
-    @media (min-width: 840px) {
-        .dashboard-card {
-            width: calc(33.33% - #{$card-gutter});
         }
     }
 }
@@ -5878,17 +5857,6 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
 
                 .card-title {
                     font-weight: bold;
-                }
-
-                .card.dashboard-card {
-                    border-radius: 0.5rem;
-                    a:first-child[tabindex='-1']{
-                        margin: 0;
-                    }
-                    .dashboard-card-img {
-                        border-top-left-radius: 0.5rem;
-                        border-top-right-radius: 0.5rem;
-                    }
                 }
 
                 .page-item {

@@ -664,15 +664,6 @@ body.path-site .block.block_settings {
     top: 46%;
 }
 
-/* My overview block */
-.block-myoverview {
-    @media (min-width: 1100px) {
-        .dashboard-card-deck:not(.fixed-width-cards) .theme-card {
-            width: calc(33.33% - #{$card-gutter});
-        }
-    }
-}
-
 body:not(#page-my-index) .block.block_calendar_month .maincalendar .calendartable.calendarmonth td.hasevent [data-region="day-content"] {
     display: none;
 }
