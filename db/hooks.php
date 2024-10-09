@@ -15,20 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme plugin version definition.
- *
  * @package   theme_snap
- * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author    Jonathan Garcia Gomez <jonathan.garcia@openlms.net>
+ * @copyright Copyright (c) 2024 Open LMS (https://www.openlms.net)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-defined('MOODLE_INTERNAL') || die;
-
-$plugin->version   = 2024091701;
-$plugin->requires  = 2023100900;
-$plugin->release   = '4.3.4';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'theme_snap';
-$plugin->dependencies = [
-    'theme_boost' => '2020110900',
+$callbacks = [
+    [
+        'hook' => core\hook\output\before_footer_html_generation::class,
+        'callback' => [\theme_snap\hook_callbacks::class, 'before_footer_html_generation'],
+        'priority' => 0,
+    ],
 ];
