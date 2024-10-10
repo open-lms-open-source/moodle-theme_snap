@@ -269,6 +269,7 @@ class behat_theme_snap extends behat_base {
         $javascript = "var value = document.getElementById('summary-editor_ifr').contentDocument.querySelectorAll('body');";
         $javascript .= "document.getElementById('summary-editor_ifr').contentDocument.body.innerHTML = '<p>New section contents</p>';";
         $this->getSession()->executeScript($javascript);
+        $this->execute('behat_general::i_change_window_size_to', ['window', 'medium']);
         $this->execute('behat_general::i_click_on', ['Image', 'button']);
         $this->execute('behat_general::i_click_on', ['Browse repositories...', 'button']);
         $this->execute('behat_general::i_click_on_in_the', ['Private files', 'link', '.fp-repo-area', 'css_element']);
@@ -276,7 +277,6 @@ class behat_theme_snap extends behat_base {
         $this->execute('behat_general::i_click_on', ['Select this file', 'button']);
         $this->execute('behat_forms::i_set_the_field_to', ['Describe this image', 'File test']);
         $this->execute('behat_general::wait_until_the_page_is_ready');
-        $this->execute('behat_general::i_change_window_size_to', ['window', 'medium']);
         $javascript = "document.querySelector('button.tiny_image_urlentrysubmit').click()";
         $this->getSession()->executeScript($javascript);
         $javascript = "document.querySelector('input[type=\"submit\"].btn.btn-primary[name=\"addtopic\"][value=\"Create section\"]').click();";

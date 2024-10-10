@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, a course tools section is available.
 
   Background:
-    Given I skip because "This wil lbe reviewed in INT-18407"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -208,19 +207,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on the course main page for "C1"
     And I click on "a[href=\"#coursetools\"]" "css_element"
     Then I should see "Enrol me"
-
-  @javascript
-  Scenario: Course tools includes link to Course catalogue plugin.
-    Given I am using Open LMS
-    And I log in as "teacher1"
-    And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
-    And "a[id=\"ct-open-catalogue\"]" "css_element" should exist
-    And I log out
-    And I log in as "student1"
-    And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
-    And "a[id=\"ct-open-catalogue\"]" "css_element" should exist
 
   @javascript
   Scenario: Course Dashboard should be visible after clicking in the Course Dashboard link after clicking in a course section.

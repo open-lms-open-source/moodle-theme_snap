@@ -33,14 +33,13 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
 
   @javascript
   Scenario: Go to Snap settings page, put a color in theme color and see contrast message.
-    And I skip because "I will be fixed on INT-19666"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I set the following fields to these values:
       |  Site color |      #FFAAAA                   |
     And I click on "Save changes" "button"
@@ -49,14 +48,13 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
 
   @javascript
   Scenario: Go to Snap settings page, put a valid JSON text in it and see contrast message.
-    And I skip because "I will be fixed on INT-19666"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -71,14 +69,13 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
 
   @javascript
   Scenario: Go to Snap settings page, put a valid JSON text in it and don't see contrast message.
-    And I skip because "I will be fixed on INT-19666"
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
     And I expand "Themes" node
-    And I follow "Snap"
+    And I click on "#themesettingsnap_tree_item > a" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
