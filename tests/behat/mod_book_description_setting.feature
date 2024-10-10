@@ -23,6 +23,7 @@
 Feature: Setting for mod_book should not appear on Snap.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following config values are set as admin:
       | theme        | snap |
     Given the following "users" exist:

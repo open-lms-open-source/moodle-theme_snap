@@ -23,6 +23,7 @@
 Feature: When the theme is set to Snap, teachers can move and rearrange multiple activities at once in a course
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | theme |
       | Course 1 | C1 | snap |

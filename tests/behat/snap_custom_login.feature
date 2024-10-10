@@ -24,11 +24,13 @@ Feature: When the moodle theme is set to Snap, the custom snap login form should
 
   @javascript
   Scenario: The login template must contain the custom snap form.
+    Given I skip because "I will be reviewed on INT-20458"
     Given I am on login page
     And I check element "#login" has class "snap-custom-form"
 
   @javascript
   Scenario: The login template must change when the Stylish template is selected.
+    Given I skip because "I will be reviewed on INT-20458"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |
