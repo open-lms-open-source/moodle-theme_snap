@@ -56,5 +56,5 @@ Feature: Aria label validation for core forum options.
     And I click on "//th//a[contains(text(),'Discussion 1')]" "xpath_element"
     And "div[data-content='forum-discussion'] div.singleselect" "css_element" should exist
     And "div[data-content='forum-discussion'] div.movediscussionoption" "css_element" should exist
-    And the "aria-label" attribute of "div[data-content='forum-discussion'] div.singleselect form.form-inline select.custom-select.singleselect" "css_element" should contain "Display options"
+    And the "aria-label" attribute of "div[data-content='forum-discussion'] select.custom-select.singleselect" "css_element" should contain "Display options"
     And the "aria-label" attribute of "div[data-content='forum-discussion'] div.movediscussionoption select.custom-select.urlselect" "css_element" should contain "Move options"

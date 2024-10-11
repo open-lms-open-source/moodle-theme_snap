@@ -134,7 +134,8 @@ $tag-font-weight: bold !default;
     background-color: $color;
 
     &[href] {
-        @include hover-focus {
+        &:hover,
+        &:focus {
             background-color: darken($color, 10%);
         }
     }
@@ -162,14 +163,6 @@ $tag-font-weight: bold !default;
 
 .tag-danger {
     @include tag-variant($tag-danger-bg);
-}
-
-@mixin pull-left() {
-    @include float-left();
-}
-
-@mixin pull-right() {
-    @include float-right();
 }
 
 .custom-select {

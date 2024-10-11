@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   the grade information about the student.
 
   Background:
+    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |

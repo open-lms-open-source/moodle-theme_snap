@@ -69,10 +69,10 @@ Feature: Snap message send messages
     And I click on "//a[@title='View my messages']/*[local-name()='svg']" "xpath_element"
     And I should see "1" in the ".section[data-region='view-overview-group-messages'] small[data-region='section-total-count-container'] span[data-region='section-total-count']" "css_element"
     And I should see "There are 1 unread conversations" in the "#view-overview-group-messages-unread-count-label" "css_element"
-    And I should see "1" in the ".badge-primary[data-region='unread-count']" "css_element"
+    And I should see "1" in the ".badge[data-region='unread-count']" "css_element"
     And I click on ".rounded-circle[alt='Group 1']" "css_element"
     Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
-    Then ".badge-primary.hidden[data-region='unread-count']" "css_element" should exist
+    Then ".badge.hidden[data-region='unread-count']" "css_element" should exist
     Then "span#view-overview-group-messages-unread-count-label:contains('There are 1 unread conversations')" "css_element" should exist
 
   Scenario: Send a message to a starred conversation in snap
@@ -98,7 +98,7 @@ Feature: Snap message send messages
     And I click on "//a[@title='View my messages']/*[local-name()='svg']" "xpath_element"
     And I should see "1" in the ".section[data-region='view-overview-favourites'] span[data-region='section-total-count']" "css_element"
     And I should see "There are 1 unread conversations" in the "#view-overview-group-messages-unread-count-label" "css_element"
-    And I should see "1" in the ".badge-primary[data-region='unread-count'] span" "css_element"
+    And I should see "1" in the ".badge[data-region='unread-count'] span" "css_element"
     And I click on ".rounded-circle[alt='Group 1']" "css_element"
     Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
     Then "//*[@data-region='unread-count']/span[contains(text(),'There are  unread messages')]" "xpath_element" should exist
@@ -145,7 +145,7 @@ Feature: Snap message send messages
     And I should see "1" in the ".badge-count-container .snap-message-count" "css_element"
     And I click on ".rounded-circle[alt='Student 1']" "css_element"
     Then I should see "Hi!" in the ".d-flex[data-region='day-messages-container']" "css_element"
-    Then ".badge-primary.hidden[data-region='unread-count']" "css_element" should exist
+    Then ".badge.hidden[data-region='unread-count']" "css_element" should exist
     Then "span#view-overview-messages-unread-count-label:contains('There are 2 unread conversations')" "css_element" should exist
 
   Scenario: Message bubble should have a specific color instead of site color.

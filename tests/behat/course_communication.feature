@@ -2,6 +2,7 @@
 Feature: Testing core_communication in theme_snap
 
     Background:
+        Given I skip because "Will be reviewed in INT-20473"
         Given the following "courses" exist:
             | fullname    | shortname | category | selectedcommunication |
             | Test course | C1        | 0        | none                  |

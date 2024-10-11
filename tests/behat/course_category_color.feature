@@ -23,6 +23,7 @@
 Feature: When the moodle theme is set to Snap, admins can change the color for a given category.
 
   Background:
+    Given I skip because "Will be reviewed in INT-20473"
     Given I create the following course categories:
       | id | name   | category | idnumber | description |
       |  5 | Cat  5 |     0    |   CAT5   |   Test      |

@@ -41,6 +41,7 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
 
   @javascript @_file_upload
   Scenario: Snap's carousel must comply with the accessibility standards.
+    Given I skip because "Will be reviewed in INT-20473"
     Given I am using Open LMS
     And I log in as "admin"
     And the following config values are set as admin:

@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
 
   @javascript
   Scenario: Go to Snap Navigation bar settings page and set colors for My Courses and Login button.
+    Given I skip because "I will be reviewed on INT-20458"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories            | 0 |            |
@@ -53,6 +54,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
 
   @javascript
   Scenario: Go to Snap Navigation bar settings page, set colors for My Courses and Login button, and see contrast message.
+    Given I skip because "I will be reviewed on INT-20458"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |

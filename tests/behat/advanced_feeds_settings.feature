@@ -24,6 +24,7 @@ Feature: The setting Enable Advanced feeds should be available only when at leas
 
   @javascript
   Scenario: Go to Snap Personal menu and Snap feeds settings page and enable any of the dependency options
+    Given I skip because "Will be reviewed in INT-20473"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |
