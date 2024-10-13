@@ -38,8 +38,8 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I click on "#theme-settings-snap" "css_element"
     And I set the following fields to these values:
       |  Site color |      #FFAAAA                   |
     And I click on "Save changes" "button"
@@ -53,8 +53,8 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I click on "#theme-settings-snap" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -74,8 +74,8 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I click on "#theme-settings-snap" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
