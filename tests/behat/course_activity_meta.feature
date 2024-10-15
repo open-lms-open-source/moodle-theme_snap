@@ -23,7 +23,7 @@
 Feature: When the moodle theme is set to Snap, students see meta data against course activities.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
+    Given I skip because "It will be reviewed on INT-20486"
     Given the following config values are set as admin:
       | enableoutcomes | 1 |
       | theme | snap |
@@ -132,7 +132,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I follow "Section 1"
     # Create assignment 1.
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name                  | Test assign  |
       | Description                      | Description  |
       | Online text                      | 1            |
@@ -198,7 +198,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | Scale | 1337dom scale |
     And I press "Save changes"
     And I am on "Course 1" course homepage
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name | Test assignment name |
       | Description | Submit your online text |
       | assignsubmission_onlinetext_enabled | 1 |
@@ -288,7 +288,7 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | student3 | GI1   |
 
     # Create assignment 1.
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name           | A1   |
       | Description               | x    |
       | Online text               | 1    |
@@ -345,12 +345,12 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
   Scenario: Check that the forum Due date is being shown in the Course main page
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I add a "Forum" to section "1" and I fill the form with:
+    And I add a forum activity to course "C1" section "1" and I fill the form with:
       | Forum name  | Test forum name                |
       | Description | Test forum description         |
       | Whole forum grading > Type | Point           |
       | Due date               | ##1 January 2000 08:00## |
-    And I add a "Forum" to section "1" and I fill the form with:
+    And I add a forum activity to course "C1" section "1" and I fill the form with:
       | Forum name  | Test forum name 2                |
       | Description | Test forum 2 description         |
       | Whole forum grading > Type | Point           |

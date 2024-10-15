@@ -28,7 +28,6 @@
 Feature: Elements for Snap should have the proper aria attributes.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following config values are set as admin:
       | enableglobalsearch | true |
     Given the following "courses" exist:
@@ -77,8 +76,8 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "//span[text()='Snap']" "xpath_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I follow "Featured categories and courses"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_one']" to "1"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_two']" to "2"

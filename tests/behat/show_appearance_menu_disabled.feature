@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap and there is a page resource, appearance options should not appear.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | theme |
       | Course 1 | C1 | 0 | 1 | |

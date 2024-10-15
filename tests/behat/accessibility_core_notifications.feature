@@ -25,7 +25,6 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
   screen readers functionality.
 
   Background:
-    Given I skip because "Will be reviewed in INT-20473"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -42,7 +41,7 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
       | quiz       | Quiz 1 | Quiz 1 description | C1     | quiz1    |
     And I log in as "admin"
     And I am on "Course 1" course homepage
-    And I add a "Forum" to section "1" and I fill the form with:
+    And I add a forum activity to course "C1" section "1" and I fill the form with:
       | Forum name | Test forum name |
       | Forum type | Standard forum for general use |
       | Description | Test forum description |
@@ -50,7 +49,6 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
 
   @javascript
   Scenario: Success notification should have close dialog as aria-label attribute to be accessible
-    Given I skip because "I will be reviewed on INT-20458"
     When I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"

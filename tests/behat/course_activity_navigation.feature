@@ -30,7 +30,7 @@ Feature: Activity navigation in Snap theme
   I need to use the activity navigation controls in activities
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
+    Given I skip because "It will be reviewed on INT-20486"
     Given the following config values are set as admin:
       | allowstealth | 1    |
       | theme        | snap |
@@ -83,6 +83,7 @@ Feature: Activity navigation in Snap theme
     And I press "Save and return to course"
     # Hidden activity.
     And I scroll to the bottom
+    And I follow "Section 2"
     And I click on ".snap-activity[data-type='Glossary'] button.snap-edit-asset-more" "css_element"
     And I click on ".snap-activity[data-type='Glossary'] .dropdown .availability-dropdown" "css_element"
     And I click on ".snap-activity[data-type='Glossary'] a[data-action='cmHide']" "css_element"

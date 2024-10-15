@@ -2027,7 +2027,7 @@ class course_renderer extends \core_course_renderer {
             $advancedactions .= 'data-toggle="dropdown" data-boundary="window" data-offset="-10,12"';
             $advancedactions .= 'title=\''.get_string('moreoptionslabel', 'theme_snap').' "'.$mod->get_formatted_name().'"\'';
             $advancedactions .= 'aria-label="' . get_string('moreoptionslabel', 'theme_snap') . '" aria-expanded="false"';
-            $advancedactions .= 'aria-controls="#snap-asset-menu">'.$moreicons.'</button>';
+            $advancedactions .= 'aria-controls="snap-asset-menu">'.$moreicons.'</button>';
             $advancedactions .= '<ul id="snap-asset-menu" class="dropdown-menu asset-edit-menu">';
             foreach ($actionsadvanced as $action) {
                 $advancedactions .= "$action";
@@ -2084,7 +2084,7 @@ class course_renderer extends \core_course_renderer {
                 'data-toggle' => 'dropdown',
                 'data-boundary' => 'window',
                 'aria-expanded' => 'false',
-                'aria-controls' => '#snap-groups-menu',
+                'aria-controls' => 'snap-groups-menu',
                 ));
         $groupsdropdownlist = \html_writer::tag('ul', $render,
             array(

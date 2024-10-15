@@ -51,10 +51,9 @@ Feature: Check that the correct tab order and focus exists for the page.
 
   @javascript @accessibility
   Scenario: Focus should be over the input with an error after submitting a form with a required field in blank.
-    Given I skip because "Will be reviewed in INT-20473"
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I add a "Assignment" to section "0"
+    And I add a assign activity to course "C1" section "0"
     And I click on "Save and display" "button"
     # To indicate that the form has failed.
     Then "#id_error_name" "css_element" should be visible
@@ -66,7 +65,6 @@ Feature: Check that the correct tab order and focus exists for the page.
 
   @javascript
   Scenario: On mobile view, submit buttons should appear after the advance form at the bottom of the form.
-    Given I skip because "Will be reviewed in INT-20473"
     Given I change window size to "520x2400"
     And I log in as "admin"
     And I am on "Course 1" course homepage

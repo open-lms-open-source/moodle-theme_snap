@@ -271,11 +271,11 @@ class behat_theme_snap extends behat_base {
         $this->getSession()->executeScript($javascript);
         $this->execute('behat_general::i_change_window_size_to', ['window', 'medium']);
         $this->execute('behat_general::i_click_on', ['Image', 'button']);
-        $this->execute('behat_general::i_click_on', ['Browse repositories...', 'button']);
+        $this->execute('behat_general::i_click_on', ['Browse repositories', 'button']);
         $this->execute('behat_general::i_click_on_in_the', ['Private files', 'link', '.fp-repo-area', 'css_element']);
         $this->execute('behat_general::i_click_on', ['test.png', 'link']);
         $this->execute('behat_general::i_click_on', ['Select this file', 'button']);
-        $this->execute('behat_forms::i_set_the_field_to', ['Describe this image', 'File test']);
+        $this->execute('behat_forms::i_set_the_field_to', ["How would you describe this image to someone who can't see it:", 'File test']);
         $this->execute('behat_general::wait_until_the_page_is_ready');
         $javascript = "document.querySelector('button.tiny_image_urlentrysubmit').click()";
         $this->getSession()->executeScript($javascript);
@@ -500,8 +500,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I set the section name to "(?P<name_string>(?:[^"]|\\")*)"$/
      */
     public function i_set_section_name_to($name) {
-        $this->execute('behat_forms::i_set_the_field_to', ['name[customize]', '1']);
-        $this->execute('behat_forms::i_set_the_field_to', ['name[value]', $name]);
+        $this->execute('behat_forms::i_set_the_field_to', ['name', $name]);
     }
 
     /**
@@ -525,8 +524,7 @@ class behat_theme_snap extends behat_base {
         $this->i_go_to_course_section($section);
         $this->execute('behat_general::i_click_on', ['#section-'.$section.' .edit-summary', 'css_element']);
         $helper->wait_until_the_page_is_ready();
-        $this->execute('behat_forms::i_set_the_field_to', ['name[customize]', '1']);
-        $this->execute('behat_forms::i_set_the_field_to', ['name[value]', 'Topic '.$date.' '.$section]);
+        $this->execute('behat_forms::i_set_the_field_to', ['name', 'Topic '.$date.' '.$section]);
         $this->add_date_restriction($datetime, 'Save changes');
     }
 

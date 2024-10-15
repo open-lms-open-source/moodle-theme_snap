@@ -24,7 +24,7 @@
 Feature: Manual completion updates page wihout reload.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
+
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | topics | 0        | 1         | 1                |      1       |
@@ -45,6 +45,7 @@ Feature: Manual completion updates page wihout reload.
   @javascript
   # Done as one scenario for best performance.
   Scenario Outline: Assignment module is manually marked complete and releases restricted activities / sections.
+    Given I skip because "It will be reviewed on INT-20486"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |

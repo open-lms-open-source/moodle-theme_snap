@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, a student can remove a submitted file assignment.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | initsections |
       | Course 1 | C1        | 0        | 1         |      1       |
@@ -38,7 +37,7 @@ Feature: When the moodle theme is set to Snap, a student can remove a submitted 
       | student1 | C1     | student        |
     Then I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name | Assignment One |
       | Description | Submit your file |
       | assignsubmission_file_enabled | 1 |

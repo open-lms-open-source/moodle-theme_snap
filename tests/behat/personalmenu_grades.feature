@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
   grades / grading column showing them things that have recently had feedback or have recently been submitted.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | groupmodeforce | initsections |
       | Course 1 | C1        | 0        | 1         | 0              |      1       |
@@ -160,11 +159,12 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | teacher3 | GI2   |
 
     # Set restriction to assignment 1.
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name     | A1 |
       | Description         | x  |
       | Online text         | 1  |
       | Group mode          | 1  |
+    And I follow "Section 1"
     And I should see "A1"
     And I click on ".modtype_assign:nth-of-type(1) .snap-edit-asset-more" "css_element"
     And I click on ".modtype_assign:nth-of-type(1) .snap-edit-asset" "css_element"
@@ -178,11 +178,12 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
     And I am on "Course 1" course homepage
 
     # Set restriction to assignment 2.
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name     | A2 |
       | Description         | x  |
       | Online text         | 1  |
       | Group mode          | 1  |
+    And I follow "Section 1"
     And I should see "A2"
     And I click on ".modtype_assign:nth-of-type(2) .snap-edit-asset-more" "css_element"
     And I click on ".modtype_assign:nth-of-type(2) .snap-edit-asset" "css_element"
@@ -266,12 +267,13 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
       | teacher3 | GI2   |
 
     # Create assignment 1.
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name           | A1   |
       | Description               | x    |
       | Online text               | 1    |
       | Group mode                | 1    |
       | Students submit in groups | Yes  |
+    And I follow "Section 1"
     And I should see "A1"
     And I log out
 

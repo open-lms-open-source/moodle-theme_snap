@@ -23,7 +23,7 @@
 Feature: When the moodle theme is set to Snap, admins can change the color for a given category.
 
   Background:
-    Given I skip because "Will be reviewed in INT-20473"
+
     Given I create the following course categories:
       | id | name   | category | idnumber | description |
       |  5 | Cat  5 |     0    |   CAT5   |   Test      |
@@ -39,8 +39,8 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -60,8 +60,8 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -82,8 +82,8 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -103,8 +103,8 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"
@@ -124,8 +124,8 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"
     And I should see "JSON Text"

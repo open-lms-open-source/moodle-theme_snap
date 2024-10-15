@@ -28,7 +28,6 @@
 # Alternate texts: cat.text-alternatives, wcag111, section508, section508.22.a.
 Feature: Check functionality in activity cards.
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -45,7 +44,7 @@ Feature: Check functionality in activity cards.
   Scenario: Add an image to an activity card, student and teacher should not see the image in the content.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I add a "Folder" to section "1" and I fill the form with:
+    And I add a folder activity to course "C1" section "1" and I fill the form with:
       | Name         | Test Page        |
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
@@ -74,7 +73,7 @@ Feature: Check functionality in activity cards.
     And I log out
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I add a "Folder" to section "1" and I fill the form with:
+    And I add a folder activity to course "C1" section "1" and I fill the form with:
       | Name         | Test Page        |
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
@@ -123,7 +122,7 @@ Feature: Check functionality in activity cards.
   Scenario: For activity cards, when the activity is a lesson the card should not display feedback link.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
-    And I add a "Lesson" to section "0" and I fill the form with:
+    And I add a lesson activity to course "C1" section "0" and I fill the form with:
       | Name | Test lesson |
       | Description | Test lesson description |
     And I click on ".modtype_lesson .mod-link" "css_element"

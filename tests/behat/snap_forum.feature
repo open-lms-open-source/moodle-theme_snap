@@ -23,7 +23,6 @@
 
 Feature: When the moodle theme is set to Snap, core forums displays correctly.
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
@@ -37,7 +36,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | student1 | C1     | student        |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I add a "Forum" to section "1" and I fill the form with:
+    And I add a forum activity to course "C1" section "1" and I fill the form with:
       | Forum name  | Test forum name                |
       | Forum type  | Standard forum for general use |
       | Description | Test forum description         |

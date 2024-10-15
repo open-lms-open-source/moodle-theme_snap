@@ -41,7 +41,6 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
 
   @javascript @_file_upload
   Scenario: Snap's carousel must comply with the accessibility standards.
-    Given I skip because "Will be reviewed in INT-20473"
     Given I am using Open LMS
     And I log in as "admin"
     And the following config values are set as admin:
@@ -50,8 +49,8 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I follow "Cover display"
     And I click on "#themesnapcoverdisplay #admin-slide_one_image div[id^='filemanager-'] .filemanager-container .dndupload-message .dndupload-arrow" "css_element"
     And I click on "Private files" "link" in the ".fp-repo-area" "css_element"
@@ -67,8 +66,8 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I follow "Cover display"
     And I click on "#themesnapcoverdisplay #admin-slide_two_image div[id^='filemanager-'] .filemanager-container .dndupload-message .dndupload-arrow" "css_element"
     And I click on "Private files" "link" in the ".fp-repo-area" "css_element"

@@ -25,7 +25,7 @@ Feature: When setting an html content on course sections (introduction, labels, 
   color and background color holds.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
+    Given I skip because "It will be reviewed on INT-20486"
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion |
       | Course 1 | C1        | topics | 0        | 1         | 1                |

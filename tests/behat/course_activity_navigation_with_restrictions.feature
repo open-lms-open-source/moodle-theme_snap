@@ -26,7 +26,6 @@ Feature: Activity navigation involving activities with access restrictions in Sn
   I need to be able to use the activity navigation feature to access the activity after satisfying its access conditions
 
   Background:
-    Given I skip because "Will be reviewed in INT-20473"
     Given the following config values are set as admin:
       | theme | snap |
     Given the following "users" exist:
@@ -44,7 +43,7 @@ Feature: Activity navigation involving activities with access restrictions in Sn
       | activity    | name          | intro                       | course | idnumber   | section |
       | assign      | Assignment 1  | Test assign description 1   | C1     | assign1    | 0       |
       | forum       | Forum 1       | Test forum description      | C1     | forum1     | 0       |
-      | chat        | Chat 1        | Test chat description       | C1     | chat1      | 0       |
+      | book        | Book 1        | Test book description       | C1     | book1      | 0       |
       | quiz        | Quiz 1        | Test quiz description       | C1     | quiz1      | 0       |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
@@ -63,10 +62,10 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I should see "Start discussions or post replies"
     And I set the field "View the activity" to "1"
     And I press "Save and return to course"
-    # Require Forum 1 to be completed first before Chat 1 can be accessed.
-    And I click on ".modtype_chat .snap-edit-asset-more" "css_element"
-    And I click on ".modtype_chat .snap-edit-asset" "css_element"
-    # And I click on "Edit settings" "link" in the "Chat 1" activity.
+    # Require Forum 1 to be completed first before Book 1 can be accessed.
+    And I click on ".modtype_book .snap-edit-asset-more" "css_element"
+    And I click on ".modtype_book .snap-edit-asset" "css_element"
+    # And I click on "Edit settings" "link" in the "Book 1" activity.
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
     And I click on "//button[text()=\"Activity completion\"]" "xpath_element"
@@ -81,13 +80,13 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I click on ".modtype_assign .mod-link" "css_element"
     Then I should see "Forum 1" in the "#next-activity-link" "css_element"
     # Activity that has access restriction should not show up in the dropdown.
-    And the "Jump to..." select box should not contain "Chat 1"
+    And the "Jump to..." select box should not contain "Book 1"
     And I select "Quiz 1" from the "Jump to..." singleselect
-    # Forum 1 should be shown in the previous link since Chat 1 is not yet available.
+    # Forum 1 should be shown in the previous link since Book 1 is not yet available.
     And I should see "Forum 1" in the "#prev-activity-link" "css_element"
-    And the "Jump to..." select box should not contain "Chat 1"
+    And the "Jump to..." select box should not contain "Book 1"
     # Navigate to Forum 1.
     And I click on "//div/a[contains(text(),'Forum 1')]" "xpath_element"
-    # Since Forum 1 has now been viewed and deemed completed, Chat 1 can now be accessed.
-    And I should see "Chat 1" in the "#next-activity-link" "css_element"
-    And the "Jump to..." select box should contain "Chat 1"
+    # Since Forum 1 has now been viewed and deemed completed, Book 1 can now be accessed.
+    And I should see "Book 1" in the "#next-activity-link" "css_element"
+    And the "Jump to..." select box should contain "Book 1"

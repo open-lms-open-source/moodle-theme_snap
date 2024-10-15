@@ -74,7 +74,6 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
 
   @javascript
   Scenario: User sees empty grading section
-    Given I skip because "Will be reviewed in INT-20473"
     Given I log in as "teacher1"
     And I click on "#snap_feeds_side_menu_trigger" "css_element"
     And I should see "Assignment One"

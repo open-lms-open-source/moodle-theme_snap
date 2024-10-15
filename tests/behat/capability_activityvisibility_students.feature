@@ -24,7 +24,6 @@
 Feature: When theme is set to Snap, and course:activityvisibility is set for students, a student should be able to hide an activity.
 
   Background:
-    Given I skip because "Will be reviewed in INT-20473"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -41,7 +40,6 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
 
   @javascript
   Scenario: Student can hide an activity if it has course:activityvisibility capability
-    Given I skip because "Will be reviewed in INT-20473"
     When I log in as "admin"
     And I am on "Course 1" course homepage
     And I set capability "moodle/course:activityvisibility" for students in the course

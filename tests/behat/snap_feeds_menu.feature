@@ -24,7 +24,6 @@
 Feature: Users can access the Snap feeds information using the nav button in Snap.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1 | Teacher     | 1         | teacher1@example.com  |

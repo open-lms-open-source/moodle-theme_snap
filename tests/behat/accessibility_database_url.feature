@@ -36,12 +36,12 @@ Feature: Check that the correct attributes exists for URL field in a database ac
 
   @javascript
   Scenario: Url type and Url autocomplete should exists for input Url in the "Add entry" for Database activity.
-    Given I skip because "Will be reviewed in INT-20473"
+    Given I skip because "It will be reviewed on INT-20486"
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     # Create database activity and allow editing of
     # approved entries.
-    And I add a "Database" to section "1" and I fill the form with:
+    And I add a database activity to course "C1" section "1" and I fill the form with:
       | Name              | Test database name |
       | Description       | Test               |
     And I click on "li.modtype_data a.mod-link" "css_element"

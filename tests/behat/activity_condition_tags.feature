@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, activity restriction tags are shown.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -64,6 +63,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I set the field with xpath "//span[@class=\"pr-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
+    And I follow "Section 1"
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Examples:
@@ -93,6 +93,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I set the field with xpath "//span[@class=\"accesshide\"][text()=\"Required restrictions \"]//following-sibling::select" to "all"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
+    And I follow "Section 1"
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"
@@ -123,6 +124,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I set the field with xpath "//span[@class=\"accesshide\"][text()=\"Required restrictions \"]//following-sibling::select" to "any"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
+    And I follow "Section 1"
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"

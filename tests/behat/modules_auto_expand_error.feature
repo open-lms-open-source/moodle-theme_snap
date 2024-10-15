@@ -23,13 +23,12 @@
 Feature: When setting an erroneous field in settings, snap auto-expands area.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | topics | 0        | 1         | 1                |      1       |
     Then I log in as "admin"
     And I am on "Course 1" course homepage
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name | Assignment One    |
       | Description     | Test description  |
     And I log out

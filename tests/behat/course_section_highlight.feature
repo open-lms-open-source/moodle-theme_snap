@@ -23,7 +23,7 @@
 Feature: When the moodle theme is set to Snap, teachers can toggle the currently higlighted course sections.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
+    Given I skip because "It will be reviewed on INT-20486"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsecitons |
       | Course 1 | C1        | 0        | topics |      1       |

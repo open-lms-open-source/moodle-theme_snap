@@ -38,7 +38,6 @@ Feature: Animated images should be accessible.
 
   @javascript
   Scenario: Animated images can be paused, and their animation can be resumed afterwards.
-    Given I skip because "I will be reviewed on INT-20458"
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I upload file "testgif_small.gif" to section 1

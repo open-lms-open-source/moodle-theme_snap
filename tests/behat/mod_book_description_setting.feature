@@ -23,7 +23,6 @@
 Feature: Setting for mod_book should not appear on Snap.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following config values are set as admin:
       | theme        | snap |
     Given the following "users" exist:
@@ -42,7 +41,7 @@ Feature: Setting for mod_book should not appear on Snap.
   Scenario: As a teacher I should not see the setting Display description on course page.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I add a "Book" to section "0"
+    And I add a book activity to course "C1" section "0"
     And "#id_general .fcontainer .checkbox" "css_element" should exist
     And I should not see "Display description on course page"
 

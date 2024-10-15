@@ -2,7 +2,7 @@
 Feature: Testing core_communication in theme_snap
 
     Background:
-        Given I skip because "Will be reviewed in INT-20473"
+
         Given the following "courses" exist:
             | fullname    | shortname | category | selectedcommunication |
             | Test course | C1        | 0        | none                  |
@@ -47,7 +47,7 @@ Feature: Testing core_communication in theme_snap
         And I select "Custom link" from the "Provider" singleselect
         And I should see "Custom link URL"
         And I set the following fields to these values:
-            | communication_customlinkroomname | Test URL                                                                                   |
+            | communicationroomname | Test URL                                                                                   |
             | customlinkurl                    | #wwwroot#/communication/provider/customlink/tests/behat/fixtures/custom_link_test_page.php |
         And I press "Save changes"
         Then "Chat to course participants" "button" should be visible
@@ -77,7 +77,7 @@ Feature: Testing core_communication in theme_snap
         And I follow "Communication"
         And I select "Custom link" from the "Provider" singleselect
         And I set the following fields to these values:
-            | communication_customlinkroomname | Test URL                                                                                   |
+            | communicationroomname | Test URL                                                                                   |
             | customlinkurl                    | #wwwroot#/communication/provider/customlink/tests/behat/fixtures/custom_link_test_page.php |
         And I press "Save changes"
         And "Chat to course participants" "button" should be visible
@@ -94,7 +94,7 @@ Feature: Testing core_communication in theme_snap
         And I follow "Communication"
         And I select "Custom link" from the "Provider" singleselect
         And I set the following fields to these values:
-            | communication_customlinkroomname | Test URL                                                                                   |
+            | communicationroomname | Test URL                                                                                   |
             | customlinkurl                    | #wwwroot#/communication/provider/customlink/tests/behat/fixtures/custom_link_test_page.php |
         And I press "Save changes"
         And "Chat to course participants" "button" should be visible

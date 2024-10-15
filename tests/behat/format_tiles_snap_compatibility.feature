@@ -24,7 +24,7 @@
 Feature: When the moodle theme is set to Snap with course format tiles, a course tools section is available.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
+    Given I skip because "It will be reviewed on INT-20486"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |

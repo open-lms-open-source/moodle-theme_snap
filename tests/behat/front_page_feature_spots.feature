@@ -24,7 +24,6 @@
 Feature: Correct functionality of feature spots in the front page with every possible setting
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -74,8 +73,8 @@ Feature: Correct functionality of feature spots in the front page with every pos
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I follow "Feature spots"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fs_one_title_link']" to "testnolink"
     And I press "Save changes"

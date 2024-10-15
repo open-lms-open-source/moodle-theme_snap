@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
   edit mode.
 
   Background:
-    Given I skip because "I will be reviewed on INT-20458"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -86,7 +85,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And I click on "#section-1 .snap-visibility.snap-hide" "css_element"
     And I wait until "#section-1 .snap-visibility.snap-show" "css_element" exists
     And I reload the page
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name | Assignment One          |
       | Description     | Submit your online text |
       | visible         | 1                       |
@@ -107,7 +106,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
     And I am on the course main page for "C1"
-    And I add a "Assignment" to section "1" and I fill the form with:
+    And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name | Assignment One          |
       | Description     | Submit your online text |
       | visible         | 0                       |

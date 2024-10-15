@@ -24,7 +24,6 @@ Feature: The setting Enable Advanced feeds should be available only when at leas
 
   @javascript
   Scenario: Go to Snap Personal menu and Snap feeds settings page and enable any of the dependency options
-    Given I skip because "Will be reviewed in INT-20473"
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |
@@ -32,8 +31,8 @@ Feature: The setting Enable Advanced feeds should be available only when at leas
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Site administration" node
     And I expand "Appearance" node
-    And I expand "Themes" node
-    And I click on "#themesettingsnap_tree_item > a" "css_element"
+    And I follow "Themes"
+    And I follow "Edit theme settings 'Snap'"
     And I should see "Personal menu and Snap feeds"
     And I click on "Personal menu and Snap feeds" "link"
     And I should see "Enable Advanced feeds"
