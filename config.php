@@ -65,7 +65,7 @@ if ($themeissnap && $notajaxscript) {
                 $actualpage = strpos($PAGE->pagetype, "grade-report");
                 $lastpage = strpos($SESSION->theme_snap_last_page, "grade-report");
                 // Check actual page is not a grader report page, and previous one was a grader report page.
-                if ($actualpage === false && $lastpage !== false) {
+                if ($actualpage === false && $lastpage !== false && $PAGE->pagetype !== 'grade-edit-tree-grade') {
                     // Change editing mode to avoid affecting other views.
                     $USER->editing = 0;
                 }
