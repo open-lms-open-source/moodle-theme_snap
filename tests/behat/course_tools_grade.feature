@@ -290,6 +290,30 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I log out
 
   @javascript
+  Scenario: User Editing mode should remain enabled after saving changes when editing grades through the Edit Grade view.
+    Given I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I follow "Gradebook setup"
+    And I click on ".tertiary-navigation-selector" "css_element"
+    And I navigate to "Grader report" in current page administration
+    And I click on "Turn editing on" "button"
+    And I click on "A1" "core_grades > grade_actions" in the "Student 1" "table_row"
+    Given I change window size to "320x480"
+    And I choose "Edit grade" in the open action menu
+    Given I change window size to "medium"
+    And I click on "Overridden" "checkbox"
+    And I set the field "Final grade" to "10"
+    And I press "Save changes"
+    And I should see "Turn editing off"
+    And "Save changes" "button" should exist
+    And I click on "Turn editing off" "button"
+    And "Save changes" "button" should not exist
+    And I should not see "Turn editing off"
+    And I should see "Turn editing on"
+    And I log out
+
+  @javascript
   Scenario: Grade report single view should have an edit button.
     Given I log in as "admin"
     When I am on "Course 1" course homepage
