@@ -220,6 +220,35 @@ table.boxwidthwide {
         .snap-indication {
             font-size: 0.8em;
         }
+        .toggle-sensitive-wrapper {
+            margin-bottom: 0 !important;
+            label[for="password"] {
+                margin-top: 1em;
+            }
+            &.input-group:not(.small-screens-only) input#password {
+                border-end-end-radius: 0;
+                border-start-end-radius: 0;
+            }
+            &.input-group.small-screens-only input#password {
+                @media (max-width: 576px) {
+                    border-end-end-radius: 0;
+                    border-start-end-radius: 0;
+                }
+            }
+            .input-group-append {
+                height: 2em;
+                margin-top: 0.8em;
+                @media (max-width: 767px) {
+                    height: 2.1em;
+                }
+                .toggle-sensitive-btn {
+                    border-end-end-radius: 5px;
+                    border-start-end-radius: 5px;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+            }
+        }
     }
     #snap-alt-login {
         h2 {
