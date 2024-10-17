@@ -212,16 +212,25 @@
 <span class="snap-log-in-more snap-log-in-loading-spinner"></span>
 
 {{#js}}
-    require(['jquery', 'core/yui'], function($, Y) {
     {{#error}}
-        $(function() {
-            M.util.focus_login_error(Y);
-        });
+        const errorLog = document.getElementById('loginerrormessage');
+        if (errorLog) {
+            errorLog.focus();
+        }
     {{/error}}
     {{^error}}
         {{#autofocusform}}
-            $(function() {
-                M.util.focus_login_form(Y);
+            require(['core_form/events'], function(FormEvent) {
+                function autoFocus() {
+                    const userNameField = document.getElementById('username');
+                    if (userNameField.value.length == 0) {
+                        userNameField.focus();
+                    } else {
+                        document.getElementById('password').focus();
+                    }
+                }
+                autoFocus();
+                window.addEventListener(FormEvent.eventTypes.fieldStructureChanged, autoFocus);
             });
         {{/autofocusform}}
     {{/error}}
@@ -230,5 +239,4 @@
             ToggleSensitive.init("password", {{smallscreensonly}});
         });
     {{/togglepassword}}
-    });
 {{/js}}

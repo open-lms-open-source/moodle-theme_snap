@@ -22,8 +22,8 @@
 /**
  * Snap Personal menu.
  */
-define(['jquery', 'core/log', 'core/yui', 'theme_snap/pm_course_cards', 'theme_snap/util', 'theme_snap/ajax_notification'],
-    function($, log, Y, courseCards, util, ajaxNotify) {
+define(['jquery', 'core/log', 'theme_snap/pm_course_cards', 'theme_snap/util', 'theme_snap/ajax_notification'],
+    function($, log, courseCards, util, ajaxNotify) {
 
         /**
          * Personal Menu (courses menu).

@@ -257,7 +257,7 @@ define(
 
             var appendto = $('body');
             var spinner = '<div class="loadingstat three-quarters">' +
-                Y.Escape.html(M.util.get_string('loading', 'theme_snap')) +
+                M.util.get_string('loading', 'theme_snap') +
                 '</div>';
             lightboxopen(spinner, appendto, function() {
                 $(resourcemod).attr('tabindex', '-1').focus();
