@@ -4456,6 +4456,26 @@ table th img.iconhelp {
     box-sizing: content-box !important;
 }
 
+.path-grade-report-grader .gradeparent .dropdown-item {
+    // Fix dropdown elements focus.
+    box-sizing: border-box !important;
+}
+
+// Adjust Collapsed columns
+.path-grade-report-grader .collapsecolumndropdown {
+    font-size: 0.9rem;
+    &.show {
+        width: 320px;
+    }
+    .path-grade-report-grader .collapsecolumndropdown .flex-row.ml-auto {
+        display: flex;
+        .btn {
+            font-size: 0.9rem;
+            padding: .3rem .6rem;
+        }
+    }
+}
+
 .path-grade-report-grader .gradeparent .heading .cell,
 .path-grade-report-grader .gradeparent .avg .cell,
 .path-grade-report-grader .gradeparent .cell.user {
