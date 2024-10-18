@@ -76,6 +76,29 @@ define(['jquery'],
                     $('.snap-log-in-more').hide();
                     $('.snap-log-in-more').css('visibility','hidden');
                 });
+
+                // This code is to add the floating label in the password field when the password toggle is enabled.
+                const passwordToggleObserver = function(mutationsList, observer) {
+                    for (const mutation of mutationsList) {
+                        if (mutation.type === 'childList') {
+                            const passwordToggle = document.querySelector('.snap-login .input-group-append');
+                            const passwordFloatingLabel = document.querySelector('.snap-login label[for="password"]');
+                            const passwordInputField = document.querySelector('.snap-login .toggle-sensitive-wrapper');
+                            if (passwordToggle && passwordFloatingLabel && passwordInputField) {
+                                passwordInputField.appendChild(passwordFloatingLabel);
+                                observer.disconnect();
+                            }
+                        }
+                    }
+                };
+                if (document.querySelector('.snap-login')) {
+                    // In Snap we have a floating label in the login input fields. Core uses a JS code to add a
+                    // wrapper container and add the password toggle. We need to move the label inside that wrapper
+                    // only when the toggle exists to make the floating label work aslo with the wrapper. We need a
+                    // mutation observer because we need to wait for that element to exist to move the label.
+                    const observer = new MutationObserver(passwordToggleObserver);
+                    observer.observe(document.body, { childList: true, subtree: true });
+                }
             }
         };
     }

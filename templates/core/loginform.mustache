@@ -225,5 +225,10 @@
             });
         {{/autofocusform}}
     {{/error}}
+    {{#togglepassword}}
+        require(['core/togglesensitive'], function(ToggleSensitive) {
+            ToggleSensitive.init("password", {{smallscreensonly}});
+        });
+    {{/togglepassword}}
     });
 {{/js}}

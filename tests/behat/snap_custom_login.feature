@@ -45,3 +45,26 @@ Feature: When the moodle theme is set to Snap, the custom snap login form should
     And I log out
     And I am on login page
     Then ".page-stylish-login" "css_element" should exist
+
+  @javascript
+  Scenario: The login password toggle must be displayed in Snap login page.
+    Given the following config values are set as admin:
+      | loginpasswordtoggle | 0 |
+    And I am on login page
+    And ".toggle-sensitive-btn" "css_element" should not exist
+    Then the following config values are set as admin:
+      | loginpasswordtoggle | 1 |
+    And I am on login page
+    And ".toggle-sensitive-btn" "css_element" should exist
+    And I set the field "password" to "This is a password"
+    And ".toggle-sensitive-wrapper input[type='text'] " "css_element" should not exist
+    And I click on ".toggle-sensitive-btn" "css_element"
+    And ".toggle-sensitive-wrapper input[type='text'] " "css_element" should exist
+    And I click on ".toggle-sensitive-btn" "css_element"
+    And ".toggle-sensitive-wrapper input[type='text'] " "css_element" should not exist
+    Then the following config values are set as admin:
+      | loginpasswordtoggle | 2 |
+    And I am on login page
+    And ".toggle-sensitive-btn" "css_element" should not be visible
+    And I change window size to "320x480"
+    And ".toggle-sensitive-btn" "css_element" should be visible
