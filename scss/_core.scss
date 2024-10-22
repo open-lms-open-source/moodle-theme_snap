@@ -3842,11 +3842,16 @@ body.hascontinuecancel.path-site #page {
     min-width: 32%;
     padding: 0;
     /* large size */
-    &.chooserdialogue,
     &.filepicker {
         min-width: 90%;
         height: calc(100% - 10px);
     }
+
+    &.chooserdialogue {
+        min-width: 90%;
+        height: max-content; // Changing this to a unit value causes a flickering effect on resize.
+    }
+
     video#player {
         max-height: 50vh;
     }
