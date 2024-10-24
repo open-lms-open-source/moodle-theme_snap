@@ -3850,6 +3850,9 @@ body.hascontinuecancel.path-site #page {
     &.chooserdialogue {
         min-width: 90%;
         height: max-content; // Changing this to a unit value causes a flickering effect on resize.
+        &.moodle-dialogue-fullscreen {
+            height: auto;
+        }
     }
 
     video#player {
