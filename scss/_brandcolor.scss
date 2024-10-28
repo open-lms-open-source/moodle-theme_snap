@@ -736,6 +736,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+    // -------------------------
+    // Calendar color
+    // -------------------------
+    .block_calendar_month .calendarwrapper .calendarmonth.calendartable td.today span.day-number-circle {
+        background-color: $brand-primary;
+    }
+
 
     // -------------------------
     // Grader Report
