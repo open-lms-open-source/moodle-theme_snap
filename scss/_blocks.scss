@@ -404,12 +404,6 @@ body.path-site .block.block_settings {
     }
 }
 
-.snap-personal-menu-more, .snap-feeds-menu-more {
-    svg path{
-        fill: $brand-primary !important; // !important needed to override svg fills.
-    }
-}
-
 .snap-personal-menu-more svg {
     width: 16px;
     margin-left: 4px;
