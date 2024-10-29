@@ -739,8 +739,14 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     // -------------------------
     // Calendar color
     // -------------------------
-    .block_calendar_month .calendarwrapper .calendarmonth.calendartable td.today span.day-number-circle {
-        background-color: $brand-primary;
+    .block_calendar_month, &#page-calendar-view div.maincalendar {
+        .calendarwrapper {
+            .calendarmonth.calendartable {
+                td.today span.day-number-circle {
+                    background-color: $brand-primary;
+                }
+            }
+        }
     }
 
 
