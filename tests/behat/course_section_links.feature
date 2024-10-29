@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, section titles can be clicked for editing section information.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20486"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |

@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   the grade information about the student.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20486"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -330,7 +329,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And "input[value='Save']" "css_element" should not exist
     # Select an activity to grade.
     And I click on ".grade-search" "css_element"
-    And I click on "#list-result-listbox > li" "css_element"
+    And I click on ".searchresultitemscontainer li" "css_element"
     When I click on "Turn editing on" "button"
     And I should see "Turn editing off"
     And "input[value='Save']" "css_element" should exist

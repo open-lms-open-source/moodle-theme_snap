@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
   resource inline.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20486"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | 0        | 1         | 1                |      1       |
@@ -54,6 +53,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And I set the following fields to these values:
       | Display | 5 |
     And I click on "#id_submitbutton2" "css_element"
+    And I follow "Section 1"
     And "span.autocompletion img[title='The system marks this item complete according to conditions: test mp3 file']" "css_element" should exist
     And I click on ".snap-resource[data-type='mp3'] .snap-asset-link a" "css_element"
     And I wait until "#snap-light-box" "css_element" is visible
@@ -79,6 +79,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
       | showdescription                                | 1                   |
       | Display | 5 |
     And I click on "#id_submitbutton2" "css_element"
+    And I follow "Section 1"
     And I click on ".snap-resource[data-type='mp3'] .snap-asset-link a" "css_element"
     And I wait until "#snap-light-box" "css_element" is visible
     Then "#snap-light-box" "css_element" should exist

@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, teachers only see block edit controls when in edit mode.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20486"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -65,6 +64,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I set the section summary to "<iframe src=\"/\"></iframe>"
     And I press "Save changes"
     And I follow "Course Dashboard"
+    And I am on the course main page for "C1"
     And I follow "Edit blocks"
     Then course page should be in edit mode
     # Reload the course page. We should still be in editing mode.

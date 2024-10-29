@@ -25,7 +25,6 @@ Feature: When setting an html content on course sections (introduction, labels, 
   color and background color holds.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20486"
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion |
       | Course 1 | C1        | topics | 0        | 1         | 1                |
@@ -39,8 +38,10 @@ Feature: When setting an html content on course sections (introduction, labels, 
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I click on ".edit-summary" "css_element"
-    And I set the field "Summary" to "<div id=\"test_html\"style=\"background: #f0f8ff;color: #1e90ff;\">Test text <strong>New Changes</strong>"
+    And I set the field "Section name" to "Test section"
+    And I set the field "Description" to "<div id=\"test_html\"style=\"background: #f0f8ff;color: #1e90ff;\">Test text <strong>New Changes</strong>"
     And I press "Save changes"
+    And I wait until "#test_html" "css_element" is visible
     And I check element "#test_html" with property "color" = "#1e90ff"
     And I check element "#test_html" with property "background" = "#f0f8ff"
 
@@ -49,8 +50,10 @@ Feature: When setting an html content on course sections (introduction, labels, 
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I click on ".edit-summary" "css_element"
-    And I set the field "Summary" to "Test summary"
+    And I set the field "Section name" to "Test section"
+    And I set the field "Description" to "Test summary"
     And I press "Save changes"
+    And I wait until ".summary .no-overflow" "css_element" is visible
     And I check element ".summary .no-overflow" with property "color" = "#565656"
 
   @javascript

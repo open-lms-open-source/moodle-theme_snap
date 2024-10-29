@@ -910,15 +910,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     }
 
                     // SHAME - make section name creation mandatory
+                    const sname = document.getElementById('id_name');
                     if ($('#page-course-editsection.format-topics').length) {
-                        var usedefaultname = document.getElementById('id_name_customize'),
-                            sname = document.getElementById('id_name_value');
-                        usedefaultname.value = '1';
-                        usedefaultname.checked = true;
                         sname.required = "required";
                         // Make sure that section does have at least one character.
                         $(sname).attr("pattern", ".*\\S+.*");
-                        $(usedefaultname).parent().css('display', 'none');
 
                         // Enable the cancel button.
                         $('#id_cancel').on('click', function() {

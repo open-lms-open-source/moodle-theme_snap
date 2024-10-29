@@ -30,7 +30,7 @@ Feature: Activity navigation in Snap theme
   I need to use the activity navigation controls in activities
 
   Background:
-    Given I skip because "It will be reviewed on INT-20486"
+    Given I skip because "It will be reviewed on INT-20529"
     Given the following config values are set as admin:
       | allowstealth | 1    |
       | theme        | snap |

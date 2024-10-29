@@ -45,7 +45,7 @@ Feature: Manual completion updates page wihout reload.
   @javascript
   # Done as one scenario for best performance.
   Scenario Outline: Assignment module is manually marked complete and releases restricted activities / sections.
-    Given I skip because "It will be reviewed on INT-20486"
+    Given I skip because "It will be reviewed on INT-20529"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |

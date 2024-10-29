@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   course section from a simple file input element in either read or edit mode.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20486"
     Given the following "courses" exist:
       | fullname | shortname | category | format | maxbytes | enablecompletion | initsections |
       | Course 1 | C1        | 0        | topics | 500000   | 1                |      1       |
@@ -96,7 +95,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And the following config values are set as admin:
       | displayoptions | <display>  | resource |
     And I am on "Course 1" course homepage
-    And I add a file activity to course "C1" section "1"
+    And I add a resource activity to course "Course 1" section "1"
     And I expand all fieldsets
     And I set the field "Students must manually mark the activity as done" to "1"
     And I click on "id_completionexpected_enabled" "checkbox"
@@ -132,7 +131,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
       | displayoptions     | <display>| resource   |
       | displaydescription | 0        | theme_snap |
     And I am on "Course 1" course homepage
-    And I add a file activity to course "C1" section "1"
+    And I add a resource activity to course "Course 1" section "1"
     And I expand all fieldsets
     And I set the following fields to these values:
       | Name                      | Myfile  |
@@ -160,7 +159,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
       | displayoptions     | <display> | resource   |
       | displaydescription | 0         | theme_snap |
     And I am on "Course 1" course homepage
-    And I add a file activity to course "C1" section "1"
+    And I add a resource activity to course "Course 1" section "1"
     And I expand all fieldsets
     And I set the following fields to these values:
       | Name | Myfile |

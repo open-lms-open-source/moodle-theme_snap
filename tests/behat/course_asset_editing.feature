@@ -214,7 +214,7 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario: In the frontpage, an admin duplicates an activity.
-    Given I skip because "It will be reviewed on INT-20486"
+    Given I skip because "It will be reviewed on INT-20529"
     Given the following "activities" exist:
       | activity | course               | section | name        | intro                  | idnumber |
       | assign   | Acceptance test site | 1       | Assignment1 | Assignment description | assign1  |

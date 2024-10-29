@@ -19,12 +19,12 @@
 # @copyright  2015 Guy Thomas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_course @theme_snap_course
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, teachers can move course sections without using drag and drop and without
   having to enter edit mode.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20486"
+    Given I skip because "It will be reviewed on INT-20529"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 |     C1    |     0    | topics |      1       |

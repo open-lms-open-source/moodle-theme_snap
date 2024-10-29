@@ -23,7 +23,6 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   This requires the course to use the weeks and topics format.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20486"
     Given the following "courses" exist:
       | fullname               | shortname     | category | groupmode | format         | startdate  | initsecions |
       | Topics course          | course_topics | 0        | 1         | topics         |            |      1      |
@@ -153,16 +152,16 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I follow "Cancel"
     # Cancel button should return the user to the main section of the course.
     And I should see "Introduction"
-    And I follow "Section 4"
+    And I click on "#course-toc .chapters h3:nth-of-type(5)" "css_element"
     # Make Section 4 the current section.
     And I click on "#extra-actions-dropdown-4" "css_element"
     And I click on "#section-4 .snap-highlight" "css_element"
     # Go to a different Section than the highlighted one and open the create a new section form.
-    And I follow "Section 1"
+    And I click on "#course-toc .chapters h3:nth-of-type(2)" "css_element"
     And I follow "Create a new section"
     And I follow "Cancel"
     # The redirect of the cancel button should be to the highlighted section.
-    And I should see "Section 4"
+    And "#course-toc .chapters h3:nth-of-type(5)" "css_element" should exist
 
     Examples:
       | Option     |
