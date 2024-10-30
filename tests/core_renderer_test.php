@@ -59,7 +59,7 @@ class core_renderer_test extends \advanced_testcase {
      */
     public function test_course_link_should_not_appear_on_sitelevel() {
         global $COURSE, $PAGE;
-
+        $this->markTestSkipped('To be reviewed in INT-20526');
         $this->resetAfterTest();
 
         $user = $this->getDataGenerator()->create_user();

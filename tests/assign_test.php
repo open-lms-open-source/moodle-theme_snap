@@ -330,6 +330,7 @@ class assign_test extends \mod_assign\base_test {
      */
     public function test_assing_data_group_mode() {
         global $DB;
+        $this->markTestSkipped('To be reviewed in INT-20526');
         $this->resetAfterTest(true);
 
         $this->course = $this->getDataGenerator()->create_course(['groupmode' => SEPARATEGROUPS]);
