@@ -74,9 +74,10 @@ echo html_writer::link($defaulthomeurl, $sitefullname, $attrs);
     echo core_renderer::search_box();
     echo '</span>';
     echo $OUTPUT->snap_feeds_side_menu_trigger();
-    if ($settingslink->output) {
+    if ($settingslink->output || $this->page->user_allowed_editing()) {
         echo '<div class="snap_line_separator"></div>';
     }
+    echo $OUTPUT->edit_switch();
     echo $OUTPUT->render($settingslink);
     ?>
 </div>

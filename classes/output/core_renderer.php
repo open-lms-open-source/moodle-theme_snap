@@ -450,26 +450,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // Core renderer has not $output attribute, but code checker requires it.
         global $COURSE, $OUTPUT;
 
-        $editblocks = '';
         $output = '';
 
         $oncoursepage = strpos($this->page->pagetype, 'course-view') === 0;
         $coursecontext = \context_course::instance($COURSE->id);
         if ($COURSE->format !== 'tiles') {
-            if ($oncoursepage && has_capability('moodle/course:update', $coursecontext)) {
-                $url = new \moodle_url('/course/view.php', ['id' => $COURSE->id, 'sesskey' => sesskey()]);
-                if ($this->page->user_is_editing()) {
-                    $url->param('edit', 'off');
-                    $editstring = get_string('turneditingoff');
-                } else {
-                    $url->param('edit', 'on');
-                    $editstring = get_string('editcoursecontent', 'theme_snap');
-                }
-                $editblocks = '<div class="text-center"><a href="' . $url . '" class="btn btn-primary">' . $editstring . '</a></div><br>';
-            }
-
             $output .= '<div id="moodle-blocks" class="clearfix">';
-            $output .= $editblocks;
             $output .= $OUTPUT->blocks('side-pre');
             $output .= '</div>';
         } else {

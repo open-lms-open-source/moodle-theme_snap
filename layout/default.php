@@ -39,16 +39,6 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
 if ($PAGE->pagetype == 'admin-search') {
     $PAGE->set_secondary_navigation(false);
 }
-if (($PAGE->pagetype == "grade-report-grader-index" || $PAGE->pagetype == "grade-report-singleview-index") && $PAGE->user_allowed_editing()) {
-    // Show grade report edit button.
-    $button = shared::get_grade_report_edit_button();
-    $PAGE->set_button($button);
-}
-if ($PAGE->pagetype == "mod-lightboxgallery-view" && $PAGE->user_allowed_editing()) {
-    // Show grade report edit button.
-    $editbutton = shared::snap_edit_button();
-    $PAGE->set_button($editbutton);
-}
 ?>
 
 <!-- Moodle js hooks -->
@@ -139,7 +129,7 @@ if ($hasadminbutton) {
     }
 }
 echo "<div class='snap-page-heading-button' >";
-if ($PAGE->pagelayout !== 'admin') {
+if ($PAGE->pagelayout !== 'admin' && $PAGE->pagelayout !== 'mydashboard' && $PAGE->pagetype !== 'mod-book-view') {
     echo $OUTPUT->page_heading_button();
 }
 // Validation added to check if settings option should be displayed;

@@ -40,9 +40,9 @@ class behat_theme_snap_behat_blocks extends behat_blocks {
         // Core tests expect you to have enabled edit mode in advance, but Snap
         // does this differently.
         $helper = behat_context_helper::get('behat_general');
+        $helper->i_click_on('.editmode-switch-form', 'css_element');
         $helper->click_link("Course Dashboard");
-        $helper->click_link("Edit blocks");
         parent::i_add_the_block($blockname);
-        $helper->click_link("Turn editing off");
+        $helper->i_click_on('.editmode-switch-form', 'css_element');
     }
 }

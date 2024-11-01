@@ -37,22 +37,6 @@ section#region-main
 
 /* stylelint-disable declaration-no-important*/
 
-// Course page  - turn editing on button.
-.format-topics,
-.format-weeks {
-
-    // SLamour Nov 2015 - editing only shows blocks.
-    &.editing.pagelayout-course {
-        #course-toc,
-        #region-main {
-            display: none;
-        }
-
-        #page-mast .singlebutton {
-            display: block;
-        }
-    }
-}
 // Support for multiple formats like the 'change cover image' option.
 body[class^="format-"].theme-snap {
     #page-mast {
@@ -72,13 +56,6 @@ body[class^="format-"].theme-snap {
                 }
             }
         }
-    }
-}
-
-// Blocks config pages when editing.
-.editing.pagelayout-admin {
-    #region-main {
-        display: block;
     }
 }
 
@@ -838,9 +815,7 @@ body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone i
 
 .course-content > ul li.section.state-visible,
 #snap-add-new-section.state-visible,
-.editing #snap-add-new-section,
 #coursetools.state-visible, #tiles-section.state-visible,
-.editing #coursetools,
 .format-singleactivity #coursetools {
     visibility: visible;
     height: auto;

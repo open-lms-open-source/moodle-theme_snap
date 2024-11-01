@@ -57,7 +57,7 @@ Feature: Setting for mod_book should not appear on Snap.
       | Chapter title | Dummy first chapter |
       | Content       | Dummy content       |
     And I press "Save changes"
-    And I press "Turn editing on"
+    And I switch edit mode in Snap
     And I follow "Add new chapter"
     Then ".checkbox #id_subchapter" "css_element" should exist
     And the "Subchapter" "checkbox" should be enabled

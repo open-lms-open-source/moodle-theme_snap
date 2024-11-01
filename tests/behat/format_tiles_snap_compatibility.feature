@@ -57,62 +57,40 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     Given I log in as "student1"
     And I am on the course main page for "C1"
     Then "Course Dashboard" "link" should be visible
-    And "Edit blocks" "link" should not be visible
-    And "Edit content" "link" should not be visible
+    And ".editmode-switch-form" "css_element" should not exist
     When I click on "Course Dashboard" "link"
     And I wait until the page is ready
-    And "Edit blocks" "link" should not be visible
+    And ".editmode-switch-form" "css_element" should not exist
 
   @javascript
   Scenario: Edit mode is displayed for teachers.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     Then "Course Dashboard" "link" should be visible
-    And "Edit content" "link" should be visible
-    And "Edit blocks" "link" should not be visible
+    And ".editmode-switch-form" "css_element" should exist
     When I click on "Course Dashboard" "link"
     And I wait until the page is ready
-    And "Edit blocks" "link" should be visible
-    And "Edit content" "link" should not be visible
+    And ".editmode-switch-form" "css_element" should exist
 
   @javascript
   Scenario: As teacher you can switch between edit mode on and edit mode off.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And "Edit content" "link" should be visible
+    And ".editmode-switch-form" "css_element" should exist
     Then "Course Dashboard" "link" should be visible
-    And "Edit blocks" "link" should not be visible
-    And "Turn editing off" "link" should not be visible
     And I should not see "Add an activity or resource"
-    When I click on "Edit content" "link"
+    When I switch edit mode in Snap
     And I wait until the page is ready
-    Then "Edit content" "link" should not be visible
-    And "Edit blocks" "link" should not be visible
     And I should see "Add an activity or resource"
-    And "Turn editing off" "link" should be visible
-    When I click on "Turn editing off" "link"
+    And I switch edit mode in Snap
     And I wait until the page is ready
-    Then "Edit content" "link" should be visible
-    And "Turn editing off" "link" should not be visible
     And I should not see "Add an activity or resource"
     When I click on "Course Dashboard" "link"
     And I wait until the page is ready
-    Then "Edit blocks" "link" should be visible
-    And "Edit content" "link" should not be visible
     And I should not see "Add a block"
-    When I click on "Edit blocks" "link"
+    And I switch edit mode in Snap
     And I wait until the page is ready
-    Then "Edit blocks" "link" should not exist
-    And "Turn editing off" "link" should exist
     And I should see "Add a block"
-    When I am on the course main page for "C1"
-    Then "Edit blocks" "link" should not be visible
-    And "Turn editing off" "link" should be visible
-    And "Edit content" "link" should not be visible
-    When I click on "Turn editing off" "link"
-    And I wait until the page is ready
-    Then "Turn editing off" "link" should not be visible
-    And "Edit content" "link" should be visible
 
   @javascript
   Scenario: Users can see blocks in Course Dashboard.
@@ -120,7 +98,7 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I am on the course main page for "C1"
     When I click on "Course Dashboard" "link"
     And I wait until the page is ready
-    When I click on "Edit blocks" "link"
+    And I switch edit mode in Snap
     And I wait until the page is ready
     And I should see "Add a block"
     And I set the field with xpath "//select[@class = 'custom-select singleselect']" to "Calendar"
@@ -158,7 +136,7 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
   Scenario: Users can change activity visibility and group settings using Tiles in Snap.
     Given I log in as "admin"
     And I am on "Course Test" course homepage
-    When I click on "Edit content" "link"
+    And I switch edit mode in Snap
     And I wait until the page is ready
     And I click on ".modtype_quiz .moodle-actionmenu" "css_element"
     Then I should see "Availability"

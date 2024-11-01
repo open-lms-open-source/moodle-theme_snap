@@ -75,7 +75,6 @@ class tiles_content extends content {
 
         // Additional output HTML to render Snap Course tools and edit mode button in footer.
         $data->course_tools = shared::course_tools(true);
-        $data->edit_mode = shared::render_edit_mode($course->id, 'tiles', $PAGE->pagetype);
 
         return $data;
     }

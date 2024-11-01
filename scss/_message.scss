@@ -16,6 +16,10 @@
         display: none;
     }
 
+    .editmode-switch-form {
+        display: none !important;
+    }
+
     #maincontent + h2 {
         @include sr-only();
     }

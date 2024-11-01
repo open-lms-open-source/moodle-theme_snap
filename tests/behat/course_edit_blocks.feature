@@ -37,7 +37,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
       | teacher1 | C2     | editingteacher |
 
   @javascript
-  Scenario: In read mode on a topics course, teacher clicks edit blocks and can edit blocks.
+  Scenario: In read mode on a topics course, teacher clicks edit mode and can edit blocks.
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro                         | section |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       |
@@ -47,51 +47,43 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     Then "#section-1" "css_element" should exist
     And ".block_news_items a.toggle-display" "css_element" should not exist
     And I should see "Test assignment1" in the "#section-1" "css_element"
+    And I switch edit mode in Snap
     And I follow "Course Dashboard"
-    And I follow "Edit blocks"
-    Then course page should be in edit mode
-
-    # edit mode persists if course accessed directly via menu
-    # (this is basically to check it works without the &notifyeditingon parameter
-    Given I am on the course main page for "C1"
     Then course page should be in edit mode
 
     # Edit mode should persist even if there are iframes in a section summary.
     # First add a section with an iframe which points to the host root.
-    And I follow "Turn editing off"
     And I follow "Section 1"
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section summary to "<iframe src=\"/\"></iframe>"
     And I press "Save changes"
-    And I follow "Course Dashboard"
     And I am on the course main page for "C1"
-    And I follow "Edit blocks"
+    And I follow "Course Dashboard"
     Then course page should be in edit mode
     # Reload the course page. We should still be in editing mode.
     Given I am on the course main page for "C1"
     Then course page should be in edit mode
-
-    # edit mode does not persist between courses
+    # Edit mode does persist between courses.
     Given I am on the course main page for "C2"
     And I follow "Course Dashboard"
-    Then I should see "Edit blocks"
+    Then course page should be in edit mode
 
   @javascript
-  Scenario: If edit mode is on for a course, it should not carry over to site homepage
+  Scenario: If edit mode is on for a course, it should carry over to site homepage
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I follow "Course Dashboard"
-    And I follow "Edit blocks"
+    And I switch edit mode in Snap
     When I am on site homepage
-    Then I should not see "Change site name"
-    Then I should not see "Add a block"
+    Then I should see "Change site name"
+    Then I should see "Add a block"
 
   @javascript
-  Scenario: If edit mode is on for site homepage, it should not carry over to courses
+  Scenario: If edit mode is on for site homepage, it should carry over to courses
     Given I log in as "admin"
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Turn editing on"
+    And I switch edit mode in Snap
     When I am on the course main page for "C1"
     And I follow "Course Dashboard"
-    Then I should see "Edit blocks"
+    Then course page should be in edit mode

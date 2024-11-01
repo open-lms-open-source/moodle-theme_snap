@@ -1265,6 +1265,10 @@ footer #moodle-footer
             }
 
         }
+        .divider {
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+        }
     }
     position: fixed;
     width: 100vw;

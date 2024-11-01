@@ -275,7 +275,7 @@ class behat_theme_snap extends behat_base {
         $this->execute('behat_general::i_click_on_in_the', ['Private files', 'link', '.fp-repo-area', 'css_element']);
         $this->execute('behat_general::i_click_on', ['test.png', 'link']);
         $this->execute('behat_general::i_click_on', ['Select this file', 'button']);
-        $this->execute('behat_forms::i_set_the_field_to', ["How would you describe this image to someone who can't see it:", 'File test']);
+        $this->execute('behat_forms::i_set_the_field_to', ["How would you describe this image to someone who can't see it?", 'File test']);
         $this->execute('behat_general::wait_until_the_page_is_ready');
         $javascript = "document.querySelector('button.tiny_image_urlentrysubmit').click()";
         $this->getSession()->executeScript($javascript);
@@ -919,10 +919,6 @@ class behat_theme_snap extends behat_base {
         // @codingStandardsIgnoreLine
         /* @var $generalcontext behat_general */
         $generalcontext = behat_context_helper::get('behat_general');
-        $node = $this->get_selected_node('css_element', '#course-toc');
-        if ($node->isVisible()) {
-            throw new ExpectationException('#course-toc should not be visible', $this->getSession()->getDriver());
-        }
         $generalcontext->ensure_element_exists('.block_adminblock', 'css_element');
         $generalcontext->ensure_element_exists('body.editing', 'css_element');
     }
@@ -2117,6 +2113,13 @@ JS;
         $this->execute("behat_navigation::i_expand_node", 'Development');
         $this->execute('behat_general::click_link', ['Purge caches']);
         $this->execute('behat_general::click_link', ['Purge all caches']);
+    }
+
+    /**
+     * @Given /^I switch edit mode in Snap$/
+     */
+    public function switch_edit_mode_in_snap() {
+        $this->execute('behat_general::i_click_on', ['.editmode-switch-form', 'css_element']);
     }
 
     /**

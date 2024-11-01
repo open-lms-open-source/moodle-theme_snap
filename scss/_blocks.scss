@@ -74,9 +74,7 @@
 #page-my-index #moodle-blocks,
 #page-calendar-view #moodle-blocks,
 #page-mod-assign-editsubmission #moodle-blocks,
-#moodle-blocks.state-visible,
-.format-weeks.path-course-view.editing #moodle-blocks,
-.format-topics.path-course-view.editing #moodle-blocks {
+#moodle-blocks.state-visible {
     visibility: visible;
     height: auto;
     overflow: visible;
@@ -443,6 +441,38 @@ body.path-site .block.block_settings {
     }
 }
 
+// Edit mode toggle.
+.editmode-switch-form {
+    .input-group {
+        padding-bottom: 0.4em;
+        @include media-breakpoint-down(md) {
+            padding-bottom: 0;
+        }
+        label {
+            color: $brand-primary !important;
+            margin-top: .1rem;
+        }
+    }
+    .custom-control-input {
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        opacity: 0;
+    }
+    .custom-control-input:checked~.custom-control-label::before {
+        background-color: $brand-primary;
+        border-color: $brand-primary;
+    }
+    @media (max-width: 410px) {
+        margin-left: 3em;
+    }
+    @include media-breakpoint-down(sm) {
+        .input-group label {
+            display: none;
+        }
+    }
+}
+
 .snap_line_separator {
     border-left: 2px solid $icons-color;
     height: 25px;
@@ -595,6 +625,13 @@ body.path-site .block.block_settings {
         @media (max-width: 425px) {
             margin-top: 4rem;
         }
+    }
+    // Hide the Turn editing on button from the block settings.
+    a[href*="edit=on"],
+    a[href*="edit=off"],
+    a[href*="edit=1"],
+    a[href*="edit=0"] {
+        display: none;
     }
 }
 

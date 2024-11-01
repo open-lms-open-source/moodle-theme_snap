@@ -74,7 +74,6 @@ class format_tiles_renderer extends renderer {
 
         // Additional output HTML to render Snap Course tools and edit mode button in footer.
         $data->course_tools = shared::course_tools(true);
-        $data->edit_mode = shared::render_edit_mode($course->id, 'tiles', $this->page->pagetype);
 
         return $this->output->render_from_template($templatename, $data);
     }

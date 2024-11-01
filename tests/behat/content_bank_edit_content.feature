@@ -34,8 +34,7 @@ Feature: When the Moodle theme is set to Snap, the content in the content bank c
     And I upload "h5p/tests/fixtures/filltheblanks.h5p" file to "Files" filemanager
     And I click on "Save changes" "button"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I follow "Turn editing on"
+    And I switch edit mode in Snap
     And I add the "Navigation" block if not present
     And I configure the "Navigation" block
     And I set the following fields to these values:

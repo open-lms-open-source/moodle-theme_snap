@@ -174,3 +174,7 @@
 #page-user-profile .label-info {
     color: white;
 }
+// Hide the Customize this page button because we already have the edition toggle here.
+#page-user-profile .snap-page-heading-button .singlebutton:nth-of-type(2) {
+    display: none;
+}

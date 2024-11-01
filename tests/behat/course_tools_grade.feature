@@ -267,7 +267,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I log out
 
   @javascript
-  Scenario: Course grader report should have an edit button.
+  Scenario: Course grader report should be have edit mode in Snap.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I click on "#admin-menu-trigger" "css_element"
@@ -275,18 +275,16 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on ".tertiary-navigation-selector" "css_element"
     # Check editing button works with Grader report.
     And I navigate to "Grader report" in current page administration
-    And I should see "Turn editing on"
     And "Save changes" "button" should not exist
-    And I click on "Turn editing on" "button"
-    And I should see "Turn editing off"
+    And I switch edit mode in Snap
     And "Save changes" "button" should exist
-    And I click on "Turn editing off" "button"
-    And I should see "Turn editing on"
+    And I switch edit mode in Snap
     And "Save changes" "button" should not exist
-    And I click on "Turn editing on" "button"
+    And I switch edit mode in Snap
     And I am on "Course 1" course homepage
-    # Edit mode goes to default value when changing to other view.
-    And I should not see "Turn editing off"
+    # Edit mode persit when changing page.
+    And I follow "Course Dashboard"
+    Then course page should be in edit mode
     And I log out
 
   @javascript
@@ -297,7 +295,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook setup"
     And I click on ".tertiary-navigation-selector" "css_element"
     And I navigate to "Grader report" in current page administration
-    And I click on "Turn editing on" "button"
+    And I switch edit mode in Snap
     And I click on "A1" "core_grades > grade_actions" in the "Student 1" "table_row"
     Given I change window size to "320x480"
     And I choose "Edit grade" in the open action menu
@@ -305,12 +303,9 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "Overridden" "checkbox"
     And I set the field "Final grade" to "10"
     And I press "Save changes"
-    And I should see "Turn editing off"
     And "Save changes" "button" should exist
-    And I click on "Turn editing off" "button"
+    And I switch edit mode in Snap
     And "Save changes" "button" should not exist
-    And I should not see "Turn editing off"
-    And I should see "Turn editing on"
     And I log out
 
   @javascript
@@ -322,24 +317,21 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on ".tertiary-navigation-selector" "css_element"
     # Check editing button works with Grade report single view.
     And I navigate to "Single view" in current page administration
-    And I should see "Turn editing on"
     # Check grade items view.
     And I click on "Grade items" "link"
-    Then I should see "Turn editing on"
     And "input[value='Save']" "css_element" should not exist
     # Select an activity to grade.
     And I click on ".grade-search" "css_element"
     And I click on ".searchresultitemscontainer li" "css_element"
-    When I click on "Turn editing on" "button"
-    And I should see "Turn editing off"
+    When I switch edit mode in Snap
     And "input[value='Save']" "css_element" should exist
-    When I click on "Turn editing off" "button"
-    And I should see "Turn editing on"
+    When I switch edit mode in Snap
     Then the "input[value='Save']" "css_element" should be disabled
-    And I click on "Turn editing on" "button"
+    And I switch edit mode in Snap
     And I am on "Course 1" course homepage
-    # Edit mode goes to default value when changing to other view.
-    And I should not see "Turn editing off"
+    # Edit mode does persist between courses.
+    And I follow "Course Dashboard"
+    Then course page should be in edit mode
     And I log out
 
   @javascript
@@ -354,11 +346,9 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "tr.userrow .moodle-actionmenu.grader" "css_element"
     And I use js to click on "[aria-label='Single view for this user']"
     # Check student grades view.
-    Then I should see "Turn editing on"
     And I should see "Student 1"
     Then the "Save" "button" should be disabled
     # Check editing button works.
-    When I click on "Turn editing on" "button"
+    When I switch edit mode in Snap
     Then I should see "Student 1"
-    And I should see "Turn editing off"
     And "Save" "button" should exist

@@ -161,7 +161,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I am on site homepage
     Then I should not see "Change cover image"
     And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Turn editing on" in current page administration
+    And I switch edit mode in Snap
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I click on "#snap-coverimagecontrol label" "css_element"
