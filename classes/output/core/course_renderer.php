@@ -2179,7 +2179,6 @@ class course_renderer extends \core_course_renderer {
             $cardcontent .= $this->coursecat_coursebox_content($chelper, $course);
             $cardcontent .= html_writer::end_tag('div');
         } else {
-            $contentimages = '';
             $url = $OUTPUT->get_generated_image_for_id($course->id);
             foreach ($course->get_course_overviewfiles() as $file) {
                 $isimage = $file->is_valid_image();
@@ -2197,26 +2196,27 @@ class course_renderer extends \core_course_renderer {
                     ]);
                 $imageclasses .= ' hiddencourse';
             }
-            $contentimages .= $hiddeninfobadge;
-            $contentimages .= html_writer::tag('div','',
-                [
-                    'class' => $imageclasses,
-                    'style' => 'background-image: url('.$url.');'
-                ]);
-
             $classes = trim('col-sm-3 coursebox clearfix '. $additionalclasses);
 
-            $cardcontent .= html_writer::start_tag('a',
-                [
-                    'href' => new moodle_url('/course/view.php', ['id' => $course->id]),
-                    'class' => 'snap-home-course',
-                    'title' => $chelper->get_course_formatted_name($course)
-                ]);
-            $cardcontent .= $contentimages;
-            $cardcontent .= html_writer::tag('span', $chelper->get_course_formatted_name($course), [
-                'class' => 'snap-home-course-title overflow-hidden'
-            ]);
-            $cardcontent .= html_writer::end_tag('a');
+            $data  = array(
+                'classes' => $classes,
+                'courseid' => $course->id,
+                'courseimage' => $url ? $url : '',
+                'imageclasses' => $imageclasses,
+                'hiddeninfobadge' => $hiddeninfobadge,
+                'data-type' => self::COURSECAT_TYPE_COURSE,
+                'imagestyle' => 'background-image: url('.$url.');',
+                'coursecontacts' => $this->course_contacts($course),
+                'coursename' => $chelper->get_course_formatted_name($course),
+                'coursesummary' => $this->course_summary($chelper, $course),
+                'coursecustomfields' => $this->course_custom_fields($course),
+                'coursecategoryname' => $this->course_category_name($chelper, $course),
+                'hassummary' => $this->course_summary($chelper, $course) ? true : false,
+                'courselink' => new moodle_url('/course/view.php', ['id' => $course->id]),
+            );
+
+            $content = $this->output->render_from_template('theme_snap/home_page_coursebox', $data);
+            return $content;
         }
 
         if ($chelper->get_show_courses() < self::COURSECAT_SHOW_COURSES_EXPANDED) {

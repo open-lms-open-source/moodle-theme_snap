@@ -4362,11 +4362,20 @@ table th img.iconhelp {
     border-radius: 0 0 4px 4px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 2.4em;
+    max-height: 2.3em;
+    min-height: unset;
 }
+
+#snap-featured-categories .row.text-center,
+#snap-featured-courses .row.text-center,
+.frontpage-course-list-all,
+.frontpage-course-list-enrolled {
+    justify-content: space-evenly;
+}
+
 .frontpage-course-list-enrolled,
 .frontpage-course-list-all {
     display: flex;
@@ -4386,16 +4395,18 @@ table th img.iconhelp {
 .snap-featured-course,
 .snap-home-course {
     display: block;
-    height: 300px;
+    height: 220px;
     position: relative;
     margin-bottom: 1em;
     @include alakazam;
+    border-radius: .5rem;
 
     @media screen and (max-width: 768px) {
         height: 210px;
     }
 
     &:hover {
+        background: white;
         transform: scale(1.03);
         box-shadow:
             0 2px 2px 0 rgba(0, 0, 0, 0.14),
@@ -4407,17 +4418,79 @@ table th img.iconhelp {
         .snap-home-course-title {
             text-decoration: underline;
         }
+        .card-header {
+            .snap-home-course-title {
+                background: transparent;
+                transition: transform 1s ease;
+                transform: translateX(-2%);
+                text-align: left;
+                overflow: hidden;
+            }
+            @keyframes snap-info-blink {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); }
+            }
+
+            .more-info {
+                display: block;
+                color: $brand-primary;
+                margin-top: .2em;
+                font-size: larger;
+                text-align: end;
+                animation: snap-info-blink 0.5s ease-in-out;
+                pointer-events: none;
+                opacity: .8;
+                &::before {
+                    pointer-events: all;
+                }
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    &:not(:hover) {
+        .card-header {
+            .snap-home-course-title {
+                max-width: unset;
+                flex: unset;
+            }
+        }
+    }
+    .card-header {
+        min-height: 25%;
+        background-color: #fff;
+        bottom: 0;
+        padding: .5em 4%;
+        width: 100%;
+        margin-left: 0;
+        border-bottom-left-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+        .snap-home-course-title {
+            padding: 0;
+            -webkit-line-clamp: 1;
+            max-height: 1.4em;
+            min-height: unset;
+        }
+        .more-info {
+            display: none;
+            color: $brand-primary;
+            margin-top: .2em;
+            font-size: larger;
+            text-align: end;
+        }
     }
     .hiddenbadge {
         position: relative;
         z-index: 1;
         float: left;
-        margin-top: 9.5em;
+        margin-top: 7.5em;
         margin-left: 5%;
         padding: 0.25em 0.1em;
         font-size: 90%;
         @media screen and (max-width: 940px) {
-            margin-top: 12em;
+            margin-top: 9em;
             font-size: 75%;
             margin-left: 2%;
         }
@@ -4425,6 +4498,74 @@ table th img.iconhelp {
             margin-top: 9.5em;
             font-size: 90%;
             margin-left: 5%;
+        }
+    }
+}
+.snap-home-course-card {
+    .modal-content {
+        border-radius: .5em;
+    }
+    .modal-body {
+        .hiddenbadge {
+            margin-top: 1em;
+        }
+        padding: 0;
+        .close {
+            margin-right: 1em;
+            margin-top: 1rem;
+            background-color: $brand-primary;
+            color: white;
+            padding: .2em .4em .2em .4em;
+            opacity: 1;
+            border-radius: 1em;
+        }
+        .snap-home-courses-image {
+            border-top-left-radius: .5em;
+            border-top-right-radius: .5em;
+            height: 15em;
+            position: relative;
+            .bottom-image-options {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                text-align: left;
+                background-color: rgba(0, 0, 0, 0.5);
+                height: 60px;
+            }
+            .courselink {
+                margin-left: 2em;
+                margin-top: .5em;
+            }
+        }
+        .card-title {
+            font-weight: bold;
+            display: block;
+            text-align: start;
+            padding: 1em 2em 1em 2em;
+            color: $brand-primary;
+        }
+        .course-info {
+            padding: 1em 2em 1em 2em;
+            font-size: $h6-font-size;
+            max-height: 400px;
+            overflow-y: auto;
+            .summary-info {
+                text-align: justify;
+            }
+            .additional-info {
+                text-align: justify;
+                .teachers {
+                    padding: 0;
+                    li {
+                        margin-bottom: .5em;
+                    }
+                }
+                .customfield {
+                    .customfieldname {
+                        font-weight: bold;
+                    }
+                }
+            }
         }
     }
 }
@@ -4460,6 +4601,9 @@ table th img.iconhelp {
     overflow-y: hidden;
     &:hover {
         overflow-y: auto;
+    }
+    @media (max-width: 768px) {
+        font-size: larger;
     }
 }
 
