@@ -61,7 +61,7 @@ class featured_courses implements \renderable, \templatable {
         }
 
         if (!empty($config->fc_browse_all)) {
-            $url = new moodle_url('/my/courses.php');
+            $url = new moodle_url('/course/');
             $this->browseallurl = $url;
         }
 
