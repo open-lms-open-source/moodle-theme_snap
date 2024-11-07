@@ -1289,13 +1289,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // We need to create this part of HTML here or multiple nav tags will exist for each item.
         $content = '<nav class="navbar navbar-expand-lg navbar-light">';
+        $content .= '<div class="container-fluid">';
         $content .= '<ul class="navbar-collapse clearfix snap-navbar-content">';
         foreach ($menu->get_children() as $item) {
             $context = $item->export_for_template($this);
             $content .= $this->render_from_template('theme_snap/custom_menu_item', $context);
         }
 
-        return $content.'</nav>'.'</ul>';
+        return $content.'</ul>'.'</div>'.'</nav>';
     }
 
     /**

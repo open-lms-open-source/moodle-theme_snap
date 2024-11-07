@@ -39,12 +39,14 @@ echo $OUTPUT->doctype() ?>
 <?php echo $OUTPUT->standard_top_of_body_html() ?>
 
 <nav role="navigation" class="navbar navbar-default">
-    <div class="navbar-header">
-        <span class="navbar-brand"><?php echo $SITE->shortname; ?></span>
-    </div>
-    <div id="moodle-navbar">
-        <div class="nav-link float-md-right">
-            <?php echo $OUTPUT->secure_layout_login_info() ?>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <span class="navbar-brand"><?php echo $SITE->shortname; ?></span>
+        </div>
+        <div id="moodle-navbar">
+            <div class="nav-link float-md-right">
+                <?php echo $OUTPUT->secure_layout_login_info() ?>
+            </div>
         </div>
     </div>
 </nav>
