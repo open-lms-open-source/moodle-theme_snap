@@ -602,82 +602,56 @@ li.section:focus {
         }
     }
 
-    div[data-internal="hvp"] .modicon_hvp {
-        .activityicon {
-            filter: $hvp-filter;
-        }
+    div[data-internal="hvp"] .modicon_hvp .activityicon {
+        filter: $hvp-filter;
     }
 
-    div[data-internal="lightboxgallery"] .modicon_lightboxgallery {
-        .activityicon {
-            filter: $lightbox-filter;
-        }
+    div[data-internal="lightboxgallery"] .modicon_lightboxgallery .activityicon {
+        filter: $lightbox-filter;
     }
 
-    div[data-internal="resource"] .modicon_resource {
-        img.activityicon {
-            filter: $resource-filter;
-        }
+    div[data-internal="resource"] .modicon_resource img.activityicon {
+        filter: $resource-filter;
     }
 
-    div[data-internal="book"] .modicon_book {
-        img.activityicon {
-            filter: $book-filter;
-        }
+    div[data-internal="book"] .modicon_book img.activityicon {
+        filter: $book-filter;
     }
 
-    div[data-internal="folder"] .modicon_folder {
-        img.activityicon {
-            filter: $folder-filer;
-        }
+    div[data-internal="folder"] .modicon_folder img.activityicon {
+        filter: $folder-filer;
     }
 
-    div[data-internal="questionnaire"] .modicon_questionnaire{
-        img.activityicon {
-            filter: $questionnaire-filter;
-        }
+    div[data-internal="questionnaire"] .modicon_questionnaire img.activityicon {
+        filter: $questionnaire-filter;
     }
 
-    div[data-internal="url"] .modicon_url {
-        img.activityicon {
-            filter: $url-filter;
-        }
+    div[data-internal="url"] .modicon_url img.activityicon {
+        filter: $url-filter;
     }
 
-    div[data-internal="label"] .modicon_label {
-        img.activityicon {
-            filter: $label-filter;
-        }
+    div[data-internal="label"] .modicon_label img.activityicon {
+        filter: $label-filter;
     }
 
-    div[data-internal="page"] .modicon_page {
-        img.activityicon {
-            filter: $page-filter;
-        }
+    div[data-internal="page"] .modicon_page img.activityicon {
+        filter: $page-filter;
     }
 
-    div[data-internal^="lti_type"] {
-        img.icon {
-            filter: $resource-filter;
-        }
+    div[data-internal^="lti_type"] img.icon {
+        filter: $resource-filter;
     }
 
-    div[data-internal="certificate"] .modicon_certificate {
-        img.activityicon {
-            filter: $certificate-filter;
-        }
+    div[data-internal="certificate"] .modicon_certificate img.activityicon {
+        filter: $certificate-filter;
     }
 
-    div[data-internal="customquiz"] .modicon_customquiz {
-        .activityicon {
-            filter: $customquiz-filter;
-        }
+    div[data-internal="customquiz"] .modicon_customquiz .activityicon {
+        filter: $customquiz-filter;
     }
 
-    div[data-internal="livepoll"] .modicon_livepoll {
-        img.activityicon {
-            filter: $livepoll-filter;
-        }
+    div[data-internal="livepoll"] .modicon_livepoll img.activityicon {
+        filter: $livepoll-filter;
     }
 
     div[data-internal="checklist"] .modicon_checklist,
@@ -694,10 +668,8 @@ li.section:focus {
         }
     }
 
-    div[data-internal="zoom"] .modicon_zoom {
-        img.activityicon {
-            filter: $zoom-filter;
-        }
+    div[data-internal="zoom"] .modicon_zoom img.activityicon {
+        filter: $zoom-filter;
     }
 
     div[data-internal="goone"] .modicon_goone {
