@@ -368,7 +368,9 @@ define(
                     var sections = $('.course-content li[id^="section-"]');
                     var urlParams = location.hash.split("&"),
                         sectionParam = urlParams[0];
-                    if (sections.length == 1 && sectionParam != '#coursetools') {
+                    if (sections.length == 1 &&
+                        sectionParam != '#coursetools' &&
+                        sectionParam != '#snap-add-new-section') {
                         sections.addClass('state-visible');
                         var section = sections.attr('id').split('section-')[1];
                         if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && section > 0) {

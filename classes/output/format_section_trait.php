@@ -428,15 +428,7 @@ trait format_section_trait {
         $summarylabel = get_string('summarylabel', 'theme_snap');
         $o .= "<div class='summary' role='group' aria-label='$summarylabel'>";
 
-        // SHAME: Inhibiting section html under certain circumstances.
-        // H5P fix, sometimes instructors will try to embed iframes pointing to other courses,
-        // this can damage the current course editing state, so let's not render section summaries.
-        // Anyways, no course content appears when editing is on when using Snap.
-        $notifyeditingon = optional_param('notifyeditingon', 0, PARAM_INT);
-        $editingflag = optional_param('edit', '', PARAM_ALPHA);
-        if (empty($USER->editing) && empty($notifyeditingon) && empty($editingflag)) {
-            $summarytext = $this->format_summary_text($section);
-        }
+        $summarytext = $this->format_summary_text($section);
 
         $canupdatecourse = has_capability('moodle/course:update', $context);
 

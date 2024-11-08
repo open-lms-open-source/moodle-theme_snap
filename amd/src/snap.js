@@ -734,6 +734,44 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         };
 
         /**
+         * Edit url for edit toggle in course page.
+         * @param {string} courseFormat
+         */
+        var editToggleURL = function(courseFormat) {
+
+            // We use this MutationObserver because modifying the URL with a hash for navigation does not trigger a page
+            // reload. Specifically, the `window.location` statement in `lib/amd/src/edit_switch.js` does not cause a
+            // reload. To work around this, we need to manually reload the page, but only after confirming that the
+            // edit mode was successfully enabled. To do this, we observe the `aria-checked` attribute, which is added
+            // by the `toggleEditSwitch` function in `lib/amd/src/edit_switch.js` when the edit mode was changed.
+            const editModeToggleObserver = function(mutationsList, observer) {
+                for (const mutation of mutationsList) {
+                    if (mutation.type === 'attributes') {
+                        const editToggle = document.querySelector('.editmode-switch-form .custom-control-input');
+                        if (editToggle.hasAttribute('aria-checked')) {
+                            observer.disconnect();
+                            location.reload();
+                        }
+                    }
+                }
+            };
+            var courseEditSwitch = document.querySelector(
+                '#page-course-view-' + courseFormat + ' .editmode-switch-form .custom-control-input');
+            if (courseEditSwitch) {
+                var urlHash = window.location.hash;
+                var originalUrl = courseEditSwitch.getAttribute('data-pageurl');
+                var modifiedURL = originalUrl+urlHash;
+                courseEditSwitch.setAttribute('data-pageurl', modifiedURL);
+                window.onhashchange = function() {
+                    urlHash = window.location.hash;
+                    courseEditSwitch.setAttribute('data-pageurl', originalUrl+urlHash);
+                };
+                const observer = new MutationObserver(editModeToggleObserver);
+                observer.observe(document.body, {attributes: true});
+            }
+        };
+
+        /**
          * Function to fix the styles when fullscreen is used with Atto Editor.
          */
         function waitForFullScreenButton() {
@@ -1365,6 +1403,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             userCompetency.parent().addClass('ml-4');
                         }
                     }
+
+                    // To update the edit toggle URL in course page.
+                    editToggleURL('topics');
+                    editToggleURL('weeks');
+
                 });
                 accessibility.snapAxInit();
                 messages.init();

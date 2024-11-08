@@ -569,6 +569,10 @@
 
 // Print options for book resource.
 #page-mod-book-view {
+    // Hide the Customize this page button because we already have the edition toggle here.
+    .snap-page-heading-button .singlebutton:nth-of-type(1) {
+        display: none;
+    }
     .snap-page-heading-button > .action-menu {
         float: right;
     }

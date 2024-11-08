@@ -218,3 +218,30 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "a[href=\"#section-1\"].chapter-title" "css_element"
     And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+
+  @javascript
+  Scenario: User should be redirected to the same section in the course in Snap when changing the edit mode.
+    Given the course format for "C1" is set to "topics"
+    When I log in as "admin"
+    And I am on the course main page for "C1"
+    And I click on "#snap-course-tools" "css_element"
+    Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+    And I switch edit mode in Snap
+    And I wait until the page is ready
+    Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+    And I click on "a[href='#section-1'].chapter-title" "css_element"
+    And I switch edit mode in Snap
+    And I wait until the page is ready
+    And I should not see "Course Dashboard" in the "#coursetools" "css_element"
+    Then the course format for "C1" is set to "weeks"
+    When I log in as "admin"
+    And I am on the course main page for "C1"
+    And I click on "#snap-course-tools" "css_element"
+    Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+    And I switch edit mode in Snap
+    And I wait until the page is ready
+    Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+    And I click on "a[href='#section-1'].chapter-title" "css_element"
+    And I switch edit mode in Snap
+    And I wait until the page is ready
+    Then I should not see "Course Dashboard" in the "#coursetools" "css_element"

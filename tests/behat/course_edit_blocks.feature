@@ -74,6 +74,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I am on the course main page for "C1"
     And I follow "Course Dashboard"
     And I switch edit mode in Snap
+    And course page should be in edit mode
     When I am on site homepage
     Then I should see "Change site name"
     Then I should see "Add a block"

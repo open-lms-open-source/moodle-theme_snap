@@ -129,7 +129,7 @@ if ($hasadminbutton) {
     }
 }
 echo "<div class='snap-page-heading-button' >";
-if ($PAGE->pagelayout !== 'admin' && $PAGE->pagelayout !== 'mydashboard' && $PAGE->pagetype !== 'mod-book-view') {
+if ($PAGE->pagelayout !== 'admin') {
     echo $OUTPUT->page_heading_button();
 }
 // Validation added to check if settings option should be displayed;

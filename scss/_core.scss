@@ -5042,6 +5042,14 @@ section#region-main {
 // Fixes for course cards in the user dashboard.
 #page-my-index {
 
+    // Hide the Customize this page button because we already have the edition toggle here.
+    &:not(.editing) .snap-page-heading-button .singlebutton:nth-of-type(1) {
+        display: none;
+    }
+    &.editing .snap-page-heading-button .singlebutton:nth-of-type(2) {
+        display: none;
+    }
+
     #moodle-blocks {
         padding: 0;
         .block_myoverview .block-cards {
