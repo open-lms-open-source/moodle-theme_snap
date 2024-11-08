@@ -1263,6 +1263,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
             $contextheader = new \context_header($heading, $headinglevel, $imagedata, $userbuttons, $prefix);
             return $this->render($contextheader); // Only context header for course modules.
+        } else if ($context->contextlevel == CONTEXT_COURSE) {
+          return parent::context_header($headerinfo, $headinglevel);
         }
         return ''; // Any other case we fall back to the Snap header.
     }
