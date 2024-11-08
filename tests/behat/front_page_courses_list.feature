@@ -117,4 +117,25 @@ Feature: Correct functionality of enrolled courses and available courses in the 
     And I am on site homepage
     And "Hidden from students" "text" should exist in the "#frontpage-course-list" "css_element"
 
+  @javascript
+  Scenario: Users can open the course cards info modal.
+    Given I log in as "admin"
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I navigate to "Settings" in current page administration
+    And I set the field with xpath "//select[@id='id_s__frontpageloggedin0']" to "List of courses"
+    And I set the field with xpath "//select[@id='id_s__frontpageloggedin1']" to "Enrolled courses"
+    And I press "Save changes"
+    And I am on site homepage
+    And "i.more-info" "css_element" should not be visible
+    And I hover ".snap-home-course" "css_element"
+    And "i.more-info" "css_element" should be visible
+    And I click on "i.more-info" "css_element"
+    And ".snap-home-course-card" "css_element" should be visible
+    And I should see "Lorem ipsum dolor sit amet"
+    And I click on ".close" "css_element"
+    And ".snap-home-course-card" "css_element" should not be visible
+    And I should not see "Lorem ipsum dolor sit amet"
+
+
 
