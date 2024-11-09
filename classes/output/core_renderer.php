@@ -1256,15 +1256,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $prefix = get_string('modulename', $this->page->activityname);
                 }
             }
-        }
+            // Return the heading wrapped in an sr-only element so it is only visible to screen-readers.
+            if (!empty($this->page->layout_options['nocontextheader'])) {
+                return html_writer::div($heading, 'sr-only');
+            }
 
-        // Return the heading wrapped in an sr-only element so it is only visible to screen-readers.
-        if (!empty($this->page->layout_options['nocontextheader'])) {
-            return html_writer::div($heading, 'sr-only');
+            $contextheader = new \context_header($heading, $headinglevel, $imagedata, $userbuttons, $prefix);
+            return $this->render($contextheader); // Only context header for course modules.
         }
-
-        $contextheader = new \context_header($heading, $headinglevel, $imagedata, $userbuttons, $prefix);
-        return $this->render($contextheader);
+        return ''; // Any other case we fall back to the Snap header.
     }
 
     /**

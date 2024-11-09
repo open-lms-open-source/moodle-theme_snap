@@ -114,7 +114,7 @@ $hvp-interactive-content:            #000000; // HVP
 $communication-filter: invert(55%) sepia(61%) saturate(423%) hue-rotate(49deg) brightness(89%) contrast(92%);; // Forums, Chat, Open forum
 $assignment-filter:    invert(32%) sepia(48%) saturate(3787%) hue-rotate(173deg) brightness(97%) contrast(101%); // Assignment, Workshop, Attendance, H5P, Journal
 $content-filter:       invert(85%) sepia(40%) saturate(5001%) hue-rotate(348deg) brightness(84%) contrast(82%); // Quiz, choice, feedback
-$information-filter:   invert(85%) sepia(40%) saturate(5001%) hue-rotate(348deg) brightness(84%) contrast(82%); // Wiki, glossary, Database, Choice Group
+$information-filter:   invert(33%) sepia(97%) saturate(3270%) hue-rotate(155deg) brightness(100%) contrast(101%); // Wiki, glossary, Database, Choice Group
 $collab-filter:        invert(25%) sepia(52%) saturate(2509%) hue-rotate(285deg) brightness(88%) contrast(88%); // Collaborate
 $hvp-filter:           brightness(0%) contrast(100%); // HVP
 
@@ -133,7 +133,7 @@ $color-bk-resource:                  #f8f9fa; // For resources description backg
 $lightbox-filter:      invert(36%) sepia(66%) saturate(5372%) hue-rotate(148deg) brightness(90%) contrast(101%); // Lightbox gallery
 $resource-filter:      invert(40%) sepia(7%) saturate(6564%) hue-rotate(168deg) brightness(99%) contrast(75%); // Resources lTI
 $book-filter:          invert(24%) sepia(91%) saturate(1089%) hue-rotate(200deg) brightness(90%) contrast(90%); // Book
-$folder-filer:         invert(78%) sepia(36%) saturate(870%) hue-rotate(353deg) brightness(87%) contrast(90%); // Folder
+$folder-filter:         invert(78%) sepia(36%) saturate(870%) hue-rotate(353deg) brightness(87%) contrast(90%); // Folder
 $questionnaire-filter: invert(51%) sepia(96%) saturate(615%) hue-rotate(353deg) brightness(84%) contrast(96%); // Questionnaire, IMSCP, SCORM, Survey, Lesson
 $url-filter:           invert(31%) sepia(50%) saturate(1389%) hue-rotate(189deg) brightness(91%) contrast(90%); // URL
 $label-filter:         invert(21%) sepia(56%) saturate(1129%) hue-rotate(197deg) brightness(104%) contrast(95%); // Label
@@ -154,6 +154,7 @@ $color-code:                         $color-resource; // Orange.
 
 // Open LMS
 $color-certificate:                  $color-content; // Course certificate
+$color-customcertificate:            #9832A7; // Custom certificate
 $color-customquiz:                   #C14A81; // Custom Quiz
 $color-livepoll:                     #A03F3F; // Livepoll
 $color-checklist:                    #2E9467; // Checklist Dialogue
@@ -162,6 +163,7 @@ $color-zoom:                         #7C2D8F; // Zoom
 $color-go1:                          #3A7E98; // GO1 content item
 
 $certificate-filter: $content-filter; // Course certificate
+$customcertificate-filter: invert(26%) sepia(32%) saturate(4543%) hue-rotate(274deg) brightness(86%) contrast(89%); // Custom certificate
 $customquiz-filter: invert(39%) sepia(84%) saturate(431%) hue-rotate(280deg) brightness(87%) contrast(96%); // Custom Quiz
 $livepoll-filter: invert(31%) sepia(14%) saturate(2379%) hue-rotate(314deg) brightness(102%) contrast(92%); // Livepoll
 $checklist-filter: invert(48%) sepia(82%) saturate(346%) hue-rotate(101deg) brightness(85%) contrast(87%); // Checklist Dialogue

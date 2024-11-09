@@ -619,7 +619,7 @@ li.section:focus {
     }
 
     div[data-internal="folder"] .modicon_folder img.activityicon {
-        filter: $folder-filer;
+        filter: $folder-filter;
     }
 
     div[data-internal="questionnaire"] .modicon_questionnaire img.activityicon {
@@ -644,6 +644,10 @@ li.section:focus {
 
     div[data-internal="certificate"] .modicon_certificate img.activityicon {
         filter: $certificate-filter;
+    }
+
+    div[data-internal="coursecertificate"] .modicon_coursecertificate img.activityicon {
+        filter: $customcertificate-filter;
     }
 
     div[data-internal="customquiz"] .modicon_customquiz .activityicon {
@@ -673,7 +677,7 @@ li.section:focus {
     }
 
     div[data-internal="goone"] .modicon_goone {
-        background: transparent;
+        background: transparent; // We need this one to eliminate background color.
         img.activityicon {
             filter: $go1-filter;
         }
@@ -686,6 +690,209 @@ li.section:focus {
                 filter: none;
             }
         }
+    }
+}
+
+// ---------------------------------------
+// Mod view rules
+// ---------------------------------------
+
+.path-mod.theme-snap.pagelayout-incourse .page-header-image .activityiconcontainer {
+    filter: none; // We color icons using filters and avoid any interference will help.
+    .activityicon {
+        background-color: transparent;
+        height: 45px !important; // Moodle has it's own rules.
+        width: 45px !important;
+    }
+}
+
+
+#page-mod-forum-view,
+#page-mod-forum-mod,
+#page-mod-chat-view,
+#page-mod-chat-mod,
+#page-mod-forum-view,
+#page-mod-forum-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $communication-filter;
+    }
+}
+
+#page-mod-assign-view,
+#page-mod-assign-mod,
+#page-mod-workshop-view,
+#page-mod-workshop-mod,
+#page-mod-journal-view,
+#page-mod-journal-mod,
+#page-mod-attendance-view,
+#page-mod-attendance-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $assignment-filter;
+    }
+}
+
+#page-mod-choice-view,
+#page-mod-choice-mod,
+#page-mod-feedback-view,
+#page-mod-feedback-mod,
+#page-mod-quiz-view,
+#page-mod-quiz-mod,
+#page-mod-survey-view,
+#page-mod-survey-mod,
+#page-mod-lesson-view,
+#page-mod-lesson-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $content-filter;
+    }
+}
+
+#page-mod-data-view,
+#page-mod-data-mod,
+#page-mod-glossary-view,
+#page-mod-glossary-mod,
+#page-mod-wiki-view,
+#page-mod-wiki-mod,
+#page-mod-choicegroup-view,
+#page-mod-choicegroup-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $information-filter;
+    }
+}
+
+#page-mod-collaborate-view,
+#page-mod-collaborate-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $collab-filter;
+    }
+}
+
+#page-mod-hvp-view,
+#page-mod-hvp-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $hvp-filter;
+    }
+}
+
+#page-mod-lightboxgallery-view,
+#page-mod-lightboxgallery-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $lightbox-filter;
+    }
+}
+
+#page-mod-resource-view,
+#page-mod-resource-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $resource-filter;
+    }
+}
+
+#page-mod-book-view,
+#page-mod-book-edit {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $book-filter;
+    }
+}
+
+#page-mod-folder-view,
+#page-mod-folder-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $folder-filter;
+    }
+}
+
+#page-mod-questionnaire-view,
+#page-mod-questionnaire-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $questionnaire-filter;
+    }
+}
+
+#page-mod-url-view,
+#page-mod-url-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $url-filter;
+    }
+}
+
+#page-mod-label-view,
+#page-mod-label-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $label-filter;
+    }
+}
+
+#page-mod-page-view,
+#page-mod-page-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $page-filter;
+    }
+}
+
+#page-mod-lti-view,
+#page-mod-lti-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $resource-filter;
+    }
+}
+
+#page-mod-certificate-view,
+#page-mod-certificate-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $certificate-filter;
+    }
+}
+
+#page-mod-coursecertificate-view,
+#page-mod-coursecertificate-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $customcertificate-filter;
+    }
+}
+
+#page-mod-customquiz-view,
+#page-mod-customquiz-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $customquiz-filter;
+    }
+}
+
+#page-mod-livepoll-view,
+#page-mod-livepoll-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $livepoll-filter;
+    }
+}
+
+#page-mod-checklist-view,
+#page-mod-checklist-mod,
+#page-mod-dialogue-view,
+#page-mod-dialogue-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $checklist-filter;
+    }
+}
+
+#page-mod-quizgame-view,
+#page-mod-quizgame-mod,
+#page-mod-adaptivequiz-view,
+#page-mod-adaptivequiz-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $quizlms-filter;
+    }
+}
+
+#page-mod-zoom-view,
+#page-mod-zoom-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $zoom-filter;
+    }
+}
+
+#page-mod-goone-view,
+#page-mod-goone-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $go1-filter;
     }
 }
 
@@ -1682,7 +1889,7 @@ body.snap-resource-card {
         &.modtype_folder {
             border-top-color: $color-folder;
             .activityiconcontainer {
-                filter: $folder-filer;
+                filter: $folder-filter;
             }
         }
 
@@ -1765,7 +1972,7 @@ body.snap-resource-card {
                     }
                     .readmore-container {
                         text-align: center;
-                    
+
                         .btn {
                             i.icon {
                                 display: block;
@@ -1828,6 +2035,13 @@ body.snap-resource-card {
             border-top-color: $color-certificate;
             .activityiconcontainer {
                 filter: $certificate-filter;
+            }
+        }
+
+        &.modtype_coursecertificate {
+            border-top-color: $color-customcertificate;
+            .activityiconcontainer {
+                filter: $customcertificate-filter;
             }
         }
     }
