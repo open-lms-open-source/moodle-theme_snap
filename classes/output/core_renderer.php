@@ -284,6 +284,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $renderer = $this->page->get_renderer('core');
         $header = $this->page->activityheader;
         $headercontext = $header->export_for_template($renderer);
+        unset($headercontext['title']);
         if (!empty($headercontext)) {
             return $this->render_from_template('core/activity_header', $headercontext);
         }
@@ -1213,6 +1214,58 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return ''; // Empty return to avoid errors.
     }
 
+    /**
+     * Renders the context header for the page.
+     *
+     * @param array $headerinfo Heading information.
+     * @param int $headinglevel What 'h' level to make the heading.
+     * @return string A rendered context header.
+     */
+    public function context_header($headerinfo = null, $headinglevel = 1): string {
+        global $USER, $CFG;
+        require_once($CFG->dirroot . '/user/lib.php');
+        $context = $this->page->context;
+        $imagedata = null;
+        $userbuttons = null;
+        // Make sure to use the heading if it has been set.
+        if (isset($headerinfo['heading'])) {
+            $heading = $headerinfo['heading'];
+        } else {
+            $heading = $this->page->heading;
+        }
+
+        $prefix = null;
+        if ($context->contextlevel == CONTEXT_MODULE) {
+            if ($this->page->course->format === 'singleactivity') {
+                $heading = format_string($this->page->course->fullname, true, ['context' => $context]);
+            } else {
+                $heading = $this->page->cm->get_formatted_name();
+                $iconurl = $this->page->cm->get_icon_url();
+                $iconclass = $iconurl->get_param('filtericon') ? '' : 'nofilter';
+                $iconattrs = [
+                    'class' => "icon activityicon $iconclass",
+                    'aria-hidden' => 'true'
+                ];
+                $imagedata = html_writer::img($iconurl->out(false), '', $iconattrs);
+                $purposeclass = plugin_supports('mod', $this->page->activityname, FEATURE_MOD_PURPOSE);
+                $purposeclass .= ' activityiconcontainer icon-size-6';
+                $purposeclass .= ' modicon_' . $this->page->activityname;
+                $isbranded = component_callback('mod_' . $this->page->activityname, 'is_branded', [], false);
+                $imagedata = html_writer::tag('div', $imagedata, ['class' => $purposeclass . ($isbranded ? ' isbranded' : '')]);
+                if (!empty($USER->editing)) {
+                    $prefix = get_string('modulename', $this->page->activityname);
+                }
+            }
+        }
+
+        // Return the heading wrapped in an sr-only element so it is only visible to screen-readers.
+        if (!empty($this->page->layout_options['nocontextheader'])) {
+            return html_writer::div($heading, 'sr-only');
+        }
+
+        $contextheader = new \context_header($heading, $headinglevel, $imagedata, $userbuttons, $prefix);
+        return $this->render($contextheader);
+    }
 
     /**
      * Get page heading.
@@ -1235,6 +1288,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $heading = format_string($COURSE->fullname);
             $heading = html_writer::link($courseurl, $heading);
             $heading = html_writer::tag($tag, $heading);
+            $heading .= $this->context_header();
         } else {
             // Default heading.
             $heading = html_writer::tag($tag, $heading);
