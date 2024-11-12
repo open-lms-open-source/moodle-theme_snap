@@ -153,7 +153,7 @@ $color-video:                        $color-resource; // Blue.
 $color-code:                         $color-resource; // Orange.
 
 // Open LMS
-$color-certificate:                  $color-content; // Course certificate
+$color-certificate:                  #9832A7; // Course certificate
 $color-customcertificate:            #9832A7; // Custom certificate
 $color-customquiz:                   #C14A81; // Custom Quiz
 $color-livepoll:                     #A03F3F; // Livepoll
@@ -162,8 +162,7 @@ $color-quizlms:                      $color-content; // Adaptive quiz, Quiz game
 $color-zoom:                         #7C2D8F; // Zoom
 $color-go1:                          #3A7E98; // GO1 content item
 
-$certificate-filter: $content-filter; // Course certificate
-$customcertificate-filter: invert(26%) sepia(32%) saturate(4543%) hue-rotate(274deg) brightness(86%) contrast(89%); // Custom certificate
+$certificate-filter: invert(26%) sepia(32%) saturate(4543%) hue-rotate(274deg) brightness(86%) contrast(89%); // Course certificate
 $customquiz-filter: invert(39%) sepia(84%) saturate(431%) hue-rotate(280deg) brightness(87%) contrast(96%); // Custom Quiz
 $livepoll-filter: invert(31%) sepia(14%) saturate(2379%) hue-rotate(314deg) brightness(102%) contrast(92%); // Livepoll
 $checklist-filter: invert(48%) sepia(82%) saturate(346%) hue-rotate(101deg) brightness(85%) contrast(87%); // Checklist Dialogue

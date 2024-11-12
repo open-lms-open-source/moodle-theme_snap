@@ -580,7 +580,8 @@ li.section:focus {
     div[data-internal="feedback"] .modicon_feedback,
     div[data-internal="quiz"] .modicon_quiz,
     div[data-internal="survey"] .modicon_survey,
-    div[data-internal="lesson"] .modicon_lesson {
+    div[data-internal="lesson"] .modicon_lesson,
+    div[data-internal="facetoface"] .modicon_facetoface {
         .activityicon {
             filter: $content-filter;
         }
@@ -642,12 +643,10 @@ li.section:focus {
         filter: $resource-filter;
     }
 
-    div[data-internal="certificate"] .modicon_certificate img.activityicon {
-        filter: $certificate-filter;
-    }
-
+    div[data-internal="certificate"] .modicon_certificate img.activityicon,
+    div[data-internal="customcert"] .modicon_customcert img.activityicon,
     div[data-internal="coursecertificate"] .modicon_coursecertificate img.activityicon {
-        filter: $customcertificate-filter;
+        filter: $certificate-filter;
     }
 
     div[data-internal="customquiz"] .modicon_customquiz .activityicon {
@@ -740,7 +739,9 @@ li.section:focus {
 #page-mod-survey-view,
 #page-mod-survey-mod,
 #page-mod-lesson-view,
-#page-mod-lesson-mod {
+#page-mod-lesson-mod,
+#page-mod-facetoface-view,
+#page-mod-facetoface-mod {
     .page-header-image .activityiconcontainer .activityicon {
         filter: $content-filter;
     }
@@ -837,16 +838,13 @@ li.section:focus {
 }
 
 #page-mod-certificate-view,
-#page-mod-certificate-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $certificate-filter;
-    }
-}
-
+#page-mod-certificate-mod,
+#page-mod-customcert-view,
+#page-mod-customcert-mod,
 #page-mod-coursecertificate-view,
 #page-mod-coursecertificate-mod {
     .page-header-image .activityiconcontainer .activityicon {
-        filter: $customcertificate-filter;
+        filter: $certificate-filter;
     }
 }
 
@@ -1832,7 +1830,8 @@ body.snap-resource-card {
 
         &.modtype_choice,
         &.modtype_feedback,
-        &.modtype_quiz {
+        &.modtype_quiz,
+        &.modtype_facetoface {
             border-top-color: $color-content;
             .activityiconcontainer img {
                 filter: $content-filter;
@@ -2031,17 +2030,12 @@ body.snap-resource-card {
             }
         }
 
-        &.modtype_certificate {
+        &.modtype_certificate,
+        &.modtype_coursecertificate,
+        &.modtype_customcert {
             border-top-color: $color-certificate;
             .activityiconcontainer {
                 filter: $certificate-filter;
-            }
-        }
-
-        &.modtype_coursecertificate {
-            border-top-color: $color-customcertificate;
-            .activityiconcontainer {
-                filter: $customcertificate-filter;
             }
         }
     }

@@ -96,9 +96,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     }
 
     .snap-dropzone .activityiconcontainer {
-        background-color: $brand-primary;
+        background-color: transparent;
         img.activityicon {
-            filter: brightness(0) invert(1);
+            filter: $resource-filter;
         }
     }
 
