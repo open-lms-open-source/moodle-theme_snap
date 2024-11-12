@@ -23,7 +23,6 @@
 Feature: Entering a Snap course without specifying a section will take you to the current section
 
   Background:
-    Given I skip because "It will be reviewed on INT-20529"
     Given the following "courses" exist:
       | fullname | shortname | category | format | hiddensections| initsections |
       | Course 1 | C1        | 0        | topics |     0         |      1       |
@@ -107,6 +106,7 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I highlight section 1
     And I restrict course section 1 by date to "tomorrow"
     And I should see "Conditional" in TOC item 1
+    And I am on the course main page for "C1"
     And I go to course section 1
     And I should see available from date of "tomorrow" in section 1
     And I log out
