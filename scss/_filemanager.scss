@@ -87,11 +87,6 @@ div[data-fieldtype=filemanager] > p:nth-of-type(1) {
     background: $body-bg;
 }
 
-// Fix for file picker in Snap, not showing all the repositories.
-.moodle-dialogue-base .moodle-dialogue.filepicker {
-    overflow: scroll;
-}
-
 .jschooser .choosercontainer #chooseform .alloptions {
     max-height: calc(100vh - 10rem) !important; // Overules JS caculated value.
 }

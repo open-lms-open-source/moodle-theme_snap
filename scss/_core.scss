@@ -3845,11 +3845,6 @@ body.hascontinuecancel.path-site #page {
 .moodle-dialogue-base .moodle-dialogue {
     min-width: 32%;
     padding: 0;
-    /* large size */
-    &.filepicker {
-        min-width: 90%;
-        height: calc(100% - 10px);
-    }
 
     &.chooserdialogue {
         min-width: 90%;
@@ -3862,6 +3857,10 @@ body.hascontinuecancel.path-site #page {
     video#player {
         max-height: 50vh;
     }
+}
+
+.moodle-dialogue-base .filepicker .alert-warning {
+    margin: 0 1px 18px;
 }
 
 /* Prevent modal dialog to be seen behind the text and tool card content right fit */
