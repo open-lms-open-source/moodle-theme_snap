@@ -683,8 +683,7 @@ li.section:focus {
     }
 
     .activityiconcontainer {
-        &.modicon_hotpot,
-        &.modicon_facetoface {
+        &.modicon_hotpot {
             .activityicon {
                 filter: none;
             }
@@ -710,8 +709,8 @@ li.section:focus {
 #page-mod-forum-mod,
 #page-mod-chat-view,
 #page-mod-chat-mod,
-#page-mod-forum-view,
-#page-mod-forum-mod {
+#page-mod-hsuforum-view,
+#page-mod-hsuforum-mod {
     .page-header-image .activityiconcontainer .activityicon {
         filter: $communication-filter;
     }

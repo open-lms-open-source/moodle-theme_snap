@@ -271,6 +271,113 @@ body.path-site .block.block_settings {
                 }
             }
         }
+
+        snap-feed {
+            .feeditem.snap-media-object img {
+
+                &[data-mod-name="forum"],
+                &[data-mod-name="chat"],
+                &[data-mod-name="hsuforum"] {
+                    filter: $communication-filter;
+                }
+
+                &[data-mod-name="assign"],
+                &[data-mod-name="workshop"],
+                &[data-mod-name="journal"],
+                &[data-mod-name="attendance"] {
+                    filter: $assignment-filter;
+                }
+
+                &[data-mod-name="choice"],
+                &[data-mod-name="feedback"],
+                &[data-mod-name="quiz"],
+                &[data-mod-name="survey"],
+                &[data-mod-name="lesson"],
+                &[data-mod-name="facetoface"] {
+                    filter: $content-filter;
+                }
+
+                &[data-mod-name="data"],
+                &[data-mod-name="glossary"],
+                &[data-mod-name="wiki"],
+                &[data-mod-name="choicegroup"] {
+                    filter: $information-filter;
+                }
+
+                &[data-mod-name="collaborate"] {
+                    filter: $collab-filter;
+                }
+
+                &[data-mod-name="hvp"] {
+                    filter: $hvp-filter;
+                }
+
+                &[data-mod-name="lightboxgallery"] {
+                    filter: $lightbox-filter;
+                }
+
+                &[data-mod-name="resource"] {
+                    filter: $resource-filter;
+                }
+
+                &[data-mod-name="book"] {
+                    filter: $book-filter;
+                }
+
+                &[data-mod-name="folder"] {
+                    filter: $folder-filter;
+                }
+
+                &[data-mod-name="questionnaire"] {
+                    filter: $questionnaire-filter;
+                }
+
+                &[data-mod-name="url"] {
+                    filter: $url-filter;
+                }
+
+                &[data-mod-name="label"] {
+                    filter: $label-filter;
+                }
+
+                &[data-mod-name="page"] {
+                    filter: $page-filter;
+                }
+
+                &[data-mod-name="certificate"],
+                &[data-mod-name="customcert"],
+                &[data-mod-name="coursecertificate"] {
+                    filter: $certificate-filter;
+                }
+
+                &[data-mod-name="customquiz"] {
+                    filter: $customquiz-filter;
+                }
+
+                &[data-mod-name="livepoll"] {
+                    filter: $livepoll-filter;
+                }
+
+                &[data-mod-name="checklist"],
+                &[data-mod-name="dialogue"] {
+                    filter: $checklist-filter;
+                }
+
+                &[data-mod-name="quizgame"],
+                &[data-mod-name="adaptivequiz"] {
+                    filter: $quizlms-filter;
+                }
+
+                &[data-mod-name="zoom"] {
+                    filter: $zoom-filter;
+                }
+
+                &[data-mod-name="goone"] {
+                    filter: $go1-filter;
+                }
+            }
+        }
+
     }
 
     .snap-feeds-mobile-menu  {

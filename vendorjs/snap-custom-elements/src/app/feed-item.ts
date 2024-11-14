@@ -9,4 +9,5 @@ export class FeedItem {
   extraClasses: string;
   fromCache: number;
   itemId: number;
+  modName: string;
 }

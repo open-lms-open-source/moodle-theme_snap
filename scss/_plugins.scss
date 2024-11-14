@@ -1509,3 +1509,155 @@ body.format-tiles.editing .section .snap-asset .actions {
         }
     }
 }
+
+body#page-admin-plugins {
+    .pluginicon { // Default for all plugins
+        background: transparent;
+    }
+
+    .name-mod_forum,
+    .name-mod_chat,
+    .name-mod_hsuforum {
+        .pluginicon {
+            filter: $communication-filter;
+        }
+    }
+
+    .name-mod_assign,
+    .name-mod_workshop,
+    .name-mod_journal,
+    .name-mod_attendance {
+        .pluginicon {
+            filter: $assignment-filter;
+        }
+    }
+
+    .name-mod_choice,
+    .name-mod_feedback,,
+    .name-mod_quiz,
+    .name-mod_survey,
+    .name-mod_lesson,
+    .name-mod_facetoface {
+        .pluginicon {
+            filter: $content-filter;
+        }
+    }
+
+    .name-mod_data,
+    .name-mod_glossary,
+    .name-mod_wiki,
+    .name-mod_choicegroup {
+        .pluginicon {
+            filter: $information-filter;
+        }
+    }
+
+    .name-mod_collaborate .pluginicon {
+        filter: $collab-filter;
+    }
+
+    .name-mod_hvp .pluginicon {
+            filter: $hvp-filter;
+    }
+
+    .name-mod_lightboxgallery {
+        .pluginicon {
+            filter: $lightbox-filter;
+        }
+    }
+
+
+    .name-mod_resource {
+        .pluginicon {
+            filter: $resource-filter;
+        }
+    }
+
+    .name-mod_book {
+        .pluginicon {
+            filter: $book-filter;
+        }
+    }
+
+    .name-mod_folder {
+        .pluginicon {
+            filter: $folder-filter;
+        }
+    }
+
+    .name-mod_questionnaire {
+        .pluginicon {
+            filter: $questionnaire-filter;
+        }
+    }
+
+    .name-mod_url {
+        .pluginicon {
+            filter: $url-filter;
+        }
+    }
+
+    .name-mod_label {
+        .pluginicon {
+            filter: $label-filter;
+        }
+    }
+
+    .name-mod_page {
+        .pluginicon {
+            filter: $page-filter;
+        }
+    }
+
+    .name-mod_lti {
+        .pluginicon {
+            filter: $resource-filter;
+        }
+    }
+
+    .name-mod_certificate,
+    .name-mod_customcert,
+    .name-mod_coursecertificate {
+        .pluginicon {
+            filter: $certificate-filter;
+        }
+    }
+
+    .name-mod_customquiz {
+        .pluginicon {
+            filter: $customquiz-filter;
+        }
+    }
+
+    .name-mod_livepoll {
+        .pluginicon {
+            filter: $livepoll-filter;
+        }
+    }
+
+    .name-mod_checklist,
+    .name-mod_dialogue {
+        .pluginicon {
+            filter: $checklist-filter;
+        }
+    }
+
+    .name-mod_quizgame,
+    .name-mod_adaptivequiz {
+        .pluginicon {
+            filter: $quizlms-filter;
+        }
+    }
+
+    .name-mod_zoom {
+        .pluginicon {
+            filter: $zoom-filter;
+        }
+    }
+
+    .name-mod_goone {
+        .pluginicon {
+            filter: $go1-filter;
+        }
+    }
+}

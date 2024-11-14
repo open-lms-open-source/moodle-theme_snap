@@ -117,7 +117,8 @@ class webservice_ws_feed_activity_test extends \advanced_testcase {
         $this->assertCount(2, $deadlines);
         $this->assertEqualsIgnoringCase($assignactivityname, $deadlines[0]['iconDesc']);
         $this->assertEqualsIgnoringCase($quizmodulename, $deadlines[1]['iconDesc']);
-
+        $this->assertEquals($assignmodulename, $deadlines[0]['modName']);
+        $this->assertEquals($quizmodulename, $deadlines[1]['modName']);
         // Create a label activity and verify that it is not being returned by web service.
         $this->setAdminUser();
         $labelmodulename = 'label';
