@@ -412,12 +412,7 @@ body.path-site .block.block_settings {
             display: block;
             height: 100vh;
             background: #eef0f6;
-
-            .snap-feeds-header {
-                background-color: $brand-primary;
-                padding: 0.5rem 1rem;
-            }
-
+        
             .nav {
                 position: fixed;
                 bottom: 0;
@@ -431,7 +426,6 @@ body.path-site .block.block_settings {
                     padding-top: 4px;
 
                     .nav-link {
-                        background: $brand-primary;
                         mask-repeat: no-repeat !important;
                         mask-position: center !important;
                         mask-size: 50px !important;
@@ -456,12 +450,10 @@ body.path-site .block.block_settings {
                     &.active {
                         opacity: 1;
                         padding-top: 0;
-                        border-top: 4px solid $brand-primary;
 
                         small {
                             visibility: visible;
                             font-weight: bold;
-                            color: $brand-primary;
                         }
                     }
                 }
@@ -515,8 +507,7 @@ body.path-site .block.block_settings {
 }
 
 .snap-feeds-menu-more svg, .snap-feeds-mobile-sections svg {
-    width: 20px;
-    margin-left: 8px;
+    width: 1.8em;
     margin-right: -8px;
 }
 

@@ -359,9 +359,12 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     &#page-login-index #page,
     .news-article-image,
     .news-article-preview,
-    #snap-footer-alert,
-    #toc-mobile-menu-toggle {
+    #snap-footer-alert {
         background-image: none;
+        background-color: $brand-primary;
+    }
+
+    #toc-mobile-menu-toggle {
         background-color: $brand-primary;
     }
 
@@ -1064,7 +1067,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
     }
-
+ 
     .snap-pm-section {
         .vertical-divider {
             width: 2px;
@@ -1355,6 +1358,25 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: $brand-primary;
         }
     }
+
+    @media screen and (max-width: 992px) {
+        .snap-feeds-mobile-menu {
+            .snap-feeds-header {
+                background-color: $brand-primary;
+                padding: 0.5rem 1rem;
+            }
+            .nav .nav-item {
+                .nav-link {
+                    background: $brand-primary;
+                }
+                &.active{
+                    border-top: 4px solid $brand-primary;
+                    small{
+                        color: $brand-primary;}
+                }
+            }
+        }
+    }    
 }
 
 /*
