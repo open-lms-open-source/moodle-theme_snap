@@ -176,3 +176,20 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     Examples:
       | display | exist            |
       | 6       | should exist |
+
+  @javascript
+  Scenario: User can upload file with edit mode enabled.
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I switch edit mode in Snap
+    And I follow "Section 1"
+    Then "#section-1" "css_element" should exist
+    And "#snap-drop-file-1" "css_element" should exist
+    And I upload file "test_text_file.txt" to section 1
+    And I upload file "test_mp3_file.mp3" to section 1
+    Then ".snap-resource[data-type='txt']" "css_element" should exist
+    And ".snap-resource[data-type='mp3']" "css_element" should exist
+    And I upload file "testgif.gif" to section 1
+    Then I should not see "Add image to course page"
+    And I should not see "Create file resource"
+    And I should see "testgif" in the "#section-1 .snap-native-image .activityinstance .instancename" "css_element"
