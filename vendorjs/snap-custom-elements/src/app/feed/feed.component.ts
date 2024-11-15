@@ -14,8 +14,8 @@ import {MoodleRes} from "../moodle.res";
   template: `
       <h2>{{ title }}</h2>
       <div id="{{ elemId }}" [@growIn]="feedItemTotal">
-          <div class="snap-media-object feeditem {{feedItem.extraClasses}}" *ngFor="let feedItem of feedItems" [attr.data-from-cache]="feedItem.fromCache">
-              <img *ngIf="feedItem.iconUrl !== ''" src="{{feedItem.iconUrl}}" alt="{{feedItem.iconDesc}}" [className]="feedItem.iconClass">
+          <div class="snap-media-object feeditem {{feedItem.extraClasses}}" *ngFor="let feedItem of feedItems" [attr.data-from-cache]="feedItem.fromCache" [attr.data-mod-name]="feedItem.modName">
+              <img *ngIf="feedItem.iconUrl !== ''" src="{{feedItem.iconUrl}}" alt="{{feedItem.iconDesc}}" [className]="feedItem.iconClass" [attr.data-mod-name]="feedItem.modName">
               <div class="snap-media-body">
                   <a [attr.href]="feedItem.urlParameter ? feedItem.actionUrl + '&snapfeedsclicked=on' : feedItem.actionUrl">
                       <h3>

@@ -180,4 +180,14 @@ class core_renderer_test extends \advanced_testcase {
         }
         $this->assertEquals($expected, $pagebreadcrumbsarray);
     }
+
+    /**
+     * Track changes on boost core_renderer. If this fails, please check the context_header function.
+     * @return void
+     */
+    public function test_core_renderer_changes_boost() {
+        global $CFG;
+        $sha1 = hash_file('sha1', $CFG->dirroot . '/theme/boost/classes/output/core_renderer.php');
+        $this->assertEquals('b01e09191e7c4d6356e1eee565147e2d8a0e6127', $sha1);
+    }
 }

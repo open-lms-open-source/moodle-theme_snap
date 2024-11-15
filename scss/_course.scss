@@ -549,88 +549,30 @@ li.section:focus {
 // ---------------------------------------
 // Mod chooser for Snap - Icon colors.
 // ---------------------------------------
-.modchoosercontainer .activityiconcontainer {
-    &.smaller {
+
+.theme-snap .modchoosercontainer {
+    img.activityicon { // All activity chooser icons with the same size.
         height: 45px;
         width: 45px;
     }
-    &.administration {
-        background-color: transparent; }
-    &.administration .activityicon,
-    &.administration .icon {
-        height: 45px;
-        width: 45px;
-        filter: none; }
-
-    &.assessment {
-        background-color: transparent; }
-    &.assessment .activityicon,
-    &.assessment .icon {
-        height: 45px;
-        width: 45px;
-        filter: none; }
-
-    &.collaboration {
-        background-color: transparent; }
-    &.collaboration .activityicon,
-    &.collaboration .icon {
-        height: 45px;
-        width: 45px;
-        filter: none; }
-
-    &.communication {
-        background-color: transparent; }
-    &.communication .activityicon,
-    &.communication .icon {
-        height: 45px;
-        width: 45px;
-        filter: none; }
-
-    &.content {
-        background-color: transparent; }
-    &.content .activityicon,
-    &.content .icon {
-        height: 45px;
-        width: 45px;
-        filter: none; }
-
-    &.interface {
-        background-color: transparent; }
-    &.interface .activityicon,
-    &.interface .icon {
-        height: 45px;
-        width: 45px;
-        filter: none; }
-}
-
-
-.theme-snap .modchoosercontainer {
     .activityiconcontainer {
+        background-color: transparent;
         padding: unset;
     }
     div[data-internal="forum"] .modicon_forum,
     div[data-internal="chat"] .modicon_chat,
     div[data-internal="hsuforum"] .modicon_hsuforum {
-        background-color: transparent;
-        padding: unset;
         .activityicon {
-            filter: none;
-            height: 45px;
-            width: 45px;
+            filter: $communication-filter;
         }
     }
 
     div[data-internal="assign"] .modicon_assign,
     div[data-internal="workshop"] .modicon_workshop,
     div[data-internal="journal"] .modicon_journal,
-    div[data-internal="hvp"] .modicon_hvp,
     div[data-internal="attendance"] .modicon_attendance {
-        background-color: transparent;
-        padding: unset;
         .activityicon {
-            filter: none;
-            height: 45px;
-            width: 45px;
+            filter: $assignment-filter;
         }
     }
 
@@ -638,14 +580,10 @@ li.section:focus {
     div[data-internal="feedback"] .modicon_feedback,
     div[data-internal="quiz"] .modicon_quiz,
     div[data-internal="survey"] .modicon_survey,
-    div[data-internal="questionnaire"] .modicon_questionnaire,
-    div[data-internal="lesson"] .modicon_lesson {
-        background-color: transparent;
-        padding: unset;
+    div[data-internal="lesson"] .modicon_lesson,
+    div[data-internal="facetoface"] .modicon_facetoface {
         .activityicon {
-            filter: none;
-            height: 45px;
-            width: 45px;
+            filter: $content-filter;
         }
     }
 
@@ -653,54 +591,305 @@ li.section:focus {
     div[data-internal="glossary"] .modicon_glossary,
     div[data-internal="wiki"] .modicon_wiki,
     div[data-internal="choicegroup"] .modicon_choicegroup {
-        background-color: transparent;
-        padding: unset;
         .activityicon {
-            filter: none;
-            height: 45px;
-            width: 45px;
+            filter: $information-filter;
         }
     }
 
-    div[data-internal="hvp"] .modicon_hvp,
-    div[data-internal="collaborate"] .modicon_collaborate,
-    div[data-internal="goone"] .modicon_goone,
-    div[data-internal="hsuforum"] .modicon_hsuforum {
-        background-color: transparent;
+    div[data-internal="collaborate"] .modicon_collaborate {
+        background: transparent; // This has to be specific so we gain priority.
         img.activityicon {
-            filter: none;
-            height: 45px;
-            width: 45px;
+            filter: $collab-filter;
         }
     }
 
+    div[data-internal="hvp"] .modicon_hvp .activityicon {
+        filter: $hvp-filter;
+    }
 
-    .activityiconcontainer:not(
-    .modicon_book,
-    .modicon_page,
-    .modicon_lti,
-    .modicon_resource,
-    .modicon_folder,
-    .modicon_label,
-    .modicon_lightboxgallery,
-    .modicon_url,
-    .modicon_checklist,
-    .modicon_collaborate,
-    .modicon_adaptivequiz,
-    .modicon_customquiz,
-    .modicon_coursecertificate,
-    .modicon_dialogue,
-    .modicon_goone,
-    .modicon_imscp,
-    .modicon_scorm,
-    .modicon_quizgame)
-    {
-        padding: unset;
-        .activityicon {
-            filter: none;
-            height: 45px;
-            width: 45px;
+    div[data-internal="lightboxgallery"] .modicon_lightboxgallery .activityicon {
+        filter: $lightbox-filter;
+    }
+
+    div[data-internal="resource"] .modicon_resource img.activityicon {
+        filter: $resource-filter;
+    }
+
+    div[data-internal="book"] .modicon_book img.activityicon {
+        filter: $book-filter;
+    }
+
+    div[data-internal="folder"] .modicon_folder img.activityicon {
+        filter: $folder-filter;
+    }
+
+    div[data-internal="questionnaire"] .modicon_questionnaire img.activityicon {
+        filter: $questionnaire-filter;
+    }
+
+    div[data-internal="url"] .modicon_url img.activityicon {
+        filter: $url-filter;
+    }
+
+    div[data-internal="label"] .modicon_label img.activityicon {
+        filter: $label-filter;
+    }
+
+    div[data-internal="page"] .modicon_page img.activityicon {
+        filter: $page-filter;
+    }
+
+    div[data-internal^="lti_type"] img.icon {
+        filter: $resource-filter;
+    }
+
+    div[data-internal="certificate"] .modicon_certificate img.activityicon,
+    div[data-internal="customcert"] .modicon_customcert img.activityicon,
+    div[data-internal="coursecertificate"] .modicon_coursecertificate img.activityicon {
+        filter: $certificate-filter;
+    }
+
+    div[data-internal="customquiz"] .modicon_customquiz .activityicon {
+        filter: $customquiz-filter;
+    }
+
+    div[data-internal="livepoll"] .modicon_livepoll img.activityicon {
+        filter: $livepoll-filter;
+    }
+
+    div[data-internal="checklist"] .modicon_checklist,
+    div[data-internal="dialogue"] .modicon_dialogue {
+        img.activityicon {
+            filter: $checklist-filter;
         }
+    }
+
+    div[data-internal="quizgame"] .modicon_quizgame,
+    div[data-internal="adaptivequiz"] .modicon_adaptivequiz {
+        .activityicon {
+            filter: $quizlms-filter;
+        }
+    }
+
+    div[data-internal="zoom"] .modicon_zoom img.activityicon {
+        filter: $zoom-filter;
+    }
+
+    div[data-internal="goone"] .modicon_goone {
+        background: transparent; // We need this one to eliminate background color.
+        img.activityicon {
+            filter: $go1-filter;
+        }
+    }
+
+    .activityiconcontainer {
+        &.modicon_hotpot {
+            .activityicon {
+                filter: none;
+            }
+        }
+    }
+}
+
+// ---------------------------------------
+// Mod view rules
+// ---------------------------------------
+
+.path-mod.theme-snap.pagelayout-incourse .page-header-image .activityiconcontainer {
+    filter: none; // We color icons using filters and avoid any interference will help.
+    .activityicon {
+        background-color: transparent;
+        height: 45px !important; // Moodle has it's own rules.
+        width: 45px !important;
+    }
+}
+
+
+#page-mod-forum-view,
+#page-mod-forum-mod,
+#page-mod-chat-view,
+#page-mod-chat-mod,
+#page-mod-hsuforum-view,
+#page-mod-hsuforum-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $communication-filter;
+    }
+}
+
+#page-mod-assign-view,
+#page-mod-assign-mod,
+#page-mod-workshop-view,
+#page-mod-workshop-mod,
+#page-mod-journal-view,
+#page-mod-journal-mod,
+#page-mod-attendance-view,
+#page-mod-attendance-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $assignment-filter;
+    }
+}
+
+#page-mod-choice-view,
+#page-mod-choice-mod,
+#page-mod-feedback-view,
+#page-mod-feedback-mod,
+#page-mod-quiz-view,
+#page-mod-quiz-mod,
+#page-mod-survey-view,
+#page-mod-survey-mod,
+#page-mod-lesson-view,
+#page-mod-lesson-mod,
+#page-mod-facetoface-view,
+#page-mod-facetoface-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $content-filter;
+    }
+}
+
+#page-mod-data-view,
+#page-mod-data-mod,
+#page-mod-glossary-view,
+#page-mod-glossary-mod,
+#page-mod-wiki-view,
+#page-mod-wiki-mod,
+#page-mod-choicegroup-view,
+#page-mod-choicegroup-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $information-filter;
+    }
+}
+
+#page-mod-collaborate-view,
+#page-mod-collaborate-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $collab-filter;
+    }
+}
+
+#page-mod-hvp-view,
+#page-mod-hvp-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $hvp-filter;
+    }
+}
+
+#page-mod-lightboxgallery-view,
+#page-mod-lightboxgallery-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $lightbox-filter;
+    }
+}
+
+#page-mod-resource-view,
+#page-mod-resource-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $resource-filter;
+    }
+}
+
+#page-mod-book-view,
+#page-mod-book-edit {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $book-filter;
+    }
+}
+
+#page-mod-folder-view,
+#page-mod-folder-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $folder-filter;
+    }
+}
+
+#page-mod-questionnaire-view,
+#page-mod-questionnaire-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $questionnaire-filter;
+    }
+}
+
+#page-mod-url-view,
+#page-mod-url-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $url-filter;
+    }
+}
+
+#page-mod-label-view,
+#page-mod-label-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $label-filter;
+    }
+}
+
+#page-mod-page-view,
+#page-mod-page-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $page-filter;
+    }
+}
+
+#page-mod-lti-view,
+#page-mod-lti-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $resource-filter;
+    }
+}
+
+#page-mod-certificate-view,
+#page-mod-certificate-mod,
+#page-mod-customcert-view,
+#page-mod-customcert-mod,
+#page-mod-coursecertificate-view,
+#page-mod-coursecertificate-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $certificate-filter;
+    }
+}
+
+#page-mod-customquiz-view,
+#page-mod-customquiz-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $customquiz-filter;
+    }
+}
+
+#page-mod-livepoll-view,
+#page-mod-livepoll-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $livepoll-filter;
+    }
+}
+
+#page-mod-checklist-view,
+#page-mod-checklist-mod,
+#page-mod-dialogue-view,
+#page-mod-dialogue-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $checklist-filter;
+    }
+}
+
+#page-mod-quizgame-view,
+#page-mod-quizgame-mod,
+#page-mod-adaptivequiz-view,
+#page-mod-adaptivequiz-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $quizlms-filter;
+    }
+}
+
+#page-mod-zoom-view,
+#page-mod-zoom-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $zoom-filter;
+    }
+}
+
+#page-mod-goone-view,
+#page-mod-goone-mod {
+    .page-header-image .activityiconcontainer .activityicon {
+        filter: $go1-filter;
     }
 }
 
@@ -727,17 +916,6 @@ li.section:focus {
 .section-modchooser-link,
 .snap-dropzone {
     margin-top: 1em;
-}
-// Overwrite css for new OpenLMS icons.
-body.theme-snap li.activity.modtype_livepoll .activityiconcontainer img.activityicon,
-body.theme-snap .modchoosercontainer div[data-internal="livepoll"] .modicon_livepoll img.activityicon,
-body.theme-snap li.activity.modtype_hsuforum .activityiconcontainer img.activityicon,
-body.theme-snap .modchoosercontainer div[data-internal="hsuforum"] .modicon_hsuforum img.activityicon,
-body.theme-snap li.activity.modtype_collaborate .activityiconcontainer img.activityicon,
-body.theme-snap .modchoosercontainer div[data-internal="collaborate"] .modicon_collaborate img.activityicon,
-body.theme-snap li.activity.modtype_goone .activityiconcontainer img.activityicon,
-body.theme-snap .modchoosercontainer div[data-internal="goone"] .modicon_goone img.activityicon{
-    filter: none;
 }
 
 /* Landing page does not have renderer, so markup is different. */
@@ -1620,52 +1798,42 @@ body.snap-resource-card {
             display: inline-block;
         }
 
-        //  We need that the filter color doesn't get applied to the plugins which we are changing it's icon.
-        &.modtype_questionnaire,
-        &.modtype_checklist,
-        &.modtype_certificate,
-        &.modtype_customcert,
-        &.modtype_hotpot,
-        &.modtype_ouwiki,
-        &.modtype_bigbluebuttonbn {
-            .activityiconcontainer img.activityicon {
-                filter: none;
+        &.modtype_forum,
+        &.modtype_chat {
+            border-top-color: $color-communication;
+            .activityiconcontainer img {
+                filter: $communication-filter;
             }
         }
 
-        &.modtype_forum,
-        &.modtype_chat,
         &.modtype_hsuforum {
             border-top-color: $color-communication;
-            .activityiconcontainer {
-                background-color: $color-communication;
-            }
         }
 
         &.modtype_assign,
         &.modtype_workshop,
         &.modtype_journal,
-        &.modtype_attendance,
-        &.modtype_h5pactivity {
+        &.modtype_attendance {
             border-top-color: $color-assignment;
-            .activityiconcontainer {
-                background-color: $color-assignment;
+            .activityiconcontainer img {
+                filter: $assignment-filter;
             }
         }
 
         &.modtype_hvp {
             border-top-color: $hvp-interactive-content;
             .activityiconcontainer {
-                background-color: $hvp-interactive-content;
+                filter: $hvp-filter;
             }
         }
 
         &.modtype_choice,
         &.modtype_feedback,
-        &.modtype_quiz {
+        &.modtype_quiz,
+        &.modtype_facetoface {
             border-top-color: $color-content;
-            .activityiconcontainer {
-                background-color: $color-content;
+            .activityiconcontainer img {
+                filter: $content-filter;
             }
         }
 
@@ -1675,26 +1843,28 @@ body.snap-resource-card {
         &.modtype_imscp,
         &.modtype_scorm {
             border-top-color: $color-questionnaire;
-            .activityiconcontainer {
-                background-color: $color-questionnaire;
+            .activityiconcontainer img {
+                filter: $questionnaire-filter;
             }
         }
 
         &.modtype_lightboxgallery {
             border-top-color: $color-lightbox;
-            .activityiconcontainer {
-                background-color: $color-lightbox;
+            .activityiconcontainer img {
+                filter: $lightbox-filter;
             }
         }
 
-        &.modtype_lti {
+        &.modtype_lti, {
             border-top-color: $color-resource;
             .activityiconcontainer {
-                background-color: $color-resource;
                 img.activityicon {
-                    filter: none;
+                    filter: $resource-filter;
                 }
             }
+        }
+        &.modtype_h5pactivity {
+            border-top-color: $color-resource;
         }
 
         &.modtype_data,
@@ -1703,28 +1873,28 @@ body.snap-resource-card {
         &.modtype_choicegroup {
             border-top-color: $color-information;
             .activityiconcontainer {
-                background-color: $color-information;
+                filter: $information-filter;
             }
         }
 
         &.modtype_collaborate {
             border-top-color: $color-collab;
             .activityiconcontainer {
-                background-color: $color-collab;
+                filter: $collab-filter;
             }
         }
 
         &.modtype_folder {
             border-top-color: $color-folder;
             .activityiconcontainer {
-                background-color: $color-folder;
+                filter: $folder-filter;
             }
         }
 
         &.modtype_livepoll {
             border-top-color: $color-livepoll;
             .activityiconcontainer {
-                background-color: $color-livepoll;
+                filter: $livepoll-filter;
             }
         }
 
@@ -1732,21 +1902,21 @@ body.snap-resource-card {
         &.modtype_dialogue {
             border-top-color: $color-checklist;
             .activityiconcontainer {
-                background-color: $color-checklist;
+                filter: $checklist-filter;
             }
         }
 
         &.modtype_resource {
             border-top-color: $color-resource;
             .activityiconcontainer {
-                background-color: $color-resource; // For tiles format.
+                filter: $resource-filter;
             }
         }
 
         &.modtype_url {
             border-top-color: $color-url;
             .activityiconcontainer {
-                background-color: $color-url;
+                filter: $url-filter;
             }
         }
 
@@ -1757,7 +1927,7 @@ body.snap-resource-card {
         &.modtype_book {
             border-top-color: $color-book;
             .activityiconcontainer {
-                background-color: $color-book;
+                filter: $book-filter;
             }
             .summary-text.row {
                 justify-content: space-around;
@@ -1800,7 +1970,7 @@ body.snap-resource-card {
                     }
                     .readmore-container {
                         text-align: center;
-                    
+
                         .btn {
                             i.icon {
                                 display: block;
@@ -1811,7 +1981,7 @@ body.snap-resource-card {
                 }
             }
             .activityiconcontainer {
-                background-color: $color-page;
+                filter: $page-filter;
             }
         }
 
@@ -1833,7 +2003,7 @@ body.snap-resource-card {
         &.modtype_zoom {
             border-top-color: $color-zoom;
             .activityiconcontainer {
-                background-color: $color-zoom;
+                filter: $zoom-filter;
             }
         }
 
@@ -1841,28 +2011,30 @@ body.snap-resource-card {
         &.modtype_adaptivequiz {
             border-top-color: $color-quizlms;
             .activityiconcontainer {
-                background-color: $color-quizlms;
+                filter: $quizlms-filter;
             }
         }
 
         &.modtype_goone {
             border-top-color: $color-go1;
             .activityiconcontainer {
-                background-color: $color-go1;
+                filter: $go1-filter;
             }
         }
 
         &.modtype_customquiz {
             border-top-color: $color-customquiz;
             .activityiconcontainer {
-                background-color: $color-customquiz;
+                filter: $customquiz-filter;
             }
         }
 
-        &.modtype_coursecertificate {
+        &.modtype_certificate,
+        &.modtype_coursecertificate,
+        &.modtype_customcert {
             border-top-color: $color-certificate;
             .activityiconcontainer {
-                background-color: $color-certificate;
+                filter: $certificate-filter;
             }
         }
     }
@@ -1878,105 +2050,51 @@ body.snap-resource-card {
         &.snap-mime-spreadsheet,
         &.snap-mime-chart,
         &.snap-mime-database,
-        &.snap-mime-calc {
-            border-top-color: $color-excel;
-            .activityiconcontainer {
-                background-color: $color-excel;
-            }
-        }
-
-        // ADOBE //
+        &.snap-mime-calc,
         &.snap-mime-pdf,
         &.snap-mime-eps,
-        &.snap-mime-flash {
-            border-top-color: $color-pdf;
-            .activityiconcontainer {
-                background-color: $color-pdf;
-            }
-        }
-
+        &.snap-mime-flash,
         &.snap-mime-markup,
         &.snap-mime-html,
         &.snap-mime-xhtml,
         &.snap-mime-sourcecode,
-        &.snap-mime-text {
-            border-top-color: $color-code;
-            .activityiconcontainer {
-                background-color: $color-code;
-            }
-        }
-
-        // Resources colors
+        &.snap-mime-text,
         &.snap-mime-document,
         &.snap-mime-writer,
-        &.snap-mime-oth {
-            border-top-color: $color-word;
-            .activityiconcontainer {
-                background-color: $color-word;
-            }
-        }
-
+        &.snap-mime-oth,
         &.snap-mime-wmv,
         &.snap-mime-video,
         &.snap-mime-quicktime,
         &.snap-mime-mpeg,
-        &.snap-mime-avi {
-            border-top-color: $color-video;
-            .activityiconcontainer {
-                background-color: $color-video;
-            }
-        }
-
-        // MULTIMEDIA //
+        &.snap-mime-avi ,
         &.snap-mime-mp3,
         &.snap-mime-wav,
-        &.snap-mime-audio {
-            border-top-color: $color-audio;
-            .activityiconcontainer {
-                background-color: $color-audio;
-            }
-        }
-
+        &.snap-mime-audio,
         &.snap-mime-powerpoint,
-        &.snap-mime-impress {
-            border-top-color: $color-powerpoint;
+        &.snap-mime-impress,
+        &.snap-mime-archive {
+            border-top-color: $color-resource;
             .activityiconcontainer {
-                background-color: $color-powerpoint;
+                filter: $resource-filter;
             }
         }
 
         &.modtype_folder {
             border-top-color: $color-folder;
-            .activityiconcontainer {
-                background-color: $color-folder;
-            }
         }
 
         &.modtype_url {
             border-top-color: $color-url;
-            .activityiconcontainer {
-                background-color: $color-url;
-            }
-        }
-
-        &.snap-mime-archive {
-            border-top-color: #fed859;
         }
 
         &.modtype_imscp,
         &.modtype_scorm {
             border-top-color: $color-questionnaire;
-            .activityiconcontainer {
-                background-color: $color-questionnaire;
-            }
         }
 
         &.modtype_lightboxgallery,
         &.snap-mime-bmp {
             border-top-color: $color-lightbox;
-            .activityiconcontainer {
-                background-color: $color-lightbox;
-            }
         }
     }
 }
@@ -2236,9 +2354,9 @@ body.snap-resource-card {
 .path-mod {
     &.path-mod-lti {
         .activityiconcontainer {
-            background-color: $color-resource;
+            filter: $resource-filter;
             img.icon {
-                filter: none;
+                filter: none; // TODO: do we need this?
             }
         }
     }

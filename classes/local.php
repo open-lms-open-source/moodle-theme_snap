@@ -999,7 +999,8 @@ class local {
                 'description'  => $meta,
                 'extraClasses' => '',
                 'fromCache'    => 0,
-                'urlParameter'    => $snapfeedsurlparam,
+                'urlParameter' => $snapfeedsurlparam,
+                'modName'      => $cm->modname,
             ];
         }
 
@@ -2460,7 +2461,8 @@ SQL;
                     'description'  => $meta,
                     'extraClasses' => '',
                     'fromCache'    => $fromcache,
-                    'urlParameter'    => $snapfeedsurlparam,
+                    'urlParameter' => $snapfeedsurlparam,
+                    'modName'      => $cm->modname
                 ];
             }
             $id++;
