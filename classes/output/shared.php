@@ -497,8 +497,8 @@ EOF;
         // Does the page have editable course content?
         if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
             $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
-            if ($canmanageacts && (empty($USER->editing) || $COURSE->id === SITEID) && $COURSE->format !== 'tiles' ||
-                $canmanageacts && !empty($USER->editing) && $COURSE->format == 'tiles') {
+            if ($canmanageacts && $COURSE->format !== 'tiles' ||
+                ($canmanageacts && !empty($USER->editing) && $COURSE->format == 'tiles')) {
                 $modinfo = get_fast_modinfo($COURSE);
                 $modnamesused = $modinfo->get_used_module_names();
 
