@@ -281,10 +281,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     public function activity_header() {
+        global $COURSE;
         $renderer = $this->page->get_renderer('core');
         $header = $this->page->activityheader;
         $headercontext = $header->export_for_template($renderer);
-        unset($headercontext['title']);
+        if ($COURSE->format !== 'singleactivity') {
+            unset($headercontext['title']);
+        }
         if (!empty($headercontext)) {
             return $this->render_from_template('core/activity_header', $headercontext);
         }
