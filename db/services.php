@@ -132,4 +132,13 @@ $functions = [
         'loginrequired'   => true,
         'readonlysession' => true, // We don't modify the session.
     ],
+    'theme_snap_coursetools_block_actions'              => [
+        'classname'       => 'theme_snap\\webservice\\ws_coursetools_block_actions',
+        'methodname'      => 'service',
+        'description'     => 'Changes the default behavior of course actions in course tools section',
+        'type'            => 'write',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
+    ],
 ];

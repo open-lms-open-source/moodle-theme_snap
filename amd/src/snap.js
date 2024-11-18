@@ -1408,6 +1408,18 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     editToggleURL('topics');
                     editToggleURL('weeks');
 
+                    // Modify Hide / Show / Delete actions for blocks in coursetools section to be redirected to the
+                    // course dashboard instead of course main page.
+                    const snapEditingCourse = document.querySelector('body.theme-snap.pagelayout-course.editing');
+                    if (snapEditingCourse) {
+                        require(
+                            [
+                                'theme_snap/coursetools_blocks_management'
+                            ], function(CoursetoolsBlocksManagementAmd) {
+                                CoursetoolsBlocksManagementAmd.init(courseConfig);
+                            }
+                        );
+                    }
                 });
                 accessibility.snapAxInit();
                 messages.init();

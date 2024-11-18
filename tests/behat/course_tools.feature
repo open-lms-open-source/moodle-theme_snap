@@ -245,3 +245,35 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I switch edit mode in Snap
     And I wait until the page is ready
     Then I should not see "Course Dashboard" in the "#coursetools" "css_element"
+
+  @javascript
+  Scenario: User should be redirected to the Course Dashboard in the course in Snap when modifying block.
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    When I click on "Course Dashboard" "link"
+    And I wait until the page is ready
+    And I switch edit mode in Snap
+    And I wait until the page is ready
+    And I should see "Add a block"
+    And I set the field with xpath "//select[@class = 'custom-select singleselect']" to "Calendar"
+    And I wait until the page is ready
+    And I should see "Calendar"
+    And I click on ".block_calendar_month .action-menu-item" "css_element"
+    And I click on ".dragdrop-keyboard-drag li:nth-child(1)" "css_element"
+    And I wait until the page is ready
+    And I click on ".block_calendar_month .block-controls .action-menu-trigger" "css_element"
+    And I follow "Hide Calendar block"
+    And I wait until the page is ready
+    And I should see "Add a block"
+    And ".block_calendar_month.block.invisibleblock" "css_element" should exist
+    And I click on ".block_calendar_month .block-controls .action-menu-trigger" "css_element"
+    And I follow "Show Calendar block"
+    And I wait until the page is ready
+    And I should see "Add a block"
+    And ".block_calendar_month.block.invisibleblock" "css_element" should not exist
+    And I click on ".block_calendar_month .block-controls .action-menu-trigger" "css_element"
+    And I follow "Delete Calendar block"
+    And I click on ".modal button[data-action='save']" "css_element"
+    And I wait until the page is ready
+    And I should see "Add a block"
+    And ".block_calendar_month" "css_element" should not exist
