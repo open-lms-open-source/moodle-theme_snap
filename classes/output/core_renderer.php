@@ -281,10 +281,13 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     public function activity_header() {
+        global $COURSE;
         $renderer = $this->page->get_renderer('core');
         $header = $this->page->activityheader;
         $headercontext = $header->export_for_template($renderer);
-        unset($headercontext['title']);
+        if ($COURSE->format !== 'singleactivity') {
+            unset($headercontext['title']);
+        }
         if (!empty($headercontext)) {
             return $this->render_from_template('core/activity_header', $headercontext);
         }
@@ -1263,6 +1266,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
             $contextheader = new \context_header($heading, $headinglevel, $imagedata, $userbuttons, $prefix);
             return $this->render($contextheader); // Only context header for course modules.
+        } else if ($context->contextlevel == CONTEXT_COURSE) {
+          return parent::context_header($headerinfo, $headinglevel);
         }
         return ''; // Any other case we fall back to the Snap header.
     }
