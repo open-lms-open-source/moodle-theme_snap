@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, section names should not be empty.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20529"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -59,12 +58,14 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I wait until the page is ready
     And "body#page-course-editsection" "css_element" should not exist
     #Names with trailing spaces are allowed too
+    And I click on "#course-toc a[section-number='1']" "css_element"
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section name to "Section one   "
     And I press "Save changes"
     And I wait until the page is ready
     And "body#page-course-editsection" "css_element" should not exist
     #Valid name is allowed
+    And I click on "#course-toc a[section-number='1']" "css_element"
     And I click on "#section-1 .edit-summary" "css_element"
     Then I set the section name to "Section one"
     And I press "Save changes"
@@ -112,42 +113,25 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
       | 1          |
 
   @javascript
-  Scenario Outline: When creating a section in weekly format, the name should be at least one character.
+  Scenario Outline: When creating a section in weekly format, changing the name should update TOC.
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
     And I am on the course main page for "C1"
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
-    And the field "id_format" matches value "Topics format"
     And I set the following fields to these values:
       | id_startdate_day | 1 |
       | id_startdate_month | January |
       | id_startdate_year | 2020 |
-      | id_format | Weekly format |
+      | id_format | weeks |
       | id_enddate_enabled | 0 |
     And I press "Save and display"
-    And I should see "1 January - 7 January"
-    And I log out
-    And I log in as "teacher1"
-    And I am on the course main page for "C1"
-    And I follow "1 January - 7 January"
+    And I follow "Section 1"
     And I click on "#section-1 .edit-summary" "css_element"
-    #"Only spaces" name not allowed
-    And I set the field "Custom" to "1"
-    And I set the section name to "  "
+    And I set the section name to ""
     And I press "Save changes"
-    And "body#page-course-editsection" "css_element" should exist
-    #Names with leading spaces allowed
-    And I set the section name to "  Section one"
-    And I press "Save changes"
-    And I should see "Section one"
-    #Names with trailing spaces allowed
-    And I follow "8 January - 14 January"
-    And I click on "#section-2 .edit-summary" "css_element"
-    And I set the section name to "Section two   "
-    And I press "Save changes"
-    And I should see "Section two"
+    And I should see "1 January - 7 January"
     Examples:
       | Option     |
       | 0          |

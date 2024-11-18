@@ -352,10 +352,10 @@ EOF;
             'progresstotal'
         ], 'completion');
 
-        // Are we viewing /course/view.php - note, this is different from just checking the page type.
+        // Are we viewing /course/view.php or /course/section.php - note, this is different from just checking the page type.
         // We only ever want to load course.js when on site page or view.php - no point in loading it when on
         // course settings page, etc.
-        $courseviewpage = local::current_url_path() === '/course/view.php';
+        $courseviewpage = in_array(local::current_url_path(), ['/course/view.php', '/course/section.php']);
         $pagehascoursecontent = ($PAGE->pagetype === 'site-index' || $courseviewpage);
 
         $cancomplete = isloggedin() && !isguestuser();

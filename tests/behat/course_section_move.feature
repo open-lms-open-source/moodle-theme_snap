@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
   having to enter edit mode.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20529"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 |     C1    |     0    | topics |      1       |
