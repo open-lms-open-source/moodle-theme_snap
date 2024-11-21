@@ -2108,6 +2108,16 @@ class course_renderer extends \core_course_renderer {
         return in_array($cm->modname, ['resource', 'scorm']) || plugin_supports('mod', $cm->modname, FEATURE_MOD_ARCHETYPE) === MOD_ARCHETYPE_RESOURCE;
     }
 
+    // Callback to filter students from enrolled users.
+    private function is_student($enrolledUsers) {
+        $filteredStudents = array_filter($enrolledUsers, function($user) {
+            if (isset($user[5])) {
+                return true;
+            }
+        });
+        return $filteredStudents;
+    }
+
     /**
      * Override course render for course and category box in home page.
      *
@@ -2121,7 +2131,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function coursecat_coursebox(\coursecat_helper $chelper, $course, $additionalclasses = '') {
-        global $CFG, $PAGE, $OUTPUT;;
+        global $CFG, $PAGE, $OUTPUT, $USER;
         if ($PAGE->pagetype !== 'site-index') {
             return \core_course_renderer::coursecat_coursebox($chelper, $course, $additionalclasses);
         }
@@ -2147,6 +2157,8 @@ class course_renderer extends \core_course_renderer {
             $cardcontent .= $this->coursecat_coursebox_content($chelper, $course);
             $cardcontent .= html_writer::end_tag('div');
         } else {
+            //These are the course cards for Enrolled Courses and Available courses in the homepage.
+            // Course image.
             $url = $OUTPUT->get_generated_image_for_id($course->id);
             foreach ($course->get_course_overviewfiles() as $file) {
                 $isimage = $file->is_valid_image();
@@ -2154,6 +2166,7 @@ class course_renderer extends \core_course_renderer {
                     '/' . $file->get_contextid() . '/' . $file->get_component() . '/' .
                     $file->get_filearea() . $file->get_filepath() . $file->get_filename(), !$isimage);
             }
+            // Course visibility.
             $isvisible = $course->visible;
             $hiddeninfobadge = '';
             $imageclasses = 'snap-home-courses-image';
@@ -2165,20 +2178,48 @@ class course_renderer extends \core_course_renderer {
                 $imageclasses .= ' hiddencourse';
             }
             $classes = trim('col-sm-3 coursebox clearfix '. $additionalclasses);
+            // Course category information.
+            $coursecategoryname = '';
+            $category = \core_course_category::get($course->category, IGNORE_MISSING);
+            if (isset($category)) {
+                $category = $category->name;
+                $coursecategoryname = html_writer::tag('span', '<b>'.get_string('category').": ".
+                    '</b>'.$category, ['class' => 'coursecategory']);
+            }
+
+            if (isloggedin()) {
+                // Enrolled students information.
+                $enrolledstudents = $this->is_student(enrol_get_course_users_roles($course->id));
+                $studentscount = count($enrolledstudents);
+                $studentsstring = strtolower(get_string('students'));
+                if ($studentscount == 1 ) {
+                    $studentsstring = strtolower(get_string('student','theme_snap'));
+                }
+                $enrolledstudentsinfo = $studentscount.' '.$studentsstring;
+
+                // Starred courses information.
+                $usercontext = \context_user::instance($USER->id);
+                $service = \core_favourites\service_factory::get_service_for_user_context($usercontext);
+                $isfavourite = $service->favourite_exists('core_course', 'courses', $course->id,
+                    \context_course::instance($course->id));
+            }
 
             $data  = array(
                 'classes' => $classes,
                 'courseid' => $course->id,
-                'courseimage' => $url ? $url : '',
+                'isloggedin' => isloggedin(),
+                'isfavourite' => $isfavourite ?? '',
                 'imageclasses' => $imageclasses,
+                'courseimage' => $url ? $url : '',
                 'hiddeninfobadge' => $hiddeninfobadge,
+                'enrolledstudents' => $enrolledstudentsinfo ?? '',
                 'data-type' => self::COURSECAT_TYPE_COURSE,
+                'coursecategoryname' => $coursecategoryname,
                 'imagestyle' => 'background-image: url('.$url.');',
                 'coursecontacts' => $this->course_contacts($course),
                 'coursename' => $chelper->get_course_formatted_name($course),
                 'coursesummary' => $this->course_summary($chelper, $course),
                 'coursecustomfields' => $this->course_custom_fields($course),
-                'coursecategoryname' => $this->course_category_name($chelper, $course),
                 'hassummary' => $this->course_summary($chelper, $course) ? true : false,
                 'courselink' => new moodle_url('/course/view.php', ['id' => $course->id]),
             );

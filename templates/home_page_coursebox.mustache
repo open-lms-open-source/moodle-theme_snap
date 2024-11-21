@@ -25,15 +25,43 @@
 <div class="{{classes}}" data-courseid="{{courseid}}" data-type="{{data-type}}">
     <div class="snap-home-course">
         <!--Card content-->
+        <div class="favouriteicon">
+            {{#isloggedin}}
+            <button class="btn unset-favourite {{^isfavourite}}d-none{{/isfavourite}}" data-courseid="{{courseid}}"
+                title="{{#str}}removefromfavourites, block_myoverview{{/str}}"
+                aria-label="{{#str}}removefromfavourites, block_myoverview{{/str}}" tabindex="0">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+            <button class="btn set-favourite {{#isfavourite}}d-none{{/isfavourite}}" data-courseid="{{courseid}}"
+                title="{{#str}}addtofavourites, block_myoverview{{/str}}"
+                aria-label="{{#str}}addtofavourites, block_myoverview{{/str}}" tabindex="0">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+            {{/isloggedin}}
+        </div>
         {{{hiddeninfobadge}}}
         <a href="{{courselink}}" title="{{coursename}}">
             <div class="{{imageclasses}}" style="{{imagestyle}}"></div>
         </a>
         <div class="card-header row">
-            <a class="snap-home-course-title col-xl-10 col-lg-10 col-md-6 col-sm-6 col-6"" href="{{courselink}}" title="{{coursename}}">
+            <a class="snap-home-course-title col-xl-10 col-lg-9 col-md-9 col-sm-10 col-10"" href="{{courselink}}" title="{{coursename}}">
                 <span class="">{{coursename}}</span>
             </a>
-            <i type="button" class="fa-solid fa-circle-info more-info col-xl-2 col-lg-2 col-md-6 col-sm-6 col-6"" data-toggle="modal" data-target="#coursemodal{{courseid}}"></i>
+            <button class="btn more-info col-1" data-toggle="modal" data-target="#coursemodal{{courseid}}"
+                title="{{#str}}showcourseinformation, theme_snap{{/str}}"
+                aria-label="{{#str}}showcourseinformation, theme_snap{{/str}}" tabindex="0">
+                    <i class="fa-solid fa-circle-info"></i>
+            </button>
+            <div class="additional-options row">
+                <div class="col-12">
+                    {{{coursecategoryname}}}
+                 </div>
+            </div>
+            {{#isloggedin}}
+            <div class="coursestudents row">
+                <span class="col"><i class="fa-regular fa-circle-user"></i> {{enrolledstudents}}</span>
+            </div>
+            {{/isloggedin}}
         </div>
     </div>
     {{> theme_snap/course_card_modal }}

@@ -4389,6 +4389,13 @@ table th img.iconhelp {
     }
 }
 
+.snap-home-course {
+    &:hover {
+        z-index: 1;
+        margin-bottom: 3em;
+    }
+}
+
 /* Featured category and course link. */
 .snap-featured-category,
 .snap-featured-course,
@@ -4419,26 +4426,25 @@ table th img.iconhelp {
         }
         .card-header {
             .snap-home-course-title {
+                margin-left: 2%;
+                text-align: left;
+                overflow: hidden;
                 background: transparent;
                 transition: transform 1s ease;
                 transform: translateX(-2%);
-                text-align: left;
-                overflow: hidden;
             }
             @keyframes snap-info-blink {
                 0% { transform: scale(1); }
-                50% { transform: scale(1.2); }
+                50% { transform: scale(1.05); }
                 100% { transform: scale(1); }
             }
 
             .more-info {
+                padding: 0;
                 display: block;
-                color: $brand-primary;
-                margin-top: .2em;
                 font-size: larger;
-                text-align: end;
+                color: $brand-primary;
                 animation: snap-info-blink 0.5s ease-in-out;
-                pointer-events: none;
                 opacity: .8;
                 &::before {
                     pointer-events: all;
@@ -4447,12 +4453,33 @@ table th img.iconhelp {
                     opacity: 1;
                 }
             }
+            .additional-options {
+                margin-top: .5em;
+            }
+            .additional-options,
+            .coursestudents {
+                width: 100%;
+                span {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                    text-align: left;
+                    font-size: medium;
+                }
+                @media screen and (max-width: 768px) {
+                    margin-left: -2%;
+                }
+            }
+        }
+        .favouriteicon .fa-regular {
+            display: inline;
+            -webkit-text-stroke: 1px $brand-primary;
         }
     }
     &:not(:hover) {
         .card-header {
             .snap-home-course-title {
-                max-width: unset;
                 flex: unset;
             }
         }
@@ -4471,14 +4498,43 @@ table th img.iconhelp {
             -webkit-line-clamp: 1;
             max-height: 1.4em;
             min-height: unset;
+            max-width: unset;
         }
         .more-info {
             display: none;
-            color: $brand-primary;
-            margin-top: .2em;
-            font-size: larger;
-            text-align: end;
         }
+        .additional-options,
+        .coursestudents {
+            width: 100%;
+            span {
+                display: none;
+            }
+        }
+    }
+    .set-favourite,
+    .unset-favourite {
+        padding: 0;
+    }
+    .favouriteicon {
+        position: absolute;
+        width: 100%;
+        text-align: end;
+        padding-right: 20px;
+        padding-top: 0.1em;
+        margin-top: 0.5em;
+        margin-right: 5%;
+        z-index: 1;
+        @media screen and (max-width: 768px) {
+            font-size: larger;
+        }
+    }
+    .favouriteicon .fa-solid {
+        text-shadow: 1px 1px 3px black;
+        -webkit-text-stroke: 1px white;
+        color: $brand-primary;
+    }
+    .favouriteicon .fa-regular {
+        display: none;
     }
     .hiddenbadge {
         position: relative;
@@ -4488,10 +4544,10 @@ table th img.iconhelp {
         margin-left: 5%;
         padding: 0.25em 0.1em;
         font-size: 90%;
-        @media screen and (max-width: 940px) {
-            margin-top: 9em;
-            font-size: 75%;
+        @media screen and (max-width: 1080px) {
+            margin-top: 10em;
             margin-left: 2%;
+            font-size: 65%;
         }
         @media screen and (max-width: 768px) {
             margin-top: 9.5em;
@@ -4505,6 +4561,10 @@ table th img.iconhelp {
         border-radius: .5em;
     }
     .modal-body {
+        .hiddeninfo {
+            text-align: left;
+            margin-left: 2em;
+        }
         .hiddenbadge {
             margin-top: 1em;
         }
@@ -4530,18 +4590,28 @@ table th img.iconhelp {
                 text-align: left;
                 background-color: rgba(0, 0, 0, 0.5);
                 height: 60px;
+                padding-top: .5rem;
             }
             .courselink {
                 margin-left: 2em;
-                margin-top: .5em;
+            }
+            .studentsinfo {
+                color: white;
+                margin-left: 1.5em;
+                font-size: medium;
             }
         }
         .card-title {
             font-weight: bold;
             display: block;
             text-align: start;
-            padding: 1em 2em 1em 2em;
+            padding: 1em 2em 0 2em;
             color: $brand-primary;
+        }
+        .coursecategory {
+            display: block;
+            text-align: start;
+            padding: 0 2em 1em 2em;
         }
         .course-info {
             padding: 1em 2em 1em 2em;

@@ -34,12 +34,18 @@
                 <a class="btn btn-primary courselink" role="button" href="{{courselink}}" title="{{#str}} courselink, theme_snap {{/str}}">
                     {{#str}} courselink, theme_snap {{/str}}
                 </a>
+                {{#isloggedin}}
+                <span class="studentsinfo"><i class="fa-regular fa-circle-user"></i> {{enrolledstudents}}</span>
+                {{/isloggedin}}
             </div>
          </div>
-         {{{hiddeninfobadge}}}
+         <div class="hiddeninfo d-block">
+            {{{hiddeninfobadge}}}
+         </div>
          <span class="card-title">
             {{coursename}}
          </span>
+         {{{coursecategoryname}}}
          <div class="row course-info {{#hassummary}}hassummary{{/hassummary}}">
             {{#hassummary}}
             <div class="col-sm-6 summary-info">
@@ -47,14 +53,12 @@
             </div>
             <div class="col-sm-6 additional-info">
                 {{{coursecontacts}}}
-                {{{coursecategoryname}}}
                 {{{coursecustomfields}}}
             </div>
             {{/hassummary}}
             {{^hassummary}}
             <div class="col-sm-12 additional-info">
                 {{{coursecontacts}}}
-                {{{coursecategoryname}}}
                 {{{coursecustomfields}}}
             </div>
             {{/hassummary}}
