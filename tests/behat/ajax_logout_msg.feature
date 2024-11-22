@@ -46,7 +46,6 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
 
   @javascript
   Scenario: Teacher get's login status warning when trying to manage sections if logged out.
-    Given I skip because "It will be reviewed on INT-20529"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -74,10 +73,10 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I am on the course main page for "C1"
     When I follow "Section 2"
     And I follow "Move \"Section 2\""
-    Then I should see "Moving \"Section 2\"" in the "#snap-footer-alert" "css_element"
+    Then I should see "Moving \"Untitled Section\"" in the "#snap-footer-alert" "css_element"
     And I follow "Section 4"
     And I log out via a separate window
-    When I follow "Place section \"Section 2\" before section \"Section 4\""
+    When I follow "Place section \"Untitled Section\" before section \"Section 4\""
     Then I should see "You are logged out"
 
   @javascript

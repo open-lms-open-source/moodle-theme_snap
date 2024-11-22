@@ -23,7 +23,7 @@
 Feature: When the moodle theme is set to Snap, students see meta data against course activities.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20529"
+    Given I skip because "It will be reviewed on INT-20595"
     Given the following config values are set as admin:
       | enableoutcomes | 1 |
       | theme | snap |

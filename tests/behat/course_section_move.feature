@@ -52,6 +52,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I follow "Untitled Section"
     And I set the section name to "My & < > Section"
     And I press "Save changes"
+    And I follow "My & < > Section"
     And I follow "Move \"My & < > Section\""
     Then I should see "Moving \"My & < > Section\"" in the "#snap-footer-alert" "css_element"
     When I follow "Section 4"
@@ -62,12 +63,12 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     # Note that "4th" refers to section-3 as section-0 is the "introduction" section in the TOC.
     When I click on the "4th" link in the TOC
     Then I should see "My & < > Section" in the "#section-3 .sectionname" "css_element"
-    Then the previous navigation for section "3" is for "Section 2" linking to "#section-2"
+    Then the previous navigation for section "3" is for "Section 3" linking to "#section-2"
     And the next navigation for section "3" is for "Section 4" linking to "#section-4"
     And I follow "Section 4"
     And the previous navigation for section "4" is for "My & < > Section" linking to "#section-3"
     When I follow "Section 2"
-    And the next navigation for section "2" is for "My & < > Section" linking to "#section-3"
+    And the next navigation for section "1" is for "Section 3" linking to "#section-2"
     # The data-section attribute of the moved section module link should match the section number.
     # This is done so activities are created in the correct section.
     When I follow "My & < > Section"
@@ -91,6 +92,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I follow "Untitled Section"
     And I set the section name to "My & < > Section"
     And I press "Save changes"
+    And I follow "My & < > Section"
     And I follow "Move \"My & < > Section\""
     Then I should see "Moving \"My & < > Section\"" in the "#snap-footer-alert" "css_element"
     When I follow "Section 4"

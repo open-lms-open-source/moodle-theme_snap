@@ -439,7 +439,7 @@ class course {
                     // This module's html has already been included in a changed section html.
                     continue;
                 }
-                $html = $courserenderer->course_section_cm_list_item($course, $completioninfo, $cm, $cm->sectionnum);
+                $html = $courserenderer->course_section_cm_list_item_snap($course, $completioninfo, $cm, $cm->sectionnum);
                 $changedmodhtml[$modid] = (object) [
                     'id'   => $modid,
                     'html' => $html,
