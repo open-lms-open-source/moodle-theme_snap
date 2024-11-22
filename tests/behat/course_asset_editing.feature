@@ -93,12 +93,10 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     Then "#section-1" "css_element" should exist
     And ".snap-activity[data-type='Assignment']" "css_element" should exist
     And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I click on ".dropdown .availability-dropdown" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a[data-action='cmHide']" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" exists
     And I click on ".snap-activity.assign .snap-asset-actions" "css_element"
-    And I click on ".dropdown .availability-dropdown" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a[data-action='cmShow']" "css_element"
+    And I click on ".snap-activity[data-type='Assignment']  a.js_snap_show" "css_element"
     Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist
     Examples:
       | Option     |
@@ -120,15 +118,13 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     Then ".snap-resource[data-type='txt']" "css_element" should exist
     And ".snap-resource[data-type='txt'].draft" "css_element" should not exist
     And I click on ".snap-resource[data-type='txt'] button.snap-edit-asset-more" "css_element"
-    And I click on ".dropdown .availability-dropdown" "css_element"
-    And I click on ".snap-resource[data-type='txt'] a[data-action='cmHide']" "css_element"
+    And I click on ".snap-resource[data-type='txt'] a.js_snap_hide" "css_element"
     Then I wait until ".snap-resource[data-type='txt'].draft" "css_element" exists
     # This is to test that the change persists.
     And I reload the page
     And ".snap-resource[data-type='txt'].draft" "css_element" should exist
     And I click on ".snap-resource[data-type='txt'] button.snap-edit-asset-more" "css_element"
-    And I click on ".dropdown .availability-dropdown" "css_element"
-    And I click on ".snap-resource[data-type='txt'] a[data-action='cmShow']" "css_element"
+    And I click on ".snap-resource[data-type='txt'] a.js_snap_show" "css_element"
     Then I wait until ".snap-resource[data-type='txt'].draft" "css_element" does not exist
     # This is to test that the change persists.
     And I reload the page

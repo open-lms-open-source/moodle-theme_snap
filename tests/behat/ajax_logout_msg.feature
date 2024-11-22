@@ -96,8 +96,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     When I follow "Section 1"
     And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
     And I log out via a separate window
-    And I click on ".dropdown .availability-dropdown" "css_element"
-    When I click on ".snap-activity[data-type='Assignment'] a[data-action='cmHide']" "css_element"
+    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
     And I wait until the page is ready
     # Test logout msg when attempting to duplicate asset
     Given I log in as "teacher"
