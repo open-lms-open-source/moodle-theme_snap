@@ -30,15 +30,6 @@ use theme_snap\output\format_tiles\content\tiles_content;
 
 class format_tiles_renderer extends renderer {
 
-    public function render_content() {
-        $format = course_get_format($this->page->course->id);
-        $section = 1; // TODO.
-        $displayoptions = [];
-        $contentclass = new tiles_content($format, $section, null, $displayoptions);
-        $data = $contentclass->export_for_template($this);
-        echo $this->render_from_template('theme_snap/format_tiles/content', $data);
-    }
-
     public function render_from_template($templatename, $data) {
         global $CFG;
 

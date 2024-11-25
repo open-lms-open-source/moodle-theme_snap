@@ -88,7 +88,7 @@
                     </div>
                 </div>
             {{/has_filter_buttons}}
-            <div id="tiles-overall-progress-outer" class="ml-auto mr-1 mb-2 pt-1 d-none d-sm-block">
+            <div id="tiles-overall-progress-outer" class="ml-auto mr-1 mb-2 pt-1 d-none d-sm-block{{#overall_progress_indicator.isComplete}} is-complete{{/overall_progress_indicator.isComplete}}">
                 {{#overall_progress_indicator}}
                     {{> format_tiles/progress}}
                 {{/overall_progress_indicator}}

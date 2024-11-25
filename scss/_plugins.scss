@@ -1096,38 +1096,31 @@ body.format-tiles.editing {
 #page-course-view-tiles {
     // Styles for Dashboard, progress indicator, filter buttons and edit course content link.
     #headerabovetiles {
+        margin-top: 3em;
         margin-bottom: 1em;
         & > div:nth-child(1) {
             float: left;
         }
         & > div:nth-child(2) {
+            width: fit-content;
             .btn-group {
                 right: 0;
                 position: absolute;
                 margin-right: 3rem;
             }
             .tiles-top-button {
-                right: 0;
-                position: absolute;
-            }
-            div.progress-indic {
-                margin-right: 6rem;
                 right: 0;
                 position: absolute;
             }
         }
         & > div:nth-child(3) {
+            width: fit-content;
             .btn-group {
                 right: 0;
                 position: absolute;
                 margin-right: 3rem;
             }
             .tiles-top-button {
-                right: 0;
-                position: absolute;
-            }
-            div.progress-indic {
-                margin-right: 15rem;
                 right: 0;
                 position: absolute;
             }
@@ -1430,6 +1423,7 @@ body.format-tiles.editing {
     }
     .alert-block {
         display: inline-block;
+        margin-left: 2em;
     }
 }
 

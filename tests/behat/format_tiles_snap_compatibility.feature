@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap with course format tiles, a course tools section is available.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20596"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
@@ -139,10 +138,8 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I switch edit mode in Snap
     And I wait until the page is ready
     And I click on ".modtype_quiz .moodle-actionmenu" "css_element"
-    Then I should see "Availability"
     And I should see "Group mode"
-    Then I click on ".modtype_quiz .moodle-actionmenu [aria-label='Availability']" "css_element"
-    And I click on ".modtype_quiz .moodle-actionmenu  [data-value='hide']" "css_element"
+    And I click on ".modtype_quiz .moodle-actionmenu [data-action='cmHide']" "css_element"
     Then I should see "Hidden from students"
     And I click on ".modtype_quiz .moodle-actionmenu" "css_element"
     And I click on ".modtype_quiz .moodle-actionmenu [aria-label='Group mode']" "css_element"

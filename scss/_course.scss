@@ -2346,6 +2346,29 @@ body.snap-resource-card {
             }
         }
     }
+    // Hide content divider in Tiles.
+    &.editing .divider.bulk-hidden:not(.always-visible) {
+        display: none !important;
+    }
+    .activity-item .activity-name-area .activityname .inplaceeditable .quickeditlink {
+        position: relative;
+        z-index: 2;
+        margin-left: .5rem;
+    }
+    .tile .completioncheckbox .fa-check::before {
+        margin-left: .3em;
+    }
+    .section-collapsemenu .expandall {
+        display: none;
+    }
+    .section-collapsemenu.collapsed {
+        .collapseall {
+            display: none;
+        }
+        .expandall {
+            display: block;
+        }
+    }
 }
 
 // --------------------------------------------------------------------
