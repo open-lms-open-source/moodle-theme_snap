@@ -25,14 +25,12 @@ namespace theme_snap\webservice;
 
 defined('MOODLE_INTERNAL') || die();
 
-use external_single_structure;
-use external_multiple_structure;
-use external_value;
+use core_external\external_value;
+use core_external\external_single_structure;
+use core_external\external_multiple_structure;
 use coding_exception;
 use moodle_url;
 use cache;
-
-require_once($CFG->dirroot.'/lib/externallib.php');
 
 /**
  * Definition helper class.

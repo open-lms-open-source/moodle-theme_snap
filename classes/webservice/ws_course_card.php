@@ -17,10 +17,13 @@
 namespace theme_snap\webservice;
 
 use theme_snap\services\course;
+use core_external\external_api;
+use core_external\external_value;
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
+use core_external\external_multiple_structure;
 
 defined('MOODLE_INTERNAL') || die();
-
-require_once(__DIR__ . '/../../../../lib/externallib.php');
 
 /**
  * Course card web service
@@ -28,42 +31,42 @@ require_once(__DIR__ . '/../../../../lib/externallib.php');
  * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class ws_course_card extends \external_api {
+class ws_course_card extends external_api {
     /**
-     * @return \external_function_parameters
+     * @return external_function_parameters
      */
     public static function service_parameters() {
         $parameters = [
-            'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
-            'favorited' => new \external_value(PARAM_TEXT, 'Is this course currently a favorite', VALUE_DEFAULT),
+            'courseshortname' => new external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
+            'favorited' => new external_value(PARAM_TEXT, 'Is this course currently a favorite', VALUE_DEFAULT),
         ];
-        return new \external_function_parameters($parameters);
+        return new external_function_parameters($parameters);
     }
 
     /**
-     * @return \external_single_structure
+     * @return external_single_structure
      */
     public static function service_returns() {
         $keys = [
-            'courseid' => new \external_value(PARAM_INT, 'Course ID', VALUE_REQUIRED),
-            'shortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
-            'fullname' => new \external_value(PARAM_TEXT, 'Full name of course', VALUE_REQUIRED),
+            'courseid' => new external_value(PARAM_INT, 'Course ID', VALUE_REQUIRED),
+            'shortname' => new external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
+            'fullname' => new external_value(PARAM_TEXT, 'Full name of course', VALUE_REQUIRED),
             // Note PARAM_URL returns an object which wont work with a template.
-            'url' => new \external_value(PARAM_RAW, 'Course url', VALUE_REQUIRED),
-            'visibleavatars' => new \external_multiple_structure(
-                new \external_value(PARAM_RAW, 'Avatar HTML'),
+            'url' => new external_value(PARAM_RAW, 'Course url', VALUE_REQUIRED),
+            'visibleavatars' => new external_multiple_structure(
+                new external_value(PARAM_RAW, 'Avatar HTML'),
                 'An array of visible avatars, each as a single html string.', VALUE_DEFAULT, array()
             ),
-            'hiddenavatars' => new \external_multiple_structure(
-                new \external_value(PARAM_RAW, 'Avatar HTML'),
+            'hiddenavatars' => new external_multiple_structure(
+                new external_value(PARAM_RAW, 'Avatar HTML'),
                 'An array of hidden avatars, each as a single html string.', VALUE_DEFAULT, array()
             ),
-            'showextralink' => new \external_value(PARAM_BOOL, 'Show an extra avatar link', VALUE_REQUIRED),
-            'published' => new \external_value(PARAM_BOOL, 'Is this course published', VALUE_REQUIRED),
-            'favorited' => new \external_value(PARAM_BOOL, 'Is this course marked as a favorite', VALUE_REQUIRED),
+            'showextralink' => new external_value(PARAM_BOOL, 'Show an extra avatar link', VALUE_REQUIRED),
+            'published' => new external_value(PARAM_BOOL, 'Is this course published', VALUE_REQUIRED),
+            'favorited' => new external_value(PARAM_BOOL, 'Is this course marked as a favorite', VALUE_REQUIRED),
         ];
 
-        return new \external_single_structure($keys, 'coursecard');
+        return new external_single_structure($keys, 'coursecard');
     }
 
     /**

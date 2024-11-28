@@ -26,15 +26,13 @@ namespace theme_snap\webservice;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once("$CFG->libdir/externallib.php");
-
 use context;
 use context_course;
-use external_api;
-use external_multiple_structure;
-use external_single_structure;
-use external_value;
-use external_function_parameters;
+use core_external\external_function_parameters;
+use core_external\external_multiple_structure;
+use core_external\external_api;
+use core_external\external_value;
+use core_external\external_single_structure;
 use theme_snap\services\course;
 
 /**
@@ -44,39 +42,39 @@ use theme_snap\services\course;
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class ws_course_cards_data extends \external_api {
+class ws_course_cards_data extends external_api {
     /**
      * @return external_function_parameters
      */
     public static function service_parameters() {
         $parameters = [
-            'page' => new \external_value(PARAM_INT, 'Page', VALUE_DEFAULT, 0),
-            'category' => new \external_value(PARAM_TEXT, 'Category', VALUE_DEFAULT, 'current'),
+            'page' => new external_value(PARAM_INT, 'Page', VALUE_DEFAULT, 0),
+            'category' => new external_value(PARAM_TEXT, 'Category', VALUE_DEFAULT, 'current'),
         ];
-        return new \external_function_parameters($parameters);
+        return new external_function_parameters($parameters);
     }
 
     /**
      * @return external_multiple_structure
      */
     public static function service_returns() {
-        return  new \external_multiple_structure(
-            new \external_single_structure([
-                'courseid' => new \external_value(PARAM_INT, 'Course ID', VALUE_REQUIRED),
-                'shortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
-                'fullname' => new \external_value(PARAM_TEXT, 'Full name of course', VALUE_REQUIRED),
-                'url' => new \external_value(PARAM_RAW, 'Course url', VALUE_REQUIRED),
-                'visibleavatars' => new \external_multiple_structure(
-                    new \external_value(PARAM_RAW, 'Avatar HTML'),
+        return  new external_multiple_structure(
+            new external_single_structure([
+                'courseid' => new external_value(PARAM_INT, 'Course ID', VALUE_REQUIRED),
+                'shortname' => new external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
+                'fullname' => new external_value(PARAM_TEXT, 'Full name of course', VALUE_REQUIRED),
+                'url' => new external_value(PARAM_RAW, 'Course url', VALUE_REQUIRED),
+                'visibleavatars' => new external_multiple_structure(
+                    new external_value(PARAM_RAW, 'Avatar HTML'),
                     'An array of visible avatars, each as a single html string.', VALUE_DEFAULT, array()
                 ),
-                'hiddenavatars' => new \external_multiple_structure(
-                    new \external_value(PARAM_RAW, 'Avatar HTML'),
+                'hiddenavatars' => new external_multiple_structure(
+                    new external_value(PARAM_RAW, 'Avatar HTML'),
                     'An array of hidden avatars, each as a single html string.', VALUE_DEFAULT, array()
                 ),
-                'showextralink' => new \external_value(PARAM_BOOL, 'Show an extra avatar link', VALUE_REQUIRED),
-                'published' => new \external_value(PARAM_BOOL, 'Is this course published', VALUE_REQUIRED),
-                'favorited' => new \external_value(PARAM_BOOL, 'Is this course marked as a favorite', VALUE_REQUIRED),
+                'showextralink' => new external_value(PARAM_BOOL, 'Show an extra avatar link', VALUE_REQUIRED),
+                'published' => new external_value(PARAM_BOOL, 'Is this course published', VALUE_REQUIRED),
+                'favorited' => new external_value(PARAM_BOOL, 'Is this course marked as a favorite', VALUE_REQUIRED),
             ])
         );
     }

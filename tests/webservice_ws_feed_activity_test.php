@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 namespace theme_snap;
 use theme_snap\webservice\ws_feed;
+use core_external\external_function_parameters;
+use core_external\external_multiple_structure;
 
 /**
  * Test ws_feed web service
@@ -22,18 +24,17 @@ use theme_snap\webservice\ws_feed;
  * @copyright Copyright (c) 2020 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * 
- * @runTestsInSeparateProcesses
  */
 class webservice_ws_feed_activity_test extends \advanced_testcase {
 
     public function test_service_parameters() {
         $params = ws_feed::service_parameters();
-        $this->assertTrue($params instanceof \external_function_parameters);
+        $this->assertTrue($params instanceof external_function_parameters);
     }
 
     public function test_service_returns() {
         $returns = ws_feed::service_returns();
-        $this->assertTrue($returns instanceof \external_multiple_structure);
+        $this->assertTrue($returns instanceof external_multiple_structure);
     }
 
     public function test_service_message() {

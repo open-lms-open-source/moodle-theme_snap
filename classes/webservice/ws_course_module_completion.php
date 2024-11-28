@@ -24,32 +24,34 @@
 namespace theme_snap\webservice;
 
 use theme_snap\services\course;
+use core_external\external_api;
+use core_external\external_value;
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once(__DIR__ . '/../../../../lib/externallib.php');
-
-class ws_course_module_completion extends \external_api {
+class ws_course_module_completion extends external_api {
     /**
-     * @return \external_function_parameters
+     * @return external_function_parameters
      */
     public static function service_parameters() {
         $parameters = [
-            'id' => new \external_value(PARAM_INT, 'Course module id', VALUE_REQUIRED),
-            'completionstate' => new \external_value(PARAM_BOOL, 'Course module completion state', VALUE_REQUIRED),
+            'id' => new external_value(PARAM_INT, 'Course module id', VALUE_REQUIRED),
+            'completionstate' => new external_value(PARAM_BOOL, 'Course module completion state', VALUE_REQUIRED),
         ];
-        return new \external_function_parameters($parameters);
+        return new external_function_parameters($parameters);
     }
 
     /**
-     * @return \external_single_structure
+     * @return external_single_structure
      */
     public static function service_returns() {
         $keys = [
-            'id' => new \external_value(PARAM_INT, 'course module id'),
-            'completionhtml' => new \external_value(PARAM_RAW, 'completion html'),
+            'id' => new external_value(PARAM_INT, 'course module id'),
+            'completionhtml' => new external_value(PARAM_RAW, 'completion html'),
         ];
-        return new \external_single_structure($keys, 'course_module_completion');
+        return new external_single_structure($keys, 'course_module_completion');
     }
 
     /**

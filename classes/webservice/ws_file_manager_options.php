@@ -18,11 +18,13 @@ namespace theme_snap\webservice;
 
 use stdClass;
 use context_course;
-
+use core_external\external_api;
+use core_external\external_value;
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once(__DIR__ . '/../../../../lib/externallib.php');
 require_once($CFG->dirroot.'/repository/lib.php');
 
 /**
@@ -31,20 +33,20 @@ require_once($CFG->dirroot.'/repository/lib.php');
  * @copyright Copyright (c) 2024 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class ws_file_manager_options extends \external_api {
+class ws_file_manager_options extends external_api {
     /**
-     * @return \external_function_parameters
+     * @return external_function_parameters
      */
     public static function service_parameters() {
-        return new \external_function_parameters([]);
+        return new external_function_parameters([]);
     }
 
     /**
-     * @return \external_single_structure
+     * @return external_single_structure
      */
     public static function service_returns() {
-        return new \external_single_structure([
-            'fpoptions'    => new \external_value(PARAM_TEXT, 'JSON with file manager data')
+        return new external_single_structure([
+            'fpoptions'    => new external_value(PARAM_TEXT, 'JSON with file manager data')
         ]);
     }
 
