@@ -3011,6 +3011,25 @@ ul.events-new + ul.events-underway {
     font-size: 1.3em;
 }
 
+// Add styles for questions preview.
+.path-question-bank-previewquestion {
+    #page-content {
+        padding: 15px;
+    }
+    .fcontainer {
+        padding-left: 2.5rem;
+    }
+    .que {
+        padding: unset;
+        h3.no {
+            margin: unset;
+        }
+    }
+    #techinfo_caption a {
+        margin: 3px;
+    }
+}
+
 // Add margin to quiz submit/check button.
 .que .im-controls {
     margin: 0.5em 0;
