@@ -1903,19 +1903,35 @@ class course_renderer extends \core_course_renderer {
             /** @var core_courseformat\output\local\content\cm\visibility */
             $availability = new $availabilityclass($courseformat, $sectioninfo, $mod);
             $availabilitychoice = $availability->get_choice_list();
-            $availabilityrender = $this->output->render($availabilitychoice);
 
-            $data = (object) [
-                'toggleclass' => 'availability-dropdown',
-                'toggleariacontrols' => 'availability-menu',
-                'spanicon' => 'fa-eye',
-                'spancontent' => get_string('availability'),
-                'dropdownmenuid' => 'availability-menu',
-                'dropdownmenuclasses' => 'availability-dropdown-menu',
-                'dropdownoptions' => $availabilityrender,
-            ];
+            // Get selectable options.
+            $selectableoptions = $availabilitychoice->get_selectable_options();
 
-            $actionsadvanced[] = $this->render_from_template('theme_snap/activity_sub_panel', $data);
+            if ($sectioninfo->visible && count($selectableoptions) === 1) {
+                $hideaction = '<li><a href="'.new moodle_url($baseurl, ['hide' => $mod->id]);
+                $hideaction .= '" data-action="hide" role="button" class="dropdown-item editing_hide js_snap_hide">'.
+                    '<i class="icon fa fa-eye fa-fw "></i>'.$str->hide.'</a></li>';
+                $actionsadvanced[] = $hideaction;
+                $showaction = '<li><a href="'.new moodle_url($baseurl, ['show' => $mod->id]);
+                $showaction .= '" data-action="show" role="button" class="dropdown-item editing_show js_snap_show">'.
+                    '<i class="icon fa fa-eye-slash fa-fw "></i>'.$str->show.'</a></li>';
+                $actionsadvanced[] = $showaction;
+            } else {
+                // Multiple options available, display as a submenu.
+                $availabilityrender = $this->output->render($availabilitychoice);
+
+                $data = (object) [
+                    'toggleclass' => 'availability-dropdown',
+                    'toggleariacontrols' => 'availability-menu',
+                    'spanicon' => 'fa-eye',
+                    'spancontent' => get_string('availability'),
+                    'dropdownmenuid' => 'availability-menu',
+                    'dropdownmenuclasses' => 'availability-dropdown-menu',
+                    'dropdownoptions' => $availabilityrender,
+                ];
+
+                $actionsadvanced[] = $this->render_from_template('theme_snap/activity_sub_panel', $data);
+            }
         }
 
         // Duplicate.
