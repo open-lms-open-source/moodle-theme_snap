@@ -484,10 +484,7 @@ trait format_section_trait {
             // N.B. this function handles the can edit permissions.
             $output .= $this->course_section_add_cm_control_snap($course, $section->section, 0);
         }
-        // TODO: Test editing mode.
-        if (!$PAGE->user_is_editing()) {
-            $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $section->section));
-        }
+        $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $section->section));
         $output .= html_writer::end_tag('div');
         $output .= html_writer::end_tag('li');
         return $output;

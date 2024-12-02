@@ -65,9 +65,18 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     Then I should see "My & < > Section" in the "#section-3 .sectionname" "css_element"
     Then the previous navigation for section "3" is for "Section 3" linking to "#section-2"
     And the next navigation for section "3" is for "Section 4" linking to "#section-4"
+    And I switch edit mode in Snap
+    Then the previous navigation for section "3" is for "Section 3" linking to "#section-2"
+    And the next navigation for section "3" is for "Section 4" linking to "#section-4"
     And I follow "Section 4"
+    And I switch edit mode in Snap
+    And the previous navigation for section "4" is for "My & < > Section" linking to "#section-3"
+    And I switch edit mode in Snap
     And the previous navigation for section "4" is for "My & < > Section" linking to "#section-3"
     When I follow "Section 2"
+    And I switch edit mode in Snap
+    And the next navigation for section "1" is for "Section 3" linking to "#section-2"
+    And I switch edit mode in Snap
     And the next navigation for section "1" is for "Section 3" linking to "#section-2"
     # The data-section attribute of the moved section module link should match the section number.
     # This is done so activities are created in the correct section.
