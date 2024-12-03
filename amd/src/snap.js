@@ -772,6 +772,64 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
         };
 
         /**
+         * Set a course as favourite from the enrolled courses in the home page.
+         * @param {string} selector
+         */
+        var setHomeCourseFavourite = function(selector) {
+            // Buttons to unset the course as favourite.
+            const favouriteButtons = document.querySelectorAll('.snap-home-course .favouriteicon .' + selector);
+            favouriteButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const course = button.dataset.courseid;
+                    var favouriteValue;
+                    if (selector === 'unset-favourite') {
+                        favouriteValue = false;
+                    } else {
+                        favouriteValue = true;
+                    }
+                    const args = {
+                        courses: [
+                            {
+                                'id': course,
+                                'favourite': favouriteValue
+                            }
+                        ]
+                    };
+                    const request = {
+                        methodname: 'core_course_set_favourite_courses',
+                        args: args,
+                        done: function(response) {
+                            if (!response.warnings.length) {
+                                // We need to hide the current button and show the opposite one.
+                                const relatedUnsetButton = document.querySelectorAll(
+                                    '.favouriteicon .' + selector + '[data-courseid="' + course + '"]');
+                                relatedUnsetButton.forEach(function(relatedButton) {
+                                    relatedButton.classList.add('d-none');
+                                });
+                                if (selector === 'unset-favourite') {
+                                    const relatedSetButton = document.querySelectorAll(
+                                        '.favouriteicon .set-favourite[data-courseid="' + course + '"]');
+                                    relatedSetButton.forEach(function(setButton) {
+                                        setButton.classList.remove('d-none');
+                                    });
+                                } else {
+                                    const relatedUnsetButton = document.querySelectorAll(
+                                        '.favouriteicon .unset-favourite[data-courseid="' + course + '"]');
+                                    relatedUnsetButton.forEach(function(setButton) {
+                                        setButton.classList.remove('d-none');
+                                    });
+                                }
+
+                            }
+                        }
+                    };
+
+                    return ajax.call([request])[0];
+                });
+            });
+        };
+
+        /**
          * Function to fix the styles when fullscreen is used with Atto Editor.
          */
         function waitForFullScreenButton() {
@@ -1351,6 +1409,13 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             util.processAnimatedImages();
                         });
                         observerTilesSect.observe(targetTilesSect, configTilesSect);
+                    }
+
+                    // Listener to set the favourite courses from the homepage enrolled courses.
+                    const snapHomeCourses = document.querySelector('#page-site-index #frontpage-course-list .snap-home-course');
+                    if (snapHomeCourses) {
+                        setHomeCourseFavourite('unset-favourite');
+                        setHomeCourseFavourite('set-favourite');
                     }
 
                     // Snapify format site on the front page if needed.
