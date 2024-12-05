@@ -402,122 +402,6 @@ body.snap-pm-open {
             }
         }
     }
-
-    #snap-personal-menu-feed-deadlines .snap-media-object,
-    #snap-personal-menu-feed-grading .snap-media-object {
-        .activityiconcontainer {
-            width: 35px;
-            height: 35px;
-            padding: 0.3rem;
-            float: left;
-            margin: 0.3em 1em 0 0.3em;
-            &.activity-feed[activity-type="Forum"],
-            &.activity-feed[activity-type="Chat"],
-            &.activity-feed[activity-type="Open Forum"] {
-                background-color: transparent;
-                padding: 0.4rem;
-                & > img {
-                    filter: none;
-                }
-            }
-            &.activity-feed[activity-type="External tool"] {
-                background-color: transparent;
-                padding: 0.4rem;
-                & > img {
-                    filter: none;
-                }
-            }
-            &.activity-feed[activity-type="Assignment"],
-            &.activity-feed[activity-type="Assign"],
-            &.activity-feed[activity-type="Workshop"],
-            &.activity-feed[activity-type="Journal"],
-            &.activity-feed[activity-type="Interactive Content"],
-            &.activity-feed[activity-type="H5P"],
-            &.activity-feed[activity-type="Attendance"] {
-                background-color: transparent;
-                padding: 0.4rem;
-                & > img {
-                    filter: none;
-                }
-            }
-            &.activity-feed[activity-type="Choice"],
-            &.activity-feed[activity-type="Feedback"],
-            &.activity-feed[activity-type="Quiz"],
-            &.activity-feed[activity-type="Survey"],
-            &.activity-feed[activity-type="Questionnaire"],
-            &.activity-feed[activity-type="Lesson"] {
-                background-color: transparent;
-                padding: 0.4rem;
-                & > img {
-                    filter: none;
-                }
-            }
-            &.activity-feed[activity-type="Database"],
-            &.activity-feed[activity-type="Glossary"],
-            &.activity-feed[activity-type="Wiki"],
-            &.activity-feed[activity-type="Group choice"] {
-                background-color: transparent;
-                padding: 0.4rem;
-                & > img {
-                    filter: none;
-                }
-            }
-            &.activity-feed[activity-type="Collaborate"] {
-                background-color: transparent;
-                padding: 0.4rem;
-                & > img {
-                    filter: none;
-                }
-            }
-            &.activity-feed[activity-type="America's Professor Quiz"] {
-                background-color: transparent;
-                padding: 0.4rem;
-                & > img {
-                    filter:none;
-                }
-            }
-            &.activity-feed[activity-type="Checklist"],
-            &.activity-feed[activity-type="GO1 content item"],
-            &.activity-feed[activity-type="Course certificate"],
-            &.activity-feed[activity-type="Adaptive Quiz"],
-            &.activity-feed[activity-type="Quizventure"],
-            &.activity-feed[activity-type="Zoom meeting"],
-            &.activity-feed[activity-type="Dialogue"] {
-                background-color: transparent;
-                padding: 0.4rem;
-                & > img {
-                    filter: none;
-                }
-            }
-            &.activity-feed[activity-type="Questionnaire"],
-            &.activity-feed[activity-type="Go one"],
-            &.activity-feed[activity-type="HotPot module"],
-            &.activity-feed[activity-type="Custom certificate"],
-            &.activity-feed[activity-type="Certificate"],
-            &.activity-feed[activity-type="OU WIKI"],
-            &.activity-feed[activity-type="BigBlueButton"] {
-                img {
-                    filter: none;
-                }
-            }
-            &.activity-feed[activity-type="File"],
-            &.activity-feed[activity-type="IMS content package"],
-            &.activity-feed[activity-type="SCORM package"],
-            &.activity-feed[activity-type="Folder"],
-            &.activity-feed[activity-type="Lightbox Gallery"],
-            &.activity-feed[activity-type="URL"],
-            &.activity-feed[activity-type="Book"],
-            &.activity-feed[activity-type="Page"],
-            &.activity-feed[activity-type="Label"],
-            &.activity-feed[activity-type="File"] {
-                background-color: transparent;
-                padding: 0.4rem;
-                img {
-                    filter: opacity(0.5);
-                }
-            }
-        }
-    }
     #snap-personal-menu-feed-forumposts,
     #snap-personal-menu-feed-messages {
         .snap-media-object .activityiconcontainer {
@@ -572,4 +456,8 @@ body.snap-pm-open {
 }
 .snap-login-option {
     display: none;
+}
+#snap-personal-menu-deadlines li,
+#snap-personal-menu-grading li {
+    list-style-type: none;
 }

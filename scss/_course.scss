@@ -2037,6 +2037,12 @@ body.snap-resource-card {
                 filter: $certificate-filter;
             }
         }
+        &.modtype_scheduler {
+            border-top-color: $scheduler-filter;
+            .activityiconcontainer {
+                filter: $scheduler-filter;
+            }
+        }
     }
 }
 
@@ -2412,8 +2418,6 @@ body.snap-resource-card {
             width: 45px;
             img.icon {
                 height: fit-content;
-                min-width: 45px;
-                filter: none;
             }
         }
     }

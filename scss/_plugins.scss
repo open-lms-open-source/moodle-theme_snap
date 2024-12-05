@@ -1425,6 +1425,10 @@ body.format-tiles.editing {
         display: inline-block;
         margin-left: 2em;
     }
+    .activityicon {
+        min-height: 32px;
+        min-width: 32px;
+    }
 }
 
 // Styles on section Actions for format Tiles.
@@ -1657,5 +1661,152 @@ body#page-admin-plugins {
         .pluginicon {
             filter: $go1-filter;
         }
+    }
+}
+
+// -------------------------
+//  Activity icons.
+// -------------------------
+.path-course .block-region img, // Activities icons in Course page blocks.
+.path-my .block-region img, // Activities icons in dashboard page blocks.
+.layout-incourse .page-header-image .activityiconcontainer img, // Activities icons in secondary course pages.
+.path-grade-report img, .path-grade-edit img, // Activities icons in grader pages.
+#page-site-index .block-region img, // Activities icons in home page blocks.
+#snap_feeds_side_menu .snap-feeds .snap-media-object img, // Activities icons in Snap feeds.
+#snap_feeds_side_menu .snap-feeds-mobile-menu .snap-media-object img, // Activities icons in Snap feeds mobile version.
+#snap-personal-menu-feed-deadlines .snap-media-object img, // Activities icons in Personal menu deadlines.
+#snap-personal-menu-feed-grading .snap-media-object img, // Activities icons in Personal menu grading.
+#snap-personal-menu-deadlines .snap-media-object img, // Activities icons in Personal menu deadlines when advanced feeds disabled.
+#snap-personal-menu-grading .snap-media-object img, // Activities icons in Personal menu grading when advanced feeds disabled.
+#page-course-view-tiles .activity img, // Activities icons in courses with Tiles format.
+#page-admin-modules #modules img { // Activities icons "Manage activities" administration page.
+
+    &[src*="forum"][src*="icon"], &[src*="forum"][src*="monologo"],
+    &[src*="chat"][src*="icon"], &[src*="chat"][src*="monologo"],
+    &[src*="hsuforum"][src*="icon"], &[src*="hsuforum"][src*="monologo"] {
+        filter: $communication-filter;
+    }
+
+    &[src*="assign"][src*="icon"], &[src*="assign"][src*="monologo"],
+    &[src*="workshop"][src*="icon"], &[src*="workshop"][src*="monologo"],
+    &[src*="journal"][src*="icon"], &[src*="journal"][src*="monologo"],
+    &[src*="attendance"][src*="icon"], &[src*="attendance"][src*="monologo"] {
+        filter: $assignment-filter;
+    }
+
+    &[src*="choice"][src*="icon"], &[src*="choice"][src*="monologo"],
+    &[src*="feedback"][src*="icon"], &[src*="feedback"][src*="monologo"],
+    &[src*="quiz"][src*="icon"], &[src*="quiz"][src*="monologo"],
+    &[src*="survey"][src*="icon"], &[src*="survey"][src*="monologo"],
+    &[src*="lesson"][src*="icon"], &[src*="lesson"][src*="monologo"],
+    &[src*="facetoface"][src*="icon"], &[src*="facetoface"][src*="monologo"] {
+        filter: $content-filter;
+    }
+
+    &[src*="data"][src*="icon"], &[src*="data"][src*="monologo"],
+    &[src*="glossary"][src*="icon"], &[src*="glossary"][src*="monologo"],
+    &[src*="wiki"][src*="icon"], &[src*="wiki"][src*="monologo"],
+    &[src*="choicegroup"][src*="icon"], &[src*="choicegroup"][src*="monologo"] {
+        filter: $information-filter;
+    }
+
+    &[src*="collaborate"][src*="icon"], &[src*="collaborate"][src*="monologo"] {
+        filter: $collab-filter;
+    }
+
+    &[src*="hvp"][src*="icon"], &[src*="hvp"][src*="monologo"] {
+        filter: $hvp-filter;
+    }
+
+    &[src*="lightboxgallery"][src*="icon"], &[src*="lightboxgallery"][src*="monologo"] {
+        filter: $lightbox-filter;
+    }
+
+    &[src*="resource"][src*="icon"], &[src*="resource"][src*="monologo"],
+    &[src*="lti"][src*="icon"], &[src*="lti"][src*="monologo"] {
+        filter: $resource-filter;
+    }
+
+    &[src*="url"][src*="icon"], &[src*="url"][src*="monologo"] {
+        filter: $scheduler-filter;
+    }
+
+    &[src*="book"][src*="icon"], &[src*="book"][src*="monologo"] {
+        filter: $book-filter;
+    }
+
+    &[src*="folder"][src*="icon"], &[src*="folder"][src*="monologo"] {
+        filter: $folder-filter;
+    }
+
+    &[src*="questionnaire"][src*="icon"], &[src*="questionnaire"][src*="monologo"] {
+        filter: $questionnaire-filter;
+    }
+
+    &[src*="url"][src*="icon"], &[src*="url"][src*="monologo"],
+    &[src*="snap/core"], &[src*="snap/format_tiles"] {
+        filter: $url-filter;
+    }
+
+    &[src*="label"][src*="icon"], &[src*="label"][src*="monologo"] {
+        filter: $label-filter;
+    }
+
+    &[src*="page"][src*="icon"], &[src*="page"][src*="monologo"] {
+        filter: $page-filter;
+    }
+
+    &[src*="certificate"][src*="icon"], &[src*="certificate"][src*="monologo"],
+    &[src*="customcert"][src*="icon"], &[src*="customcert"][src*="monologo"],
+    &[src*="coursecertificate"][src*="icon"], &[src*="coursecertificate"][src*="monologo"] {
+        filter: $certificate-filter;
+    }
+
+    &[src*="customquiz"][src*="icon"], &[src*="customquiz"][src*="monologo"] {
+        filter: $customquiz-filter;
+    }
+
+    &[src*="livepoll"][src*="icon"], &[src*="livepoll"][src*="monologo"] {
+        filter: $livepoll-filter;
+    }
+
+    &[src*="checklist"][src*="icon"], &[src*="checklist"][src*="monologo"],
+    &[src*="dialogue"][src*="icon"], &[src*="dialogue"][src*="monologo"] {
+        filter: $checklist-filter;
+    }
+
+    &[src*="quizgame"][src*="icon"], &[src*="quizgame"][src*="monologo"],
+    &[src*="adaptivequiz"][src*="icon"], &[src*="adaptivequiz"][src*="monologo"] {
+        filter: $quizlms-filter;
+    }
+
+    &[src*="zoom"][src*="icon"], &[src*="zoom"][src*="monologo"] {
+        filter: $zoom-filter;
+    }
+
+    &[src*="goone"][src*="icon"], &[src*="goone"][src*="monologo"] {
+        filter: $go1-filter;
+    }
+
+    &[src*="andrescosearch"][src*="icon"], &[src*="andrescosearch"][src*="monologo"],
+    &[src*="kalvidres"][src*="icon"], &[src*="kalvidres"][src*="monologo"] {
+        filter: $url-filter;
+    }
+
+    &[src*="ebcwep"][src*="icon"], &[src*="ebcwep"][src*="monologo"] {
+        filter: $ebcwep-filter;
+    }
+
+    &[src*="groupselect"][src*="icon"], &[src*="groupselect"][src*="monologo"] {
+        filter: $groupselect-filter;
+    }
+
+    &[src*="imscp"][src*="icon"], &[src*="imscp"][src*="monologo"],
+    &[src*="scorm"][src*="icon"], &[src*="scorm"][src*="monologo"] {
+        filter: $imscp-filter;
+    }
+
+    &[src*="scheduler"][src*="icon"], &[src*="scheduler"][src*="monologo"] {
+        filter: $scheduler-filter;
     }
 }
