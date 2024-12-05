@@ -70,7 +70,7 @@ Feature: When the moodle theme is set to Snap and can open the user menu from th
     Then I should see "Course catalogue"
     Then I should see "Program catalogue"
     Then I should see "My programs"
-    Then I should see "My reports"
+    Then I should see "My Reports"
     Then I should see "Preferences"
     Then I should see "Switch role to..."
     Then I should see "Log out"
