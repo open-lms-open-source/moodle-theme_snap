@@ -68,3 +68,11 @@ Feature: When the moodle theme is set to Snap, the custom snap login form should
     And ".toggle-sensitive-btn" "css_element" should not be visible
     And I change window size to "320x480"
     And ".toggle-sensitive-btn" "css_element" should be visible
+
+  @javascript
+  Scenario: A guest user can login using the Snap login page.
+    Given I am on login page
+    And "#page-site-index #page-mast" "css_element" should not be visible
+    And I press "Access as a guest"
+    And "#page-site-index #page-mast" "css_element" should be visible
+    And I should not see "Invalid login, please try again"

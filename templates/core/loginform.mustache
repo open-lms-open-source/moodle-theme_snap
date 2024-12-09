@@ -164,6 +164,7 @@
             <div class="snap-login snap-login-option snap-login-box" id="snap-guest-login">
                 <h2>{{#str}}someallowguest{{/str}}</h2>
                 <form action="{{loginurl}}" method="post" id="guestlogin">
+                    <input type="hidden" name="logintoken" value="{{logintoken}}">
                     <input type="hidden" name="username" value="guest" />
                     <input type="hidden" name="password" value="guest" />
                     <button class="btn btn-secondary btn-block" id="guestloginbtn" type="submit">{{#str}}loginguest{{/str}}</button>
