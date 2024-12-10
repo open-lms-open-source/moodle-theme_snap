@@ -23,7 +23,7 @@
 Feature: When the moodle theme is set to Snap, students see meta data against course activities.
 
   Background:
-    Given I skip because "It will be reviewed on INT-20595"
+    Given I skip because "To be reviewed on INT-20659 (Only fails on Gitlab)."
     Given the following config values are set as admin:
       | enableoutcomes | 1 |
       | theme | snap |
@@ -131,14 +131,17 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I click on "li#section-1 [data-action='open-chooser']" "css_element"
+    And I follow "Assignment"
     # Create assignment 1.
-    And I add a assign activity to course "C1" section "1" and I fill the form with:
+    And I set the following fields to these values:
       | Assignment name                  | Test assign  |
       | Description                      | Description  |
       | Online text                      | 1            |
       | Group mode                       | 1            |
       | Students submit in groups        | Yes          |
       | Require all group members submit | No           |
+    And I press "Save and return to course"
     And I should see "Test assign"
     And I log out
     And I log in as "student1"
@@ -288,11 +291,16 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | student3 | GI1   |
 
     # Create assignment 1.
-    And I add a assign activity to course "C1" section "1" and I fill the form with:
+    And I follow "Section 1"
+    And I click on "li#section-1 [data-action='open-chooser']" "css_element"
+    And I follow "Assignment"
+    # Create assignment 1.
+    And I set the following fields to these values:
       | Assignment name           | A1   |
       | Description               | x    |
       | Online text               | 1    |
       | Group mode                | 1    |
+    And I press "Save and return to course"
     And I should see "A1"
     And I log out
     # Login as student from group 1 to submit an assignment.
@@ -350,11 +358,17 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | Description | Test forum description         |
       | Whole forum grading > Type | Point           |
       | Due date               | ##1 January 2000 08:00## |
-    And I add a forum activity to course "C1" section "1" and I fill the form with:
+    #And I am on "Course 1" course homepage
+    And I follow "Section 1"
+    And I click on "li#section-1 [data-action='open-chooser']" "css_element"
+    And I click on "[title='Add a new Forum']" "css_element"
+    # Create assignment 1.
+    And I set the following fields to these values:
       | Forum name  | Test forum name 2                |
       | Description | Test forum 2 description         |
       | Whole forum grading > Type | Point           |
       | Due date               | ##2 January 2000 08:00## |
+    And I press "Save and return to course"
     Then I should see "Due 1 January 2000"
     Then I should see "Due 2 January 2000"
     And I log out
@@ -511,6 +525,9 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
 
 	@javascript
   Scenario: Show availability modes in activity cards
+    Given the following config values are set as admin:
+      | allowstealth | 1 |
+
     Given the following "activities" exist:
       | activity   | name              | course    | idnumber     |
       | assign     | Test Assignment 1 | C1        | assign1      |
