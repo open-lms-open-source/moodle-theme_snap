@@ -62,7 +62,7 @@ affect any configuration, it is just a sample to help users build the configurat
 $string['changecoverimage'] = 'Change cover image';
 $string['changefullname'] = 'Change site name';
 $string['chapters'] = 'Chapters';
-$string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['choosereadme'] = 'Snap\'s user-friendly and responsive design removes barriers to online learning, enabling you to create the modern, engaging experience users expect on the web today. Its intuitive layout is optimized for online learning, focusing on the things that matter - your learning activities and content.';
 $string['close'] = 'Close';
 $string['conditional'] = 'Conditional';
 $string['contents'] = 'Contents';
