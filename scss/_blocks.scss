@@ -733,6 +733,14 @@ body.path-site .block.block_settings {
     }
 }
 
+.block_settings #frontpagesettings_group {
+    display: grid;
+
+    .type_custom:has(.conduit-frontpage) {
+        order: 99;
+    }
+}
+
 #page-content .block_settings.state-visible,
 .block_settings:target {
     visibility: visible;
