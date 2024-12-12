@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 namespace theme_snap;
 use theme_snap\webservice\ws_course_card;
+use core_external\external_function_parameters;
+use core_external\external_multiple_structure;
 
 /**
  * Test course card web service
@@ -22,23 +24,21 @@ use theme_snap\webservice\ws_course_card;
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * 
- * @runTestsInSeparateProcesses
  */
 class webservice_ws_course_card_data_test extends \advanced_testcase {
 
     protected function setUp(): void {
         global $CFG;
-        require_once("{$CFG->libdir}/externallib.php");
     }
 
     public function test_service_parameters() {
         $params = \theme_snap\webservice\ws_course_cards_data::service_parameters();
-        $this->assertTrue($params instanceof \external_function_parameters);
+        $this->assertTrue($params instanceof external_function_parameters);
     }
 
     public function test_service_returns() {
         $returns = \theme_snap\webservice\ws_course_cards_data::service_returns();
-        $this->assertTrue($returns instanceof \external_multiple_structure);
+        $this->assertTrue($returns instanceof external_multiple_structure);
     }
 
     public function test_service() {

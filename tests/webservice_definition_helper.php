@@ -18,6 +18,7 @@ defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\webservice\definition_helper;
 use theme_snap\renderables\course_toc;
+use core_external\external_value;
 
 /**
  * Testable version of definition_helper.
@@ -183,7 +184,7 @@ class webservice_definition_helper extends \advanced_testcase {
         $definitionhelper = new definition_helper($toc);
         $definition = $definitionhelper->get_definition();
         $this->assertTrue(isset($definition['formatsupportstoc']));
-        $this->assertTrue($definition['formatsupportstoc'] instanceof \external_value);
+        $this->assertTrue($definition['formatsupportstoc'] instanceof external_value);
     }
 
     public function test_wsdocs() {
@@ -269,7 +270,7 @@ EOF;
         $this->assertTrue(is_object($obj));
         $this->assertFalse($isarr);
         $this->assertTrue(!empty($obj->complete));
-        $this->assertTrue($obj->complete instanceof \external_value);
+        $this->assertTrue($obj->complete instanceof external_value);
         $this->assertTrue(!empty($obj->complete->type));
         $this->assertTrue(!empty($obj->complete->required));
         $this->assertTrue(!empty($obj->complete->desc));
@@ -308,7 +309,7 @@ EOF;
         $this->assertTrue(is_object($obj));
         $this->assertTrue($isarr);
         $this->assertTrue(!empty($obj->complete));
-        $this->assertTrue($obj->complete instanceof \external_value);
+        $this->assertTrue($obj->complete instanceof external_value);
         $this->assertTrue(!empty($obj->complete->type));
         $this->assertTrue(!empty($obj->complete->required));
         $this->assertTrue(!empty($obj->complete->desc));
@@ -328,7 +329,7 @@ EOF;
         $definition = $helper->get_definition();
         $this->assertArrayHasKey('something', $definition);
         $something = $definition['something'];
-        $this->assertTrue($something instanceof \external_value);
+        $this->assertTrue($something instanceof external_value);
         $this->assertEmpty($something->desc);
     }
 

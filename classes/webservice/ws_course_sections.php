@@ -24,10 +24,12 @@
 namespace theme_snap\webservice;
 
 use theme_snap\services\course;
+use core_external\external_api;
+use core_external\external_value;
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
 
 defined('MOODLE_INTERNAL') || die();
-
-require_once(__DIR__ . '/../../../../lib/externallib.php');
 
 /**
  * Course section action web service.
@@ -41,44 +43,44 @@ require_once(__DIR__ . '/../../../../lib/externallib.php');
  * @copyright Copyright (c) 2016 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class ws_course_sections extends \external_api {
+class ws_course_sections extends external_api {
     /**
-     * @return \external_function_parameters
+     * @return external_function_parameters
      */
     public static function service_parameters() {
         $parameters = [
-            'courseshortname' => new \external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
-            'action' => new \external_value(PARAM_ALPHA, 'Action to perform: visibility|highlight|delete', VALUE_REQUIRED),
-            'sectionnumber' => new \external_value(PARAM_INT, 'Section number', VALUE_REQUIRED),
-            'value' => new \external_value(PARAM_INT,
+            'courseshortname' => new external_value(PARAM_TEXT, 'Course shortname', VALUE_REQUIRED),
+            'action' => new external_value(PARAM_ALPHA, 'Action to perform: visibility|highlight|delete', VALUE_REQUIRED),
+            'sectionnumber' => new external_value(PARAM_INT, 'Section number', VALUE_REQUIRED),
+            'value' => new external_value(PARAM_INT,
                     'Value corresponding to action - e.g. visibility 0 is hide, highlight 1 would highlight the section',
                     VALUE_REQUIRED),
-            'loadmodules' => new \external_value(PARAM_BOOL,
+            'loadmodules' => new external_value(PARAM_BOOL,
                     'Should modules be returned, if false, the modules array will be empty. ' .
                     '(Only available for section visibility)',
                     VALUE_REQUIRED),
         ];
-        return new \external_function_parameters($parameters);
+        return new external_function_parameters($parameters);
     }
 
     /**
-     * @return \external_single_structure
+     * @return external_single_structure
      */
     public static function service_returns() {
         $keys = [
-            'actionmodel' => new \external_single_structure(
+            'actionmodel' => new external_single_structure(
                 definition_helper::define_class_for_webservice('theme_snap\renderables\course_action_section_base'),
                 'Action model',
                 VALUE_OPTIONAL
             ),
-            'toc' => new \external_single_Structure(
+            'toc' => new external_single_Structure(
                 definition_helper::define_class_for_webservice('theme_snap\renderables\course_toc'),
                 'Table of contents',
                 VALUE_REQUIRED
             ),
         ];
 
-        return new \external_single_structure($keys, 'course_completion');
+        return new external_single_structure($keys, 'course_completion');
     }
 
     /**

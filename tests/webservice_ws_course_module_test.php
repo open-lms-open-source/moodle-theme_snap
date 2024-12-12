@@ -16,6 +16,8 @@
 
 namespace theme_snap;
 use theme_snap\webservice\ws_course_module;
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
 
 /**
  * Test ws_course_module web service
@@ -23,18 +25,17 @@ use theme_snap\webservice\ws_course_module;
  * @copyright Copyright (c) 2024 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @runTestsInSeparateProcesses
  */
 class webservice_ws_course_module_test extends \advanced_testcase {
 
     public function test_service_parameters() {
         $params = ws_course_module::service_parameters();
-        $this->assertTrue($params instanceof \external_function_parameters);
+        $this->assertTrue($params instanceof external_function_parameters);
     }
 
     public function test_service_returns() {
         $returns = ws_course_module::service_returns();
-        $this->assertTrue($returns instanceof \external_single_structure);
+        $this->assertTrue($returns instanceof external_single_structure);
     }
 
     public function test_service_course_module() {

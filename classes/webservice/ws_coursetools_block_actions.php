@@ -18,7 +18,10 @@ namespace theme_snap\webservice;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once("$CFG->libdir/externallib.php");
+use core_external\external_api;
+use core_external\external_value;
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
 
 /**
  * Course tools block actions webservice.
@@ -26,31 +29,31 @@ require_once("$CFG->libdir/externallib.php");
  * @copyright Copyright (c) 2024 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class ws_coursetools_block_actions extends \external_api {
+class ws_coursetools_block_actions extends external_api {
     /**
-     * @return \external_function_parameters
+     * @return external_function_parameters
      */
     public static function service_parameters() {
         $parameters = [
-            'params' => new \external_single_structure([
-                'action' => new \external_value(PARAM_TEXT, 'Block action.', VALUE_REQUIRED),
-                'id' => new \external_value(PARAM_INT, 'Block ID.', VALUE_REQUIRED),
-                'courseid' => new \external_value(PARAM_INT, 'Course ID', VALUE_REQUIRED),
+            'params' => new external_single_structure([
+                'action' => new external_value(PARAM_TEXT, 'Block action.', VALUE_REQUIRED),
+                'id' => new external_value(PARAM_INT, 'Block ID.', VALUE_REQUIRED),
+                'courseid' => new external_value(PARAM_INT, 'Course ID', VALUE_REQUIRED),
             ], ),
         ];
-        return new \external_function_parameters($parameters);
+        return new external_function_parameters($parameters);
     }
 
     /**
-     * @return \external_single_structure
+     * @return external_single_structure
      */
     public static function service_returns() {
         $keys = [
-            'success' => new \external_value(PARAM_BOOL, 'The block action was successfully executed.', VALUE_REQUIRED),
-            'error' => new \external_value(PARAM_TEXT, 'error', VALUE_OPTIONAL)
+            'success' => new external_value(PARAM_BOOL, 'The block action was successfully executed.', VALUE_REQUIRED),
+            'error' => new external_value(PARAM_TEXT, 'error', VALUE_OPTIONAL)
         ];
 
-        return new \external_single_structure($keys, 'blockactions');
+        return new external_single_structure($keys, 'blockactions');
     }
 
     /**

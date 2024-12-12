@@ -18,7 +18,10 @@ namespace theme_snap\webservice;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once("$CFG->libdir/externallib.php");
+use core_external\external_api;
+use core_external\external_value;
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
 
 /**
  * Course module web service.
@@ -29,20 +32,20 @@ require_once("$CFG->libdir/externallib.php");
  * @copyright Copyright (c) 2024 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class ws_course_module extends \external_api {
+class ws_course_module extends external_api {
 
     public static function service_parameters() {
         $parameters = [
-            'cmid' => new \external_value(PARAM_INT, 'Course module ID', VALUE_REQUIRED),
+            'cmid' => new external_value(PARAM_INT, 'Course module ID', VALUE_REQUIRED),
         ];
-        return new \external_function_parameters($parameters);
+        return new external_function_parameters($parameters);
     }
 
     public static function service_returns() {
         $keys = [
-            'html' => new \external_value(PARAM_RAW, 'Course module HTML')
+            'html' => new external_value(PARAM_RAW, 'Course module HTML')
         ];
-        return new \external_single_structure($keys, 'course_module HTML return value');
+        return new external_single_structure($keys, 'course_module HTML return value');
     }
 
     public static function service($cmid) {

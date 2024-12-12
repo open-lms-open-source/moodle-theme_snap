@@ -26,15 +26,13 @@ namespace theme_snap\webservice;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once("$CFG->libdir/externallib.php");
-
 use context;
 use context_course;
-use external_api;
-use external_multiple_structure;
-use external_single_structure;
-use external_value;
-use external_function_parameters;
+use core_external\external_function_parameters;
+use core_external\external_multiple_structure;
+use core_external\external_api;
+use core_external\external_value;
+use core_external\external_single_structure;
 use theme_snap\renderables\course_card;
 use theme_snap\services\course;
 
@@ -45,25 +43,25 @@ use theme_snap\services\course;
  * @copyright Copyright (c) 2019 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class ws_course_cards_categories extends \external_api {
+class ws_course_cards_categories extends external_api {
     /**
      * @return external_function_parameters
      */
     public static function service_parameters() {
         $parameters = [
-            'page' => new \external_value(PARAM_TEXT, 'Page', VALUE_DEFAULT, 0),
+            'page' => new external_value(PARAM_TEXT, 'Page', VALUE_DEFAULT, 0),
         ];
-        return new \external_function_parameters($parameters);
+        return new external_function_parameters($parameters);
     }
 
     /**
      * @return external_multiple_structure
      */
     public static function service_returns() {
-        return new \external_multiple_structure(
-            new \external_single_structure([
-                'category' => new \external_value(PARAM_ALPHANUM, 'Category', VALUE_REQUIRED),
-                'courses' => new \external_value(PARAM_INT, 'Number of courses for the respective category', VALUE_REQUIRED),
+        return new external_multiple_structure(
+            new external_single_structure([
+                'category' => new external_value(PARAM_ALPHANUM, 'Category', VALUE_REQUIRED),
+                'courses' => new external_value(PARAM_INT, 'Number of courses for the respective category', VALUE_REQUIRED),
             ])
         );
     }
