@@ -561,9 +561,6 @@ body.path-site .block.block_settings {
         background-color: $brand-primary;
         border-color: $brand-primary;
     }
-    @media (max-width: 410px) {
-        margin-left: 3em;
-    }
     @include media-breakpoint-down(sm) {
         .input-group label {
             display: none;
