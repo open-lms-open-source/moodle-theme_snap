@@ -6248,3 +6248,7 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
         border-top-left-radius: 0.25rem !important;
     }
 }
+
+.reportbuilder-wrapper .filters-dropdown {
+    padding-bottom: 5rem !important; // !important to override the boost padding-bottom.
+}
