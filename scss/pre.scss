@@ -169,6 +169,11 @@ $checklist-filter: invert(48%) sepia(82%) saturate(346%) hue-rotate(101deg) brig
 $quizlms-filter: $content-filter; // Adaptive quiz, Quiz game
 $zoom-filter: invert(21%) sepia(52%) saturate(2247%) hue-rotate(265deg) brightness(95%) contrast(94%); // Zoom
 $go1-filter: invert(40%) sepia(35%) saturate(400%) hue-rotate(180deg) brightness(90%) contrast(85%); // GO1 content item
+$url-filter: invert(49%) sepia(52%) saturate(4675%) hue-rotate(156deg) brightness(89%) contrast(102%); // Andresco
+$ebcwep-filter: invert(36%) sepia(98%) saturate(6969%) hue-rotate(315deg) brightness(90%) contrast(119%); // EBC Wooclap Event Participation
+$groupselect-filter: invert(25%) sepia(54%) saturate(6226%) hue-rotate(245deg) brightness(100%) contrast(102%); // Group self-selection
+$imscp-filter: invert(25%) sepia(63%) saturate(1152%) hue-rotate(344deg) brightness(94%) contrast(91%); // IMS content package
+$scheduler-filter: invert(45%) sepia(46%) saturate(3819%) hue-rotate(260deg) brightness(101%) contrast(87%); // Scheduler
 
 // -------------------------
 // Colour variables for the customisable mr_nav.
