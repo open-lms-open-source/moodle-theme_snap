@@ -1287,13 +1287,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if ($this->page->pagelayout == 'mypublic' && $COURSE->id == SITEID) {
             // For the user profile page message button we need to call 2.9 content_header.
             $heading = parent::context_header();
-        } else if ($COURSE->id != SITEID && stripos($heading, format_string($COURSE->fullname)) === 0) {
+        } else if (($COURSE->id != SITEID
+            && (stripos($heading, format_string($COURSE->fullname)) === 0)
+            || $pagetype === 'course-view-section-topics')) {
             // If we are on a course page which is not the site level course page.
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
             $heading = format_string($COURSE->fullname);
             $heading = html_writer::link($courseurl, $heading);
             $heading = html_writer::tag($tag, $heading);
-            $heading .= $this->context_header();
+            if (!$this->snap_page_is_activity_view() && !$this->snap_page_is_edit_section() && !$this->snap_page_is_activity_mod() && !$this->snap_page_is_user_view()) {
+                $heading = $this->context_header(['heading' => $heading]);
+            }
         } else {
             // Default heading.
             $heading = html_writer::tag($tag, $heading);
@@ -2798,5 +2802,45 @@ HTML;
         $namelink = html_writer::link($courseurl, $coursename);
         $replacedname = str_replace($coursename, $namelink, $element);
         return $replacedname;
+    }
+
+    /**
+     * Checks if the current page is an activity view.
+     *
+     * @return bool
+     */
+    protected function snap_page_is_activity_view() {
+        return $this->page->context->contextlevel === CONTEXT_MODULE
+               && strpos($this->page->pagetype, 'mod-') === 0
+               && substr($this->page->pagetype, -5) === '-view';
+    }
+
+    /**
+     * Checks if the current page is an activity mod.
+     *
+     * @return bool
+     */
+    protected function snap_page_is_activity_mod() {
+        return $this->page->context->contextlevel === CONTEXT_MODULE
+               && strpos($this->page->pagetype, 'mod-') === 0
+               && substr($this->page->pagetype, -4) === '-mod';
+    }
+
+    /**
+     * Checks if the current page is an edit section page.
+     *
+     * @return bool
+     */
+    protected function snap_page_is_edit_section() {
+        return $this->page->pagetype === 'course-editsection';
+    }
+
+    /**
+     * Checks if the current page is a user view.
+     *
+     * @return bool
+     */
+    protected function snap_page_is_user_view() {
+        return $this->page->pagetype === 'user-view';
     }
 }

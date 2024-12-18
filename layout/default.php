@@ -85,6 +85,9 @@ echo $OUTPUT->custom_menu_spacer();
 <div id="region-main-box">
 <section id="region-main">
 <?php
+if ($OUTPUT->snap_page_is_activity_view()) {
+    echo $OUTPUT->context_header();
+}
 echo $OUTPUT->course_content_header();
 
 // Ensure edit blocks button is only shown for appropriate pages.
