@@ -143,5 +143,37 @@ define(['jquery', 'core/templates', 'core/str'], function($, templates, str) {
                 });
             }
         },
+
+        /**
+         * Adds the correct section return to the modchooser, so use it only where it makes sense.
+         */
+        modchooserSectionReturn: function() {
+            if (document.querySelector('body.path-course') !== null) {
+                let choosers = document.querySelectorAll('button.section-modchooser-link');
+                if (choosers.length !== 0) {
+                    choosers.forEach(el => {
+                        el.addEventListener('click', e => {
+                            let sectionNum = e.target.closest('[data-sectionid]').getAttribute('data-sectionid');
+                            let modchooserObserver = new MutationObserver(function() {
+                                let loadedModules = document.querySelectorAll('[role="menuitem"]' +
+                                    ' [data-region="chooser-option-info-container"]' +
+                                    ' a[data-action="add-chooser-option"]');
+                                if (loadedModules.length > 0) {
+                                    loadedModules.forEach(el => {
+                                        let link = el.href + '&sr=' + sectionNum;
+                                        el.setAttribute('href', link);
+                                    });
+                                }
+                            });
+                            let modchooserObserverConfig = {
+                                childList: true,
+                                subtree: true,
+                            };
+                            modchooserObserver.observe(document.body, modchooserObserverConfig);
+                        });
+                    });
+                }
+            }
+        }
     };
 });

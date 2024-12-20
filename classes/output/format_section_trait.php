@@ -473,7 +473,7 @@ trait format_section_trait {
     public function course_section($course, $section, $modinfo) {
         global $PAGE;
 
-        $output = $this->section_header($section, $course, false, 0);
+        $output = $this->section_header($section, $course, false, $section->sectionnum);
         $renderer = new course_renderer($PAGE, null);
         // GThomas 21st Dec 2015 - Only output assets inside section if the section is user visible.
         // Otherwise you can see them, click on them and it takes you to an error page complaining that they
@@ -494,10 +494,15 @@ trait format_section_trait {
 
     // Basically unchanged from the core version adds some navigation with course_section_navigation renderable.
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
-        global $PAGE;
+        global $DB, $PAGE;
 
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
+
+        if ($PAGE->url->get_path() === '/course/section.php' && ($sectionid = optional_param('id', -1, PARAM_INT)) !== -1) {
+            $section = $DB->get_record('course_sections', ['id' => $sectionid], 'section', MUST_EXIST);
+            $course->marker = $section->section ?? 0;
+        }
 
         $context = context_course::instance($course->id);
 

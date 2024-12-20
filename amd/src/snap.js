@@ -1485,6 +1485,9 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             }
                         );
                     }
+
+                    // Add the correct section return to the modchooser.
+                    util.modchooserSectionReturn();
                 });
                 accessibility.snapAxInit();
                 messages.init();
