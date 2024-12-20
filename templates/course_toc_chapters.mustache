@@ -24,10 +24,10 @@
     <h3>
     <li class="{{classes}}">
         {{#outputlink}}
-            <a class="chapter-title" aria-current="false" section-id="{{sectionid}}" section-number="{{section}}" href="{{url}}">{{{title}}}</a>
+            <a class="chapter-title" aria-current="false" section-id="{{sectionid}}" section-number="{{section}}" href="{{url}}" title="{{title}}">{{{title}}}</a>
         {{/outputlink}}
         {{^outputlink}}
-            <span class="chapter-title" aria-current="false" section-id="{{sectionid}}" section-number="{{section}}">{{title}}</span>
+            <span class="chapter-title" aria-current="false" section-id="{{sectionid}}" section-number="{{section}}" title="{{title}}>{{title}}</span>
         {{/outputlink}}
         {{#iscurrent}}
             <span class="text text-success">
@@ -35,8 +35,8 @@
             </span>
         {{/iscurrent}}
         {{#availabilitystatus}}
-            <span class="text {{availabilityclass}}">
-                <small class="published-status">{{availabilitystatus}}</small>
+            <span class="text">
+                <b class="published-status">{{availabilitystatus}}</b>
             </span>
         {{/availabilitystatus}}
         {{#progress}}{{#progress.total}}

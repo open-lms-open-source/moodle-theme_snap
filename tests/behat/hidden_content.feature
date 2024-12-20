@@ -40,7 +40,7 @@ Feature: When importing a course into another, the hidden content should be appl
     And I am on the course main page for "C1"
     And I follow "Section 1"
     And I follow "Hide"
-    And "li.draft.snap-visible-section span.text.text-warning small.published-status" "css_element" should exist
+    And "li.draft.snap-visible-section span.text b.published-status" "css_element" should exist
     And I am on the course main page for "C2"
     And I click on "#admin-menu-trigger" "css_element"
     And I expand "Course reuse" node
