@@ -709,19 +709,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: $nav-button-color;
         }
 
-        // Edit mode toggle.
-        .editmode-switch-form {
-            .input-group {
-                label {
-                    color: $nav-button-color !important;
-                }
-            }
-            .custom-control-input:checked~.custom-control-label::before {
-                background-color: $nav-button-color;
-                border-color: $nav-button-color;
-            }
-        }
-
         #nav-notification-popover-container .count-container {
             background-color: $nav-color;
         }
