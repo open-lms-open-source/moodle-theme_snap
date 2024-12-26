@@ -228,33 +228,6 @@ class course {
                 $coverimageurl = local::course_cat_coverimage_url($context->instanceid);
                 $coverimageurl = "url($coverimageurl);";
             }
-
-
-            $finfo = $storedfile->get_imageinfo();
-            $imagemaincolor = color_contrast::calculate_image_main_color($storedfile, $finfo);
-            $contrast = color_contrast::evaluate_color_contrast($imagemaincolor, "#FFFFFF");
-
-            if ($context->contextlevel === CONTEXT_COURSECAT) {
-                $themecolor = get_config('theme_snap', 'themecolor');
-                $catconfig = get_config('theme_snap', 'category_color');
-                $catscolor = [];
-                $catid = $context->instanceid;
-                if (!empty($catconfig)) {
-                    $catscolor = json_decode($catconfig);
-                }
-                if (!empty($catscolor) && property_exists($catscolor, $catid)) {
-                    $themecolor = $catscolor->$catid;
-                }
-                $catcontrast = color_contrast::evaluate_color_contrast($imagemaincolor, $themecolor);
-                if ($catcontrast < 4.5) {
-                    return ['success' => true,'imageurl'=> $coverimageurl, 'contrast' => get_string('imageinvalidratiocategory',
-                        'theme_snap', number_format((float)$catcontrast, 2))];
-                }
-            }
-            if ($contrast < 4.5) {
-                return ['success' => true,'imageurl'=> $coverimageurl, 'contrast' => get_string('imageinvalidratio',
-                    'theme_snap', number_format((float)$contrast, 2)),];
-            }
         }
         return ['success' => $success, 'imageurl'=> $coverimageurl];
     }

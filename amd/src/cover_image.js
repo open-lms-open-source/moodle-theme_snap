@@ -24,6 +24,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
 
         var savedImageURL = $('#page-header').css("background-image");
         var temporalImageURL = 'none';
+        var temporalImageID = 0;
+        var temporalFileName = '';
         var cropper = null;
         var cropperRatio = 6/1;
         if ($('#page-site-index').length) {
@@ -65,6 +67,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
          */
         var state1 = function() {
             temporalImageURL = 'none';
+            temporalImageID = 0;
+            temporalFileName = '';
             $('#page-header').css('background-image', savedImageURL);
             if (savedImageURL === "none") {
                 $('.path-course-view #page-header').removeClass('mast-image');
@@ -133,6 +137,22 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             $('.snap_cover_image_save_button').removeClass("d-none");
             currentImageUrl = getOriginalImageURL(currentImageUrl);
             return currentImageUrl;
+        };
+
+        /**
+         * Apply listeners to aspect ratio options.
+         */
+        var aspectRatioOptions = function() {
+            if ($('#page-course-view-topics, #page-course-view-weeks').length) {
+                // If the Table of contents display option is set to Top.
+                if ($('#page-header #course-toc').length) {
+                    cropperRatio = 6/2;
+                    cropper.setAspectRatio(cropperRatio);
+                } else {
+                    cropperRatio = 6/1;
+                    cropper.setAspectRatio(cropperRatio);
+                }
+            }
         };
 
         /**
@@ -218,6 +238,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                     zoomable: false,
                     minCropBoxWidth: 300,
                 });
+                aspectRatioOptions();
                 $('.snap_cover_image_cropper_description').removeClass('d-none');
                 $('#id_snap_cover_image_save_button').click(function() {
                     if (cropper.getCroppedCanvas() !== null) {
@@ -289,6 +310,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                             args: {params: ajaxParams},
                             done: function() {
                                 temporalImageURL = 'none';
+                                temporalImageID = 0;
+                                temporalFileName = '';
                                 savedImageURL = 'none';
                                 cropper = null;
                                 state1();
@@ -369,6 +392,15 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                     // Initialize preview image cropper for the uploaded image.
                     var imageToCrop = document.getElementById('id_snap_cover_image_preview');
                     temporalImageURL = params.url;
+                    temporalFileName = params.file;
+                    if (params.id !== undefined) {
+                        temporalImageID = params.id;
+                    } else if (params.file !== undefined) {
+                        var fileNameWithoutSpaces = params.file.replace(/ .*/, "");
+                        var regex = new RegExp("draft\\/(\\d+)\\/" + fileNameWithoutSpaces, "g");
+                        var urlId = params.url.match(regex);
+                        temporalImageID = urlId[0].match(/\d+/)[0];
+                    }
                     cropper = new Cropper(imageToCrop, {
                         viewMode: 3,
                         aspectRatio: cropperRatio,
@@ -377,6 +409,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                         minCropBoxWidth: 300,
                     });
                 }
+                aspectRatioOptions();
                 $('.snap_cover_image_cropper_description').removeClass('d-none');
                 $('#id_snap_cover_image_save_button').click(function() {
                     var croppedImage = cropper.getCroppedCanvas().toDataURL("image/png");
@@ -404,8 +437,43 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             return function(params) {
             if (params.url !== '') {
                 temporalImageURL = params.url;
+                temporalFileName = params.file;
+                if (params.id !== undefined) {
+                    temporalImageID = params.id;
+                } else if (params.file !== undefined) {
+                    var fileNameWithoutSpaces = params.file.replace(/ .*/, "");
+                    var regex = new RegExp("draft\\/(\\d+)\\/" + fileNameWithoutSpaces, "g");
+                    var urlId = params.url.match(regex);
+                    temporalImageID = urlId[0].match(/\d+/)[0];
+                }
                 // Load the preview image.
                 loadPreviewImage(params, courseShortName, categoryId);
+                var ajaxParams = {};
+                ajaxParams.fileid = temporalImageID;
+                ajaxParams.imagefilename = temporalFileName;
+                ajaxParams.contrastvalidation = true;
+                if (categoryId !== null) {
+                    ajaxParams.categoryid = categoryId;
+                } else if (courseShortName !== null) {
+                    ajaxParams.courseshortname = courseShortName;
+                }
+                ajax.call([
+                    {
+                        methodname: 'theme_snap_cover_image',
+                        args: {params: ajaxParams},
+                        done: function(response) {
+                            $('#snap-alert-cover-image-contrast').remove();
+                            if (response.contrast) {
+                                addCoverImageAlert('snap-alert-cover-image-contrast', response.contrast,
+                                    'dialogue'
+                                );
+                            }
+                        },
+                        fail: function(response) {
+                            ajaxNotify.ifErrorShowBestMsg(response);
+                        }
+                    }
+                ], true, true);
                 }
             };
         };
@@ -456,15 +524,19 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                         var regex = new RegExp("draft\\/(\\d+)\\/" + fileNameWithoutSpaces, "g");
                         var urlId = params.url.match(regex);
                         ajaxParams.fileid = urlId[0].match(/\d+/)[0];
+                } else {
+                    ajaxParams.fileid = temporalImageID;
                 }
 
                 if (params.file !== undefined) {
                     ajaxParams.imagefilename = params.file;
+                } else {
+                    ajaxParams.imagefilename = temporalFileName;
                 }
                 if (params.url !== undefined) {
                     ajaxParams.originalimageurl = params.url;
                 } else {
-                    ajaxParams.originalimageurl = '';
+                    ajaxParams.originalimageurl = temporalImageURL;
                 }
 
                 cropper.getCroppedCanvas().toBlob((blob) => {
@@ -479,17 +551,14 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                                 args: {params: ajaxParams},
                                 done: function(response) {
                                     state1();
-                                    if (response.contrast) {
-                                        addCoverImageAlert('snap-alert-cover-image-size',
-                                            response.contrast
-                                        );
-                                    }
                                     if (!response.success && response.warning) {
                                         addCoverImageAlert('snap-alert-cover-image-upload-failed', response.warning);
                                     }
                                     var newUrl = getCroppedImageURL(response.imageurl);
                                     savedImageURL = 'url(' + newUrl + ')';
                                     temporalImageURL = 'none';
+                                    temporalImageID = 0;
+                                    temporalFileName = '';
                                     $('#page-header').css('background-image', savedImageURL);
                                     $('#page-header').addClass('mast-image');
                                     $('#page-header .breadcrumb-item a').addClass('mast-breadcrumb');
