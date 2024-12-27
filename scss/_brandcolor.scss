@@ -32,6 +32,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 .theme-snap {
     .badge-primary {
         background-color: $brand-primary !important;
+        color: #fff;
     }
 
     #snap-modchooser-modal,
@@ -707,6 +708,19 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
         #snap-pm-trigger {
             color: $nav-button-color;
+        }
+
+        // Edit mode toggle.
+        .editmode-switch-form {
+            .input-group {
+                label {
+                    color: $brand-primary !important;
+                }
+            }
+            .custom-control-input:checked~.custom-control-label::before {
+                background-color: $brand-primary;
+                border-color: $brand-primary;
+            }
         }
 
         #nav-notification-popover-container .count-container {
