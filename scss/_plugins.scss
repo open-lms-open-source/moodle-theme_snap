@@ -1679,12 +1679,18 @@ body#page-admin-plugins {
 #snap-personal-menu-deadlines .snap-media-object img, // Activities icons in Personal menu deadlines when advanced feeds disabled.
 #snap-personal-menu-grading .snap-media-object img, // Activities icons in Personal menu grading when advanced feeds disabled.
 #page-course-view-tiles .activity img, // Activities icons in courses with Tiles format.
+#page-course-view-section-tiles .activityiconcontainer img,
+#page-course-recent #region-main img,
 #page-admin-modules #modules img { // Activities icons "Manage activities" administration page.
 
     &[src*="forum"][src*="icon"], &[src*="forum"][src*="monologo"],
     &[src*="chat"][src*="icon"], &[src*="chat"][src*="monologo"],
     &[src*="hsuforum"][src*="icon"], &[src*="hsuforum"][src*="monologo"] {
         filter: $communication-filter;
+    }
+
+    &[src*="hsuforum"][src*="icon"], &[src*="hsuforum"][src*="monologo"] {
+        height: 25px;
     }
 
     &[src*="assign"][src*="icon"], &[src*="assign"][src*="monologo"],
@@ -1712,6 +1718,7 @@ body#page-admin-plugins {
 
     &[src*="collaborate"][src*="icon"], &[src*="collaborate"][src*="monologo"] {
         filter: $collab-filter;
+        height: 30px;
     }
 
     &[src*="hvp"][src*="icon"], &[src*="hvp"][src*="monologo"] {
@@ -1808,5 +1815,32 @@ body#page-admin-plugins {
 
     &[src*="scheduler"][src*="icon"], &[src*="scheduler"][src*="monologo"] {
         filter: $scheduler-filter;
+    }
+}
+
+#page-course-view-tiles #multi_section_tiles,
+#page-course-view-tiles.format-tiles-single-sec  {
+    .activityiconcontainer img {
+        &[src*="hsuforum"][src*="icon"], &[src*="hsuforum"][src*="monologo"] {
+            filter: none;
+            height: 55px;
+        }
+
+        &[src*="livepoll"][src*="icon"], &[src*="livepoll"][src*="monologo"],
+        &[src*="collaborate"][src*="icon"], &[src*="collaborate"][src*="monologo"] {
+            height: 55px;
+        }
+    }
+}
+#page-course-view-section-tiles.editing,
+#page-course-view-section-tiles.single-section-page,
+#page-course-view-tiles.editing,
+#page-course-view-tiles #section-zero-container,
+#page-course-view-tiles.format-tiles-single-sec.editing {
+    .activityiconcontainer img:not(.modchooser img) {
+        &[src*="hsuforum"][src*="icon"], &[src*="hsuforum"][src*="monologo"],
+        &[src*="livepoll"][src*="icon"], &[src*="livepoll"][src*="monologo"] {
+            filter: none;
+        }
     }
 }

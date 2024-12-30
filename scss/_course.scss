@@ -1808,6 +1808,9 @@ body.snap-resource-card {
 
         &.modtype_hsuforum {
             border-top-color: $color-communication;
+            .activityiconcontainer.hsuforum img {
+                height: 25px;
+            }
         }
 
         &.modtype_assign,
@@ -1879,8 +1882,9 @@ body.snap-resource-card {
 
         &.modtype_collaborate {
             border-top-color: $color-collab;
-            .activityiconcontainer {
+            .activityiconcontainer img {
                 filter: $collab-filter;
+                height: 30px;
             }
         }
 
@@ -1909,7 +1913,7 @@ body.snap-resource-card {
         &.modtype_resource {
             border-top-color: $color-resource;
             .activityiconcontainer {
-                filter: $resource-filter;
+                filter: $color-resource; // For Course Tiles format.
             }
         }
 
