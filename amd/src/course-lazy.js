@@ -234,7 +234,9 @@ define(
                 '#snap-add-new-section.state-visible'
             );
             if (!visibleChapters.length) {
-                if ($('.section.main.current').length) {
+                if (section !== '') {
+                    $(section).addClass('state-visible').focus();
+                } else if ($('.section.main.current').length) {
                     $('.section.main.current').addClass('state-visible').focus();
                 } else {
                     $('#section-0').addClass('state-visible').focus();
