@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Open LMS. (http://www.openlms.net)
+ * @copyright  Copyright (c) 2024 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -104,7 +104,7 @@ $string['deadlinestoggle'] = 'Bitiş Tarihleri';
 $string['deadlinestoggledesc'] = 'Kullanıcılara kaydolunan derslerin varsa yaklaşan etkinlik bitiş tarihlerini gösterin.';
 $string['defaultsummary'] = 'Bu alanı, bu konunun ne hakkında olduğunu; metin yoluyla, resim, ses ve video kullanarak açıklamak için kullanın.';
 $string['defaultintrosummary'] = 'Yeni dersine hoş geldin {$a}. <br>Metin, resim, ses ve video yoluyla dersinin ne hakkında olduğunu anlatarak başlayın.';
-$string['defaulttopictitle'] = 'Başlığı Olmayan Konu';
+$string['defaultsectiontitle'] = 'Başlıksız Bölüm';
 $string['debugerrors'] = 'Hata Ayıklama Hataları';
 $string['deleteassetconfirm'] = 'Sil {$a}';
 $string['deletingasset'] = '{$a} siliniyor';
@@ -135,6 +135,7 @@ $string['error:failedtoduplicateasset'] = 'Kopyalanamadı';
 $string['error:failedtodeleteasset'] = 'Varlık silinemedi';
 $string['error:failedtotoc'] = 'İçindekiler tablosu alınamadı.';
 $string['extension'] = 'Uzantı {$a}';
+$string['extra_section_menu'] = 'Ekstra bölüm menüsü';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'Facebook sayfanızın url\'si.';
 $string['favicon'] = 'Sık kullanılan simge';
@@ -143,27 +144,43 @@ $string['favorite'] = 'Sık kullanılan {$a}';
 $string['favorited'] = 'Sık kullanılanlara eklenen {$a}';
 $string['featurespots'] = 'Özellik noktaları';
 $string['featurespotsedit'] = 'Özellik noktalarını düzenle';
-$string['featurespotshelp'] = '<p>Mevcut ve potansiyel kullanıcılar için temel faydaları vurgulamak üzere sitenizin ön sayfasına 3 adede kadar özellik noktası ekleyin.</p>
-<p>Her özelliğe bir görüntü, başlık ve içerik açıklaması ekleyebilirsiniz. Özelliği ön sayfada görmek için bir başlık girmeniz gerekir. Görüntü ve içerik açıklaması bölümleri isteğe bağlıdır.</p>
+$string['featurespotshelp'] = '<p>Mevcut ve potansiyel kullanıcılar için temel faydaları vurgulamak üzere sitenizin ön sayfasına 6 adede kadar özellik noktası ekleyin.</p>
+<p>Her özelliğe bir görüntü, başlık ve içerik açıklaması ekleyebilirsiniz. <strong>Özelliği ön sayfada görmek için bir başlık girmeniz gerekir.</strong> Görüntü ve içerik açıklaması bölümleri isteğe bağlıdır.</p>
 <p>Önerilen görüntü boyutu karedir ve 200 piksele 200 pikselden büyük değildir.</p>';
 $string['featurespotsheading'] = 'Özellik noktaları başlığı';
 $string['featureonetitle'] = 'Özellik 1 başlığı';
 $string['featuretwotitle'] = 'Özellik 2 başlığı';
 $string['featurethreetitle'] = 'Özellik 3 başlığı';
+$string['featurefourtitle'] = 'Özellik 4 başlığı';
+$string['featurefivetitle'] = 'Özellik 5 başlığı';
+$string['featuresixtitle'] = 'Özellik 6 başlığı';
 $string['featureonetitlelink'] = 'Özellik 1 başlık bağlantısı';
 $string['featuretwotitlelink'] = 'Özellik 2 başlık bağlantısı';
 $string['featurethreetitlelink'] = 'Özellik 3 başlık bağlantısı';
+$string['featurefourtitlelink'] = 'Özellik 4 başlık bağlantısı';
+$string['featurefivetitlelink'] = 'Özellik 5 başlık bağlantısı';
+$string['featuresixtitlelink'] = 'Özellik 6 başlık bağlantısı';
 $string['featuretitlelinkdesc'] = 'Bu özellik noktasını bağlamak istediğiniz URL\'yi yazın. Sitenize haricî veya dâhilî bağlantılar ekleyebilirsiniz. Dâhilî bağlantı eklemek için lütfen / işaretini de içerecek şekilde site URL\'sinden bağlantıyı kopyalayın. Örneğin, bir kursa bağlantı vermek için "course/view.php?id=160" kullanılır. Haricî bir bağlantı eklemek için bağlantıyı https:// ile başlatın';
 $string['featureonetitlecb'] = 'Özellik 1\'i yeni pencerede aç';
 $string['featuretwotitlecb'] = 'Özellik 2\'yi yeni pencerede aç';
 $string['featurethreetitlecb'] = 'Özellik 3\'ü yeni pencerede aç';
+$string['featurefourtitlecb'] = 'Özellik 4\'ü yeni pencerede aç';
+$string['featurefivetitlecb'] = 'Özellik 5\'i yeni pencerede aç';
+$string['featuresixtitlecb'] = 'Özellik 6\'yı yeni pencerede aç';
 $string['featuretitlecbdesc'] = 'Bu ayar etkinleştirilirse belirtilen noktaya eklenen bağlantı, yeni bir pencerede açılır';
 $string['featureonetext'] = 'Özellik 1 içeriği';
 $string['featuretwotext'] = 'Özellik 2 içeriği';
 $string['featurethreetext'] = 'Özellik 3 içeriği';
+$string['featurefourtext'] = 'Özellik 4 içeriği';
+$string['featurefivetext'] = 'Özellik 5 içeriği';
+$string['featuresixtext'] = 'Özellik 6 içeriği';
 $string['featureoneimage'] = 'Özellik 1 resmi';
 $string['featuretwoimage'] = 'Özellik 2 resmi';
 $string['featurethreeimage'] = 'Özellik 3 resmi';
+$string['featurefourimage'] = 'Özellik 4 resmi';
+$string['featurefiveimage'] = 'Özellik 5 resmi';
+$string['featuresiximage'] = 'Özellik 6 resmi';
+$string['featuredcategoriesandcourses'] = 'Öne çıkan kategoriler ve kurslar';
 $string['featuredcourses'] = 'Öne çıkan dersler';
 $string['featuredcourseshelp'] = 'Sitenizin ön sayfasında 8 adede kadar öne çıkan dersi vurgulayın. Bir dersi öne çıkarmak için Ders kimliğini girin.';
 $string['featuredcoursesheading'] = 'Öne çıkan dersler başlığı';
@@ -178,6 +195,20 @@ $string['featuredcourseeight'] = 'Öne çıkan ders 8';
 $string['featuredcoursesedit'] = 'Öne çıkan dersleri düzenle';
 $string['featuredcoursesbrowseall'] = 'Tüm derslere gözat';
 $string['featuredcoursesbrowsealldesc'] = 'Tüm derslere gözat bağlantısı ekle';
+$string['featuredcategories'] = 'Öne çıkan kategoriler';
+$string['featuredcategorieshelp'] = 'Sitenizin ön sayfasında 8 adede kadar öne çıkan kategoriyi vurgulayın. Bir kategoriyi öne çıkarmak için kategori kimliğini yazın.';
+$string['featuredcategoriesheading'] = 'Öne çıkan kategoriler başlığı';
+$string['featuredcategoryone'] = 'Öne çıkan kategori 1';
+$string['featuredcategorytwo'] = 'Öne çıkan kategori 2';
+$string['featuredcategorythree'] = 'Öne çıkan kategori 3';
+$string['featuredcategoryfour'] = 'Öne çıkan kategori 4';
+$string['featuredcategoryfive'] = 'Öne çıkan kategori 5';
+$string['featuredcategoriesix'] = 'Öne çıkan kategori 6';
+$string['featuredcategorieseven'] = 'Öne çıkan kategori 7';
+$string['featuredcategoryeight'] = 'Öne çıkan kategori 8';
+$string['featuredcategoriesedit'] = 'Öne çıkan kategorileri düzenle';
+$string['featuredcategoriesbrowseall'] = 'Tüm kategorilere gözat';
+$string['featuredcategoriesbrowsealldesc'] = 'Tüm kategorilere gözat bağlantısı ekle';
 $string['feature_spot_background_color'] = 'Arka plan rengi';
 $string['feature_spot_title_color'] = 'Başlık metni rengi';
 $string['feature_spot_description_color'] = 'Açıklama metni rengi';
@@ -199,6 +230,7 @@ $string['forumpoststoggle'] = 'Forum gönderileri';
 $string['forumpoststoggledesc'] = 'Kullanıcılarınıza, derslerinden gelen en son 10 forum gönderisini gösterin';
 $string['fullname'] = 'Site adı';
 $string['fullnamedesc'] = 'Sitenizin adı.';
+$string['gotoactivity'] = 'Etkinliğe git {$a}';
 $string['graderadviseuserreport'] = '"Not veren raporu" mobil cihazlarda çok iyi çalışmaz. Yerine "kullanıcı raporu" önerilmektedir';
 $string['grading'] = 'Not Verme';
 $string['help'] = 'Yardım';
@@ -297,7 +329,7 @@ $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'Kullan�
 $string['privacy:metadata:theme_snap_course_favorites'] = 'Kullanıcının Snap için sık kullanılanlara eklediği dersleri depolar';
 $string['problemsfound'] = 'Bulunan Sorunlar';
 $string['progress'] = 'İlerleme';
-$string['readmore'] = 'Devamını oku »';
+$string['readmore'] = 'Devamını oku&nbsp;»';
 $string['recentactivity'] = 'En Son Etkinlik';
 $string['recentfeedback'] = 'Geri bildirim';
 $string['region-main'] = 'Ana';
@@ -330,7 +362,7 @@ $string['topbarlinkcolor'] = 'Gezinti çubuğu bağlantı ve simge rengi';
 $string['topbarbuttoncolor'] = 'Derslerim\'in arka planı';
 $string['togglenavigation'] = 'Gezintiyi aç kapa';
 $string['topicactions'] = 'Konu eylemleri';
-$string['xakatwitterdesc'] = 'hesabınızın url\'si.';
+$string['xakatwitterdesc'] = 'Hesabınızın url\'si.';
 $string['unenrolme'] = 'Kaydımı sil';
 $string['enrolme'] = 'Beni kaydet';
 $string['unread'] = 'okunmamış';
@@ -381,6 +413,7 @@ $string['imageinvalidratio'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olm
 $string['catinvalidratio'] = 'Aşağıdaki renk kategorileri, Site arka plan rengine (beyaz) karşı: "{$a->white}". Gezinti çubuğu arka plan rengine karşı: "{$a->custombar}". Kurslarım düğmesi arka plan rengine karşı: "{$a->customnav}" içeren <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil.';
 $string['spotinvalidratio'] = 'Arka plan rengi WCAG<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank"> 2.0 minimum oran değeri 4.5:1</a>\'e uygun değil. {$a->name} değerine karşı geçerli değer: {$a->value}.';
 $string['imageinvalidratiocategory'] = 'WCAG 2.0 minimum oran değeri 4.5:1\'e uygun olmadığından dolayı bu resimde tema rengiyle kontrast sorunları olabilir. Ortalama piksel değeri: "{$a}"';
+$string['browseallcategories'] = 'Tüm kategorilere gözat';
 $string['lazyload_mod_page'] = 'Sayfa kaynakları için varsayılan yavaş yüklemeyi etkinleştir';
 $string['lazyload_mod_page_description'] = 'Etkinleştirildiğinde, bu ayar çok sayfalı dersler için ders sayfası yükleme sürelerini önemli ölçüde kısaltır.';
 $string['pmadvancedfeed_viewmore'] = 'Daha fazlasına bak';
@@ -399,7 +432,7 @@ $string['alternativeloginoptions'] = 'Alternatif oturum açma seçenekleri';
 $string['openmessagedrawer'] = 'Mesajlaşma çekmecesini aç.';
 $string['refreshdeadlinestask'] = 'Bitiş tarihlerinin önbellek verilerini yenile. Bu, tüm kullanıcılar oturum açmadan önce çalıştırılmalıdır.';
 $string['resetdeadlinesquerycounttask'] = 'Teslim tarihlerini sorgulama sayımını sıfırla';
-$string['refreshdeadlinestaskoff'] = 'Doldurmak için veri aranmadı. Önbelleğe alınmış son tarih verilerini doldurmak için lütfen Snap\'in Kişisel menü ayarlarındaki “Son tarihleri planlanan görevi kullanarak yenile” ayarını açın.';
+$string['refreshdeadlinestaskoff'] = 'Doldurmak için veri aranmadı. Önbelleğe alınmış son tarih verilerini doldurmak için lütfen Snap\'in Kişisel menü ayarlarındaki "Son tarihleri planlanan görevi kullanarak yenile" ayarını açın.';
 $string['activityrestriction'] = 'Etkinlik kısıtlama';
 $string['hideandshowactioncb'] = 'Etkinlik onay kutusu eylemini gizle ve göster';
 $string['retryfeed'] = 'Bu akış şu anda kullanılamıyor, lütfen daha sonra tekrar kontrol edin. Akış: {$a}';
@@ -433,3 +466,18 @@ $string['snapfootertxtcolor'] = 'Altbilgi metin rengi';
 $string['enableblockmyoverviewwarning'] = 'Ders özeti bloku devre dışı bırakıldı. Kursları görüntülemek için lütfen engeli etkinleştirin.';
 $string['collapseicon'] = 'Şunun içeriğini daraltın:';
 $string['expandicon'] = 'Şunun içeriğini genişletin:';
+$string['imageproperties'] = 'Görüntü özellikleri';
+$string['coverimagedesc'] = 'Kapakta yer alacak resmi .jpeg, .png veya .gif biçiminde seçtiğinizden emin olun. Site düzeyinde izin verilen maksimum dosya boyutundan ({$a}) fazla olmamalıdır. En iyi görüntüleme için 4:3 (1024x768 piksel) en boy oranını hedefleyin. Ayrıca, özellikle kursun beyaz başlığıyla ilgili olarak daha iyi bir kullanıcı deneyimi için WCAG 2.0 yönergelerine uygun renk kombinasyonlarını dikkate alın.';
+$string['coverimagecropperdesc'] = 'Kırpma kutusunu kullanarak görüntülenecek görüntünün alanını seçin.';
+$string['browserepositories'] = 'Yeni bir görüntü ekle';
+$string['saveimage'] = 'Görüntüyü kaydet';
+$string['selectimage'] = 'Görüntü seç';
+$string['deleteimage'] = 'Kapak görüntüsünü sil';
+$string['confirmdeletefile'] = 'Bu işlem kapak görüntüsünü silecek. Kayıtlı dosyayı silmek istediğinize emin misiniz?';
+$string['coverimagesettingswarning'] = 'Kapak görüntüsünü doğrudan kurs ayarları sayfasından güncellerseniz kırpılmış kapak görüntüsünü sıfırlanır. Lütfen daha sonra istediğiniz kırpmayı yeniden seçmeyi unutmayın.';
+$string['opens'] = '{$a} öğesini açar';
+$string['opened'] = '{$a} açıldı';
+$string['year'] = 'Yıl';
+$string['homepage'] = 'Ana sayfa';
+$string['allyears'] = 'Tüm yıllar';
+$string['courselink'] = 'Kursa git';
