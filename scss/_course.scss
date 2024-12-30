@@ -1173,6 +1173,10 @@ li.section:focus {
                 display: flex;
                 justify-content: space-between;
             }
+
+            .editing & {
+                width: 100% !important; // !important to override boost style.
+            }
         }
     }
 }
