@@ -2017,17 +2017,22 @@ header#page-header
 
     .carousel-caption {
         // Reset bootstrap styles.
-        left: 7%;
-        bottom: inherit;
-        text-align: left;
-        top: 20vh;
-        width: 50%;
-        text-shadow: none;
+        display: inline-block;
+        word-break: break-word;
         color: #666;
+        position: unset;
+        text-align: justify;
         // Add snap cover styles.
         background-color: rgba(255, 255, 255, 0.9);
         padding: 1em 2%;
-        margin-top: 2em;
+        margin: 10em 6% 1em;
+        @include media-breakpoint-up(md) {
+            width: 50%;
+            margin: 20vh 4%;
+        }
+        @include media-breakpoint-down(md) {
+            margin-bottom: 5em;
+        }
     }
 
     .carousel-indicators {
