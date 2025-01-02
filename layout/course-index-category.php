@@ -146,8 +146,10 @@ if (!empty($coverimagecss)) {
                 ?>
         </section>
         </div>
+        <div id="moodle-blocks" class="clearfix">
+            <?php echo $OUTPUT->custom_block_region('side-pre'); ?>
+        </div>
         <?php
-        echo $OUTPUT->custom_block_region('side-pre');
         echo $OUTPUT->snap_feeds_side_menu();
         ?>
     </div>
