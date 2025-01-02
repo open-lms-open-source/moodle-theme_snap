@@ -369,8 +369,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: $brand-primary;
     }
 
-    #course-toc .snap-visible-section {
+    #course-toc .snap-visible-section .chapter-title {
         background-color: $brand-primary;
+        opacity: 0.8;
     }
 
     .mast-image {
