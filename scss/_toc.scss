@@ -35,7 +35,6 @@
 
     /* TOC list. */
     #chapters {
-        list-style: none;
         padding: 0;
 
         h3 {
@@ -53,18 +52,31 @@
 
         /* Chapter link */
         .chapter-title {
-            display: block;
+            display: inline-block;
             margin-bottom: -0.3em;
             line-height: 1.75;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .snap-visible-section .chapter-title {
+            margin-bottom: 0;
+        }
+        span.text {
+            display: block;
         }
     }
 
     /* Section currently displayed. */
     .snap-visible-section {
-        border-bottom-right-radius: 0.5rem;
-        border-top-right-radius: 0.5rem;
         padding-left: 0.5em;
         color: #fff;
+        .chapter-title {
+            border-radius: 0.5rem;
+            padding-right: 0.5rem;
+            padding-left: 0.5rem;
+        }
         a,
         span {
             color: #fff;
@@ -119,22 +131,34 @@ div[data-flexitour="step-background"] {
         li {
             margin-left: 0;
             // Indicators for draft and current section.
-            &.draft,
-            &.current {
-                .chapter-title:before {
-                    content: " ";
-                    height: 14px;
-                    width: 14px;
-                    display: inline-block;
-                    margin-right: .35em;
-                    border-radius: 50%;
-                }
+            &.draft::before,
+            &.current::before {
+                content: " ";
+                height: 14px;
+                width: 14px;
+                display: inline-block;
+                margin-right: .35em;
+                border-radius: 50%;
+                margin-bottom: 0.3rem;
             }
-            &.current .chapter-title:before {
+            &.draft.snap-visible-section::before,
+            &.current.snap-visible-section::before {
+                margin-bottom: 0.5rem;
+            }
+            &.current::before {
                 background-color: $brand-success;
             }
-            &.draft .chapter-title:before {
+            &.draft::before {
                 background-color: $brand-warning;
+            }
+            &.draft span.text {
+                color: $brand-warning;
+            }
+            &.draft,
+            &.current {
+                .chapter-title {
+                    width: 85%;
+                }
             }
         }
 
@@ -164,6 +188,8 @@ div[data-flexitour="step-background"] {
 // -------------------------
 #page-header {
     #course-toc {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
         margin: 2.5em auto -.5em;
     }
 
@@ -191,10 +217,10 @@ div[data-flexitour="step-background"] {
     // Specific styles for numbered chapters to improve readability.
     ol#chapters {
         list-style-position: outside;
-
+        margin-top: 2em;
         li {
             margin-left: 2em;
-            list-style: none;
+            padding-right: 3em;
         }
     }
 
@@ -206,9 +232,33 @@ div[data-flexitour="step-background"] {
     .toc-footer {
         margin-right: 4%;
         text-align: right;
-
+        @media (min-width: 990px) {
+            position: absolute;
+            top: 1em;
+            right: 0;
+            margin-right: 5%;
+        }
         a {
             margin-right: 0.5em;
+            margin-top: 1em;
+        }
+    }
+    .snap-visible-section::marker {
+        color: #565656;
+    }
+    .draft span.text {
+        color: $brand-warning;
+    }
+    @media (min-width: 990px) {
+        #toc-search {
+            z-index: 1;
+            #toc-search-input.state-active,
+            #toc-search-input:focus {
+                width: 600px;
+            }
+            #toc-search-results {
+                width: 585px;
+            }
         }
     }
 }
