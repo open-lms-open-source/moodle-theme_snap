@@ -394,7 +394,10 @@ label[for="toc-search-input"]{
 
 @include media-breakpoint-down(md) {
     .theme-snap  a#toc-mobile-menu-toggle {
-        background: $brand-primary url("[[pix:theme|burger]]") no-repeat 50% 50%;
+        background-image: url("[[pix:theme|burger]]");
+        background-repeat: no-repeat;
+        background-position-x: 50%;
+        background-position-y: 50%;
         background-size: 1em;
         display: inline-block;
         bottom: 0.5em;
