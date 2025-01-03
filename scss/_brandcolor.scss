@@ -750,6 +750,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                     -webkit-text-stroke-width: 1px;
                 }
             }
+            // Keyboard header Intellicart icon animation (Tab key).
+            .popover-region-toggle.nav-link.icon-no-margin:focus-visible {
+                .icon.fa-shopping-cart {
+                    color: $nav-color;
+                    -webkit-text-stroke-width: 1px;
+                }
+            }
         }
 
         .badge-count-container .icon.fa-comment {

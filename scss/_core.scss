@@ -1266,12 +1266,16 @@ footer #moodle-footer
                 padding: .5rem .5rem;
             }
 
+            .hidden-md-down a[aria-label="Search"] {
+                padding-left: 0px;
+                padding-right: 2px;
+            }
+
             a:focus, div[tabindex]:focus {
                 border-radius: .5rem !important; // !important to override a possible .rounded-0 like in the search btn.
                 outline-style: solid;
                 box-shadow: none;
             }
-
         }
         .divider {
             margin-right: 0 !important;
@@ -1516,7 +1520,7 @@ footer #moodle-footer
 .badge-count-container {
     display: inline-block;
     float: none;
-    width: 2.35em;
+    width: 2.1em;
 
     // we want to maintain the position along the Intellicart or notification icons when
     // these icons don't exists in the Snap header.
@@ -1626,6 +1630,9 @@ footer #moodle-footer
         #admin-menu-trigger {
             margin-left: .2em;
         }
+        .float-right.js-only.row .hidden-md-down a[aria-label="Search"] i.fa-search {
+            font-size: 1.6rem;
+        }
     }
 }
 
@@ -1648,8 +1655,6 @@ footer #moodle-footer
                     padding-left: 0;
                     padding-right: 0;
                     i.fa-search {
-                        font-size: 1.6rem;
-                        
                         &:hover {
                             @extend .fa-beat;
                         }
@@ -6271,4 +6276,74 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
 // Override Bootstrap .text-dark class.
 .badge.bg-secondary.text-dark {
     color: #fff !important;
+}
+
+// Keyboard header icon animations (Tab key).
+#mr-nav #snap-header {
+    // User menu icon.
+    .usermenu a#user-menu-toggle:focus-visible {
+        .userpicture,
+        .userinitials {
+            @include alakazam;
+            transform: scale(1.1);
+        }
+    }
+
+    // Messages icon.
+    .badge-count-container a.snap-message-count:focus-visible {
+        @extend .fa-beat;
+        --fa-animation-duration: 0.5s;
+        --fa-animation-iteration-count: 1;
+        font-weight: bolder;
+        .icon.fa-comment {
+            font-weight: bolder;
+        }
+    }
+
+    // Intellicart icon.
+    #nav-intellicart-popover-container .popover-region-toggle.nav-link.icon-no-margin:focus-visible {
+        @extend .fa-beat;
+        --fa-animation-duration: 0.5s;
+        --fa-animation-iteration-count: 1;
+    }
+
+    // Notifications icon.
+    #nav-notification-popover-container .popover-region-toggle.nav-link.icon-no-margin:focus-visible {
+        @extend .fa-shake;
+        --fa-animation-duration: 1.5s;
+        --fa-animation-iteration-count: 1;
+        .icon.fa-bell-o {
+            font-weight: bolder;
+        }
+    }
+
+    // Search icon.
+    .hidden-md-down .btn.btn-open.rounded-0.nav-link:focus-visible {
+        @extend .fa-beat;
+        --fa-animation-duration: 0.5s;
+        --fa-animation-iteration-count: 1;
+        .icon.fa-search {
+            -webkit-text-stroke-width: 1px;
+        }
+    }
+
+    // Snap Feeds icon.
+    #snap_feeds_side_menu_trigger:focus-visible {
+        @extend .fa-bounce;
+        --fa-animation-duration: 1s;
+        --fa-animation-iteration-count: 1;
+        svg .hover-visible {
+            opacity: 1;
+        }
+    }
+
+    // Admin gear icon.
+    #admin-menu-trigger:focus-visible {
+        svg {
+            transform: rotate(90deg);
+        }
+        .snap-gear-icon {
+            fill: currentColor;
+        }
+    }
 }
