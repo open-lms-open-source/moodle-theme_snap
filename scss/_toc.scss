@@ -64,7 +64,7 @@
             margin-bottom: 0;
         }
         span.text {
-            display: block;
+            display: inline-block;
         }
     }
 
@@ -82,6 +82,9 @@
             color: #fff;
             text-decoration: none;
         }
+        .completionstatus {
+            color: #666;
+        }
     }
 
     /* Completed section icon. */
@@ -90,13 +93,11 @@
         height: 1.3em;
     }
 
-    /* CSS mididots. */
-    .text + .text:before {
-        content: " · ";
-    }
-
     .text small {
         font-weight: 300;
+    }
+    .conditional .published-status {
+        color: $brand-warning;
     }
 }
 
@@ -153,11 +154,17 @@ div[data-flexitour="step-background"] {
             }
             &.draft span.text {
                 color: $brand-warning;
+                &.completionstatus {
+                    color: #666;
+                }
             }
             &.draft,
             &.current {
                 .chapter-title {
-                    width: 85%;
+                    width: 92%;
+                    @media (min-width: 990px) {
+                        width: 85%;
+                    }
                 }
             }
         }
@@ -206,6 +213,22 @@ div[data-flexitour="step-background"] {
         &.list-large {
             column-count: 3;
         }
+        span {
+            .published-status {
+                color: $brand-warning;
+            }
+            &.completionstatus {
+                color: #666;
+            }
+            &.text {
+                margin-top: 0.3em;
+            }
+        }
+        /* Chapter link */
+        .chapter-title,
+        .snap-visible-section .chapter-title {
+            margin-bottom: -0.5em;
+        }
     }
 
     #toc-desktop-menu-heading {
@@ -245,9 +268,6 @@ div[data-flexitour="step-background"] {
     }
     .snap-visible-section::marker {
         color: #565656;
-    }
-    .draft span.text {
-        color: $brand-warning;
     }
     @media (min-width: 990px) {
         #toc-search {
