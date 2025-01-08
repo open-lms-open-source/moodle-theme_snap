@@ -71,7 +71,7 @@ echo html_writer::link($defaulthomeurl, $sitefullname, $attrs);
 
     $settingslink = new settings_link();
     echo '<span class="hidden-md-down">';
-    echo core_renderer::search_box();
+    echo $OUTPUT->search_box();
     echo '</span>';
     echo $OUTPUT->snap_feeds_side_menu_trigger();
     if ($settingslink->output || $this->page->user_allowed_editing()) {
