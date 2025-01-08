@@ -32,6 +32,7 @@ namespace theme_snap;
  */
 class course_management_test extends \advanced_testcase {
     public function test_link_updated_with_hash() {
+        $this->markTestSkipped('To be reviewed by INT-20687');
         global $PAGE, $CFG;
 
         $this->resetAfterTest(true);

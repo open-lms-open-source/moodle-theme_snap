@@ -26,8 +26,6 @@ namespace theme_snap;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/lib/outputrequirementslib.php');
-
 class snap_page_requirements_manager extends \page_requirements_manager {
     /**
      * Ensure that the specified JavaScript function is called from an inline script
