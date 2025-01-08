@@ -39,6 +39,7 @@
     .page-context-header {
         text-align: center;
         display: block;
+        flex-direction: column;
 
         .page-header-image,
         .page-header-headings,
@@ -58,6 +59,7 @@
 
             .btn {
                 border-color: transparent;
+                border-radius: 0.25rem;
             }
         }
     }
