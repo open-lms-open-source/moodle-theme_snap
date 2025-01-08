@@ -1326,30 +1326,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                         }
                     }
 
-                    // Add tab logic order to navigation bar icons, part of this order is being taken from the layout nav.php file.
-                    var customMenu = $('ul.snap-navbar-content li:first-child a');
-                    var moodlePage = $("#moodle-page a:first");
-                    var notificationsBtn = $('#nav-notification-popover-container > div.popover-region-toggle.nav-link');
-                    var searchButton = $('#mr-nav .simplesearchform a.btn.btn-open');
-                    var adminMenuTrigger = $('#admin-menu-trigger');
-
-                    var lastElement;
-                    if (customMenu.length) {
-                        lastElement = customMenu;
-                    } else {
-                        lastElement = moodlePage;
-                    }
-                    if (notificationsBtn.length && searchButton.length && adminMenuTrigger.length && lastElement.length) {
-                        // Update tab events because all elements have tabindex="0" and they are rendered funny.
-                        require(
-                            [
-                                'theme_snap/rearrange_tab_handler-lazy'
-                            ], function(searchTabHandler) {
-                                searchTabHandler.init([notificationsBtn, searchButton, adminMenuTrigger, lastElement]);
-                            }
-                        );
-                    }
-
                     // Add settings tab show behaviour to classes which want to do that.
                     $('.snap-settings-tab-link').on('click', function() {
                         var tab = $('a[href="' + $(this).attr('href') + '"].nav-link');
