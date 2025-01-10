@@ -59,14 +59,13 @@ class core_renderer_test extends \advanced_testcase {
      */
     public function test_course_link_should_not_appear_on_sitelevel() {
         global $COURSE, $PAGE;
-        $this->markTestSkipped('To be reviewed in INT-20526');
         $this->resetAfterTest();
 
         $user = $this->getDataGenerator()->create_user();
         $COURSE = $this->getDataGenerator()->create_course();
         $COURSE->id = SITEID; // Simulate site level.
 
-        $PAGE = new \moodle_page();
+        $PAGE->force_theme('snap');
         $PAGE->set_url('/user/view.php', array('id' => $user->id, 'course' => $COURSE->id));
         $PAGE->set_context(\context_user::instance($user->id));
         $PAGE->set_pagelayout('mypublic');
