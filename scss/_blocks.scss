@@ -630,7 +630,7 @@ body.path-site .block.block_settings {
     }
 }
 
-.block_settings #frontpagesettings_group {
+.block_settings .contains_branch[aria-expanded="true"] #frontpagesettings_group {
     display: grid;
 
     .type_custom:has(.conduit-frontpage) {
