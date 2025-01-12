@@ -56,6 +56,7 @@ Feature: View activity activity header and completion information in activities
     And the "Receive a grade" completion condition of "Music history" is displayed as "todo"
     And I am on the "Music history" "assign activity" page
     And I press "Add submission"
+    Then I should not see "Music history" in the "#page-mast" "css_element"
     And I set the field "Online text" to "History of playing with drumsticks reversed"
     And I press "Save changes"
     And I press "Submit assignment"

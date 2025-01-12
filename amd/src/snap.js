@@ -941,6 +941,15 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                     // Add a class to the body to show js is loaded.
                     $('body').addClass('snap-js-loaded');
 
+                    // Regroup activity naming to the correct placing in the DOM.
+                    if (document.querySelector('[id^="page-mod-"]')) {
+                        let contextHeader = document.querySelector('div.page-context-header');
+                        let regionMain = document.querySelector('#region-main');
+                        if (contextHeader !== null && regionMain !== null) {
+                            regionMain.insertBefore(contextHeader, regionMain.firstChild);
+                        }
+                    }
+
                     // Apply progressbar.js for circular progress display.
                     progressbarcircle();
                     // Course footer recent updates dom fixes.
