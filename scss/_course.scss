@@ -1002,6 +1002,19 @@ li.section:focus {
     overflow: visible;
 }
 
+/**
+ * Styles for the single activity course format.
+ */
+body.format-singleactivity {
+    div#region-main-box {
+        section#region-main {
+            div > div.page-header-headings > h1 {
+                display: none;
+            }
+        }
+    }
+}
+
 /* hide progress label with odd z-indexing */
 #completionprogressid {
     display: none;

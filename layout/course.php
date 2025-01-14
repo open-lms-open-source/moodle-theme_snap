@@ -64,6 +64,14 @@ echo $OUTPUT->custom_menu_spacer();
         $output = $PAGE->get_renderer('core', 'course');
         echo $output->course_format_warning();
     }
+    // Allow individual course formats to set their preferred values.
+    switch ($COURSE->format) {
+        case 'weeks':
+            $PAGE->set_heading($COURSE->fullname);
+            break;
+        default:
+            break;
+    }
     echo $OUTPUT->page_heading();
     echo $OUTPUT->course_header();
     // Note, there is no blacklisting for the edit blocks button on course pages.
