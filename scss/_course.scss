@@ -1089,6 +1089,10 @@ body.format-singleactivity {
 //  Assets in snap.
 // -------------------------
 .section {
+    .activity:first-child {
+        border-top-style: solid;
+        border-top-width: .3em;
+    }
     li.snap-asset.modtype_page .activityinstance {
         margin-bottom: 1em;
     }
