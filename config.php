@@ -218,3 +218,4 @@ if ($runningbehattest) {
 
 $THEME->requiredblocks = $requiredblocks;
 $THEME->haseditswitch = false;
+$THEME->iconsystem = '\\theme_snap\\output\\icon_system_fontawesome';
