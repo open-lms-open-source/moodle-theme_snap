@@ -1652,13 +1652,12 @@ class activity_test extends snap_base_test {
     }
 
     public function test_quiz_ungraded() {
+        global $CFG, $DB;
         $this->resetAfterTest();
 
         $sixmonthsago = time() - YEARSECS / 2;
 
         [$student, $teacher, $course, $group] = $this->course_group_user_setup();
-
-        $this->setUser($student);
 
         // Test with no quizes.
         $actual = activity::quiz_ungraded([], $sixmonthsago);
@@ -1675,6 +1674,30 @@ class activity_test extends snap_base_test {
 
         $actual = activity::quiz_ungraded([$course->id], $sixmonthsago);
         $this->assertCount(0, $actual);
+
+        // Enable cache.
+        $CFG->theme_snap_grading_cache = true;
+        // Run the query.
+        activity::quiz_ungraded([$course->id], $sixmonthsago);
+        $cache = \cache::make('theme_snap', 'course_users_quiz_ungraded');
+        $users = $cache->get($course->id);
+        // Cache should have something.
+        $this->assertNotEmpty($users);
+        // If the user has moodle/grade:viewall, it should be on the list.
+        $this->assertTrue(in_array($teacher->id, $users));
+
+        $manualplugin = enrol_get_plugin('manual');
+
+        $enrol = $DB->get_record('enrol', array('courseid' => $course->id, 'enrol' => 'manual'), '*', MUST_EXIST);
+        // Un-enrol user.
+        $manualplugin->unenrol_user($enrol, $teacher->id);
+        $cache = \cache::make('theme_snap', 'course_users_quiz_ungraded');
+        $this->assertEmpty($cache->get($course->id));
+        // Run again.
+        activity::quiz_ungraded([$course->id], $sixmonthsago);
+        $cache = \cache::make('theme_snap', 'course_users_quiz_ungraded');
+        // No one meets requirements.
+        $this->assertEmpty($cache->get($course->id));
     }
 
     public function test_snap_deadlines_feed_size() {

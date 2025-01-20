@@ -1054,7 +1054,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'currentcourselist' => $currentcourselist,
             'pastcourselist' => $pastcourselist,
             'browseallcourses' => $browseallcourses,
-            'updates' => $this->render_callstoaction(),
+            'updates' => empty($this->advanced_feeds_enabled()) ? $this->render_callstoaction() : [],
             'advancedfeeds' => $this->advanced_feeds_enabled(),
         ];
 

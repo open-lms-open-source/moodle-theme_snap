@@ -83,5 +83,13 @@ $definitions = array(
         'simplekeys'         => true,
         'simpledata'         => false,
     ],
+    'course_users_assign_ungraded' => [
+        'mode'               => cache_store::MODE_APPLICATION,
+        'simplekeys'         => true,
+    ],
+    'course_users_quiz_ungraded' => [
+        'mode'               => cache_store::MODE_APPLICATION,
+        'simplekeys'         => true,
+    ],
 );
 
