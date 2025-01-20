@@ -598,7 +598,7 @@ img {
 }
 
 // Stop images shrinking to nothing on Chrome
-table img {
+table img:not(.activityicon) {
     min-width: 12px;
 }
 
