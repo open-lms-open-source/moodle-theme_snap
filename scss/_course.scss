@@ -639,10 +639,6 @@ li.section:focus {
         filter: $page-filter;
     }
 
-    div[data-internal^="lti_type"] img.icon {
-        filter: $resource-filter;
-    }
-
     div[data-internal="certificate"] .modicon_certificate img.activityicon,
     div[data-internal="customcert"] .modicon_customcert img.activityicon,
     div[data-internal="coursecertificate"] .modicon_coursecertificate img.activityicon {
@@ -826,13 +822,6 @@ li.section:focus {
 #page-mod-page-mod {
     .page-header-image .activityiconcontainer .activityicon {
         filter: $page-filter;
-    }
-}
-
-#page-mod-lti-view,
-#page-mod-lti-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $resource-filter;
     }
 }
 
@@ -1875,11 +1864,6 @@ body.snap-resource-card {
 
         &.modtype_lti, {
             border-top-color: $color-resource;
-            .activityiconcontainer {
-                img.activityicon {
-                    filter: $resource-filter;
-                }
-            }
         }
         &.modtype_h5pactivity {
             border-top-color: $color-resource;
@@ -2402,7 +2386,6 @@ body.snap-resource-card {
 .path-mod {
     &.path-mod-lti {
         .activityiconcontainer {
-            filter: $resource-filter;
             img.icon {
                 filter: none; // TODO: do we need this?
             }
