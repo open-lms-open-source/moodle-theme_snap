@@ -1868,7 +1868,8 @@ class course_renderer extends \core_course_renderer {
         if (has_capability('moodle/course:manageactivities', $modcontext)) {
             // Update button.
             $editalt = get_string('activityedit', 'theme_snap');
-            $actionsadvanced[] = '<li><a href="'.new moodle_url($baseurl, ['update' => $mod->id]).'" aria-label="'
+            $actionsadvanced[] = '<li><a href="'.new moodle_url($baseurl,
+                    ['update' => $mod->id, 'sr' => $mod->sectionnum]).'" aria-label="'
                 .$editalt.' '.$mod->get_formatted_name().'" data-action="update" role="button" '.
                 'class="snap-edit-asset dropdown-item" role="button"><i class="icon fa fa-pencil fa-fw "></i>'
                 .$str->editsettings.'</a></li>';
@@ -1877,7 +1878,7 @@ class course_renderer extends \core_course_renderer {
                 $editconditionsalt = get_string('editconditions', 'completion');
                 $actionsadvanced[] = '<li><a href="' . new moodle_url(
                     '/course/modedit.php',
-                    ['update' => $mod->id, 'showonly' => 'activitycompletionheader']
+                    ['update' => $mod->id, 'showonly' => 'activitycompletionheader', 'sr' => $mod->sectionnum]
                 ) . '" aria-label="'
                 . $editconditionsalt . ' ' . $mod->get_formatted_name() . '" data-action="update" role="button" ' .
                 'class="snap-edit-conditions-asset dropdown-item" role="button"><i class="icon fa fa-pencil fa-fw "></i>'
