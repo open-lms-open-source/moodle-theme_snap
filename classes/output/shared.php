@@ -242,7 +242,8 @@ EOF;
             'totopofsection',
             'unknownerror',
             'ok',
-            'cancel'
+            'cancel',
+            'highlight'
         ], 'moodle');
 
         $PAGE->requires->strings_for_js([

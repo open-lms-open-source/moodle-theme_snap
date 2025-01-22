@@ -1449,19 +1449,27 @@ define(
                     .not('#section-0').removeClass("current");
 
                     $notCurrent.each(function() {
-                        var highlighter = $(this).find('.snap-highlight');
+                        var highlighter = this.querySelector('.snap-highlight');
                         var sectionNumber = parentSectionNumber(highlighter);
                         let highlighterref = '';
-                        if ($(highlighter).parents('.dropdown-item').length > 0) {
-                            highlighterref = $(highlighter).parent()
-                                .attr('href')
+                        var highlightString = M.util.get_string('highlight', 'moodle');
+                        if (highlighter.closest('.dropdown-item') !== null) {
+                            highlighterref = highlighter.parentElement
+                                .getAttribute('href')
                                 .replace(/(marker=)[0-9]+/ig, '$1' + sectionNumber);
-                            $(highlighter).parent().attr('href', highlighterref).attr('aria-pressed', 'false');
+                            highlighter.innerHTML = highlightString;
+                            highlighter.setAttribute('href', highlighterref);
+                            highlighter.setAttribute('aria-pressed', 'false');
+                            highlighter.parentElement.setAttribute('href', highlighterref);
+                            highlighter.parentElement.setAttribute('aria-pressed', 'false');
+                            highlighter.parentElement.setAttribute('aria-label', highlightString);
                         } else {
-                            highlighterref = $(highlighter)
-                                .attr('href')
+                            highlighterref = highlighter.parentElement
+                                .getAttribute('href')
                                 .replace(/(marker=)[0-9]+/ig, '$1' + sectionNumber);
-                            $(highlighter).attr('href', highlighterref).attr('aria-pressed', 'false');
+                            highlighter.innerHTML = highlightString;
+                            highlighter.setAttribute('href', highlighterref);
+                            highlighter.setAttribute('aria-pressed', 'false');
                         }
                     });
                 });

@@ -44,6 +44,14 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
+    And I click on "#course-toc .chapters h3:nth-of-type(2)" "css_element"
+    Then "#section-1" "css_element" should exist
+    And "#chapters h3:nth-of-type(2) li.snap-visible-section" "css_element" should exist
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    And I click on "#section-1 .snap-highlight" "css_element"
+    And I wait until "#section-1 .snap-highlight" "css_element" exists
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    And I should see "Unhighlight"
     And I click on "#course-toc .chapters h3:nth-of-type(3)" "css_element"
     Then "#section-2" "css_element" should exist
     And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
@@ -53,6 +61,9 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     # Note: nth-of-type(3) corresponds to the second section in the TOC.
     And I should see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
     And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
+    And I click on "#course-toc .chapters h3:nth-of-type(2)" "css_element"
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    And I should see "Highlight"
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
