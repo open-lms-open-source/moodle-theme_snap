@@ -309,9 +309,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         // Imitate btn.btn-secondary CSS for buttons without proper
         // Bootstrap classes applied to them, and override colors for
         // btn-secondary, btn-default.
-        color: $brand-primary !important;
-        border-color: $brand-primary !important;
-        background: transparent !important;
+        color: $brand-primary;
+        border-color: $brand-primary;
+        background: transparent;
 
         &:hover:not(:disabled),
         &:focus:not(:disabled),
@@ -326,7 +326,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
     .btn.btn-secondary {
         .icon {
-            color: $brand-primary !important;
+            color: $brand-primary;
         }
 
         &:hover:not(:disabled),
@@ -1104,6 +1104,11 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
     }
+    .btn.btn-secondary.dropdown-toggle.dropdown-toggle-split {
+        background-color: $brand-primary;
+        border-color: $brand-primary;
+        color: white;
+    }
 
     .openlms-custom-elements {
         ul#pld_tab {
@@ -1171,7 +1176,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: white;
         }
 
-        .btn.btn-secondary:hover, .btn.btn-secondary.dropdown-toggle.dropdown-toggle-split{
+        .btn.btn-secondary:hover, .btn.btn-secondary:focus, .btn.btn-secondary.dropdown-toggle.dropdown-toggle-split {
             background-color: $brand-primary;
             border-color: $brand-primary;
             color: white;
@@ -1179,7 +1184,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         .btn.btn-secondary.dropdown-toggle.dropdown-toggle-split {
             min-width: 0;
         }
-        .btn.btn-secondary, .btn.btn-secondary:focus, .btn.btn-secondary:focus:not(:disabled) {
+        .btn.btn-secondary {
             color: $brand-primary;
             background: white;
             font-size: medium;
@@ -1198,10 +1203,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         select.custom-select:focus, select.custom-select, .nav-link:focus,
         .btn.btn-secondary.dropdown-toggle.dropdown-toggle-split {
             box-shadow: none;
-        }
-
-        button.btn.btn-secondary#apply-filter, button.btn.btn-secondary#show-all  {
-            background-color: white !important;
         }
 
         ol.pld-edit-panels {
@@ -1237,7 +1238,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .modal.show {
         .btn.btn-secondary.btn-left.text-filter {
             color: $brand-primary;
-            background: white;
+            background: transparent;
             &:hover,
             &:focus,
             &:active {
@@ -1386,6 +1387,17 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
     }    
+}
+
+/*
+    Defining brand category color for mod_data
+*/
+#page-mod-data-view.theme-snap {
+    &.path-mod .whitebutton .btn.btn-secondary {
+        color: $brand-primary;
+        border-color: $brand-primary;
+        background: transparent;
+    }
 }
 
 /*
