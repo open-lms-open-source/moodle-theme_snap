@@ -1470,6 +1470,16 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                             }
                         );
                     }
+                    // Modify the edit mod link in settings block to add section return parameter.
+                    const linkWithSection = document.querySelector('.breadcrumb-nav .breadcrumb-item [href*="#section-"]');
+                    const blockSettingsLink = document.querySelector('.block_settings [href*="course/modedit.php?update"]');
+                    if (linkWithSection && blockSettingsLink) {
+                        const sectionMatch = linkWithSection.href.match(/section-(\d+)/);
+                        if (sectionMatch) {
+                            const sectionNumber = sectionMatch[1];
+                            blockSettingsLink.href += `&sr=${sectionNumber}`;
+                        }
+                    }
 
                     // Add the correct section return to the modchooser.
                     util.modchooserSectionReturn();

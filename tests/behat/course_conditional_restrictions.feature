@@ -58,6 +58,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I am on the course main page for "C1"
     And I go to course section 1
     And I restrict course asset "S1 Restricted" by completion of "S2 Restricted"
+    And I am on the course main page for "C1"
     And I go to course section 1
     And I click on "li.modtype_assign a.snap-conditional-tag" "css_element"
     And I should see "Not available unless: The activity S2 Restricted is marked complete"
@@ -122,6 +123,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I am on the course main page for "C1"
     And I go to course section 1
     And I restrict course asset "S1 Restricted" by belong to the group "Grou'p1"
+    And I am on the course main page for "C1"
     And I go to course section 1
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     And I should see "Not available unless: You belong to Grou'p1"
@@ -131,6 +133,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I am on the course main page for "C1"
     And I go to course section 2
     And I restrict course asset "S3 Restricted" by completion of "S6 Activ'ity"
+    And I am on the course main page for "C1"
     And I go to course section 2
     And I click on "//li[@id='section-2']//a[@class='snap-conditional-tag']" "xpath_element"
     And I should see "Not available unless: The activity S6 Activ'ity is marked complete"
