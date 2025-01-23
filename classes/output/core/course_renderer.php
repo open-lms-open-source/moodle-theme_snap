@@ -1966,7 +1966,7 @@ class course_renderer extends \core_course_renderer {
                 'toggleclass' => 'groups-dropdown',
                 'toggleariacontrols' => 'groups-menu',
                 'spancontent' => get_string('groups'),
-                'spanicon' => 'fa-user-circle',
+                'spanicon' => 'fa-user-group',
                 'dropdownmenuid' => 'groups-menu',
                 'dropdownmenuclasses' => 'groups-dropdown-menu',
                 'dropdownoptions' => $grouprender,
