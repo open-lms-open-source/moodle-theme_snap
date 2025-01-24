@@ -35,6 +35,8 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards', 'theme_snap/util', '
 
             var redirectToSitePolicy = false;
 
+            var snapFeedsEnabled = false;
+
             /**
              * Add deadlines, messages, grades & grading,  async'ly to the personal menu
              *
@@ -100,27 +102,27 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards', 'theme_snap/util', '
                         }
                     }
                 };
+                if (!snapFeedsEnabled) {
+                    loadAjaxInfo('deadlines');
+                    loadAjaxInfo('graded');
+                    loadAjaxInfo('grading');
+                    loadAjaxInfo('messages');
+                    loadAjaxInfo('forumposts');
+                    $(document).trigger('snapUpdatePersonalMenu');
 
-                loadAjaxInfo('deadlines');
-                loadAjaxInfo('graded');
-                loadAjaxInfo('grading');
-                loadAjaxInfo('messages');
-                loadAjaxInfo('forumposts');
-
-                $(document).trigger('snapUpdatePersonalMenu');
-
-                // Triggering event for external PM open listeners.
-                // Try/catch added to ensure browser compatibility for webcomponents.
-                try {
-                    document.dispatchEvent(new Event('snapPersonalMenuOpen'));
-                } catch(error) {
-                    log.error(error.message);
+                    // Triggering event for external PM open listeners.
+                    // Try/catch added to ensure browser compatibility for webcomponents.
                     try {
-                        var evt = document.createEvent("Event");
-                        evt.initEvent('snapPersonalMenuOpen', true, true);
-                        document.dispatchEvent(evt);
-                    } catch(err) {
-                        log.error(err.message);
+                        document.dispatchEvent(new Event('snapPersonalMenuOpen'));
+                    } catch (error) {
+                        log.error(error.message);
+                        try {
+                            var evt = document.createEvent("Event");
+                            evt.initEvent('snapPersonalMenuOpen', true, true);
+                            document.dispatchEvent(evt);
+                        } catch (err) {
+                            log.error(err.message);
+                        }
                     }
                 }
             };
@@ -247,9 +249,11 @@ define(['jquery', 'core/log', 'theme_snap/pm_course_cards', 'theme_snap/util', '
             /**
              * Initialising function.
              * @param {boolean} sitePolicyAcceptReqd
+             * @param {boolean} snapFeedsFlag
              */
-            this.init = function(sitePolicyAcceptReqd) {
+            this.init = function(sitePolicyAcceptReqd, snapFeedsFlag) {
                 redirectToSitePolicy = sitePolicyAcceptReqd;
+                snapFeedsEnabled = snapFeedsFlag;
                 applyListeners();
                 if (!redirectToSitePolicy) {
                     courseCards.init();
