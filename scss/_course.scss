@@ -1439,10 +1439,13 @@ body.snap-resource-card {
             }
             #snap-asset-menu {
                 i.icon,
-                img.icon, {
+                img.icon {
                     width: 16px;
                     height: 16px;
                     margin-right: 6px;
+                }
+                i.icon.fa-user-group {
+                    margin-right: 2px;
                 }
                 #groups-menu img.icon {
                     opacity: (0.5);
