@@ -357,6 +357,14 @@ div.editor_atto_toolbar div.atto_group {
     @extend h6;
 }
 
+// Make Navigation Header visible over items.
+#page-course-edit,
+#page-admin-user {
+    #mr-nav {
+        z-index: 1051;
+    }
+}
+
 // Help for mods displayed in the edit form.
 #snap-collapse-help {
     padding: 1em 0;
