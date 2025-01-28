@@ -480,7 +480,7 @@ EOF;
 
         $initvars = [$coursevars, $pagehascoursecontent, get_max_upload_file_size($CFG->maxbytes), $forcepwdchange,
                      $conversationbadgecountenabled, $userid, $sitepolicyacceptreqd, $inalternativerole, $brandcolors,
-                     $gradingconstants];
+                     $gradingconstants, (bool) get_config('theme_snap', 'personalmenuadvancedfeedsenable')];
         $initaxvars = [$localjoulegrader, $allyreport, $blockreports, $localcatalogue];
         $alternativelogins = new login_alternative_methods();
         if ($alternativelogins->potentialidps) {

@@ -5,7 +5,7 @@
   "packages": {
     "": {
       "devDependencies": {
-        "grunt": "~0.4.1",
+        "grunt": "^0.4.5",
         "grunt-contrib-watch": "^0.6.1",
         "grunt-exec": "^0.4.7",
         "grunt-http": "^2.3.3",
@@ -248,6 +248,12 @@
         "node": ">=0.4.0"
       }
     },
+    "node_modules/eventemitter2": {
+      "version": "0.4.14",
+      "resolved": "https://registry.npmjs.org/eventemitter2/-/eventemitter2-0.4.14.tgz",
+      "integrity": "sha512-K7J4xq5xAD5jHsGM5ReWXRTFa3JRGofHiMcVgQ8PRwgWxzjHpMWCIzsmyf60+mh8KLsqYPcjUMa0AC4hd6lPyQ==",
+      "dev": true
+    },
     "node_modules/exit": {
       "version": "0.1.2",
       "resolved": "https://registry.npmjs.org/exit/-/exit-0.1.2.tgz",
@@ -301,6 +307,7 @@
       "version": "3.2.11",
       "resolved": "https://registry.npmjs.org/glob/-/glob-3.2.11.tgz",
       "integrity": "sha512-hVb0zwEZwC1FXSKRPFTeOtN7AArJcJlI6ULGLtrstaswKNlrTJqAA+1lYlSUop4vjA423xlBzqfVS3iWGlqJ+g==",
+      "deprecated": "Glob versions prior to v9 are no longer supported",
       "dev": true,
       "dependencies": {
         "inherits": "2",
@@ -386,6 +393,7 @@
       "version": "3.1.21",
       "resolved": "https://registry.npmjs.org/glob/-/glob-3.1.21.tgz",
       "integrity": "sha512-ANhy2V2+tFpRajE3wN4DhkNQ08KDr0Ir1qL12/cUe5+a7STEK8jkW4onUYuY8/06qAFuT5je7mjAqzx0eKI2tQ==",
+      "deprecated": "Glob versions prior to v9 are no longer supported",
       "dev": true,
       "dependencies": {
         "graceful-fs": "~1.2.0",
@@ -716,12 +724,6 @@
       "engines": {
         "node": "*"
       }
-    },
-    "node_modules/grunt/node_modules/eventemitter2": {
-      "version": "0.4.14",
-      "resolved": "https://registry.npmjs.org/eventemitter2/-/eventemitter2-0.4.14.tgz",
-      "integrity": "sha1-j2G3XN4BKy6esoTUVFWDtWQ7Yas=",
-      "dev": true
     },
     "node_modules/har-schema": {
       "version": "2.0.0",
@@ -1068,6 +1070,7 @@
       "version": "2.2.8",
       "resolved": "https://registry.npmjs.org/rimraf/-/rimraf-2.2.8.tgz",
       "integrity": "sha512-R5KMKHnPAQaZMqLOsyuyUmcIjSeDm+73eoqQpaXA7AZ22BL+6C+1mcUscgOsNd8WVlJuvlgAPsegcx7pjlV0Dg==",
+      "deprecated": "Rimraf versions prior to v4 are no longer supported",
       "dev": true,
       "bin": {
         "rimraf": "bin.js"
@@ -1439,6 +1442,12 @@
       "integrity": "sha512-rp5dMKN8zEs9dfi9g0X1ClLmV//WRyk/R15mppFNICIFRG5P92VP7Z04p8pk++gABo9W2tY+kHyu6P1mEHgmTA==",
       "dev": true
     },
+    "eventemitter2": {
+      "version": "0.4.14",
+      "resolved": "https://registry.npmjs.org/eventemitter2/-/eventemitter2-0.4.14.tgz",
+      "integrity": "sha512-K7J4xq5xAD5jHsGM5ReWXRTFa3JRGofHiMcVgQ8PRwgWxzjHpMWCIzsmyf60+mh8KLsqYPcjUMa0AC4hd6lPyQ==",
+      "dev": true
+    },
     "exit": {
       "version": "0.1.2",
       "resolved": "https://registry.npmjs.org/exit/-/exit-0.1.2.tgz",
@@ -1595,12 +1604,6 @@
           "version": "0.1.22",
           "resolved": "https://registry.npmjs.org/async/-/async-0.1.22.tgz",
           "integrity": "sha512-2tEzliJmf5fHNafNwQLJXUasGzQCVctvsNkXmnlELHwypU0p08/rHohYvkqKIjyXpx+0rkrYv6QbhJ+UF4QkBg==",
-          "dev": true
-        },
-        "eventemitter2": {
-          "version": "0.4.14",
-          "resolved": "https://registry.npmjs.org/eventemitter2/-/eventemitter2-0.4.14.tgz",
-          "integrity": "sha1-j2G3XN4BKy6esoTUVFWDtWQ7Yas=",
           "dev": true
         }
       }
