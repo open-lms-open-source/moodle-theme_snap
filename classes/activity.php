@@ -345,6 +345,7 @@ class activity {
         return $meta;
     }
 
+
     /**
      * Get all assignments (for all courses) waiting to be graded.
      *
@@ -353,21 +354,42 @@ class activity {
      * @return array $ungraded
      */
     public static function assign_ungraded($courseids, $since = null) {
-        global $DB;
+        global $DB, $CFG;
 
         $ungraded = array();
 
         if ($since === null) {
             $since = time() - (12 * WEEKSECS);
         }
-
+        if (!empty($CFG->theme_snap_grading_cache)) {
+            $cache = \cache::make('theme_snap', 'course_users_assign_ungraded');
+        }
         // Limit to assignments with grades.
         $gradetypelimit = 'AND gi.gradetype NOT IN (' . GRADE_TYPE_NONE . ',' . GRADE_TYPE_TEXT . ')';
-
         foreach ($courseids as $courseid) {
 
-            // Get the assignments that need grading.
-            [$esql, $params] = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
+            if (!empty($CFG->theme_snap_grading_cache)) {
+                $users = $cache->get($courseid);
+                if (empty($users)) {
+                    // Get the assignments that need grading.
+                    [$esql, $params] = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
+                    $users = array_keys($DB->get_records_sql_menu($esql, $params));
+                    $cache->set($courseid, !empty($users) ? $users : []);
+                }
+
+                if (empty($users)) {
+                    continue;
+                }
+                $esql = '';
+                list($usersql, $userparams) = $DB->get_in_or_equal($users, SQL_PARAMS_NAMED);
+                $usersql = " AND sb.userid $usersql ";
+            } else {
+                [$esql, $params] = get_enrolled_sql(\context_course::instance($courseid), 'mod/assign:submit', 0, true);
+                $esql = " JOIN ($esql) e ON e.id = sb.userid ";
+                $usersql = '';
+                $userparams = [];
+            }
+
             $params['courseid'] = $courseid;
 
             [$sqlgroupsjoin, $sqlgroupswhere, $groupparams] = self::get_groups_sql($courseid);
@@ -387,10 +409,7 @@ class activity {
                       JOIN {assign_submission} sb
                         ON sb.assignment = a.id
                        AND sb.latest = 1
-
-                      JOIN ($esql) e
-                        ON e.id = sb.userid
-
+                      $esql  
  -- Start of join required to make assignments marked via gradebook not show as requiring grading
  -- Note: This will lead to disparity between the assignment page (mod/assign/view.php[questionmark]id=[id])
  -- and the module page will still say that 1 item requires grading.
@@ -416,7 +435,7 @@ class activity {
 
                      WHERE sb.status = 'submitted'
                        AND a.course = :courseid
-
+                       $usersql
                        AND (
                            sb.timemodified > gg.timemodified
                            OR gg.finalgrade IS NULL
@@ -426,7 +445,7 @@ class activity {
                        $sqlgroupswhere
                  $gradetypelimit
                  GROUP BY instanceid, a.course, opentime, closetime, coursemoduleid ORDER BY a.duedate ASC";
-            $rs = $DB->get_records_sql($sql, array_merge($params, $groupparams));
+            $rs = $DB->get_records_sql($sql, array_merge($params, $groupparams, $userparams));
             $ungraded = array_merge($ungraded, $rs);
         }
 
@@ -441,18 +460,36 @@ class activity {
      * @return array $ungraded
      */
     public static function quiz_ungraded($courseids, $since = null) {
-        global $DB;
+        global $DB, $CFG;
 
         if ($since === null) {
             $since = time() - (12 * WEEKSECS);
         }
 
         $ungraded = array();
+        if (!empty($CFG->theme_snap_grading_cache)) {
+            $cache = \cache::make('theme_snap', 'course_users_quiz_ungraded');
+        }
 
         foreach ($courseids as $courseid) {
+            if (!empty($CFG->theme_snap_grading_cache)) {
+                $users = $cache->get($courseid);
+                if (empty($users)) {
+                    // Get the assignments that need grading.
+                    [$esql, $params] = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
+                    $users = array_keys($DB->get_records_sql_menu($esql, $params));
+                    $cache->set($courseid, !empty($users) ? $users : []);
+                }
 
-            // Get people who are typically not students (people who can view grader report) so that we can exclude them!
-            [$graderids, $params] = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
+                if (empty($users)) {
+                    continue;
+                }
+                list($gradersql, $params) = $DB->get_in_or_equal($users, SQL_PARAMS_NAMED, 'param', false);
+            } else {
+                // Get people who are typically not students (people who can view grader report) so that we can exclude them!
+                [$gradersql, $params] = get_enrolled_sql(\context_course::instance($courseid), 'moodle/grade:viewall');
+                $gradersql = "NOT IN ($gradersql)";
+            }
             $params['courseid'] = $courseid;
 
             $sql = "-- Snap SQL
@@ -476,7 +513,7 @@ class activity {
                       JOIN {user_enrolments} ue ON en.id = ue.enrolid
                        AND qa.userid = ue.userid
                      WHERE ue.status = 0
-                       AND qa.userid NOT IN ($graderids)
+                       AND qa.userid $gradersql
                        AND qa.state = 'finished'
                        AND (q.timeclose = 0 OR q.timeclose > $since)
                   GROUP BY instanceid, q.course, opentime, closetime, coursemoduleid

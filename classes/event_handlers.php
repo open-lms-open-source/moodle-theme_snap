@@ -57,6 +57,10 @@ class event_handlers {
 
         local::process_coverimage($context);
         local::clean_course_card_bg_image_cache($event->contextid);
+        $cache = \cache::make('theme_snap', 'course_users_assign_ungraded');
+        $cache->delete($context->instanceid);
+        $cache = \cache::make('theme_snap', 'course_users_quiz_ungraded');
+        $cache->delete($context->instanceid);
     }
 
     /**
@@ -74,6 +78,10 @@ class event_handlers {
 
         local::clean_course_card_bg_image_cache($event->contextid);
         local::clean_course_card_teacher_avatar_cache($event->contextid);
+        $cache = \cache::make('theme_snap', 'course_users_assign_ungraded');
+        $cache->delete($event->objectid);
+        $cache = \cache::make('theme_snap', 'course_users_quiz_ungraded');
+        $cache->delete($event->objectid);
     }
 
     /**
@@ -172,6 +180,10 @@ class event_handlers {
         // Too many checks need to be done for determining if the new user is a
         // course contact. Purging all avatars just in case.
         local::clean_course_card_teacher_avatar_cache($context->id);
+        $cache = \cache::make('theme_snap', 'course_users_assign_ungraded');
+        $cache->delete($context->instanceid);
+        $cache = \cache::make('theme_snap', 'course_users_quiz_ungraded');
+        $cache->delete($context->instanceid);
     }
 
     /**
@@ -190,6 +202,10 @@ class event_handlers {
             $context->id,
             $event->relateduserid
         );
+        $cache = \cache::make('theme_snap', 'course_users_assign_ungraded');
+        $cache->delete($context->instanceid);
+        $cache = \cache::make('theme_snap', 'course_users_quiz_ungraded');
+        $cache->delete($context->instanceid);
     }
 
     /**
@@ -209,6 +225,10 @@ class event_handlers {
             $context->id,
             $event->relateduserid
         );
+        $cache = \cache::make('theme_snap', 'course_users_assign_ungraded');
+        $cache->delete($context->instanceid);
+        $cache = \cache::make('theme_snap', 'course_users_quiz_ungraded');
+        $cache->delete($context->instanceid);
     }
 
     /**

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import {Observable, of} from 'rxjs';
+import {finalize, Observable, of, shareReplay} from 'rxjs';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
@@ -20,6 +20,8 @@ export class FeedService {
   private maxLifeTime = 1800; // Default of 30 mins (1800 secs).
 
   private static readonly FEED_CACHE_KEY = 'themeSnapCachedPMFeedResults';
+
+  private feedRequestMap = new Map<string, Observable<MoodleRes[]>>();
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -45,7 +47,9 @@ export class FeedService {
     if (!sessKey) {
       return of(errorRes);
     }
-
+    if (this.feedRequestMap.has(feedId)) {
+      return this.feedRequestMap.get(feedId);
+    }
     const moodleResKey: MoodleResKey = new MoodleResKey();
     moodleResKey.sessKey = sessKey;
 
@@ -72,19 +76,25 @@ export class FeedService {
         courseid: courseId ?? undefined
       }
     }];
-    return this.http.post<MoodleRes[]>(`${wwwRoot}${this.moodleAjaxUrl}?sesskey=${sessKey}`, body, this.httpOptions)
+    const request = this.http.post<MoodleRes[]>(`${wwwRoot}${this.moodleAjaxUrl}?sesskey=${sessKey}`, body, this.httpOptions)
       .pipe(
+        shareReplay(1),
         map(res => this.extractData(res)),
         map(res => this.storeDataInLocalCache(moodleResKey, res)),
-        catchError(this.handleError<MoodleRes[]>('getFeed', errorRes))
+        catchError(this.handleError<MoodleRes[]>('getFeed', errorRes)),
+        finalize(() => {
+          this.feedRequestMap.delete(feedId);
+        })
       );
+    this.feedRequestMap.set(feedId, request);
+    return request;
   }
 
   public extractData(response: any) : MoodleRes[] {
     if (!response.length) {
       // Single response with error arrived.
       let singleMoodleRes: MoodleRes = response;
-      return [singleMoodleRes]
+      return [singleMoodleRes];
     }
 
     let multiMoodleRes: MoodleRes[] = response;

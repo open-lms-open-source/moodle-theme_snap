@@ -870,10 +870,11 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
              * @param {bool} inAlternativeRole
              * @param {string} brandColors
              * @param {int} gradingConstants
+             * @param {boolean} snapFeedsEnabled
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
                                messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole,
-                               brandColors, gradingConstants) {
+                               brandColors, gradingConstants, snapFeedsEnabled) {
 
                 // Set up.
 
@@ -892,7 +893,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 M.snapTheme = {forcePassChange: forcePassChange};
 
                 // General AMD modules.
-                personalMenu.init(sitePolicyAcceptReqd);
+                personalMenu.init(sitePolicyAcceptReqd, snapFeedsEnabled);
 
                 // Course related AMD modules (note, site page can technically have course content too).
                 if (pageHasCourseContent) {

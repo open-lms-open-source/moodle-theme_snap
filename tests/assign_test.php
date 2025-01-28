@@ -189,6 +189,9 @@ class assign_test extends \mod_assign\base_test {
     }
 
     public function test_assign_ungraded() {
+        global $CFG, $DB;
+        $this->resetAfterTest();
+
         $sixmonthsago = time() - YEARSECS / 2;
 
         $actual = activity::assign_ungraded([], $sixmonthsago);
@@ -201,6 +204,29 @@ class assign_test extends \mod_assign\base_test {
 
         $actual = activity::assign_ungraded([$this->course->id], $sixmonthsago);
         $this->assertCount(1, $actual);
+
+        // Enable cache.
+        $CFG->theme_snap_grading_cache = true;
+
+        $actual = activity::assign_ungraded([], $sixmonthsago);
+        // Function should work the same way.
+        $this->assertCount(0, $actual);
+
+        $actual = activity::assign_ungraded([$this->course->id], $sixmonthsago);
+        $this->assertCount(1, $actual);
+        // Now lets check the cache content.
+        $cache = \cache::make('theme_snap', 'course_users_assign_ungraded');
+        $this->assertNotEmpty($cache->get($this->course->id));
+        $users = $cache->get($this->course->id);
+        $this->assertTrue(in_array($this->students[0]->id, $users));
+
+        $manualplugin = enrol_get_plugin('manual');
+
+        $enrol = $DB->get_record('enrol', array('courseid' => $this->course->id, 'enrol' => 'manual'), '*', MUST_EXIST);
+        // Unenrol user and capture event.
+        $manualplugin->unenrol_user($enrol, $this->students[0]->id);
+        $cache = \cache::make('theme_snap', 'course_users_assign_ungraded');
+        $this->assertEmpty($cache->get($this->course->id));
     }
 
     public function test_events_graded() {
