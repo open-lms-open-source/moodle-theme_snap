@@ -46,6 +46,11 @@ class course_toc_chapter implements \renderable {
     public $iscurrent;
 
     /**
+     * @var bool
+     */
+    public $isweeksformat;
+
+    /**
      * @var string
      */
     public $availabilityclass;

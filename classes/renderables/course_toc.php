@@ -236,6 +236,11 @@ class course_toc implements \renderable, \templatable {
                 $chapter->classes .= 'snap-visible-section current ';
             }
 
+            $chapter->isweeksformat = false;
+            if ($this->format->get_format() == "weeks") {
+                $chapter->isweeksformat = true;
+            }
+
             if ($chapter->outputlink) {
                 $chapter->url = '#section-'.$section;
             }
