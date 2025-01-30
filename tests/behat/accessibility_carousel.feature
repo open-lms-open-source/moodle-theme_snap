@@ -33,7 +33,10 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And the following "blocks" exist:
       | blockname     | contextlevel | reference |
       | private_files | System       |   1       |
+    And I change window size to "large"
     And I log in as "admin"
+    And I click on "button[data-original-title='Open block drawer']" "css_element"
+    And I scroll to the bottom
     And I follow "Manage private files..."
     And I upload "lib/tests/fixtures/gd-logo.png" file to "Files" filemanager
     And I click on "Save changes" "button"

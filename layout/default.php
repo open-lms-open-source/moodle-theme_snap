@@ -131,6 +131,7 @@ if ($hasadminbutton) {
         }
     }
 }
+
 echo "<div class='snap-page-heading-button' >";
 if ($PAGE->pagelayout !== 'admin') {
     echo $OUTPUT->page_heading_button();
@@ -173,7 +174,7 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 </div>
 
 <?php
-require(__DIR__.'/moodle-blocks.php');
+require __DIR__.'/blocks_drawer.php';
 echo $OUTPUT->snap_feeds_side_menu();
 ?>
 </div>

@@ -107,32 +107,6 @@
     }
 }
 
-// We need to modify the blocks styles to be modified where we need them.
-// These will be applied for the course and the front page only.
-body.pagelayout-course,
-#page-site-index {
-    .block,
-    .block-region .block {
-        margin: 0 auto 1em;
-        padding: 0;
-        border: 0;
-        box-shadow: none;
-        background-color: transparent;
-        max-width: 50.5em;
-    }
-}
-// These will be applied to the dashboard page.
-#page-my-index {
-    .block,
-    .block-region .block {
-        border-radius: 0.5rem;
-    }
-}
-
-body.path-site .block-region .block {
-    margin: 2em auto;
-}
-
 .block.block_settings,
 body.path-site .block.block_settings {
     margin-top: 0;
@@ -700,4 +674,61 @@ body.path-site .block.block_settings {
 
 body:not(#page-my-index) .block.block_calendar_month .maincalendar .calendartable.calendarmonth td.hasevent [data-region="day-content"] {
     display: none;
+}
+
+.drawer-toggler {
+    position: fixed;
+    top: 170px;
+    z-index: 23;
+    right: 0;
+       &.drawer-right-toggle .btn {
+        background-color: #dee2e6;
+        border-radius: 15px 0 0 15px;
+        width: 55px;
+        text-align: left;
+        margin-right: -20px;
+        transition: transform 200ms ease-in-out;
+        &:hover {
+            transform: translateX(-10px);
+        }
+        i.icon {
+            color: #1d2125;
+        }
+    }
+}
+
+.drawer.drawer-right {
+    background-color: #EEF0F6;
+    margin-top: 147px;
+    height: calc(100vh - 147px);
+    transition: margin-top 0.25s ease-in-out;
+    transition: right 0.2s ease, top 0.2s ease, bottom 0.2s ease, visibility 0.2s ease, transform 0.5s ease;
+    @media (max-width: 992px) {
+        margin-top: 97px;
+        height: calc(100vh - 97px);
+    }
+    @media (max-width: 991px) {
+        margin-top: 61px;
+        height: calc(100vh - 61px);
+    }
+
+    .card {
+        border-radius: 0.5rem;
+    }
+}
+
+body.notloggedin .drawer.drawer-right {
+    margin-top: 0;
+    height: 100vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .drawer.drawer-right {
+      transition: none;
+    }
+}
+
+body:has(#mr-nav.headroom--unpinned) .drawer.drawer-right {
+    margin-top: 0;
+    height: calc(100vh);
 }

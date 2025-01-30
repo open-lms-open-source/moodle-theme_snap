@@ -39,9 +39,11 @@ Feature: When a user clicks on next or previous month link in the calendar block
   @javascript
   Scenario: Ensure that on the redirection the calendar is being display on the page when a user clicks on the next month link
     or in the previous month link
+    And I change window size to "large"
     Given I log in as "teacher1"
     And I am on the course main page for "course_topics"
     Then I follow "Course Dashboard"
+    And I click on "button[data-original-title='Open block drawer']" "css_element"
     And I should see "Calendar"
     And I click on ".arrow_link.next" "css_element"
     Then I should see "Calendar"
@@ -49,9 +51,11 @@ Feature: When a user clicks on next or previous month link in the calendar block
   @javascript
   Scenario: Ensure that on the redirection the calendar is being display on the page when a user clicks on the previous month link
     or in the previous month link
+    And I change window size to "large"
     Given I log in as "teacher1"
     Then I am on the course main page for "course_topics"
     Then I follow "Course Dashboard"
+    And I click on "button[data-original-title='Open block drawer']" "css_element"
     And I should see "Calendar"
     And I follow "Previous month"
     Then I should see "Calendar"

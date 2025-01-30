@@ -109,7 +109,7 @@ echo $OUTPUT->course_content_footer();
 ?>
 </section>
 <?php
-require(__DIR__.'/moodle-blocks.php');
+require __DIR__.'/blocks_drawer.php';
 echo $OUTPUT->snap_feeds_side_menu();
 
 if ($tocformat && $leftnav) {
