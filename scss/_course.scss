@@ -1129,6 +1129,7 @@ body.format-singleactivity {
         }
 
         .activityinstance {
+            display: block;
             padding: 0;
             height: auto;
             background-color: rgba(255, 255, 255, 0.9);
@@ -1188,6 +1189,16 @@ body.format-singleactivity {
                 width: 100% !important; // !important to override boost style.
             }
         }
+    }
+}
+
+// Override Boost 4.5 editing styles.
+.editing.theme-snap .section.main .snap-asset.activity {
+    .activityinstance {
+        padding: 0;
+    }
+    &:hover, &:focus {
+        background-color: #fff;
     }
 }
 
@@ -1442,6 +1453,7 @@ body.snap-resource-card {
                 display: flex;
             }
             #snap-asset-menu {
+                list-style: none;
                 i.icon,
                 img.icon {
                     width: 16px;
@@ -2131,22 +2143,28 @@ body.snap-resource-card {
 // -------------------------
 // Tiles Course format.
 // -------------------------
+#page-course-view-tiles {
+    // Hide Boost actions dropdown icon.
+    .action-menu .dropdown-toggle:after {
+        display: none;
+        border: none;
+        content: none;
+    }
 
-// Hide Boost actions dropdown icon.
-#page-course-view-tiles .action-menu .dropdown-toggle:after {
-    display: none;
-    border: none;
-    content: none;
+    // Hide New add module button in Tiles.
+    &.editing .activitychooser-button {
+        display: none !important;
+    }
+    &.editing .activity .activity-item {
+        outline: none;
+        box-shadow: none;
+    }
+
+    #abovetiles {
+        width: 100%;
+    }
 }
 
-// Hide New add module button in Tiles.
-#page-course-view-tiles.editing .activitychooser-button {
-    display: none!important;
-}
-
-#page-course-view-tiles #abovetiles {
-    width: 100%;
-}
 
 // Tiles course format styles.
 .format-tiles {
