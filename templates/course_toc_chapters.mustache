@@ -30,9 +30,16 @@
             <span class="chapter-title" aria-current="false" section-id="{{sectionid}}" section-number="{{section}}" title="{{title}}>{{title}}</span>
         {{/outputlink}}
         {{#iscurrent}}
-            <span class="text text-success">
-                <small>{{#str}}current, theme_snap{{/str}}</small>
-            </span>
+            {{#isweeksformat}}
+                <span class="text text-success">
+                    <small>{{#str}}currentsection, format_weeks{{/str}}</small>
+                </span>
+            {{/isweeksformat}}
+            {{^isweeksformat}}
+                <span class="text text-success">
+                    <small>{{#str}}highlightedsection, theme_snap{{/str}}</small>
+                </span>
+            {{/isweeksformat}}
         {{/iscurrent}}
         {{#availabilitystatus}}
             <span class="text">
