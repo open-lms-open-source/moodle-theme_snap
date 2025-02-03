@@ -2416,7 +2416,7 @@ body.snap-resource-card {
         }
     }
 }
-.path-admin:not(#page-admin-blocks),
+.path-admin:not(#page-admin-blocks):not(#page-admin-roles-manage):not(#page-admin-setting-mediaplayers),
 .path-backup {
     tr img.icon {
         margin-right: 1rem;
