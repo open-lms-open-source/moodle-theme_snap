@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap @theme_snap_course
-Feature: When the moodle theme is set to Snap, teachers can toggle the currently higlighted course sections.
+Feature: When the moodle theme is set to Snap, teachers can toggle the currently highlighted course sections.
 
   Background:
     Given the following "courses" exist:
@@ -37,7 +37,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
       | student1 | C1 | student |
 
   @javascript
-  Scenario Outline: In read mode, teacher toggles section as current and student sees appropriate status.
+  Scenario Outline: In read mode, teacher toggles section as Highlighted and student sees appropriate status.
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -51,12 +51,12 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I click on "#section-2 .snap-highlight" "css_element"
     And I wait until "#section-2 .snap-highlight" "css_element" exists
     # Note: nth-of-type(3) corresponds to the second section in the TOC.
-    And I should see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
+    And I should see "Highlighted" in the "#chapters h3:nth-of-type(3)" "css_element"
     And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    Then I should see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
+    Then I should see "Highlighted" in the "#chapters h3:nth-of-type(3)" "css_element"
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
@@ -64,12 +64,12 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I click on "#extra-actions-dropdown-2" "css_element"
     Given I click on "#section-2 .snap-highlight" "css_element"
     And I wait until "#section-2 .snap-highlight" "css_element" exists
-    Then I should not see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
+    Then I should not see "Highlighted" in the "#chapters h3:nth-of-type(3)" "css_element"
     And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    Then I should not see "Current" in the "#chapters h3:nth-of-type(3)" "css_element"
+    Then I should not see "Highlighted" in the "#chapters h3:nth-of-type(3)" "css_element"
     Examples:
       | Option     |
       | 0          |
@@ -102,7 +102,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And "#section-1 .snap-highlight" "css_element" should not exist
 
   @javascript
-  Scenario Outline: Student cannot mark section current.
+  Scenario Outline: Student cannot mark section highlighted.
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -115,3 +115,13 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
       | Option     |
       | 0          |
       | 1          |
+
+  Scenario: For Weeks Format, the "current week" should be highlighted in the course.
+    Given the following "courses" exist:
+      | fullname | shortname | format | coursedisplay | numsections | startdate |
+      | Course 2 | C2        | weeks  | 0             | 5           | ##yesterday## |
+    Given I log in as "admin"
+    And I am on the course main page for "C2"
+    And I click on "#course-toc .chapters h3:nth-of-type(2) a" "css_element"
+    Then "#section-1" "css_element" should exist
+    Then I should see "Current week" in the "#section-1" "css_element"

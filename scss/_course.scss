@@ -159,6 +159,8 @@ body[class^="format-"].theme-snap {
         img.svg-icon {
             display: block !important;
             margin: 0.3em auto;
+            min-width: 36px;
+            min-height: 36px;
             @include clearfix;
         }
 

@@ -398,8 +398,13 @@ trait format_section_trait {
         $o .= '<div class="snap-draft-tag snap-draft-section">'.$drafticon.' '.get_string('draft', 'theme_snap').'</div>';
 
         // Current section message.
+        if ($course->format == "weeks") {
+            $currentstring = get_string('currentsection', 'format_weeks');
+        } else {
+            $currentstring = get_string('highlightedsection', 'theme_snap');
+        }
         $currenticon = '<img aria-hidden="true" role="presentation" class="svg-icon" src="'.$output->image_url('/i/marked').'" />';
-        $o .= '<span class="snap-current-tag">'.$currenticon.' '.get_string('current', 'theme_snap').'</span>';
+        $o .= '<span class="snap-current-tag">' . $currenticon . ' ' . $currentstring . '</span>';
 
         // Availabiliy message.
         // Note - $canviewhiddensection is required so that teachers can see the availability info message permanently,
