@@ -58,6 +58,7 @@ Feature: Setting for mod_book should not appear on Snap.
       | Content       | Dummy content       |
     And I press "Save changes"
     And I switch edit mode in Snap
+    And I click on "button[data-original-title='Open block drawer']" "css_element"
     And I follow "Add new chapter"
     Then ".checkbox #id_subchapter" "css_element" should exist
     And the "Subchapter" "checkbox" should be enabled
