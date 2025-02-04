@@ -1042,7 +1042,7 @@ class activity {
 
             if ($groups[0]) {
                 [$groupsql, $params] = $DB->get_in_or_equal($groups[0]);
-                $sortorder = count($groups[0]) > 1 ? 'AND maog.sortorder = 1' : "";
+                $sortorder = count($groups[0]) > 1 ? 'AND ma.id = ? ORDER BY maog.sortorder LIMIT 1' : "";
 
                 $sql = "-- Snap sql
                     SELECT ma.id,
@@ -1065,13 +1065,14 @@ class activity {
                     FROM {assign} ma
 
                 LEFT JOIN {assign_overrides} mao ON mao.assignid = ma.id AND mao.userid = ? AND mao.groupid IS NULL
-                LEFT JOIN {assign_overrides} maog ON maog.assignid = ma.id AND maog.groupid $groupsql
-                      $sortorder
-
-                    WHERE course = ?";
+                LEFT JOIN {assign_overrides} maog ON maog.assignid = ma.id AND maog.groupid $groupsql 
+                WHERE course = ? $sortorder";
 
                 array_unshift($params, $USER->id);
                 $params[] = $courseid;
+                if (count($groups[0]) > 1) {
+                    $params[] = $modinst;
+                }
 
             } else {
 
