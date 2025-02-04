@@ -2744,13 +2744,6 @@ ul.events-new + ul.events-underway {
     overflow: hidden;
 }
 
-.path-mod-quiz #mod_quiz_navblock .qnbutton:hover,
-.path-mod-quiz #mod_quiz_navblock .qnbutton:focus {
-    background-color: $brand-primary;
-    border: 1px solid $brand-primary;
-    color: #fff;
-}
-
 // Centers Quiz navigation buttons on the attempt and review page.
 #page-mod-quiz-attempt.theme-snap,
 #page-mod-quiz-review.theme-snap {
