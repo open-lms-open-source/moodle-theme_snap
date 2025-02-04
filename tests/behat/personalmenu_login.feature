@@ -101,6 +101,7 @@ Feature: When the moodle theme is set to Snap,
       | user      | course | role           |
       | teacher1  | C1     | editingteacher |
     And I am on homepage
+    And I click on "button[data-original-title='Open block drawer']" "css_element"
     When I follow "Courses"
     And I am on "Course 1" course homepage
     # The above will trigger a redirect to the login page.

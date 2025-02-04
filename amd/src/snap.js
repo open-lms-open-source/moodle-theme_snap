@@ -185,13 +185,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
          */
         /* eslint-disable no-invalid-this */
         var applyBlockHash = function() {
-            // Add block hash to add block form.
-            if (onCoursePage()) {
-                $('.block_adminblock form').each(function() {
-                    /* eslint-disable no-invalid-this */
-                    $(this).attr('action', $(this).attr('action') + '#coursetools');
-                });
-            }
 
             if (location.hash !== '') {
                 return;

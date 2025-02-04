@@ -36,6 +36,7 @@ Feature: Check that the correct attributes exists for URL field in a database ac
 
   @javascript
   Scenario: Url type and Url autocomplete should exists for input Url in the "Add entry" for Database activity.
+    And I change window size to "large"
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     # Create database activity and allow editing of
@@ -51,6 +52,7 @@ Feature: Check that the correct attributes exists for URL field in a database ac
     And I set the field "Field name" to "Data URL"
     And I click on "Save" "button"
     And I should see "Field added"
+    And I click on "button[data-original-title='Open block drawer']" "css_element"
     And I follow "Database"
     And I click on "Add entry" "button"
     And the "type" attribute of "input.mod-data-input.form-control.d-inline" "css_element" should contain "url"
