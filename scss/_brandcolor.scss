@@ -597,6 +597,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     // Quiz
     // -------------------------
 
+    #mod_quiz_navblock .qnbutton:hover,
+    #mod_quiz_navblock .qnbutton:focus {
+        background-color: $brand-primary;
+        border: 1px solid $brand-primary;
+        color: #fff;
+    }
+
     .que {
         border-bottom: 1px solid $brand-primary;
     }
