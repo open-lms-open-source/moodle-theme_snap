@@ -653,6 +653,10 @@ class activity_test extends snap_base_test {
         $group2 = $this->getDataGenerator()->create_group(array('courseid' => $course->id));
         $this->getDataGenerator()->create_group_member(array('userid' => $student, 'groupid' => $group2->id));
 
+        // Third group enrollment.
+        $group3 = $this->getDataGenerator()->create_group(array('courseid' => $course->id));
+        $this->getDataGenerator()->create_group_member(array('userid' => $student, 'groupid' => $group3->id));
+
         $ovdgroup2open = $timeclose1 + (2 * DAYSECS);
         $ovdgroup2due = $timeclose1 + (7 * DAYSECS);
         $this->override_quiz_group_opendate($quiz1->id, $group2->id, $ovdgroup2open);
@@ -712,19 +716,30 @@ class activity_test extends snap_base_test {
 
         // Change the sort order of the original group override so we can have a new one override it.
         $ovdrow = $DB->get_record('assign_overrides', ['assignid' => $assign1->id, 'groupid' => $group->id]);
-        $ovdrow->sortorder = 2;
+        $ovdrow->sortorder = 3;
         $DB->update_record('assign_overrides', $ovdrow);
 
         // Second group override.
         $ovdgroup2open = $timeclose1 + (2 * DAYSECS);
         $ovdgroup2due = $timeclose1 + (7 * DAYSECS);
-        $this->override_assign_group_opendate($assign1->id, $group2->id, $ovdgroup2open, 1);
-        $this->override_assign_group_duedate($assign1->id, $group2->id, $ovdgroup2due, 1);
+        $this->override_assign_group_opendate($assign1->id, $group2->id, $ovdgroup2open, 2);
+        $this->override_assign_group_duedate($assign1->id, $group2->id, $ovdgroup2due, 2);
 
         $dates1 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
 
         $this->assertEquals($ovdgroup2open, $dates1->timeopen);
         $this->assertEquals($ovdgroup2due, $dates1->timeclose);
+
+        // Third group override.
+        $ovdgroup3open = $timeclose1 + (4 * DAYSECS);
+        $ovdgroup3due = $timeclose1 + (14 * DAYSECS);
+        $this->override_assign_group_opendate($assign1->id, $group3->id, $ovdgroup3open, 1);
+        $this->override_assign_group_duedate($assign1->id, $group3->id, $ovdgroup3due, 1);
+
+        $dates3 = \theme_snap\activity::instance_activity_dates($course->id, $cm, '', '');
+
+        $this->assertEquals($ovdgroup3open, $dates3->timeopen);
+        $this->assertEquals($ovdgroup3due, $dates3->timeclose);
 
         // Override open time for user and make sure it trumps the group override.
         $ovduseropen = time() + (11 * DAYSECS);
