@@ -367,6 +367,9 @@ EOF;
                 $modinfo = get_fast_modinfo($COURSE);
                 $sections = $modinfo->get_section_info_all();
                 foreach ($sections as $number => $section) {
+                    if ($PAGE->url->get_path() === '/course/section.php' && optional_param('id', -1, PARAM_INT) == $section->id) {
+                        $sectionnum = $section->sectionnum;
+                    }
                     $ci = new \core_availability\info_section($section);
                     $information = '';
                     if (!$ci->is_available($information, true)) {
@@ -398,6 +401,10 @@ EOF;
             'partialrender' => !empty(get_config('theme_snap', 'coursepartialrender')),
             'toctype' => get_config('theme_snap', 'leftnav'),
         ];
+
+        if (!empty($sectionnum)) {
+            $coursevars->sectionnum = $sectionnum;
+        }
 
         $forcepwdchange = (bool) get_user_preferences('auth_forcepasswordchange', false);
         $conversationbadgecountenabled = isloggedin() && $PAGE->theme->settings->messagestoggle == 1;
