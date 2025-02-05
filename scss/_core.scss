@@ -3746,8 +3746,8 @@ body.hascontinuecancel.path-site #page {
 
 #page-admin-purgecaches #notice,
 #notice.snap-continue-cancel {
-    min-height: 800px;
-    position: absolute;
+    font-size: 1em;
+    border-radius: 0.5rem;
     padding: 10% 4%;
     top: 1.5em;
     left: 0;
