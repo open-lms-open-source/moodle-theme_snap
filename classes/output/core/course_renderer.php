@@ -599,7 +599,17 @@ class course_renderer extends \core_course_renderer {
         // Bail at this point if we aren't using a supported format. (Folder view is only partially supported).
         $supported = ['topics', 'weeks', 'site'];
         if (!in_array($COURSE->format, $supported)) {
-            return parent::course_section_cm($course, $completioninfo, $mod, $sectionreturn, $displayoptions).$assetmeta;
+            $format = course_get_format($course);
+            if ($sectionreturn) {
+                $format->set_sectionnum($sectionreturn);
+            }
+            $modinfo = $format->get_modinfo();
+            $section = $modinfo->get_section_info($format->get_sectionnum());
+            $cmclass = $format->get_output_classname('content\\cm');
+            $cm = new $cmclass($format, $section, $mod, $displayoptions);
+            $renderer = $format->get_renderer($this->page);
+            $data = $cm->export_for_template($renderer);
+            return $this->output->render_from_template('core_courseformat/local/content/cm', $data) .$assetmeta;
         }
 
         // Allow moving and rearranging multiple activities at once.
@@ -1765,8 +1775,6 @@ class course_renderer extends \core_course_renderer {
     /**
      * Checks if course module has any conditions that may make it unavailable for
      * all or some of the students
-     * Copied from course/rederer.php
-     * @deprecated since Moodle 4.0 MDL-72656 - please do not use this function any more.
      *
      * @param cm_info $mod
      * @return bool
