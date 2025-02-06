@@ -873,7 +873,7 @@ define(
 
                     var params = {
                         'action': action,
-                        'sectionreturn': 1,
+                        'sectionreturn': null,
                         'id': cmid
                     };
 
