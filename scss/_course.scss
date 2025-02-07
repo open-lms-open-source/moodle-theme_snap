@@ -3282,6 +3282,10 @@ span.editinstructions {
         animation-timing-function: linear;
         animation-duration: 0.68s;
     }
+    #page-header .page-header-headings h1 {
+        font-weight: 400;
+        font-size: 2.5rem;
+    }
 }
 
 @keyframes fadein {
