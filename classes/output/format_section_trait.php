@@ -280,15 +280,23 @@ trait format_section_trait {
         // ajax.
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
 
+        $pagepath = $PAGE->url->get_path();
+
         if ($section->section != 0) {
             // Only in the non-general sections.
             if (!$section->visible) {
                 $sectionstyle = ' hidden';
             } else if (course_get_format($course)->is_section_current($section)) {
-                $sectionstyle = ' current state-visible set-by-server';
+                $sectionstyle = ' current set-by-server';
+                if ($pagepath !== '/course/section.php') {
+                    $sectionstyle .= ' state-visible';
+                }
             }
         } else if ($course->format == "topics" && $course->marker == 0) {
-            $sectionstyle = ' state-visible set-by-server';
+            $sectionstyle = ' set-by-server';
+            if ($pagepath !== '/course/section.php') {
+                $sectionstyle .= ' state-visible';
+            }
         }
 
         if ($this->is_section_conditional($section)) {
@@ -300,7 +308,16 @@ trait format_section_trait {
                 $sectionstyle .= ' conditional';
             }
             if (course_get_format($course)->is_section_current($section)) {
-                $sectionstyle .= ' current state-visible set-by-server';
+                $sectionstyle .= ' current set-by-server';
+                if ($pagepath !== '/course/section.php') {
+                    $sectionstyle .= ' state-visible';
+                }
+            }
+        }
+
+        if ($pagepath === '/course/section.php' && ($sectionid = optional_param('id', -1, PARAM_INT)) !== -1) {
+            if ($sectionid == $section->id) {
+                $sectionstyle .= ' state-visible';
             }
         }
 
@@ -506,7 +523,7 @@ trait format_section_trait {
 
         if ($PAGE->url->get_path() === '/course/section.php' && ($sectionid = optional_param('id', -1, PARAM_INT)) !== -1) {
             $section = $DB->get_record('course_sections', ['id' => $sectionid], 'section', MUST_EXIST);
-            $course->marker = $section->section ?? 0;
+            $course->sectionreturn = $section->section ?? 0;
         }
 
         $context = context_course::instance($course->id);
@@ -531,6 +548,7 @@ trait format_section_trait {
                     }
                 }
             }
+            $startsectionid = !empty($course->sectionreturn) ? $course->sectionreturn : $startsectionid;
             $mainsection = $modinfo->get_section_info($startsectionid);
             // Marker can be set to a deleted section.
             if (!empty($mainsection) && (!empty($mainsection->visible) || $canviewhidden)) {
