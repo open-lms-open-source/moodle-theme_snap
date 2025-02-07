@@ -118,7 +118,7 @@ class mediaresource_controller extends controller_abstract {
         $completion = new \completion_info($COURSE);
         $completion->set_module_viewed($cm);
         $renderer = $PAGE->get_renderer('core', 'course');
-        $resource->completionhtml = $renderer->course_section_cm_completion($COURSE, $completion, $cm);
+        $resource->completionhtml = $renderer->snap_course_section_cm_completion($COURSE, $completion, $cm);
 
         return $resource;
     }

@@ -290,7 +290,7 @@ class course_renderer extends \core_course_renderer {
      * @return string
      * @throws \dml_exception
      */
-    public function course_section_cm_completion($course, &$completioninfo, cm_info $mod, $displayoptions = []) {
+    public function snap_course_section_cm_completion($course, &$completioninfo, cm_info $mod, $displayoptions = []) {
         global $CFG, $USER, $DB;
 
         $output = '';
@@ -510,14 +510,14 @@ class course_renderer extends \core_course_renderer {
 
         // Completion tracking.
         $completiontracking = '<div class="snap-asset-completion-tracking">';
-        $completiontracking .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
+        $completiontracking .= $this->snap_course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
         $completiontracking .= '</div>';
 
         // Add specific class if the completion tracking is disabled for an activity.
         $completion = $completioninfo->is_enabled($mod);
         if ($completion == COMPLETION_TRACKING_NONE) {
             $completiontracking = '<div class="disabled-snap-asset-completion-tracking">';
-            $completiontracking .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
+            $completiontracking .= $this->snap_course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
             $completiontracking .= '</div>';
         }
 
