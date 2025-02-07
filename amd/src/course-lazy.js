@@ -112,6 +112,11 @@ define(
                 section = urlParams[0],
                 mod = urlParams[1] || null;
 
+            // Redirect to the correct section when doing /course/section.php.
+            if (section === '' && location.pathname === '/course/section.php' && self.courseConfig.sectionnum) {
+                section = '#section-' + self.courseConfig.sectionnum;
+            }
+
             var sectionId = false;
             if (section.indexOf('#sectionid') != -1) {
                 sectionId = section.match(/#sectionid-(\d+)-title/)[1];
