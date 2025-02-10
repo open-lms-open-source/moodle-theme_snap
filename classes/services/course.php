@@ -630,6 +630,6 @@ class course {
 
         $completion->update_state($cminfo, $completionstate);
 
-        return $renderer->course_section_cm_completion($course, $completion, $cminfo);
+        return $renderer->snap_course_section_cm_completion($course, $completion, $cminfo);
     }
 }
