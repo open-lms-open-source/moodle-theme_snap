@@ -24,7 +24,6 @@
 namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
-require_once(__DIR__ . '/../../../lib/badgeslib.php');
 /**
  * Testing for Render Edit Mode in theme Snap.
  *
@@ -33,6 +32,11 @@ require_once(__DIR__ . '/../../../lib/badgeslib.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class render_edit_mode_test extends \advanced_testcase {
+
+    public function setUp() : void {
+        global $CFG;
+        require_once(__DIR__ . '/../../../lib/badgeslib.php');
+    }
 
     /**
      * @throws coding_exception
