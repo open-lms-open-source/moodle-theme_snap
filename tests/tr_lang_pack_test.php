@@ -23,6 +23,8 @@
  */
 namespace theme_snap;
 
+use core_plugin_manager;
+
 class tr_lang_pack_test extends \advanced_testcase {
 
     /**
@@ -34,6 +36,12 @@ class tr_lang_pack_test extends \advanced_testcase {
 
     public function test_tr_lang_pack_correct() {
         global $CFG;
+
+        $pluginname = 'local_mrooms';
+        $plugins = core_plugin_manager::instance()->get_plugins_of_type('local');
+        if (!array_key_exists($pluginname, $plugins)) {
+            $this->markTestSkipped("This test is only for the openLMS environment.");
+        }
 
         $strfile = file_get_contents($CFG->dirroot . '/theme/snap/cli/trstrings.json');
         $stringsarr = json_decode($strfile, true);
