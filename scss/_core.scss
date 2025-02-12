@@ -5742,7 +5742,7 @@ div[id^=snap-create-activity-] .section-modchooser-link {
 // Modify icon design for help button in the header for CCM in Snap.
 #page-local-ccm-view.theme-snap {
     div#ccm-header-information {
-        padding-left: 1em;
+        padding-left: 0.5em;
     }
     a#ccm-help-button-header-popover {
         &:focus {
@@ -5750,23 +5750,11 @@ div[id^=snap-create-activity-] .section-modchooser-link {
         }
     }
     i#ccm-help-button-header-icon {
-        height: 20px;
-        width: 20px;
-        margin-bottom: 3px;
-        box-sizing: border-box;
-        justify-content: space-around;
-        align-items: center;
-        display: flex;
-        border: 4px solid #ddd;
-        border-radius: 50%;
-        vertical-align: middle;
         color: #ddd !important;
         background-color: white;
-
         &:hover {
             background-color: white;
             color: $brand-primary !important;
-            border: 4px solid $brand-primary;
         }
     }
 }
