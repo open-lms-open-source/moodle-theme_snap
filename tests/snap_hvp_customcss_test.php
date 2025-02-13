@@ -16,6 +16,7 @@
 namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
+use core_plugin_manager;
 use theme_snap\snap_base_test;
 
 global $CFG;
@@ -38,6 +39,13 @@ class snap_hvp_customcss_test extends snap_base_test {
      */
     public function test_hvp_alter_styles() {
         global $CFG;
+
+        $pluginname = 'mod_hvp';
+        $plugins = core_plugin_manager::instance()->get_plugins_of_type('local');
+        if (!array_key_exists($pluginname, $plugins)) {
+            $this->markTestSkipped("This test should only be run when the mod hvp plugin is installed.");
+        }
+
         require_once($CFG->dirroot . '/theme/snap/classes/mod_hvp_renderer.php');
         $content = 'hvpcustomcss';
         $target = 1;
