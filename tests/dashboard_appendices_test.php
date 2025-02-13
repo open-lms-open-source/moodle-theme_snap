@@ -21,9 +21,10 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace theme_snap;
+use core_plugin_manager;
+
 defined('MOODLE_INTERNAL') || die();
 
-require_once(__DIR__ . '/../../../lib/badgeslib.php');
 /**
  * Testing for dashboard appendices.
  *
@@ -33,9 +34,20 @@ require_once(__DIR__ . '/../../../lib/badgeslib.php');
  */
 class dashboard_appendices_test extends \advanced_testcase {
 
+    public function setUp() : void {
+        global $CFG;
+        require_once(__DIR__ . '/../../../lib/badgeslib.php');
+    }
+
     public function test_dashboard_shows_open_reports_experimental() {
         global $CFG, $DB, $COURSE;
         $this->resetAfterTest();
+
+        $pluginname = 'block_reports';
+        $plugins = core_plugin_manager::instance()->get_plugins_of_type('block');
+        if (!array_key_exists($pluginname, $plugins)) {
+            $this->markTestSkipped("This test should only be run when the block report plugin is installed.");
+        }
 
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_user();

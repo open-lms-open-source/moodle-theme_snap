@@ -24,7 +24,6 @@
 
 namespace theme_snap\output\format_tiles\content;
 
-
 use format_tiles\output\courseformat\content as content;
 use theme_snap\output\shared;
 
@@ -35,47 +34,49 @@ use theme_snap\output\shared;
  * @copyright 2022 David Watson
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class tiles_content extends content {
+if (class_exists('format_tiles\output\courseformat\content')) {
+    class tiles_content extends content {
 
-    /**
-     * Export this data so it can be used as the context for a mustache template (core/inplace_editable).
-     *
-     * @param \renderer_base $output typically, the renderer that's calling this function
-     * @return \stdClass data context for a mustache template
-     */
-    public function export_for_template(\renderer_base $output) {
-        global $PAGE, $CFG, $OUTPUT;
+        /**
+         * Export this data so it can be used as the context for a mustache template (core/inplace_editable).
+         *
+         * @param \renderer_base $output typically, the renderer that's calling this function
+         * @return \stdClass data context for a mustache template
+         */
+        public function export_for_template(\renderer_base $output) {
+            global $PAGE, $CFG, $OUTPUT;
 
-        // Get default tiles data for template.
-        $data = parent::export_for_template($output);
+            // Get default tiles data for template.
+            $data = parent::export_for_template($output);
 
-        // Get data for 'theme_snap/format_tiles/content' OpenLMS template.
-        $isediting = $PAGE->user_is_editing();
-        $course = $this->format->get_course();
-        $editingonparam = optional_param('notifyeditingon', 0, PARAM_INT);
-        $currenturl = $CFG->wwwroot . '/course/view.php?id=' . $course->id;
-        if ($editingonparam === 0) {
-            $currenturl = $currenturl . '&notifyeditingon=1';
-        }
-        $data->imgurltools = $OUTPUT->image_url('course_dashboard', 'theme');
-        $data->urlcoursetools = $currenturl . '#coursetools';
-        if (has_capability('moodle/course:update', \context_system::instance())) {
-            $data->has_edit_capability = true;
-            $urleditmode = $CFG->wwwroot . '/course/view.php?id=' . $course->id . '&sesskey=' . sesskey();
-            if ($isediting) {
-                $urleditmode .= '&edit=off';
-                $editstring = get_string('turneditingoff');
-            } else {
-                $urleditmode .= '&edit=on';
-                $editstring = get_string('editmodetiles', 'theme_snap');
+            // Get data for 'theme_snap/format_tiles/content' OpenLMS template.
+            $isediting = $PAGE->user_is_editing();
+            $course = $this->format->get_course();
+            $editingonparam = optional_param('notifyeditingon', 0, PARAM_INT);
+            $currenturl = $CFG->wwwroot . '/course/view.php?id=' . $course->id;
+            if ($editingonparam === 0) {
+                $currenturl = $currenturl . '&notifyeditingon=1';
             }
-            $data->urleditmode = $urleditmode;
-            $data->editstring = $editstring;
-        }
+            $data->imgurltools = $OUTPUT->image_url('course_dashboard', 'theme');
+            $data->urlcoursetools = $currenturl . '#coursetools';
+            if (has_capability('moodle/course:update', \context_system::instance())) {
+                $data->has_edit_capability = true;
+                $urleditmode = $CFG->wwwroot . '/course/view.php?id=' . $course->id . '&sesskey=' . sesskey();
+                if ($isediting) {
+                    $urleditmode .= '&edit=off';
+                    $editstring = get_string('turneditingoff');
+                } else {
+                    $urleditmode .= '&edit=on';
+                    $editstring = get_string('editmodetiles', 'theme_snap');
+                }
+                $data->urleditmode = $urleditmode;
+                $data->editstring = $editstring;
+            }
 
         // Additional output HTML to render Snap Course tools and edit mode button in footer.
         $data->course_tools = shared::course_tools(true);
 
-        return $data;
+            return $data;
+        }
     }
 }
