@@ -74,7 +74,8 @@ class course_module_recycle_bin_test extends \advanced_testcase {
      * Check that our hook is called when an activity is deleted.
      */
     public function test_pre_course_module_delete_hook() {
-        global $DB;
+        global $DB, $PAGE;
+        $PAGE->set_url('/test');
 
         $this->assertEquals(1, $DB->count_records('course_modules',
             ['course' => $this->course->id, 'deletioninprogress' => 0]));
