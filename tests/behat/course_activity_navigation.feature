@@ -43,6 +43,7 @@ Feature: Activity navigation in Snap theme
       | fullname | shortname | format | initsections |
       | Course 1 | C1        | topics |      1       |
       | Course 2 | C2        | topics |      1       |
+      | Course 3 | C3        | weeks  |      1       |
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | student1  | C1      | student         |
@@ -72,6 +73,7 @@ Feature: Activity navigation in Snap theme
       | wiki       | Wiki 1       | Test wiki description       | C1     | wiki1     | 6       |
       | workshop   | Workshop 1   | Test workshop description   | C1     | workshop1 | 6       |
       | assign     | Assignment 1 | Test assignment description | C2     | assign21  | 0       |
+      | assign     | Assignment 1 | Test assignment description | C3     | assign31  | 3       |
     And I log in as "admin"
     And I reset session storage
     And I am on "Course 1" course homepage
@@ -399,3 +401,16 @@ Feature: Activity navigation in Snap theme
     And I reload the page
     And I should not see "Available but not shown on course page"
     And I click on ".snap-activity[data-type='External tool'] button.snap-edit-asset-more" "css_element"
+
+  @javascript
+  Scenario: Navigate to a weeks format course, into an activity, and return to the activity's section.
+    Given I log in as "admin"
+    And I am on "Course 3" course homepage
+    And I follow "Section 3"
+    And I click on "#section-3 .edit-summary" "css_element"
+    And I set the section name to "Weeks testing season session"
+    And I press "Save changes"
+    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
+    And I follow "Edit settings"
+    And I press "Save and return to course"
+    Then I should see "Assignment 1"

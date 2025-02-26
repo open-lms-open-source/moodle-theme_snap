@@ -170,6 +170,7 @@ class course_toc implements \renderable, \templatable {
     }
 
     protected function set_chapters() {
+        global $PAGE;
 
         $this->chapters = (object) [];
 
@@ -233,12 +234,20 @@ class course_toc implements \renderable, \templatable {
             $chapter->iscurrent = false;
             if ($this->format->is_section_current($section)) {
                 $chapter->iscurrent = true;
-                $chapter->classes .= 'snap-visible-section current ';
+                $chapter->classes .= 'current ';
+                if ($this->format->get_format() !== "weeks") {
+                    $chapter->classes .= 'snap-visible-section ';
+                }
             }
 
             $chapter->isweeksformat = false;
             if ($this->format->get_format() == "weeks") {
                 $chapter->isweeksformat = true;
+                if ($PAGE->url->get_path() === '/course/section.php' && optional_param('id', -1, PARAM_INT) == $thissection->id) {
+                    $chapter->classes .= 'snap-visible-section ';
+                } elseif ($PAGE->url->get_path() !== '/course/section.php' && $this->format->is_section_current($section)) {
+                    $chapter->classes .= 'snap-visible-section ';
+                }
             }
 
             if ($chapter->outputlink) {
