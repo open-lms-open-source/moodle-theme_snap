@@ -279,8 +279,8 @@ trait format_section_trait {
         // the renderer, even when via an AJAX request. The HTML returned has to be the same for all requests, even
         // ajax.
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-
         $pagepath = $PAGE->url->get_path();
+        $sectionid = optional_param('id', -1, PARAM_INT);
 
         if ($section->section != 0) {
             // Only in the non-general sections.
@@ -291,6 +291,8 @@ trait format_section_trait {
                 if ($pagepath !== '/course/section.php') {
                     $sectionstyle .= ' state-visible';
                 }
+            } else if ($course->format == 'weeks' && $sectionid == $section->id) {
+                $sectionstyle .= ' state-visible set-by-server';
             }
         } else if ($course->format == "topics" && $course->marker == 0) {
             $sectionstyle = ' set-by-server';
@@ -520,8 +522,10 @@ trait format_section_trait {
 
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
+        $pagepath = $PAGE->url->get_path();
+        $sectionid = optional_param('id', -1, PARAM_INT);
 
-        if ($PAGE->url->get_path() === '/course/section.php' && ($sectionid = optional_param('id', -1, PARAM_INT)) !== -1) {
+        if ($pagepath === '/course/section.php' && $sectionid !== -1) {
             $section = $DB->get_record('course_sections', ['id' => $sectionid], 'section', MUST_EXIST);
             $course->sectionreturn = $section->section ?? 0;
         }
@@ -541,11 +545,15 @@ trait format_section_trait {
             if ($course->format == 'topics') {
                 $startsectionid = !empty($course->marker) ? $course->marker : 0;
             } else if ($course->format == 'weeks') {
-                for ($i = 0; $i <= $numsections; $i++) {
-                    if (course_get_format($course)->is_section_current($i)) {
-                        $startsectionid = $i;
-                        break;
+                if ($pagepath !== '/course/section.php') {
+                    for ($i = 0; $i <= $numsections; $i++) {
+                        if (course_get_format($course)->is_section_current($i)) {
+                            $startsectionid = $i;
+                            break;
+                        }
                     }
+                } elseif ($sectionid !== -1) {
+                    $startsectionid = !empty($course->marker) ? $course->marker : 0;
                 }
             }
             $startsectionid = !empty($course->sectionreturn) ? $course->sectionreturn : $startsectionid;
