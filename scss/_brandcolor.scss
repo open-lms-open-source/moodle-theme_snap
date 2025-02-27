@@ -324,6 +324,14 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+    .modtype_page .btn.btn-outline-primary {
+        &:hover:not(:disabled),
+        &:focus:not(:disabled),
+        &:active:not(:disabled) {
+            background-color: transparent;
+        }
+    }
+
     .btn.btn-secondary {
         .icon {
             color: $brand-primary;

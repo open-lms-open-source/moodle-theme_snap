@@ -1153,6 +1153,15 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                                     $(cardmultimedia).append(activityCards);
                                 });
                             }
+                            str.get_strings([
+                                {key: 'pageactivitywithnodescription', component: 'theme_snap'}
+                            ]).done(function (stringsjs) {
+                                let stringmsg = stringsjs[0];
+                                let modpagelocation = $("#page-mod-page-mod")
+                                    .find("#id_coursecontentnotification")
+                                    .closest('.form-group');
+                                $(modpagelocation).append(stringmsg);
+                            });
                         }
 
                         // Resources - put description in common mod settings.

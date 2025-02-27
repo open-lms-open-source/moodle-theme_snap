@@ -509,3 +509,4 @@ $string['allyears'] = 'All years';
 $string['courselink'] = 'Go to course';
 $string['student'] = 'Student';
 $string['showcourseinformation'] = 'Show course information';
+$string['pageactivitywithnodescription'] = 'If the Page Description is empty and the Page Content contains fewer than 200 characters, the expand icon will not be displayed for the Page Activity on the Course page, as the Page Content will serve as the Page Description.';

@@ -961,8 +961,12 @@ class course_renderer extends \core_course_renderer {
 
         $preview = $page->summary;
 
+        $showexpandicon = true;
         if (!$page->intro) {
             $preview = shorten_text($page->content, 200);
+            if ($preview == $page->content) {
+                $showexpandicon = false;
+            }
         }
 
         $readmore = get_string('readmore', 'theme_snap');
@@ -1006,20 +1010,23 @@ class course_renderer extends \core_course_renderer {
             <div class='summary-text'>
                 {$preview}
             </div>
-        </div>
-        <div class='readmore-container d-flex justify-content-center'>
-            {$expandpagebutton}
-        </div>
-        <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
-            <div id='pagemod-content-container'>
-                {$content}
-            </div>
-            <div class='d-flex justify-content-center w-100 pt-3'>
-                <button class='snap-action-icon btn btn-outline-primary p-2 d-inline-flex' aria-expanded='true' title='{$close} {$page->name}'>
-                    <i aria-hidden='true' class='icon fa fa-chevron-up fa-fw m-0' title='{$expand} {$page->name}'></i>
-                </button>
-            </div>
         </div>";
+        if ($showexpandicon) {
+            $o .= "
+            <div class='readmore-container d-flex justify-content-center'>
+                {$expandpagebutton}
+            </div>
+            <div class=pagemod-content tabindex='-1' data-content-loaded={$contentloaded}>
+                <div id='pagemod-content-container'>
+                    {$content}
+                </div>
+                <div class='d-flex justify-content-center w-100 pt-3'>
+                    <button class='snap-action-icon btn btn-outline-primary p-2 d-inline-flex' aria-expanded='true' title='{$close} {$page->name}'>
+                        <i aria-hidden='true' class='icon fa fa-chevron-up fa-fw m-0' title='{$expand} {$page->name}'></i>
+                    </button>
+                </div>
+            </div>";
+        }
         return $o;
     }
 
