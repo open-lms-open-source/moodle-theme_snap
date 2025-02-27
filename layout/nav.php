@@ -66,7 +66,6 @@ echo html_writer::link($defaulthomeurl, $sitefullname, $attrs);
     }
     echo $OUTPUT->my_courses_nav_link();
     echo $OUTPUT->user_menu_nav_dropdown();
-    echo $OUTPUT->render_message_icon();
     echo $OUTPUT->render_notification_popups();
 
     $settingslink = new settings_link();

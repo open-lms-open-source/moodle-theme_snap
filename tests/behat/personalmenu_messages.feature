@@ -43,18 +43,15 @@ Feature: When the moodle theme is set to Snap, students and teachers have a conv
   Scenario Outline: Snap user can see conversation count and messages.
     Given the following config values are set as admin:
       | personalmenuadvancedfeedsenable | <enadvfeeds> | theme_snap |
-    Then I log in as "teacher1"
-    And ".conversation_badge_count.hidden" "css_element" should exist
-    And I log out
     And I change viewport size to "large"
     And I log in as "student1"
     And I send "Test message!" message to "Teacher 1" user
     And I log out
     And I log in as "teacher1"
     And I <waitclause>
-    Then ".conversation_badge_count" "css_element" should exist
+    Then ".count-container" "css_element" should exist
     And I close the personal menu
-    Then I should see "1" in the ".conversation_badge_count" "css_element"
+    Then I should see "1" in the "//div[@data-region='popover-region-messages']//*[@data-region='count-container']" "xpath_element"
     And I open the personal menu
     And I should see "Test message!" in the "#snap-personal-menu-<selectorstr>" "css_element"
     And I log out
@@ -63,9 +60,9 @@ Feature: When the moodle theme is set to Snap, students and teachers have a conv
     And I log out
     And I log in as "teacher1"
     And I <waitclause>
-    Then ".conversation_badge_count" "css_element" should exist
+    Then ".count-container" "css_element" should exist
     And I close the personal menu
-    Then I should see "2" in the ".conversation_badge_count" "css_element"
+    Then I should see "2" in the "//div[@data-region='popover-region-messages']//*[@data-region='count-container']" "xpath_element"
     Examples:
       | enadvfeeds | selectorstr    | waitclause                                          |
       | 0          | messages       | wait until the page is ready                        |

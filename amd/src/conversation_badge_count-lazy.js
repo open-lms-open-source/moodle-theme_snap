@@ -23,8 +23,8 @@
 /**
  * @module theme_snap/conversation_badge_count-lazy
  */
-define(['jquery', 'core/ajax','core/str'],
-    function($, Ajax, Str) {
+define(['jquery', 'core/ajax'],
+    function($, Ajax) {
         var self = this;
 
         /**
@@ -88,14 +88,6 @@ define(['jquery', 'core/ajax','core/str'],
                 self.containerEl.text('');
                 self.containerEl.addClass("hidden");
             }
-            var text = $('.snap-message-count');
-            Str.get_string('openmessagedrawer', 'theme_snap').done(function(openstring) {
-                Str.get_string('unreadconversations', 'core_message', count)
-                    .done(function(unreadstring) {
-                        text.attr('title', openstring+unreadstring);
-                        text.attr('aria-label', openstring+unreadstring);
-                    });
-            });
         };
 
         /**
