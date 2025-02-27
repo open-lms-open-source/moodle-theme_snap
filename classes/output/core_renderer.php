@@ -295,40 +295,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
-     * Badge counter for new messages.
-     * @return string
-     */
-    protected function render_message_icon() {
-        global $CFG, $USER;
-
-        // Add the messages icon with message count.
-        // The icon should not be displayed if the user is not logged in.
-        if (!isloggedin() || isguestuser() || user_not_fully_set_up($USER) ||
-            get_user_preferences('auth_forcepasswordchange') ||
-            (!$USER->policyagreed && !is_siteadmin() &&
-                ($manager = new \core_privacy\local\sitepolicy\manager()) && $manager->is_defined())) {
-            return '';
-        }
-
-        if (!empty($CFG->messaging) && !empty(get_config('theme_snap', 'messagestoggle'))) {
-            $url = new \moodle_url($CFG->wwwroot."/message/");
-            // Get number of unread conversations.
-            $unreadcount = \core_message\api::count_unread_conversations($USER);
-            $unreadconversationsstr = get_string('unreadconversations', 'core_message', $unreadcount);
-            $ariaopenmessagedrawer = get_string('openmessagedrawer', 'theme_snap');
-            return '<div class="badge-count-container">
-                        <a class="snap-message-count" aria-label="'.$ariaopenmessagedrawer.$unreadconversationsstr.'" +
-                         href="'.$url.'" title="'.$ariaopenmessagedrawer.$unreadconversationsstr.'">
-                            <i class="icon fa-regular fa-comment fa-fw">
-                                <div class="conversation_badge_count hidden"></div>
-                            </i>
-                        </a>
-                    </div>';
-        }
-        return '';
-    }
-
-    /**
      * Render messages from users
      * @return string
      */
@@ -2197,18 +2163,14 @@ HTML;
     protected function render_notification_popups() {
         // @codingStandardsIgnoreStart
         // Core renderer has not $output attribute, but code checker requires it.
-        global $CFG, $OUTPUT;
+        global $OUTPUT;
 
         $navoutput = '';
         if (\core_component::get_component_directory('local_intellicart') !== null) {
             require_once(__DIR__ . '/../../../../local/intellicart/lib.php');
             $navoutput .= local_intellicart_render_navbar_output($OUTPUT);
         }
-        // We only want the notifications bell, not the messages badge so temporarilly disable messaging to exclude it.
-        $messagingenabled = $CFG->messaging;
-        $CFG->messaging = false;
         $navoutput .= message_popup_render_navbar_output($OUTPUT);
-        $CFG->messaging = $messagingenabled;
         if (empty($navoutput)) {
             return '';
         }

@@ -1516,57 +1516,6 @@ footer #moodle-footer
     }
 }
 
-// Core alerts badge.
-.badge-count-container {
-    display: inline-block;
-    float: none;
-    width: 2.1em;
-
-    // we want to maintain the position along the Intellicart or notification icons when
-    // these icons don't exists in the Snap header.
-    a.snap-message-count {
-        border-radius: .5rem;
-        padding: .5rem .5rem;
-        display: block;
-    }
-
-    .icon.fa-comment {
-        font-size: 24px;
-        position: relative;
-        margin: 0;
-
-        &:before {
-            content: "\f0e5";
-        }
-
-        &:hover {
-            @extend .fa-beat;
-            --fa-animation-duration: 0.5s;
-            --fa-animation-iteration-count: 1;
-
-            font-weight: bolder;
-        }
-    }
-    .conversation_badge_count {
-        height: 18px;
-        width: 18px;
-        border-radius: 50%;
-        color: white !important; // Override core color preset for anchors.
-        font-size: x-small;
-        font-family: $font-family-system;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        right: -0.5em; // Magic number.
-        top: -0.5em; // Magic number.
-
-        &.hidden {
-            display: none;
-        }
-    }
-}
-
 @include media-breakpoint-down(sm) {
     .js-snap-pm-trigger.snap-my-courses-menu {
         margin-bottom: 0.5em;
@@ -5433,7 +5382,7 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 
 
 
-.theme-snap [data-region=right-hand-drawer].drawer {
+.theme-snap [data-region=right-hand-drawer].drawer:not([data-origin^="message-drawer-toggle-"]) {
     z-index: 12;
     position: fixed;
     right: 0;
@@ -6280,13 +6229,16 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
     }
 
     // Messages icon.
-    .badge-count-container a.snap-message-count:focus-visible {
-        @extend .fa-beat;
-        --fa-animation-duration: 0.5s;
-        --fa-animation-iteration-count: 1;
-        font-weight: bolder;
-        .icon.fa-comment {
+    [id^="message-drawer-toggle-"] {
+        &:focus-visible,
+        &:hover {
+            @extend .fa-beat;
+            --fa-animation-duration: 0.5s;
+            --fa-animation-iteration-count: 1;
             font-weight: bolder;
+            .icon.fa-comment-o {
+                font-weight: bolder;
+            }
         }
     }
 

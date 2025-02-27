@@ -742,6 +742,17 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
 
+        [id^="message-drawer-toggle-"] {
+            .icon.fa-comment-o {
+                font-size: 24px;
+                color: $nav-color;
+            }
+
+            .count-container {
+                background-color: $nav-color;
+            }
+        }
+
         #nav-intellicart-popover-container {
             // Intellicart shopping icon.
             .icon.fa-shopping-cart {
@@ -763,14 +774,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                     color: $nav-color;
                     -webkit-text-stroke-width: 1px;
                 }
-            }
-        }
-
-        .badge-count-container .icon.fa-comment {
-            color: $nav-color;
-
-            .conversation_badge_count {
-                background-color: $nav-color;
             }
         }
     }

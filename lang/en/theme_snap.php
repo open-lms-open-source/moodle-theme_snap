@@ -456,7 +456,6 @@ $string['enabledloginorderdesc'] = 'Select which login option should be displaye
 $string['moodleloginfirst'] = 'Display Moodle login first';
 $string['alternativeloginfirst'] = 'Display alternative login options first';
 $string['alternativeloginoptions'] = 'Alternative login options';
-$string['openmessagedrawer'] = 'Open messaging drawer. ';
 $string['refreshdeadlinestask'] = 'Refresh deadlines cached data. This should be run before all users login.';
 $string['resetdeadlinesquerycounttask'] = 'Reset deadlines query count';
 $string['refreshdeadlinestaskoff'] = 'Didn\'t look for data to populate. Please turn on the setting "Refresh deadlines using scheduled task" in Snap\'s Personal menu settings to allow this task to populate deadlines cached data.';
