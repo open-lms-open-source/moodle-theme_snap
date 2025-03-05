@@ -23,7 +23,7 @@
 Feature: The setting Enable Advanced feeds should be available only when at least one of the options Deadlines, Feedback and grading, Messages or Forum posts is selected.
 
   @javascript
-  Scenario: Go to Snap Personal menu and Snap feeds settings page and enable any of the dependency options
+  Scenario: Go to Snap Snap feeds settings page and enable any of the dependency options
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories | 0 |
@@ -33,8 +33,8 @@ Feature: The setting Enable Advanced feeds should be available only when at leas
     And I expand "Appearance" node
     And I follow "Themes"
     And I follow "Edit theme settings 'Snap'"
-    And I should see "Personal menu and Snap feeds"
-    And I click on "Personal menu and Snap feeds" "link"
+    And I should see "Snap feeds"
+    And I click on "Snap feeds" "link" in the "#snap-admin-tabs" "css_element"
     And I should see "Enable Advanced feeds"
     And I set the following fields to these values:
       | Deadlines  | 1 |
@@ -75,6 +75,5 @@ Feature: The setting Enable Advanced feeds should be available only when at leas
     And I click on "Save changes" "button"
     And I wait until the page is ready
     And I should see "Changes saved"
-    Then I click on "Personal menu and Snap feeds" "link"
+    And I click on "Snap feeds" "link" in the "#snap-admin-tabs" "css_element"
     And I should not see "Enable Advanced feeds"
-

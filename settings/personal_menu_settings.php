@@ -20,42 +20,46 @@ global $PAGE;
 
 $snapsettings = new admin_settingpage('themesnappersonalmenu', get_string('personalmenuandsnapfeeds', 'theme_snap'));
 
-// Personal menu enable settings.
-$name = 'theme_snap/personalmenuenablepersonalmenuheading';
-$title = new lang_string('personalmenuenablepersonalmenuheading', 'theme_snap');
-$description = new lang_string('personalmenuenablepersonalmenuheadingdesc', 'theme_snap');
-$setting = new admin_setting_heading($name, $title, $description);
-$snapsettings->add($setting);
+// Snap Personal Menu is now deprecated and will be completely removed in Moodle 4.5.
+// Only available for Behat tests until it is fully removed.
+if (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING) {
+    // Personal menu enable settings.
+    $name = 'theme_snap/personalmenuenablepersonalmenuheading';
+    $title = new lang_string('personalmenuenablepersonalmenuheading', 'theme_snap');
+    $description = new lang_string('personalmenuenablepersonalmenuheadingdesc', 'theme_snap');
+    $setting = new admin_setting_heading($name, $title, $description);
+    $snapsettings->add($setting);
 
-$name = 'theme_snap/personalmenuenablepersonalmenu';
-$title = new lang_string('personalmenuenablepersonalmenu', 'theme_snap');
-$description = new lang_string('personalmenuenablepersonalmenudesc', 'theme_snap');
-$default = !$checked;
-$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+    $name = 'theme_snap/personalmenuenablepersonalmenu';
+    $title = new lang_string('personalmenuenablepersonalmenu', 'theme_snap');
+    $description = new lang_string('personalmenuenablepersonalmenudesc', 'theme_snap');
+    $default = !$checked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $snapsettings->add($setting);
 
-// Personal menu display on login on/off.
-$name = 'theme_snap/personalmenulogintoggle';
-$title = new lang_string('personalmenulogintoggle', 'theme_snap');
-$description = new lang_string('personalmenulogintoggledesc', 'theme_snap');
-$default = !$checked;
-$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+    // Personal menu display on login on/off.
+    $name = 'theme_snap/personalmenulogintoggle';
+    $title = new lang_string('personalmenulogintoggle', 'theme_snap');
+    $description = new lang_string('personalmenulogintoggledesc', 'theme_snap');
+    $default = !$checked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $snapsettings->add($setting);
 
-// Personal menu show course grade in cards.
-$name = 'theme_snap/showcoursegradepersonalmenu';
-$title = new lang_string('showcoursegradepersonalmenu', 'theme_snap');
-$description = new lang_string('showcoursegradepersonalmenudesc', 'theme_snap');
-$default = $checked;
-$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
+    // Personal menu show course grade in cards.
+    $name = 'theme_snap/showcoursegradepersonalmenu';
+    $title = new lang_string('showcoursegradepersonalmenu', 'theme_snap');
+    $description = new lang_string('showcoursegradepersonalmenudesc', 'theme_snap');
+    $default = $checked;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
+    $snapsettings->add($setting);
 
-// Personal menu settings to hide when it is disabled.
-$dependency = 'theme_snap/personalmenuenablepersonalmenu';
-$tohide     = 'theme_snap/personalmenulogintoggle';
-$settings->hide_if($tohide, $dependency, 'notchecked', 0);
-$tohide     = 'theme_snap/showcoursegradepersonalmenu';
-$settings->hide_if($tohide, $dependency, 'notchecked', 0);
+    // Personal menu settings to hide when it is disabled.
+    $dependency = 'theme_snap/personalmenuenablepersonalmenu';
+    $tohide     = 'theme_snap/personalmenulogintoggle';
+    $settings->hide_if($tohide, $dependency, 'notchecked', 0);
+    $tohide     = 'theme_snap/showcoursegradepersonalmenu';
+    $settings->hide_if($tohide, $dependency, 'notchecked', 0);
+}
 
 // Snap feeds settings.
 $advancedfeedsdependants = [];
