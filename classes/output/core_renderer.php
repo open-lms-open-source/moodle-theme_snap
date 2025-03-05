@@ -1262,6 +1262,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $heading = html_writer::link($courseurl, $heading);
             if (!$this->snap_page_is_activity_view() && !$this->snap_page_is_edit_section() && !$this->snap_page_is_activity_mod() && !$this->snap_page_is_user_view()) {
                 $heading = $this->context_header(['heading' => $heading]);
+            } else {
+                $heading = html_writer::tag($tag, $heading);
             }
         } else {
             // Default heading.
@@ -2772,8 +2774,7 @@ HTML;
      */
     protected function snap_page_is_activity_view() {
         return $this->page->context->contextlevel === CONTEXT_MODULE
-               && strpos($this->page->pagetype, 'mod-') === 0
-               && substr($this->page->pagetype, -5) === '-view';
+               && strpos($this->page->pagetype, 'mod-') === 0;
     }
 
     /**
