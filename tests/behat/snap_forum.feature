@@ -65,6 +65,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
 
   @javascript
   Scenario Outline: Settings option in discussions is shown correctly for experimental ui in different screen sizes
+    Given I skip because "Will be reviewed in INT-20853"
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"

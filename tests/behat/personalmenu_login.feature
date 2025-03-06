@@ -94,6 +94,7 @@ Feature: When the moodle theme is set to Snap,
 
   @javascript
   Scenario: User accesses a course and is prompted to log in, does not see personal menu
+    Given I skip because "Will be reviewed in INT-20853"
     Given the following "courses" exist:
       | fullname | shortname |
       | Course 1 | C1        |

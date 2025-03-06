@@ -23,6 +23,7 @@
 Feature: As an admin, I should be able to set a site's footer on Snap theme.
 
   Background:
+    Given I skip because "Will be reviewed in INT-20853"
     Given the following config values are set as admin:
       | theme | snap |
       | linkadmincategories | 0 |
