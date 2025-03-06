@@ -383,6 +383,7 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
                 $('body').popover({
                     selector: '[data-toggle="popover"]',
                     trigger: 'click',
+                    container: 'body',
                     whitelist: Object.assign(DefaultWhitelist, {
                         table: [],
                         thead: [],
