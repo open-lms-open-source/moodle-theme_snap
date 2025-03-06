@@ -46,6 +46,7 @@
         {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
     {{/ theme_boost/drawer}}
 
+    {{#showdraweropenbutton}}
     <div class="drawer-toggler drawer-right-toggle">
         <button
             class="btn px-1 py-2"
@@ -58,9 +59,10 @@
         >
             <span class="sr-only">{{#str}}opendrawerblocks, core{{/str}}</span>
             <span class="dir-rtl-hide">{{#pix}} t/blocks_drawer, moodle {{/pix}}</span>
-            <span class="dir-ltr-hide">{{#pix}} t/blocks_drawer_rtl, moodle {{/pix}}</span>
-        </button>
-    </div>
+                <span class="dir-ltr-hide">{{#pix}} t/blocks_drawer_rtl, moodle {{/pix}}</span>
+            </button>
+        </div>
+    {{/showdraweropenbutton}}
 {{/hasblocks}}
 
 {{#js}}

@@ -23,16 +23,6 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-if (isloggedin()) {
-    $blockdraweropen = get_user_preferences('drawer-open-block') == true;
-} else {
-    $blockdraweropen = false;
-}
-
-if (defined(constant_name: 'BEHAT_SITE_RUNNING') && get_user_preferences('behat_keep_drawer_closed') != 1) {
-    $blockdraweropen = false;
-}
-
 $addblockbutton = $OUTPUT->addblockbutton();
 $blockshtml = $OUTPUT->blocks('side-pre');
 $hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
@@ -44,7 +34,7 @@ if (!$hasblocks) {
 $templatecontext = [
     'hasblocks' => $hasblocks,
     'sidepreblocks' => $blockshtml,
-    'blockdraweropen' => $blockdraweropen,
-    'addblockbutton' => $addblockbutton
+    'addblockbutton' => $addblockbutton,
+    'showdraweropenbutton' => false
 ];
 echo $OUTPUT->render_from_template('theme_snap/blocks_drawer', $templatecontext);

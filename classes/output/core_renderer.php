@@ -2165,14 +2165,17 @@ HTML;
     protected function render_notification_popups() {
         // @codingStandardsIgnoreStart
         // Core renderer has not $output attribute, but code checker requires it.
-        global $OUTPUT;
+        global $OUTPUT, $CFG;
 
         $navoutput = '';
         if (\core_component::get_component_directory('local_intellicart') !== null) {
             require_once(__DIR__ . '/../../../../local/intellicart/lib.php');
             $navoutput .= local_intellicart_render_navbar_output($OUTPUT);
         }
+        $messagingenabled = $CFG->messaging;
+        $CFG->messaging = false;
         $navoutput .= message_popup_render_navbar_output($OUTPUT);
+        $CFG->messaging = $messagingenabled;
         if (empty($navoutput)) {
             return '';
         }

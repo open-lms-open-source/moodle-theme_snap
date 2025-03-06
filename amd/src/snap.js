@@ -544,24 +544,6 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
             // Onclick for toggle of state-visible of admin block and mobile menu.
             $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle", function(e) {
 
-                // Close the Snap feeds side menu in case it is open.
-                var snapFeedsTrigger = document.getElementById('snap_feeds_side_menu_trigger');
-                if ($(snapFeedsTrigger).length != 0) {
-                    var hrefSnapFeeds = snapFeedsTrigger.getAttribute('href');
-                    if ($(snapFeedsTrigger).hasClass('active') && $(hrefSnapFeeds).hasClass('state-visible')) {
-                        var showFeedsString = M.util.get_string('show', 'moodle')
-                            + ' ' +  M.util.get_string('snapfeedsblocktitle', 'theme_snap');
-                        $(snapFeedsTrigger).attr('title', showFeedsString);
-                        $(snapFeedsTrigger).attr('aria-label', showFeedsString);
-                        $(snapFeedsTrigger).attr('aria-expanded', false);
-                        $(snapFeedsTrigger).removeClass('active');
-                        $(hrefSnapFeeds).removeClass('state-visible');
-                        $('#page').toggleClass('offcanvas');
-                        if ($('#sticky-footer').length != 0) {
-                            $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
-                        }
-                    }
-                }
                 var href = this.getAttribute('href');
                 // Make this only happen for settings button.
                 if (this.getAttribute('id') === 'admin-menu-trigger') {
@@ -584,19 +566,7 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
 
             // Onclick for toggle of state-visible of snap feeds side menu.
             $(document).on("click", "#snap_feeds_side_menu_trigger", function(e) {
-                // Close the Admin settings block in case it is open.
-                var adminSettingsTrigger = document.getElementById('admin-menu-trigger');
-                if ($(adminSettingsTrigger).length != 0) {
-                    var hrefAdminSettings = adminSettingsTrigger.getAttribute('href');
-                    if ($(adminSettingsTrigger).hasClass('active') && $(hrefAdminSettings).hasClass('state-visible')) {
-                        $(adminSettingsTrigger).removeClass('active');
-                        $(hrefAdminSettings).removeClass('state-visible');
-                        $('#page').toggleClass('offcanvas');
-                        if ($('#sticky-footer').length != 0) {
-                            $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
-                        }
-                    }
-                }
+
 
                 var href = this.getAttribute('href');
                 if (this.getAttribute('id') === 'snap_feeds_side_menu_trigger') {

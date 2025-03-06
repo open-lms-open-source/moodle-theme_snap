@@ -68,16 +68,13 @@ echo html_writer::link($defaulthomeurl, $sitefullname, $attrs);
     echo $OUTPUT->user_menu_nav_dropdown();
     echo $OUTPUT->render_notification_popups();
 
-    $settingslink = new settings_link();
     echo '<span class="hidden-md-down">';
     echo $OUTPUT->search_box();
     echo '</span>';
-    echo $OUTPUT->snap_feeds_side_menu_trigger();
-    if ($settingslink->output || $this->page->user_allowed_editing()) {
+    if ($this->page->user_allowed_editing()) {
         echo '<div class="snap_line_separator"></div>';
     }
     echo $OUTPUT->edit_switch();
-    echo $OUTPUT->render($settingslink);
     ?>
 </div>
 </div>
@@ -99,7 +96,80 @@ if (!empty($custommenu)) {
 </header>
 
 <?php
-if (!empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
-    echo $OUTPUT->personal_menu();
+// Only proceed with sidebar menu for logged-in users
+if (isloggedin() && !isguestuser()) {
+    if (!empty($CFG->messaging)) {
+        $unreadcount = \core_message\api::count_unread_conversations($USER);
+        $requestcount = \core_message\api::get_received_contact_requests_count($USER->id);
+        $context = [
+            'userid' => $USER->id,
+            'unreadcount' => $unreadcount + $requestcount
+        ];
+        $messages_item = $OUTPUT->render_from_template('core_message/message_popover', $context);
+    }
+    $addblockbutton = $OUTPUT->addblockbutton();
+    $blockshtml = $OUTPUT->blocks('side-pre');
+    $settingslink = new settings_link();
+    $hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
+    $sidebarmenuitems = [];
+
+    // Only add settings link if it has output
+    if (!empty($settingslink->output)) {
+        $sidebarmenuitems[] = [
+            'customcontent' => $OUTPUT->render($settingslink),
+            'dataattributes' => [
+                ['name' => 'activeselector', 'value' => '#admin-menu-trigger.active']
+            ]
+        ];
+    }
+    // Only add blocks drawer button if there are blocks
+    if ($hasblocks) {
+        $sidebarmenuitems[] = [
+            'title' => get_string('opendrawerblocks', 'core'),
+            'iconimg' => $OUTPUT->image_url('blocksdrawers', 'theme'),
+            'isbutton' => true,
+            'dataattributes' => [
+                ['name' => 'toggler', 'value' => 'drawers'],
+                ['name' => 'action', 'value' => 'toggle'],
+                ['name' => 'target', 'value' => 'theme_snap-drawers-blocks'],
+                ['name' => 'toggle', 'value' => 'tooltip'],
+                ['name' => 'placement', 'value' => 'right'],
+                ['name' => 'activeselector', 'value' => '#theme_snap-drawers-blocks.show']
+            ],
+            'classes' => 'blocks-drawer-button'
+        ];
+    }
+
+    // Only add feeds side menu trigger if it exists
+    $feedsTrigger = $OUTPUT->snap_feeds_side_menu_trigger();
+    if (!empty($feedsTrigger)) {
+        $sidebarmenuitems[] = [
+            'customcontent' => $feedsTrigger,
+            'dataattributes' => [
+                ['name' => 'activeselector', 'value' => '#snap_feeds_side_menu_trigger.active']
+            ]
+        ];
+    }
+
+    // Only add messages item if messaging is enabled
+    if (!empty($messages_item)) {
+        $sidebarmenuitems[] = [
+            'customcontent' => $messages_item,
+            'dataattributes' => [
+                ['name' => 'activeselector', 'value' => '[data-region="popover-region-messages"]:not(.collapsed)']
+            ]
+        ];
+    }
+
+    // Only render the sidebar menu if there are items to display
+    if (!empty($sidebarmenuitems)) {
+        echo $OUTPUT->render_from_template('theme_snap/sidebar_menu', [
+            'menuitems' => $sidebarmenuitems
+        ]);
+    }
+
+    if (!empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
+        echo $OUTPUT->personal_menu();
+    }
 }
 
