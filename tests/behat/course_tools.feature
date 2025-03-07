@@ -116,15 +116,15 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     # Note we have to call this step twice because for some reason it doesn't automatically go to the module page the
     # first time - that's a core issue though.
     And I am on the course main page for "C1"
-    Then I should not see "<formatdisplay>" in the "#page-mast" "css_element"
+    Then I should not see "<formatdisplay>" in the ".format-singleactivity .page-header-headings > h1" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And "#snap-student-dashboard" "css_element" should exist
     And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
     And ".snap-student-dashboard-grade" "css_element" <seegrade> exist
     Examples:
       | type    | completionenabled | gradebookaccessible | seecompletion | seegrade   | formatdisplay |
-      | general | Enabled           | Allow               | should        | should     | C1            |
-      | general | Disabled          | Prohibit            | should not    | should not | C1            |
+      | general | Enabled           | Allow               | should        | should     | Course 1      |
+      | general | Disabled          | Prohibit            | should not    | should not | Course 1      |
       | single  | Enabled           | Allow               | should        | should     | Course 1      |
       | single  | Disabled          | Prohibit            | should not    | should not | Course 1      |
 
