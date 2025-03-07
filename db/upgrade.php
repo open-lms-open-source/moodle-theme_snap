@@ -142,5 +142,13 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024030700, 'theme', 'snap');
     }
 
+    // Snap Personal Menu is now deprecated and will be completely removed in Moodle 4.5.
+    if ($oldversion < 2025011002) {
+        set_config('personalmenuenablepersonalmenu', 0, 'theme_snap');
+        set_config('personalmenulogintoggle', 0, 'theme_snap');
+        set_config('showcoursegradepersonalmenu', 0, 'theme_snap');
+        upgrade_plugin_savepoint(true, 2025011002, 'theme', 'snap');
+    }
+
     return true;
 }
