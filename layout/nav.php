@@ -110,7 +110,18 @@ if (isloggedin() && !isguestuser()) {
     $addblockbutton = $OUTPUT->addblockbutton();
     $blockshtml = $OUTPUT->blocks('side-pre');
     $settingslink = new settings_link();
-    $hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
+    // Excluding settings block from blocks count
+    $hasblocks = (strpos($blockshtml, 'data-block=') !== false && 
+                 !(strpos($blockshtml, 'data-block="settings"') !== false && 
+                   substr_count($blockshtml, 'data-block="') === 1)) || 
+                 !empty($addblockbutton);
+    // Define page types where blocks should be shown
+    // Using patterns with exact matches and prefix matches
+    $whitelistpagesforblocks = [
+        'exact' => ['site-index', 'my-index'],
+        'prefix' => ['course-view']
+    ];
+    
     $sidebarmenuitems = [];
 
     // Only add settings link if it has output
@@ -122,10 +133,29 @@ if (isloggedin() && !isguestuser()) {
             ]
         ];
     }
-    // Only add blocks drawer button if there are blocks
-    if ($hasblocks) {
+    
+    // Check if current page type matches any whitelist pattern
+    $pagematcheswhitelist = false;
+    
+    // Check exact matches
+    if (in_array($PAGE->pagetype, $whitelistpagesforblocks['exact'])) {
+        $pagematcheswhitelist = true;
+    }
+    
+    // Check prefix matches if not already matched
+    if (!$pagematcheswhitelist) {
+        foreach ($whitelistpagesforblocks['prefix'] as $prefix) {
+            if (strpos($PAGE->pagetype, $prefix) === 0) {
+                $pagematcheswhitelist = true;
+                break;
+            }
+        }
+    }
+    
+    // Only add blocks drawer button if there are blocks and page type matches whitelist
+    if ($hasblocks && $pagematcheswhitelist) {
         $sidebarmenuitems[] = [
-            'title' => get_string('opendrawerblocks', 'core'),
+            'title' => get_string('toggleblocksdrawer', 'theme_snap'),
             'iconimg' => $OUTPUT->image_url('blocksdrawers', 'theme'),
             'isbutton' => true,
             'dataattributes' => [

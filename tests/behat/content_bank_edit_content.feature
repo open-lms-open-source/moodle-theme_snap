@@ -31,19 +31,19 @@ Feature: When the Moodle theme is set to Snap, the content in the content bank c
       | private_files | System       |   1       |
     And I change window size to "large"
     And I log in as "admin"
-    And I click on "button[data-original-title='Open block drawer']" "css_element"
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     And I follow "Manage private files..."
     And I upload "h5p/tests/fixtures/filltheblanks.h5p" file to "Files" filemanager
     And I click on "Save changes" "button"
     And I am on site homepage
     And I switch edit mode in Snap
-    And I click on "button[data-original-title='Open block drawer']" "css_element"
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     And I add the "Navigation" block if not present
     And I configure the "Navigation" block
     And I set the following fields to these values:
       | Page contexts | Display throughout the entire site |
     And I press "Save changes"
-    And I click on "button[data-original-title='Open block drawer']" "css_element"
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     And I click on "Site pages" "list_item" in the "Navigation" "block"
     And I click on "Content bank" "link" in the "Navigation" "block"
     And I click on "Upload" "link"

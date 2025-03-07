@@ -904,7 +904,7 @@ EOF;
             $links[] = $downloaditem;
         }
         $o .= self::print_student_dashboard();
-        $o .= '<ul id="coursetools-list">' .self::render_appendices($links). '</ul><hr>';
+        $o .= '<ul id="coursetools-list">' .self::render_appendices($links). '</ul>';
 
         return $o;
     }

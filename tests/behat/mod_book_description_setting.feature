@@ -44,21 +44,3 @@ Feature: Setting for mod_book should not appear on Snap.
     And I add a book activity to course "C1" section "0"
     And "#id_general .fcontainer .checkbox" "css_element" should exist
     And I should not see "Display description on course page"
-
-  @javascript
-  Scenario: As a teacher I should see the setting Subcharter.
-    Given I log in as "teacher1"
-    And the following "activities" exist:
-      | activity   | name         | intro                       | course | idnumber  | section |
-      | book       | Book 1       | Test book description       | C1     | book1     | 0       |
-    And I am on "Course 1" course homepage
-    And I click on ".modtype_book .mod-link" "css_element"
-    And I set the following fields to these values:
-      | Chapter title | Dummy first chapter |
-      | Content       | Dummy content       |
-    And I press "Save changes"
-    And I switch edit mode in Snap
-    And I click on "button[data-original-title='Open block drawer']" "css_element"
-    And I follow "Add new chapter"
-    Then ".checkbox #id_subchapter" "css_element" should exist
-    And the "Subchapter" "checkbox" should be enabled

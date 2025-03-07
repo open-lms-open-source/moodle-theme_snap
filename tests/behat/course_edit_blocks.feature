@@ -77,7 +77,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And course page should be in edit mode
     When I am on site homepage
     Then I should see "Change site name"
-    And I click on "button[data-original-title='Open block drawer']" "css_element"
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     And I scroll to the bottom
     Then I should see "Add a block"
 

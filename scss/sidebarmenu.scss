@@ -223,6 +223,11 @@ $transition-speed: 0.3s;
 
 .drawer.drawer-right.show {
     right: $sidebar-width;
+    
+    // Add z-index when dropdown menu is visible to not hide it.
+    body:has(.dropdown-menu.dropdown-menu-right.show) & {
+        z-index: 22; // For some reason this z-index works
+    }
 }
 
 #snap_feeds_side_menu.state-visible {

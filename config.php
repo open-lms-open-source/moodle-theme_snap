@@ -217,4 +217,5 @@ if ($runningbehattest) {
 }
 
 $THEME->requiredblocks = $requiredblocks;
+$THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
 $THEME->haseditswitch = false;
