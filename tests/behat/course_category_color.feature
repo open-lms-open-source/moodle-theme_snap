@@ -36,10 +36,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
   Scenario: Go to Snap settings page and put a wrong JSON text in it.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"
@@ -57,10 +54,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
   Scenario: Go to Snap settings page and put a valid JSON text in it.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"
@@ -79,10 +73,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
   Scenario: Go to Snap settings page and put a valid JSON text in it but with no existing categories.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"
@@ -100,10 +91,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
   Scenario: Go to Snap settings page and put a not valid color in the JSON text.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"
@@ -121,10 +109,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color for a
   Scenario: Go to Snap settings page and put a wrong JSON text with duplicated IDs.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I should see "Category color"
     And I click on "Category color" "link"

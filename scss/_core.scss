@@ -5610,14 +5610,6 @@ div[id^=snap-create-activity-] .section-modchooser-link {
     width: 100%;
 }
 
-// Go to top button Snap Mobile
-@media (max-width: 991px) {
-    .theme-snap #goto-top-link {
-        bottom: 5em;
-        right: 0.7em;
-    }
-}
-
 #goto-top-link i.icon {
     color: #696969;
 }
@@ -5802,7 +5794,7 @@ $gototop-bottom-position: 50px !default;
     opacity: 0;
     transition: opacity .7s ease 0s, visibility .1s ease .8s;
     display: block;
-    position: fixed;
+    position: absolute;
     bottom: $gototop-bottom-position;
     right: 0;
     a {
@@ -5821,7 +5813,7 @@ $gototop-bottom-position: 50px !default;
 body.scrolled #goto-top-link {
     opacity: 1;
     visibility: visible;
-    transition: visibility 0s ease 0s, opacity .7s ease .1s;
+    transition: visibility 0s ease 0s, opacity .7s ease .1s, margin 0.2s ease;
 }
 
 body[id^="page-mod-"][id$="-view"] #region-main .tertiary-navigation .row .navitem {

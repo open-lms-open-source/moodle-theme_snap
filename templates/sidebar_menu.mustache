@@ -62,7 +62,7 @@
     }
 }}
 
-<div id="snap-sidebar-menu" class="snap-sidebar-menu">
+<div id="snap-sidebar-menu" class="snap-sidebar-menu {{#opensidebar}}show{{/opensidebar}} positioning-offscreen">
     <div class="snap-sidebar-menu-content">
         {{#menuitems}}
             {{#customcontent}}
@@ -96,11 +96,23 @@
                 {{/isbutton}}
             {{/customcontent}}
         {{/menuitems}}
+        
+        <!-- TOC Mobile Menu Toggle - Only visible on mobile -->
+        <a id="toc-mobile-menu-toggle" href="#course-toc" class="snap-sidebar-menu-item">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            <small class="sr-only">{{#str}}contents, theme_snap{{/str}}</small>
+        </a>
+    </div>
+
+    <div id="goto-top-link">
+        <a class="btn btn-light" role="button" href="javascript:void(0)" aria-label="Go to top">
+            <i class="icon fa fa-arrow-up" title="{{#str}}totop, theme_snap{{/str}}" aria-label="{{#str}}totop, theme_snap{{/str}}"></i>
+        </a>
     </div>
     
     <!-- Sidebar Menu Trigger Button (part of the sidebar) -->
     <button type="button" class="snap-sidebar-menu-trigger" aria-label="{{#str}}menu{{/str}}">
-        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        <i class="fa {{#opensidebar}}fa-angle-left rotate-180{{/opensidebar}}{{^opensidebar}}fa-angle-left{{/opensidebar}}" aria-hidden="true"></i>
     </button>
 </div>
 

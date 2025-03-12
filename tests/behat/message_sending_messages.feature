@@ -26,7 +26,6 @@ Feature: Snap message send messages
   I need to be able to send a message
 
   Background:
-    Given I skip because "Will be reviewed in INT-20853"
     Given I create the following course categories:
       | id | name   | category | idnumber | description |
       |  5 | Cat 5  |     0    |   CAT5   |   Test      |
@@ -163,22 +162,6 @@ Feature: Snap message send messages
     Then I should see "Hi!" in the ".message.clickable[data-region='message']" "css_element"
     And I check element ".message-app .message.send" with property "background-color" = "#E6E6E6"
     And I check element ".message-app .message.send .tail" with property "border-bottom-color" = "#E6E6E6"
-
-  Scenario: Message icon should change its color when the category color changes.
-    Given the following config values are set as admin:
-      | category_color | {"5":"#510038"} | theme_snap |
-    And I log in as "admin"
-    And I purge snap caches
-    And I wait until the page is ready
-    And I log out
-    And I wait until the page is ready
-    And I log in as "admin"
-    And I wait until the page is ready
-    And I follow "My Courses"
-    And I follow "Browse all courses"
-    And I wait until the page is ready
-    And I follow "Cat 5"
-    And I check element "[id^='message-drawer-toggle-'] .icon.fa-comment-o" with color "#510038"
 
   Scenario: Send a message from course participants.
     Given I log in as "student1"

@@ -23,7 +23,6 @@
 Feature: As an admin, I should be able to set a site's footer on Snap theme.
 
   Background:
-    Given I skip because "Will be reviewed in INT-20853"
     Given the following config values are set as admin:
       | theme | snap |
       | linkadmincategories | 0 |
@@ -40,10 +39,7 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
     And I am on site homepage
     And "iframe" "css_element" should not be visible
     And I should not see "New footer"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     Then I click on "Snap footer" "link"
     Then I should see "Site footer"
@@ -98,10 +94,7 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
     And the following config values are set as admin:
       | linkadmincategories | 0 |
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     Then I click on "Snap footer" "link"
     And I should see "Snap footer"

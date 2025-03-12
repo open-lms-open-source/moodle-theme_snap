@@ -52,7 +52,6 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   @javascript
   Scenario Outline: For editing teachers, ensure new section creation is available and works for topic courses but
     not single activity or social course formats.
-    Given I skip because "Will be reviewed in INT-20853"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -126,7 +125,6 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
 
   @javascript
   Scenario Outline: For editing teachers, ensure new section creation works when using content.
-    Given I skip because "Will be reviewed in INT-20853"
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |

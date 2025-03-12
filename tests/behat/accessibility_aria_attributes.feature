@@ -73,10 +73,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And the following config values are set as admin:
     | linkadmincategories | 0 |
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I follow "Featured categories and courses"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_one']" to "1"

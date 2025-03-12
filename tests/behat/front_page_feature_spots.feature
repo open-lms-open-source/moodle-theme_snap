@@ -70,10 +70,7 @@ Feature: Correct functionality of feature spots in the front page with every pos
     And the following config values are set as admin:
       | linkadmincategories | 0 |
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I follow "Feature spots"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fs_one_title_link']" to "testnolink"

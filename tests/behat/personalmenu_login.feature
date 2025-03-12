@@ -94,7 +94,6 @@ Feature: When the moodle theme is set to Snap,
 
   @javascript
   Scenario: User accesses a course and is prompted to log in, does not see personal menu
-    Given I skip because "Will be reviewed in INT-20853"
     Given the following "courses" exist:
       | fullname | shortname |
       | Course 1 | C1        |
@@ -102,8 +101,6 @@ Feature: When the moodle theme is set to Snap,
       | user      | course | role           |
       | teacher1  | C1     | editingteacher |
     And I am on homepage
-    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
-    When I follow "Courses"
     And I am on "Course 1" course homepage
     # The above will trigger a redirect to the login page.
     And I wait until ".snap-log-in-loading-spinner" "css_element" is not visible

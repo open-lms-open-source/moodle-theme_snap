@@ -35,10 +35,7 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
   Scenario: Go to Snap settings page, put a color in theme color and see contrast message.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I click on "#theme-settings-snap" "css_element"
     And I set the following fields to these values:
       |  Site color |      #FFAAAA                   |
@@ -50,10 +47,7 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
   Scenario: Go to Snap settings page, put a valid JSON text in it and see contrast message.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I click on "#theme-settings-snap" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"
@@ -71,10 +65,7 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
   Scenario: Go to Snap settings page, put a valid JSON text in it and don't see contrast message.
     Given I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I click on "#theme-settings-snap" "css_element"
     And I should see "Category color"
     And I click on "Category color" "link"

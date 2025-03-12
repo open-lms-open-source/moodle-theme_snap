@@ -1504,14 +1504,6 @@ body.format-tiles.editing .section .snap-asset .actions {
     }
 }
 
-.theme-snap #sticky-footer {
-    @media (min-width: 768px) {
-        &.snap-mod-data-sticky-footer {
-            margin-right: $drawer-width;
-        }
-    }
-}
-
 body#page-admin-plugins {
     .pluginicon { // Default for all plugins
         background: transparent;
