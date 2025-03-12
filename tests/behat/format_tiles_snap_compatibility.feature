@@ -119,6 +119,7 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
       | enableoutcomes | 1 |
       | theme | snap |
     Then I log in as "admin"
+    And I change window size to "large"
     And I am on "Course Test" course homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Legacy outcomes" in current page administration

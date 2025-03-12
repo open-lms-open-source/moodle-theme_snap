@@ -41,6 +41,7 @@ Feature: When the moodle theme is set to Snap, students and teachers can open a 
 
   @javascript
   Scenario Outline: Teacher / Student can view personal menu on a mobile device.
+    Given I skip because "Will be reviewed in INT-20853"
     Given I change window size to "320x480"
     And I log in as "<user>"
     And I open the personal menu

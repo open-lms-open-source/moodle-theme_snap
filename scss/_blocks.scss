@@ -405,8 +405,6 @@ body.path-site .block.block_settings {
     }
 
     svg {
-        margin-top: 0.4em;
-
         path {
             stroke: currentColor;
         }
@@ -726,9 +724,4 @@ body.notloggedin .drawer.drawer-right {
     .drawer.drawer-right {
       transition: none;
     }
-}
-
-body:has(#mr-nav.headroom--unpinned) .drawer.drawer-right {
-    margin-top: 0;
-    height: calc(100vh);
 }

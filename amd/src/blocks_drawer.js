@@ -25,9 +25,7 @@
 import Drawers from 'theme_boost/drawers';
 
 const SELECTORS = {
-    ADMIN_MENU_TRIGGER: 'admin-menu-trigger',
     DRAWER_OPEN_BUTTON: '.drawer-toggler.drawer-right-toggle > button',
-    SNAP_FEEDS_TRIGGER: 'snap_feeds_side_menu_trigger',
     BLOCK_SETTINGS: '.block_settings',
     DRAWER: '.drawer',
 };
@@ -36,32 +34,6 @@ const SELECTORS = {
  * Setup event listeners.
  */
 const setupEventListeners = () => {
-    const adminMenuTrigger = document.getElementById(SELECTORS.ADMIN_MENU_TRIGGER);
-    const snapFeedsTrigger = document.getElementById(SELECTORS.SNAP_FEEDS_TRIGGER);
-    if (adminMenuTrigger) {
-        adminMenuTrigger.addEventListener('click', () => {
-            Drawers.closeAllDrawers();
-            setTimeout(() => {
-                if (adminMenuTrigger.classList.contains('active')) {
-                    hideDrawerOpenButton();
-                } else {
-                    showDrawerOpenButton();
-                }
-            }, 200); // 200ms delay to allow the drawer to animate.
-        });
-    }
-    if (snapFeedsTrigger) {
-        snapFeedsTrigger.addEventListener('click', () => {
-            Drawers.closeAllDrawers();
-            setTimeout(() => {
-                if (snapFeedsTrigger.getAttribute('aria-expanded') === 'true') {
-                    hideDrawerOpenButton();
-                } else {
-                    showDrawerOpenButton();
-                }
-            }, 200); // 200ms delay to allow the drawer to animate.
-        });
-    }
     document.addEventListener(Drawers.eventTypes.drawerShow, e => {
         const originalPreventOverlap = e.detail.drawerInstance.preventOverlap;
         e.detail.drawerInstance.preventOverlap = () => {
@@ -84,26 +56,6 @@ const setupEventListeners = () => {
             e.stopPropagation();
         }
     }, true);
-};
-
-/**
- * Show the drawer open button.
- */
-const showDrawerOpenButton = () => {
-    const drawerOpenButton = document.querySelector(SELECTORS.DRAWER_OPEN_BUTTON);
-    if (drawerOpenButton) {
-        drawerOpenButton.style.display = 'inline-block';
-    }
-};
-
-/**
- * Hide the drawer open button.
- */
-const hideDrawerOpenButton = () => {
-    const drawerOpenButton = document.querySelector(SELECTORS.DRAWER_OPEN_BUTTON);
-    if (drawerOpenButton) {
-        drawerOpenButton.style.display = 'none';
-    }
 };
 
 /**

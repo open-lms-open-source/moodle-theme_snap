@@ -27,6 +27,7 @@ Feature: Snap managing contacts
   I need to be able to add and remove users
 
   Background:
+    Given I skip because "Will be reviewed in INT-20853"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |

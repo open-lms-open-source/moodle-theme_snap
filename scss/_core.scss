@@ -6228,20 +6228,6 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
         }
     }
 
-    // Messages icon.
-    [id^="message-drawer-toggle-"] {
-        &:focus-visible,
-        &:hover {
-            @extend .fa-beat;
-            --fa-animation-duration: 0.5s;
-            --fa-animation-iteration-count: 1;
-            font-weight: bolder;
-            .icon.fa-comment-o {
-                font-weight: bolder;
-            }
-        }
-    }
-
     // Intellicart icon.
     #nav-intellicart-popover-container .popover-region-toggle.nav-link.icon-no-margin:focus-visible {
         @extend .fa-beat;
@@ -6268,9 +6254,10 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
             -webkit-text-stroke-width: 1px;
         }
     }
+}
 
-    // Snap Feeds icon.
-    #snap_feeds_side_menu_trigger:focus-visible {
+.blocks-drawer-button {
+    &:hover, &:focus-visible {
         @extend .fa-bounce;
         --fa-animation-duration: 1s;
         --fa-animation-iteration-count: 1;
@@ -6278,14 +6265,17 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
             opacity: 1;
         }
     }
+}
 
-    // Admin gear icon.
-    #admin-menu-trigger:focus-visible {
-        svg {
-            transform: rotate(90deg);
-        }
-        .snap-gear-icon {
-            fill: currentColor;
+[id^="message-drawer-toggle-"] {
+    &:focus-visible,
+    &:hover {
+        @extend .fa-beat;
+        --fa-animation-duration: 0.5s;
+        --fa-animation-iteration-count: 1;
+        font-weight: bolder;
+        .icon.fa-comment-o {
+            font-weight: bolder;
         }
     }
 }
