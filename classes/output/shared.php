@@ -504,9 +504,10 @@ EOF;
         $PAGE->requires->js_call_amd('theme_snap/login_render-lazy', 'loginRender', $loginvars);
         // Does the page have editable course content?
         if ($pagehascoursecontent && $PAGE->user_allowed_editing()) {
-            $canmanageacts = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id));
-            if ($canmanageacts && $COURSE->format !== 'tiles' ||
-                ($canmanageacts && !empty($USER->editing) && $COURSE->format == 'tiles')) {
+            $canmanage = has_capability('moodle/course:manageactivities', context_course::instance($COURSE->id))
+                || has_capability('moodle/course:update', context_course::instance($COURSE->id));
+            if ($canmanage && $COURSE->format !== 'tiles' ||
+                ($canmanage && !empty($USER->editing) && $COURSE->format == 'tiles')) {
                 $modinfo = get_fast_modinfo($COURSE);
                 $modnamesused = $modinfo->get_used_module_names();
 
