@@ -919,7 +919,7 @@ class behat_theme_snap extends behat_base {
         // @codingStandardsIgnoreLine
         /* @var $generalcontext behat_general */
         $generalcontext = behat_context_helper::get('behat_general');
-        $generalcontext->ensure_element_exists('.block_adminblock', 'css_element');
+        $generalcontext->ensure_element_exists('#admin-menu-trigger', 'css_element');
         $generalcontext->ensure_element_exists('body.editing', 'css_element');
     }
 

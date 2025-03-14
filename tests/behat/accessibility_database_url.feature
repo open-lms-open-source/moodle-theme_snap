@@ -52,7 +52,9 @@ Feature: Check that the correct attributes exists for URL field in a database ac
     And I set the field "Field name" to "Data URL"
     And I click on "Save" "button"
     And I should see "Field added"
-    And I click on "button[data-original-title='Open block drawer']" "css_element"
+    And I am on "Course 1" course homepage
+    And I click on "#course-toc .chapters h3:nth-of-type(2)" "css_element"
+    And I click on "li.modtype_data a.mod-link" "css_element"
     And I follow "Database"
     And I click on "Add entry" "button"
     And the "type" attribute of "input.mod-data-input.form-control.d-inline" "css_element" should contain "url"

@@ -217,5 +217,6 @@ if ($runningbehattest) {
 }
 
 $THEME->requiredblocks = $requiredblocks;
+$THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
 $THEME->haseditswitch = false;
 $THEME->iconsystem = '\\theme_snap\\output\\icon_system_fontawesome';

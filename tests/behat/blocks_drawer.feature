@@ -10,9 +10,9 @@ Feature: Testing blocks_drawer in theme_snap
   Scenario: The blocks drawer can be opened, closed and see the Navigation block
     Given I am logged in as "teacher1"
     And I am on site homepage
-    Then "button[data-original-title='Open block drawer']" "css_element" should exist
+    Then "button[data-original-title='Toggle block drawer']" "css_element" should exist
     And I should not see "Dashboard" in the "Navigation" "block"
-    And I click on "button[data-original-title='Open block drawer']" "css_element"
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     And I should see "Dashboard" in the "Navigation" "block"
 
   @javascript
@@ -31,5 +31,5 @@ Feature: Testing blocks_drawer in theme_snap
     And ".drawer.show" "css_element" should not exist
     And "section.block_settings.state-visible" "css_element" should not exist
     Then I click on "#snap_feeds_side_menu_trigger" "css_element"
-    And I click on "button[data-original-title='Open block drawer']" "css_element"
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     And I should see "Dashboard" in the "Navigation" "block"
