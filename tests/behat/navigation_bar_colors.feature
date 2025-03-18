@@ -29,10 +29,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
       | linkadmincategories            | 0 |            |
       | personalmenuenablepersonalmenu | 1 | theme_snap |
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I should see "Navigation bar"
     And I click on "Navigation bar" "link"
@@ -57,10 +54,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
     And the following config values are set as admin:
       | linkadmincategories | 0 |
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I should see "Navigation bar"
     And I click on "Navigation bar" "link"

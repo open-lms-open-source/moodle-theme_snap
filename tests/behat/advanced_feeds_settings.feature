@@ -28,10 +28,7 @@ Feature: The setting Enable Advanced feeds should be available only when at leas
     And the following config values are set as admin:
       | linkadmincategories | 0 |
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I should see "Snap feeds"
     And I click on "Snap feeds" "link" in the "#snap-admin-tabs" "css_element"

@@ -159,7 +159,7 @@ body.path-site .block.block_settings {
     overflow-x: hidden;
     z-index: 13;
     right: -100%;
-    transition: right 0.4s ease-in-out;
+    transition: right 0.4s ease-in-out, top 0.3s ease, height 0.3s ease;
     width: 320px;
     position: fixed;
     top: 0em;
@@ -168,7 +168,6 @@ body.path-site .block.block_settings {
         right: 0;
     }
     .snap-feeds {
-        margin-top: 10em;
         h5, hr {
             display: none;
         }
@@ -561,7 +560,7 @@ body.path-site .block.block_settings {
     height: 0;
     visibility: hidden;
     position: fixed;
-    background-color: #fff !important;
+    background-color: #EEF0F6 !important;
     top: 0em;
     right: -100%;
     padding: 0;
@@ -619,7 +618,7 @@ body.path-site .block.block_settings {
     z-index: 13;
     right: 0;
     border-left: 1px solid #eee;
-    transition: right 0.4s ease-in-out;
+    transition: right 0.4s ease-in-out, top 0.3s ease, height 0.3s ease;
 }
 
 .block .header .title .commands {
@@ -697,19 +696,7 @@ body:not(#page-my-index) .block.block_calendar_month .maincalendar .calendartabl
 
 .drawer.drawer-right {
     background-color: #EEF0F6;
-    margin-top: 147px;
-    height: calc(100vh - 147px);
-    transition: margin-top 0.25s ease-in-out;
-    transition: right 0.2s ease, top 0.2s ease, bottom 0.2s ease, visibility 0.2s ease, transform 0.5s ease;
-    @media (max-width: 992px) {
-        margin-top: 97px;
-        height: calc(100vh - 97px);
-    }
-    @media (max-width: 991px) {
-        margin-top: 61px;
-        height: calc(100vh - 61px);
-    }
-
+    transition: right 0.3s ease, bottom 0.3s ease, top 0.3s ease, height 0.3s ease, visibility 0.3s ease, transform 0.5s ease;
     .card {
         border-radius: 0.5rem;
     }

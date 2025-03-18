@@ -28,17 +28,10 @@ Feature: Configure new external tool type to test it on a course.
       | fullname | shortname | category |
       | Course 1 | C1        | 0        |
     And the following config values are set as admin:
-      | linkadmincategories | 1 |
+      | linkadmincategories | 0 |
     And I log in as "admin"
     And I am on front page
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I scroll to the bottom
-    And I follow "Plugins"
-    And I follow "Site administration"
-    And I follow "Plugins"
-    And I follow "External tool"
-    And I follow "Manage tools"
+    And I go to "Site administration > Plugins > Activity modules > External tool > Manage tools" in snap administration
     # Create tool type that opens in a new window.
     And I follow "configure a tool manually"
     And I set the field "Tool name" to "Teaching Tool 1"

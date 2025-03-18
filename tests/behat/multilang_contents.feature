@@ -32,12 +32,7 @@ Feature: The site displays only the language that user has selected for multilan
       | Course 1 | Course 1  | C1       |
     And I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I scroll to the bottom
-    And I expand "Plugins" node
-    And I expand "Filters" node
-    And I follow "Manage filters"
+    And I go to "Site administration > Plugins > Filters > Manage filters" in snap administration
     And I click on "On" "option" in the "#activemultilang" "css_element"
     And I click on "Content and headings" "option" in the "#applytomultilang" "css_element"
     And I am on site homepage

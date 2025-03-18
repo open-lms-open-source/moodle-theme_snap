@@ -373,10 +373,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: $brand-primary;
     }
 
-    #toc-mobile-menu-toggle {
-        background-color: $brand-primary;
-    }
-
     #course-toc .snap-visible-section .chapter-title {
         background-color: $brand-primary;
         opacity: 0.8;
@@ -1425,7 +1421,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     */
     .snap-sidebar-menu {
         background-color: #eff0f6; // Light color when closed
-        transition: right 0.3s ease, background-color 0.3s ease;
         
         &.show {
             background-color: rgba($brand-primary, 0.8);

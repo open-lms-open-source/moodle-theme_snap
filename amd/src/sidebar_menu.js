@@ -31,6 +31,9 @@ const SELECTORS = {
     MESSAGES_POPOVER: '[data-region="popover-region-messages"]',
     CLOSE_DRAWER_BUTTON: '[data-action="closedrawer"]',
     SIDEBAR_MENU_ITEM: '.snap-sidebar-menu-item',
+    NAV_UNPINNED: '#mr-nav.headroom--unpinned',
+    GOTO_TOP_LINK: '#goto-top-link',
+    COURSE_TOC: '#course-toc',
 };
 
 const CLASSES = {
@@ -38,8 +41,27 @@ const CLASSES = {
     SHOW: 'show',
     ACTIVE: 'active',
     COLLAPSED: 'collapsed',
-    ROTATE: 'rotate-180'
+    ROTATE: 'rotate-180',
+    STATE_VISIBLE: 'state-visible',
+    POSITIONING_OFFSCREEN: 'positioning-offscreen',
 };
+
+const DRAWERS = {
+    SELECTORS: [
+        '.drawer',
+        '.block_settings.block',
+        '#snap_feeds_side_menu',
+        '.drawer:has(.message-app)'
+    ],
+    ACTIVE_SELECTORS: [
+        '.drawer.show',
+        '.block_settings.block.state-visible',
+        '#snap_feeds_side_menu.state-visible',
+        '.drawer:not(.hidden):has(.message-app)'
+    ]
+};
+
+let lastScrollX = 0;
 
 /**
  * Toggle sidebar menu visibility and update its position
@@ -51,7 +73,7 @@ const toggleSidebar = () => {
 
     sidebar.classList.toggle(CLASSES.SHOW);
     icon.classList.toggle(CLASSES.ROTATE);
-    updateSidebarPosition();
+    updateElementPositions();
     
     // If we're closing the sidebar, close any open drawers
     if (isClosing) {
@@ -60,19 +82,62 @@ const toggleSidebar = () => {
 };
 
 /**
- * Update sidebar position based on header height
+ * Update the position of UI elements relative to the header
+ * @param {Array|string|null} selectors - CSS selector(s) for elements to update, or null for sidebar only
  */
-const updateSidebarPosition = () => {
-    const sidebar = document.querySelector(SELECTORS.SIDEBAR);
+const updateElementPositions = (selectors = null) => {
     const header = document.querySelector(SELECTORS.HEADER);
-
-    if (!sidebar || !header) {
+    if (!header) {
         return;
     }
 
     const headerRect = header.getBoundingClientRect();
-    sidebar.style.top = `${headerRect.bottom}px`;
-    sidebar.style.height = `calc(100vh - ${headerRect.bottom}px)`;
+    const visibleHeight = window.innerHeight;
+    const topPosition = Math.max(0, headerRect.bottom);
+    const isNavUnpinned = document.querySelector(SELECTORS.NAV_UNPINNED);
+    
+    const sidebar = document.querySelector(SELECTORS.SIDEBAR);
+    if (sidebar) {
+        if (isNavUnpinned) {
+            sidebar.style.top = '0px';
+            sidebar.style.height = '100vh';
+        } else {
+            sidebar.style.top = `${topPosition}px`;
+            sidebar.style.height = `${visibleHeight - topPosition}px`;
+        }
+        
+        // Remove positioning-offscreen class after positioning is complete
+        // Add a small delay before removing the positioning-offscreen class
+        setTimeout(() => {
+            sidebar.classList.remove(CLASSES.POSITIONING_OFFSCREEN);
+        }, 100);
+    }
+
+    if (selectors) {
+        const selectorsArray = Array.isArray(selectors) ? selectors : [selectors];
+        
+        // Update each element's position
+        selectorsArray.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            
+            elements.forEach(element => {    
+                if (isNavUnpinned) {
+                    element.style.top = '0px';
+                    element.style.height = '100vh';
+                } else {
+                    element.style.top = `${topPosition}px`;
+                    element.style.height = `${visibleHeight - topPosition}px`;
+                }
+                
+                // Ensure the element is visible within the viewport if it's active
+                if (element.classList.contains(CLASSES.SHOW) || 
+                    element.classList.contains(CLASSES.ACTIVE) || 
+                    !element.classList.contains(CLASSES.COLLAPSED)) {
+                    element.style.maxHeight = isNavUnpinned ? '100vh' : `${visibleHeight - topPosition}px`;
+                }
+            });
+        });
+    }
 };
 
 /**
@@ -80,20 +145,21 @@ const updateSidebarPosition = () => {
  * @param {Event} e - The event object
  */
 const handleDrawerButtonClick = (e) => {
-    const button = e.target.closest(SELECTORS.DRAWER_BUTTON);
-    if (!button) {
-        return;
-    }
-
-    const activeSelector = button.dataset.activeselector;
-    if (!activeSelector) {
-        return;
-    }
-
-    // Check if the drawer is being opened
     setTimeout(() => {
+        const button = e.target.closest(SELECTORS.DRAWER_BUTTON);
+        repositionGotoTopLink();
+        if (!button) {
+            return;
+        }
+
+        const activeSelector = button.dataset.activeselector;
+        if (!activeSelector) {
+            return;
+        }
+
         const activeElements = document.querySelectorAll(activeSelector);
-        const isActive = Array.from(activeElements).some(el =>
+        const isActive = Array.from(activeElements).some(
+            (el) =>
             el.classList.contains(CLASSES.SHOW) ||
             el.classList.contains(CLASSES.ACTIVE) ||
             !el.classList.contains(CLASSES.COLLAPSED) // Consider not collapsed as active
@@ -116,7 +182,7 @@ const handleDrawerButtonClick = (e) => {
  */
 const closeOtherDrawers = (currentSelector, currentButton) => {
     const drawerButtons = document.querySelectorAll(SELECTORS.DRAWER_BUTTON);
-
+    repositionGotoTopLink();
     drawerButtons.forEach(button => {
         if (button === currentButton) {
             return;
@@ -152,7 +218,7 @@ const closeOtherDrawers = (currentSelector, currentButton) => {
  */
 const closeAllDrawers = () => {
     const drawerButtons = document.querySelectorAll(SELECTORS.DRAWER_BUTTON);
-    
+    repositionGotoTopLink();
     drawerButtons.forEach(button => {
         const activeSelector = button.dataset.activeselector;
         if (!activeSelector) {
@@ -185,6 +251,7 @@ const closeAllDrawers = () => {
  */
 const handleMessagesPopoverClick = (e) => {
     const sidebarItem = e.currentTarget.closest(SELECTORS.SIDEBAR_MENU_ITEM);
+    repositionGotoTopLink();
     if (sidebarItem) {
         const isCollapsed = e.currentTarget.classList.contains(CLASSES.COLLAPSED);
         if (isCollapsed) {
@@ -199,6 +266,7 @@ const handleMessagesPopoverClick = (e) => {
  * Handle close drawer button clicks
  */
 const handleCloseDrawerClick = () => {
+    repositionGotoTopLink();
     // Remove active classes from all drawer buttons
     document.querySelectorAll(SELECTORS.DRAWER_BUTTON).forEach(button => {
         button.classList.remove(CLASSES.ACTIVE);
@@ -220,8 +288,29 @@ const setupEventListeners = () => {
         trigger.addEventListener('click', toggleSidebar);
     }
 
-    window.addEventListener('resize', updateSidebarPosition);
-    window.addEventListener('scroll', updateSidebarPosition);
+    // Update both sidebar and drawer positions on resize and scroll
+    window.addEventListener('resize', () => {
+        updateElementPositions(DRAWERS.SELECTORS);
+    });
+    
+    window.addEventListener('scroll', () => {
+        // Add a small delay to avoid performance issues with rapid scroll events
+        setTimeout(() => {
+            updateElementPositions(DRAWERS.SELECTORS);
+            
+            // Check if Go to Top link is visible and reposition it if needed
+            const gotoTopLink = document.querySelector(SELECTORS.GOTO_TOP_LINK);
+            if (gotoTopLink) {
+                const computedStyle = window.getComputedStyle(gotoTopLink);
+                if (computedStyle.visibility === 'visible') {
+                    repositionGotoTopLink();
+                }
+            }
+            
+            // Handle horizontal scrolling to control sticky elements (e.g. grader)
+            toggleSidebarOnHorizontalScroll(window.scrollX);
+        }, 50);
+    });
 
     // Add click event listeners to drawer buttons
     document.querySelectorAll(SELECTORS.DRAWER_BUTTON).forEach(button => {
@@ -238,6 +327,39 @@ const setupEventListeners = () => {
     document.querySelectorAll(SELECTORS.CLOSE_DRAWER_BUTTON).forEach(element => {
         element.addEventListener('click', handleCloseDrawerClick);
     });
+    
+    // Set up course TOC observer
+    setupCourseTocObserver();
+};
+
+/**
+ * Set up a MutationObserver to watch for changes to #course-toc
+ */
+const setupCourseTocObserver = () => {
+    const courseToc = document.querySelector(SELECTORS.COURSE_TOC);
+    if (courseToc) {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    if (courseToc.classList.contains(CLASSES.STATE_VISIBLE)) {
+                        // Close the sidebar when course TOC becomes visible
+                        const sidebar = document.querySelector(SELECTORS.SIDEBAR);
+                        const icon = document.querySelector(SELECTORS.TRIGGER_ICON);
+                        
+                        if (sidebar && sidebar.classList.contains(CLASSES.SHOW)) {
+                            sidebar.classList.remove(CLASSES.SHOW);
+                            if (icon) {
+                                icon.classList.remove(CLASSES.ROTATE);
+                            }
+                            closeAllDrawers();
+                            updateElementPositions();
+                        }
+                    }
+                }
+            });
+        });
+        observer.observe(courseToc, { attributes: true });
+    }
 };
 
 /**
@@ -245,8 +367,77 @@ const setupEventListeners = () => {
  */
 export const init = () => {
     setupEventListeners();
-    updateSidebarPosition();
+    updateElementPositions();
     
-    // Open the sidebar by default
-    toggleSidebar();
+    // Update positions of all drawers
+    updateElementPositions(DRAWERS.SELECTORS);
+};
+
+/**
+ * Reposition the "Go to Top" button based on open drawers
+ */
+const repositionGotoTopLink = () => {
+    const gotoTopLink = document.querySelector(SELECTORS.GOTO_TOP_LINK);
+    if (!gotoTopLink) {
+        return;
+    }
+    
+    gotoTopLink.style.marginRight = '';
+    
+    // Check if sidebar is showing
+    const sidebar = document.querySelector(SELECTORS.SIDEBAR);
+    const isSidebarShowing = sidebar && sidebar.classList.contains(CLASSES.SHOW);
+    
+    // Only proceed if sidebar is showing
+    if (isSidebarShowing) {
+        // Check each drawer selector
+        for (const selector of DRAWERS.ACTIVE_SELECTORS) {
+            const drawer = document.querySelector(selector);
+            
+            if (drawer && drawer.offsetWidth > 0) {
+                // Get the width of the drawer
+                const drawerWidth = drawer.offsetWidth;
+                // Add margin to position the link to the left of the drawer
+                gotoTopLink.style.marginRight = `${drawerWidth}px`;
+                return; // Exit after finding the first open drawer
+            }
+        }
+    }
+};
+
+/**
+ * Hide or show the sidebar based on horizontal scroll position
+ * @param {number} scrollX - The horizontal scroll position
+ */
+const toggleSidebarOnHorizontalScroll = (scrollX) => {
+    const sidebar = document.querySelector(SELECTORS.SIDEBAR);
+    if (!sidebar) {
+        return;
+    }
+    if (scrollX !== 0) {
+        if (lastScrollX === 0) {
+            // Hide sidebar
+            sidebar.style.right = '-100%';
+            
+            // Hide active drawers
+            DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
+                const activeDrawers = document.querySelectorAll(selector);
+                activeDrawers.forEach(drawer => {
+                    drawer.style.right = '-100%';
+                });
+            });
+        }
+    } else if (lastScrollX !== 0) {
+        // When returning to scroll position 0
+        sidebar.style.right = '';
+        
+        // Restore active drawers visibility
+        DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
+            const activeDrawers = document.querySelectorAll(selector);
+            activeDrawers.forEach(drawer => {
+                drawer.style.right = '';
+            });
+        });
+    }
+    lastScrollX = scrollX;
 };

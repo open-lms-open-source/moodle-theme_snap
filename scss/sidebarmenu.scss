@@ -9,6 +9,10 @@ $hover-text-color: #fff;
 $text-color: #fff;
 $transition-speed: 0.3s;
 
+// Mobile variables
+$mobile-sidebar-width: 40px;
+$mobile-sidebar-peek-width: 10px;
+
 .snap-sidebar-menu {
     position: fixed;
     top: 0;
@@ -16,13 +20,13 @@ $transition-speed: 0.3s;
     width: $sidebar-width;
     height: 100%;
     z-index: $sidebar-z-index;
-    transition: right $transition-speed ease;
+    transition: 
+        right $transition-speed ease,
+        top $transition-speed ease, 
+        height $transition-speed ease,
+        background-color $transition-speed ease;
     overflow: visible;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    
-    &.show {
-        right: 0;
-    }
     
     &::before {
         content: '';
@@ -30,11 +34,22 @@ $transition-speed: 0.3s;
         top: 15px;
         left: 50%;
         transform: translateX(-50%);
-        width: 40px;
+        width: 0;
         height: 3px;
         background-color: #fff;
         border-radius: 3px;
         z-index: $sidebar-z-index + 1;
+        opacity: 0;
+        transition: width $transition-speed ease, opacity $transition-speed ease;
+    }
+    
+    &.show {
+        right: 0;
+                
+        &::before {
+            width: 40px;
+            opacity: 1;
+        }
     }
 }
 
@@ -212,6 +227,21 @@ $transition-speed: 0.3s;
     background-color: transparent;
 }
 
+@media screen and (max-width: 992px) {
+    .snap-sidebar-menu {
+        width: $mobile-sidebar-width;
+        right: -($mobile-sidebar-width - $mobile-sidebar-peek-width);
+    }
+
+    .snap-sidebar-menu-content {
+        width: $mobile-sidebar-width;
+    }
+}
+
+.snap-sidebar-menu.positioning-offscreen {
+    right: -200px;
+}
+
 // ---------------------------------------
 // External overrides/adaptations
 // ---------------------------------------
@@ -219,10 +249,16 @@ $transition-speed: 0.3s;
 #page-content .block_settings.state-visible,
 .block_settings:target {
     right: $sidebar-width;
+    @media screen and (max-width: 992px) {
+        right: $mobile-sidebar-width;
+    }
 }
 
 .drawer.drawer-right.show {
     right: $sidebar-width;
+    @media screen and (max-width: 992px) {
+        right: $mobile-sidebar-width;
+    }
     
     // Add z-index when dropdown menu is visible to not hide it.
     body:has(.dropdown-menu.dropdown-menu-right.show) & {
@@ -232,12 +268,20 @@ $transition-speed: 0.3s;
 
 #snap_feeds_side_menu.state-visible {
     right: $sidebar-width;
+    @media screen and (max-width: 992px) {
+        right: $mobile-sidebar-width;
+        width: calc(100% - #{$mobile-sidebar-width});
+        .snap-feeds-mobile-menu .nav{
+            width: calc(100% - #{$mobile-sidebar-width});
+        }
+    }
 }
 
 [data-region=right-hand-drawer].drawer {
-    top: 147px; // TODO: This has to be dynamic
-    height: calc(100% - 147px); // TODO: This has to be dynamic
     margin-right: $sidebar-width;
+    @media screen and (max-width: 992px) {
+        margin-right: $mobile-sidebar-width;
+    }
 }
 
 [data-region="popover-region-messages"] {
@@ -250,5 +294,40 @@ $transition-speed: 0.3s;
         &::after {
             content: none;
         }
+    }
+}
+
+.snap-sidebar-menu {
+    &.show {
+        & ~ #page {
+            margin-right: $sidebar-width;
+            @media screen and (max-width: 992px) {
+                margin-right: $mobile-sidebar-width;
+            }
+        }
+    }
+}
+
+
+#mr-nav {
+    &.headroom--unpinned {
+        & ~ .snap-sidebar-menu {
+            top: 0 !important;
+            height: 100vh !important;
+        }
+    }
+}
+
+#goto-top-link {
+    bottom: 6em;
+    right: $sidebar-width;
+
+    @media (max-width: 991px) {
+        right: $mobile-sidebar-width;
+    }
+    
+    a.btn {
+        border-radius: 1.5rem 0 0 1.5rem;
+        width: 2rem;
     }
 }

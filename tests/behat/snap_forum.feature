@@ -64,30 +64,6 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
       | teacher1 | not exist |
 
   @javascript
-  Scenario Outline: Settings option in discussions is shown correctly for experimental ui in different screen sizes
-    Given I skip because "Will be reviewed in INT-20853"
-    Given I log in as "student1"
-    And I am on "Course 1" course homepage
-    And I follow "Section 1"
-    And I click on ".forum .instancename:contains('Test forum name')" "css_element"
-    And I add a new discussion to "Test forum name" forum with:
-      | Subject | Discussion 1 |
-      | Message | Discussion contents 1, first message |
-    And I click on "Discussion 1" "link"
-    And "button[aria-controls=\"discussion-settings-drawer\"]" "css_element" should exist
-    And I click on "[id^=toggle-discussion-settings-drawer]" "css_element"
-    And I change window size to "<size>"
-    And I check element "#discussion-settings-drawer" with property "top" = "<Top>"
-    And I log out
-    Examples:  // Top is converted to px as 1em = 19.8
-      | size      | Top   |
-      | 1920x1080 |   6em |
-      |  992x1080 | 3.5em |
-      |  790x1080 | 5.5em |
-      |  765x1080 |   4em |
-      |  665x1080 | 6.5em |
-
-  @javascript
   Scenario: Grading Buttons are usable for teachers.
     Given I log in as "student1"
     And I am on "Course 1" course homepage

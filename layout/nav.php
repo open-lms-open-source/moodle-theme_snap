@@ -193,8 +193,10 @@ if (isloggedin() && !isguestuser()) {
 
     // Only render the sidebar menu if there are items to display
     if (!empty($sidebarmenuitems)) {
+        $opensidebar = true; // Opened by default
         echo $OUTPUT->render_from_template('theme_snap/sidebar_menu', [
-            'menuitems' => $sidebarmenuitems
+            'menuitems' => $sidebarmenuitems,
+            'opensidebar' => $opensidebar
         ]);
     }
 

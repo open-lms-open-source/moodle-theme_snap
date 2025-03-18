@@ -104,9 +104,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I click on "#delete_image_confirm_button" "css_element"
     Then I should not see cover image in page header
     Then I log in as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Development" node
+    And I go to "Site administration > Development" in snap administration
     And I follow "Purge caches"
     And I press "Purge all caches"
     Then I should see "All caches were purged"

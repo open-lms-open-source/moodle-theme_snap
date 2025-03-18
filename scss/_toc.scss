@@ -414,29 +414,13 @@ label[for="toc-search-input"]{
 
 @include media-breakpoint-down(md) {
     .theme-snap  a#toc-mobile-menu-toggle {
-        background-image: url("[[pix:theme|burger]]");
-        background-repeat: no-repeat;
-        background-position-x: 50%;
-        background-position-y: 50%;
-        background-size: 1em;
-        display: inline-block;
-        bottom: 0.5em;
-        right: 0.5em;
-        position: fixed;
-        width: 2em;
-        height: 2em;
-        font-size: 1.5em;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-        border-radius: 50%;
-        z-index: 666;
+        display: block;
     }
-
     #course-toc {
         position: fixed !important;
-        right: 0;
         padding: 3em 4%;
         margin: 0;
-        z-index: 66;
+        z-index: 1052;
         background-color: transparent !important;
         @include alakazam();
         outline: none;
@@ -475,12 +459,15 @@ label[for="toc-search-input"]{
             text-align: left;
         }
 
-        #toc-mobile-menu-toggle {
+        #toc-mobile-menu-toggle.toc-mobile-menu-toggle-close{
             position: fixed;
             box-shadow: none;
-            top: 0;
+            top: 1.8em;
+            right: 2em;
+            width: 2em;
+            height: 2em;
             background: white url("[[pix:theme|close_x]]") no-repeat 50% 50%;
-            background-size: 1em;
+            background-size: 2em;
         }
     }
 

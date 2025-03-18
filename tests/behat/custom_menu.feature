@@ -25,13 +25,10 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
 
   Background:
     Given the following config values are set as admin:
-      | linkadmincategories | 1 |
+      | linkadmincategories | 0 |
     And I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I follow "Appearance"
-    And I follow "Advanced theme settings"
+    And I go to "Site administration > Appearance > Advanced theme settings" in snap administration
     And I set the text field  "Custom menu items" with multi-line text:
       """
       Moodle community|https://moodle.org
