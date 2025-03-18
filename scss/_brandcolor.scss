@@ -728,6 +728,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
         // Edit mode toggle.
         .editmode-switch-form {
+            margin-bottom: 0;
             .input-group {
                 label {
                     color: $brand-primary !important;
