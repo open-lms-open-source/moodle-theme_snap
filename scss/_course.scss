@@ -257,6 +257,9 @@ li.section:focus {
 
 .course-content .current {
     background-color: transparent;
+    &::before {
+        content: unset;
+    }
 }
 
 .sectionname {
@@ -410,6 +413,7 @@ li.section:focus {
         .dropdown-item {
             display: block;
             border-radius: initial;
+            text-align: left;
             width: auto;
             height: auto;
             padding: 0.5em;
@@ -425,6 +429,13 @@ li.section:focus {
 
                 .menu-icon { // Making the pix icon white.
                     filter: brightness(0) invert(1);
+                }
+            }
+
+            &.ajaxing {
+                &::after {
+                    display: inline-block;
+                    margin-left: 7em;
                 }
             }
         }
