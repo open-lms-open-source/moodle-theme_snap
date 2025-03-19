@@ -129,6 +129,7 @@ if ($coursemainpage) {
 
 </div>
 </div>
+<?php echo $OUTPUT->standard_after_main_region_html() ?>
 <!-- close moodle js hooks -->
 
 <?php require(__DIR__.'/footer.php');
