@@ -150,10 +150,12 @@ if (!empty($coverimagecss)) {
             <?php echo $OUTPUT->custom_block_region('side-pre'); ?>
         </div>
         <?php
+        require __DIR__.'/blocks_drawer.php';
         echo $OUTPUT->snap_feeds_side_menu();
         ?>
     </div>
 </div>
+<?php echo $OUTPUT->standard_after_main_region_html() ?>
     <!-- close moodle js hooks -->
 <?php
 // @codingStandardsIgnoreEnd

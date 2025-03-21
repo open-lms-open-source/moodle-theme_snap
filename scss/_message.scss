@@ -158,11 +158,6 @@
     width: 100%;
 }
 
-#page-user-profile [data-region=right-hand-drawer].drawer,
-.path-course-view
-[data-region=right-hand-drawer].drawer {
-    visibility: hidden;
-}
 // Fix for personal menu hidden in IE 11 message page.
 .ie11#page-message-index {
     #region-main div[role="main"] .message-app.main > .container-fluid {
@@ -215,11 +210,6 @@
         height: 38px;
         width: 38px;
     }
-}
-
-// Hide the message drawer when in profile view.
-body#page-user-profile .drawer .message-app {
-    visibility: hidden;
 }
 
 // Fix for message page to modify visibility on search input for mobile view"

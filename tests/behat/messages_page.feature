@@ -98,36 +98,24 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     Then ".drawer .message-app" "css_element" should not be visible
 
   @javascript
-  Scenario: When selecting messages in profile, a new messages window opens.
+  Scenario: When selecting messages in profile, message drawer is opened.
     Given I log in as "admin"
     And I open the user menu
     And I follow "Profile"
     And I wait until the page is ready
     And I click on "//a[@id='message-user-button']" "xpath_element"
     And I wait until the page is ready
-    And I check body for classes "theme-snap"
-    And "body#page-message-index" "css_element" should exist
+    And ".snap-drawer-headroom" "css_element" should be visible
 
   @javascript
-  Scenario: Accessing the messages from the user report in the grader redirects to the message index page.
-    Given I log in as "admin"
-    And I am on the course main page for "C1"
-    And I follow "Course Dashboard"
-    And I follow "Gradebook"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "User report" in current page administration
-    And I set the field with xpath "//*[@data-region='input']" to "Student"
-    And I click on "li[aria-label='Student 1']" "css_element"
-    And I click on "#message-user-button" "css_element"
-    Then "body#page-message-index" "css_element" should exist
-
-  @javascript
-  Scenario: Messages drawer is not visible in Snap general views.
+  Scenario: Messages drawer is visible in Snap general views.
     Given I log in as "admin"
     And I am on site homepage
-    And ".snap-drawer-headroom" "css_element" should not be visible
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Settings" in current page administration
-    And ".snap-drawer-headroom" "css_element" should not be visible
+    And I click on "[data-region='popover-region-messages']" "css_element"
+    And ".snap-drawer-headroom" "css_element" should be visible
+    And I am on the course main page for "C1"
+    And I click on "[data-region='popover-region-messages']" "css_element"
+    And ".snap-drawer-headroom" "css_element" should be visible
     And I follow "My Courses"
-    And ".snap-drawer-headroom" "css_element" should not be visible
+    And I click on "[data-region='popover-region-messages']" "css_element"
+    And ".snap-drawer-headroom" "css_element" should be visible

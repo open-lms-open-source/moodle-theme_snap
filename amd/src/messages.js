@@ -23,8 +23,8 @@
 /**
  * JS code to manage hide/show of full width messages drawer.
  */
-define(['jquery', 'core/pubsub'],
-    function($, PubSub) {
+define(['jquery'],
+    function($) {
         // Array to control which popovers are open.
         var openedpopovers = [];
         // Maximum size in pixels to consider a mobile screen
@@ -98,41 +98,7 @@ define(['jquery', 'core/pubsub'],
                             }
                         }
                     }).bind();
-                } else {
-
-                    // The pages or selectors in this array will redirect to the message page without showing the drawer.
-                    const redirectPagesForMessages = [
-                        '#page-user-profile',
-                        '.userprofile #message-user-button',
-                        '#page-grade-report-user-index',
-                        '#page-grade-report-overview-index',
-                    ];
-
-                    const isPageMatched = redirectPagesForMessages.some(function(selector) {
-                        return $(selector).length != 0;
-                    });
-
-                    if (isPageMatched) {
-                        $('[id^="drawer-"].drawer[role="region"]').css('display', 'none');
-                        PubSub.subscribe("message-drawer-create-conversation-with-user", function (args) {
-                            redirectToMessage(args);
-                        });
-                        // The drawer in snap will always open in a new window
-                        PubSub.subscribe("message-drawer-show-conversation", function (args) {
-                            redirectToMessage(args);
-                        });
-                    }
                 }
-                var redirectToMessage = function(args) {
-                    let processedId = '';
-                    if (typeof args === 'object' && args.userid) {
-                        processedId = parseInt(args.userid);
-                    } else {
-                        processedId = parseInt(args);
-                    }
-                    const moodleurl = M.cfg.wwwroot;
-                    window.location = moodleurl.concat('/message/index.php?id=', processedId);
-                };
             },
         };
     }
