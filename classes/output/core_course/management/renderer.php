@@ -57,9 +57,9 @@ class renderer extends \core_course_management_renderer {
      * @return string
      */
     private function decorate_link_with_detail_hash(string $html) : string {
-        $needle = 'class="float-left coursename aalink" href="';
+        $needle = 'class="float-start coursename aalink" href="';
         if (strpos($html, $needle) === false) {
-            $needle = 'class="text-break col pl-0 mb-2 coursename aalink" href="';
+            $needle = 'class="text-break col ps-0 mb-2 coursename aalink" href="';
         }
         $hrefstart = strpos($html, $needle) + strlen($needle);
         $hrefclose = strpos($html, '"', $hrefstart);

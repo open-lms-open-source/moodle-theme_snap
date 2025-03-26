@@ -57,7 +57,7 @@
                     <div class="coursegrade">{{#str}}coursegrade, theme_snap{{/str}} <a href="{{feedbackurl}}">{{feedback.coursegrade.value}}</a></div>
             {{/feedback.coursegrade.value}}
             {{#completion.render}}
-            <div class="completionstatus outoftotal">{{#str}}progresstotal, completion, {"complete":{{completion.complete}},"total":{{completion.total}} }{{/str}}<span class="float-right">{{completion.progress}}%</span></div>
+            <div class="completionstatus outoftotal">{{#str}}progresstotal, completion, {"complete":{{completion.complete}},"total":{{completion.total}} }{{/str}}<span class="float-end">{{completion.progress}}%</span></div>
             <div class="completion-line" style="width:{{completion.progress}}%"></div>
             {{/completion.render}}
         </div>

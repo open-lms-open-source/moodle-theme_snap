@@ -1261,7 +1261,7 @@ footer #moodle-footer
     #snap-header {
         padding: .5em 4%;
         padding-bottom: 0;
-        .pull-right.js-only, .float-right.js-only {
+        .pull-right.js-only, .float-end.js-only {
             .nav-link {
                 padding: .5rem .5rem;
             }
@@ -1287,7 +1287,7 @@ footer #moodle-footer
 
     @media (max-width: 991px) {
         width: 100%;
-        .float-right.js-only.row {
+        .float-end.js-only.row {
             margin-right: 0.2rem;
         }
     }
@@ -1416,7 +1416,7 @@ footer #moodle-footer
 // Styles for Snap user menu.
 #snap-header {
 
-    .pull-right.js-only.row, .float-right.js-only.row {
+    .pull-right.js-only.row, .float-end.js-only.row {
         margin-top: 1em;
 
         @media (max-width: 768px) {
@@ -1579,7 +1579,7 @@ footer #moodle-footer
         #admin-menu-trigger {
             margin-left: .2em;
         }
-        .float-right.js-only.row .hidden-md-down a[aria-label="Search"] i.fa-search {
+        .float-end.js-only.row .hidden-md-down a[aria-label="Search"] i.fa-search {
             font-size: 1.6rem;
         }
     }
@@ -1588,7 +1588,7 @@ footer #moodle-footer
 // md: 768px.
 @include media-breakpoint-down(md) {
     #snap-header {
-        .pull-right.js-only.row, .float-right.js-only.row {
+        .pull-right.js-only.row, .float-end.js-only.row {
             padding-top: 0;
             margin-top: 0;
             #snap-pm-trigger.js-snap-pm-trigger {
@@ -5043,8 +5043,8 @@ section#region-main {
 .activity-navigation {
     .pull-right,
     .pull-left,
-    .float-right,
-    .float-left {
+    .float-end,
+    .float-start {
         a {
             white-space: inherit;
         }
