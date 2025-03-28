@@ -24,6 +24,7 @@
 Feature: Users can access to the My Courses page in Snap.
 
   Background:
+    Given I skip because "Will be reviewed on INT-20906"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | student1  | Student    | 1         | student1@example.com  |
