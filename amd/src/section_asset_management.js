@@ -682,7 +682,7 @@ define(
                     var loadedSections = [];
                     var sections = [];
                     if (current != 0 && target != 0) {
-                        $.each($('#course-toc #chapters > li a'), function (idx, obj) {
+                        $.each($('#course-toc #chapters li a'), function (idx, obj) {
                             sections.push($(obj).attr('href').split('#section-')[1]);
                         });
                         var newOrder = calculateSections(sections, current, target);
