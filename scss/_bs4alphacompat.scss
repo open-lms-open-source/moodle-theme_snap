@@ -52,20 +52,20 @@ $tag-warning-bg: $brand-warning !default;
 $tag-danger-bg: $brand-danger !default;
 
 $state-success-text: $success;
-$state-success-bg: theme-color-level("success", -10) !default;
-$state-success-border: theme-color-level("success", -9) !default;
+$state-success-bg: shift-color($success, -80%) !default;
+$state-success-border: shift-color($success, -70%) !default;
 
 $state-info-text: $info;
-$state-info-bg: theme-color-level("info", -10) !default;
-$state-info-border: theme-color-level("info", -9) !default;
+$state-info-bg: shift-color($info, -80%) !default;
+$state-info-border: shift-color($info, -70%) !default;
 
 $state-warning-text: $warning;
-$state-warning-bg: theme-color-level("warning", -10) !default;
-$state-warning-border: theme-color-level("warning", -10) !default;
+$state-warning-bg: shift-color($warning, -80%) !default;
+$state-warning-border: shift-color($warning, -80%) !default;
 
 $state-danger-text: $danger;
-$state-danger-bg: theme-color-level("danger", -10) !default;
-$state-danger-border: theme-color-level("danger", -9) !default;
+$state-danger-bg: shift-color($danger, -80%) !default;
+$state-danger-border: shift-color($danger, -70%) !default;
 
 @mixin form-control-validation($color) {
     // Color the label and help text

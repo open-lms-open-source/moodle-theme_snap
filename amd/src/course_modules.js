@@ -212,7 +212,7 @@ define(
                 if (lbox.length === 0) {
                     $(appendto).append('<div id="snap-light-box" tabindex="-1">' +
                         '<div id="snap-light-box-content"></div>' +
-                        '<a id="snap-light-box-close" class="float-right snap-action-icon snap-icon-close" href="#">' +
+                        '<a id="snap-light-box-close" class="float-end snap-action-icon snap-icon-close" href="#">' +
                         '<small>Close</small>' +
                         '</a>' +
                         '</div>');

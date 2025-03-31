@@ -1577,7 +1577,7 @@ class course_renderer extends \core_course_renderer {
     public function communication_link(): string {
         $link = $this->communication_url() ?? '';
         $commicon = $this->pix_icon('t/messages-o', '', 'moodle', ['class' => 'fa fa-comments']);
-        $newwindowicon = $this->pix_icon('i/externallink', get_string('opensinnewwindow'), 'moodle', ['class' => 'ml-1']);
+        $newwindowicon = $this->pix_icon('i/externallink', get_string('opensinnewwindow'), 'moodle', ['class' => 'ms-1']);
         $content = $commicon . get_string('communicationroomlink', 'course') . $newwindowicon;
         $html = html_writer::tag('a', $content, ['target' => '_blank', 'href' => $link]);
 

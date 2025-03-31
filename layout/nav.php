@@ -56,7 +56,7 @@ if (!empty($PAGE->theme->settings->logo)) {
 echo html_writer::link($defaulthomeurl, $sitefullname, $attrs);
 ?>
 
-<div class="float-right js-only row">
+<div class="float-end js-only row">
     <?php
     if (class_exists('local_geniusws\navigation')) {
         $bblink = new genius_dashboard_link();

@@ -21,7 +21,7 @@
     // We need to specify the exact elements that needs to have a transparent background,
     // since core create some buttons as anchors and that may cause a problem.
     // Had to separate this in two otherwise it won't work.
-    #category-listing ul.ml-1.list-unstyled a.categoryname {
+    #category-listing ul.ms-1.list-unstyled a.categoryname {
         &:hover,
         &:active,
         &:focus {
