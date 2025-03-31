@@ -129,3 +129,20 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
       | 1                       | list    | should not  | Section one   | Section two    |
       | 0                       | top     | should      | Section one   | Section two    |
       | 1                       | top     | should      | 1.Section one | 1.Section two  |
+
+  @javascript
+  Scenario: Teacher with course update permission can see delete section confirmation dialog.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | coursepartialrender | 1 | theme_snap |
+    And I log out
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+
+    And I follow "Section 1"
+    Then "#section-1" "css_element" should exist
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    When I click on "#section-1 .snap-section-editing.actions .snap-delete" "css_element"
+    Then I should see section delete dialog
+    Then I should see "Are you absolutely sure you want to completely delete"
+
