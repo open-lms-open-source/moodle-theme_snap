@@ -174,6 +174,10 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 </div>
 
 <?php
+if($OUTPUT->snap_page_is_book()){
+    echo $OUTPUT->snap_blocks();
+}
+
 require __DIR__.'/blocks_drawer.php';
 echo $OUTPUT->snap_feeds_side_menu();
 ?>

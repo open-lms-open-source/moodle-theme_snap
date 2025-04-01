@@ -2807,4 +2807,14 @@ HTML;
     protected function snap_page_is_user_view() {
         return $this->page->pagetype === 'user-view';
     }
+
+    /**
+     * Checks if the current page is a book type activity.
+     *
+     * @return bool
+     */
+    protected function snap_page_is_book() {
+        return $this->page->context->contextlevel === CONTEXT_MODULE
+            && $this->page->cm->modname === 'book';
+    }
 }
