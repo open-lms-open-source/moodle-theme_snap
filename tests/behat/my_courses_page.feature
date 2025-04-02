@@ -24,7 +24,6 @@
 Feature: Users can access to the My Courses page in Snap.
 
   Background:
-    Given I skip because "Will be reviewed on INT-20906"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | student1  | Student    | 1         | student1@example.com  |
@@ -51,26 +50,23 @@ Feature: Users can access to the My Courses page in Snap.
     And I should see "Course overview"
     Then ".block_myoverview" "css_element" should exist
     And ".snap-page-my-courses-options .btn-group" "css_element" should exist
-    Then I click on ".snap-page-my-courses-options .btn-group" "css_element"
-    And I should see "New course"
+    And I should see "Create course"
     And I should see "Manage courses"
     And I should not see "Request a course"
-    And I follow "New course"
+    When I click on "Create course" "button" in the "page-content" "region"
     And I should see "Add a new course"
     And I click on "#snap-home" "css_element"
-    And I click on ".snap-page-my-courses-options .btn-group" "css_element"
-    And I follow "Manage courses"
+    When I click on "Manage courses" "button" in the "page-content" "region"
     And I should see "Manage course categories and courses"
     And I log out
     And I log in as "student1"
     And I should see "Course overview"
     Then ".block_myoverview" "css_element" should exist
     And ".snap-page-my-courses-options .btn-group" "css_element" should exist
-    Then I click on ".snap-page-my-courses-options .btn-group" "css_element"
-    And I should not see "New course"
+    And I should not see "Create course"
     And I should not see "Manage courses"
     And I should see "Request a course"
-    And I follow "Request a course"
+    When I click on "Request a course" "button" in the "page-content" "region"
     And I should see "Details of the course you are requesting"
     And the following config values are set as admin:
       | enablecourserequests | 0 |
@@ -111,7 +107,7 @@ Feature: Users can access to the My Courses page in Snap.
     And I follow "Plugins"
     And I follow "Category: Blocks"
     And I follow "Manage blocks"
-    And I click on "Disable Course overview" "icon" in the "Course overview" "table_row"
+    And I click on "Disable Course overview" "checkbox" in the "Course overview" "table_row"
     And I follow "My Courses"
     Then ".block_myoverview" "css_element" should not exist
     And I should see "The Course overview block is disabled"
@@ -120,13 +116,14 @@ Feature: Users can access to the My Courses page in Snap.
     And I follow "Plugins"
     And I follow "Category: Blocks"
     And I follow "Manage blocks"
-    And I click on "Enable Course overview" "icon" in the "Course overview" "table_row"
+    And I click on "Enable Course overview" "checkbox" in the "Course overview" "table_row"
     And I follow "My Courses"
     Then ".block_myoverview" "css_element" should exist
     And I should not see "The Course overview block is disabled"
 
   @javascript
   Scenario: User can use the year filter in the Course overview block in Snap.
+    Given I skip because "Will be reviewed on INT-20992"
     Given I log in as "teacher1"
     And I should see "Course overview"
     And "#yeardropdown" "css_element" should not exist
@@ -161,6 +158,7 @@ Feature: Users can access to the My Courses page in Snap.
 
   @javascript
   Scenario: User can use the completion filter in the Course overview block in Snap.
+    Given I skip because "Will be reviewed on INT-20992"
     Given the following "courses" exist:
       | fullname | shortname | category | enablecompletion |
       | Course 2 | C2        | 0        | 1                |

@@ -142,7 +142,7 @@ $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settin
 echo $regionmainsettingsmenu;
 echo "</div>";
 if ($PAGE->pagelayout === 'mycourses') {
-    // Add kebab menu for course management options in my courses page.
+    // Add course management options in my courses page.
     echo $OUTPUT->snap_my_courses_management_options();
 }
 if ($PAGE->pagelayout === 'frontpage' && $PAGE->pagetype === 'site-index') {
