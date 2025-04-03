@@ -61,6 +61,14 @@ const DRAWERS = {
     ]
 };
 
+const POPOVERS_DROPDOWNS = {
+    CLICKABLE_SELECTORS: [
+        '#user-menu-toggle', // User menu
+        '#nav-intellicart-popover-container', // Intellicart
+        '#nav-notification-popover-container', // Notifications
+    ]
+};
+
 let lastScrollX = 0;
 
 /**
@@ -330,6 +338,9 @@ const setupEventListeners = () => {
     
     // Set up course TOC observer
     setupCourseTocObserver();
+    
+    // Set up popover/dropdown click handlers
+    setupPopoverClickHandlers();
 };
 
 /**
@@ -440,4 +451,55 @@ const toggleSidebarOnHorizontalScroll = (scrollX) => {
         });
     }
     lastScrollX = scrollX;
+};
+
+/**
+ * Add event listeners to popover/dropdown elements to close drawers first
+ */
+const setupPopoverClickHandlers = () => {
+    let isClosingDrawers = false;
+    
+    const checkAndCloseDrawers = () => {
+        if (isClosingDrawers) {
+            return false;
+        }
+        
+        let hasOpenDrawers = false;
+        DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
+            const activeDrawers = document.querySelectorAll(selector);
+            if (activeDrawers.length > 0) {
+                hasOpenDrawers = true;
+            }
+        });
+        
+        if (hasOpenDrawers) {
+            // Set flag to prevent recursive calls
+            isClosingDrawers = true;    
+            // Close all drawers first
+            closeAllDrawers();
+            isClosingDrawers = false;
+            return true;
+        }
+        
+        return false;
+    };
+    
+    POPOVERS_DROPDOWNS.CLICKABLE_SELECTORS.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        
+        elements.forEach(element => {
+            // Handle mouse clicks
+            element.addEventListener('click', () => {
+                checkAndCloseDrawers();
+            }, true);
+            
+            // Handle keyboard events (Enter key)
+            element.addEventListener('keydown', (e) => {
+                // Check if the Enter key was pressed
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    checkAndCloseDrawers();
+                }
+            }, true);
+        });
+    });
 };
