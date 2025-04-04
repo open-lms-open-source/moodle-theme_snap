@@ -26,6 +26,8 @@ Feature: Testing sidebarmenu in theme_snap
     Given I am logged in as "admin"
     And I am on site homepage
     And ".snap-sidebar-menu.show" "css_element" should exist
+    And I click on "#admin-menu-trigger" "css_element"
+    And ".block_settings.state-visible" "css_element" should exist
     Then I click on ".usermenu .dropdown-toggle" "css_element"
     And ".block_settings.state-visible" "css_element" should not exist
     And I click on "button[data-original-title='Toggle block drawer']" "css_element"

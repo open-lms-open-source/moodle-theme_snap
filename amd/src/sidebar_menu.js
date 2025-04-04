@@ -385,6 +385,25 @@ export const init = () => {
 };
 
 /**
+ * Query active drawers, applying a workaround for selectors containing ':has' if needed.
+ * TODO: Delete this when the selenium version of the job is higher than 3.141.59
+ *
+ * @param {string} selector The CSS selector to query.
+ * @returns {NodeListOf<Element>|Array<Element>} A NodeList or an Array of matching elements.
+ */
+const queryActiveDrawers = (selector) => {
+    // Check if the selector string contains ':has(' and matches the specific known case
+    if (selector === '.drawer:not(.hidden):has(.message-app)') {
+        // Workaround for :has(.message-app) 
+        const potentialDrawers = document.querySelectorAll('.drawer:not(.hidden)');
+        return Array.from(potentialDrawers).filter(drawer => drawer.querySelector('.message-app'));
+    } else {
+        // Standard query for other selectors
+        return document.querySelectorAll(selector);
+    }
+};
+
+/**
  * Reposition the "Go to Top" button based on open drawers
  */
 const repositionGotoTopLink = () => {
@@ -401,16 +420,20 @@ const repositionGotoTopLink = () => {
     
     // Only proceed if sidebar is showing
     if (isSidebarShowing) {
-        // Check each drawer selector
+        // Check each drawer selector using the helper function
         for (const selector of DRAWERS.ACTIVE_SELECTORS) {
-            const drawer = document.querySelector(selector);
-            
-            if (drawer && drawer.offsetWidth > 0) {
-                // Get the width of the drawer
-                const drawerWidth = drawer.offsetWidth;
-                // Add margin to position the link to the left of the drawer
-                gotoTopLink.style.marginRight = `${drawerWidth}px`;
-                return; // Exit after finding the first open drawer
+            const activeDrawers = queryActiveDrawers(selector); // Use the helper function
+
+            if (activeDrawers.length > 0) {
+                // Get the first active drawer found for this selector type
+                const drawer = activeDrawers[0];
+                if (drawer.offsetWidth > 0) {
+                    // Get the width of the drawer
+                    const drawerWidth = drawer.offsetWidth;
+                    // Add margin to position the link to the left of the drawer
+                    gotoTopLink.style.marginRight = `${drawerWidth}px`;
+                    return; // Exit after finding the first open drawer
+                }
             }
         }
     }
@@ -432,7 +455,7 @@ const toggleSidebarOnHorizontalScroll = (scrollX) => {
             
             // Hide active drawers
             DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
-                const activeDrawers = document.querySelectorAll(selector);
+                const activeDrawers = queryActiveDrawers(selector); // Use the helper function
                 activeDrawers.forEach(drawer => {
                     drawer.style.right = '-100%';
                 });
@@ -444,7 +467,7 @@ const toggleSidebarOnHorizontalScroll = (scrollX) => {
         
         // Restore active drawers visibility
         DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
-            const activeDrawers = document.querySelectorAll(selector);
+            const activeDrawers = queryActiveDrawers(selector); // Use the helper function
             activeDrawers.forEach(drawer => {
                 drawer.style.right = '';
             });
@@ -466,7 +489,7 @@ const setupPopoverClickHandlers = () => {
         
         let hasOpenDrawers = false;
         DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
-            const activeDrawers = document.querySelectorAll(selector);
+            const activeDrawers = queryActiveDrawers(selector); // Use the helper function
             if (activeDrawers.length > 0) {
                 hasOpenDrawers = true;
             }
