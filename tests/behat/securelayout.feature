@@ -39,6 +39,12 @@ Feature: Using the snap theme page displaying with secure layout
       | question | page | maxmark |
       | TF1      | 1    |         |
       | TF2      | 1    | 3.0     |
+    And the following "users" exist:
+      | username | firstname | lastname | email                |
+      | student1 | Sam1      | Student1 | student1@example.com |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | student1 | C1     | student        |
 
   Scenario: Confirm that the user name is displayed in the navbar without a link
     Given I log in as "admin"
@@ -59,3 +65,16 @@ Feature: Using the snap theme page displaying with secure layout
     And I click on ".snap-asset-link a" "css_element"
     And I press "Preview quiz"
     Then I should not see "This is a custom item" in the "nav" "css_element"
+
+  Scenario: Quiz description is displayed when Safe Exam Browser is required
+    Given the following "activities" exist:
+      | activity   | name   | intro              | course | idnumber | seb_requiresafeexambrowser |
+      | quiz       | Quiz2  | Quiz 2 description | C1     | quiz2    | 1                          |
+    And quiz "Quiz2" contains the following questions:
+      | question | page |
+      | TF1      | 1    |
+    When I log in as "student1"
+    And I am on the "Quiz2" "quiz activity" page
+    Then "body#page-mod-quiz-view" "css_element" should exist
+    And I should see "Launch Safe Exam Browser"
+    And I should see "Quiz 2 description"

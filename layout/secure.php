@@ -54,7 +54,14 @@ echo $OUTPUT->doctype() ?>
     <?php echo $OUTPUT->secure_layout_language_menu() ?>
 </div>
 <div id="page" class="container">
-
+    <?php
+        if (empty($PAGE->layout_options['noactivityheader'])) {
+            $header = $PAGE->activityheader;
+            $renderer = $PAGE->get_renderer('core');
+            $headercontent = $header->export_for_template($renderer);
+            echo $OUTPUT->render_from_template('core/activity_header', $headercontent);
+        }
+    ?>
 <div id="page">
 <div id="page-content">
 
