@@ -6271,3 +6271,8 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
         }
     }
 }
+
+// Paginator space in category view
+.category-browse .pagination {
+    margin-top: 3rem;
+}

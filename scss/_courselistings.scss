@@ -33,6 +33,7 @@
     }
     .moreinfo {
         float: right;
+        margin-left: auto;
     }
     &.loaded {
         .moreinfo {
@@ -51,6 +52,7 @@
             height: initial;
             width: 300px;
             border-radius: 0.5rem;
+            max-height: initial;
         }
     }
     .teachers {
@@ -142,11 +144,13 @@
         display: none;
     }
     .category > .info > .categoryname {
-        background-image: url([[pix:moodle|t/collapsed_empty]]);
+        background-image: url([[pix:theme|collapsed_empty]]);
         background-repeat: no-repeat;
         padding: 2px 18px;
         margin: 3px;
         background-position: center left;
+        font-size: 1.3em;
+        background-size: 16px 16px;
     }
 
     .category.with_children > .info > .categoryname {
