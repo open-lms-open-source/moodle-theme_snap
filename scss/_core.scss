@@ -1690,6 +1690,10 @@ body.contains-snap-custom_menu-spacer {
     border: none;
 }
 
+#page-backup-restorefile #region-main {
+    max-width: 100%;
+}
+
 #page-course-view-topics #region-main, #page-course-view-weeks #region-main {
     padding: 1em 0;
 }
