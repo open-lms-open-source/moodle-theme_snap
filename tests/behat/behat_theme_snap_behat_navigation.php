@@ -117,4 +117,10 @@ EOF;
         $this->i_am_on_course_homepage($coursefullname);
     }
 
+    /**
+     * @When /I scroll to the right/
+     */
+    public function i_scroll_to_the_right() {
+        $this->getSession()->executeScript('window.scrollBy(1100, 0);');
+    }
 }

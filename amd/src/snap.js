@@ -828,6 +828,66 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
         }
 
         /**
+         * Sets up event listeners for the "Go to Top" and "Go to Left" buttons.
+         */
+        function setupGotoButtons() {
+            const goLeftButtonId = 'goto-left-link';
+            const goTopButtonId = 'goto-top-link';
+
+            // Scroll listener for "Go to Left" button
+            const goLeftBtn = document.getElementById(goLeftButtonId);
+            let ticking = false;
+
+            if (goLeftBtn) {
+                window.addEventListener("scroll", () => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            const isScrolled = window.scrollX > 500;
+                            const hasClass = goLeftBtn.classList.contains("scrolled");
+
+                            if (isScrolled && !hasClass) {
+                                goLeftBtn.classList.add("scrolled");
+                            } else if (!isScrolled && hasClass) {
+                                goLeftBtn.classList.remove("scrolled");
+                            }
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+
+                // Click listener for "Go to Left" link inside the button
+                const goLeftLink = goLeftBtn.querySelector("a");
+                if (goLeftLink) {
+                    goLeftLink.addEventListener("click", function () {
+                        window.scrollTo({ left: 0, behavior: "smooth" });
+
+                        const focusable = document.querySelector("body a, body [tabindex='0']");
+                        if (focusable) {
+                            focusable.focus();
+                        }
+                    });
+                }
+            }
+
+            // Click listener for "Go to Top" link
+            const goTopBtn = document.getElementById(goTopButtonId);
+            if (goTopBtn) {
+                const goTopLink = goTopBtn.querySelector("a");
+                if (goTopLink) {
+                    goTopLink.addEventListener("click", function () {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+
+                        const focusable = document.querySelector("body a, body [tabindex='0']");
+                        if (focusable) {
+                            focusable.focus();
+                        }
+                    });
+                }
+            }
+        }
+
+        /**
          * AMD return object.
          */
         return {
@@ -1470,11 +1530,8 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 accessibility.snapAxInit();
                 messages.init();
 
-                // Smooth scroll for go to top button.
-                $("div#goto-top-link > a").click(function() {
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                    $('body').find('a, [tabindex=0]').first().focus();
-                });
+                // Smooth scroll for go to top and left button.
+                setupGotoButtons();
 
                 // Blocks selectors to remove 'editing' class because is not necessary to access their settings.
                 var noneditingblocks = {};
