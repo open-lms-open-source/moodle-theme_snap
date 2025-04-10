@@ -174,7 +174,7 @@ if (stripos($PAGE->bodyclasses, 'format-singleactivity') !== false ) {
 </div>
 
 <?php
-if($OUTPUT->snap_page_is_book()){
+if($OUTPUT->snap_page_is_whitelisted_mod()){
     echo $OUTPUT->snap_blocks();
 }
 
