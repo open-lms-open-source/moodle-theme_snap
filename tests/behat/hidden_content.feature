@@ -43,6 +43,7 @@ Feature: When importing a course into another, the hidden content should be appl
     And "li.draft.snap-visible-section span.text small.published-status" "css_element" should exist
     And I am on the course main page for "C2"
     And I click on "#admin-menu-trigger" "css_element"
+    And I change window size to "large"
     And I expand "Course reuse" node
     And I follow "Import"
     And I click on "tbody tr .c0 input#import-course-2" "css_element"

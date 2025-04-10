@@ -331,3 +331,10 @@ $mobile-sidebar-peek-width: 10px;
         width: 2rem;
     }
 }
+
+footer#moodle-footer {
+    margin-right: $sidebar-width;
+    @media (max-width: 991px) {
+        margin-right: $mobile-sidebar-width;
+    }
+}

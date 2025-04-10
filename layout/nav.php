@@ -155,14 +155,14 @@ if (isloggedin() && !isguestuser()) {
     // Only add blocks drawer button if there are blocks and page type matches whitelist
     if ($hasblocks && $pagematcheswhitelist) {
         $sidebarmenuitems[] = [
-            'title' => get_string('toggleblocksdrawer', 'theme_snap'),
+            'title' => get_string('toggleblockdrawer', 'theme_snap'),
             'iconimg' => $OUTPUT->image_url('blocksdrawers', 'theme'),
             'isbutton' => true,
             'dataattributes' => [
                 ['name' => 'toggler', 'value' => 'drawers'],
                 ['name' => 'action', 'value' => 'toggle'],
                 ['name' => 'target', 'value' => 'theme_snap-drawers-blocks'],
-                ['name' => 'toggle', 'value' => 'tooltip'],
+                ['name' => 'original-title', 'value' => get_string('toggleblockdrawer', 'theme_snap')],
                 ['name' => 'placement', 'value' => 'right'],
                 ['name' => 'activeselector', 'value' => '#theme_snap-drawers-blocks.show']
             ],
