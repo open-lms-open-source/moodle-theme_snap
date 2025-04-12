@@ -238,7 +238,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         // @codingStandardsIgnoreStart
         $gearicon = '<svg xmlns="http://www.w3.org/2000/svg" id="snap-admin-icon" viewBox="0 0 100 100">
-                        <title>'.get_string('admin', 'theme_snap').'</title>
+                        <title>'.get_string('toggleadmindrawer', 'theme_snap').'</title>
                         <path d="M85.2,54.9c0.2-1.4,0.3-2.9,0.3-4.5c0-1.5-0.1-3-0.3-4.5l9.6-7.5c0.9-0.7,1-1.9,0.6-2.9l-9.1-15.8c-0.6-1-1.8-1.3-2.8-1
                         l-11.3,4.6c-2.4-1.8-4.9-3.3-7.7-4.5l-1.8-12c-0.1-1-1-1.9-2.2-1.9H42.3c-1.1,0-2.1,0.9-2.2,1.9l-1.7,12.1c-2.8,1.1-5.3,2.7-7.7,4.5
                         l-11.3-4.6c-1-0.4-2.2,0-2.8,1L7.5,35.6c-0.6,1-0.3,2.2,0.6,2.9l9.6,7.5c-0.2,1.4-0.3,2.9-0.3,4.5c0,1.5,0.1,3,0.3,4.5L8,62.4
@@ -252,10 +252,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $attributes = [
             'id' => 'admin-menu-trigger',
             'class' => 'float-end',
-            'data-toggle' => 'tooltip',
             'data-placement' => 'bottom',
-            'title' => get_string('admin', 'theme_snap'),
-            'aria-label' => get_string('admin', 'theme_snap'),
+            'title' => get_string('toggleadmindrawer', 'theme_snap'),
+            'aria-label' => get_string('toggleadmindrawer', 'theme_snap'),
+            'data-original-title' => get_string('toggleadmindrawer', 'theme_snap'),
+            'aria-expanded' => 'false',
         ];
 
         return html_writer::link($url, $gearicon, $attributes);
@@ -2691,13 +2692,12 @@ HTML;
         $attributes = [
             'id' => 'snap_feeds_side_menu_trigger',
             'class' => 'js-snap-feeds-side-menu-trigger',
-            'title' => get_string('show'). ' ' .get_string('snapfeedsblocktitle', 'theme_snap'),
-            'aria-label' => get_string('show'). ' ' .get_string('snapfeedsblocktitle', 'theme_snap'),
+            'title' => get_string('togglesnapfeedsdrawer', 'theme_snap'),
+            'aria-label' => get_string('togglesnapfeedsdrawer', 'theme_snap'),
             'aria-expanded' => "false",
         ];
 
         return html_writer::link($url, $icon, $attributes);
-
     }
 
     /**

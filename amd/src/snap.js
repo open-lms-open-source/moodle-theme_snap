@@ -541,14 +541,18 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 }
             });
 
-            // Onclick for toggle of state-visible of admin block and mobile menu.
+            // Admin drawer: Onclick for toggle of state-visible of admin block and mobile menu.
             $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle", function(e) {
-
                 var href = this.getAttribute('href');
                 // Make this only happen for settings button.
                 if (this.getAttribute('id') === 'admin-menu-trigger') {
                     $(this).toggleClass('active');
                     $('#page').toggleClass('offcanvas');
+                    if ($(this).attr('aria-expanded') === 'true') {
+                        $(this).attr('aria-expanded', false);
+                    } else {
+                        $(this).attr('aria-expanded', true);
+                    }
                 }
                 $(href).attr('tabindex', '0');
                 $(href).toggleClass('state-visible').focus();
@@ -564,27 +568,17 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 }
             });
 
-            // Onclick for toggle of state-visible of snap feeds side menu.
+            // Snap feeds drawer: Onclick for toggle of state-visible of Snap feeds side menu.
             $(document).on("click", "#snap_feeds_side_menu_trigger", function(e) {
-
-
                 var href = this.getAttribute('href');
                 if (this.getAttribute('id') === 'snap_feeds_side_menu_trigger') {
-                    var showFeedsString = M.util.get_string('show', 'moodle')
-                        + ' ' +  M.util.get_string('snapfeedsblocktitle', 'theme_snap');
-                    var hideFeedsString = M.util.get_string('hide', 'moodle')
-                        + ' ' +  M.util.get_string('snapfeedsblocktitle', 'theme_snap');
-                    if (this.getAttribute('title') === showFeedsString) {
-                        $(this).attr('title', hideFeedsString);
-                        $(this).attr('aria-label', hideFeedsString);
-                        $(this).attr('aria-expanded', true);
-                    } else {
-                        $(this).attr('title', showFeedsString);
-                        $(this).attr('aria-label', showFeedsString);
-                        $(this).attr('aria-expanded', false);
-                    }
                     $(this).toggleClass('active');
                     $('#page').toggleClass('offcanvas');
+                    if ($(this).attr('aria-expanded') === 'true') {
+                        $(this).attr('aria-expanded', false);
+                    } else {
+                        $(this).attr('aria-expanded', true);
+                    }
                 }
                 $(href).toggleClass('state-visible').focus();
                 e.preventDefault();

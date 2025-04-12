@@ -457,6 +457,13 @@ body.path-site .block.block_settings {
     position: relative;
 }
 
+.block_navigation .block_tree li:first-of-type > ul {
+    padding-left: 0px;
+    p {
+        font-size: 0.9em;
+    }
+}
+
 .block .icon.column {
     width: 21px;
 
@@ -575,6 +582,7 @@ body.path-site .block.block_settings {
 
     .card-title {
         visibility: hidden;
+        position: absolute;
     }
 
     // Hide a possible second gear menu
