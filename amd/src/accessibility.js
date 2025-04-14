@@ -380,9 +380,10 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
              */
             setManualPopovers: function() {
                 const btnSelector = '.iconhelp.btn';
+
                 $('body').popover({
                     selector: '[data-toggle="popover"]',
-                    trigger: 'click',
+                    trigger: 'manual',
                     container: 'body',
                     whitelist: Object.assign(DefaultWhitelist, {
                         table: [],
@@ -393,6 +394,47 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
                         td: [],
                     }),
                 });
+
+                // Prevent Bootstrap from automatically reacting to button focus
+                $(btnSelector).on('focusin', function(e) {
+                    e.stopImmediatePropagation();
+                });
+
+                $(btnSelector).on('click', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+
+                    const $el = $(this);
+                    const isOpen = $el.attr('aria-expanded') === 'true';
+
+                    if (isOpen) {
+                        $el.popover('hide');
+                    } else {
+                        $el.popover('show');
+                    }
+                });
+
+                $(btnSelector).on('keydown', function(e) {
+                    const $el = $(this);
+
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+
+                        const isOpen = $el.attr('aria-expanded') === 'true';
+
+                        if (isOpen) {
+                            $el.popover('hide');
+                        } else {
+                            $el.popover('show');
+                        }
+                    }
+
+                    if (e.key === 'Escape') {
+                        $el.popover('hide');
+                    }
+                });
+
                 $(btnSelector).on('shown.bs.popover', function () {
                     const popover = $(this).data('bs.popover').tip;
                     $(this).attr('aria-controls', popover.id);
@@ -400,10 +442,12 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
                     $(popover).insertAfter($(this));
                     $(popover).popover('update');
                 });
+
                 $(btnSelector).on('hidden.bs.popover', function () {
                     $(this).attr('aria-expanded', false);
                 });
             }
+
         };
     }
 );
