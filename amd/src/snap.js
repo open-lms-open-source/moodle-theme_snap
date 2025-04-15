@@ -25,11 +25,10 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
-        'theme_snap/cover_image', 'theme_snap/progressbar', 'core/templates', 'core/str', 'core/ajax', 'theme_snap/accessibility',
+define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/cover_image',
+        'theme_snap/progressbar', 'core/templates', 'core/str', 'core/ajax', 'theme_snap/accessibility',
         'theme_snap/messages', 'theme_snap/scroll'],
-    function($, log, Aria, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str, ajax, accessibility,
-             messages, Scroll) {
+    function($, log, Aria, Headroom, util, coverImage, ProgressBar, templates, str, ajax, accessibility, messages, Scroll) {
 
         'use strict';
 
@@ -325,14 +324,10 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 var newHash = location.hash;
                 log.info('hashchange');
                 if (newHash !== lastHash) {
-                    if (location.hash === '#primary-nav') {
-                        personalMenu.update();
-                    } else {
-                        $('#page, #moodle-footer, #js-snap-pm-trigger, #logo, .skiplinks').css('display', '');
-                        if (onCoursePage()) {
-                            log.info('show section', e.target);
-                            courseLib.showSection();
-                        }
+                    $('#page, #moodle-footer, #logo, .skiplinks').css('display', '');
+                    if (onCoursePage()) {
+                        log.info('show section', e.target);
+                        courseLib.showSection();
                     }
                 }
                 lastHash = newHash;
@@ -839,15 +834,13 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
              * @param {bool} forcePassChange
              * @param {bool} messageBadgeCountEnabled
              * @param {int} userId
-             * @param {bool} sitePolicyAcceptReqd
              * @param {bool} inAlternativeRole
              * @param {string} brandColors
              * @param {int} gradingConstants
-             * @param {boolean} snapFeedsEnabled
              */
             snapInit: function(courseConfig, pageHasCourseContent, siteMaxBytes, forcePassChange,
-                               messageBadgeCountEnabled, userId, sitePolicyAcceptReqd, inAlternativeRole,
-                               brandColors, gradingConstants, snapFeedsEnabled) {
+                               messageBadgeCountEnabled, userId, inAlternativeRole,
+                               brandColors, gradingConstants) {
 
                 // Set up.
 
@@ -864,9 +857,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
                 M.cfg.context = courseConfig.contextid;
                 M.snapTheme = {forcePassChange: forcePassChange};
-
-                // General AMD modules.
-                personalMenu.init(sitePolicyAcceptReqd, snapFeedsEnabled);
 
                 // Course related AMD modules (note, site page can technically have course content too).
                 if (pageHasCourseContent) {
@@ -982,10 +972,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     if ((thirdlinkerror).length) {
                         titlelinksettingone.css(linktitlestyle);
                         titlelinksettingtwo.css(linktitlestyle);
-                    }
-
-                    if ($('body').hasClass('snap-pm-open')) {
-                        personalMenu.update();
                     }
 
                     // SHAME - make section name creation mandatory
