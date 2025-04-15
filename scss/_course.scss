@@ -915,11 +915,6 @@ li.section:focus {
     margin-top: 1em;
 }
 
-/* Landing page does not have renderer, so markup is different. */
-#page-site-index .section-modchooser-link {
-    border-color: white;
-}
-
 // get rid of js cursor style applied to the whole commands area
 .snap-section-editing[style] {
     cursor: default !important;
