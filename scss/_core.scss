@@ -1000,27 +1000,28 @@ a.yui3-button,
 }
 
 #page-site-index .section-modchooser-link {
-    clear: both;
-    margin: 0;
-    padding: 0.5em;
+    display: flex !important;
+    flex-direction: column;
+    text-align: center;
+    padding: 1em 9em !important;
+
+    @media (max-width: 576px) {
+        padding: 1em 2em !important;
+    }
+
+    .activity-add-text {
+        color: $brand-primary;
+    }
+}
+
+#page-site-index .section-modchooser-link::before {
+    content: '';
     display: block;
-    border-color: white;
-
-    img {
-        display: none;
-    }
-
-    .section-modchooser-text {
-        @extend .btn-outline-primary;
-    }
-
-    a,
-    .section-modchooser-text {
-        display: block;
-        width: 100%;
-        text-align: center;
-        text-decoration: none;
-    }
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0.5em;
+    background: transparent url("[[pix:theme|move_here]]") no-repeat center center;
+    background-size: contain;
 }
 
 // Styles for #page-report-competency-index.
@@ -2116,6 +2117,12 @@ header#page-header
 #page-site-index .singlebutton {
     display: inline-block;
     text-align: center;
+    padding: 0 6%;
+}
+#page-site-index .buttons {
+    display: block;
+    max-width: 50.5em;
+    margin: 2em auto;
 }
 
 #site-news-forum h2,
