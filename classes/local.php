@@ -76,21 +76,14 @@ class local {
     /**
      * Does this course have any visible feedback for current user?.
      * @param \stdClass $course
-     * @param bool $oncoursedashboard
      * @return object
      */
-    public static function course_grade($course, $oncoursedashboard = false) {
+    public static function course_grade($course) {
         global $USER;
 
         $failobj = (object) [
             'coursegrade' => false,
         ];
-
-        $config = get_config('theme_snap');
-        if (empty($config->showcoursegradepersonalmenu) && $oncoursedashboard === false) {
-            // If not enabled, don't return data.
-            return $failobj;
-        }
 
         if (!isloggedin() || isguestuser()) {
             return $failobj;
@@ -125,7 +118,6 @@ class local {
         // Default feedbackobj.
         $feedbackobj = (object) [
             'feedbackurl' => $feedbackurl->out(),
-            'showgrade' => $config->showcoursegradepersonalmenu,
         ];
 
         if (!$coursegrade->is_hidden() || $canviewhidden) {
@@ -464,7 +456,6 @@ class local {
         $maxtime = !empty($CFG->theme_snap_max_pm_completion_time_courses) ?
             $CFG->theme_snap_max_pm_completion_time_courses : (MINSECS / 4);
         $starttime = time();
-        $showgrades = get_config('theme_snap', 'showcoursegradepersonalmenu');
 
         foreach ($courseids as $courseid) {
             if (!isset($courses[$courseid])) {
@@ -478,10 +469,6 @@ class local {
                 'completion' => self::course_completion_progress($course),
             );
 
-            if (!empty($showgrades)) {
-                $feedback = self::course_grade($course);
-                $courseinfo[$courseid]->feedback = $feedback;
-            }
             // Only calculate completion within the configured time window or for maximum amount of courses.
             if (count($courseinfo) == $maxcourses || ((time() - $starttime) > $maxtime)) {
                 break;

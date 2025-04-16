@@ -1034,38 +1034,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
-     * Personal menu trigger - a login link or my courses link.
-     *
-     */
-    public function personal_menu_trigger() {
-        global $USER;
-        $output = '';
-        if (!isloggedin() || isguestuser()) {
-            if (local::current_url_path() != '/login/index.php') {
-                $output .= $this->login_button();
-            }
-        } else {
-            $userpicture = new user_picture($USER);
-            $userpicture->link = false;
-            $userpicture->alttext = false;
-            $userpicture->size = 40;
-            $picture = $this->render($userpicture);
-
-            $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
-            $linkcontent = $picture.$menu;
-            $attributes = [
-                'aria-haspopup' => 'true',
-                'class' => 'js-snap-pm-trigger snap-my-courses-menu',
-                'id' => 'snap-pm-trigger',
-                'aria-controls' => 'snap-pm',
-            ];
-            $output .= html_writer::link('#', $linkcontent, $attributes);
-        }
-        return $output;
-    }
-
-
-    /**
      * get section number by section id
      * @param int $sectionid
      * @return int|boolean (false if not found)
@@ -1472,28 +1440,12 @@ HTML;
      * @return array|string
      */
     public function body_css_classes(array $additionalclasses = []) {
-        global $COURSE, $SESSION, $CFG, $USER;
-
-        $openfixyafterlogin = false;
+        global $COURSE, $CFG, $USER;
 
         $classes = parent::body_css_classes($additionalclasses);
         $classes = explode (' ', $classes);
 
         $classes[] = 'device-type-'.$this->page->devicetypeinuse;
-
-        $forcepasschange = get_user_preferences('auth_forcepasswordchange');
-        if (isset($SESSION->justloggedin) && empty($forcepasschange)) {
-            // We need to check first if the personal menu is enabled.
-            if (!empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
-                $openfixyafterlogin = !empty($this->page->theme->settings->personalmenulogintoggle);
-            }
-            $onfrontpage = ($this->page->pagetype === 'site-index');
-            $onuserdashboard = ($this->page->pagetype === 'my-index');
-            if ($openfixyafterlogin && !isguestuser() && ($onfrontpage || $onuserdashboard)) {
-                $classes[] = 'snap-pm-open';
-            }
-        }
-        unset($SESSION->justloggedin);
 
         // Define the page types we want to purge yui classes from the body  - e.g. local-joulegrader-view,
         // local-pld-view, etc.
@@ -2469,13 +2421,8 @@ HTML;
         if (!isloggedin() || isguestuser()) {
             return $output;
         }
-        if (empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
-            $classes = 'snap-my-courses-menu snap-my-courses-link';
-            $url = new \moodle_url('/my/courses.php');
-        } else {
-            $classes = 'js-snap-pm-trigger snap-my-courses-menu snap-my-courses-link';
-            $url = '#';
-        }
+        $classes = 'snap-my-courses-menu snap-my-courses-link';
+        $url = new \moodle_url('/my/courses.php');
         $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
         $attributes = [
             'aria-haspopup' => 'true',
@@ -2505,15 +2452,13 @@ HTML;
                 $additionallinks = [];
 
                 // My courses link.
-                if (empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
-                    $mycourses = new stdClass();
-                    $mycourses->itemtype = 'link';
-                    $mycourses->url = new moodle_url('/my/courses.php');
-                    $mycourses->link = $mycourses->itemtype == 'link';
-                    $mycourses->title = get_string('menu', 'theme_snap');
-                    $mycourses->titleidentifier = 'menu,theme_snap';
-                    $additionallinks[] = $mycourses;
-                }
+                $mycourses = new stdClass();
+                $mycourses->itemtype = 'link';
+                $mycourses->url = new moodle_url('/my/courses.php');
+                $mycourses->link = $mycourses->itemtype == 'link';
+                $mycourses->title = get_string('menu', 'theme_snap');
+                $mycourses->titleidentifier = 'menu,theme_snap';
+                $additionallinks[] = $mycourses;
 
                 // My programs link.
                 if (is_callable('mr_on') && mr_on('myprograms', '_MR_BLOCKS')) {

@@ -33,18 +33,6 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
       | personalmenuadvancedfeedsenable | 0 | theme_snap |
 
   @javascript
-  Scenario: Logged in user get's login status warning when logged out if personal menu is opened.
-    Given the following config values are set as admin:
-      | personalmenuenablepersonalmenu | 1 | theme_snap |
-    And I log in as "teacher"
-    And I am on site homepage
-    And I log out via a separate window
-    And I open the personal menu
-    Then I should see "You are logged out"
-    When I press "Continue"
-    Then "body#page-login-index" "css_element" should exist
-
-  @javascript
   Scenario: Teacher get's login status warning when trying to manage sections if logged out.
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
@@ -118,15 +106,3 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I log out via a separate window
     When I click on "li#section-1 li.snap-drop.asset-drop div.asset-wrapper" "css_element"
     Then I should see "You are logged out"
-
-  @javascript
-  Scenario: User account is created with force password change on login enabled, personal menu shows a warning when
-    opened with a link to change the users password.
-    Given the following config values are set as admin:
-      | personalmenuenablepersonalmenu | 1 | theme_snap |
-    And force password change is assigned to user "teacher"
-    When I log in as "teacher"
-    Then I should see "You must change your password to proceed."
-    # Opening the personal menu should trigger an AJAX error which is displayed within the menu.
-    And I open the personal menu
-    Then I should see "You must change your password before using the personal menu." in the "#snap-pm-content .force-pwd-warning" "css_element"

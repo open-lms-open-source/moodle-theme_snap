@@ -25,8 +25,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
   Background:
     Given the following config values are set as admin:
       | defaulthomepage                | 0 |            |
-      | personalmenuenablepersonalmenu | 1 | theme_snap |
-
 
   @javascript
   Scenario: Editing teachers can change and delete course cover image.
@@ -44,9 +42,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | teacher2 | C1     | teacher        |
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I open the personal menu
-    And I should not see course card image in personal menu
-    And I close the personal menu
     Then I should see "Change cover image"
     And I should not see cover image in page header
     And I click on "#snap-coverimagecontrol label" "css_element"
@@ -71,9 +66,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I should see cover image in page header
     And I reload the page
     Then I should see cover image in page header
-    And I open the personal menu
-    And I should see course card image in personal menu
-    And I close the personal menu
     # Test changing the image again
     And I click on "#snap-coverimagecontrol label" "css_element"
     And ".cropper-container" "css_element" should exist
@@ -89,9 +81,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I reload the page
     And I check element ".mast-image .breadcrumb a" with color "#82009E"
     Then I should see cover image in page header
-    And I open the personal menu
-    And I should see course card image in personal menu
-    And I close the personal menu
     # Test deleting cover image
     And I click on "#snap-coverimagecontrol label" "css_element"
     And I click on "Delete cover image" "button" in the "Image properties" "dialogue"
@@ -109,9 +98,6 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I press "Purge all caches"
     Then I should see "All caches were purged"
     And I reload the page
-    And I open the personal menu
-    And I should not see course card image in personal menu
-    And I close the personal menu
     # Test cover image can only be set on main course page
     And I am on the course main page for "C1"
     Then I should see "Change cover image"

@@ -13,23 +13,20 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for personal menu display on initial login.
+# Tests for User menu display on initial login.
 #
 # @package    theme_snap
 # @author     Daniel Cifuentes daniel.cifuentes@openlms.net
 # @copyright  Copyright (c) 2023 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_personalmenu
-Feature: When the moodle theme is set to Snap and can open the user menu from the header,
-  and open the personal menu from the my courses link
+@theme @theme_snap
+Feature: When the moodle theme is set to Snap and can open the user menu from the header
 
   Background:
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
-    And the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap |
     And I am on site homepage
 
   @javascript

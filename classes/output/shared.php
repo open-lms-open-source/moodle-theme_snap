@@ -990,7 +990,7 @@ EOF;
 
         // User grade.
         if (has_capability('gradereport/overview:view', $coursecontext)) {
-            $grade = local::course_grade($COURSE, true);
+            $grade = local::course_grade($COURSE);
             $coursegrade = '-';
             $gradeitem = \grade_item::fetch_course_item($COURSE->id);
             $displayformat = $gradeitem->get_displaytype();

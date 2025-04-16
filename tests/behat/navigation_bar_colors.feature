@@ -27,7 +27,6 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
     Given I log in as "admin"
     And the following config values are set as admin:
       | linkadmincategories            | 0 |            |
-      | personalmenuenablepersonalmenu | 1 | theme_snap |
     And I am on site homepage
     And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
@@ -41,7 +40,7 @@ Feature: When the moodle theme is set to Snap, admins can change the color of th
     And I click on "Save changes" "button"
     And I wait until the page is ready
     And I should see "Changes saved"
-    And I check element "a.js-snap-pm-trigger.snap-my-courses-menu" with color "#000000"
+    And I check element "#snap-pm-trigger" with color "#000000"
     And I check element "#snap-pm-trigger" with property "background-color" = "#FF0000"
     And I log out
     And I am on site homepage

@@ -20,7 +20,7 @@
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @theme @theme_snap
-Feature: As an authenticated non-admin user, opening the snap personal menu redirects to the site policy acceptance
+Feature: As an authenticated non-admin user, opening the snap my courses menu redirects to the site policy acceptance
   page when not previously accepted.
 
   Background:
@@ -30,30 +30,6 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     And the following "users" exist:
       | username | firstname | lastname | email |
       | student1 | Student | 1 | student1@example.com |
-
-  Scenario: Login redirects to site policy page appropriately when personal menu set to show on login.
-    Accepting the site policy prevents redirect on next login.
-    Given I log in as "student1"
-    And I have been redirected to the site policy page
-    And I press "Yes"
-    And I log out
-    When I log in as "student1"
-    Then I am currently on the default site home page
-
-  Scenario: Login redirects to site policy page appropriately when personal menu set to not show on login.
-    Accepting the site policy prevents redirect next time personal menu is opened.
-    Given the following config values are set as admin:
-      | personalmenulogintoggle        | 0 | theme_snap |
-      | personalmenuenablepersonalmenu | 1 | theme_snap |
-    And I log in as "student1"
-    Then I have been redirected to the site policy page
-    And I press "Yes"
-    And I log out
-    Then I log in as "student1"
-    And I am currently on the default site home page
-    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
-    And I wait until the page is ready
-    Then I should not see "You must agree to this policy to continue using this site. Do you agree?"
 
   Scenario: Login redirects to site policy page appropriately in my courses page.
   Accepting the site policy prevents redirect next time my courses is opened.
@@ -66,8 +42,3 @@ Feature: As an authenticated non-admin user, opening the snap personal menu redi
     And I follow "My Courses"
     And I wait until the page is ready
     Then I should not see "You must agree to this policy to continue using this site. Do you agree?"
-
-  @javascript
-  Scenario: Opening personal menu does not redirect when logged in as admin user.
-    Given I log in as "admin"
-    Then I am currently on the default site home page

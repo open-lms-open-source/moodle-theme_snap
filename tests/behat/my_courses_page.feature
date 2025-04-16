@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2023 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_personalmenu
+@theme @theme_snap
 Feature: Users can access to the My Courses page in Snap.
 
   Background:
@@ -75,26 +75,6 @@ Feature: Users can access to the My Courses page in Snap.
     And I should see "Course overview"
     Then ".block_myoverview" "css_element" should exist
     And ".snap-page-my-courses-options .btn-group" "css_element" should not exist
-
-  @javascript
-  Scenario: User can disable personal menu to redirect to the My Courses page with header button.
-    Given I log in as "admin"
-    And "#snap-pm" "css_element" should not be visible
-    And I follow "My Courses"
-    Then ".block_myoverview" "css_element" should exist
-    And ".snap-page-my-courses-options .btn-group" "css_element" should exist
-    Then the following config values are set as admin:
-      | personalmenuenablepersonalmenu | 1 | theme_snap  |
-      | personalmenulogintoggle        | 1 | theme_snap  |
-    And I log in as "admin"
-    Then "#snap-pm" "css_element" should be visible
-    Then the following config values are set as admin:
-      | personalmenulogintoggle | 0 | theme_snap  |
-    And I log in as "admin"
-    Then "#snap-pm" "css_element" should not be visible
-    And I follow "My Courses"
-    Then "#snap-pm" "css_element" should be visible
-    And "#page-my-index .page-mycourses" "css_element" should not exist
 
   @javascript
   Scenario: User will see a warning message when the Course overview block is disabled.

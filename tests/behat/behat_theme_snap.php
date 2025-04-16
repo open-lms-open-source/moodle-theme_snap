@@ -285,42 +285,6 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * I follow "Menu" fails randomly on occasions, this custom step is an alternative to resolve that issue.
-     * It also avoids a failure if the menu is already open.
-     * @Given /^I open the personal menu$/
-     */
-    public function i_open_the_personal_menu() {
-        $node = $this->find('css', '#snap-pm');
-        // Only attempt to open the personal menu if its not already open.
-        if (!$node->isVisible()) {
-            // @codingStandardsIgnoreLine
-            /* @var $generalcontext behat_general */
-            $generalcontext = behat_context_helper::get('behat_general');
-            $generalcontext->i_click_on('.snap-my-courses-menu', 'css_element');
-        }
-    }
-
-    /**
-     * @Given /^I close the personal menu$/
-     */
-    public function i_close_the_personal_menu() {
-        $node = $this->find('css', '#snap-pm');
-        // Only attempt to close the personal menu if its already open.
-        if ($node->isVisible()) {
-            $node = $this->find('css', '#snap-pm-close');
-            $node->click();
-        }
-    }
-
-    /**
-     * This function will wait an instant for ajax calls to finish.
-     * @Given /^I wait for the personal menu to be loaded$/
-     */
-    public function i_wait_personal_menu_to_load() {
-        $this->getSession()->wait(2000, '(jQuery.active === 0)'); // Time in milliseconds.
-    }
-
-    /**
      * @param string $assignmentname
      * @param string $shortname
      * @param string $grade
@@ -1027,18 +991,6 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * Follow the link which is located inside the personal menu.
-     *
-     * @When /^I follow "(?P<link>(?:[^"]|\\")*)" in the mobile personal menu$/
-     * @param string $link we look for
-     */
-    public function i_follow_in_the_mobile_menu($link) {
-        $node = $this->get_node_in_container('link', $link, 'css_element', '#snap-pm-mobilemenu');
-        $this->ensure_node_is_visible($node);
-        $node->click();
-    }
-
-    /**
      * @Given /^the message processor "(?P<processorname_string>(?:[^"]|\\")*)" is enabled$/
      * @param string $processorname
      */
@@ -1088,17 +1040,6 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * Get course card image for course card element.
-     * @return string
-     */
-    protected function coursecard_image() {
-        $session = $this->getSession();
-        return $session->evaluateScript(
-            "return jQuery('#snap-pm-courses-current-cards div[style*=\'background-image: url\']').css('background-image')"
-        );
-    }
-
-    /**
      * @Given /^I should see cover image in page header$/
      */
     public function  pageheader_has_cover_image() {
@@ -1117,31 +1058,6 @@ class behat_theme_snap extends behat_base {
         $bgimage = $this->pageheader_backgroundimage();
         if (!empty($bgimage) && $bgimage !== 'none') {
             $msg = '#page-header has a background image ('.$bgimage.')';
-            $exception = new ExpectationException($msg, $this->getSession());
-            throw $exception;
-        }
-    }
-
-
-    /**
-     * @Given /^I should see course card image in personal menu$/
-     */
-    public function personalmenu_has_coursecard_image() {
-        $ccimage = $this->coursecard_image();
-        if (empty($ccimage) || $ccimage === 'none') {
-            $msg = 'Course card does not have image ('.$ccimage.')';
-            $exception = new ExpectationException($msg, $this->getSession());
-            throw $exception;
-        }
-    }
-
-    /**
-     * @Given /^I should not see course card image in personal menu$/
-     */
-    public function personalmenu_does_not_have_coursecard_image() {
-        $ccimage = $this->coursecard_image();
-        if (!empty($ccimage) && $ccimage !== 'none') {
-            $msg = 'Course card has an image ('.$ccimage.')';
             $exception = new ExpectationException($msg, $this->getSession());
             throw $exception;
         }
@@ -1716,42 +1632,6 @@ class behat_theme_snap extends behat_base {
         // Create assignment object and update extension date for user and assignment.
         $assign = new testable_assign($cm->context, $cm, $course);
         $assign->testable_save_user_extension($user->id, $extension);
-    }
-
-    /**
-     * Return xpath for personal menu deadlines.
-     * @param int $deadline
-     * @param string $eventname
-     * @return string
-     */
-    private function personal_menu_deadline_xpath($deadline, $eventname) {
-        $deadline = calendar_day_representation($deadline);
-        $ids = "@id='snap-personal-menu-deadlines' or @id='snap-personal-menu-feed-deadlines'";
-        $xpath = "//div[$ids]//h3[contains(text(), '$eventname')]/parent::a/parent::div" .
-            "//time[contains(text(), '$deadline')]";
-        return $xpath;
-    }
-
-    /**
-     * @Given /^I see a personal menu deadline of "(?P<deadline_int>(?:[^"]|\\")*)" for "(?P<eventname_string>(?:[^"]|\\")*)"$/
-     * @param int $deadline
-     * @param string $eventname
-     */
-    public function i_see_personal_menu_deadline($deadline, $eventname) {
-        $xpath = $this->personal_menu_deadline_xpath($deadline, $eventname);
-        $this->ensure_element_is_visible($xpath, 'xpath_element');
-    }
-
-    /**
-     * @codingStandardsIgnoreStart
-     * @Given /^I do not see a personal menu deadline of "(?P<deadline_int>(?:[^"]|\\")*)" for "(?P<eventname_string>(?:[^"]|\\")*)"$/
-     * @codingStandardsIgnoreEnd
-     * @param int $deadline
-     * @param string $eventname
-     */
-    public function i_dont_see_personal_menu_deadline($deadline, $eventname) {
-        $xpath = $this->personal_menu_deadline_xpath($deadline, $eventname);
-        $this->ensure_element_does_not_exist($xpath, 'xpath_element');
     }
 
     /**

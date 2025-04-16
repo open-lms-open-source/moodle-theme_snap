@@ -199,9 +199,5 @@ if (isloggedin() && !isguestuser()) {
             'opensidebar' => $opensidebar
         ]);
     }
-
-    if (!empty(get_config('theme_snap', 'personalmenuenablepersonalmenu'))) {
-        echo $OUTPUT->personal_menu();
-    }
 }
 

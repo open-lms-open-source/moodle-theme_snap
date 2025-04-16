@@ -129,33 +129,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | single  | Disabled          | Prohibit            | should not    | should not | Course 1      |
 
   @javascript
-  Scenario: Grade and progress are shown to students only when allowed by settings.
-    Given completion tracking is "Disabled" for course "C1"
-    And I set the following system permissions of "Student" role:
-      | capability                | permission            |
-      | gradereport/overview:view | Prohibit              |
-    When I log in as "student1"
-    And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
-    And ".snap-student-dashboard-progress" "css_element" should not exist
-    And ".snap-student-dashboard-grade" "css_element" should not exist
-    Given completion tracking is "Enabled" for course "C1"
-    And I set the following system permissions of "Student" role:
-      | capability                | permission            |
-      | gradereport/overview:view | Allow                 |
-    And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
-    And ".snap-student-dashboard-progress" "css_element" should exist
-    And ".snap-student-dashboard-grade" "css_element" should exist
-    Given the following config values are set as admin:
-      | showcoursegradepersonalmenu | 0 | theme_snap |
-    And I reload the page
-    And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
-    And ".snap-student-dashboard-progress" "css_element" should exist
-    And ".snap-student-dashboard-grade" "css_element" should exist
-
-  @javascript
   Scenario: Course tools includes ally course lti report.
     Given I am using Open LMS
     And I log in as "teacher1"

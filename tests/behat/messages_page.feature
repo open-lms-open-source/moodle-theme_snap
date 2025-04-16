@@ -74,20 +74,6 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     Then ".drawer .message-app" "css_element" should not be visible
 
   @javascript
-  Scenario: In personal menu preferences page, it must be possible to click the items.
-    Given the following config values are set as admin:
-      | personalmenuenablepersonalmenu | 1 | theme_snap |
-    And I log in as "admin"
-    And I am on site homepage
-    And I click on ".js-snap-pm-trigger.snap-my-courses-menu" "css_element"
-    And I click on "//a[@id='snap-pm-preferences']" "xpath_element"
-    And I follow "Message preferences"
-    And I should see "Settings"
-    And I should see "Privacy"
-    And I should see "Notification preferences"
-    Then ".drawer .message-app" "css_element" should be visible
-
-  @javascript
   Scenario: When selecting messages of a contact, it must be possible to click the items.
     Given I log in as "admin"
     And I am on the course main page for "C1"

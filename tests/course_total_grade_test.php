@@ -284,12 +284,6 @@ class course_total_grade_Test extends \advanced_testcase {
             'feedback' => false,
         ];
 
-        $config = get_config('theme_snap');
-        if (empty($config->showcoursegradepersonalmenu)) {
-            // If not enabled, don't return data.
-            return $failobj;
-        }
-
         if (!isloggedin() || isguestuser()) {
             return $failobj;
         }
@@ -323,7 +317,6 @@ class course_total_grade_Test extends \advanced_testcase {
         // Default feedbackobj.
         $feedbackobj = (object)[
             'feedbackurl' => $feedbackurl->out(),
-            'showgrade' => $config->showcoursegradepersonalmenu,
         ];
 
         if (!$coursegrade->is_hidden() || $canviewhidden) {

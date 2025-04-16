@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2024 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_personalmenu
+@theme @theme_snap
 Feature: Users can access the Snap feeds information using the nav button in Snap.
 
   Background:
