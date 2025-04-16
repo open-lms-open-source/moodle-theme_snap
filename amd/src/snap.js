@@ -25,10 +25,11 @@
 /**
  * Main snap initialising function.
  */
-define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
+define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/personal_menu',
         'theme_snap/cover_image', 'theme_snap/progressbar', 'core/templates', 'core/str', 'core/ajax', 'theme_snap/accessibility',
         'theme_snap/messages', 'theme_snap/scroll'],
-    function($, log, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str, ajax, accessibility, messages, Scroll) {
+    function($, log, Aria, Headroom, util, personalMenu, coverImage, ProgressBar, templates, str, ajax, accessibility,
+             messages, Scroll) {
 
         'use strict';
 
@@ -557,6 +558,13 @@ define(['jquery', 'core/log', 'theme_snap/headroom', 'theme_snap/util', 'theme_s
                 $(href).attr('tabindex', '0');
                 $(href).toggleClass('state-visible').focus();
                 e.preventDefault();
+
+                // Toggle accessibility visibility for screen readers using aria-hidden.
+                if ($(href).hasClass('state-visible')) {
+                    Aria.unhide(document.querySelector('#settingsnav'));
+                } else {
+                    Aria.hide(document.querySelector('#settingsnav'));
+                }
 
                 if ($('.message-app.main').length === 0) {
                     document.dispatchEvent(new Event("messages-drawer:toggle"));
