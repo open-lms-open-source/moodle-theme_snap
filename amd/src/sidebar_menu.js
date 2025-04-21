@@ -14,6 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+import {isSmall} from 'core/pagehelpers';
+import {setUserPreferences, getUserPreferences} from 'core_user/repository';
+
 /**
  * JavaScript for the Snap theme sidebar menu functionality
  *
@@ -67,6 +70,27 @@ const POPOVERS_DROPDOWNS = {
         '#nav-intellicart-popover-container', // Intellicart
         '#nav-notification-popover-container', // Notifications
     ]
+};
+
+const ACTIVE_SELECTORS = {
+    ADMIN_MENU: '[data-activeselector="#admin-menu-trigger.active"]',
+    BLOCKS_DRAWER: '[data-activeselector="#theme_snap-drawers-blocks.show"]',
+    SNAP_FEEDS: '[data-activeselector="#snap_feeds_side_menu_trigger.active"]',
+    MESSAGES_DRAWER: '[data-activeselector=\'[data-region="popover-region-messages"]:not(.collapsed)\']',
+};
+
+const PREFERENCES = {
+    ADMIN_MENU: 'snap-admin-menu-open',
+    BLOCKS_DRAWER: 'drawer-open-block',
+    SNAP_FEEDS: 'snap-feeds-open',
+    MESSAGES_DRAWER: 'snap-message-drawer-open',
+};
+
+const PREFERENCE_MAP = {
+    [PREFERENCES.ADMIN_MENU]: ACTIVE_SELECTORS.ADMIN_MENU,
+    [PREFERENCES.BLOCKS_DRAWER]: ACTIVE_SELECTORS.BLOCKS_DRAWER,
+    [PREFERENCES.SNAP_FEEDS]: ACTIVE_SELECTORS.SNAP_FEEDS,
+    [PREFERENCES.MESSAGES_DRAWER]: ACTIVE_SELECTORS.MESSAGES_DRAWER,
 };
 
 let lastScrollX = 0;
@@ -177,8 +201,10 @@ const handleDrawerButtonClick = (e) => {
             // If this drawer is being opened, close others
             closeOtherDrawers(activeSelector, button);
             button.classList.add(CLASSES.ACTIVE);
+            setDrawerPreference(activeSelector, true);
         } else {
             button.classList.remove(CLASSES.ACTIVE);
+            setDrawerPreference(activeSelector, false);
         }
     }, 50); // Small delay to allow the drawer state to update
 };
@@ -216,6 +242,7 @@ const closeOtherDrawers = (currentSelector, currentButton) => {
             } else {
                 button.click();
             }
+            setDrawerPreference(activeSelector, false);
             button.classList.remove(CLASSES.ACTIVE);
         }
     });
@@ -269,6 +296,58 @@ const handleMessagesPopoverClick = (e) => {
         }
     }
 };
+
+/**
+ * Set the Actual Drawer based on user preferences.
+ *
+ * @return {Promise}
+ */
+const setActiveDrawer = async() => {
+    const preferences = await getUserPreferences();
+    const preferencesArray = {};
+    preferences.preferences.forEach(pref => {
+        preferencesArray[pref.name] = pref.value;
+    });
+
+    // Review which user preference is set to true, from PREFERENCE_MAP
+    for (const [prefKey, drawerSelector] of Object.entries(PREFERENCE_MAP)) {
+        // See if any Drawer was opened. (Preference set to 1)
+        const shouldOpen = preferencesArray[prefKey] === 1 || preferencesArray[prefKey] === '1';
+
+        if (shouldOpen) {
+            const button = document.querySelector(drawerSelector);
+            if (button) {
+                // Simulate click on button.
+                const clickableElement = button.querySelector('a, button') || button;
+                clickableElement.click();
+            }
+        }
+    }
+};
+
+/**
+ * Set User preferences for the corresponding Drawer selected.
+ * If "Value" = true, sets selected drawer to open and others to closed.
+ * If "Value" = false, sets selected drawer to closed only.
+ * @param {string} activeSelector - The selector for the drawer requested
+ * @param {boolean} value - The value for the preference
+ */
+const setDrawerPreference = (activeSelector, value) => {
+    // Loop all preferences map and set true or false to selected one.
+    for (const [preference, selector] of Object.entries(PREFERENCE_MAP)) {
+        if (selector.includes(activeSelector) && !isSmall() && value) {
+            // Set open status to selected Drawer.
+            setUserPreferences([{name: preference, value: true}]);
+        } else if (value) {
+            // Set closed status to other Drawers.
+            setUserPreferences([{name: preference, value: false}]);
+        } else if (selector.includes(activeSelector) && !value) {
+            // Set closed status to selected Drawer.
+            setUserPreferences([{name: preference, value: false}]);
+        }
+    }
+};
+
 
 /**
  * Handle close drawer button clicks
@@ -338,7 +417,7 @@ const setupEventListeners = () => {
     
     // Set up course TOC observer
     setupCourseTocObserver();
-    
+
     // Set up popover/dropdown click handlers
     setupPopoverClickHandlers();
 };
@@ -382,6 +461,8 @@ export const init = () => {
     
     // Update positions of all drawers
     updateElementPositions(DRAWERS.SELECTORS);
+    // Open active Drawer.
+    setActiveDrawer();
 };
 
 /**
@@ -394,7 +475,7 @@ export const init = () => {
 const queryActiveDrawers = (selector) => {
     // Check if the selector string contains ':has(' and matches the specific known case
     if (selector === '.drawer:not(.hidden):has(.message-app)') {
-        // Workaround for :has(.message-app) 
+        // Workaround for :has(.message-app)
         const potentialDrawers = document.querySelectorAll('.drawer:not(.hidden)');
         return Array.from(potentialDrawers).filter(drawer => drawer.querySelector('.message-app'));
     } else {
@@ -481,12 +562,12 @@ const toggleSidebarOnHorizontalScroll = (scrollX) => {
  */
 const setupPopoverClickHandlers = () => {
     let isClosingDrawers = false;
-    
+
     const checkAndCloseDrawers = () => {
         if (isClosingDrawers) {
             return false;
         }
-        
+
         let hasOpenDrawers = false;
         DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
             const activeDrawers = queryActiveDrawers(selector); // Use the helper function
@@ -494,28 +575,28 @@ const setupPopoverClickHandlers = () => {
                 hasOpenDrawers = true;
             }
         });
-        
+
         if (hasOpenDrawers) {
             // Set flag to prevent recursive calls
-            isClosingDrawers = true;    
+            isClosingDrawers = true;
             // Close all drawers first
             closeAllDrawers();
             isClosingDrawers = false;
             return true;
         }
-        
+
         return false;
     };
-    
+
     POPOVERS_DROPDOWNS.CLICKABLE_SELECTORS.forEach(selector => {
         const elements = document.querySelectorAll(selector);
-        
+
         elements.forEach(element => {
             // Handle mouse clicks
             element.addEventListener('click', () => {
                 checkAndCloseDrawers();
             }, true);
-            
+
             // Handle keyboard events (Enter key)
             element.addEventListener('keydown', (e) => {
                 // Check if the Enter key was pressed
