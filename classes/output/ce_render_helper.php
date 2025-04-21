@@ -73,9 +73,9 @@ class ce_render_helper {
     public function render_feed_web_component($feedkey, $title, $emptymessage, $virtualpaging = false, $showreload = true,
         $waitforpm = true, $courseid = 0, $location = '' ) {
         global $CFG;
-        $pagesize = get_config('theme_snap', 'personalmenuadvancedfeedsperpage');
+        $pagesize = get_config('theme_snap', 'advancedfeedsperpage');
         $pagesize = !empty($pagesize) ? $pagesize : 3;
-        $maxlifetime = get_config('theme_snap', 'personalmenuadvancedfeedslifetime');
+        $maxlifetime = get_config('theme_snap', 'advancedfeedslifetime');
         $maxlifetime = is_number($maxlifetime) ? $maxlifetime : 30 * MINSECS;
         $sesskey = sesskey();
 

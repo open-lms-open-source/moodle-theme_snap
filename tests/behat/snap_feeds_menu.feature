@@ -41,7 +41,7 @@ Feature: Users can access the Snap feeds information using the nav button in Sna
   Scenario: User can access to Snap feeds menu with advanced feeds enabled.
     Given I log in as "admin"
     And the following config values are set as admin:
-      | personalmenuadvancedfeedsenable | true |
+      | advancedfeedsenable | true |
     And I log in as "teacher1"
     And I am on site homepage
     And "#snap_feeds_side_menu_trigger" "css_element" should exist
@@ -63,7 +63,7 @@ Feature: Users can access the Snap feeds information using the nav button in Sna
   Scenario: User can access to Snap feeds menu with advanced feeds disabled.
     Given I log in as "admin"
     And the following config values are set as admin:
-      | personalmenuadvancedfeedsenable | false |
+      | advancedfeedsenable | false |
     And I log in as "teacher1"
     And I am on site homepage
     And "#snap_feeds_side_menu_trigger" "css_element" should exist

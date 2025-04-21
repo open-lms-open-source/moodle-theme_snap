@@ -35,7 +35,7 @@ class hook_callbacks {
     public static function before_footer_html_generation(\core\hook\output\before_footer_html_generation $hook): void {
         global $CFG, $PAGE;
 
-        if ($PAGE->theme->name !== 'snap' || empty(get_config('theme_snap', 'personalmenuadvancedfeedsenable'))) {
+        if ($PAGE->theme->name !== 'snap' || empty(get_config('theme_snap', 'advancedfeedsenable'))) {
             return;
         }
 

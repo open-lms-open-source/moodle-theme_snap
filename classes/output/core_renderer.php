@@ -599,8 +599,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return bool
      */
     private function advanced_feeds_enabled() {
-        $advancedfeedsenabled = property_exists($this->page->theme->settings, 'personalmenuadvancedfeedsenable')
-        && $this->page->theme->settings->personalmenuadvancedfeedsenable == 1;
+        $advancedfeedsenabled = property_exists($this->page->theme->settings, 'advancedfeedsenable')
+        && $this->page->theme->settings->advancedfeedsenable == 1;
         $anydependencyenabled = property_exists($this->page->theme->settings, 'deadlinestoggle')
         && $this->page->theme->settings->deadlinestoggle == 1 || property_exists($this->page->theme->settings, 'feedbacktoggle')
         && $this->page->theme->settings->feedbacktoggle == 1 || property_exists($this->page->theme->settings, 'messagestoggle')

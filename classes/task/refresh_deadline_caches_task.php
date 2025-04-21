@@ -59,7 +59,7 @@ class refresh_deadline_caches_task extends scheduled_task {
         // Reset query count.
         activity::reset_deadline_query_count();
 
-        if (empty(get_config('theme_snap', 'personalmenurefreshdeadlines'))) {
+        if (empty(get_config('theme_snap', 'refreshdeadlines'))) {
             mtrace(get_string('refreshdeadlinestaskoff', 'theme_snap'));
             // Skip, setting is off.
             return;

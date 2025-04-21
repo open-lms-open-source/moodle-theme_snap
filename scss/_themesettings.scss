@@ -131,7 +131,7 @@
 
     // These form items are a checkbox which makes other bigger items disappear,
     // so this style makes the item preseve the height of the form row.
-    #admin-personalmenuadvancedfeedsenable {
+    #admin-advancedfeedsenable {
         min-height: 13.1em;
     }
 
@@ -168,11 +168,11 @@
     }
 }
 // -------------------------
-// Tab - Personal menu.
+// Tab - Snap Feeds.
 // -------------------------
-#themesnappersonalmenu.active {
+#themesnapfeeds.active {
     #admin-forumpoststoggle,
-    #admin-personalmenuadvancedfeedsenable {
+    #admin-advancedfeedsenable {
         clear: both;
     }
 

@@ -30,7 +30,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
       | username | firstname | lastname | email                |
       | teacher  | Test      | teacher  | teacher@example.com  |
     And the following config values are set as admin:
-      | personalmenuadvancedfeedsenable | 0 | theme_snap |
+      | advancedfeedsenable | 0 | theme_snap |
 
   @javascript
   Scenario: Teacher get's login status warning when trying to manage sections if logged out.

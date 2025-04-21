@@ -1891,7 +1891,7 @@ class activity_test extends snap_base_test {
         }
 
         // The task should refresh deadline data for users who logged in within the last 6 months by default.
-        set_config('personalmenurefreshdeadlines', '1', 'theme_snap');
+        set_config('refreshdeadlines', '1', 'theme_snap');
         $task = new refresh_deadline_caches_task();
         $task->execute();
 

@@ -157,5 +157,30 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025041400, 'theme', 'snap');
     }
 
+    if ($oldversion < 2025042100) {
+        // Rename Personal menu settings.
+        if (!is_null(get_config('theme_snap', 'personalmenuadvancedfeedsenable'))) {
+            $previous = get_config('theme_snap', 'personalmenuadvancedfeedsenable');
+            set_config('advancedfeedsenable', $previous, 'theme_snap');
+            unset_config('personalmenuadvancedfeedsenable', 'theme_snap');
+        }
+        if (!is_null(get_config('theme_snap', 'personalmenuadvancedfeedsperpage'))) {
+            $previous = get_config('theme_snap', 'personalmenuadvancedfeedsperpage');
+            set_config('advancedfeedsperpage', $previous, 'theme_snap');
+            unset_config('personalmenuadvancedfeedsperpage', 'theme_snap');
+        }
+        if (!is_null(get_config('theme_snap', 'personalmenuadvancedfeedslifetime'))) {
+            $previous = get_config('theme_snap', 'personalmenuadvancedfeedslifetime');
+            set_config('advancedfeedslifetime', $previous, 'theme_snap');
+            unset_config('personalmenuadvancedfeedslifetime', 'theme_snap');
+        }
+        if (!is_null(get_config('theme_snap', 'personalmenurefreshdeadlines'))) {
+            $previous = get_config('theme_snap', 'personalmenurefreshdeadlines');
+            set_config('refreshdeadlines', $previous, 'theme_snap');
+            unset_config('personalmenurefreshdeadlines', 'theme_snap');
+        }
+        upgrade_plugin_savepoint(true, 2025042100, 'theme', 'snap');
+    }
+
     return true;
 }

@@ -18,7 +18,7 @@ defined('MOODLE_INTERNAL') || die;// Main settings.
 
 global $PAGE;
 
-$snapsettings = new admin_settingpage('themesnappersonalmenu', get_string('personalmenuandsnapfeeds', 'theme_snap'));
+$snapsettings = new admin_settingpage('themesnapfeeds', get_string('snapfeeds', 'theme_snap'));
 
 // Snap feeds settings.
 $advancedfeedsdependants = [];
@@ -28,7 +28,7 @@ $description = new lang_string('mycoursessnapfeedsdesc', 'theme_snap');
 $setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
-// Personal menu deadlines on/off.
+// Deadlines on/off.
 $name = 'theme_snap/deadlinestoggle';
 $title = new lang_string('deadlinestoggle', 'theme_snap');
 $description = new lang_string('deadlinestoggledesc', 'theme_snap');
@@ -37,7 +37,7 @@ $setting = new admin_setting_configcheckbox($name, $title, $description, $defaul
 $advancedfeedsdependencies[] = $setting->name;
 $snapsettings->add($setting);
 
-// Personal menu recent feedback & grading on/off.
+// Recent feedback & grading on/off.
 $name = 'theme_snap/feedbacktoggle';
 $title = new lang_string('feedbacktoggle', 'theme_snap');
 $description = new lang_string('feedbacktoggledesc', 'theme_snap');
@@ -46,7 +46,7 @@ $setting = new admin_setting_configcheckbox($name, $title, $description, $defaul
 $advancedfeedsdependencies[] = $setting->name;
 $snapsettings->add($setting);
 
-// Personal menu messages on/off.
+// Messages on/off.
 $name = 'theme_snap/messagestoggle';
 $title = new lang_string('messagestoggle', 'theme_snap');
 $description = new lang_string('messagestoggledesc', 'theme_snap');
@@ -55,7 +55,7 @@ $setting = new admin_setting_configcheckbox($name, $title, $description, $defaul
 $advancedfeedsdependencies[] = $setting->name;
 $snapsettings->add($setting);
 
-// Personal menu forum posts on/off.
+// Forum posts on/off.
 $name = 'theme_snap/forumpoststoggle';
 $title = new lang_string('forumpoststoggle', 'theme_snap');
 $description = new lang_string('forumpoststoggledesc', 'theme_snap');
@@ -64,17 +64,17 @@ $setting = new admin_setting_configcheckbox($name, $title, $description, $defaul
 $advancedfeedsdependencies[] = $setting->name;
 $snapsettings->add($setting);
 
-// Enable advanced PM feeds.
-$name = 'theme_snap/personalmenuadvancedfeedsenable';
-$title = new lang_string('personalmenuadvancedfeedsenable', 'theme_snap');
-$description = new lang_string('personalmenuadvancedfeedsenabledesc', 'theme_snap');
+// Enable advanced feeds.
+$name = 'theme_snap/advancedfeedsenable';
+$title = new lang_string('advancedfeedsenable', 'theme_snap');
+$description = new lang_string('advancedfeedsenabledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
-$name = 'theme_snap/personalmenuadvancedfeedsperpage';
-$title = new lang_string('personalmenuadvancedfeedsperpage', 'theme_snap');
-$description = new lang_string('personalmenuadvancedfeedsperpagedesc', 'theme_snap');
+$name = 'theme_snap/advancedfeedsperpage';
+$title = new lang_string('advancedfeedsperpage', 'theme_snap');
+$description = new lang_string('advancedfeedsperpagedesc', 'theme_snap');
 $default = '3';
 $pmfeedperpagechoices = [
     '3' => '3',
@@ -85,9 +85,9 @@ $pmfeedperpagechoices = [
 $setting = new admin_setting_configselect($name, $title, $description, $default, $pmfeedperpagechoices);
 $snapsettings->add($setting);
 
-$name = 'theme_snap/personalmenuadvancedfeedslifetime';
-$title = new lang_string('personalmenuadvancedfeedslifetime', 'theme_snap');
-$description = new lang_string('personalmenuadvancedfeedslifetimedesc', 'theme_snap');
+$name = 'theme_snap/advancedfeedslifetime';
+$title = new lang_string('advancedfeedslifetime', 'theme_snap');
+$description = new lang_string('advancedfeedslifetimedesc', 'theme_snap');
 $default = 30 * MINSECS;
 $setting = new admin_setting_configduration($name, $title, $description, $default, MINSECS);
 $snapsettings->add($setting);
@@ -99,19 +99,19 @@ $description = '';
 $setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
-$name = 'theme_snap/personalmenurefreshdeadlines';
-$title = new lang_string('personalmenurefreshdeadlines', 'theme_snap');
-$description = new lang_string('personalmenurefreshdeadlinesdesc', 'theme_snap');
+$name = 'theme_snap/refreshdeadlines';
+$title = new lang_string('refreshdeadlines', 'theme_snap');
+$description = new lang_string('refreshdeadlinesdesc', 'theme_snap');
 $default = !$checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
 $settings->add($snapsettings);
 
-// Personalmenuadvancedfeedsenable depends on $advancedfeedsdependencie.
-// Personalmenuadvancedfeedsperpage and personalmenuadvancedfeedslifetime depends on personalmenuadvancedfeedsenable.
+// advancedfeedsenable depends on $advancedfeedsdependencie.
+// advancedfeedsperpage and advancedfeedslifetime depends on advancedfeedsenable.
 $PAGE->requires->js_call_amd('theme_snap/hide_settings',
     'hideDependingOnChecked',
-    array('personalmenuadvancedfeedsenable',
+    array('advancedfeedsenable',
     $advancedfeedsdependencies,
-    array('personalmenuadvancedfeedsperpage', 'personalmenuadvancedfeedslifetime')));
+    array('advancedfeedsperpage', 'advancedfeedslifetime')));
