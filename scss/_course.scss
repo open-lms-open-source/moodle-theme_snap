@@ -2814,7 +2814,7 @@ form.togglecompletion {
     .snap-edit-more-dropdown {
         &:hover,
         &:focus {
-            .icon {
+            .snap-edit-asset-more .icon {
                 transform: scale(1.1);
                 border-color: $gray-light;
             }
