@@ -528,3 +528,31 @@ function snap_print_course_request_buttons($context) {
             'get', array('disabled' => $disabled));
     }
 }
+
+/**
+ * Get the current user preferences that are available
+ *
+ * @return array[]
+ */
+function theme_snap_user_preferences(): array {
+    return [
+        'snap-admin-menu-open' => [
+            'type' => PARAM_BOOL,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => false,
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
+        'snap-feeds-open' => [
+            'type' => PARAM_BOOL,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => false,
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
+        'snap-message-drawer-open' => [
+            'type' => PARAM_BOOL,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => false,
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
+    ];
+}
