@@ -199,7 +199,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     }
 
     // Snap Feeds
-    .snap-personal-menu-more, .snap-feeds-menu-more {
+    .snap-sidebar-menu-more, .snap-feeds-menu-more {
         svg path{
             fill: $brand-primary !important; // !important needed to override svg fills.
         }
@@ -718,7 +718,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
 
-        #snap-pm-trigger {
+        #snap-my-courses-trigger {
             color: $nav-button-color;
         }
 

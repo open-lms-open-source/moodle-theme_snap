@@ -1361,7 +1361,7 @@ footer #moodle-footer
     }
 }
 
-#mr-nav #snap-pm-trigger {
+#mr-nav #snap-my-courses-trigger {
     display: inline;
     border: none;
     position: relative; // Position to support message badge.
@@ -1510,7 +1510,7 @@ footer #moodle-footer
     }
 }
 
-#mr-nav #snap-pm-trigger:hover {
+#mr-nav #snap-my-courses-trigger:hover {
     text-decoration: none;
     .hidden-xs-down {
         text-decoration: underline;
@@ -1518,7 +1518,7 @@ footer #moodle-footer
 }
 
 @include media-breakpoint-down(sm) {
-    .js-snap-pm-trigger.snap-my-courses-menu {
+    .js-snap-my-courses-trigger.snap-my-courses-menu {
         margin-bottom: 0.5em;
     }
 }
@@ -1562,7 +1562,7 @@ footer #moodle-footer
     #mr-nav {
         padding-right: 0;
         #snap-header {
-            #snap-pm-trigger {
+            #snap-my-courses-trigger {
                 padding-left: 0;
             }
         }
@@ -1572,7 +1572,7 @@ footer #moodle-footer
 // sm: 576px.
 @include media-breakpoint-down(sm) {
     #snap-header {
-        #snap-pm-trigger {
+        #snap-my-courses-trigger {
             margin-right: 0;
             padding-right: 0;
             margin-bottom: 0;
@@ -1592,7 +1592,7 @@ footer #moodle-footer
         .pull-right.js-only.row, .float-end.js-only.row {
             padding-top: 0;
             margin-top: 0;
-            #snap-pm-trigger.js-snap-pm-trigger {
+            #snap-my-courses-trigger.js-snap-my-courses-trigger {
                 span.hidden-xs-down {
                     display: none;
                 }

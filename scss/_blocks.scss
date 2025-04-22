@@ -179,7 +179,7 @@ body.path-site .block.block_settings {
             margin: 1rem;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
-            .snap-personal-menu-more {
+            .snap-sidebar-menu-more {
                 pointer-events: none;
                 margin-top: 1em;
                 margin-right: -0.8rem;
@@ -359,7 +359,7 @@ body.path-site .block.block_settings {
                     text-align: right;
                 }
 
-                .snap-feeds-menu-more, .snap-personal-menu-more {
+                .snap-feeds-menu-more, .snap-sidebar-menu-more {
                     * {
                         display: inline-block;
                         transform: translate(8px, 16px);
@@ -374,7 +374,7 @@ body.path-site .block.block_settings {
     }
 }
 
-.snap-personal-menu-more svg {
+.snap-sidebar-menu-more svg {
     width: 16px;
     margin-left: 4px;
 }

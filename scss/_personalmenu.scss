@@ -18,119 +18,6 @@
     display: none;
 }
 
-body.snap-pm-open {
-    background-color: #eee;
-}
-
-// -------------------------
-//  Personal open and close.
-// -------------------------
-.snap-pm-open {
-
-    #snap-pm {
-        display: block;
-    }
-
-    #page,
-    #moodle-footer,
-    #mr-nav,
-    #newmessageoverlay,
-    .skiplinks {
-        display: none;
-    }
-
-    // Animate opening the pm.
-    #snap-pm-inner {
-        /* stylelint-disable no-unknown-animations*/
-        animation-name: snap-drop;
-        /* stylelint-enable no-unknown-animations*/
-        animation-iteration-count: once;
-        animation-timing-function: ease-in-out;
-        animation-duration: 0.3s;
-    }
-}
-
-// -------------------------
-//  Personal menu header.
-// -------------------------
-#snap-pm-header {
-    padding: 2%;
-    color: white;
-
-    .userpicture {
-        float: left;
-        width: 5em;
-        margin-right: 2%;
-    }
-
-    .userinitials.size-90 {
-        float: left;
-        margin-right: 2%;
-        width: 90px;
-        height: 90px;
-        font-size: 2rem;
-    }
-
-    h1,
-    a {
-        color: white !important;
-        padding-top: 0; // No top padding on close icon and links.
-    }
-}
-
-// -------------------------
-//  Navigation to previous years courses.
-// -------------------------
-#snap-pm-courses-nav {
-    border: none;
-    // Reset bs styles.
-    .nav-item {
-        float: left;
-    }
-    .nav-link {
-        background-color: transparent;
-        border: none;
-        padding: .5em;
-    }
-}
-
-
-// -------------------------
-//  Personal menu content.
-// -------------------------
-#snap-pm-content {
-    padding: 2%;
-    position: relative;
-
-    // Headings for sections including updates.
-    h2 {
-        clear: both;
-        font-size: 1rem;
-        font-weight: 500;
-        line-height: 1;
-        padding: 0.5em 0;
-        margin: 0.5em 0;
-    }
-
-    #snap-pm-courses {
-        overflow: hidden;
-    }
-
-    // Tablet and mobile display.
-    @include media-breakpoint-down(md) {
-        width: 700vw;
-
-        section {
-            width: calc(100vw - 2em) !important;
-            float: left;
-            padding: 0 2em;
-            margin-bottom: 60px; // For the menu.
-            border-color: transparent !important;
-
-        }
-    }
-}
-
 @keyframes slideFromLeft {
     0% {
         opacity: 0;
@@ -196,15 +83,7 @@ body.snap-pm-open {
     }
 }
 
-// -------------------------
-//  Personal menu links to browse all course, see all messages etc.
-// -------------------------
-#snap-pm-courses .snap-personal-menu-more {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-.snap-personal-menu-more {
+.snap-sidebar-menu-more {
     display: block;
     text-align: right;
     .snap-feeds-refresh-icon,
@@ -213,7 +92,7 @@ body.snap-pm-open {
     }
 }
 
-.snap-personal-menu-feed-loading {
+.snap-sidebar-menu-feed-loading {
     &:after {
         @include ajaxing(inline-block, relative, 20px, 6px);
     }
@@ -231,7 +110,7 @@ body.snap-pm-open {
 .snap-login-option {
     display: none;
 }
-#snap-personal-menu-deadlines li,
-#snap-personal-menu-grading li {
+#snap-sidebar-menu-deadlines li,
+#snap-sidebar-menu-grading li {
     list-style-type: none;
 }

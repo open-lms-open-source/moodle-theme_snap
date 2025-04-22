@@ -55,16 +55,6 @@ define(['jquery'],
                             }
                         }
                     });
-                    // Listener for the personal menu.
-                    document.addEventListener("messages-drawer:pm-toggle", function () {
-                        if ($('#page-message-edit').length || $('#page-message-index').length) {
-                            if ($('.snap-pm-open').length) {
-                                $('.drawer .message-app').hide();
-                            } else {
-                                $('.drawer .message-app').show();
-                            }
-                        }
-                    });
                     // Listeners for popovers.
                     var popover = $('div.popover-region');
                     popover.on('popoverregion:menuopened', function () {

@@ -5965,10 +5965,6 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
     border: 1px solid #e5e5e5;
 }
 
-.fixy .userpicture.defaultuserpic {
-    border: none;
-}
-
 .icon-close:before {
     content: '';
     background: transparent url("[[pix:theme|close_x]]") no-repeat 50% 50%;
@@ -5978,8 +5974,7 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
     margin: 0.1em auto;
 }
 
-#snap-footer-alert .snap-icon-close:before,
-.fixy .snap-icon-close:before {
+#snap-footer-alert .snap-icon-close:before {
     background: transparent url("[[pix:theme|close_x_white]]") no-repeat 50% 50%;
 }
 
@@ -11935,27 +11930,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     padding-left: 0.3em;
 }
 
-.fixy {
-    display: none;
-    background-color: #eee;
-}
-
-.snap-pm-open #primary-nav,
-.snap-pm-open #snap-login {
-    display: block;
-}
-
-.snap-pm-open #page,
-.snap-pm-open #moodle-footer,
-.snap-pm-open #fixy-trigger,
-.snap-pm-open .genius_dashboard_link,
-.snap-pm-open #admin-menu-trigger,
-.snap-pm-open #newmessageoverlay,
-.snap-pm-open #snap-home,
-.snap-pm-open .skiplinks {
-    display: none;
-}
-
 .snap-my-courses-menu {
     display: inline;
     border: none;
@@ -11989,183 +11963,11 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     top: 0.5em;
 }
 
-.fixy {
-    margin: 0 auto;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    bottom: 0;
-    overflow-y: auto;
-    z-index: 1000000;
-}
-
-.fixy #snap-pm-close {
-    color: #fff;
-}
-
-.fixy h2 {
-    font-weight: 500;
-    line-height: 1;
-    padding: 0.5em 0;
-    margin: 0;
-    margin-bottom: 1em;
-    font-size: 1rem;
-}
-
-@media only screen and (min-width: 768px) {
-    .fixy #snap-pm-close {
-        margin-top: 1rem;
-    }
-}
-
 .notloggedin header .snap-login-button {
     margin-right: 4%;
 }
 
-.fixy-inner {
-    margin: 0 auto;
-    animation-name: snap-drop;
-    animation-iteration-count: once;
-    animation-timing-function: ease-in-out;
-    animation-duration: 0.3s;
-}
-
-#fixy-user {
-    padding: 1em 4%;
-}
-
-#fixy-user:before,
-#fixy-user:after {
-    content: " ";
-    display: table;
-}
-
-#fixy-user:after {
-    clear: both;
-}
-
-#fixy-user:before,
-#fixy-user:after {
-    content: " ";
-    display: table;
-}
-
-#fixy-user:after {
-    clear: both;
-}
-
-#fixy-user a,
-#fixy-user a .h1 {
-    color: white;
-}
-
-#fixy-user .userpicture {
-    float: left;
-    margin-right: 2%;
-}
-
-#fixy-user #fixy-user-details {
-    float: left;
-}
-
-#fixy-user #fixy-logout {
-    display: block;
-    line-height: 0;
-}
-
-#snap-pm-content {
-    padding: 0 2%;
-}
-
-#snap-pm-content:before,
-#snap-pm-content:after {
-    content: " ";
-    display: table;
-}
-
-#snap-pm-content:after {
-    clear: both;
-}
-
-#snap-pm-content:before,
-#snap-pm-content:after {
-    content: " ";
-    display: table;
-}
-
-#snap-pm-content:after {
-    clear: both;
-}
-
-#snap-pm-content section {
-    padding: 1em 0;
-}
-
-#snap-login.fixy input {
-    display: block;
-    width: 92%;
-    max-width: 23rem;
-}
-
-#snap-login.fixy input[type='text'],
-#snap-login.fixy input[type='password'] {
-    margin: 0 auto 0.5em;
-    padding: 0 0.5em;
-    background-color: #fff;
-    font-size: inherit;
-    border: 0;
-    box-shadow: none;
-}
-
-#snap-login.fixy input:focus {
-    outline: none;
-}
-
-#snap-login.fixy input[type='submit'] {
-    margin: 0 auto 3.5em;
-}
-
-#snap-login.fixy h1 {
-    color: #fff;
-    padding: 1rem 4%;
-    margin: 0;
-}
-
-#snap-login.fixy label {
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    line-height: 1;
-    display: block;
-    padding-top: 1em;
-    font-weight: 300;
-    margin: 0.5em auto;
-    width: 92%;
-    max-width: 23rem;
-}
-
-#snap-login.fixy .fixy-inner {
-    min-height: 100vh;
-}
-
-#snap-login.fixy .subcontent.potentialidps {
-    width: auto;
-    text-align: center;
-}
-
-.fixy input::placeholder {
-    letter-spacing: 0.1em;
-}
-
 @media only screen and (min-width: 1200px) {
-    #fixy-my-courses {
-        position: relative;
-        min-height: 1px;
-        padding-left: 15px;
-        padding-right: 15px;
-        margin-bottom: 2em;
-    }
 
     .callstoaction {
         position: relative;
@@ -12179,13 +11981,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
         width: 100%;
         padding-bottom: 0.5em;
         border-bottom: 1px dotted #999;
-    }
-}
-
-@media only screen and (min-width: 1200px) and (min-width: 1200px) {
-    #fixy-my-courses {
-        float: left;
-        width: 75%;
     }
 }
 
@@ -12208,59 +12003,13 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     }
 }
 
-#fixy-mobile-menu {
-    display: none;
-    z-index: 2;
-}
-
 @media only screen and (max-width: 480px) {
-    #fixy-user .userpicture {
-        width: 60px;
-    }
 
     #primary-nav section {
         width: 96vw !important;
         float: left;
         padding: 1em;
         transition: all 0.4s ease-in-out;
-    }
-
-    #snap-pm-content {
-        position: relative;
-        width: 700vw;
-        overflow: hidden;
-        padding-bottom: 2em;
-    }
-
-    .fixy-inner {
-        overflow: hidden;
-        width: 100vw;
-    }
-
-    #fixy-mobile-menu {
-        display: block;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        height: 60px;
-        text-align: center;
-        background-color: #fff;
-        border-top: 1px solid #eee;
-    }
-
-    #fixy-mobile-menu a {
-        display: inline-block;
-        margin: 2%;
-        width: 12%;
-        outline: 0;
-    }
-
-    #fixy-mobile-menu a .svg-icon {
-        border-radius: 50%;
-        height: 40px;
-        width: 40px;
     }
 
     .courseinfo-body {
@@ -12270,59 +12019,28 @@ fieldset[disabled] a#changenumsections .reduce-sections {
     }
 }
 
-.callstoaction section,
-#fixy-my-courses {
+.callstoaction section {
     position: relative;
 }
 
-.callstoaction section .snap-personal-menu-more,
-#fixy-my-courses .snap-personal-menu-more {
+.callstoaction section .snap-sidebar-menu-more {
     position: absolute;
     top: 0.9rem;
     right: 0;
 }
 
-.callstoaction section .snap-personal-menu-more:hover .svg-icon,
-#fixy-my-courses .snap-personal-menu-more:hover .svg-icon,
-.callstoaction section .snap-personal-menu-more:focus .svg-icon,
-#fixy-my-courses .snap-personal-menu-more:focus .svg-icon {
+.callstoaction section .snap-sidebar-menu-more:hover .svg-icon,
+.callstoaction section .snap-sidebar-menu-more:focus .svg-icon {
     border: 1px solid #fff;
     transform: scale(1.1);
 }
 
-.callstoaction section .svg-icon,
-#fixy-my-courses .svg-icon {
+.callstoaction section .svg-icon {
     transition: all 0.4s ease-in-out;
     border-radius: 100%;
     margin-right: 0;
     width: 36px;
     height: 36px;
-}
-
-.fixy .callstoaction #snap-personal-menu-deadlines,
-.fixy .callstoaction #snap-personal-menu-graded,
-.fixy .callstoaction #snap-personal-menu-grading,
-.fixy .callstoaction #snap-personal-menu-messages,
-.fixy .callstoaction #snap-personal-menu-feed-graded,
-.fixy .callstoaction #snap-personal-menu-feed-grading,
-.fixy .callstoaction #snap-personal-menu-feed-messages {
-    min-height: 50px;
-}
-
-#fixy-hidden-courses {
-    display: none;
-    outline: none;
-}
-
-#fixy-hidden-courses.state-visible {
-    display: block;
-}
-
-@media screen and (min-width: 768px) {
-    #fixy-my-courses .courseinfo {
-        width: calc(30.33333333%);
-        min-height: 250px;
-    }
 }
 
 .courseinfo {
@@ -13420,16 +13138,12 @@ a:hover,
     border-color: #03a9f4;
 }
 
-#fixy-my-courses .courseinfo a,
 .snap-progressbar-link .progressbar-text a,
-#fixy-my-courses .courseinfo a:visited,
 .snap-progressbar-link .progressbar-text a:visited {
     color: #03a9f4;
 }
 
-#fixy-my-courses .courseinfo a:focus,
 .snap-progressbar-link .progressbar-text a:focus,
-#fixy-my-courses .courseinfo a:hover,
 .snap-progressbar-link .progressbar-text a:hover {
     color: #038dcc;
 }
@@ -13547,29 +13261,8 @@ legend,
     font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-#fixy-trigger .message_badge_count,
-#fixy-trigger .conversation_badge_count {
-    background-color: #038dcc;
-}
-
 .courseinfo-teachers-more:hover {
     border-color: #03a9f4;
-}
-
-#fixy-user {
-    background-color: #03a9f4;
-}
-
-.fixy .label-success {
-    color: #03a9f4;
-}
-
-.fixy .fixy-header {
-    background-color: #03a9f4;
-}
-
-#fixy-mobile-menu .svg-icon {
-    border: 1px solid #03a9f4;
 }
 
 .snap-unread-marker {
@@ -13588,7 +13281,6 @@ input#id_submitbutton2,
 .path-admin .buttons input[type="submit"],
 td.submit input,
 #notice .singlebutton + .singlebutton input,
-#login.fixy input[type=submit],
 button#local-joulegrader-preview-button,
 button.atto_equation_submit,
 .yui-skin-sam .yui-button,
@@ -13642,7 +13334,6 @@ input#id_submitbutton2:visited,
 .path-admin .buttons input[type="submit"]:visited,
 td.submit input:visited,
 #notice .singlebutton + .singlebutton input:visited,
-#login.fixy input[type=submit]:visited,
 button#local-joulegrader-preview-button:visited,
 button.atto_equation_submit:visited,
 .yui-skin-sam .yui-button:visited,
@@ -13683,7 +13374,6 @@ input#id_submitbutton2:hover,
 .path-admin .buttons input[type="submit"]:hover,
 td.submit input:hover,
 #notice .singlebutton + .singlebutton input:hover,
-#login.fixy input[type=submit]:hover,
 button#local-joulegrader-preview-button:hover,
 button.atto_equation_submit:hover,
 .yui-skin-sam .yui-button:hover,
@@ -13721,7 +13411,6 @@ input#id_submitbutton2:focus,
 .path-admin .buttons input[type="submit"]:focus,
 td.submit input:focus,
 #notice .singlebutton + .singlebutton input:focus,
-#login.fixy input[type=submit]:focus,
 button#local-joulegrader-preview-button:focus,
 button.atto_equation_submit:focus,
 .yui-skin-sam .yui-button:focus,
@@ -13759,7 +13448,6 @@ input#id_submitbutton2:active,
 .path-admin .buttons input[type="submit"]:active,
 td.submit input:active,
 #notice .singlebutton + .singlebutton input:active,
-#login.fixy input[type=submit]:active,
 button#local-joulegrader-preview-button:active,
 button.atto_equation_submit:active,
 .yui-skin-sam .yui-button:active,
@@ -13797,7 +13485,6 @@ input#id_submitbutton2.active,
 .path-admin .buttons input[type="submit"].active,
 td.submit input.active,
 #notice .singlebutton + .singlebutton input.active,
-#login.fixy input[type=submit].active,
 button#local-joulegrader-preview-button.active,
 button.atto_equation_submit.active,
 .yui-skin-sam .yui-button.active,
@@ -13841,7 +13528,6 @@ input#id_submitbutton2[disabled],
 .path-admin .buttons input[type="submit"][disabled],
 td.submit input[disabled],
 #notice .singlebutton + .singlebutton input[disabled],
-#login.fixy input[type=submit][disabled],
 button#local-joulegrader-preview-button[disabled],
 button.atto_equation_submit[disabled],
 .yui-skin-sam .yui-button[disabled],
@@ -14108,10 +13794,6 @@ img.iconhelp:hover {
 .spinner-three-quarters:not(:required).spinner-dark {
     border-color: #03a9f4;
     border-right-color: transparent;
-}
-
-.behat-site #fixy-user #fixy-logout {
-    line-height: 1em;
 }
 
 .behat-site #moodle-blocks {

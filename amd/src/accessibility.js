@@ -67,17 +67,6 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
                         'aria-label': stringsjs[3],
                     });
 
-
-                    // Add needed ID's for personal menu links.
-                    $('#snap-pm-updates section a.snap-personal-menu-more small:contains("' + stringsjs[4] + '")')
-                        .attr("id", "snap-pm-deadline");
-                    $('#snap-pm-updates section a.snap-personal-menu-more small:contains("' + stringsjs[5] + '")')
-                        .attr("id", "snap-pm-feedback");
-                    $('#snap-pm-updates section a.snap-personal-menu-more small:contains("' + stringsjs[6] + '")')
-                        .attr("id", "snap-pm-messages");
-                    $('#snap-pm-updates section a.snap-personal-menu-more small:contains("' + stringsjs[7] + '")')
-                        .attr("id", "snap-pm-forum-posts");
-
                     // Add needed ID's for course dashboard.
                     // These ID's were added for the most used elements in the course dashboard.
 

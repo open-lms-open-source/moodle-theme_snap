@@ -191,6 +191,6 @@ Feature: Snap message send messages
     And I log in as "student2"
     And I am on site homepage
     And I click on "#snap_feeds_side_menu_trigger" "css_element"
-    And I click on "#snap-personal-menu-feed-messages > div > div > a" "css_element"
+    And I click on "#snap-sidebar-menu-feed-messages > div > div > a" "css_element"
     # To check that the message is opened directly.
     And I should see "Hi!" in the "//div[@class='body-container position-relative']//div[@data-region='view-conversation']//div[@data-region='content-message-container']//div[@data-region='message']//div[@data-region='text-container']//p" "xpath_element"

@@ -43,17 +43,17 @@ import {MoodleRes} from "../moodle.res";
           {{strings['viewmore']}}
         </a>
       </div>
-      <a *ngIf="viewMoreEnabled && nextPage >= 0" href="javascript: void(0);" class="snap-personal-menu-more"
+      <a *ngIf="viewMoreEnabled && nextPage >= 0" href="javascript: void(0);" class="snap-sidebar-menu-more"
          (click)="getFeed($event)" title="{{ viewMoreMessage }} {{ title.toLowerCase() }}">
           <small>{{viewMoreMessage}}</small>
           <i class="snap-feeds-more-icon fa fa-caret-down"></i>
       </a>
-      <a *ngIf="nextPage === -1 && showReload" href="javascript: void(0);" class="snap-personal-menu-more"
+      <a *ngIf="nextPage === -1 && showReload" href="javascript: void(0);" class="snap-sidebar-menu-more"
          (click)="purgeDataAndResetFeed()" title="{{ reloadMessage }} {{ title.toLowerCase() }}">
           <small>{{reloadMessage}}</small>
           <i class="snap-feeds-refresh-icon fa fa-refresh"></i>
       </a>
-      <span *ngIf="fetchingData" class="snap-personal-menu-more snap-personal-menu-feed-loading">
+      <span *ngIf="fetchingData" class="snap-sidebar-menu-more snap-sidebar-menu-feed-loading">
         <a class="small text-muted">{{loadingFeed}} </a>
       </span>
   `,
@@ -97,7 +97,6 @@ export class FeedComponent implements OnInit {
   @Input() initialValue?: string;
   @Input() wwwRoot: string;
   @Input() maxLifeTime?: number;
-  @Input() waitForPersonalMenu?: boolean;
   @Input() courseId?: number;
   @Input() loadingFeed?: string;
 
@@ -153,8 +152,7 @@ export class FeedComponent implements OnInit {
         this.nextPage = -1;
       }
     } else {
-      if (!this.waitForPersonalMenu || document.querySelectorAll('body.snap-pm-open').length > 0
-        || document.querySelectorAll('#snap_feeds_side_menu .snap-feeds').length > 0) {
+      if (document.querySelectorAll('#snap_feeds_side_menu .snap-feeds').length > 0) {
         this.resetFeed();
       }
     }
