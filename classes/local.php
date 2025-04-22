@@ -45,11 +45,6 @@ require_once($CFG->dirroot.'/lib/enrollib.php');
 class local {
 
     /**
-     * Default limit for retrieving course completion data.
-     */
-    const DEFAULT_COMPLETION_COURSE_LIMIT = 100;
-
-    /**
      * Is there a valid grade or feedback inside this grader report table item?
      *
      * @param $item
@@ -443,20 +438,6 @@ class local {
 
         $courses = enrol_get_my_courses(['enablecompletion', 'showgrades']);
 
-        // We do not support meta data for people who have a crazy number of courses!
-        $maxcourses = !empty($CFG->theme_snap_max_pm_completion_courses) ?
-            $CFG->theme_snap_max_pm_completion_courses : self::DEFAULT_COMPLETION_COURSE_LIMIT;
-        $barlimit = !empty($CFG->theme_snap_bar_limit) ?
-            $CFG->theme_snap_bar_limit : self::DEFAULT_COMPLETION_COURSE_LIMIT;
-        if (count($courses) > $barlimit) {
-            return $courseinfo;
-        }
-
-        // Max completion review window. Default, 15 secs.
-        $maxtime = !empty($CFG->theme_snap_max_pm_completion_time_courses) ?
-            $CFG->theme_snap_max_pm_completion_time_courses : (MINSECS / 4);
-        $starttime = time();
-
         foreach ($courseids as $courseid) {
             if (!isset($courses[$courseid])) {
                 // Don't throw an error, just carry on.
@@ -468,12 +449,6 @@ class local {
                 'course' => $courseid,
                 'completion' => self::course_completion_progress($course),
             );
-
-            // Only calculate completion within the configured time window or for maximum amount of courses.
-            if (count($courseinfo) == $maxcourses || ((time() - $starttime) > $maxtime)) {
-                break;
-            }
-
         }
         return $courseinfo;
     }

@@ -1305,49 +1305,6 @@ class local_test extends snap_base_test {
     }
 
     /**
-     * Test the $CFG limit that can be set to improve the Snap personal menu performance.
-     */
-
-    public function test_course_completion_progress_limit() {
-        global $CFG;
-
-        $this->resetAfterTest();
-
-        $CFG->enablecompletion = true;
-        $generator = $this->getDataGenerator();
-        $student = $generator->create_user();
-        $teacher = $generator->create_user();
-        $courseids = $this->completion_activity_helper($student, $teacher, 22);
-        // No limit should return 22 courses.
-        $result = local::courseinfo($courseids);
-        $this->assertCount(22, $result);
-        $result = reset($result);
-        // Verify data.
-        $this->assertFalse($result->completion->fromcache);
-        $this->assertEquals(1, $result->completion->complete);
-        $this->assertEquals(1, $result->completion->total);
-        $this->assertEquals(100, $result->completion->progress);
-
-        // Lower limit.
-        $CFG->theme_snap_max_pm_completion_courses = 10;
-        $this->assertCount(10, local::courseinfo($courseids));
-        $CFG->theme_snap_max_pm_completion_courses = 99;
-        $this->assertCount(22, local::courseinfo($courseids));
-        // Limit as 0 will fall into the default 100 number.
-        $CFG->theme_snap_max_pm_completion_courses = 0;
-        $this->assertCount(22, local::courseinfo($courseids));
-        $CFG->theme_snap_max_pm_completion_courses = 2;
-        $result = local::courseinfo($courseids);
-        $this->assertCount(2, $result);
-        $result = reset($result);
-        // Finally verify data.
-        $this->assertTrue($result->completion->fromcache); // Cache should still be valid.
-        $this->assertEquals(1, $result->completion->complete);
-        $this->assertEquals(1, $result->completion->total);
-        $this->assertEquals(100, $result->completion->progress);
-    }
-
-    /**
      * Helper function that creates a given number of courses with completion enabled a generates data
      * that can be retrieved by the Snap course completion functions.
      * @param $student

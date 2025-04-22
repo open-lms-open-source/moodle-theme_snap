@@ -303,7 +303,6 @@ EOF;
             'forumpicturegroup',
             'forumreplies',
             'forumlastpost',
-            'hiddencoursestoggle',
             'loading',
             'more',
             'moving',

@@ -906,40 +906,6 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * Get selector for favorite toggle.
-     * @param string $shortname
-     * @param bool $pressed
-     * @return string
-     */
-    private function favorite_selector($shortname, $pressed = true) {
-        $pressedstr = $pressed ? 'true' : 'false';
-        return '.coursecard[data-shortname="'.$shortname.'"] .favoritetoggle[aria-pressed="'.$pressedstr.'"]';
-    }
-
-    /**
-     * @param string $shortname
-     * @Given /^Favorite toggle does not exist for course "(?P<shortname>(?:[^"]|\\")*)"$/
-     */
-    public function favorite_toggle_doesnt_exist_for_course($shortname) {
-        // @codingStandardsIgnoreLine
-        /* @var behat_general $general */
-        $general = behat_context_helper::get('behat_general');
-        $general->should_not_exist($this->favorite_selector($shortname, false), 'css_element');
-        $general->should_not_exist($this->favorite_selector($shortname, true), 'css_element');
-    }
-
-    /**
-     * @param string $shortname
-     * @Given /^Favorite toggle exists for course "(?P<shortname>(?:[^"]|\\")*)"$/
-     */
-    public function favorite_toggle_exists_for_course($shortname) {
-        // @codingStandardsIgnoreLine
-        /* @var behat_general $general */
-        $general = behat_context_helper::get('behat_general');
-        $general->should_exist($this->favorite_selector($shortname, false), 'css_element');
-    }
-
-    /**
      * @param string $shortname1
      * @param string $shortname2
      * @Given /^Course card "(?P<shortname1>(?:[^"]|\\")*)" appears before "(?P<shortname2>(?:[^"]|\\")*)"$/
@@ -953,30 +919,6 @@ class behat_theme_snap extends behat_base {
         $postelement = '.coursecard[data-shortname="'.$shortname2.'"]';
 
         $general->should_appear_before($preelement, 'css_element', $postelement, 'css_element');
-    }
-
-    /**
-     * @param string $shortname
-     * @Given /^Course card "(?P<shortname>(?:[^"]|\\")*)" is favorited$/
-     */
-    public function course_is_favorited($shortname) {
-        // @codingStandardsIgnoreLine
-        /* @var behat_general $general */
-        $general = behat_context_helper::get('behat_general');
-        $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
-        $general->should_exist($this->favorite_selector($shortname), 'css_element');
-    }
-
-    /**
-     * @param string $shortname
-     * @Given /^Course card "(?P<shortname>(?:[^"]|\\")*)" is not favorited$/
-     */
-    public function course_is_not_favorited($shortname) {
-        // @codingStandardsIgnoreLine
-        /* @var behat_general $general */
-        $general = behat_context_helper::get('behat_general');
-        $this->ensure_element_does_not_exist('.snap-icon-toggle.favoritetoggle.ajaxing', 'css_element');
-        $general->should_not_exist($this->favorite_selector($shortname), 'css_element');
     }
 
     /**

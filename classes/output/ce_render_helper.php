@@ -79,8 +79,8 @@ class ce_render_helper {
         $maxlifetime = is_number($maxlifetime) ? $maxlifetime : 30 * MINSECS;
         $sesskey = sesskey();
 
-        $viewmoremsg = get_string('pmadvancedfeed_viewmore', 'theme_snap');
-        $reloadmsg = get_string('pmadvancedfeed_reload', 'theme_snap');
+        $viewmoremsg = get_string('advancedfeed_viewmore', 'theme_snap');
+        $reloadmsg = get_string('advancedfeed_reload', 'theme_snap');
         $loadingfeed = get_string('loadingfeed', 'theme_snap');
 
         $initialvalue = '';

@@ -91,22 +91,6 @@ class snap_personal_menu_controller extends controller_abstract {
     }
 
     /**
-     * Get course information - progress / grades, etc
-     *
-     * @return string
-     */
-    public function get_courseinfo_action() {
-        $courseids = optional_param('courseids', false, PARAM_SEQUENCE);
-        if (!empty($courseids)) {
-            $courseids = explode(',', $courseids);
-        }
-        $courseinfo = \theme_snap\local::courseinfo($courseids);
-        return json_encode(array(
-            'info' => $courseinfo,
-        ));
-    }
-
-    /**
      * Get user's current login status.
      *
      * @return string

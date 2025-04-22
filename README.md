@@ -47,26 +47,10 @@ of the flag. These flags are accessed with the global configuration object
 
 The configuration flags are presented here in alphabetical order.
 
-### The `theme_snap_bar_limit` flag
-
-The purpose of this flag is to set the maximum amount of Courses that a Student
-can have with the Progress Bar of those Courses being displayed in the Snap
-personal menu (accessed by clicking on 'My Courses'). If a Student is enrolled
-in more courses than this number, then no single Course will have its Progress
-Bar displayed. In other case, all the Courses will have their Progress Bar
-displayed. This is done so as to avoid degrading site performance when a
-Student has many courses.
-
-This flag is set as an integer:
-
-   - `$CFG->theme_snap_bar_limit = 55` means that the Progress Bar will be
-   displayed for up to 55 Courses. If a Student is enrolled in 56 or more
-   Courses, then the Progress Bar of those Courses won't be displayed.
-
 ### The `theme_snap_disable_deadline_mods` flag
 
 The purpose of this flag is to disable selected Activities from being shown in
-the Deadlines feed in the Snap personal menu. This does not disable individual
+the Deadlines feed in the Snap Feeds. This does not disable individual
 Activities but rather this disables Activities by their type. For example, you
 can use this flag to disable Assignment and Quiz activities from being shown in
 the Deadlines feed.
@@ -104,32 +88,6 @@ This flag is set as an integer:
 
    - `$CFG->theme_snap_max_concurrent_deadline_queries = 700` means that 700
    concurrent Deadline queries can be performed at a maximum.
-
-### The `theme_snap_max_pm_completion_courses` flag
-
-The purpose of this flag is to set the maximum amount of Courses that will have
-their Progress Bar displayed in the Snap personal menu. The default amount is
-currently set at 100. This flag can be used along with the flag
-`theme_snap_bar_limit`.
-
-This flag is set as an integer:
-
-   - `$CFG->theme_snap_max_pm_completion_courses = 15` means that only the
-   first 15 Courses will have their Progress Bar displayed in the Snap personal
-   menu.
-
-### The `theme_snap_max_pm_completion_time_courses` flag
-
-The purpose of this flag is to set the maximum amount of time in seconds, that
-the calculations for the Progress Bar of the Courses in the Snap personal menu
-can last. Only the Progress Bars calculated within this time window will be
-rendered. The default is currently 15 seconds.
-
-This flag is set as a double:
-
-   - `$CFG->theme_snap_max_pm_completion_time_courses = 20.9` means that only
-   the Progress Bars that manage to be calculated within the first 20.9 seconds
-   of the calculation, will be rendered.
 
 ### The `theme_snap_refresh_deadlines_last_login` flag
 

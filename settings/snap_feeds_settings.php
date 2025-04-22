@@ -76,13 +76,13 @@ $name = 'theme_snap/advancedfeedsperpage';
 $title = new lang_string('advancedfeedsperpage', 'theme_snap');
 $description = new lang_string('advancedfeedsperpagedesc', 'theme_snap');
 $default = '3';
-$pmfeedperpagechoices = [
+$snapfeedperpagechoices = [
     '3' => '3',
     '4' => '4',
     '5' => '5',
     '6' => '6',
 ];
-$setting = new admin_setting_configselect($name, $title, $description, $default, $pmfeedperpagechoices);
+$setting = new admin_setting_configselect($name, $title, $description, $default, $snapfeedperpagechoices);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/advancedfeedslifetime';
