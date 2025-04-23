@@ -270,7 +270,7 @@ body.path-site .block.block_settings {
     @media screen and (max-width: 992px) {
         &.state-visible {
             width: 100%;
-            z-index: 100;
+            z-index: 1030;
         }
 
         .snap-feeds {
@@ -592,12 +592,8 @@ body.path-site .block.block_settings {
     }
 
     .block_tree.list {
-        margin-top: 2rem;
         @include media-breakpoint-down(md) {
             margin-top: 0;
-        }
-        @media (max-width: 425px) {
-            margin-top: 4rem;
         }
     }
     // Hide the Turn editing on button from the block settings.
@@ -606,6 +602,10 @@ body.path-site .block.block_settings {
     a[href*="edit=1"],
     a[href*="edit=0"] {
         display: none;
+    }
+
+    #settingsnav {
+        padding-top: 0!important;
     }
 }
 
