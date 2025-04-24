@@ -73,21 +73,18 @@ const POPOVERS_DROPDOWNS = {
 };
 
 const ACTIVE_SELECTORS = {
-    ADMIN_MENU: '[data-activeselector="#admin-menu-trigger.active"]',
     BLOCKS_DRAWER: '[data-activeselector="#theme_snap-drawers-blocks.show"]',
     SNAP_FEEDS: '[data-activeselector="#snap_feeds_side_menu_trigger.active"]',
     MESSAGES_DRAWER: '[data-activeselector=\'[data-region="popover-region-messages"]:not(.collapsed)\']',
 };
 
 const PREFERENCES = {
-    ADMIN_MENU: 'snap-admin-menu-open',
     BLOCKS_DRAWER: 'drawer-open-block',
     SNAP_FEEDS: 'snap-feeds-open',
     MESSAGES_DRAWER: 'snap-message-drawer-open',
 };
 
 const PREFERENCE_MAP = {
-    [PREFERENCES.ADMIN_MENU]: ACTIVE_SELECTORS.ADMIN_MENU,
     [PREFERENCES.BLOCKS_DRAWER]: ACTIVE_SELECTORS.BLOCKS_DRAWER,
     [PREFERENCES.SNAP_FEEDS]: ACTIVE_SELECTORS.SNAP_FEEDS,
     [PREFERENCES.MESSAGES_DRAWER]: ACTIVE_SELECTORS.MESSAGES_DRAWER,
