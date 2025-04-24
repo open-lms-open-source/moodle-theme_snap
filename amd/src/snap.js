@@ -543,12 +543,14 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
             });
 
             // Admin drawer: Onclick for toggle of state-visible of admin block and mobile menu.
-            $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle", function(e) {
+            $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle, [id^=\"message-drawer-toggle-\"]", function(e) {
+
                 var href = this.getAttribute('href');
                 // Make this only happen for settings button.
-                if (this.getAttribute('id') === 'admin-menu-trigger') {
+                if (this.getAttribute('id') === 'admin-menu-trigger'
+                    || this.getAttribute('id').startsWith('message-drawer-toggle-')) {
                     $(this).toggleClass('active');
-                    $('#page').toggleClass('offcanvas');
+                    $('#page').toggleClass('show-drawer-right');
                     if ($(this).attr('aria-expanded') === 'true') {
                         $(this).attr('aria-expanded', false);
                     } else {
@@ -581,7 +583,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 var href = this.getAttribute('href');
                 if (this.getAttribute('id') === 'snap_feeds_side_menu_trigger') {
                     $(this).toggleClass('active');
-                    $('#page').toggleClass('offcanvas');
+                    $('#page').toggleClass('show-drawer-right');
                     if ($(this).attr('aria-expanded') === 'true') {
                         $(this).attr('aria-expanded', false);
                     } else {
