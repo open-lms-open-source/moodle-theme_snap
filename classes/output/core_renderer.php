@@ -2813,7 +2813,7 @@ HTML;
      * @return bool
      */
     protected function snap_page_is_whitelisted_mod() {
-        $whitelist = ['book', 'quiz'];
+        $whitelist = ['book', 'lesson', 'quiz'];
         return $this->page->context->contextlevel === CONTEXT_MODULE
             && in_array($this->page->cm->modname, $whitelist);
     }
