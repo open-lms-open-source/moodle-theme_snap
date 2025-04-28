@@ -1,6 +1,7 @@
 $sidebar-width: 50px;
 $sidebar-tab-width: 40px;
 $sidebar-peek-width: 15px;
+$open-drawer-width: 370px;
 $sidebar-tab-bg-color: #eff0f6;
 $sidebar-shadow: -1px 0 2px rgba(0, 0, 0, 0.2);
 $sidebar-z-index: 1050;
@@ -336,5 +337,20 @@ footer#moodle-footer {
     margin-right: $sidebar-width;
     @media (max-width: 991px) {
         margin-right: $mobile-sidebar-width;
+    }
+}
+
+// Adjust sticky footer to Sidebar.
+body:has(.snap-sidebar-menu.show) #sticky-footer {
+    margin-right: $sidebar-width;
+    @media screen and (max-width: 992px) {
+        margin-right: $mobile-sidebar-width;
+    }
+
+    // Adjust sticky footer to open Drawer.
+    @media screen and (min-width: 992px) {
+        &.snap-mod-data-sticky-footer {
+            margin-right: $open-drawer-width;
+        }
     }
 }
