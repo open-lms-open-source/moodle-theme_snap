@@ -98,10 +98,12 @@
         {{/menuitems}}
         
         <!-- TOC Mobile Menu Toggle - Only visible on mobile -->
-        <a id="toc-mobile-menu-toggle" href="#course-toc" class="snap-sidebar-menu-item">
-            <i class="fa fa-list" aria-hidden="true"></i>
-            <small class="sr-only">{{#str}}contents, theme_snap{{/str}}</small>
-        </a>
+        {{#iscoursepage}}
+            <a id="sidebar-toc-mobile-toggle" href="#course-toc" class="snap-sidebar-menu-item mobile-only-toc-toggle">
+                <i class="fa fa-list" aria-hidden="true"></i>
+                <small class="sr-only">{{#str}}contents, theme_snap{{/str}}</small>
+            </a>
+        {{/iscoursepage}}
     </div>
 
     <div id="goto-top-link">

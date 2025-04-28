@@ -354,3 +354,12 @@ body:has(.snap-sidebar-menu.show) #sticky-footer {
         }
     }
 }
+
+// TOC Mobile Toggle
+.mobile-only-toc-toggle {
+    display: none;
+    
+    @media screen and (max-width: 767px) {
+        display: block;
+    }
+}
