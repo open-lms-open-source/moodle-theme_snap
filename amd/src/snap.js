@@ -597,6 +597,14 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 }
             });
 
+            // Messages Drawer: Onclick for Snap sidebar menu to adjust sticky footer.
+            $(document).on("click", "[data-region=\"popover-region-messages\"] a", function() {
+                // Code for mod_data sticky footer.
+                if ($('#sticky-footer').length != 0) {
+                    $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
+                }
+            });
+
             // Mobile menu button.
             $(document).on("click", "#course-toc.state-visible a", function() {
                 $('#course-toc').removeClass('state-visible');
