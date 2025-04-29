@@ -768,46 +768,6 @@ video {
     height: auto !important;
 }
 
-@mixin responsive-video() {
-    width: 100%;
-    max-width: $user-content-max-width;
-    height: 240px;
-    margin: 0 auto;
-    display: block;
-    clear: both;
-
-    @include media-breakpoint-up(sm) {
-        height: 360px;
-    }
-    @include media-breakpoint-up(md) {
-        height: 480px;
-    }
-}
-
-// Responsive video for iframes, objects, embeds.
-iframe:not(.vjs-tech) {
-    &[src*="youtube.com"],
-    &[src*="youtu.be"],
-    &[src*="vimeo.com"],
-    &[src*="archive.org/embed"],
-    &[src*="youtube-nocookie.com"],
-    &[src*="embed.ted.com"],
-    &[src*="embed-ssl.ted.com"],
-    &[src*="kickstarter.com"],
-    &[src*="video.html"],
-    &[src*="simmons.tegrity.com"],
-    &[src*="dailymotion.com"] {
-        @include responsive-video();
-    }
-}
-
-body.theme-snap .oembed-responsive {
-    > :first-child:not(video),
-    > .oembed-responsive-pad {
-        @include responsive-video();
-    }
-}
-
 li {
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
