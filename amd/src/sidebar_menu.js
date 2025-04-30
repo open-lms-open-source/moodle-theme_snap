@@ -412,41 +412,8 @@ const setupEventListeners = () => {
         element.addEventListener('click', handleCloseDrawerClick);
     });
     
-    // Set up course TOC observer
-    setupCourseTocObserver();
-
     // Set up popover/dropdown click handlers
     setupPopoverClickHandlers();
-};
-
-/**
- * Set up a MutationObserver to watch for changes to #course-toc
- */
-const setupCourseTocObserver = () => {
-    const courseToc = document.querySelector(SELECTORS.COURSE_TOC);
-    if (courseToc) {
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                    if (courseToc.classList.contains(CLASSES.STATE_VISIBLE)) {
-                        // Close the sidebar when course TOC becomes visible
-                        const sidebar = document.querySelector(SELECTORS.SIDEBAR);
-                        const icon = document.querySelector(SELECTORS.TRIGGER_ICON);
-                        
-                        if (sidebar && sidebar.classList.contains(CLASSES.SHOW)) {
-                            sidebar.classList.remove(CLASSES.SHOW);
-                            if (icon) {
-                                icon.classList.remove(CLASSES.ROTATE);
-                            }
-                            closeAllDrawers();
-                            updateElementPositions();
-                        }
-                    }
-                }
-            });
-        });
-        observer.observe(courseToc, { attributes: true });
-    }
 };
 
 /**

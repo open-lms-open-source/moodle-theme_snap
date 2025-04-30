@@ -194,9 +194,12 @@ if (isloggedin() && !isguestuser()) {
     // Only render the sidebar menu if there are items to display
     if (!empty($sidebarmenuitems)) {
         $opensidebar = true; // Opened by default
+        $iscoursepage = strpos($PAGE->pagetype, 'course-view') === 0;
+
         echo $OUTPUT->render_from_template('theme_snap/sidebar_menu', [
             'menuitems' => $sidebarmenuitems,
-            'opensidebar' => $opensidebar
+            'opensidebar' => $opensidebar,
+            'iscoursepage' => $iscoursepage
         ]);
     }
 }
