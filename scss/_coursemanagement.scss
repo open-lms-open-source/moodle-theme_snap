@@ -13,6 +13,18 @@
         }
     }
 
+    i.icon.fa-search {
+        color: unset;
+    }
+
+    .tertiary-navigation .navitem {
+        margin-right: 20px;
+        margin-bottom: 25px;
+        select {
+            border-radius: .25rem;
+        }
+    }
+
     // Links inside the course management page with unnecessary box shadow added by core in 3.9.
     a {
         box-shadow: none;
