@@ -5078,11 +5078,14 @@ section#region-main {
     .availability-field.fcontainer {
         overflow: scroll;
     }
+    .availability-field img {
+        min-width: 16px;
+        min-height: 16px;
+    }
     .availability-inner .availability-group.form-group {
         display: inline-grid;
     }
     .availability-inner .availability-item.d-sm-flex.align-items-center {
-        flex-wrap: wrap;
         .availability-eye.col-form-label {
             display: contents;
             position: absolute;
@@ -5101,6 +5104,9 @@ section#region-main {
         span.label.label-warning {
             margin-left: 0.5em;
         }
+    }
+    .form-inline label {
+        display: inline-flex;
     }
 }
 
