@@ -100,6 +100,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
         $(window).on('resize', function() {
             mobileFormChecker();
             updateGraderHeadersTop();
+            updateSubmissionsHeaderTop();
         });
 
         var mobileFormChecker = function() {
@@ -117,6 +118,16 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
             const graderHeader = $('.path-grade-report-grader .gradeparent tr.heading');
             if (graderHeader.length) {
                 graderHeader.css('top', $('#mr-nav').height() + 'px');
+            }
+        };
+
+        /**
+         * Update the top position of the submissions header in assignment submissions view.
+         */
+        const updateSubmissionsHeaderTop = function() {
+            const submissionsHeader = $('#page-mod-assign-grading #submissions');
+            if (submissionsHeader.length) {
+                submissionsHeader.css('top', $('#mr-nav').height() + 'px');
             }
         };
 
