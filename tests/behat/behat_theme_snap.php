@@ -229,7 +229,7 @@ class behat_theme_snap extends behat_base {
         $this->i_am_on_course_page($shortname);
 
         $this->execute('behat_general::i_change_window_size_to', ['window', '600x1000']);
-        $this->execute('behat_general::i_click_on', ['#sidebar-toc-mobile-toggle', 'css_element']);
+        $this->execute('behat_general::i_click_on', ['#toc-mobile-menu-toggle', 'css_element']);
         $this->execute('behat_general::click_link', ['Create a new section']);
         $this->execute('behat_forms::i_set_the_field_to', ['Title', 'New section title']);
         $this->execute('behat_general::i_click_on', ['Create section', 'button']);
@@ -263,7 +263,7 @@ class behat_theme_snap extends behat_base {
 
         $this->i_am_on_course_page($shortname);
         $this->execute('behat_general::i_change_window_size_to', ['window', '600x1000']);
-        $this->execute('behat_general::i_click_on', ['#sidebar-toc-mobile-toggle', 'css_element']);
+        $this->execute('behat_general::i_click_on', ['#toc-mobile-menu-toggle', 'css_element']);
         $this->execute('behat_general::i_click_on', ['.col-lg-3 .toc-footer #snap-new-section', 'css_element']);
         $this->execute('behat_forms::i_set_the_field_to', ['Title', 'New section with content']);
         $javascript = "var value = document.getElementById('summary-editor_ifr').contentDocument.querySelectorAll('body');";
