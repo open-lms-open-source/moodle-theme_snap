@@ -457,6 +457,7 @@ $string['hvpcustomcssdesc'] = 'Custom CSS for the H5P module (moodle.org/plugins
 $string['tilesformatcoursehomealttext'] = 'Course home';
 $string['editmodetiles'] = 'Edit content';
 $string['totop'] = 'Go to top';
+$string['toleft'] = 'Go to left';
 $string['loginsetting'] = 'Login page';
 $string['loginbgimgheading'] = 'Login page template';
 $string['loginbgimgheadingdesc'] = 'Snap allows to change between different templates to be displayed in the login page. Please select between different options in the dropdown menu below.';

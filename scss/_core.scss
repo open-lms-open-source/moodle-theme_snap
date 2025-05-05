@@ -5594,7 +5594,8 @@ div[id^=snap-create-activity-] .section-modchooser-link {
     width: 100%;
 }
 
-#goto-top-link i.icon {
+#goto-top-link i.icon,
+#goto-left-link i.icon {
     color: #696969;
 }
 
@@ -5767,10 +5768,16 @@ div[id^=snap-create-activity-] .section-modchooser-link {
         margin-top: 2em;
     }
 }
+
+// Improved mobile behavior when scrolling horizontally.
+.device-type-tablet #page-content #region-main,
+.device-type-mobile #page-content #region-main {
+    overflow-x: scroll;
+}
+
 // -------------------------
 // Go to top button
 // -------------------------
-
 $gototop-bottom-position: 50px !default;
 
 #goto-top-link {
@@ -5785,6 +5792,32 @@ $gototop-bottom-position: 50px !default;
         position: absolute;
         right: 0;
         transform: translateY(-100%);
+    }
+}
+#goto-top-link a,
+#goto-left-link a {
+    background-color: #ced4da;
+}
+
+#goto-left-link {
+    display: none;
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+
+    a {
+        position: absolute;
+        right: 0;
+        transform: translateY(-100%);
+    }
+    a.btn {
+        border-radius: 1.5rem 0 0 1.5rem;
+        width: 2rem;
+    }
+    &.scrolled {
+        display: block;
+        z-index: 10;
     }
 }
 
