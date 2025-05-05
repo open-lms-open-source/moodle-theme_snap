@@ -105,9 +105,8 @@
             </a>
         {{/iscoursepage}}
     </div>
-
     <div id="goto-top-link">
-        <a class="btn btn-light" role="button" href="javascript:void(0)" aria-label="Go to top">
+        <a class="btn" role="button" href="javascript:void(0)" aria-label="Go to top">
             <i class="icon fa fa-arrow-up" title="{{#str}}totop, theme_snap{{/str}}" aria-label="{{#str}}totop, theme_snap{{/str}}"></i>
         </a>
     </div>
@@ -116,6 +115,11 @@
     <button type="button" class="snap-sidebar-menu-trigger" aria-label="{{#str}}menu{{/str}}">
         <i class="fa {{#opensidebar}}fa-angle-left rotate-180{{/opensidebar}}{{^opensidebar}}fa-angle-left{{/opensidebar}}" aria-hidden="true"></i>
     </button>
+</div>
+<div id="goto-left-link">
+    <a class="btn" role="button" aria-label="{{#str}}toleft, theme_snap{{/str}}">
+        <i class="icon fa fa-arrow-left" title="{{#str}}toleft, theme_snap{{/str}}"></i>
+    </a>
 </div>
 
 {{#js}}
