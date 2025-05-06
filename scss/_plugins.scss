@@ -273,21 +273,28 @@
             }
         }
         .assign-grading-summary,
-        .assign-submission-data,
-        .groupselector {
+        .assign-submission-data {
             margin-top: 0;
             margin-left: 1em;
             width: calc(33.33% - 1em);
         }
     }
 
-    .groupselector,
     .assign-grading-summary,
     .assign-submission-data {
         padding: 1em;
         margin-bottom: .5em;
         background-color: $gray-lighter;
         font-family: $font-family-system;
+    }
+    .groupselector {
+        padding: 1.5em;
+        font-family: $font-family-system;
+        display: block;
+    }
+    .groupselector label {
+        margin-bottom: 0;
+        padding-right: 1em;
     }
     .submissionsdata {
         width: 100%;
