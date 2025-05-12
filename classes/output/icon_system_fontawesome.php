@@ -41,6 +41,7 @@ class icon_system_fontawesome extends \core\output\icon_system_fontawesome {
         $iconmap = parent::get_core_icon_map();
         $iconmap['core:i/notifications'] = 'fa-bell-o';
         $iconmap['core:a/search'] = 'fa-search';
+        $iconmap['core:i/fa-file-arrow-up'] = 'fa-file-arrow-up';
         return $iconmap;
     }
 }

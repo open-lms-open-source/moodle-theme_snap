@@ -1323,7 +1323,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
-    .dropdown-item {
+    .dropdown-item:not(.groupsearchdropdown *) {
         &.groups-dropdown::before,
         &.availability-dropdown::before {
             opacity: (0.5);
@@ -1334,7 +1334,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         &:focus,
         &:focus-within {
             background-color: $brand-primary;
-            color: white;
+            color: white !important;
             i {
                 color: white;
             }
@@ -1429,6 +1429,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         &.show {
             background-color: rgba($brand-primary, 0.8);
         }
+    }
+
+    .initialsdropdown .page-link {
+        color: $brand-primary;
     }
 }
 
