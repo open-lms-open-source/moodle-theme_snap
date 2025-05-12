@@ -5065,8 +5065,12 @@ section#region-main {
             margin-left: 0.5em;
         }
     }
+    .availability-group {
+        display: inline-block;
+    }
     .form-inline label {
         display: inline-flex;
+        margin-bottom: .5rem;
     }
 }
 
