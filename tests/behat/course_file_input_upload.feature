@@ -111,7 +111,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     Given I log in as "student1"
     And I wait until the page is ready
     And I click on "#snap_feeds_side_menu_trigger" "css_element"
-    And I follow "Myfile should be completed"
+    And I click on "#snap-feeds-updates #snap-personal-menu-feed-deadlines a" "css_element"
     Then I <visible> "Mark as done"
     And I log out
 
