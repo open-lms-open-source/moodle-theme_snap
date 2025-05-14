@@ -96,4 +96,12 @@ $setting = new admin_setting_configtextarea($name, $title, $description, $defaul
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
+$name = 'theme_snap/customscss';
+$title = new lang_string('customscss', 'theme_snap');
+$description = new lang_string('customscssdesc', 'theme_snap');
+$default = '';
+$setting = new admin_setting_configtextarea($name, $title, $description, $default);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
 $settings->add($snapsettings);

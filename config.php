@@ -57,6 +57,7 @@ $THEME->parents = array('boost');
 
 $THEME->enable_dock = false;
 $THEME->prescsscallback = 'theme_snap_get_pre_scss';
+$THEME->extrascsscallback = 'theme_snap_get_extra_scss';
 $THEME->scss = function($theme) {
     return theme_snap_get_main_scss_content($theme);
 };
