@@ -806,7 +806,7 @@ EOF;
                 $iconurl = $OUTPUT->image_url('badges', 'theme');
                 $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
                 $links[] = array(
-                    'link' => 'badges/view.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
+                    'link' => 'badges/index.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
                     'title' => $badgesicon.get_string('badges', 'badges')
                 );
             }
