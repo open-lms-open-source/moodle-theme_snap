@@ -370,6 +370,16 @@ function theme_snap_get_pre_scss($theme) {
 }
 
 /**
+ * Inject additional SCSS.
+ *
+ * @param theme_config $theme The theme config object.
+ * @return string
+ */
+function theme_snap_get_extra_scss($theme) {
+    return !empty($theme->settings->customscss) ? $theme->settings->customscss : '';
+}
+
+/**
  * Fragment API function to render course sections.
  * @param $args
  * @return string
