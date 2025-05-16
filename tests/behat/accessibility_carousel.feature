@@ -49,10 +49,7 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And the following config values are set as admin:
       | linkadmincategories | 0 |
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I follow "Cover display"
     And I click on "#themesnapcoverdisplay #admin-slide_one_image div[id^='filemanager-'] .filemanager-container .dndupload-message .dndupload-arrow" "css_element"
@@ -66,10 +63,7 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     # Play and pause buttons should not be visible when only one slide exists.
     Then "#carousel-play-resume-buttons #play-button" "css_element" should not be visible
     Then "#carousel-play-resume-buttons #pause-button" "css_element" should not be visible
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I follow "Cover display"
     And I click on "#themesnapcoverdisplay #admin-slide_two_image div[id^='filemanager-'] .filemanager-container .dndupload-message .dndupload-arrow" "css_element"

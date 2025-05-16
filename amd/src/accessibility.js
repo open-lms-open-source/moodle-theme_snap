@@ -24,8 +24,8 @@
 /**
  * JS code to assign attributes and expected behavior for elements in the Dom regarding accessibility.
  */
-define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitizer', 'theme_boost/popover'],
-    function($, str, Event, { DefaultWhitelist }) {
+define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/bootstrap/tools/sanitizer', 'theme_boost/popover'],
+    function($, str, Event, FormEvents, { DefaultWhitelist }) {
         return {
             snapAxInit: function(localJouleGrader, allyReport, blockReports, localCatalogue) {
 
@@ -326,39 +326,62 @@ define(['jquery', 'core/str', 'core/event', 'theme_boost/bootstrap/tools/sanitiz
              * @param {string} elementid
              */
             enhanceform: function(elementid) {
-                var element = document.getElementById(elementid);
-                $(element).on(Event.Events.FORM_FIELD_VALIDATION, function(event, msg) {
+                const element = document.getElementById(elementid);
+                if (!element) {
+                    return;
+                }
+
+                element.addEventListener(FormEvents.eventTypes.formFieldValidationFailed, function(event) {
                     event.preventDefault();
-                    var parent = $(element).closest('.form-group');
-                    var feedback = parent.find('.form-control-feedback');
-                    var invalidinput = parent.find('input.form-control.is-invalid');
+                    const msg = event.detail?.message || '';
+
+                    const parent = element.closest('.form-group');
+                    if (!parent) {
+                        return;
+                    }
+                    const feedback = parent.querySelector('.form-control-feedback');
+                    const invalidInput = parent.querySelector('input.form-control.is-invalid');
+
+                    let activeElement = element;
 
                     // Sometimes (atto) we have a hidden textarea backed by a real contenteditable div.
-                    if (($(element).prop("tagName") == 'TEXTAREA') && parent.find('[contenteditable]')) {
-                        element = parent.find('[contenteditable]');
+                    if (element.tagName === 'TEXTAREA') {
+                        const contentEditable = parent.querySelector('[contenteditable]');
+                        if (contentEditable) {
+                            activeElement = contentEditable;
+                        }
                     }
-                    if (msg !== '') {
-                        parent.addClass('has-danger');
-                        parent.data('client-validation-error', true);
-                        $(element).addClass('is-invalid');
-                        $(element).attr('aria-describedby', feedback.attr('id'));
-                        $(element).attr('aria-invalid', true);
-                        invalidinput.attr('tabindex', 0);
-                        feedback.html(msg);
 
-                        // Only display and focus when the error was not already visible.
-                        if (!feedback.is(':visible')) {
-                            feedback.show();
-                            feedback.focus();
+                    if (msg !== '') {
+                        parent.classList.add('has-danger');
+                        parent.dataset.clientValidationError = "true";
+                        activeElement.classList.add('is-invalid');
+
+                        if (feedback) {
+                            activeElement.setAttribute('aria-describedby', feedback.id);
+                            activeElement.setAttribute('aria-invalid', 'true');
+                            if (invalidInput) {
+                                invalidInput.setAttribute('tabindex', '0');
+                            }
+                            feedback.innerHTML = msg;
+
+                            // Only display and focus when the error was not already visible.
+                            if (feedback.offsetParent === null) {
+                                feedback.style.display = 'block';
+                                feedback.focus();
+                            }
                         }
                     } else {
-                        if (parent.data('client-validation-error') === true) {
-                            parent.removeClass('has-danger');
-                            parent.data('client-validation-error', false);
-                            $(element).removeClass('is-invalid');
-                            $(element).removeAttr('aria-describedby');
-                            $(element).attr('aria-invalid', false);
-                            feedback.hide();
+                        if (parent.dataset.clientValidationError === "true") {
+                            parent.classList.remove('has-danger');
+                            delete parent.dataset.clientValidationError;
+                            activeElement.classList.remove('is-invalid');
+                            activeElement.removeAttribute('aria-describedby');
+                            activeElement.setAttribute('aria-invalid', 'false');
+
+                            if (feedback) {
+                                feedback.style.display = 'none';
+                            }
                         }
                     }
                 });
