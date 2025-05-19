@@ -75,6 +75,10 @@ Feature: Users can access to the My Courses page in Snap.
     And I should see "Course overview"
     Then ".block_myoverview" "css_element" should exist
     And ".snap-page-my-courses-options .btn-group" "css_element" should not exist
+    And I click on "#snap-sidebar-menu button.blocks-drawer-button" "css_element"
+    Then I should see "Navigation"
+    Then I should see "Site pages"
+    Then I should see "Site badges"
 
   @javascript
   Scenario: User will see a warning message when the Course overview block is disabled.

@@ -419,24 +419,32 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function snap_blocks() {
         // @codingStandardsIgnoreStart
         // Core renderer has not $output attribute, but code checker requires it.
-        global $COURSE, $OUTPUT;
+        global $COURSE, $OUTPUT, $PAGE;
 
         $output = '';
 
         $oncoursepage = strpos($this->page->pagetype, 'course-view') === 0;
         $coursecontext = \context_course::instance($COURSE->id);
-        if ($COURSE->format !== 'tiles') {
-            $output .= '<div id="moodle-blocks" class="clearfix">';
-            $output .= $OUTPUT->blocks('side-pre');
-            $output .= '</div>';
-        } else {
-            if ($oncoursepage && $this->page->user_is_editing()) {
-                $output .= '<div id="moodle-blocks" class="clearfix editing-tiles">';
-            } else {
+
+        if ($PAGE->url->get_path() !== '/my/courses.php') {
+            if ($COURSE->format !== 'tiles') {
                 $output .= '<div id="moodle-blocks" class="clearfix">';
+                $output .= $OUTPUT->blocks('side-pre');
+                $output .= '</div>';
+            } else {
+                if ($oncoursepage && $this->page->user_is_editing()) {
+                    $output .= '<div id="moodle-blocks" class="clearfix editing-tiles">';
+                } else {
+                    $output .= '<div id="moodle-blocks" class="clearfix">';
+                }
+                $output .= $OUTPUT->blocks('side-pre');
+                $output .= '</div>';
             }
-            $output .= $OUTPUT->blocks('side-pre');
-            $output .= '</div>';
+        } else {
+            ob_start();
+            require __DIR__.'/../../layout/blocks_drawer.php';
+            $output .= ob_get_contents();
+            ob_end_clean();
         }
 
         return $output;
