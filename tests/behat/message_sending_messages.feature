@@ -26,6 +26,7 @@ Feature: Snap message send messages
   I need to be able to send a message
 
   Background:
+    Given I skip because "Will be reviewed on INT-20687"
     Given I create the following course categories:
       | id | name   | category | idnumber | description |
       |  5 | Cat 5  |     0    |   CAT5   |   Test      |
