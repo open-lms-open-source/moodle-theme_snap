@@ -1618,6 +1618,12 @@ footer #moodle-footer
     &.show-drawer-right {
         left: -315px;
     }
+    // When Course Index is open.
+    @media (min-width: 992px) {
+        &.show-drawer-left {
+            padding-left: 285px;
+        }
+    }
 }
 
 // Styles when the custom menu is enabled.
@@ -6376,4 +6382,233 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
   .tertiary-navigation {
     display: none;
   }
+}
+
+// Course Index CSS Styles from Boost
+.courseindex .courseindex-item {
+    padding: 0.5rem 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+}
+.courseindex .courseindex-item.courseindex-section-title a {
+    font-weight: bold;
+}
+.courseindex .courseindex-item .icons-collapse-expand {
+    padding-right: 4px;
+}
+.courseindex .courseindex-item .courseindex-link,
+.courseindex .courseindex-item .courseindex-chevron {
+    color: #495057;
+}
+.courseindex .courseindex-item .courseindex-link:hover, .courseindex .courseindex-item .courseindex-link:focus,
+.courseindex .courseindex-item .courseindex-chevron:hover,
+.courseindex .courseindex-item .courseindex-chevron:focus {
+    color: black;
+    text-decoration: none;
+}
+.courseindex .courseindex-item:hover, .courseindex .courseindex-item:focus {
+    color: black;
+}
+.courseindex .courseindex-item:hover .courseindex-link,
+.courseindex .courseindex-item:hover .courseindex-chevron, .courseindex .courseindex-item:focus .courseindex-link,
+.courseindex .courseindex-item:focus .courseindex-chevron {
+    color: black;
+    cursor: pointer;
+}
+.courseindex .courseindex-item:hover.dimmed, .courseindex .courseindex-item:focus.dimmed {
+    color: black;
+}
+.courseindex .courseindex-item:hover.dimmed .courseindex-link,
+.courseindex .courseindex-item:hover.dimmed .courseindex-chevron, .courseindex .courseindex-item:focus.dimmed .courseindex-link,
+.courseindex .courseindex-item:focus.dimmed .courseindex-chevron {
+    color: black;
+}
+.courseindex .courseindex-item:hover.draggable, .courseindex .courseindex-item:focus.draggable {
+    cursor: move;
+}
+.courseindex .courseindex-item:hover.pageitem,
+.courseindex .courseindex-item:hover .pageitem, .courseindex .courseindex-item:focus.pageitem,
+.courseindex .courseindex-item:focus .pageitem {
+    background-color: #0c589c;
+    color: #e6e6e6;
+}
+.courseindex .courseindex-item:hover.pageitem .courseindex-link,
+.courseindex .courseindex-item:hover.pageitem .courseindex-chevron,
+.courseindex .courseindex-item:hover .pageitem .courseindex-link,
+.courseindex .courseindex-item:hover .pageitem .courseindex-chevron, .courseindex .courseindex-item:focus.pageitem .courseindex-link,
+.courseindex .courseindex-item:focus.pageitem .courseindex-chevron,
+.courseindex .courseindex-item:focus .pageitem .courseindex-link,
+.courseindex .courseindex-item:focus .pageitem .courseindex-chevron {
+    color: #e6e6e6;
+}
+.courseindex .courseindex-item:hover.pageitem .courseindex-link a,
+.courseindex .courseindex-item:hover.pageitem .courseindex-chevron a,
+.courseindex .courseindex-item:hover .pageitem .courseindex-link a,
+.courseindex .courseindex-item:hover .pageitem .courseindex-chevron a, .courseindex .courseindex-item:focus.pageitem .courseindex-link a,
+.courseindex .courseindex-item:focus.pageitem .courseindex-chevron a,
+.courseindex .courseindex-item:focus .pageitem .courseindex-link a,
+.courseindex .courseindex-item:focus .pageitem .courseindex-chevron a {
+    color: #e6e6e6;
+}
+.courseindex .courseindex-item.dragging {
+    border: 1px solid #b3d9e0;
+    background-color: #e6f2f5;
+}
+.courseindex .courseindex-item.active {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+.courseindex .courseindex-item.dimmed {
+    color: #6a737b;
+}
+.courseindex .courseindex-item.dimmed .courseindex-link,
+.courseindex .courseindex-item.dimmed .courseindex-chevron {
+    color: #6a737b;
+}
+.courseindex .courseindex-item.dimmed.pageitem {
+    color: #fff;
+}
+.courseindex .courseindex-item.dimmed.pageitem a {
+    color: #fff;
+}
+.courseindex .courseindex-item .courseindex-locked {
+    display: none;
+}
+.courseindex .courseindex-item.restrictions .courseindex-locked {
+    display: block;
+}
+.courseindex .courseindex-item.pageitem {
+    background-color: #0f6cbf;
+    color: #fff;
+    scroll-margin: 6rem;
+}
+.courseindex .courseindex-item.pageitem a {
+    color: #fff;
+}
+.courseindex .courseindex-item .completioninfo {
+    min-width: 24px;
+}
+.courseindex .courseindex-item .completioninfo.completion_complete {
+    color: #357a32;
+}
+.courseindex .courseindex-item .completioninfo.completion_fail {
+    color: #ca3120;
+}
+.courseindex .courseindex-item.indented {
+    margin-left: 1rem;
+}
+.courseindex .courseindex-section {
+    border-left: solid 3px transparent;
+}
+.courseindex .courseindex-section.dragging {
+    border: 1px solid #b3d9e0;
+    background-color: #e6f2f5;
+}
+.courseindex .courseindex-section .current-badge {
+    line-height: 1.5;
+    display: none;
+}
+.courseindex .courseindex-section.current {
+    border-left: solid 3px #0f6cbf;
+    /* Skip current badges in delegated sections. */
+}
+.courseindex .courseindex-section.current .current-badge {
+    display: inline-block;
+}
+.courseindex .courseindex-section.current .delegated-section .current-badge {
+    display: none;
+}
+.courseindex .courseindex-section.dropready .courseindex-item-content {
+    /* Extra dropzone space */
+    //padding-bottom: 1em;
+}
+.courseindex .courseindex-section .courseindex-sectioncontent .courseindex-item {
+    padding-left: 0.5rem;
+}
+.courseindex .courseindex-section.delegated-section {
+    width: 100%;
+}
+.courseindex .icon {
+    font-size: 10px;
+}
+.courseindex .d-flex-noedit {
+    display: none;
+}
+.courseindex.editing .d-flex-noedit {
+    display: flex;
+}
+.courseindex .placeholders .rounded-circle {
+    height: 1rem;
+    width: 1rem;
+}
+.courseindex .placeholders .w-100 {
+    height: 1rem;
+    margin: 0.5rem 0;
+}
+
+
+// CSS styles from Boost to Drawer behavior
+.drawer-toggles .drawer-toggler {
+    position: fixed;
+    width: fit-content;
+    z-index: 2;
+}
+.drawer-toggles .drawer-toggler .btn {
+    border-radius: 200px;
+    padding: 16px;
+    background-color: #dee2e6;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: padding 200ms;
+}
+.drawer-toggles .drawer-toggler .btn .icon {
+    width: auto;
+    height: auto;
+}
+.drawer-toggles .drawer-toggler .btn:focus {
+    box-shadow: 0 0 0 0.2rem rgba(15, 108, 191, 0.75);
+}
+.drawer-toggles .drawer-left-toggle {
+    left: 0;
+}
+.drawer-toggles .drawer-left-toggle .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding-right: 14px;
+    padding-left: 10px;
+}
+.drawer-toggles .drawer-left-toggle .btn:hover {
+    padding-left: 20px;
+}
+.drawer-toggles .drawer-right-toggle {
+    right: 0;
+}
+.drawer-toggles .drawer-right-toggle .btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-right: 10px;
+    padding-left: 14px;
+}
+.drawer-toggles .drawer-right-toggle .btn:hover {
+    padding-right: 20px;
+}
+
+
+.drawer.drawer-left.d-print-none.show {
+    z-index: 1050;
+}
+
+div#snap-course-wrapper #toc-desktop-menu-heading {
+    margin-bottom: 1em;
+    padding: 0 1em;
+    border-bottom: 1px solid #dee2e6;
+    text-transform: capitalize;
+    #toc-search {
+        top: 0;
+    }
+    h2, input {
+        font-size: medium;
+    }
+    #toc-search:focus-within {
+        width: 90%;
+    }
 }
