@@ -148,8 +148,28 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
     #admin-menu-trigger {
         &:focus {
-            outline: 3px solid $brand-primary;
-            border-color: $brand-primary;
+            outline: 3px solid white;
+            border-color: white;
+            border-radius: 0.5rem;
+            width: 37px;
+            padding: .2em;
+            #snap-admin-icon {
+                transform: rotate(90deg);
+                transition: all 0.4s ease-in-out;
+                .snap-gear-icon {
+                    fill: currentColor;
+                }
+            }
+        }
+    }
+
+    [data-target='theme_snap-drawers-blocks'] {
+        &:focus {
+            outline: 3px solid white;
+            border-color: white;
+            border-radius: 0.5rem;
+            width: 37px;
+            padding: .2em;
         }
     }
 

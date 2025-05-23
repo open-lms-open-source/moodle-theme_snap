@@ -75,3 +75,25 @@ Feature: Check that the correct tab order and focus exists for the page.
     And I follow "Collapse all"
     And I scroll to the bottom
     Then "#fgroup_id_buttonar" "css_element" should appear after the "div.collapsible-actions" "css_element"
+
+  @javascript @accessibility
+  Scenario: Snap drawers should follow their logical tab order.
+    Given I log in as "admin"
+    And I am on site homepage
+    And I click on "#admin-menu-trigger" "css_element"
+    And I press the tab key
+    Then I should see "Site home settings"
+    And I click on "#admin-menu-trigger" "css_element"
+    Then the focused element is "#admin-menu-trigger" "css_element"
+    And I press the tab key
+    Then the focused element is ".snap-sidebar-menu-item.blocks-drawer-button" "css_element"
+    And I press the enter key
+    And I press the tab key
+    And I click on ".snap-sidebar-menu-item.blocks-drawer-button" "css_element"
+    And I press the tab key
+    And I press the shift + tab key
+    Then the focused element is ".snap-sidebar-menu-item.blocks-drawer-button" "css_element"
+    And I press the tab key
+    Then the focused element is "#snap_feeds_side_menu_trigger" "css_element"
+    And I press the tab key
+    Then the focused element is ".nav-link.popover-region-toggle.position-relative.icon-no-margin" "css_element"

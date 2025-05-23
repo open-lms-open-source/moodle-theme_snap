@@ -90,6 +90,15 @@ $mobile-sidebar-peek-width: 10px;
                 box-shadow: none;
             }
         }
+
+        [id^="message-drawer-toggle-"] {
+            &:focus {
+                outline: 3px solid white;
+                border-radius: 0.5rem;
+                width: 37px;
+                padding: .3em;
+            }
+        }
     }
 }
 

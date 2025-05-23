@@ -393,6 +393,22 @@ body.path-site .block.block_settings {
         opacity: 0;
     }
 
+    &:focus {
+        svg {
+            outline: 3px solid white;
+            border-color: white;
+            border-radius: 0.5rem;
+            width: 37px;
+            padding: .01em;
+            @extend .fa-bounce;
+            --fa-animation-duration: 1s;
+            --fa-animation-iteration-count: 1;
+            .hover-visible {
+                opacity: 1;
+            }
+        }
+    }
+
     svg:hover {
         @extend .fa-bounce;
         --fa-animation-duration: 1s;
