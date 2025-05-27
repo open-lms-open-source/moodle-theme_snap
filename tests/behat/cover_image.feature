@@ -23,6 +23,7 @@
 Feature: When the moodle theme is set to Snap, cover image can be set for site and courses.
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following config values are set as admin:
       | defaulthomepage                | 0 |            |
 

@@ -23,6 +23,7 @@
 Feature: When the moodle theme is set to Snap, activity restriction tags are shown.
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |

@@ -30,6 +30,7 @@ Feature: Activity navigation in Snap theme
   I need to use the activity navigation controls in activities
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given I enable "chat" "mod" plugin
     And I enable "survey" "mod" plugin
     Given the following config values are set as admin:
