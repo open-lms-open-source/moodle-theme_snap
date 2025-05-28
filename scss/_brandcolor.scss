@@ -1454,6 +1454,11 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .initialsdropdown .page-link {
         color: $brand-primary;
     }
+
+    .custom-control-input:checked~.custom-control-label::before {
+        background-color: $brand-primary;
+        border-color: $brand-primary;
+    }
 }
 
 /*
