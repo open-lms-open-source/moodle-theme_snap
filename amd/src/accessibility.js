@@ -220,6 +220,173 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                         });
                     }
                     carouselPausePlay();
+
+                    /**
+                     * Set all the side drawers tabbing order.
+                     */
+                    function setDrawersTabOrder() {
+                        let blocksDrawerFocus;
+                        let blocksDrawerAccessed = false;
+
+                        /**
+                         * Gets both the first and the last focusable elements from a drawer.
+                         *
+                         * @param {object} drawer The drawer to be analyzed.
+                         */
+                        function getFirstAndLastOfDrawer(drawer) {
+                            let focusables = '[tabindex]:not([tabindex="-1"]),' +
+                                ' a[href]:not([tabindex]),' +
+                                ' button:not([disabled]):not([tabindex]),' +
+                                ' input:not([disabled]):not([tabindex]),' +
+                                ' textarea:not([disabled]):not([tabindex]),' +
+                                ' select:not([disabled]):not([tabindex]), details:not([tabindex])';
+
+                            let first = null;
+                            let last = null;
+                            if (drawer) {
+                                let drawerFocusables = Array.from(drawer.querySelectorAll(focusables)).filter(el => {
+                                    return el.checkVisibility();
+                                });
+                                first = drawerFocusables[0];
+                                last = drawerFocusables[drawerFocusables.length - 1];
+                            }
+                            return [first, last];
+                        }
+
+                        /**
+                         * Event listener to determine keyboard navigation of the drawers.
+                         *
+                         * @param {object} ev event
+                         */
+                        function drawerTabListener(ev) {
+
+                            // Setup for the listener.
+                            let adminDrawerIcon = document.getElementById('admin-menu-trigger');
+                            let adminDrawer = adminDrawerIcon ?
+                                document.querySelector('section.block_settings[data-block="settings"]') : null;
+                            let blocksDrawerIcon = document.querySelector('.blocks-drawer-button');
+                            let blocksDrawer = blocksDrawerIcon ?
+                                document.getElementById('theme_snap-drawers-blocks') : null;
+                            let blocksDrawerClose = document.querySelector('#theme_snap-drawers-blocks > .drawerheader > button');
+                            let snapfeedsDrawerIcon = document.getElementById('snap_feeds_side_menu_trigger');
+                            let snapfeedsDrawer = snapfeedsDrawerIcon ?
+                                document.querySelector('#snap_feeds_side_menu .snap-feeds') : null;
+                            let snapfeedsSideMenu = document.getElementById('snap_feeds_side_menu');
+                            let messageDrawerIcon = document.querySelector('a[id^=\'message-drawer-toggle-\']');
+                            let messageDrawerChild = document.querySelector('div[data-region="message-drawer"]');
+                            let messageDrawer = messageDrawerChild ? messageDrawerChild.parentElement : null;
+                            messageDrawer = messageDrawerIcon ? messageDrawer : null;
+                            let messageDrawerClose = document.querySelector('[id^="message-drawer-"] > div.closewidget > a');
+                            let drawerIcons = [adminDrawerIcon, blocksDrawerIcon, snapfeedsDrawerIcon, messageDrawerIcon]
+                                .filter(el => {
+                                    return el !== null;
+                                });
+                            let drawers = [adminDrawer, blocksDrawer, snapfeedsDrawer, messageDrawer]
+                                .filter(el => {
+                                    return el !== null;
+                                });
+                            let beforeDrawers = document.querySelector('#snap-custom-menu-header div > ul > li:nth-child(2) > a');
+                            beforeDrawers = beforeDrawers ?
+                                beforeDrawers : document.querySelector('#snap-custom-menu-header > nav > div > ul > li > a');
+                            let afterDrawers = document.querySelector('#snap-sidebar-menu > button.snap-sidebar-menu-trigger');
+
+                            let adminDrawerFirst = null;
+                            let adminDrawerLast = null;
+                            [adminDrawerFirst, adminDrawerLast] = getFirstAndLastOfDrawer(adminDrawer);
+
+                            let blocksDrawerFirst = null;
+                            let blocksDrawerLast = null;
+                            [blocksDrawerFirst, blocksDrawerLast] = getFirstAndLastOfDrawer(blocksDrawer);
+
+                            let snapfeedsDrawerFirst = null;
+                            let snapfeedsDrawerLast = null;
+                            [snapfeedsDrawerFirst, snapfeedsDrawerLast] = getFirstAndLastOfDrawer(snapfeedsDrawer);
+
+                            let messageDrawerFirst = null;
+                            let messageDrawerLast = null;
+                            [messageDrawerFirst, messageDrawerLast] = getFirstAndLastOfDrawer(messageDrawer);
+
+                            let drawerFirsts = [adminDrawerFirst, blocksDrawerFirst, snapfeedsDrawerFirst, messageDrawerFirst]
+                                .filter(el => {
+                                    return el !== null;
+                                });
+                            let drawerLasts = [adminDrawerLast, blocksDrawerLast, snapfeedsDrawerLast, messageDrawerLast]
+                                .filter(el => {
+                                    return el !== null;
+                                });
+
+                            // Process keys (Tab, Shift+Tab, and Enter).
+                            if (ev.key === 'Tab' && drawerIcons.includes(ev.target)) {
+                                ev.preventDefault();
+                                let idx = drawerIcons.indexOf(ev.target);
+                                if ((drawers[idx].classList.contains('state-visible')
+                                        && adminDrawer && drawers[idx] === adminDrawer) ||
+                                    (drawers[idx].classList.contains('show') && blocksDrawer && drawers[idx] === blocksDrawer) ||
+                                    (snapfeedsSideMenu && snapfeedsSideMenu.classList.contains('state-visible')
+                                        && snapfeedsDrawer && drawers[idx] === snapfeedsDrawer) ||
+                                    (!drawers[idx].classList.contains('hidden')
+                                        && messageDrawer && drawers[idx] === messageDrawer)) {
+                                    if (ev.shiftKey) {
+                                        drawerLasts[idx].focus();
+                                    } else {
+                                        drawerFirsts[idx].focus();
+                                    }
+                                } else {
+                                    if (ev.shiftKey) {
+                                        if (idx === 0) {
+                                            beforeDrawers.focus();
+                                        } else {
+                                            drawerIcons[idx - 1].focus();
+                                        }
+                                    } else {
+                                        if (idx < drawers.length - 1) {
+                                            drawerIcons[idx + 1].focus();
+                                        } else {
+                                            afterDrawers.focus();
+                                        }
+                                    }
+                                }
+                            } else if (ev.key === 'Tab' && !ev.shiftKey && drawerLasts.includes(ev.target)) {
+                                ev.preventDefault();
+                                let idx = drawerLasts.indexOf(ev.target);
+                                drawerIcons[idx].focus();
+                            } else if (ev.key === 'Tab' && ev.shiftKey && drawerFirsts.includes(ev.target)) {
+                                ev.preventDefault();
+                                let idx = drawerFirsts.indexOf(ev.target);
+                                drawerIcons[idx].focus();
+                            } else if (ev.key === 'Enter' && (drawerIcons.includes(ev.target)
+                                || messageDrawerClose === ev.target)) {
+                                blocksDrawerAccessed = false;
+                                ev.preventDefault();
+                                let idx = drawerIcons.indexOf(ev.target);
+                                if (drawerIcons[idx] === messageDrawerIcon) {
+                                    document.getElementById('page').classList.toggle('offcanvas');
+                                } else if (drawerIcons[idx] === blocksDrawerIcon) {
+                                    drawerIcons[idx].click();
+                                    blocksDrawerFocus = function() {
+                                        if (blocksDrawerAccessed) {
+                                            return;
+                                        } else {
+                                            blocksDrawerAccessed = true;
+                                        }
+                                        blocksDrawerIcon.focus();
+                                        blocksDrawerClose.removeEventListener('focus', blocksDrawerFocus);
+                                    };
+                                    blocksDrawerClose.addEventListener('focus', blocksDrawerFocus);
+                                } else if (messageDrawerClose !== ev.target) {
+                                    drawerIcons[idx].click();
+                                } else {
+                                    document.getElementById('page').classList.toggle('offcanvas');
+                                    messageDrawerIcon.focus();
+                                }
+                                if (idx >= 0) {
+                                    drawerIcons[idx].focus();
+                                }
+                            }
+                        }
+                        document.addEventListener('keydown', drawerTabListener);
+                    }
+                    setDrawersTabOrder();
                 });
 
                 /**
