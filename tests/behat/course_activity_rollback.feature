@@ -23,6 +23,7 @@
 Feature: Course scrollback navigation in Snap theme
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |

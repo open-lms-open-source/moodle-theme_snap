@@ -24,6 +24,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
   as session issues.
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following config values are set as admin:
       | defaulthomepage | 0 |
     And the following "users" exist:

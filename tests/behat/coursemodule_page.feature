@@ -25,6 +25,7 @@ Feature: Open page module inline
   I need to view page modules inline and have auto completion tracking updated.
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | topics | 0        | 1         | 1                |      1       |

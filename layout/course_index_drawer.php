@@ -16,26 +16,45 @@
 
 /**
  * Similar to theme/boost/layout/drawers.php
- *  Used to display the Blocks Drawer on Snap.
+ * Used to display the Course Index Drawer on Snap.
  *
  * @package    theme_snap
  * @copyright  2025 Copyright (c) 2024 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+use theme_snap\renderables\course_toc;
+
 defined('MOODLE_INTERNAL') || die();
 
-$addblockbutton = $OUTPUT->addblockbutton();
-$blockshtml = $OUTPUT->blocks('side-pre');
-$hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
+global $OUTPUT;
 
-if (!$hasblocks) {
-    $blockdraweropen = false;
+if (isloggedin()) {
+    $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
+} else {
+    $courseindexopen = false;
+}
+
+$extraclasses = ['uses-drawers'];
+if ($courseindexopen) {
+    $extraclasses[] = 'drawer-open-index';
+}
+
+$bodyattributes = $OUTPUT->body_attributes($extraclasses);
+
+// For Snap we add some HTML to Course Index.
+$coursetoc = new course_toc();
+$searchmodule = $OUTPUT->render_from_template('theme_snap/course_toc_module_search', $coursetoc);
+$tocfooter = $OUTPUT->render_from_template('theme_snap/course_toc_footer', $coursetoc->footer);
+
+
+$courseindex = $searchmodule . core_course_drawer() . $tocfooter;
+
+if (!$courseindex) {
+    $courseindexopen = false;
 }
 
 $templatecontext = [
-    'hasblocks' => $hasblocks,
-    'sidepreblocks' => $blockshtml,
-    'addblockbutton' => $addblockbutton,
-    'showdraweropenbutton' => false
+    'courseindex' => $courseindex,
 ];
-echo $OUTPUT->render_from_template('theme_snap/blocks_drawer', $templatecontext);
+echo $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext);

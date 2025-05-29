@@ -76,25 +76,14 @@ echo $OUTPUT->custom_menu_spacer();
     echo $OUTPUT->course_header();
     // Note, there is no blacklisting for the edit blocks button on course pages.
     echo $OUTPUT->page_heading_button();
-    if ($tocformat && !$leftnav && !$pathurl) {
-        echo $OUTPUT->course_toc();
-    }
     ?>
     </div>
 </div>
 <?php
-if ($tocformat && $leftnav) {
+if ($tocformat) {
     echo '<div id="snap-course-wrapper">';
     echo '<div class="row">';
-    // If current path is a level up view, we hide TOC.
-    if ($pathurl === true) {
-        echo '<div class="col-lg-12">';
-    } else {
-        echo '<div class="col-lg-3">';
-        echo $OUTPUT->course_toc();
-        echo '</div>';
-        echo '<div class="col-lg-9">';
-    }
+    echo '<div class="col-lg-12">';
 }
 ?>
 <section id="region-main">
@@ -110,9 +99,12 @@ echo $OUTPUT->course_content_footer();
 </section>
 <?php
 require __DIR__.'/blocks_drawer.php';
+if ($tocformat) {
+    require __DIR__ . '/course_index_drawer.php';
+}
 echo $OUTPUT->snap_feeds_side_menu();
 
-if ($tocformat && $leftnav) {
+if ($tocformat) {
     echo '</div> <!-- close section -->';
     echo '</div> <!-- close row -->';
     echo '</div> <!-- close course wrapper -->';

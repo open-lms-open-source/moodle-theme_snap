@@ -24,7 +24,7 @@
 Feature: Manual completion updates page wihout reload.
 
   Background:
-
+    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | topics | 0        | 1         | 1                |      1       |

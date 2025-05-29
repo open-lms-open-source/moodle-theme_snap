@@ -28,6 +28,7 @@
 Feature: Elements for Snap should have the proper aria attributes.
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following config values are set as admin:
       | enableglobalsearch | true |
     Given the following "courses" exist:

@@ -31,6 +31,7 @@ const SELECTORS = {
     TRIGGER_ICON: '.snap-sidebar-menu-trigger i',
     HEADER: 'header',
     DRAWER_BUTTON: '.snap-sidebar-menu-item[data-activeselector]',
+    COURSE_INDEX_DRAWER_BUTTON: '.drawer-toggler.drawer-left-toggle',
     MESSAGES_POPOVER: '[data-region="popover-region-messages"]',
     CLOSE_DRAWER_BUTTON: '[data-action="closedrawer"]',
     SIDEBAR_MENU_ITEM: '.snap-sidebar-menu-item',
@@ -57,7 +58,7 @@ const DRAWERS = {
         '.drawer:has(.message-app)'
     ],
     ACTIVE_SELECTORS: [
-        '.drawer.show',
+        '.drawer-right.drawer.show',
         '.block_settings.block.state-visible',
         '#snap_feeds_side_menu.state-visible',
         '.drawer:not(.hidden):has(.message-app)'
@@ -166,6 +167,16 @@ const updateElementPositions = (selectors = null) => {
                 }
             });
         });
+    }
+
+    // Updates Course Index Button position.
+    const courseindexbutton = document.querySelector(SELECTORS.COURSE_INDEX_DRAWER_BUTTON);
+    if (courseindexbutton) {
+        if (isNavUnpinned) {
+            courseindexbutton.style.top = '280px';
+        } else {
+            courseindexbutton.style.top = `${topPosition + 260}px`;
+        }
     }
 };
 
