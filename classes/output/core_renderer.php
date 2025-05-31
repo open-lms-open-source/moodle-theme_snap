@@ -31,12 +31,12 @@ use stdClass;
 use context_course;
 use context_system;
 use coding_exception;
-use single_button;
+use \core\output\single_button;
 use DateTime;
-use html_writer;
+use \core\output\html_writer;
 use moodle_url;
 use navigation_node;
-use user_picture;
+use \core\output\user_picture;
 use theme_snap\local;
 use theme_snap\services\course;
 use theme_snap\renderables\settings_link;
@@ -259,7 +259,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'aria-expanded' => 'false',
         ];
 
-        return html_writer::link($url, $gearicon, $attributes);
+        return \core\output\html_writer::link($url, $gearicon, $attributes);
     }
 
 
@@ -275,9 +275,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        $linkcontent = $this->render(new \pix_icon('sso', get_string('openlms', 'local_geniusws'), 'local_geniusws')).
+        $linkcontent = $this->render(new \core\output\pix_icon('sso', get_string('openlms', 'local_geniusws'), 'local_geniusws')).
                 get_string('dashboard', 'local_geniusws');
-        $html = html_writer::link($geniuslink->loginurl, $linkcontent, ['class' => 'genius_dashboard_link hidden-md-down']);
+        $html = \core\output\html_writer::link($geniuslink->loginurl, $linkcontent, ['class' => 'genius_dashboard_link hidden-md-down']);
         return $html;
     }
 
@@ -387,7 +387,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $title = '<h3>' .$title. '</h3>' .$content;
-        $link = html_writer::link($url, $title);
+        $link = \core\output\html_writer::link($url, $title);
 
         $data = (object) [
                 'image' => $image,
@@ -407,7 +407,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $timetext = \calendar_day_representation($time);
         $timetext .= ', ' . \calendar_time_representation($time);
         $datetime = date(DateTime::W3C, $time);
-        return html_writer::tag('time', $timetext, [
+        return \core\output\html_writer::tag('time', $timetext, [
             'datetime' => $datetime, ]
         );
     }
@@ -737,7 +737,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // This check is here for the front page login.
         if (!isloggedin() || isguestuser()) {
-            $output = html_writer::link($loginurl, get_string('login'), $loginatts);
+            $output = \core\output\html_writer::link($loginurl, get_string('login'), $loginatts);
         }
         return $output;
     }
@@ -924,22 +924,22 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     'class' => "icon activityicon $iconclass",
                     'aria-hidden' => 'true'
                 ];
-                $imagedata = html_writer::img($iconurl->out(false), '', $iconattrs);
+                $imagedata = \core\output\html_writer::img($iconurl->out(false), '', $iconattrs);
                 $purposeclass = plugin_supports('mod', $this->page->activityname, FEATURE_MOD_PURPOSE);
                 $purposeclass .= ' activityiconcontainer icon-size-6';
                 $purposeclass .= ' modicon_' . $this->page->activityname;
                 $isbranded = component_callback('mod_' . $this->page->activityname, 'is_branded', [], false);
-                $imagedata = html_writer::tag('div', $imagedata, ['class' => $purposeclass . ($isbranded ? ' isbranded' : '')]);
+                $imagedata = \core\output\html_writer::tag('div', $imagedata, ['class' => $purposeclass . ($isbranded ? ' isbranded' : '')]);
                 if (!empty($USER->editing)) {
                     $prefix = get_string('modulename', $this->page->activityname);
                 }
             }
             // Return the heading wrapped in an sr-only element so it is only visible to screen-readers.
             if (!empty($this->page->layout_options['nocontextheader'])) {
-                return html_writer::div($heading, 'sr-only');
+                return \core\output\html_writer::div($heading, 'sr-only');
             }
 
-            $contextheader = new \context_header($heading, $headinglevel, $imagedata, $userbuttons, $prefix);
+            $contextheader = new \core\output\context_header($heading, $headinglevel, $imagedata, $userbuttons, $prefix);
             return $this->render($contextheader); // Only context header for course modules.
         } else if ($context->contextlevel == CONTEXT_COURSE) {
           return parent::context_header($headerinfo, $headinglevel);
@@ -968,15 +968,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
             // If we are on a course page which is not the site level course page.
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
             $heading = format_string($COURSE->fullname);
-            $heading = html_writer::link($courseurl, $heading);
+            $heading = \core\output\html_writer::link($courseurl, $heading);
             if (!$this->snap_page_is_activity_view() && !$this->snap_page_is_edit_section() && !$this->snap_page_is_activity_mod() && !$this->snap_page_is_user_view()) {
                 $heading = $this->context_header(['heading' => $heading]);
             } else {
-                $heading = html_writer::tag($tag, $heading);
+                $heading = \core\output\html_writer::tag($tag, $heading);
             }
         } else {
             // Default heading.
-            $heading = html_writer::tag($tag, $heading);
+            $heading = \core\output\html_writer::tag($tag, $heading);
         }
 
         // If we are on the main page of a course, add the cover image selector.
@@ -994,7 +994,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
         if ($this->page->user_is_editing() && $this->page->pagelayout == 'frontpage') {
             $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap']);
-            $link = html_writer::link($url,
+            $link = \core\output\html_writer::link($url,
                             get_string('changefullname', 'theme_snap'),
                             ['class' => 'btn btn-secondary btn-sm']);
             $heading .= $link;
@@ -1022,7 +1022,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      *
      * @return string
      */
-    protected function render_custom_menu(\custom_menu $menu) {
+    protected function render_custom_menu(\core\output\custom_menu $menu) {
         if (!$menu->has_children()) {
             return '';
         }
@@ -1056,7 +1056,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $cm      = get_coursemodule_from_instance('forum', $forum->id, $SITE->id, false, MUST_EXIST);
         $context = \context_module::instance($cm->id, MUST_EXIST);
 
-        $output  = html_writer::start_tag('div', ['id' => 'site-news-forum', 'class' => 'clearfix']);
+        $output  = \core\output\html_writer::start_tag('div', ['id' => 'site-news-forum', 'class' => 'clearfix']);
         $output .= $this->heading(format_string($forum->name, true, ['context' => $context]));
 
         $groupmode    = groups_get_activity_groupmode($cm, $SITE);
@@ -1064,10 +1064,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         if (!$discussions = forum_get_discussions($cm,
             'p.modified DESC', true, null, $SITE->newsitems, false, -1, $SITE->newsitems)) {
-            $output .= html_writer::tag('div', '('.get_string('nonews', 'forum').')', ['class' => 'forumnodiscuss']);
+            $output .= \core\output\html_writer::tag('div', '('.get_string('nonews', 'forum').')', ['class' => 'forumnodiscuss']);
 
             if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
-                $output .= html_writer::link(
+                $output .= \core\output\html_writer::link(
                     new moodle_url('/mod/forum/post.php', ['forum' => $forum->id]),
                     get_string('addanewtopic', 'forum'),
                     ['class' => 'btn btn-primary']
@@ -1080,7 +1080,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return $output.'</div>';
         }
 
-        $output .= html_writer::start_div('', ['id' => 'news-articles']);
+        $output .= \core\output\html_writer::start_div('', ['id' => 'news-articles']);
 
         $counter = 0;
         foreach ($discussions as $discussion) {
@@ -1150,7 +1150,7 @@ HTML;
 HTML;
             $counter++;
         }
-        $actionlinks = html_writer::link(
+        $actionlinks = \core\output\html_writer::link(
             new moodle_url('/mod/forum/view.php', ['id' => $cm->id]),
             get_string('morenews', 'theme_snap'),
             ['class' => 'btn btn-secondary',
@@ -1158,7 +1158,7 @@ HTML;
              'tabindex' => 0, ]
         );
         if (forum_user_can_post_discussion($forum, $currentgroup, $groupmode, $cm, $context)) {
-            $actionlinks .= html_writer::link(
+            $actionlinks .= \core\output\html_writer::link(
                 new moodle_url('/mod/forum/post.php', ['forum' => $forum->id]),
                 get_string('addanewtopic', 'forum'),
                 ['class' => 'btn btn-primary',
@@ -1166,9 +1166,9 @@ HTML;
                     'tabindex' => 0, ]
             );
         }
-        $output .= html_writer::end_div();
+        $output .= \core\output\html_writer::end_div();
         $output .= "<br><div class='text-center'>$actionlinks</div>";
-        $output .= html_writer::end_tag('div');
+        $output .= \core\output\html_writer::end_tag('div');
 
         return $output;
     }
@@ -1308,11 +1308,11 @@ HTML;
         // We need plain styling of confirm boxes on upgrade because we don't know which stylesheet we have (it could be
         // from any previous version of Moodle).
         if ($continue instanceof single_button) {
-            $continue->type = single_button::BUTTON_PRIMARY;
+            $continue->type = \core\output\single_button::BUTTON_PRIMARY;
         } else if (is_string($continue)) {
-            $continue = new single_button(new moodle_url($continue), get_string('continue'), 'post', single_button::BUTTON_PRIMARY);
+            $continue = new \core\output\single_button(new moodle_url($continue), get_string('continue'), 'post', \core\output\single_button::BUTTON_PRIMARY);
         } else if ($continue instanceof moodle_url) {
-            $continue = new \single_button($continue, get_string('continue'), 'post', single_button::BUTTON_PRIMARY);
+            $continue = new \core\output\single_button($continue, get_string('continue'), 'post', \core\output\single_button::BUTTON_PRIMARY);
         } else {
             throw new coding_exception(
                 'The continue param to $OUTPUT->confirm() must be either a URL (string/moodle_url) '
@@ -1320,12 +1320,12 @@ HTML;
             );
         }
 
-        if ($cancel instanceof single_button) {
+        if ($cancel instanceof \core\output\single_button) {
             $output = '';
         } else if (is_string($cancel)) {
-            $cancel = new single_button(new moodle_url($cancel), get_string('cancel'), 'get');
+            $cancel = new \core\output\single_button(new moodle_url($cancel), get_string('cancel'), 'get');
         } else if ($cancel instanceof moodle_url) {
-            $cancel = new \single_button($cancel, get_string('cancel'), 'get');
+            $cancel = new \core\output\single_button($cancel, get_string('cancel'), 'get');
         } else {
             throw new coding_exception(
                 'The cancel param to $OUTPUT->confirm() must be either a URL (string/moodle_url) '
@@ -1334,9 +1334,9 @@ HTML;
         }
 
         $output = $this->box_start('generalbox snap-continue-cancel', 'notice');
-        $output .= html_writer::tag('h4', get_string('confirm'));
-        $output .= html_writer::tag('p', $message);
-        $output .= html_writer::tag('div', $this->render($continue) . $this->render($cancel), ['class' => 'buttons']);
+        $output .= \core\output\html_writer::tag('h4', get_string('confirm'));
+        $output .= \core\output\html_writer::tag('p', $message);
+        $output .= \core\output\html_writer::tag('div', $this->render($continue) . $this->render($cancel), ['class' => 'buttons']);
         $output .= $this->box_end();
         return $output;
     }
@@ -1428,7 +1428,7 @@ HTML;
             $fsedit = '';
             if ($this->page->user_is_editing()) {
                 $url = new moodle_url('/admin/settings.php', ['section' => 'themesettingsnap#themesnapfeaturespots']);
-                $link = html_writer::link($url, get_string('featurespotsedit', 'theme_snap'), ['class' => 'btn btn-primary']);
+                $link = \core\output\html_writer::link($url, get_string('featurespotsedit', 'theme_snap'), ['class' => 'btn btn-primary']);
                 $link = rawurldecode($link);
                 $fsedit = '<p class="text-center">' . $link . '</p>';
             }
@@ -1669,7 +1669,7 @@ HTML;
      */
     private function add_contentbank_navigation_node(navigation_node $item, $contextid) {
         $url = new moodle_url('/contentbank/index.php', ['contextid' => $contextid]);
-        $item->add(get_string('contentbank'), $url, navigation_node::TYPE_CUSTOM, null, 'contentbank', new \pix_icon('brush', ''));
+        $item->add(get_string('contentbank'), $url, navigation_node::TYPE_CUSTOM, null, 'contentbank', new \core\output\pix_icon('brush', ''));
     }
 
     /**
@@ -1710,7 +1710,7 @@ HTML;
                     'id' => $course->id, 'sesskey' => sesskey(),
                     'switchrole' => $key, 'returnurl' => $this->page->url->out_as_local_url(false),
                 ]);
-                $switchroles->add($name, $url, navigation_node::TYPE_SETTING, null, $key, new \pix_icon('i/switchrole', ''));
+                $switchroles->add($name, $url, navigation_node::TYPE_SETTING, null, $key, new \core\output\pix_icon('i/switchrole', ''));
             }
         }
     }
@@ -1951,7 +1951,7 @@ HTML;
         if (!empty($coverimage)) {
             $attrs['class'] .= ' mast-breadcrumb';
         }
-        $snapmycourses = html_writer::link(new moodle_url('/my/courses.php'), get_string('menu', 'theme_snap'), $attrs);
+        $snapmycourses = \core\output\html_writer::link(new moodle_url('/my/courses.php'), get_string('menu', 'theme_snap'), $attrs);
         $filteredbreadcrumbs = $this->remove_duplicated_breadcrumbs($this->page->navbar->get_items());
         foreach ($filteredbreadcrumbs as $item) {
             $item->hideicon = true;
@@ -1959,14 +1959,14 @@ HTML;
             // Add Breadcrumb links to all users types.
             if ($item->key === 'myhome') {
                 $breadcrumbs .= '<li class="breadcrumb-item">';
-                $breadcrumbs .= html_writer::link(new moodle_url('/my'), get_string($item->key), $attrs);
+                $breadcrumbs .= \core\output\html_writer::link(new moodle_url('/my'), get_string($item->key), $attrs);
                 $breadcrumbs .= '</li>';
                 continue;
             }
 
             if ($item->key === 'home') {
                 $breadcrumbs .= '<li class="breadcrumb-item">';
-                $breadcrumbs .= html_writer::link(new moodle_url('/'), get_string($item->key), $attrs);
+                $breadcrumbs .= \core\output\html_writer::link(new moodle_url('/'), get_string($item->key), $attrs);
                 $breadcrumbs .= '</li>';
                 continue;
             }
@@ -2008,9 +2008,9 @@ HTML;
                     $attr = ['class' => 'mast-breadcrumb'];
                 }
                 if (!is_string($item->action) && !empty($item->action->url)) {
-                    $link = html_writer::link($item->action->url, $item->text, $attr);
+                    $link = \core\output\html_writer::link($item->action->url, $item->text, $attr);
                 } else {
-                    $link = html_writer::link($item->action, $item->text, $attr);
+                    $link = \core\output\html_writer::link($item->action, $item->text, $attr);
                 }
                 $breadcrumbs .= '<li class="breadcrumb-item">' .$link. '</li>';
             }
@@ -2170,7 +2170,7 @@ HTML;
             'class' => $classes,
             'id' => 'snap-my-courses-trigger',
         ];
-        $output .= html_writer::link($url, $menu, $attributes);
+        $output .= \core\output\html_writer::link($url, $menu, $attributes);
         return $output;
     }
 
@@ -2383,7 +2383,7 @@ HTML;
             'aria-expanded' => "false",
         ];
 
-        return html_writer::link($url, $icon, $attributes);
+        return \core\output\html_writer::link($url, $icon, $attributes);
     }
 
     /**
@@ -2400,7 +2400,7 @@ HTML;
         if (empty($feeds)) {
             return $output;
         }
-        $output .= html_writer::tag('div', $feeds, ['id' => 'snap_feeds_side_menu']);
+        $output .= \core\output\html_writer::tag('div', $feeds, ['id' => 'snap_feeds_side_menu']);
         return $output;
     }
 
@@ -2423,7 +2423,7 @@ HTML;
             navigation_node::TYPE_SETTING,
             null,
             'communication',
-            new \pix_icon('t/messages-o','')
+            new \core\output\pix_icon('t/messages-o','')
         );
         $item->add_node($node, 'filtermanagement'); // Put it before the Filters option.
     }
@@ -2450,7 +2450,7 @@ HTML;
         global $COURSE;
         $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
         $coursename = format_string($COURSE->fullname);
-        $namelink = html_writer::link($courseurl, $coursename);
+        $namelink = \core\output\html_writer::link($courseurl, $coursename);
         $replacedname = str_replace($coursename, $namelink, $element);
         return $replacedname;
     }

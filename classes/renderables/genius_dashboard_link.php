@@ -24,7 +24,7 @@
 namespace theme_snap\renderables;
 use local_geniusws\navigation;
 
-class genius_dashboard_link implements \renderable {
+class genius_dashboard_link implements \core\output\renderable {
 
     /**
      * @var bool $output - are we ok to output the genius link.

@@ -22,8 +22,8 @@ use moodle_url;
 use stdClass;
 use stored_file;
 use theme_snap\output\core_renderer;
-use html_writer;
-use user_picture;
+use \core\output\html_writer;
+use \core\output\user_picture;
 
 global $CFG;
 require_once($CFG->dirroot.'/calendar/lib.php');
@@ -254,13 +254,13 @@ class local {
                     }
 
                     // Use the overall default theme.
-                    return \theme_config::DEFAULT_THEME;
+                    return \core\output\theme_config::DEFAULT_THEME;
             }
         }
 
         // We should most certainly have resolved a theme by now. Something has gone wrong.
         debugging('Error resolving the theme to use for this page.', DEBUG_DEVELOPER);
-        return \theme_config::DEFAULT_THEME;
+        return \core\output\theme_config::DEFAULT_THEME;
     }
 
     /**
@@ -646,7 +646,7 @@ class local {
         $messages = array();
         foreach ($records as $record) {
             $message = new message($record);
-            $message->set_fromuser(\user_picture::unalias($record, null, 'useridfrom', 'fromuser'));
+            $message->set_fromuser(\core\output\user_picture::unalias($record, null, 'useridfrom', 'fromuser'));
             $message->uniqueid = $record->id;
             $messages[] = $message;
         }
@@ -707,7 +707,7 @@ class local {
             }
 
             $fromuser = $message->get_fromuser();
-            $userpicture = new \user_picture($fromuser);
+            $userpicture = new \core\output\user_picture($fromuser);
             $userpicture->link = false;
             $userpicture->alttext = false;
             $userpicture->size = 100;
@@ -767,7 +767,7 @@ class local {
             $relativetext = get_string('ago', 'message', $relativetext);
         }
         $datetime = date(\DateTime::W3C, $timeinpast);
-        return html_writer::tag('time', $relativetext, array(
+        return \core\output\html_writer::tag('time', $relativetext, array(
             'is' => 'relative-time',
             'datetime' => $datetime, )
         );
@@ -833,7 +833,7 @@ class local {
             $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             if ($renderhtml) {
-                $modimage = \html_writer::img($modimageurl, $modname);
+                $modimage = \core\output\html_writer::img($modimageurl, $modname);
             } else {
                 $modimage = $modimageurl->out();
             }
@@ -923,7 +923,7 @@ class local {
             $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             if ($renderhtml) {
-                $modimage = \html_writer::img($modimageurl, $modname);
+                $modimage = \core\output\html_writer::img($modimageurl, $modname);
             } else {
                 $modimage = $modimageurl->out();
             }
@@ -1432,7 +1432,7 @@ class local {
      * @return stored_file | bool (false)
      */
     public static function site_coverimage_original() {
-        $theme = \theme_config::load('snap');
+        $theme = \core\output\theme_config::load('snap');
         $filename = $theme->settings->poster;
         if ($filename) {
             if (substr($filename, 0, 1) != '/') {
@@ -2024,7 +2024,7 @@ class local {
 
             $iconurl = '';
             if (!empty($activity->user)) {
-                $userpicture = new user_picture($activity->user);
+                $userpicture = new \core\output\user_picture($activity->user);
                 $userpicture->link = false;
                 $userpicture->alttext = false;
                 $userpicture->size = 32;
@@ -2360,7 +2360,7 @@ SQL;
                 $modimageurl = $output->image_url('icon', $cm->modname);
                 $modname = get_string('modulename', 'mod_'.$cm->modname);
                 if ($renderhtml) {
-                    $modimage = \html_writer::img($modimageurl, $modname);
+                    $modimage = \core\output\html_writer::img($modimageurl, $modname);
                 } else {
                     $modimage = $modimageurl->out();
                 }

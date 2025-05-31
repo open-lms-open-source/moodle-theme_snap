@@ -25,7 +25,7 @@ namespace theme_snap\renderables;
 use moodle_url;
 use section_info;
 
-abstract class course_action_section_base implements \renderable, \templatable {
+abstract class course_action_section_base implements \core\output\renderable, \core\output\templatable {
 
     use trait_exportable;
 

@@ -32,7 +32,7 @@ use context_course;
  * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class course_section_navigation implements \renderable {
+class course_section_navigation implements \core\output\renderable {
 
     /**
      * @var false|course_section_navigation_link previous section link

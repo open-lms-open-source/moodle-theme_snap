@@ -23,7 +23,7 @@
 
 namespace theme_snap\renderables;
 
-class course_toc_module implements \renderable {
+class course_toc_module implements \core\output\renderable {
 
     /**
      * @var string module name

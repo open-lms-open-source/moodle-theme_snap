@@ -24,7 +24,7 @@
 namespace theme_snap\renderables;
 use theme_snap\local;
 
-class settings_link implements \renderable {
+class settings_link implements \core\output\renderable {
 
     /**
      * @var int $instanceid

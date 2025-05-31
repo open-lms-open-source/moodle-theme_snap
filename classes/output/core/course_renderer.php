@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 use cm_info;
 use context_course;
 use context_module;
-use html_writer;
+use \core\output\html_writer;
 use moodle_url;
 use coursecat;
 use stdClass;
@@ -75,7 +75,7 @@ class course_renderer extends \core_course_renderer {
                 $stractivityclipboard = strip_tags(get_string('activityclipboard', '', $USER->activitycopyname));
                 $output .= '<p><font size="2">';
                 $cancelcopyurl = new moodle_url('/course/mod.php', ['cancelcopy' => 'true', 'sesskey' => sesskey()]);
-                $output .= "$stractivityclipboard&nbsp;&nbsp;(" . html_writer::link($cancelcopyurl, get_string('cancel')) .')';
+                $output .= "$stractivityclipboard&nbsp;&nbsp;(" . \core\output\html_writer::link($cancelcopyurl, get_string('cancel')) .')';
                 $output .= '</font></p>';
             }
 
@@ -106,7 +106,7 @@ class course_renderer extends \core_course_renderer {
                 $streditsummary = get_string('edit');
                 $editsectionurl = new moodle_url('/course/editsection.php', ['id' => $section->id]);
                 $attributes = ['title' => $streditsummary, 'aria-label' => $streditsummary];
-                $output .= html_writer::link($editsectionurl, $this->pix_icon('t/edit', ''), $attributes) .
+                $output .= \core\output\html_writer::link($editsectionurl, $this->pix_icon('t/edit', ''), $attributes) .
                     "<br /><br />";
             }
 
@@ -243,7 +243,7 @@ class course_renderer extends \core_course_renderer {
             $attr['id'] = 'module-' . $mod->id;
             $attr['data-modcontext'] = $mod->context->id;
 
-            $output .= html_writer::tag('li', $modulehtml, $attr);
+            $output .= \core\output\html_writer::tag('li', $modulehtml, $attr);
         }
         return $output;
     }
@@ -308,7 +308,7 @@ class course_renderer extends \core_course_renderer {
 
         if ($completion == COMPLETION_TRACKING_NONE) {
             if ($isediting) {
-                $output .= html_writer::span('&nbsp;', 'filler');
+                $output .= \core\output\html_writer::span('&nbsp;', 'filler');
             }
             return $output;
         }
@@ -366,9 +366,9 @@ class course_renderer extends \core_course_renderer {
 
             if ($isediting || !$istrackeduser || !has_capability('moodle/course:togglecompletion', $mod->context)) {
                 // When editing, the icon is just an image.
-                $completionpixicon = new \pix_icon('i/completion-'.$completionicon, $imgalt, '',
+                $completionpixicon = new \core\output\pix_icon('i/completion-'.$completionicon, $imgalt, '',
                     ['class' => 'iconsmall', 'id' => 'completion-button-' . $mod->id]);
-                $output .= html_writer::tag('span', $this->output->render($completionpixicon),
+                $output .= \core\output\html_writer::tag('span', $this->output->render($completionpixicon),
                     ['class' => 'autocompletion']);
             } else if ($completion == COMPLETION_TRACKING_MANUAL) {
                 $newstate =
@@ -387,23 +387,23 @@ class course_renderer extends \core_course_renderer {
 
                 }
 
-                $output .= html_writer::start_tag('form', ['method' => 'post',
+                $output .= \core\output\html_writer::start_tag('form', ['method' => 'post',
                     'action' => new moodle_url('/course/togglecompletion.php'),
                     'class' => 'togglecompletion', ]);
-                $output .= html_writer::start_tag('div');
-                $output .= html_writer::empty_tag('input', [
+                $output .= \core\output\html_writer::start_tag('div');
+                $output .= \core\output\html_writer::empty_tag('input', [
                     'type' => 'hidden', 'name' => 'id', 'value' => $mod->id, ]);
-                $output .= html_writer::empty_tag('input', [
+                $output .= \core\output\html_writer::empty_tag('input', [
                     'type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey(), ]);
-                $output .= html_writer::empty_tag('input', [
+                $output .= \core\output\html_writer::empty_tag('input', [
                     'type' => 'hidden', 'name' => 'modulename', 'value' => $formattedname, ]);
-                $output .= html_writer::empty_tag('input', [
+                $output .= \core\output\html_writer::empty_tag('input', [
                     'type' => 'hidden', 'name' => 'completionstate', 'value' => $newstate, ]);
-                $output .= html_writer::tag('button',
+                $output .= \core\output\html_writer::tag('button',
                     $this->output->pix_icon('i/completion-' . $completionicon, $imgalt,'', ['title' => '']),
                     ['class' => 'btn btn-link', 'id' => 'completion-button-' . $mod->id]);
-                $output .= html_writer::end_tag('div');
-                $output .= html_writer::end_tag('form');
+                $output .= \core\output\html_writer::end_tag('div');
+                $output .= \core\output\html_writer::end_tag('form');
             } else {
                 // In auto mode, the icon is just an image.
                 $showcompletionconditions = $course->showcompletionconditions == COMPLETION_SHOW_CONDITIONS;
@@ -413,8 +413,8 @@ class course_renderer extends \core_course_renderer {
                 if (!$showcompletioninfo) {
                     return $output;
                 }
-                $completionpixicon = new \pix_icon('i/completion-'.$completionicon, $imgalt, '', ['id' => 'completion-button-' . $mod->id]);
-                $span = html_writer::tag('span', $this->output->render($completionpixicon),
+                $completionpixicon = new \core\output\pix_icon('i/completion-'.$completionicon, $imgalt, '', ['id' => 'completion-button-' . $mod->id]);
+                $span = \core\output\html_writer::tag('span', $this->output->render($completionpixicon),
                     ['class' => 'autocompletion']);
                 $data = (object) [
                     'istrackeduser' => true,
@@ -553,13 +553,13 @@ class course_renderer extends \core_course_renderer {
                 $conditionaltagsrc = $this->output->image_url('lock', 'theme');
                 $datamodcontext = $mod->context->id;
                 $conditionaliconid = "snap-restriction-$datamodcontext";
-                $restrictionsource = html_writer::tag('img', '', [
+                $restrictionsource = \core\output\html_writer::tag('img', '', [
                     'class' => 'svg-icon',
                     'title' => $ariaconditionaltag,
                     'aria-hidden' => 'true',
                     'src' => $conditionaltagsrc,
                 ]);
-                $coursetoolsicon = html_writer::tag('a', $restrictionsource, [
+                $coursetoolsicon = \core\output\html_writer::tag('a', $restrictionsource, [
                     'tabindex' => '0',
                     'class' => 'snap-conditional-tag',
                     'role' => 'button',
@@ -670,7 +670,7 @@ class course_renderer extends \core_course_renderer {
         if ($mod->url) {
             if ($content) {
                 // If specified, display extra content after link.
-                $output = html_writer::tag('div', $content, ['class' => trim('contentafterlink ' . $textclasses)]);
+                $output = \core\output\html_writer::tag('div', $content, ['class' => trim('contentafterlink ' . $textclasses)]);
                 // Add chevron icon to content.
                 $output .= '<div class="mt-3">
                             <a href="'.$mod->url.'&forceview=1" aria-label="'. get_string('gotoactivity', 'theme_snap', $mod->name) .'"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
@@ -686,7 +686,7 @@ class course_renderer extends \core_course_renderer {
             $assettype = '<div class="snap-assettype">'.$snapmodtype.'</div>';
 
             // No link, so display only content.
-            $output = html_writer::tag('div', $assettype . $accesstext . $content,
+            $output = \core\output\html_writer::tag('div', $assettype . $accesstext . $content,
                 ['class' => 'contentwithoutlink text-break' . $textclasses]);
         }
         return $output;
@@ -776,7 +776,7 @@ class course_renderer extends \core_course_renderer {
                 $warningstr = $meta->reopened ? $meta->reopenedstr : $warningstr;
                 $message = $warningstr;
             }
-            return html_writer::link($url, $message);
+            return \core\output\html_writer::link($url, $message);
         }
         return '';
     }
@@ -832,12 +832,12 @@ class course_renderer extends \core_course_renderer {
                 ];
                 $url = new moodle_url("/mod/{$mod->modname}/view.php", $params);
 
-                $link = html_writer::link($url, $engagementstr);
-                $content .= html_writer::tag('p', $link);
+                $link = \core\output\html_writer::link($url, $engagementstr);
+                $content .= \core\output\html_writer::tag('p', $link);
             }
             $suspended = \theme_snap\local::suspended_participant_count($COURSE->id, $mod->id);
             if ($suspended) {
-                $content .= html_writer::tag('p', get_string("quizattemptswarn", "theme_snap"));
+                $content .= \core\output\html_writer::tag('p', get_string("quizattemptswarn", "theme_snap"));
             }
 
         } else {
@@ -851,7 +851,7 @@ class course_renderer extends \core_course_renderer {
                 }
                 $feedbackavailable = get_string('feedbackavailable', 'theme_snap');
                 if ($mod->modname != 'lesson') {
-                    $content .= html_writer::link($url, $feedbackavailable);
+                    $content .= \core\output\html_writer::link($url, $feedbackavailable);
                 }
             }
 
@@ -870,7 +870,7 @@ class course_renderer extends \core_course_renderer {
             $labeltext = $pastopen ? get_string('opened', 'theme_snap', userdate($meta->timeopen, $dateformat)) :
                 get_string('opens', 'theme_snap', userdate($meta->timeopen, $dateformat));
             $dateclass = $pastopen ? 'snap-opened-date' : 'snap-open-date';
-            $content .= html_writer::link($url, $labeltext,
+            $content .= \core\output\html_writer::link($url, $labeltext,
                 [
                     'class' => 'tag tag-success ' . $dateclass,
                     'data-from-cache' => $meta->timesfromcache ? 1 : 0,
@@ -889,7 +889,7 @@ class course_renderer extends \core_course_renderer {
             $pastdue = $meta->$field < time();
             $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
             $dateclass = $pastdue ? 'tag-danger' : 'tag-warning';
-            $content .= html_writer::link($url, $labeltext,
+            $content .= \core\output\html_writer::link($url, $labeltext,
                     [
                         'class' => 'snap-due-date tag '.$dateclass,
                         'data-from-cache' => $meta->timesfromcache ? 1 : 0,
@@ -1094,7 +1094,7 @@ class course_renderer extends \core_course_renderer {
                     $closemeflag = false;
                 }
                 $chapterlist .= "<li>";
-                $chapterlist .= html_writer::link(new moodle_url('/mod/book/view.php',
+                $chapterlist .= \core\output\html_writer::link(new moodle_url('/mod/book/view.php',
                     ['id' => $cm->id, 'chapterid' => $ch->id]), $title, []);
                 if ($ch->subchapters) {
                     $chapterlist .= "<ul>";
@@ -1250,7 +1250,7 @@ class course_renderer extends \core_course_renderer {
     protected function course_get_cm_edit_actions(cm_info $mod, $sr = null) {
         $actions = course_get_cm_edit_actions($mod, -1, $sr);
         $actions = array_filter($actions, function($action) {
-            return !($action instanceof \action_menu_filler);
+            return !($action instanceof \core\output\action_menu\filler);
         });
         $rename = core_course_inplace_editable($mod, $mod->indent, $sr);
         $edittitle = get_string('edittitle');
@@ -1371,7 +1371,7 @@ class course_renderer extends \core_course_renderer {
 
             // Print the category selector.
             if ($basecategory->get_children_count() > 1) {
-                $select = new \single_select(new moodle_url('/course/index.php'), 'categoryid',
+                $select = new \core\output\single_select(new moodle_url('/course/index.php'), 'categoryid',
                         \core_course_category::make_categories_list(), $coursecat->id, null, 'switchcategory');
                 $select->set_label(get_string('category').':');
                 $categoryselector .= $this->render($select);
@@ -1579,7 +1579,7 @@ class course_renderer extends \core_course_renderer {
         $commicon = $this->pix_icon('t/messages-o', '', 'moodle', ['class' => 'fa fa-comments']);
         $newwindowicon = $this->pix_icon('i/externallink', get_string('opensinnewwindow'), 'moodle', ['class' => 'ms-1']);
         $content = $commicon . get_string('communicationroomlink', 'course') . $newwindowicon;
-        $html = html_writer::tag('a', $content, ['target' => '_blank', 'href' => $link]);
+        $html = \core\output\html_writer::tag('a', $content, ['target' => '_blank', 'href' => $link]);
 
         return !empty($link) ? $html : '';
     }
@@ -1615,7 +1615,7 @@ class course_renderer extends \core_course_renderer {
     public function print_teacher_profile($user) {
         global $CFG, $USER;
 
-        $userpicture = new \user_picture($user);
+        $userpicture = new \core\output\user_picture($user);
         $userpicture->link = false;
         $userpicture->alttext = true;
         if (empty($userpicture->user->imagealt)) {
@@ -1680,7 +1680,7 @@ class course_renderer extends \core_course_renderer {
         if (!empty($recentactivity)) {
             foreach ($recentactivity as $modname => $moduleactivity) {
                 // Get mod icon, empty alt as title already there.
-                $img = html_writer::tag('img', '', [
+                $img = \core\output\html_writer::tag('img', '', [
                     'src' => $this->output->image_url('icon', $modname),
                     'alt' => '',
                 ]);
@@ -1757,8 +1757,8 @@ class course_renderer extends \core_course_renderer {
             foreach ($moduleshtml as $modnumber => $modulehtml) {
                 if ($ismoving) {
                     $movingurl = new \moodle_url('/course/mod.php', ['moveto' => $modnumber, 'sesskey' => sesskey()]);
-                    $sectionoutput .= html_writer::tag('li',
-                        html_writer::link($movingurl, '', ['title' => $strmovefull, 'class' => 'movehere']),
+                    $sectionoutput .= \core\output\html_writer::tag('li',
+                        \core\output\html_writer::link($movingurl, '', ['title' => $strmovefull, 'class' => 'movehere']),
                         ['class' => 'movehere']);
                 }
 
@@ -1767,14 +1767,14 @@ class course_renderer extends \core_course_renderer {
 
             if ($ismoving) {
                 $movingurl = new \moodle_url('/course/mod.php', ['movetosection' => $section->id, 'sesskey' => sesskey()]);
-                $sectionoutput .= html_writer::tag('li',
-                    html_writer::link($movingurl, '', ['title' => $strmovefull, 'class' => 'movehere']),
+                $sectionoutput .= \core\output\html_writer::tag('li',
+                    \core\output\html_writer::link($movingurl, '', ['title' => $strmovefull, 'class' => 'movehere']),
                     ['class' => 'movehere']);
             }
         }
 
         // Always output the section module list.
-        $output .= html_writer::tag('ul', $sectionoutput, ['class' => 'section img-text']);
+        $output .= \core\output\html_writer::tag('ul', $sectionoutput, ['class' => 'section img-text']);
 
         return $output;
     }
@@ -2059,15 +2059,15 @@ class course_renderer extends \core_course_renderer {
         if ($mod->effectivegroupmode == VISIBLEGROUPS) {
             $groupiconurl = $OUTPUT->image_url('i/groupv');
             $groupalt = get_string('groupsvisible', 'group');
-            $groupicon = \html_writer::img($groupiconurl, $groupalt);
+            $groupicon = \core\output\html_writer::img($groupiconurl, $groupalt);
         } else if ($mod->effectivegroupmode == SEPARATEGROUPS) {
             $groupiconurl = $OUTPUT->image_url('i/groups');
             $groupalt = get_string('groupsseparate', 'group');
-            $groupicon = \html_writer::img($groupiconurl, $groupalt);
+            $groupicon = \core\output\html_writer::img($groupiconurl, $groupalt);
         } else {
             $groupiconurl = $OUTPUT->image_url('i/groupn');
             $groupalt = get_string('groupsnone', 'group');
-            $groupicon = \html_writer::img($groupiconurl, $groupalt);
+            $groupicon = \core\output\html_writer::img($groupiconurl, $groupalt);
         }
 
         $courseformat = course_get_format($mod->get_course());
@@ -2078,7 +2078,7 @@ class course_renderer extends \core_course_renderer {
         $resourcedisplay = get_config('theme_snap', 'resourcedisplay');
         $render = $this->output->render($groupoptions);
 
-        $groupsdropdownebutton = \html_writer::tag('button', $groupicon,
+        $groupsdropdownebutton = \core\output\html_writer::tag('button', $groupicon,
             array(
                 'class' => 'snap-groups-more',
                 'data-toggle' => 'dropdown',
@@ -2086,18 +2086,18 @@ class course_renderer extends \core_course_renderer {
                 'aria-expanded' => 'false',
                 'aria-controls' => 'snap-groups-menu',
                 ));
-        $groupsdropdownlist = \html_writer::tag('ul', $render,
+        $groupsdropdownlist = \core\output\html_writer::tag('ul', $render,
             array(
                 'class' => 'dropdown-menu groups-edit-menu',
                 'id' => 'snap-groups-menu',
             ));
-        $groupsdropdownelement = \html_writer::tag('div',
+        $groupsdropdownelement = \core\output\html_writer::tag('div',
             $groupsdropdownebutton.$groupsdropdownlist ,
             array('class' => 'dropdown snap-activity-groups-dropdown'));
 
         $output = '';
         if ($groupoptions && !($resourcedisplay == 'card' && $this->is_resource($mod))) {
-            $output .= \html_writer::tag('div',
+            $output .= \core\output\html_writer::tag('div',
                 $groupsdropdownelement,
                 array(
                     'class' => 'js-only snap-groups-mode-actions',
@@ -2181,13 +2181,13 @@ class course_renderer extends \core_course_renderer {
         if ($chelper->get_show_courses() < self::COURSECAT_SHOW_COURSES_EXPANDED) {
             $classes = trim('coursebox clearfix '. $additionalclasses);
 
-            $cardcontent .= html_writer::start_tag('div', array('class' => 'info'));
+            $cardcontent .= \core\output\html_writer::start_tag('div', array('class' => 'info'));
             $cardcontent .= $this->course_name($chelper, $course);
             $cardcontent .= $this->course_enrolment_icons($course);
-            $cardcontent .= html_writer::end_tag('div');
-            $cardcontent .= html_writer::start_tag('div', array('class' => 'content'));
+            $cardcontent .= \core\output\html_writer::end_tag('div');
+            $cardcontent .= \core\output\html_writer::start_tag('div', array('class' => 'content'));
             $cardcontent .= $this->coursecat_coursebox_content($chelper, $course);
-            $cardcontent .= html_writer::end_tag('div');
+            $cardcontent .= \core\output\html_writer::end_tag('div');
         } else {
             //These are the course cards for Enrolled Courses and Available courses in the homepage.
             // Course image.
@@ -2203,7 +2203,7 @@ class course_renderer extends \core_course_renderer {
             $hiddeninfobadge = '';
             $imageclasses = 'snap-home-courses-image';
             if (!$isvisible) {
-                $hiddeninfobadge = html_writer::tag('span',get_string('hiddenfromstudents'),
+                $hiddeninfobadge = \core\output\html_writer::tag('span',get_string('hiddenfromstudents'),
                     [
                         'class' => 'badge bg-info text-white hiddenbadge'
                     ]);
@@ -2215,7 +2215,7 @@ class course_renderer extends \core_course_renderer {
             $category = \core_course_category::get($course->category, IGNORE_MISSING);
             if (isset($category)) {
                 $category = $category->name;
-                $coursecategoryname = html_writer::tag('span', '<b>'.get_string('category').": ".
+                $coursecategoryname = \core\output\html_writer::tag('span', '<b>'.get_string('category').": ".
                     '</b>'.$category, ['class' => 'coursecategory']);
             }
 
@@ -2264,13 +2264,13 @@ class course_renderer extends \core_course_renderer {
             $classes .= ' collapsed';
         }
 
-        $content .= html_writer::start_tag('div', array(
+        $content .= \core\output\html_writer::start_tag('div', array(
             'class' => $classes,
             'data-courseid' => $course->id,
             'data-type' => self::COURSECAT_TYPE_COURSE,
         ));
         $content .= $cardcontent;
-        $content .= html_writer::end_tag('div');
+        $content .= \core\output\html_writer::end_tag('div');
 
         return $content;
     }

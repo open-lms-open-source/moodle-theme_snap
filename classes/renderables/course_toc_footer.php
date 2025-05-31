@@ -22,7 +22,7 @@
  */
 namespace theme_snap\renderables;
 
-class course_toc_footer implements \renderable {
+class course_toc_footer implements \core\output\renderable {
 
     /**
      * @var boolean

@@ -24,7 +24,7 @@ use moodle_url;
  * @copyright Copyright (c) 2024 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class featured_category implements \renderable, \templatable {
+class featured_category implements \core\output\renderable, \core\output\templatable {
 
     use trait_exportable;
 

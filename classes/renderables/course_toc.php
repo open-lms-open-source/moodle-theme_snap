@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/lib.php');
 require_once($CFG->dirroot.'/course/format/lib.php');
 
-class course_toc implements \renderable, \templatable {
+class course_toc implements \core\output\renderable, \core\output\templatable {
 
     use \theme_snap\output\general_section_trait;
     use \theme_snap\renderables\trait_exportable;

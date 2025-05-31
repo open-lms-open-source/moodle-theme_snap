@@ -23,7 +23,7 @@ namespace theme_snap;
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class message implements \renderable {
+class message implements \core\output\renderable {
 
     /**
      * @var int
