@@ -5120,6 +5120,73 @@ section#region-main {
             }
         }
     }
+    .block_myoverview {
+        [data-display="card"] {
+            .col {
+                padding: 0.5rem !important;
+                .course-card {
+                    border-radius: 0.5rem;
+                    transition: transform 0.5s ease;
+                    &:hover {
+                        transform: scale(1.05);
+                        z-index: 10;
+                    }
+                    .card-img-top {
+                        border-top-left-radius: 0.5rem;
+                        border-top-right-radius: 0.5rem;
+                    }
+                    .coursename .multiline {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .categoryname {
+                        margin-top: -1em;
+                    }
+                    .card-footer {
+                        border-radius: .5rem;
+                    }
+                }
+            }
+        }
+        [data-display="list"] {
+            .course-listitem {
+                border-radius: 0.5rem;
+                border: 1px solid rgba(0,0,0,.125);
+                margin-bottom: 0.5rem;
+                padding: 1.5rem;
+                transition: transform 0.5s ease;
+                &:hover {
+                    transform: scale(1.05);
+                    z-index: 10;
+                }
+                .list-image {
+                    border-radius: 0.5rem;
+                    height: 7rem;
+                }
+            }
+        }
+        [data-display="summary"] {
+            .course-summaryitem {
+                border-radius: 0.5rem;
+                border: 1px solid rgba(0,0,0,.125);
+                margin-bottom: 0.5rem;
+                padding: 1.5rem;
+                transition: transform 0.5s ease;
+                &:hover {
+                    transform: scale(1.05);
+                    z-index: 10;
+                }
+                .summary-image {
+                    border-radius: 0.5rem;
+                    width: 100%;
+                    height: 7rem;
+                }
+            }
+        }
+    }
 }
 
 // Invalid feedback shown when saving some empty required form elements.
