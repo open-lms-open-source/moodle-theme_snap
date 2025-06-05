@@ -1,0 +1,79 @@
+// Helper function to reference theme SVG files
+@function theme-svg($filename) {
+  @return url('[[pix:theme|#{$filename}]]');
+}
+
+// Values here taken from theme/boost/style/moodle.css
+$admin-tree-icons: (
+  "question/edit.php": '\e4ef',
+  "question/bank/managecategories/category.php": '\f03a',
+  "question/bank/importquestions/import.php": '\f56f',
+  "question/bank/exportquestions/export.php": '\f56e',
+  "mod/quiz/report.php|mode=overview": theme-svg('grades'),
+  "mod/quiz/report.php|mode=responses": '\f27a',
+  "mod/quiz/report.php|mode=statistics": '\f201',
+  "mod/quiz/report.php|mode=grading": '\f5ae',
+  "mod/assign/overrides.php|mode=user": theme-svg('overrides'),
+  "mod/lesson/overrides.php|mode=user": theme-svg('overrides'),
+  "mod/lesson/report.php|action=reportoverview": '\f15b',
+  "mod/scorm/report.php": '\f15b',
+  "mod/attendance/report.php": '\f15b',
+  "mod/h5pactivity/report.php": '\f15b', 
+  "mod/survey/report.php": '\f15b',
+  "grade/grading/manage.php|component=mod_forum": '\f360',
+  "grade/grading/manage.php|component=mod_assign": '\f360',
+  "mod/forum/export.php": '\f56e',
+  "mod/forum/report/summary/index.php": '\f15b',
+  "mod/attendance/export.php": '\f56e',
+  "mod/attendance/import.php": '\f56f',
+  "mod/data/export.php": '\f56e',
+  "mod/data/import.php": '\f56f',
+  "mod/data/preset.php": '\f0ae',
+  "mod/data/field.php": '\f15c',
+  "mod/data/templates.php": '\f5fd',
+  "mod/glossary/export.php": '\f56e',
+  "mod/glossary/import.php": '\f56f',
+  "mod/glossary/edit.php": '\f65e',
+  "mod/attendance/preferences.php": '\f012',
+  "mod/attendance/tempusers.php": '\f4fd',
+  "mod/book/tool/importhtml/index.php": '\f56f',
+  "mod/checklist/report.php": '\f828',
+  "mod/checklist/edit.php": '\f0ae',
+  "mod/choice/report.php": '\f27a',
+  "mod/feedback/manage_templates.php|mode=manage": '\f5fd',
+  "mod/feedback/analysis_course.php": '\e522',
+  "mod/feedback/show_entries.php": '\f27a',
+  "mod/questionnaire/show_nonrespondents.php": '\f4b3',
+  "mod/workshop/editform.php": '\f06a',
+  "mod/workshop/allocation.php": '\f574',
+  "badges/index.php": '\f013',
+  "badges/edit.php|action=new": '\f013',
+);
+
+@each $href-pattern, $icon-value in $admin-tree-icons {
+  // Check if the key contains "|" for double href checking
+  @if str-index($href-pattern, "|") {
+    $context: str-slice($href-pattern, 1, str-index($href-pattern, "|") - 1);
+    $specific: str-slice($href-pattern, str-index($href-pattern, "|") + 1);
+    
+    // Double selector: must contain both context AND specific parts
+    p.tree_item.hasicon a[href*="#{$context}"][href*="#{$specific}"] {
+      i.icon:before {
+        content: $icon-value !important;
+      }
+    }
+  } @else {
+    // Single selector for items without "|"
+    p.tree_item.hasicon a[href*="#{$href-pattern}"] {
+      i.icon:before {
+        content: $icon-value !important;
+        // Additional styles for SVG icons if needed
+        @if type-of($icon-value) == string and str-index($icon-value, 'url(') == 1 {
+          display: inline-block;
+          width: 1em;
+          height: 1em;
+        }
+      }
+    }
+  }
+}
