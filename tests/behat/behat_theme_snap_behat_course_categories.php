@@ -167,7 +167,7 @@ class behat_theme_snap_behat_course_categories extends behat_base {
         ));
         $event->trigger();
 
-        cache_helper::purge_by_event('changesincoursecat');
+        \core_cache\helper::purge_by_event('changesincoursecat');
 
         return true;
     }

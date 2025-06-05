@@ -345,7 +345,7 @@ class local {
         // user - e.g. A teacher grades this users assignment and that triggers completion.
         $courseuserstamp = self::course_user_completion_cachestamp($course->id, $USER->id);
 
-        /** @var \cache_session $muc */
+        /** @var \core_cache\session_cache $muc */
         $muc = \cache::make('theme_snap', 'course_completion_progress');
         $cached = $muc->get($course->id.'_'.$USER->id);
         if ($cached && $cached->timestamp >= $coursestamp && $cached->timestamp >= $courseuserstamp) {

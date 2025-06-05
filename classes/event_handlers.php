@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap;
-use cache_helper;
+use \core_cache\helper as cache_helper;
 use core\event\course_updated;
 use core\event\course_deleted;
 use core\event\course_completion_updated;
