@@ -29,15 +29,20 @@ Feature: Users can access to the My Courses page in Snap.
       | student1  | Student    | 1         | student1@example.com  |
       | teacher1 | Teacher     | 1         | teacher1@example.com  |
     And the following "courses" exist:
-      | fullname | shortname | format |
-      | Course 1 | C1        | topics |
+      | fullname | shortname | format | summary      | enablecompletion |
+      | Course 1 | C1        | topics | Summary text | 1                |
     And the following "course enrolments" exist:
       | user      | course  | role            |
       | student1  | C1      | student         |
       | teacher1 | C1       | editingteacher  |
     Given the following "activities" exist:
-      | activity | course | idnumber | name             | intro             | duedate   |
-      | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | ##today## |
+      | activity | course | idnumber | name             | intro             | duedate   | completion |
+      | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | ##today## | 1          |
+      | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | ##today## | 1          |
+      | assign   | C1     | assign3  | Test assignment3 | Test assignment 3 | ##today## | 1          |
+      | assign   | C1     | assign4  | Test assignment4 | Test assignment 4 | ##today## | 1          |
+      | assign   | C1     | assign5  | Test assignment5 | Test assignment 5 | ##today## | 1          |
+      | assign   | C1     | assign6  | Test assignment6 | Test assignment 6 | ##today## | 1          |
     And the following config values are set as admin:
       | defaulthomepage | 3 |
     And the following "permission overrides" exist:
@@ -183,3 +188,28 @@ Feature: Users can access to the My Courses page in Snap.
     And I should see "Course 1"
     And I should see "Course 2"
     And I should see "Course 3"
+
+  @javascript
+  Scenario Outline: User can star course using card star icon.
+    Given I log in as "student1"
+    And I click on "#displaydropdown" "css_element"
+    And I follow "<Option>"
+    And I should see "Course 1"
+    And ".star-button [data-action='add-favourite']" "css_element" should be visible
+    And I click on "#groupingdropdown" "css_element"
+    And I follow "Starred"
+    And I should not see "Course 1"
+    And I click on "#groupingdropdown" "css_element"
+    And I follow "All"
+    And I hover "<Class>" "css_element"
+    And I click on ".star-button" "css_element"
+    And ".star-button [data-action='remove-favourite']" "css_element" should be visible
+    And I click on "#groupingdropdown" "css_element"
+    And I follow "Starred"
+    And I should see "Course 1"
+    And I click on ".star-button" "css_element"
+    Examples:
+      | Option   | Class   |
+      | Card     | .course-card     |
+      | List     | .course-listitem     |
+      | Summary  | .course-summaryitem  |
