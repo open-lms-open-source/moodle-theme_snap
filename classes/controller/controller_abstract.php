@@ -30,7 +30,7 @@ abstract class controller_abstract {
      * Generate a new URL to this page
      *
      * @param array $params
-     * @return \moodle_url
+     * @return \core\url
      */
     public function new_url($params = array()) {
         global $PAGE;

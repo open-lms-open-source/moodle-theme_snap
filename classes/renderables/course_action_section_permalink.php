@@ -22,7 +22,7 @@
  */
 
 namespace theme_snap\renderables;
-use moodle_url;
+use \core\url as moodle_url;
 use section_info;
 use context_course;
 

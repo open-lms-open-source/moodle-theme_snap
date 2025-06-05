@@ -28,7 +28,7 @@ use stdClass;
 trait trait_exportable {
 
     /**
-     * Makes an object suitable for exporting - converts objects to string where necessary - e.g. moodle_urls.
+     * Makes an object suitable for exporting - converts objects to string where necessary - e.g. \core\url.
      * @param array|object $object
      * @return string
      */
@@ -69,7 +69,7 @@ trait trait_exportable {
                 if (is_array($val)) {
                     $this->convert_object_for_export($val);
                 }
-                if ($val instanceof \moodle_url) {
+                if ($val instanceof \core\url) {
                     $object->$key = $this->convert_object_for_export($val);
                     continue;
                 }

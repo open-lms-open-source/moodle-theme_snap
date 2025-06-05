@@ -313,7 +313,7 @@ class course_total_grade_Test extends \advanced_testcase {
         $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
         $coursegrade->grade_item =& $courseitem;
 
-        $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+        $feedbackurl = new \core\url('/grade/report/user/index.php', array('id' => $course->id));
         // Default feedbackobj.
         $feedbackobj = (object)[
             'feedbackurl' => $feedbackurl->out(),

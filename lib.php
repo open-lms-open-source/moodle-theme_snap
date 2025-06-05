@@ -262,7 +262,7 @@ function theme_snap_myprofile_navigation(core_user\output\myprofile\tree $tree, 
             } else {
                 $after = null;
             }
-            $url = new moodle_url('/user/preferences.php');
+            $url = new \core\url('/user/preferences.php');
             $prefnode = new core_user\output\myprofile\node('contact', 'userpreferences', $str->preferences, $after, $url);
 
             $tree->add_node($prefnode);
@@ -528,13 +528,13 @@ function snap_print_course_request_buttons($context) {
         if ($context instanceof context_coursecat) {
             $params['category'] = $context->instanceid;
         }
-        echo $OUTPUT->single_button(new moodle_url('/course/request.php', $params),
+        echo $OUTPUT->single_button(new \core\url('/course/request.php', $params),
             get_string('requestcourse'), 'get');
     }
     // Print a button to manage pending requests.
     if (has_capability('moodle/site:approvecourse', $context)) {
         $disabled = !$DB->record_exists('course_request', array());
-        echo $OUTPUT->single_button(new moodle_url('/course/pending.php'), get_string('coursespending'),
+        echo $OUTPUT->single_button(new \core\url('/course/pending.php'), get_string('coursespending'),
             'get', array('disabled' => $disabled));
     }
 }

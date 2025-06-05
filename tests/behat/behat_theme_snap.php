@@ -1745,7 +1745,7 @@ class behat_theme_snap extends behat_base {
         global $DB;
         $activityid = $DB->get_field($activity, 'id', ['name' => $activityname], MUST_EXIST);
         $cm = get_coursemodule_from_instance($activity, $activityid, 0, false, MUST_EXIST);
-        $url = new moodle_url('/mod/' . $activity . '/view.php', ['id' => $cm->id]);
+        $url = new \core\url('/mod/' . $activity . '/view.php', ['id' => $cm->id]);
         $this->getSession()->visit($this->locate_path($url->out_as_local_url(false)));
     }
 

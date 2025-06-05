@@ -74,7 +74,7 @@ class core_renderer_test extends \advanced_testcase {
         $corerenderer = new \theme_snap\output\core_renderer($PAGE, $target);
         $heading = $corerenderer->page_heading();
 
-        $url = new \moodle_url('/course/view.php', ['id' => $COURSE->id]);
+        $url = new \core\url('/course/view.php', ['id' => $COURSE->id]);
         $this->assertFalse(strpos($heading, $url->out()));
     }
 
@@ -99,7 +99,7 @@ class core_renderer_test extends \advanced_testcase {
         $corerenderer = new \theme_snap\output\core_renderer($PAGE, $target);
         $heading = $corerenderer->page_heading();
 
-        $url = new \moodle_url('/course/view.php', ['id' => $COURSE->id]);
+        $url = new \core\url('/course/view.php', ['id' => $COURSE->id]);
         $this->assertStringContainsString($url->out(), $heading);
     }
 

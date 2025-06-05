@@ -40,7 +40,7 @@ class toc_renderer extends \theme_boost\output\core_renderer {
     /**
      * get course image
      *
-     * @return bool|\moodle_url
+     * @return bool|\core\url
      */
     public function get_course_image() {
         global $COURSE;

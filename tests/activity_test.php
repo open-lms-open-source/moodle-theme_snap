@@ -1802,12 +1802,12 @@ class activity_test extends snap_base_test {
 
         for ($t = 0; $t < 2; $t++) {
             $quiz = $this->create_quiz($course->id, $todayts);
-            $url = new \moodle_url('/mod/quiz/view.php', ['id' => $quiz->get_cmid()]);
+            $url = new \core\url('/mod/quiz/view.php', ['id' => $quiz->get_cmid()]);
             $urls[] = $url->out();
         }
         for ($t = 0; $t < 2; $t++) {
             $quiz = $this->create_quiz($course->id, $todayts + WEEKSECS);
-            $url = new \moodle_url('/mod/quiz/view.php', ['id' => $quiz->get_cmid()]);
+            $url = new \core\url('/mod/quiz/view.php', ['id' => $quiz->get_cmid()]);
             $urls[] = $url->out();
         }
         $this->setUser($student);

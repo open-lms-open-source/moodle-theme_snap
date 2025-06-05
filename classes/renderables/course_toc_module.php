@@ -36,7 +36,7 @@ class course_toc_module implements \core\output\renderable {
     public $uservisible;
 
     /**
-     * @var \moodle_url url to module icon
+     * @var \core\url url to module icon
      */
     public $iconurl;
 

@@ -17,7 +17,7 @@
 namespace theme_snap\renderables;
 
 use theme_snap\local;
-use moodle_url;
+use \core\url as moodle_url;
 
 /**
  * Featured categories renderable.

@@ -34,7 +34,7 @@ use \core\exception\coding_exception;
 use \core\output\single_button;
 use DateTime;
 use \core\output\html_writer;
-use moodle_url;
+use \core\url as moodle_url;
 use navigation_node;
 use \core\output\user_picture;
 use theme_snap\local;
@@ -136,7 +136,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     /**
      * get course image
      *
-     * @return bool|\moodle_url
+     * @return bool|moodle_url
      */
 
     public function get_course_image() {
@@ -2163,7 +2163,7 @@ HTML;
             return $output;
         }
         $classes = 'snap-my-courses-menu snap-my-courses-link';
-        $url = new \moodle_url('/my/courses.php');
+        $url = new moodle_url('/my/courses.php');
         $menu = '<span class="hidden-xs-down">' .get_string('menu', 'theme_snap'). '</span>';
         $attributes = [
             'aria-haspopup' => 'true',

@@ -48,7 +48,7 @@ class behat_theme_snap_behat_course extends behat_course {
 
         $node = $this->find('xpath', $xpath);
         $href = $node->getAttribute('href');
-        $url = new moodle_url($href);
+        $url = new \core\url($href);
         $url->param('section', $section);
         $this->getSession()->visit($this->locate_path($url->out_as_local_url(false)));
     }

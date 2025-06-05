@@ -24,7 +24,7 @@
 namespace theme_snap\renderables;
 
 use context_course;
-use moodle_url;
+use \core\url;
 
 defined('MOODLE_INTERNAL') || die();
 

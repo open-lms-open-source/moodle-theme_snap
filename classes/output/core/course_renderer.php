@@ -31,7 +31,7 @@ use cm_info;
 use context_course;
 use context_module;
 use \core\output\html_writer;
-use moodle_url;
+use \core\url as moodle_url;
 use coursecat;
 use stdClass;
 use theme_snap\activity;
@@ -845,9 +845,9 @@ class course_renderer extends \core_course_renderer {
             if (!empty($meta->grade)) {
                 // Note - the link that a module takes you to would be better off defined by a function in
                 // theme/snap/activity - for now its just hard coded.
-                $url = new \moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id]);
+                $url = new moodle_url('/grade/report/user/index.php', ['id' => $COURSE->id]);
                 if (in_array($mod->modname, ['quiz', 'assign'])) {
-                    $url = new \moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
+                    $url = new moodle_url('/mod/'.$mod->modname.'/view.php?id='.$mod->id);
                 }
                 $feedbackavailable = get_string('feedbackavailable', 'theme_snap');
                 if ($mod->modname != 'lesson') {
@@ -887,7 +887,7 @@ class course_renderer extends \core_course_renderer {
             }
             $labeltext = get_string('due', 'theme_snap', userdate($meta->$field, $dateformat));
             $pastdue = $meta->$field < time();
-            $url = new \moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
+            $url = new moodle_url("/mod/{$mod->modname}/view.php", ['id' => $mod->id]);
             $dateclass = $pastdue ? 'tag-danger' : 'tag-warning';
             $content .= \core\output\html_writer::link($url, $labeltext,
                     [
@@ -917,7 +917,7 @@ class course_renderer extends \core_course_renderer {
         $files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder DESC, id ASC', false);
         if (count($files) > 0) {
             foreach ($files as $file) {
-                $imgsrc = \moodle_url::make_pluginfile_url(
+                $imgsrc = moodle_url::make_pluginfile_url(
                         $file->get_contextid(),
                         $file->get_component(),
                         $file->get_filearea(),
@@ -1756,7 +1756,7 @@ class course_renderer extends \core_course_renderer {
         if (!empty($moduleshtml) || $ismoving) {
             foreach ($moduleshtml as $modnumber => $modulehtml) {
                 if ($ismoving) {
-                    $movingurl = new \moodle_url('/course/mod.php', ['moveto' => $modnumber, 'sesskey' => sesskey()]);
+                    $movingurl = new moodle_url('/course/mod.php', ['moveto' => $modnumber, 'sesskey' => sesskey()]);
                     $sectionoutput .= \core\output\html_writer::tag('li',
                         \core\output\html_writer::link($movingurl, '', ['title' => $strmovefull, 'class' => 'movehere']),
                         ['class' => 'movehere']);
@@ -1766,7 +1766,7 @@ class course_renderer extends \core_course_renderer {
             }
 
             if ($ismoving) {
-                $movingurl = new \moodle_url('/course/mod.php', ['movetosection' => $section->id, 'sesskey' => sesskey()]);
+                $movingurl = new moodle_url('/course/mod.php', ['movetosection' => $section->id, 'sesskey' => sesskey()]);
                 $sectionoutput .= \core\output\html_writer::tag('li',
                     \core\output\html_writer::link($movingurl, '', ['title' => $strmovefull, 'class' => 'movehere']),
                     ['class' => 'movehere']);

@@ -18,7 +18,7 @@ namespace theme_snap;
 
 defined('MOODLE_INTERNAL') || die();
 
-use moodle_url;
+use \core\url as moodle_url;
 use stdClass;
 use stored_file;
 use theme_snap\output\core_renderer;
@@ -109,7 +109,7 @@ class local {
         $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
         $coursegrade->grade_item =& $courseitem;
 
-        $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+        $feedbackurl = new moodle_url('/grade/report/user/index.php', array('id' => $course->id));
         // Default feedbackobj.
         $feedbackobj = (object) [
             'feedbackurl' => $feedbackurl->out(),
@@ -695,7 +695,7 @@ class local {
         foreach ($messages as $message) {
             // This URL will be to redirect the user to an unread message through the personal menu feed and open
             // the specific message in the message index page.
-            $url = new \moodle_url('/message/index.php', array(
+            $url = new moodle_url('/message/index.php', array(
                 'viewing' => 'unread',
                 'user2' => $message->useridfrom, )
             );
@@ -818,7 +818,7 @@ class local {
             $coursecontext = \context_course::instance($grade->courseid);
             $canviewhiddengrade = has_capability('moodle/grade:viewhidden', $coursecontext);
 
-            $url = new \moodle_url('/grade/report/user/index.php', ['id' => $grade->courseid]);
+            $url = new moodle_url('/grade/report/user/index.php', ['id' => $grade->courseid]);
             if (in_array($modtype, ['quiz', 'assign'])
                 && (!empty($grade->rawgrade) || !empty($grade->feedback))
             ) {
@@ -1143,13 +1143,13 @@ class local {
      * Make url based on file for theme_snap components only.
      *
      * @param stored_file $file
-     * @return \moodle_url | bool
+     * @return moodle_url | bool
      */
     private static function snap_pluginfile_url($file) {
         if (!$file) {
             return false;
         } else {
-            return \moodle_url::make_pluginfile_url(
+            return moodle_url::make_pluginfile_url(
                 $file->get_contextid(),
                 $file->get_component(),
                 $file->get_filearea(),
@@ -1261,7 +1261,7 @@ class local {
      * Get the cover image url for the course card.
      *
      * @param int $courseid
-     * @return bool|\moodle_url
+     * @return bool|moodle_url
      */
     public static function course_card_image_url($courseid) {
         $context = \context_course::instance($courseid);
@@ -2400,7 +2400,7 @@ SQL;
                     $meta .= '<div class="snap-completion-meta event-'.$id.'">' . $metalink .
                         '</div>';
                 }
-                $url = !empty($event->actionurl) && ($event->actionurl instanceof \moodle_url) ?
+                $url = !empty($event->actionurl) && ($event->actionurl instanceof moodle_url) ?
                     $event->actionurl : $cm->url;
 
                 if (empty($url)) {

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap\renderables;
-use moodle_url;
+use \core\url as moodle_url;
 
 /**
  * Featured course renderable
@@ -29,12 +29,12 @@ class featured_course implements \core\output\renderable, \core\output\templatab
     use trait_exportable;
 
     /**
-     * @var \moodle_url
+     * @var moodle_url
      */
     public $url;
 
     /**
-     * @var \moodle_url | null
+     * @var moodle_url | null
      */
     public $coverimageurl;
 
@@ -50,12 +50,12 @@ class featured_course implements \core\output\renderable, \core\output\templatab
 
     /**
      * featured_course constructor.
-     * @param \moodle_url $url
+     * @param moodle_url $url
      * @param string $coverimageurl
      * @param string $title
      * @param int $number
      */
-    public function __construct(\moodle_url $url, $coverimageurl, $title, $number) {
+    public function __construct(moodle_url $url, $coverimageurl, $title, $number) {
         $this->url = $url;
         $this->coverimageurl = $coverimageurl;
         $this->title = $title;

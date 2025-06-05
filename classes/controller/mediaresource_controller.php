@@ -71,7 +71,7 @@ class mediaresource_controller extends controller_abstract {
                 \core_media_manager::OPTION_BLOCK => true,
             );
             $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
-            $moodleurl = new \moodle_url('/pluginfile.php' . $path);
+            $moodleurl = new \core\url('/pluginfile.php' . $path);
             $embedhtml = \core_media_manager::instance()->embed_url($moodleurl, $resource->name, 0, 0, $embedoptions);
             // Modal title.
             $content = "<h5 class='snap-lightbox-title'>".format_string($resource->name)."</h5>";

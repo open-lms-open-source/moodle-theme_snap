@@ -64,7 +64,7 @@ if (file_exists($h5prenderer)) {
             $syscontext = \context_system::instance();
             $itemid = md5($content);
 
-            $url = \moodle_url::make_file_url("$CFG->wwwroot/pluginfile.php",
+            $url = \core\url::make_file_url("$CFG->wwwroot/pluginfile.php",
                 "/$syscontext->id/theme_snap/$content/$itemid/hvpcustomcss.css");
 
             if ($this->get_is_valid($url)) {

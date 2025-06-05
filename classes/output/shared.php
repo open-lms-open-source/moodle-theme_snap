@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 use context_course;
 use core_component;
 use \core\output\html_writer;
-use moodle_url;
+use \core\url as moodle_url;
 use stdClass;
 use theme_snap\local;
 use theme_snap\renderables\login_alternative_methods;

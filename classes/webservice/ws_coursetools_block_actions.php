@@ -74,7 +74,7 @@ class ws_coursetools_block_actions extends external_api {
             $context = \context_course::instance($course->id);
             // Load the block instances for all the regions.
             if (!$PAGE->has_set_url()) {
-                $PAGE->set_url(new \moodle_url('/course/view.php', array('id' => $params['params']['courseid'])));
+                $PAGE->set_url(new \core\url('/course/view.php', array('id' => $params['params']['courseid'])));
                 $PAGE->set_context($context);
                 $PAGE->set_course($course);
                 $PAGE->set_pagelayout('course');

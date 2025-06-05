@@ -29,7 +29,7 @@ use core_external\external_value;
 use core_external\external_single_structure;
 use core_external\external_multiple_structure;
 use \core\exception\coding_exception;
-use moodle_url;
+use \core\url;
 use cache;
 
 /**
