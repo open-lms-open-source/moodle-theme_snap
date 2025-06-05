@@ -57,7 +57,7 @@ trait null_object {
      */
     protected function set_default($prop, $val) {
         if (isset($this->_defaults[$prop])) {
-            throw new \coding_exception('Default value already set for '.$prop.' - '.$this->_defaults[$prop]);
+            throw new \core\exception\coding_exception('Default value already set for '.$prop.' - '.$this->_defaults[$prop]);
         }
         $this->$prop = $val;
         $this->_defaults[$prop] = $this->$prop;

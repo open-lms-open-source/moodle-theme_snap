@@ -79,7 +79,7 @@ class kernel_test extends \basic_testcase {
 
     public function test_execute_callback_with_both() {
         $kernel = new kernel(new router());
-        $this->expectException(\coding_exception::class);
+        $this->expectException(\core\exception\coding_exception::class);
         $kernel->execute_callback(array($this, 'both_string_callback'));
     }
 }

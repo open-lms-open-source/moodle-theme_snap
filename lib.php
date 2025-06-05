@@ -26,7 +26,7 @@ use theme_snap\image;
  * Process site cover image.
  *
  * @throws Exception
- * @throws coding_exception
+ * @throws \core\exception\coding_exception
  * @throws dml_exception
  */
 function theme_snap_process_site_coverimage() {

@@ -34,7 +34,7 @@ class mediaresource_controller extends controller_abstract {
         global $PAGE;
 
         if (empty($PAGE->cm->id)) {
-            throw new \invalid_parameter_exception('Context did not refer to a module');
+            throw new \core\exception\invalid_parameter_exception('Context did not refer to a module');
         }
 
         $context  = \context_module::instance($PAGE->cm->id);
@@ -92,7 +92,7 @@ class mediaresource_controller extends controller_abstract {
     /**
      * Read media resource
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      * @return stdClass
      */
     private function read_media() {

@@ -34,7 +34,7 @@ class addsection_controller extends controller_abstract {
         global $PAGE;
 
         if ($action !== 'addsection') {
-            throw new \coding_exception("Missing capability check for $action action");
+            throw new \core\exception\coding_exception("Missing capability check for $action action");
         }
         require_capability('moodle/course:update', $PAGE->context);
     }

@@ -703,8 +703,8 @@ class local_test extends snap_base_test {
 
     /**
      * Test that the summary, when generated from the content field, strips out images and does not exceed 200 chars.
-     * @throws \coding_exception
-     * @throws \moodle_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
      */
     public function test_get_page_mod_content_summary() {
         global $DB;
@@ -753,8 +753,8 @@ class local_test extends snap_base_test {
 
     /**
      * Test that the summary, when generated from the intro text, does not strip out images or trim the text in anyway.
-     * @throws \coding_exception
-     * @throws \moodle_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
      */
     public function test_get_page_mod_intro_summary() {
         $this->resetAfterTest();
@@ -787,7 +787,7 @@ class local_test extends snap_base_test {
     /**
      * @param array $params
      * @return \cm_info
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     private function add_assignment(array $params) {
         $generator = $this->getDataGenerator()->get_plugin_generator('mod_assign');
@@ -1311,7 +1311,7 @@ class local_test extends snap_base_test {
      * @param $teacher
      * @param $courses
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      * @throws \dml_exception
      */
 

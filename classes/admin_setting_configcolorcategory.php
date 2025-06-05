@@ -107,7 +107,7 @@ class admin_setting_configcolorcategory extends \admin_setting_configtext {
                 }
                 try {
                     \core_course_category::get($categoryid);
-                } catch (\moodle_exception $e) {
+                } catch (\core\exception\moodle_exception $e) {
                     return get_string('error:categorynotfound', 'theme_snap', $categoryid);
                 }
             }

@@ -1303,7 +1303,7 @@ class activity {
      * @param int $assignid
      * @param stdClass | int $userid
      * @return stdClass
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function assignment_due_date_info($assignid, $userid) {
         global $CFG;
@@ -1814,7 +1814,7 @@ class activity {
                     $CFG->theme_snap_max_concurrent_deadline_queries : INF;
                 if ($querycount >= $maxqueries) {
                     $lock->release();
-                    throw new \moodle_exception(
+                    throw new \core\exception\moodle_exception(
                         'retryfeed', 'theme_snap', '', get_string('deadlines', 'theme_snap'));
                 }
             } else {
@@ -1851,7 +1851,7 @@ class activity {
             $lock->release();
         } else {
             // We did not get access to the resource in time, give up.
-            throw new \moodle_exception(
+            throw new \core\exception\moodle_exception(
                 'retryfeed', 'theme_snap', '', get_string('deadlines', 'theme_snap'));
         }
     }

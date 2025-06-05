@@ -38,7 +38,7 @@ class pagemod_controller extends controller_abstract {
         global $PAGE;
 
         if (empty($PAGE->cm->id)) {
-            throw new \invalid_parameter_exception('Context did not refer to a module');
+            throw new \core\exception\invalid_parameter_exception('Context did not refer to a module');
         }
 
         switch($action) {
@@ -53,7 +53,7 @@ class pagemod_controller extends controller_abstract {
     /**
      * Read page
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      * @return stdClass
      */
     private function read_page() {

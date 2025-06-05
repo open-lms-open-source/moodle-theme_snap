@@ -37,7 +37,7 @@ class genius_dashboard_link implements \core\output\renderable {
     public $loginurl;
 
     /**
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function __construct() {
         global $USER;

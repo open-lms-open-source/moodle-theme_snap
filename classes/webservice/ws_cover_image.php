@@ -88,7 +88,7 @@ class ws_cover_image extends external_api {
         } else if (!empty($params['categoryid'])) {
             $context = get_category_or_system_context($params['categoryid']);
         } else {
-            throw new \coding_exception('Error - courseshortname OR categoryid must be provided');
+            throw new \core\exception\coding_exception('Error - courseshortname OR categoryid must be provided');
         }
         self::validate_context($context);
 
@@ -166,7 +166,7 @@ class ws_cover_image extends external_api {
             $coverimageurl = local::course_cat_coverimage_url($context->instanceid);
             $coverimageurl = "url($coverimageurl);";
         } else {
-            throw new \coding_exception('Error - courseshortname OR categoryid must be provided');
+            throw new \core\exception\coding_exception('Error - courseshortname OR categoryid must be provided');
         }
 
         return ['success' => true, 'imageurl'=> $coverimageurl];
@@ -204,7 +204,7 @@ class ws_cover_image extends external_api {
             $fs->delete_area_files($context->id, 'theme_snap', 'croppedimage');
             \cache::make('core', 'course_image')->delete($context->instanceid);
         } else {
-            throw new \coding_exception('Error - courseshortname OR categoryid must be provided');
+            throw new \core\exception\coding_exception('Error - courseshortname OR categoryid must be provided');
         }
 
         return ['success' => true];

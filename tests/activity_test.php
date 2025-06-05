@@ -40,7 +40,7 @@ class activity_test extends snap_base_test {
      * @param int $duedate
      * @param array $opts - an array of field values to go into the assign record.
      * @return \testable_assign
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     protected function create_assignment($courseid, $duedate, $opts = []) {
         global $USER, $CFG;
@@ -1276,7 +1276,7 @@ class activity_test extends snap_base_test {
     /**
      * Test upcoming deadlines
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_upcoming_deadlines_hidden() {
         global $DB;
@@ -1327,7 +1327,7 @@ class activity_test extends snap_base_test {
     /**
      * Test upcoming deadlines where enrolment has expired.
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_upcoming_deadlines_enrolment_expired() {
         global $DB;
@@ -1362,7 +1362,7 @@ class activity_test extends snap_base_test {
      * @param $time
      * @param string $comparator
      * @return string
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     protected function get_date_condition_json($time, $comparator = '>=') {
         return json_encode(
@@ -1376,7 +1376,7 @@ class activity_test extends snap_base_test {
     /**
      * Test upcoming deadlines with assignment activity restricted to future date.
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_upcoming_deadlines_restricted() {
         global $DB;
@@ -1413,7 +1413,7 @@ class activity_test extends snap_base_test {
     /**
      * Test upcoming deadlines restricted by group
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_upcoming_deadlines_group() {
         global $DB;
@@ -1488,7 +1488,7 @@ class activity_test extends snap_base_test {
     /**
      * General feedback test.
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_feedback() {
         global $DB;
@@ -1536,7 +1536,7 @@ class activity_test extends snap_base_test {
     /**
      * Test feedback where course is hidden.
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_feedback_hidden() {
         global $DB;
@@ -1587,7 +1587,7 @@ class activity_test extends snap_base_test {
     /**
      * Test feedback where enrolment has expired.
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_feedback_enrolment_expired() {
         global $DB;
@@ -1626,7 +1626,7 @@ class activity_test extends snap_base_test {
     /**
      * Test feedback with assignment restricted to future date.
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_feedback_restricted() {
         global $DB;

@@ -42,7 +42,7 @@ $lastclosetag = '</div>';
 $maincontent = $OUTPUT->main_content();
 if (substr_compare($maincontent, $lastclosetag, -strlen($lastclosetag)) !== 0) {
     $message = 'Main content does not have the expected div tag wrapping it, required for Snap Site News.';
-    throw new coding_exception($message);
+    throw new \core\exception\coding_exception($message);
 }
 
 // Snap feature spots.

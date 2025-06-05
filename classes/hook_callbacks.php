@@ -30,7 +30,7 @@ class hook_callbacks {
      *
      * @param \core\hook\output\before_footer_html_generation $hook
      * @return void
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function before_footer_html_generation(\core\hook\output\before_footer_html_generation $hook): void {
         global $CFG, $PAGE;

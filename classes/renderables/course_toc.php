@@ -88,7 +88,7 @@ class course_toc implements \core\output\renderable, \core\output\templatable {
      * @param null|int $course
      * @param null|string $format
      * @param bool $loadmodules
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function __construct($course = null, $format = null, $loadmodules = true) {
         global $COURSE, $PAGE;
@@ -132,7 +132,7 @@ class course_toc implements \core\output\renderable, \core\output\templatable {
 
     /**
      * Set modules.
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     protected function set_modules() {
         // If course does not have any sections then exit - note, module search is not supported in course formats
@@ -273,7 +273,7 @@ class course_toc implements \core\output\renderable, \core\output\templatable {
     }
 
     /**
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     protected function set_footer() {
         global $OUTPUT;

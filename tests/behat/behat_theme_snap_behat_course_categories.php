@@ -76,7 +76,7 @@ class behat_theme_snap_behat_course_categories extends behat_base {
      * @param $data
      * @param null $editoroptions
      * @return bool
-     * @throws moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public static function create_category($data, $editoroptions = null) {
         global $DB, $CFG;
@@ -94,20 +94,20 @@ class behat_theme_snap_behat_course_categories extends behat_base {
         }
 
         if (empty($data->name)) {
-            throw new moodle_exception('categorynamerequired');
+            throw new \core\exception\moodle_exception('categorynamerequired');
         }
         if (core_text::strlen($data->name) > 255) {
-            throw new moodle_exception('categorytoolong');
+            throw new \core\exception\moodle_exception('categorytoolong');
         }
         $newcategory->name = $data->name;
 
         // Validate and set idnumber.
         if (isset($data->idnumber)) {
             if (core_text::strlen($data->idnumber) > 100) {
-                throw new moodle_exception('idnumbertoolong');
+                throw new \core\exception\moodle_exception('idnumbertoolong');
             }
             if (strval($data->idnumber) !== '' && $DB->record_exists('course_categories', array('idnumber' => $data->idnumber))) {
-                throw new moodle_exception('categoryidnumbertaken');
+                throw new \core\exception\moodle_exception('categoryidnumbertaken');
             }
             $newcategory->idnumber = $data->idnumber;
         }

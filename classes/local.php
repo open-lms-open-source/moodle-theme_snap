@@ -146,7 +146,7 @@ class local {
      * Based on code in moodle_page class - functions set_category_by_id and load_category.
      * @param stdClass $course
      * @return array
-     * @throws moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public static function get_course_categories($course) {
         global $DB;
@@ -158,7 +158,7 @@ class local {
         $categories = [];
         $category = $DB->get_record('course_categories', array('id' => $course->category));
         if (!$category) {
-            throw new \moodle_exception('unknowncategory');
+            throw new \core\exception\moodle_exception('unknowncategory');
         }
         $categories[$category->id] = $category;
         $parentcategoryids = explode('/', trim($category->path, '/'));
@@ -396,7 +396,7 @@ class local {
      * Return conditionally unavailable elements.
      * @param $course
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function conditionally_unavailable_elements($course) {
         $cancomplete = isloggedin() && !isguestuser();
@@ -590,7 +590,7 @@ class local {
      * @param int $limitnum
      * @param int $maxid
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      * @throws \dml_exception
      */
     public static function get_user_messages($userid, $since = null, $limitfrom = 0, $limitnum = 3, $maxid = -1) {
@@ -791,7 +791,7 @@ class local {
      * @param bool $onlyactive - only show grades in courses actively enrolled on if true.
      * @param bool $renderhtml
      * @return []
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function graded_data($onlyactive = true, $renderhtml = false) {
         global $USER, $PAGE, $CFG;
@@ -872,7 +872,7 @@ class local {
      *
      * @param bool $onlyactive - only show grades in courses actively enrolled on if true.
      * @return string
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function graded($onlyactive = true) {
         global $PAGE;
@@ -997,7 +997,7 @@ class local {
      *
      * @param int $userid
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function gradeable_courseids($userid) {
         $courses = enrol_get_all_users_courses($userid, true);
@@ -1294,7 +1294,7 @@ class local {
      *
      * @param \context $context
      * @return bool|stored_file
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function coverimage($context, $featuredcards = false) {
         global $DB;
@@ -1495,7 +1495,7 @@ class local {
      * Get the best cover image file name for a given context.
      * @param \context $context
      * @return string
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     private static function coverimage_filename(\context $context) {
         $contextlevel = $context->contextlevel;
@@ -1507,7 +1507,7 @@ class local {
         ];
 
         if (empty($filenamemap[$contextlevel])) {
-            throw new \coding_exception('Unsupported context level '.$contextlevel);
+            throw new \core\exception\coding_exception('Unsupported context level '.$contextlevel);
         } else {
             return $filenamemap[$contextlevel];
         }
@@ -1525,7 +1525,7 @@ class local {
         $contextlevel = $context->contextlevel;
         $validcontexts = [CONTEXT_SYSTEM, CONTEXT_COURSECAT, CONTEXT_COURSE];
         if (!in_array($contextlevel, $validcontexts)) {
-            throw new \coding_exception('Invalid context passed to process_coverimage');
+            throw new \core\exception\coding_exception('Invalid context passed to process_coverimage');
         }
         $newfilename = self::coverimage_filename($context);
 
@@ -1667,7 +1667,7 @@ class local {
                 $user = $DB->get_record('user', ['id' => $userorid]);
             }
         } else {
-            throw new \coding_exception('paramater $userorid must be an object or an integer or a numeric string');
+            throw new \core\exception\coding_exception('paramater $userorid must be an object or an integer or a numeric string');
         }
 
         return $user;
@@ -1694,7 +1694,7 @@ class local {
                 $course = get_course($courseorid);
             }
         } else {
-            throw new \coding_exception('paramater $courseorid must be an object or an integer or a numeric string');
+            throw new \core\exception\coding_exception('paramater $courseorid must be an object or an integer or a numeric string');
         }
 
         return $course;
@@ -1724,7 +1724,7 @@ class local {
      * @param int $limit
      * @param int|null $since timestamp, only return posts from after this
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function recent_forum_activity($userorid = false, $limit = 10, $since = null) {
         global $CFG, $DB;
@@ -1995,8 +1995,8 @@ class local {
     /**
      * @param bool $renderhtml
      * @return array
-     * @throws \coding_exception
-     * @throws \moodle_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
      */
     public static function recent_forum_activity_data($renderhtml = false) {
         global $PAGE, $OUTPUT, $CFG;
@@ -2075,7 +2075,7 @@ class local {
      * e.g. - $PAGE->get_path on http://testing.local/apps/moodle/user/profile.php would return
      * apps/moodle/user/profile.php but we just want /user/profile.php
      * @return mixed
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function current_url_path() {
         global $PAGE;
@@ -2439,8 +2439,8 @@ SQL;
      * @param int $maxid
      * @param int $courseid
      * @return array
-     * @throws \coding_exception
-     * @throws \moodle_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
      */
     public static function get_feed(string $feedid, $page = 0, $pagesize = 3, $maxid = -1, $courseid = 0) : array {
         global $USER, $CFG;

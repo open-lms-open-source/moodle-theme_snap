@@ -929,7 +929,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_move $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_move(course_action_section_move $action) {
         $data = $action->export_for_template($this);
@@ -939,7 +939,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_visibility $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_visibility(course_action_section_visibility $action) {
         $data = $action->export_for_template($this);
@@ -949,7 +949,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_highlight $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_highlight(course_action_section_highlight $action) {
         $data = $action->export_for_template($this);
@@ -959,7 +959,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_delete $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_delete(course_action_section_delete $action) {
         $data = $action->export_for_template($this);
@@ -969,7 +969,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_duplicate $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_duplicate(course_action_section_duplicate $action) {
         $data = $action->export_for_template($this);
@@ -979,7 +979,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_extra_menu $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_extra_menu(course_action_section_extra_menu $action) {
         $data = $action->export_for_template($this);
@@ -989,7 +989,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_permalink $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_permalink(course_action_section_permalink $action) {
         $data = $action->export_for_template($this);

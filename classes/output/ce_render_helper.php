@@ -65,9 +65,9 @@ class ce_render_helper {
      * @param bool $showreload
      * @param int $courseid
      * @return string
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      * @throws \dml_exception
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_feed_web_component($feedkey, $title, $emptymessage, $virtualpaging = false, $showreload = true,
         $courseid = 0, $location = '' ) {

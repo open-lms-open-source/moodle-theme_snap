@@ -177,7 +177,7 @@ class course_total_grade_Test extends \advanced_testcase {
      * @param null|int $usercount
      * @param null|int $coursecount
      * @param null|int $assigncount
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      */
     private function init($usercount = null, $coursecount = null, $assigncount = null) {
         global $DB;

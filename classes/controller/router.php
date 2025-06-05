@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap\controller;
-use coding_exception;
+use \core\exception\coding_exception;
 
 /**
  * Controller Router.
@@ -67,7 +67,7 @@ class router {
      *
      * @param $action
      * @return string|void|boolean|null
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function route_action($action) {
         $method = "{$action}_action";

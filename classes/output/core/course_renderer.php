@@ -756,7 +756,7 @@ class course_renderer extends \core_course_renderer {
      * @param cm_info $mod
      * @param activity_meta $meta
      * @return string
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function submission_cta(cm_info $mod, activity_meta $meta) {
         global $CFG;
@@ -1263,7 +1263,7 @@ class course_renderer extends \core_course_renderer {
     /**
      * Return move notice.
      * @return bool|string
-     * @throws moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function snap_footer_alert() {
         return $this->output->render_from_template('theme_snap/footer_alert', null);
@@ -1273,7 +1273,7 @@ class course_renderer extends \core_course_renderer {
      * Generates a notification if course format is not topics or weeks the user is editing and is a teacher/mananger.
      *
      * @return string
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function course_format_warning() {
         global $COURSE;

@@ -30,7 +30,7 @@ require_once($CFG->dirroot.'/message/output/popup/lib.php');
 use stdClass;
 use context_course;
 use context_system;
-use coding_exception;
+use \core\exception\coding_exception;
 use \core\output\single_button;
 use DateTime;
 use \core\output\html_writer;
@@ -126,7 +126,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
     /**
      * @return bool|string
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function course_toc() {
         $coursetoc = new course_toc();
@@ -529,7 +529,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     /**
      * Render mobile Snap Feeds Menu
      * @return string
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     protected function render_snap_feeds_mobile() {
         global $OUTPUT;
@@ -792,8 +792,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
     /**
      * Cover image selector.
      * @return bool|null|string
-     * @throws \coding_exception
-     * @throws \moodle_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
      */
     public function cover_image_selector() {
         if (has_capability('moodle/course:changesummary', $this->page->context)) {
@@ -1051,7 +1051,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         require_once($CFG->dirroot.'/mod/forum/lib.php');
 
         if (!$forum = forum_get_course_forum($SITE->id, 'news')) {
-            throw new moodle_exception('cannotfindorcreateforum', 'forum');
+            throw new \core\exception\moodle_exception('cannotfindorcreateforum', 'forum');
         }
         $cm      = get_coursemodule_from_instance('forum', $forum->id, $SITE->id, false, MUST_EXIST);
         $context = \context_module::instance($cm->id, MUST_EXIST);
@@ -1284,7 +1284,7 @@ HTML;
      * Returns all parent categories hierarchy from a category id
      * @param int $id
      * @return array
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     private function get_parentcategories($id) {
         global $DB;
@@ -1293,7 +1293,7 @@ HTML;
         }
         $category = $DB->get_record('course_categories', ['id' => $id]);
         if (!$category) {
-            throw new \moodle_exception('unknowncategory');
+            throw new \core\exception\moodle_exception('unknowncategory');
         }
         $parentcategoryids = explode('/', trim($category->path, '/'));
         return $parentcategoryids;

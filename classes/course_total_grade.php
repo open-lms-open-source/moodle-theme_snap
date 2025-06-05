@@ -64,7 +64,7 @@ class course_total_grade extends \grade_report_overview {
         $this->user = $user;
 
         if (empty($CFG->gradebookroles)) {
-            throw new \moodle_exception('norolesdefined', 'grades');
+            throw new \core\exception\moodle_exception('norolesdefined', 'grades');
         }
 
         $this->courseid  = $course->id;
@@ -100,7 +100,7 @@ class course_total_grade extends \grade_report_overview {
      * Get course total grade.
      * @param bool $studentcoursesonly
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function get_course_total($studentcoursesonly = true) {
         global $USER;

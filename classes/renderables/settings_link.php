@@ -37,7 +37,7 @@ class settings_link implements \core\output\renderable {
     public $output = false;
 
     /**
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function __construct() {
         global $PAGE, $COURSE;
@@ -85,7 +85,7 @@ class settings_link implements \core\output\renderable {
     /**
      * Set admin menu instance, if required capability satisfied.
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     private function set_admin_menu_instance() {
         global $PAGE;

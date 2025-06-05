@@ -30,7 +30,7 @@ class toc_renderer extends \theme_boost\output\core_renderer {
 
     /**
      * @return bool|string
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function course_toc() {
         $coursetoc = new course_toc();
