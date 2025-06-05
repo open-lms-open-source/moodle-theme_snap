@@ -28,7 +28,6 @@ namespace theme_snap\output;
 use context_course;
 use core_courseformat\base as course_format;
 use core_courseformat\output\local\content;
-use renderable;
 use html_writer;
 use moodle_url;
 use stdClass;
@@ -48,35 +47,6 @@ trait format_section_trait {
      static $SECTION_ACTIONS_BEFORE_MENU = 2;
 
     /**
-     * Renders HTML to display one course module for display within a section.
-     *
-     * @deprecated since 4.0 - use core_course output components or course_format::course_section_updated_cm_item instead.
-     *
-     * This function calls:
-     * {@link core_course_renderer::course_section_cm()}
-     *
-     * @param stdClass $course
-     * @param \completion_info $completioninfo
-     * @param \cm_info $mod
-     * @param int|null $sectionreturn
-     * @param array $displayoptions
-     * @return String
-     */
-    public function course_section_updated_cm_item(
-        course_format $format,
-        \section_info $section,
-        \cm_info $cm,
-        array $displayoptions = []
-    ) {
-        global $PAGE;
-        $course = $format->get_course();
-        $completioninfo = new \completion_info($course);
-        $render = new course_renderer($PAGE, null);
-        return $render->course_section_cm_list_item_snap($course, $completioninfo, $cm, $format->get_sectionnum(),
-            $displayoptions);
-    }
-
-    /**
      * Render the enable bulk editing button.
      * @param course_format $format the course format
      * @return string|null the enable bulk button HTML (or null if no bulk available).
@@ -86,27 +56,71 @@ trait format_section_trait {
         return '';
     }
 
-    /**
-     * New moodle 4.0 render_content function.
-     * @param renderable $widget
-     */
+    public function render(\renderable $widget): string {
+        global $PAGE, $DB;
 
-    public function render_content(renderable $widget) {
-        // We need access to format and course to avoid more queries.
-        $reflectionf = new \ReflectionClass($widget);
-        $property = $reflectionf->getProperty('format');
-        $property->setAccessible(true);
-        $format = $property->getValue($widget);
-        $reflectioncourse = new \ReflectionClass($format);
-        $property = $reflectioncourse->getProperty('course');
-        $property->setAccessible(true);
-        $course = $property->getValue($format);
-
+        // Render the course content based on Core templates.
         if ($widget instanceof content) {
-            $this->print_multiple_section_page($course, null, null, null, null);
-        } else {
-            return parent::render($widget);
+            $context = \context_course::instance($PAGE->course->id);
+            $course = get_course($context->instanceid);
+
+            $modinfo = get_fast_modinfo($course);
+
+            // Check if we are in a specific section.
+            $pagepath = $PAGE->url->get_path();
+            $sectionid = optional_param('id', -1, PARAM_INT);
+            $sectionnumber = optional_param('section', -1, PARAM_INT);
+            $currentsection = null;
+            $onsectionpage = false;
+
+            if ($pagepath === '/course/section.php' && $sectionid !== -1) {
+                $sectionrecord = $DB->get_record('course_sections', ['id' => $sectionid], '*', MUST_EXIST);
+                $currentsection = $modinfo->get_section_info($sectionrecord->section);
+                $onsectionpage = true;
+            } elseif ($sectionnumber !== -1) {
+                $currentsection = $modinfo->get_section_info($sectionnumber);
+                $onsectionpage = true;
+            }
+
+            // Bring core render.
+            $corecontent = parent::render($widget);
+
+            if ($onsectionpage && $currentsection) {
+                // When rendering a single section, section.php
+                $sectionheader = $this->section_header(
+                    $currentsection,
+                    $course,
+                    true,
+                    $currentsection->section
+                );
+                $output = $sectionheader;
+                $output .= $corecontent;
+
+                if ($currentsection->uservisible) {
+                    // Add Snap modchooser and Snap drop file.
+                    $sectionfooter = $this->course_section_add_cm_control_snap($course, $currentsection->section, 0);
+                    $output .= $sectionfooter;
+                }
+                // Add Snap footer navigation for course.
+                $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $currentsection->section));
+                // Output the "Add new section" form.
+                $output .= $this->change_num_sections($course);
+                // Add Snap Course Dashboard.
+                $output .= shared::course_tools(true);
+                return $output;
+            } else {
+                // We are on view.php render.
+                $output = $corecontent;
+                // Output the "Add new section" form.
+                $output .= $this->change_num_sections($course);
+                // Add Snap Course Dashboard.
+                $output .= shared::course_tools(true);
+                return $output;
+            }
         }
+
+        // Render as usual.
+        return parent::render($widget);
     }
 
     /**
