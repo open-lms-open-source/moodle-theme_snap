@@ -45,7 +45,7 @@ use theme_snap\renderables\course_card;
 use theme_snap\renderables\course_toc;
 use theme_snap\renderables\featured_courses;
 use theme_snap\renderables\featured_categories;
-use lang_string;
+use \core\lang_string as lang_string;
 use core_course_category;
 use core\navigation\output\primary;
 

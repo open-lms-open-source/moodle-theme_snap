@@ -52,6 +52,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I upload file "testgif.gif" to section 1
     Then I should not see "Add image to course page"
     And I should not see "Create file resource"
+    And I press enter
     And I should see "testgif" in the "#section-1 .snap-native-image .activityinstance .instancename" "css_element"
 
   @javascript
@@ -193,4 +194,5 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I upload file "testgif.gif" to section 1
     Then I should not see "Add image to course page"
     And I should not see "Create file resource"
+    And I press enter
     And I should see "testgif" in the "#section-1 .snap-native-image .activityinstance .instancename" "css_element"

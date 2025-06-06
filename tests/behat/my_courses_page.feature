@@ -163,14 +163,15 @@ Feature: Users can access to the My Courses page in Snap.
       | assign      | Assignment 1  | Test assign description 1   | C2     | assign1    | 0       |
     Then I log in as "teacher1"
     And I am on "Course 2" course homepage
-    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    Then I follow "Edit settings"
+    And I am on "Course 2" course homepage with editing mode "on"
+    And I click on ".activity.modtype_assign .action-menu.section-cm-edit-actions" "css_element"
+    Then I click on "a[data-action='update']" "css_element"
     And I expand all fieldsets
     And I set the field "Students must manually mark the activity as done" to "1"
     And I press "Save and return to course"
     Then I log in as "student1"
     And I am on "Course 2" course homepage
-    And I click on ".snap-activity.assign .mod-link" "css_element"
+    And I click on ".activity.modtype_assign .activityname" "css_element"
     When I press "Mark as done"
     And I wait until "Done" "button" exists
     And I follow "My Courses"

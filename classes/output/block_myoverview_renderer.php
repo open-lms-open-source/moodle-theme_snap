@@ -25,7 +25,7 @@
 namespace theme_snap\output;
 
 use block_myoverview\output\main;
-use html_writer;
+use \core\output\html_writer as html_writer;
 use stdClass;
 
 defined('MOODLE_INTERNAL') || die();

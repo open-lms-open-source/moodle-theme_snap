@@ -1415,13 +1415,13 @@ class course_renderer extends \core_course_renderer {
             $coursedisplayoptions['paginationurl'] = new moodle_url($baseurl, ['browse' => 'courses']);
             $catdisplayoptions['nodisplay'] = true;
             $catdisplayoptions['viewmoreurl'] = new moodle_url($baseurl, ['browse' => 'categories']);
-            $catdisplayoptions['viewmoretext'] = new \lang_string('viewallsubcategories');
+            $catdisplayoptions['viewmoretext'] = new \core\lang_string('viewallsubcategories');
         } else if ($browse === 'categories' || !$coursecat->has_courses()) {
             $coursedisplayoptions['nodisplay'] = true;
             $catdisplayoptions['offset'] = $page * $perpage;
             $catdisplayoptions['paginationurl'] = new moodle_url($baseurl, ['browse' => 'categories']);
             $coursedisplayoptions['viewmoreurl'] = new moodle_url($baseurl, ['browse' => 'courses']);
-            $coursedisplayoptions['viewmoretext'] = new \lang_string('viewallcourses');
+            $coursedisplayoptions['viewmoretext'] = new \core\lang_string('viewallcourses');
         } else {
             // We have a category that has both subcategories and courses, display pagination separately.
             $coursedisplayoptions['viewmoreurl'] = new moodle_url($baseurl, ['browse' => 'courses', 'page' => 1]);

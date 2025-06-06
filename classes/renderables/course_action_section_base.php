@@ -22,7 +22,6 @@
  */
 
 namespace theme_snap\renderables;
-use \core\url;
 use section_info;
 
 abstract class course_action_section_base implements \core\output\renderable, \core\output\templatable {
@@ -35,7 +34,7 @@ abstract class course_action_section_base implements \core\output\renderable, \c
     public $title;
 
     /**
-     * @var \core\url
+     * @var \moodle_url
      */
     public $url;
 

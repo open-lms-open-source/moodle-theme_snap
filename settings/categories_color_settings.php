@@ -28,8 +28,8 @@ $snapsettings = new admin_settingpage('themesnapcolorcategories', get_string('ca
 
 $name = 'theme_snap/categorycorlor';
 
-$heading = new lang_string('category_color', 'theme_snap');
-$description = new lang_string('category_color_description', 'theme_snap');
+$heading = new \core\lang_string('category_color', 'theme_snap');
+$description = new \core\lang_string('category_color_description', 'theme_snap');
 $setting = new admin_setting_heading($name, $heading, $description);
 $snapsettings->add($setting);
 

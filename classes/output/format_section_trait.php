@@ -28,8 +28,8 @@ namespace theme_snap\output;
 use context_course;
 use core_courseformat\base as course_format;
 use core_courseformat\output\local\content;
-use html_writer;
-use moodle_url;
+use \core\output\html_writer;
+use \core\url as moodle_url;
 use stdClass;
 use theme_snap\output\core\course_renderer;
 use theme_snap\renderables\course_action_section_duplicate;
@@ -56,7 +56,7 @@ trait format_section_trait {
         return '';
     }
 
-    public function render(\renderable $widget): string {
+    public function render(\core\output\renderable $widget): string {
         global $PAGE, $DB;
 
         // Render the course content based on Core templates.

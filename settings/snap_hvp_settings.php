@@ -20,8 +20,8 @@ $snapsettings = new admin_settingpage('themesnaphvpcustomcss', get_string('hvpcu
 
 // H5P Custom CSS.
 $name = 'theme_snap/hvpcustomcss';
-$title = new lang_string('hvpcustomcss', 'theme_snap');
-$description = new lang_string('hvpcustomcssdesc', 'theme_snap');
+$title = new \core\lang_string('hvpcustomcss', 'theme_snap');
+$description = new \core\lang_string('hvpcustomcssdesc', 'theme_snap');
 $default = '';
 $setting = new admin_setting_configtextarea($name, $title, $description, $default);
 
