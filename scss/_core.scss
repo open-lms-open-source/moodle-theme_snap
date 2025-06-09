@@ -4310,6 +4310,9 @@ table th img.iconhelp {
     padding: 1em 4%;
     background-color: $snap-featured-cards-bg;
     margin-bottom: 1em;
+    .coursebox {
+        border: unset;
+    }
 }
 .snap-featured-categories-heading,
 .snap-featured-courses-heading {
@@ -5145,6 +5148,15 @@ section#region-main {
                     .categoryname {
                         margin-top: -1em;
                     }
+                    [data-region="favourite-icon"] {
+                        display: none;
+                    }
+                    .star-button {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        padding: 10px;
+                    }
                     .card-footer {
                         border-radius: .5rem;
                     }
@@ -5166,6 +5178,15 @@ section#region-main {
                     border-radius: 0.5rem;
                     height: 7rem;
                 }
+                [data-region="favourite-icon"] {
+                    display: none;
+                }
+                .star-button {
+                    position: absolute;
+                    top: 0.5em;
+                    right: 1em;
+                    padding: 3px;
+                }
             }
         }
         [data-display="summary"] {
@@ -5183,6 +5204,73 @@ section#region-main {
                     border-radius: 0.5rem;
                     width: 100%;
                     height: 7rem;
+                }
+                [data-region="favourite-icon"] {
+                    display: none;
+                }
+                .star-button {
+                    position: absolute;
+                    top: 0.5em;
+                    right: 1em;
+                    padding: 3px;
+                }
+            }
+        }
+        .progress-text {
+            width: 100%;
+            .progress,
+            .progress-bar {
+                border-radius: 0.5rem;
+            }
+        }
+        .favoriteicon {
+            background: none;
+            border: none;
+            i.remove-favourite {
+                text-shadow:
+                        -2px 0 white,
+                        2px 0 white,
+                        0 -2px white,
+                        0 2px white,
+                        -1.5px -1.5px white,
+                        -1.5px 1.5px white,
+                        1.5px -1.5px white,
+                        1.5px 1.5px white;
+                color: $brand-primary;
+            }
+            i.add-favourite {
+                text-shadow:
+                        -2px 0 $brand-primary,
+                        2px 0 $brand-primary,
+                        0 -2px $brand-primary,
+                        0 2px $brand-primary,
+                        -1.5px -1.5px $brand-primary,
+                        -1.5px 1.5px $brand-primary,
+                        1.5px -1.5px $brand-primary,
+                        1.5px 1.5px $brand-primary;
+                color: white;
+            }
+        }
+        .favoriteicon:not(.hidden) {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-menu [data-action="remove-favourite"],
+        .dropdown-menu [data-action="add-favourite"] {
+            display: none;
+        }
+        // To change the progress bar color depending on the progress value.
+        @for $i from 0 through 100 {
+            .progress-bar[aria-valuenow="#{$i}"] {
+                @if $i < 20 {
+                    background-color: $red;
+                    color: white;
+                } @else if $i < 80 {
+                    background-color: $yellow;
+                    color: black;
+                } @else {
+                    background-color: $green;
+                    color: white;
                 }
             }
         }
