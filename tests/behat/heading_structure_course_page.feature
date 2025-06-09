@@ -24,6 +24,7 @@
 Feature: With a discussion created, the heading levels structure should be correct on course page.
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |

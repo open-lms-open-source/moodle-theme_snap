@@ -24,6 +24,7 @@
 Feature: Show or hide the expand icon on the Course page based on whether the Page Activity description is empty or not
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics | 1            |

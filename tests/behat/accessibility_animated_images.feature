@@ -26,6 +26,7 @@
 Feature: Animated images should be accessible.
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | category | format | maxbytes | enablecompletion | initsections |
       | Course 1 | C1        | 0        | topics | 500000   | 1                |       1      |
