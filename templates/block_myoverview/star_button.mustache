@@ -21,10 +21,16 @@
 
 }}
 <div class="star-button">
-    <button class="favoriteicon {{#isfavourite}}hidden{{/isfavourite}}" data-action="add-favourite" data-course-id="{{id}}">
+    <button class="favoriteicon {{#isfavourite}}hidden{{/isfavourite}}"
+            data-action="add-favourite" data-course-id="{{id}}"
+            title="{{#str}}addtofavourites, block_myoverview{{/str}}"
+            aria-label="{{#str}}addtofavourites, block_myoverview{{/str}}">
         <i class="icon add-favourite fa fa-star"></i>
     </button>
-    <button class="favoriteicon {{^isfavourite}}hidden{{/isfavourite}}" data-action="remove-favourite" data-course-id="{{id}}">
+    <button class="favoriteicon {{^isfavourite}}hidden{{/isfavourite}}"
+            data-action="remove-favourite" data-course-id="{{id}}"
+            title="{{#str}}removefromfavourites, block_myoverview{{/str}}"
+            aria-label="{{#str}}removefromfavourites, block_myoverview{{/str}}">
         <i class="icon remove-favourite fa fa-star"></i>
     </button>
 </div>
