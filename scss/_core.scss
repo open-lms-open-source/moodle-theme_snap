@@ -1408,7 +1408,7 @@ footer #moodle-footer
         }
     }
 
-    #user-action-menu a[href*="my/courses.php"] {
+    #user-action-menu #carousel-item-main a[href*="my/courses.php"] {
         display: none;
     }
 
@@ -1417,7 +1417,7 @@ footer #moodle-footer
             display: none;
         }
 
-        #user-action-menu a[href*="my/courses.php"] {
+        #user-action-menu #carousel-item-main a[href*="my/courses.php"] {
             display: block;
         }
     }
