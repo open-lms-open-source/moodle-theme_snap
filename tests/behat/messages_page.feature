@@ -100,8 +100,12 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     And I click on "[data-region='popover-region-messages']" "css_element"
     And ".snap-drawer-headroom" "css_element" should be visible
     And I am on the course main page for "C1"
+    And ".snap-drawer-headroom" "css_element" should not be visible
     And I click on "[data-region='popover-region-messages']" "css_element"
     And ".snap-drawer-headroom" "css_element" should be visible
     And I follow "My Courses"
+    And ".snap-drawer-headroom" "css_element" should not be visible
     And I click on "[data-region='popover-region-messages']" "css_element"
     And ".snap-drawer-headroom" "css_element" should be visible
+#    And I click on ".closewidget a[data-action='closedrawer']" "css_element"
+#    And ".snap-drawer-headroom" "css_element" should not be visible
