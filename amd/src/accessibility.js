@@ -532,10 +532,13 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                             }
                             feedback.innerHTML = msg;
 
-                            // Only display and focus when the error was not already visible.
-                            if (feedback.offsetParent === null) {
-                                feedback.style.display = 'block';
-                                feedback.focus();
+                            // Only focus if there is no other element with focus error already.
+                            if (!document.querySelector('[data-error-focused="true"]')) {
+                                activeElement.setAttribute('data-error-focused', 'true');
+                                setTimeout(function() {
+                                    activeElement.focus();
+                                    activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }, 0);
                             }
                         }
                     } else {
