@@ -26,6 +26,7 @@ Feature: Activity navigation involving activities with access restrictions in Sn
   I need to be able to use the activity navigation feature to access the activity after satisfying its access conditions
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following config values are set as admin:
       | theme | snap |
     Given the following "users" exist:

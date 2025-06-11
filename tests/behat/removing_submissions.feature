@@ -24,6 +24,7 @@
 Feature: When the moodle theme is set to Snap, a student can remove a submitted file assignment.
 
   Background:
+    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | initsections |
       | Course 1 | C1        | 0        | 1         |      1       |

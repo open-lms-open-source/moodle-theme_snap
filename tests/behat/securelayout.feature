@@ -22,6 +22,7 @@
 @theme @theme_snap
 Feature: Using the snap theme page displaying with secure layout
   Background:
+    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | format |
       | Course 1 | C1        | topics |

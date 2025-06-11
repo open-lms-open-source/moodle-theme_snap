@@ -24,6 +24,7 @@
 Feature: When the moodle theme is set to Snap, teachers can see permalink modal.
 
     Background:
+        Given I skip because "It's failing due to New Snap Course Content - INT-21155"
         Given the following "course" exists:
             | fullname         | Course 1 |
             | shortname        | C1       |

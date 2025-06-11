@@ -6767,3 +6767,12 @@ div#snap-course-wrapper #toc-desktop-menu-heading {
         width: 90%;
     }
 }
+
+.format-weeks .single-section .section-navigation,
+.format-topics .single-section .section-navigation {
+    display: none!important;
+}
+
+li.section.main {
+    list-style: none;
+}
