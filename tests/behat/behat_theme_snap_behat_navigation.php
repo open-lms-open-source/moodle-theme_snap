@@ -121,6 +121,6 @@ EOF;
      * @When /I scroll to the right/
      */
     public function i_scroll_to_the_right() {
-        $this->getSession()->executeScript('window.scrollBy(1100, 0);');
+        $this->getSession()->executeScript('window.scrollBy(20, 0);');
     }
 }

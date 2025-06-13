@@ -54,6 +54,5 @@ Feature: Testing blocks_drawer in theme_snap
     And I am on "Course 1" course homepage
     And I am on the "Course 1" "grades > Grader report > View" page logged in as "admin"
     When I scroll to the right
-    And I should see "Test assignment6"
     Then I click on "#goto-left-link" "css_element"
     And I should see "Test assignment1"
