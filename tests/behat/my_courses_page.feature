@@ -112,7 +112,6 @@ Feature: Users can access to the My Courses page in Snap.
 
   @javascript
   Scenario: User can use the year filter in the Course overview block in Snap.
-    Given I skip because "Will be reviewed on INT-20992"
     Given I log in as "teacher1"
     And I should see "Course overview"
     And "#yeardropdown" "css_element" should not exist
@@ -140,6 +139,9 @@ Feature: Users can access to the My Courses page in Snap.
     And I click on "ul[aria-labelledby='yeardropdown'] :nth-child(3)" "css_element"
     And I should see "Course 3"
     And I should not see "Course 2"
+    And I reload the page
+    And I should see "Course 3"
+    And I should not see "Course 2"
     And I click on "#yeardropdown" "css_element"
     And I click on "ul[aria-labelledby='yeardropdown'] :nth-child(1)" "css_element"
     And I should see "Course 2"
@@ -147,7 +149,6 @@ Feature: Users can access to the My Courses page in Snap.
 
   @javascript
   Scenario: User can use the completion filter in the Course overview block in Snap.
-    Given I skip because "Will be reviewed on INT-20992"
     Given the following "courses" exist:
       | fullname | shortname | category | enablecompletion |
       | Course 2 | C2        | 0        | 1                |
@@ -180,6 +181,10 @@ Feature: Users can access to the My Courses page in Snap.
     And I should not see "Course 3"
     And I click on "#progressdropdown" "css_element"
     And I follow "Not completed"
+    And I should not see "Course 2"
+    And I should see "Course 1"
+    And I should see "Course 3"
+    And I reload the page
     And I should not see "Course 2"
     And I should see "Course 1"
     And I should see "Course 3"
