@@ -110,6 +110,18 @@
 .snap-login-option {
     display: none;
 }
+
+.snap-sidebar-menu-more.browseallcourses {
+    display: inline;
+    float: right;
+}
+
+.snap-my-courses-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 #snap-sidebar-menu-deadlines li,
 #snap-sidebar-menu-grading li {
     list-style-type: none;
