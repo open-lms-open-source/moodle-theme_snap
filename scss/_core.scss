@@ -6259,7 +6259,9 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
 
         #region-main {
             max-width: unset;
-            margin: 0;
+            padding: 0 0;
+            overflow: hidden;
+            margin: 0 !important;
         }
 
         .snap-page-my-courses-options {
@@ -6267,19 +6269,44 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
         }
 
         .block_myoverview_column {
+            padding: 0 0;
             margin-right: 3rem;
-            &.single_column {
-                @include media-breakpoint-up(lg) {
-                    padding-left: 5em;
-                    padding-right: 5em;
+            //margin-bottom: -3em;
+            .card-title {
+                padding: 0 5em;
+            }
+            hr {
+                margin: 0.5em 5em;
+            }
+            [data-region="filter"] {
+                padding: 0 5em;
+                margin-bottom: 2em;
+            }
+            [data-region="courses-view"] {
+                padding: 0 0.5em 0;
+                border-radius: 0.3em;
+                .card-grid  {
+                    padding: 2em;
+                    background-color: white;
                 }
+            }
+            .block-myoverview-content {
+                padding: 2em 3em;
+                background-color: #eef0f6;
             }
             .snap-page-my-courses-options  {
                 float: right;
             }
             .block_myoverview {
                 border: 0 !important;
-
+                .card-body {
+                    .text-muted.muted.d-flex.mb-1.flex-wrap div {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: 100%;
+                    }
+                }
                 input[name="search"]{
                     border-color: $brand-primary;
                     border-radius: 0.25rem !important;
