@@ -1899,13 +1899,10 @@ header#page-header
         margin: 10em 4% 1em;
         word-break: break-word;
     }
+}
 
-    #moodle-page {
-        /* GT Mod - I've removed this because I don't like it - the cover image ends up appearing half way under
-        the fixed menu and it looks very poor IMO.
-         */
-        /*padding-top: 2em;*/
-    }
+body:has(header div#snap-custom-menu-header) #page-header {
+    margin-top: 2.2em;
 }
 
 @include media-breakpoint-up(lg) {
