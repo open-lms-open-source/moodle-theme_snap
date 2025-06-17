@@ -56,9 +56,7 @@ Feature: Display of blocks in book activities with snap theme
 
     When I am on the "Test Book" "book activity" page
     Then I should see "Test content"
-
-    Then "#moodle-blocks" "css_element" should exist
-    And "#block-region-side-pre" "css_element" should exist
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     And ".block_book_toc" "css_element" should exist
     And I should see "Table of contents"
 
@@ -66,7 +64,6 @@ Feature: Display of blocks in book activities with snap theme
     And I log in as "student1"
     And I am on the "Test Book" "book activity" page
 
-    Then "#moodle-blocks" "css_element" should exist
-    And "#block-region-side-pre" "css_element" should exist
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     And ".block_book_toc" "css_element" should exist
     And I should see "Table of contents"
