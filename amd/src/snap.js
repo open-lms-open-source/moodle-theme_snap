@@ -562,6 +562,11 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         $(this).attr('aria-expanded', true);
                     }
                 }
+                // Code for mod_data sticky footer.
+                if ($('#sticky-footer').length != 0) {
+                    $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
+                }
+
                 $(href).attr('tabindex', '0');
                 $(href).toggleClass('state-visible').focus();
                 e.preventDefault();
@@ -575,11 +580,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
                 if ($('.message-app.main').length === 0) {
                     document.dispatchEvent(new Event("messages-drawer:toggle"));
-                }
-
-                // Code for mod_data sticky footer.
-                if ($('#sticky-footer').length != 0) {
-                    $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
                 }
             });
 
