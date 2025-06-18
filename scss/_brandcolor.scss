@@ -705,7 +705,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     // -------------------------
     #mr-nav {
         a {
-            color: $nav-color;
+            color: $brand-primary;
 
             &:hover,
             &:focus {
@@ -742,22 +742,34 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: $nav-button-color;
         }
 
+        .dropdown-toggle::after {
+            color: $nav-button-color;
+        }
+
+        #snap-home:not(.logo) {
+            color: $nav-button-color;
+        }
+
         // Edit mode toggle.
         .editmode-switch-form {
             margin-bottom: 0;
             .input-group {
                 label {
-                    color: $brand-primary !important;
+                    color: $nav-button-color !important;
                 }
             }
             .custom-control-input:checked~.custom-control-label::before {
-                background-color: $brand-primary;
-                border-color: $brand-primary;
+                background-color: $nav-color;
+                border-color: $nav-button-color;
+            }
+            .custom-control-input:checked~.custom-control-label::after {
+                background-color: $nav-bg;
             }
         }
 
         #nav-notification-popover-container .count-container {
             background-color: $nav-color;
+            color: $nav-bg;
         }
 
         #nav-notification-popover-container {
@@ -796,7 +808,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
     [id^="message-drawer-toggle-"] {
         .count-container {
-            background-color: $nav-color;
+            background-color: $brand-primary;
+            color: $nav-bg;
         }
     }
 
