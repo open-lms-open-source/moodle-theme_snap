@@ -963,7 +963,7 @@ a.yui3-button,
     display: flex !important;
     flex-direction: column;
     text-align: center;
-    padding: 1em 9em !important;
+    padding: 1em 8.5em !important;
 
     @media (max-width: 576px) {
         padding: 1em 2em !important;
@@ -982,6 +982,34 @@ a.yui3-button,
     margin-bottom: 0.5em;
     background: transparent url("[[pix:theme|move_here]]") no-repeat center center;
     background-size: contain;
+}
+
+#page-site-index .sitetopic .divider {
+    margin-top: 4.5rem !important;
+
+    hr {
+        background-color: initial;
+    }
+
+    .btn.add-content {
+        background-color: initial;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        border-radius: 3px;
+    }
+
+    .btn.add-content:hover, .btn.add-content:focus {
+        background-color: initial;
+    }
+
+    .btn.add-content:hover .activity-add-text, .btn.add-content:focus .activity-add-text {
+        text-decoration: underline;
+    }
+}
+
+#page-site-index .sitetopic .divider:has(.btn.add-content:hover) hr {
+    border-color: $gray-lighter;
 }
 
 // Styles for #page-report-competency-index.
