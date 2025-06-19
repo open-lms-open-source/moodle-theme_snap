@@ -1929,10 +1929,6 @@ header#page-header
     }
 }
 
-body:has(header div#snap-custom-menu-header) #page-header {
-    margin-top: 2.2em;
-}
-
 @include media-breakpoint-up(lg) {
     #page-site-index {
         #page-header,
@@ -5439,8 +5435,10 @@ header#mr-nav {
         display: none;
     }
     // Spacer to be shown conditionally when custom menu has items to show.
-    .snap-custom-menu-spacer {
-        padding-top: 5.25em;
+    body:has(header div#snap-custom-menu-header) {
+        .snap-custom-menu-spacer {
+            height: 7.15em;
+        }
     }
 }
 
@@ -5496,6 +5494,11 @@ header#mr-nav {
                     transition: 0.5s;
                 }
             }
+        }
+    }
+    body:has(header div#snap-custom-menu-header) {
+        .snap-custom-menu-spacer {
+            height: 3.1em;
         }
     }
 }
