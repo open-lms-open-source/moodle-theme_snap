@@ -1250,7 +1250,6 @@ footer #moodle-footer
     #snap-header {
         padding: .5em 4%;
         padding-bottom: 0;
-        background-color: $nav-bg;
         .pull-right.js-only, .float-end.js-only {
             .nav-link {
                 padding: .5rem .5rem;
@@ -1283,7 +1282,7 @@ footer #moodle-footer
     }
 
     z-index: 23;
-    background-color: $body-bg;
+    background-color: $nav-bg;
     top: 0;
 
     //headroom js http://wicky.nillia.ms/headroom.js/
