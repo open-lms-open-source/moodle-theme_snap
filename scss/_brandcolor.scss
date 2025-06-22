@@ -1459,6 +1459,20 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: $brand-primary;
         border-color: $brand-primary;
     }
+
+    #send-email-form {
+        #actionEmailRecipientTabs {
+            li:has(> button.active) {
+                &:after {
+                    background: $brand-primary;
+                }
+            }
+        }
+
+        .bg-color-primary {
+            background-color: $brand-primary;
+        }
+    }
 }
 
 /*
