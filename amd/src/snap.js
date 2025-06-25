@@ -612,6 +612,11 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 }
             });
 
+            $(document).on("click", "[id^=\"message-drawer-\"] > div.closewidget > a", function(e) {
+                $('#page').toggleClass('offcanvas');
+                e.preventDefault();
+            });
+
             // Mobile menu button.
             $(document).on("click", "#course-toc.state-visible a", function() {
                 $('#course-toc').removeClass('state-visible');
