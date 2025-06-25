@@ -119,7 +119,7 @@ if (isloggedin() && !isguestuser()) {
     // Using patterns with exact matches and prefix matches
     $whitelistpagesforblocks = [
         'exact' => ['site-index', 'my-index'],
-        'prefix' => ['course-view']
+        'prefix' => ['course-view', 'mod']
     ];
     
     $sidebarmenuitems = [];

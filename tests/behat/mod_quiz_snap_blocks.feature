@@ -57,10 +57,12 @@ Feature: Display of blocks in quiz activities with snap theme
     When I am on the "Quiz 1" "mod_quiz > View" page logged in as "student"
     And I follow "Review"
     Then I should see "25.00 out of 100.00"
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     And I should see "Quiz navigation" in the "#mod_quiz_navblock" "css_element"
 
   @javascript
   Scenario: The navigation block is displayed when attempting a quiz
     Given I am on the "Quiz 1" "mod_quiz > View" page logged in as "student"
     When I press "Attempt quiz"
+    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
     Then I should see "Quiz navigation" in the "#mod_quiz_navblock" "css_element"
