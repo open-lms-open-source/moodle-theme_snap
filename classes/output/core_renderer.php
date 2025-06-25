@@ -2493,14 +2493,4 @@ HTML;
     protected function snap_page_is_user_view() {
         return $this->page->pagetype === 'user-view';
     }
-
-    /**
-     * Check if current page is a whitelisted mod that we need to show snap blocks in some special cases.
-     * @return bool
-     */
-    protected function snap_page_is_whitelisted_mod() {
-        $whitelist = ['book', 'lesson', 'quiz'];
-        return $this->page->context->contextlevel === CONTEXT_MODULE
-            && in_array($this->page->cm->modname, $whitelist);
-    }
 }
