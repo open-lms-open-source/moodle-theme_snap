@@ -6288,7 +6288,6 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
         #region-main {
             max-width: unset;
             padding: 0 0;
-            overflow: hidden;
             margin: 0 !important;
         }
 
@@ -6299,7 +6298,6 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
         .block_myoverview_column {
             padding: 0 0;
             margin-right: 3rem;
-            //margin-bottom: -3em;
             .card-title {
                 padding: 0 5em;
             }
@@ -6317,6 +6315,9 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
                     padding: 2em;
                     background-color: white;
                 }
+            }
+            [data-region="paging-control-container"] {
+                margin-top: 1em;
             }
             .block-myoverview-content {
                 padding: 2em 3em;
