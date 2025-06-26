@@ -28,7 +28,7 @@ use stdClass;
 trait trait_exportable {
 
     /**
-     * Makes an object suitable for exporting - converts objects to string where necessary - e.g. moodle_urls.
+     * Makes an object suitable for exporting - converts objects to string where necessary - e.g. \core\url.
      * @param array|object $object
      * @return string
      */
@@ -69,12 +69,12 @@ trait trait_exportable {
                 if (is_array($val)) {
                     $this->convert_object_for_export($val);
                 }
-                if ($val instanceof \moodle_url) {
+                if ($val instanceof \core\url) {
                     $object->$key = $this->convert_object_for_export($val);
                     continue;
                 }
                 if (is_object($val)) {
-                    if ($val instanceof \renderable || get_class($val) === 'stdClass') {
+                    if ($val instanceof \core\output\renderable || get_class($val) === 'stdClass') {
                         $object->$key = $this->convert_object_for_export($val);
                     } else {
                         if (method_exists($val, '__toString')) {
@@ -91,10 +91,10 @@ trait trait_exportable {
     }
 
     /**
-     * @param \renderer_base $output
+     * @param \core\output\renderer_base $output
      * @return object
      */
-    public function export_for_template(\renderer_base $output) {
+    public function export_for_template(\core\output\renderer_base $output) {
         $clone = clone $this;
         return $this->convert_object_for_export($clone);
     }

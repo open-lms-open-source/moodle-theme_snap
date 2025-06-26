@@ -26,7 +26,7 @@ namespace theme_snap\renderables;
 use theme_snap\services\course;
 use theme_snap\local;
 
-class course_card implements \renderable {
+class course_card implements \core\output\renderable {
 
     /**
      * @var \stdClass $course
@@ -147,8 +147,8 @@ class course_card implements \renderable {
      */
     private function apply_properties() {
         $this->category = $this->course->category;
-        $this->url = new \moodle_url('/course/view.php', ['id' => $this->courseid]) . '';
-        $this->feedbackurl = new \moodle_url('/grade/report/user/index.php', ['id' => $this->courseid]) . '';
+        $this->url = new \core\url('/course/view.php', ['id' => $this->courseid]) . '';
+        $this->feedbackurl = new \core\url('/grade/report/user/index.php', ['id' => $this->courseid]) . '';
         $this->shortname = $this->course->shortname;
         $this->fullname = format_string($this->course->fullname);
         $this->published = (bool)$this->course->visible;
@@ -173,7 +173,7 @@ class course_card implements \renderable {
         $bgimage = $bgcache->get($this->contextid);
         if ($bgimage === false) {
             $bgurl = local::course_card_image_url($this->courseid);
-            if ($bgurl instanceof \moodle_url) {
+            if ($bgurl instanceof \core\url) {
                 $bgimage = $bgurl->out();
             } else {
                 $bgimage = '';
@@ -233,7 +233,7 @@ class course_card implements \renderable {
                 $userctxidx[$userid][$this->contextid] = true;
 
                 $teacheruser = $teacherusers[$userid];
-                $userpicture = new \user_picture($teacheruser);
+                $userpicture = new \core\output\user_picture($teacheruser);
                 $userpicture->link = false;
                 $userpicture->size = 35;
                 $teacherpicture = $OUTPUT->render($userpicture);

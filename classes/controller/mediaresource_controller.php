@@ -34,7 +34,7 @@ class mediaresource_controller extends controller_abstract {
         global $PAGE;
 
         if (empty($PAGE->cm->id)) {
-            throw new \invalid_parameter_exception('Context did not refer to a module');
+            throw new \core\exception\invalid_parameter_exception('Context did not refer to a module');
         }
 
         $context  = \context_module::instance($PAGE->cm->id);
@@ -71,7 +71,7 @@ class mediaresource_controller extends controller_abstract {
                 \core_media_manager::OPTION_BLOCK => true,
             );
             $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
-            $moodleurl = new \moodle_url('/pluginfile.php' . $path);
+            $moodleurl = new \core\url('/pluginfile.php' . $path);
             $embedhtml = \core_media_manager::instance()->embed_url($moodleurl, $resource->name, 0, 0, $embedoptions);
             // Modal title.
             $content = "<h5 class='snap-lightbox-title'>".format_string($resource->name)."</h5>";
@@ -92,7 +92,7 @@ class mediaresource_controller extends controller_abstract {
     /**
      * Read media resource
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      * @return stdClass
      */
     private function read_media() {

@@ -531,9 +531,9 @@ class assign_test extends \advanced_testcase {
 
     /**
      * Checks the user metadata for ungraded submission, numbers will change based on user role permissions.
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      * @throws dml_exception
-     * @throws moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function test_assing_data_group_mode() {
         global $DB;

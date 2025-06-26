@@ -23,7 +23,7 @@ $unchecked = '0';
 
 // Use custom colors for navigation bar at top of the screen.
 $name = 'theme_snap/customisenavbar';
-$title = new lang_string('customisenavbar', 'theme_snap');
+$title = new \core\lang_string('customisenavbar', 'theme_snap');
 $description = '';
 $default = $unchecked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
@@ -32,7 +32,7 @@ $snapsettings->add($setting);
 
 // Custom background color of nav bar at top of screen.
 $name = 'theme_snap/navbarbg';
-$title = new lang_string('navbarbg', 'theme_snap');
+$title = new \core\lang_string('navbarbg', 'theme_snap');
 $description = '';
 $default = '#ffffff';
 $previewconfig = null;
@@ -42,7 +42,7 @@ $snapsettings->add($setting);
 
 // Color of links in nav bar at top of the screen.
 $name = 'theme_snap/navbarlink';
-$title = new lang_string('navbarlink', 'theme_snap');
+$title = new \core\lang_string('navbarlink', 'theme_snap');
 $description = '';
 $default = '#82009E'; // Open LMS EDU Purple - To pass WCAG color contrast ratio check.
 $previewconfig = null;
@@ -53,7 +53,7 @@ $snapsettings->add($setting);
 
 // Use custom colors for My Courses button at top of the screen.
 $name = 'theme_snap/customisenavbutton';
-$title = new lang_string('customisenavbutton', 'theme_snap');
+$title = new \core\lang_string('customisenavbutton', 'theme_snap');
 $description = '';
 $default = $unchecked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
@@ -62,7 +62,7 @@ $snapsettings->add($setting);
 
 // Color of My Courses link background in nav bar at the top of the screen.
 $name = 'theme_snap/navbarbuttoncolor';
-$title = new lang_string('navbarbuttoncolor', 'theme_snap');
+$title = new \core\lang_string('navbarbuttoncolor', 'theme_snap');
 $description = '';
 $default = '#ffffff';
 $previewconfig = null;
@@ -72,7 +72,7 @@ $snapsettings->add($setting);
 
 // Color of My Courses link text in nav bar at the top of the screen.
 $name = 'theme_snap/navbarbuttonlink';
-$title = new lang_string('navbarbuttonlink', 'theme_snap');
+$title = new \core\lang_string('navbarbuttonlink', 'theme_snap');
 $description = '';
 $default = '#82009E'; // Open LMS EDU Purple - To pass WCAG color contrast ratio check.
 $previewconfig = null;
@@ -84,7 +84,7 @@ $snapsettings->add($setting);
 
 // Use custom color for text in the custom menu.
 $name = 'theme_snap/customisecustommenu';
-$title = new lang_string('customisecustommenu', 'theme_snap');
+$title = new \core\lang_string('customisecustommenu', 'theme_snap');
 $description = '';
 $default = $unchecked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
@@ -93,7 +93,7 @@ $snapsettings->add($setting);
 
 // Color of the text in the custom menu.
 $name = 'theme_snap/custommenutext';
-$title = new lang_string('custommenutext', 'theme_snap');
+$title = new \core\lang_string('custommenutext', 'theme_snap');
 $description = '';
 $default = '#ffffff';
 $previewconfig = null;

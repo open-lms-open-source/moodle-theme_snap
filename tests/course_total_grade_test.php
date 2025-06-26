@@ -177,7 +177,7 @@ class course_total_grade_Test extends \advanced_testcase {
      * @param null|int $usercount
      * @param null|int $coursecount
      * @param null|int $assigncount
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      */
     private function init($usercount = null, $coursecount = null, $assigncount = null) {
         global $DB;
@@ -313,7 +313,7 @@ class course_total_grade_Test extends \advanced_testcase {
         $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
         $coursegrade->grade_item =& $courseitem;
 
-        $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+        $feedbackurl = new \core\url('/grade/report/user/index.php', array('id' => $course->id));
         // Default feedbackobj.
         $feedbackobj = (object)[
             'feedbackurl' => $feedbackurl->out(),

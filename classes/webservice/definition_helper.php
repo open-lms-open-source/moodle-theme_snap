@@ -28,8 +28,8 @@ defined('MOODLE_INTERNAL') || die();
 use core_external\external_value;
 use core_external\external_single_structure;
 use core_external\external_multiple_structure;
-use coding_exception;
-use moodle_url;
+use \core\exception\coding_exception;
+use \core\url;
 use cache;
 
 /**
@@ -131,7 +131,7 @@ class definition_helper {
      * Create an external value from an object containing type, description, required properties.
      * @param stdClass $obj
      * @return external_value
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      */
     private function create_external_value_from_obj($obj) {
         if (empty($obj->type)) {
@@ -289,7 +289,7 @@ class definition_helper {
      * "@wsparam" is intended for documenting stdClass via json.
      * @param $comment
      * @return bool
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      */
     private function define_from_ws_param($name, $comment) {
         $matches = [];
@@ -422,7 +422,7 @@ class definition_helper {
      * Returns an array of external_value objects based on a class or object for use with defining a webservice.
      *
      * @param $classorobject
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      */
     private function define_class_for_webservice_internal($classorobject) {
         $reflect = new \ReflectionClass($classorobject);

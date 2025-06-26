@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace theme_snap\renderables;
-use moodle_url;
+use \core\url as moodle_url;
 
 /**
  * Featured Category renderable
@@ -24,17 +24,17 @@ use moodle_url;
  * @copyright Copyright (c) 2024 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class featured_category implements \renderable, \templatable {
+class featured_category implements \core\output\renderable, \core\output\templatable {
 
     use trait_exportable;
 
     /**
-     * @var \moodle_url
+     * @var moodle_url
      */
     public $url;
 
     /**
-     * @var \moodle_url | null
+     * @var moodle_url | null
      */
     public $coverimageurl;
 
@@ -50,12 +50,12 @@ class featured_category implements \renderable, \templatable {
 
     /**
      * featured_category constructor.
-     * @param \moodle_url $url
-     * @param \moodle_url $coverimageurl
+     * @param moodle_url $url
+     * @param moodle_url $coverimageurl
      * @param string $title
      * @param int $number
      */
-    public function __construct(\moodle_url $url, \moodle_url $coverimageurl = null, $title, $number) {
+    public function __construct(moodle_url $url, moodle_url $coverimageurl = null, $title, $number) {
         $this->url = $url;
         $this->coverimageurl = $coverimageurl;
         $this->title = $title;

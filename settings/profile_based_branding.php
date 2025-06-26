@@ -27,8 +27,8 @@ defined('MOODLE_INTERNAL') || die;
 $snapsettings = new admin_settingpage('themesnappbb', get_string('pbb', 'theme_snap'));
 
 $name = 'theme_snap/pbb';
-$heading = new lang_string('pbb', 'theme_snap');
-$description = new lang_string('pbb_description', 'theme_snap');
+$heading = new \core\lang_string('pbb', 'theme_snap');
+$description = new \core\lang_string('pbb_description', 'theme_snap');
 $setting = new admin_setting_heading($name, $heading, $description);
 $snapsettings->add($setting);
 

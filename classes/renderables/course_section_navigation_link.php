@@ -31,7 +31,7 @@ namespace theme_snap\renderables;
  * @copyright Copyright (c) 2016 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class course_section_navigation_link implements \renderable {
+class course_section_navigation_link implements \core\output\renderable {
     /**
      * @var int section number
      */

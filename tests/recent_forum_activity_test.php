@@ -87,7 +87,7 @@ class recent_forum_activity_test extends \advanced_testcase {
 
     /**
      * Pre-requisites for tests.
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function setUp():void {
         global $CFG, $DB;
@@ -146,7 +146,7 @@ class recent_forum_activity_test extends \advanced_testcase {
 
     /**
      * Test single discussion.
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_forum_discussion_simple($ftype = 'forum', $toffset = 0, $u1offset = 0, $u2offset = 0) {
 
@@ -207,7 +207,7 @@ class recent_forum_activity_test extends \advanced_testcase {
      * @param int $toffset
      * @param int $u1offset
      * @param int $u2offset
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_forum_post_simple($ftype = 'forum', $toffset = 0, $u1offset = 0, $u2offset = 0) {
 
@@ -270,7 +270,7 @@ class recent_forum_activity_test extends \advanced_testcase {
     /**
      * @param string $ftype
      *
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_forum_high_volume_posts($ftype = 'forum') {
         global $DB;
@@ -414,7 +414,7 @@ class recent_forum_activity_test extends \advanced_testcase {
 
     /**
      * Test an anonymous Open Forum with one anonymous discussion & reply.
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_hsuforum_anonymous() {
 
@@ -498,7 +498,7 @@ class recent_forum_activity_test extends \advanced_testcase {
 
     /**
      * Test an Open Forum with one private reply.
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function test_hsuforum_private() {
         if (!$this->plugin_present('hsuforum')) {
@@ -683,7 +683,7 @@ class recent_forum_activity_test extends \advanced_testcase {
      * @param $userid
      * @param $forumid
      * @return mixed
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     protected function create_discussion($ftype, $courseid, $userid, $forumid, Array $opts = []) {
         // Add discussion to course 1 started by user1.
@@ -708,7 +708,7 @@ class recent_forum_activity_test extends \advanced_testcase {
      * @param $forumid
      * @param $discussionid
      * @return mixed
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     protected function create_post($ftype, $courseid, $userid, $forumid, $discussionid, Array $opts = []) {
         $record = new \stdClass();

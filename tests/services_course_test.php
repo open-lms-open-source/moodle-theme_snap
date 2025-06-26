@@ -44,7 +44,7 @@ class services_course_test extends \advanced_testcase {
 
     /**
      * Pre-requisites for tests.
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function setUp(): void {
         global $CFG, $DB;

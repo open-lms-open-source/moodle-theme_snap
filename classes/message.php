@@ -23,7 +23,7 @@ namespace theme_snap;
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class message implements \renderable {
+class message implements \core\output\renderable {
 
     /**
      * @var int
@@ -107,7 +107,7 @@ class message implements \renderable {
      */
     public function set_fromuser(\stdClass $user) {
         if ($user->id != $this->useridfrom) {
-            throw new \coding_exception("The passed user->id ($user->id) != message->useridfrom ($this->useridfrom)");
+            throw new \core\exception\coding_exception("The passed user->id ($user->id) != message->useridfrom ($this->useridfrom)");
         }
         $this->fromuser = $user;
         return $this;
@@ -116,7 +116,7 @@ class message implements \renderable {
     /**
      * Will go to the DB and grab the user if not already set
      *
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      * @return stdClass
      */
     public function get_fromuser() {
@@ -124,7 +124,7 @@ class message implements \renderable {
 
         if (is_null($this->fromuser)) {
             if (empty($this->useridfrom)) {
-                throw new \coding_exception('The message useridfrom is not set');
+                throw new \core\exception\coding_exception('The message useridfrom is not set');
             }
             $this->set_fromuser(
                 $DB->get_record('user', array('id' => $this->useridfrom), \core_user\fields::for_userpic()

@@ -26,7 +26,7 @@ use theme_snap\image;
  * Process site cover image.
  *
  * @throws Exception
- * @throws coding_exception
+ * @throws \core\exception\coding_exception
  * @throws dml_exception
  */
 function theme_snap_process_site_coverimage() {
@@ -39,10 +39,10 @@ function theme_snap_process_site_coverimage() {
  * CSS Processor
  *
  * @param string $css
- * @param theme_config $theme
+ * @param \core\output\theme_config $theme
  * @return string
  */
-function theme_snap_process_css($css, theme_config $theme) {
+function theme_snap_process_css($css, \core\output\theme_config $theme) {
 
     $css = theme_snap_set_category_colors($css, $theme);
 
@@ -230,7 +230,7 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
     ];
 
     if ($context->contextlevel == CONTEXT_SYSTEM && in_array($filearea, $sysfileareas)) {
-        $theme = theme_config::load('snap');
+        $theme = \core\output\theme_config::load('snap');
         return $theme->setting_file_serve($filearea, $args, $forcedownload, $options);
     } else if (in_array($context->contextlevel, $coverimagecontexts)
             && $filearea == 'coverimage' || $filearea == 'coursecard'|| $filearea == 'croppedimage') {
@@ -243,7 +243,7 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
         return true;
     } else if ($filearea === 'hvp' || $filearea === 'hvpcustomcss') {
         // Call to serve H5P Custom CSS.
-        $theme = theme_config::load('snap');
+        $theme = \core\output\theme_config::load('snap');
         $hvpcustomcss = $theme->settings->hvpcustomcss;
         theme_snap_serve_hvp_css($args[1], $hvpcustomcss);
     } else {
@@ -262,7 +262,7 @@ function theme_snap_myprofile_navigation(core_user\output\myprofile\tree $tree, 
             } else {
                 $after = null;
             }
-            $url = new moodle_url('/user/preferences.php');
+            $url = new \core\url('/user/preferences.php');
             $prefnode = new core_user\output\myprofile\node('contact', 'userpreferences', $str->preferences, $after, $url);
 
             $tree->add_node($prefnode);
@@ -308,7 +308,7 @@ function theme_snap_get_main_scss_content($theme) {
 /**
  * Get SCSS to prepend.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return array
  */
 function theme_snap_get_pre_scss($theme) {
@@ -372,7 +372,7 @@ function theme_snap_get_pre_scss($theme) {
 /**
  * Inject additional SCSS.
  *
- * @param theme_config $theme The theme config object.
+ * @param \core\output\theme_config $theme The theme config object.
  * @return string
  */
 function theme_snap_get_extra_scss($theme) {
@@ -528,13 +528,13 @@ function snap_print_course_request_buttons($context) {
         if ($context instanceof context_coursecat) {
             $params['category'] = $context->instanceid;
         }
-        echo $OUTPUT->single_button(new moodle_url('/course/request.php', $params),
+        echo $OUTPUT->single_button(new \core\url('/course/request.php', $params),
             get_string('requestcourse'), 'get');
     }
     // Print a button to manage pending requests.
     if (has_capability('moodle/site:approvecourse', $context)) {
         $disabled = !$DB->record_exists('course_request', array());
-        echo $OUTPUT->single_button(new moodle_url('/course/pending.php'), get_string('coursespending'),
+        echo $OUTPUT->single_button(new \core\url('/course/pending.php'), get_string('coursespending'),
             'get', array('disabled' => $disabled));
     }
 }

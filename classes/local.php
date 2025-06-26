@@ -18,12 +18,12 @@ namespace theme_snap;
 
 defined('MOODLE_INTERNAL') || die();
 
-use moodle_url;
+use \core\url as moodle_url;
 use stdClass;
 use stored_file;
 use theme_snap\output\core_renderer;
-use html_writer;
-use user_picture;
+use \core\output\html_writer;
+use \core\output\user_picture;
 
 global $CFG;
 require_once($CFG->dirroot.'/calendar/lib.php');
@@ -109,7 +109,7 @@ class local {
         $coursegrade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $USER->id));
         $coursegrade->grade_item =& $courseitem;
 
-        $feedbackurl = new \moodle_url('/grade/report/user/index.php', array('id' => $course->id));
+        $feedbackurl = new moodle_url('/grade/report/user/index.php', array('id' => $course->id));
         // Default feedbackobj.
         $feedbackobj = (object) [
             'feedbackurl' => $feedbackurl->out(),
@@ -146,7 +146,7 @@ class local {
      * Based on code in moodle_page class - functions set_category_by_id and load_category.
      * @param stdClass $course
      * @return array
-     * @throws moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public static function get_course_categories($course) {
         global $DB;
@@ -158,7 +158,7 @@ class local {
         $categories = [];
         $category = $DB->get_record('course_categories', array('id' => $course->category));
         if (!$category) {
-            throw new \moodle_exception('unknowncategory');
+            throw new \core\exception\moodle_exception('unknowncategory');
         }
         $categories[$category->id] = $category;
         $parentcategoryids = explode('/', trim($category->path, '/'));
@@ -254,13 +254,13 @@ class local {
                     }
 
                     // Use the overall default theme.
-                    return \theme_config::DEFAULT_THEME;
+                    return \core\output\theme_config::DEFAULT_THEME;
             }
         }
 
         // We should most certainly have resolved a theme by now. Something has gone wrong.
         debugging('Error resolving the theme to use for this page.', DEBUG_DEVELOPER);
-        return \theme_config::DEFAULT_THEME;
+        return \core\output\theme_config::DEFAULT_THEME;
     }
 
     /**
@@ -345,7 +345,7 @@ class local {
         // user - e.g. A teacher grades this users assignment and that triggers completion.
         $courseuserstamp = self::course_user_completion_cachestamp($course->id, $USER->id);
 
-        /** @var \cache_session $muc */
+        /** @var \core_cache\session_cache $muc */
         $muc = \cache::make('theme_snap', 'course_completion_progress');
         $cached = $muc->get($course->id.'_'.$USER->id);
         if ($cached && $cached->timestamp >= $coursestamp && $cached->timestamp >= $courseuserstamp) {
@@ -396,7 +396,7 @@ class local {
      * Return conditionally unavailable elements.
      * @param $course
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function conditionally_unavailable_elements($course) {
         $cancomplete = isloggedin() && !isguestuser();
@@ -590,7 +590,7 @@ class local {
      * @param int $limitnum
      * @param int $maxid
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      * @throws \dml_exception
      */
     public static function get_user_messages($userid, $since = null, $limitfrom = 0, $limitnum = 3, $maxid = -1) {
@@ -646,7 +646,7 @@ class local {
         $messages = array();
         foreach ($records as $record) {
             $message = new message($record);
-            $message->set_fromuser(\user_picture::unalias($record, null, 'useridfrom', 'fromuser'));
+            $message->set_fromuser(\core\output\user_picture::unalias($record, null, 'useridfrom', 'fromuser'));
             $message->uniqueid = $record->id;
             $messages[] = $message;
         }
@@ -695,7 +695,7 @@ class local {
         foreach ($messages as $message) {
             // This URL will be to redirect the user to an unread message through the personal menu feed and open
             // the specific message in the message index page.
-            $url = new \moodle_url('/message/index.php', array(
+            $url = new moodle_url('/message/index.php', array(
                 'viewing' => 'unread',
                 'user2' => $message->useridfrom, )
             );
@@ -707,7 +707,7 @@ class local {
             }
 
             $fromuser = $message->get_fromuser();
-            $userpicture = new \user_picture($fromuser);
+            $userpicture = new \core\output\user_picture($fromuser);
             $userpicture->link = false;
             $userpicture->alttext = false;
             $userpicture->size = 100;
@@ -767,7 +767,7 @@ class local {
             $relativetext = get_string('ago', 'message', $relativetext);
         }
         $datetime = date(\DateTime::W3C, $timeinpast);
-        return html_writer::tag('time', $relativetext, array(
+        return \core\output\html_writer::tag('time', $relativetext, array(
             'is' => 'relative-time',
             'datetime' => $datetime, )
         );
@@ -791,7 +791,7 @@ class local {
      * @param bool $onlyactive - only show grades in courses actively enrolled on if true.
      * @param bool $renderhtml
      * @return []
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function graded_data($onlyactive = true, $renderhtml = false) {
         global $USER, $PAGE, $CFG;
@@ -818,7 +818,7 @@ class local {
             $coursecontext = \context_course::instance($grade->courseid);
             $canviewhiddengrade = has_capability('moodle/grade:viewhidden', $coursecontext);
 
-            $url = new \moodle_url('/grade/report/user/index.php', ['id' => $grade->courseid]);
+            $url = new moodle_url('/grade/report/user/index.php', ['id' => $grade->courseid]);
             if (in_array($modtype, ['quiz', 'assign'])
                 && (!empty($grade->rawgrade) || !empty($grade->feedback))
             ) {
@@ -833,7 +833,7 @@ class local {
             $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             if ($renderhtml) {
-                $modimage = \html_writer::img($modimageurl, $modname);
+                $modimage = \core\output\html_writer::img($modimageurl, $modname);
             } else {
                 $modimage = $modimageurl->out();
             }
@@ -872,7 +872,7 @@ class local {
      *
      * @param bool $onlyactive - only show grades in courses actively enrolled on if true.
      * @return string
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function graded($onlyactive = true) {
         global $PAGE;
@@ -923,7 +923,7 @@ class local {
             $modimageurl = $output->image_url('icon', $cm->modname);
             $modname = get_string('modulename', 'mod_'.$cm->modname);
             if ($renderhtml) {
-                $modimage = \html_writer::img($modimageurl, $modname);
+                $modimage = \core\output\html_writer::img($modimageurl, $modname);
             } else {
                 $modimage = $modimageurl->out();
             }
@@ -997,7 +997,7 @@ class local {
      *
      * @param int $userid
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function gradeable_courseids($userid) {
         $courses = enrol_get_all_users_courses($userid, true);
@@ -1143,13 +1143,13 @@ class local {
      * Make url based on file for theme_snap components only.
      *
      * @param stored_file $file
-     * @return \moodle_url | bool
+     * @return moodle_url | bool
      */
     private static function snap_pluginfile_url($file) {
         if (!$file) {
             return false;
         } else {
-            return \moodle_url::make_pluginfile_url(
+            return moodle_url::make_pluginfile_url(
                 $file->get_contextid(),
                 $file->get_component(),
                 $file->get_filearea(),
@@ -1261,7 +1261,7 @@ class local {
      * Get the cover image url for the course card.
      *
      * @param int $courseid
-     * @return bool|\moodle_url
+     * @return bool|moodle_url
      */
     public static function course_card_image_url($courseid) {
         $context = \context_course::instance($courseid);
@@ -1294,7 +1294,7 @@ class local {
      *
      * @param \context $context
      * @return bool|stored_file
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function coverimage($context, $featuredcards = false) {
         global $DB;
@@ -1432,7 +1432,7 @@ class local {
      * @return stored_file | bool (false)
      */
     public static function site_coverimage_original() {
-        $theme = \theme_config::load('snap');
+        $theme = \core\output\theme_config::load('snap');
         $filename = $theme->settings->poster;
         if ($filename) {
             if (substr($filename, 0, 1) != '/') {
@@ -1495,7 +1495,7 @@ class local {
      * Get the best cover image file name for a given context.
      * @param \context $context
      * @return string
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     private static function coverimage_filename(\context $context) {
         $contextlevel = $context->contextlevel;
@@ -1507,7 +1507,7 @@ class local {
         ];
 
         if (empty($filenamemap[$contextlevel])) {
-            throw new \coding_exception('Unsupported context level '.$contextlevel);
+            throw new \core\exception\coding_exception('Unsupported context level '.$contextlevel);
         } else {
             return $filenamemap[$contextlevel];
         }
@@ -1525,7 +1525,7 @@ class local {
         $contextlevel = $context->contextlevel;
         $validcontexts = [CONTEXT_SYSTEM, CONTEXT_COURSECAT, CONTEXT_COURSE];
         if (!in_array($contextlevel, $validcontexts)) {
-            throw new \coding_exception('Invalid context passed to process_coverimage');
+            throw new \core\exception\coding_exception('Invalid context passed to process_coverimage');
         }
         $newfilename = self::coverimage_filename($context);
 
@@ -1667,7 +1667,7 @@ class local {
                 $user = $DB->get_record('user', ['id' => $userorid]);
             }
         } else {
-            throw new \coding_exception('paramater $userorid must be an object or an integer or a numeric string');
+            throw new \core\exception\coding_exception('paramater $userorid must be an object or an integer or a numeric string');
         }
 
         return $user;
@@ -1694,7 +1694,7 @@ class local {
                 $course = get_course($courseorid);
             }
         } else {
-            throw new \coding_exception('paramater $courseorid must be an object or an integer or a numeric string');
+            throw new \core\exception\coding_exception('paramater $courseorid must be an object or an integer or a numeric string');
         }
 
         return $course;
@@ -1724,7 +1724,7 @@ class local {
      * @param int $limit
      * @param int|null $since timestamp, only return posts from after this
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function recent_forum_activity($userorid = false, $limit = 10, $since = null) {
         global $CFG, $DB;
@@ -1995,8 +1995,8 @@ class local {
     /**
      * @param bool $renderhtml
      * @return array
-     * @throws \coding_exception
-     * @throws \moodle_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
      */
     public static function recent_forum_activity_data($renderhtml = false) {
         global $PAGE, $OUTPUT, $CFG;
@@ -2024,7 +2024,7 @@ class local {
 
             $iconurl = '';
             if (!empty($activity->user)) {
-                $userpicture = new user_picture($activity->user);
+                $userpicture = new \core\output\user_picture($activity->user);
                 $userpicture->link = false;
                 $userpicture->alttext = false;
                 $userpicture->size = 32;
@@ -2075,7 +2075,7 @@ class local {
      * e.g. - $PAGE->get_path on http://testing.local/apps/moodle/user/profile.php would return
      * apps/moodle/user/profile.php but we just want /user/profile.php
      * @return mixed
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function current_url_path() {
         global $PAGE;
@@ -2360,7 +2360,7 @@ SQL;
                 $modimageurl = $output->image_url('icon', $cm->modname);
                 $modname = get_string('modulename', 'mod_'.$cm->modname);
                 if ($renderhtml) {
-                    $modimage = \html_writer::img($modimageurl, $modname);
+                    $modimage = \core\output\html_writer::img($modimageurl, $modname);
                 } else {
                     $modimage = $modimageurl->out();
                 }
@@ -2400,7 +2400,7 @@ SQL;
                     $meta .= '<div class="snap-completion-meta event-'.$id.'">' . $metalink .
                         '</div>';
                 }
-                $url = !empty($event->actionurl) && ($event->actionurl instanceof \moodle_url) ?
+                $url = !empty($event->actionurl) && ($event->actionurl instanceof moodle_url) ?
                     $event->actionurl : $cm->url;
 
                 if (empty($url)) {
@@ -2439,8 +2439,8 @@ SQL;
      * @param int $maxid
      * @param int $courseid
      * @return array
-     * @throws \coding_exception
-     * @throws \moodle_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
      */
     public static function get_feed(string $feedid, $page = 0, $pagesize = 3, $maxid = -1, $courseid = 0) : array {
         global $USER, $CFG;

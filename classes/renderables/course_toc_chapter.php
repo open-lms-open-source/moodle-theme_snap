@@ -23,7 +23,7 @@
 
 namespace theme_snap\renderables;
 
-class course_toc_chapter implements \renderable {
+class course_toc_chapter implements \core\output\renderable {
 
     /**
      * @var bool

@@ -24,14 +24,14 @@
 namespace theme_snap\renderables;
 
 use context_course;
-use moodle_url;
+use \core\url;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/lib.php');
 require_once($CFG->dirroot.'/course/format/lib.php');
 
-class course_toc implements \renderable, \templatable {
+class course_toc implements \core\output\renderable, \core\output\templatable {
 
     use \theme_snap\output\general_section_trait;
     use \theme_snap\renderables\trait_exportable;
@@ -88,7 +88,7 @@ class course_toc implements \renderable, \templatable {
      * @param null|int $course
      * @param null|string $format
      * @param bool $loadmodules
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function __construct($course = null, $format = null, $loadmodules = true) {
         global $COURSE, $PAGE;
@@ -132,7 +132,7 @@ class course_toc implements \renderable, \templatable {
 
     /**
      * Set modules.
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     protected function set_modules() {
         // If course does not have any sections then exit - note, module search is not supported in course formats
@@ -273,7 +273,7 @@ class course_toc implements \renderable, \templatable {
     }
 
     /**
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     protected function set_footer() {
         global $OUTPUT;

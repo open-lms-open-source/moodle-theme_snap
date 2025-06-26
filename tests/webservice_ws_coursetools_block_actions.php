@@ -78,8 +78,8 @@ class webservice_ws_coursetools_block_actions extends \advanced_testcase {
                     'courseid' => $course->id
                 ]
             );
-        } catch (\moodle_exception $e) {
-            $this->assertInstanceOf('moodle_exception', $e);
+        } catch (\core\exception\moodle_exception $e) {
+            $this->assertInstanceOf('\core\exception\moodle_exception', $e);
         }
         $this->assertCount(0, $DB->get_records('block_positions',
             ['blockinstanceid' => $blockcalendar->instance->id, 'visible' => 0]));
@@ -93,8 +93,8 @@ class webservice_ws_coursetools_block_actions extends \advanced_testcase {
                     'courseid' => $course->id
                 ]
             );
-        } catch (\moodle_exception $e) {
-            $this->assertInstanceOf('moodle_exception', $e);
+        } catch (\core\exception\moodle_exception $e) {
+            $this->assertInstanceOf('\core\exception\moodle_exception', $e);
         }
         $this->assertCount(0, $DB->get_records('block_positions',
             ['blockinstanceid' => $blockcalendar->instance->id, 'visible' => 1]));
@@ -108,8 +108,8 @@ class webservice_ws_coursetools_block_actions extends \advanced_testcase {
                     'courseid' => $course->id
                 ]
             );
-        } catch (\moodle_exception $e) {
-            $this->assertInstanceOf('moodle_exception', $e);
+        } catch (\core\exception\moodle_exception $e) {
+            $this->assertInstanceOf('\core\exception\moodle_exception', $e);
         }
         $this->assertCount(1, $DB->get_records('block_instances',
             ['id' => $blockcalendar->instance->id]));
@@ -150,8 +150,8 @@ class webservice_ws_coursetools_block_actions extends \advanced_testcase {
                     'courseid' => $course->id
                 ]
             );
-        } catch (\moodle_exception $e) {
-            $this->assertInstanceOf('moodle_exception', $e);
+        } catch (\core\exception\moodle_exception $e) {
+            $this->assertInstanceOf('\core\exception\moodle_exception', $e);
         }
 
         // Delete action allowed.

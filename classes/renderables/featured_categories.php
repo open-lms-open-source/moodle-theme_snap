@@ -17,7 +17,7 @@
 namespace theme_snap\renderables;
 
 use theme_snap\local;
-use moodle_url;
+use \core\url as moodle_url;
 
 /**
  * Featured categories renderable.
@@ -26,7 +26,7 @@ use moodle_url;
  * @copyright Copyright (c) 2024 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class featured_categories implements \renderable, \templatable {
+class featured_categories implements \core\output\renderable, \core\output\templatable {
 
     use trait_exportable;
 

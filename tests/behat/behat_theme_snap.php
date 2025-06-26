@@ -335,7 +335,7 @@ class behat_theme_snap extends behat_base {
                         'assignfeedbackcomments_editor[format]' => FORMAT_HTML,
                     ];
                     if (!$commentsplugin->save_settings($formdata)) {
-                        throw new moodle_exception($commentsplugin->get_error());
+                        throw new \core\exception\moodle_exception($commentsplugin->get_error());
                         $USER = $origuser;
                         return false;
                     }
@@ -650,7 +650,7 @@ class behat_theme_snap extends behat_base {
                 '//*[contains(text(),  \''.$elementstr.'\')]'.
                 '/parent::h3/parent::div)';
         } else {
-            throw new coding_exception('Unknown element type ('.$type.')');
+            throw new \core\exception\coding_exception('Unknown element type ('.$type.')');
         }
         return $baseselector;
     }
@@ -1247,13 +1247,13 @@ class behat_theme_snap extends behat_base {
      *
      * @param string $username
      * @return stdClass | false
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      */
     private function get_user_by_username($username) {
         global $DB;
         $user = $DB->get_record('user', ['username' => $username]);
         if (empty($user)) {
-            throw new coding_exception('Invalid username '.$username);
+            throw new \core\exception\coding_exception('Invalid username '.$username);
         }
         return $user;
     }
@@ -1275,8 +1275,8 @@ class behat_theme_snap extends behat_base {
      * @param int $userid
      * @param int $roleid
      * @return bool
-     * @throws coding_exception
-     * @throws moodle_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
      */
     protected function unassign_role_from_user($contextid, $userid, $roleid) {
         global $DB;
@@ -1737,7 +1737,7 @@ class behat_theme_snap extends behat_base {
      * Opens the course homepage.
      *
      * @Given /^I am on activity "(?P<activity>(?:[^"]|\\")*)" "(?P<activityname>(?:[^"]|\\")*)" page$/
-     * @throws coding_exception
+     * @throws \core\exception\coding_exception
      * @param string $coursefullname The full name of the course.
      * @return void
      */
@@ -1745,7 +1745,7 @@ class behat_theme_snap extends behat_base {
         global $DB;
         $activityid = $DB->get_field($activity, 'id', ['name' => $activityname], MUST_EXIST);
         $cm = get_coursemodule_from_instance($activity, $activityid, 0, false, MUST_EXIST);
-        $url = new moodle_url('/mod/' . $activity . '/view.php', ['id' => $cm->id]);
+        $url = new \core\url('/mod/' . $activity . '/view.php', ['id' => $cm->id]);
         $this->getSession()->visit($this->locate_path($url->out_as_local_url(false)));
     }
 

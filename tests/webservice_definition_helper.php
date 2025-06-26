@@ -29,7 +29,7 @@ class definition_helper_testable extends definition_helper {
      * Magic method for getting protected / private properties.
      * @param string $name
      * @return mixed
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function __get($name) {
         return $this->$name;
@@ -40,7 +40,7 @@ class definition_helper_testable extends definition_helper {
      * @param string $name
      * @param mixed $value
      * @return mixed
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function __set($name, $value) {
         $this->$name = $value;
@@ -319,7 +319,7 @@ EOF;
     }
 
     public function test_convert_ws_param_no_type() {
-        $this->expectException('coding_exception');
+        $this->expectException('\\core\\exception\\coding_exception');
         $this->expectExceptionMessage('Type not specified');
         new definition_helper_testable(new wsparam_notype());
     }

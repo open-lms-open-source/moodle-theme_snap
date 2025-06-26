@@ -83,9 +83,9 @@ if (!($PAGE->pagetype === 'login-signup')) {
 <section id="region-main">
 <?php
 if ($PAGE->title === get_string('restoredaccount')) {
-    echo html_writer::start_div('loginerror-restoredaccount');
+    echo \core\output\html_writer::start_div('loginerror-restoredaccount');
     echo $OUTPUT->main_content();
-    echo html_writer::end_div();
+    echo \core\output\html_writer::end_div();
 } else {
     echo $OUTPUT->main_content();
 }

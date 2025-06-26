@@ -80,7 +80,7 @@ class kernel {
      * header/footer, etc.
      *
      * @param $callback
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function execute_callback($callback) {
         global $OUTPUT;
@@ -91,7 +91,7 @@ class kernel {
         ob_end_clean();
 
         if (!empty($response) && !empty($buffer)) {
-            throw new \coding_exception('Mixed return output and buffer output');
+            throw new \core\exception\coding_exception('Mixed return output and buffer output');
         } else if (!empty($buffer)) {
             $response = $buffer;
         }

@@ -23,7 +23,7 @@
 
 namespace theme_snap\renderables;
 
-class login_alternative_methods implements \renderable {
+class login_alternative_methods implements \core\output\renderable {
 
     public $potentialidps = [];
 

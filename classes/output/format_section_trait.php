@@ -28,8 +28,8 @@ namespace theme_snap\output;
 use context_course;
 use core_courseformat\base as course_format;
 use core_courseformat\output\local\content;
-use html_writer;
-use moodle_url;
+use \core\output\html_writer;
+use \core\url as moodle_url;
 use stdClass;
 use theme_snap\output\core\course_renderer;
 use theme_snap\renderables\course_action_section_duplicate;
@@ -56,7 +56,7 @@ trait format_section_trait {
         return '';
     }
 
-    public function render(\renderable $widget): string {
+    public function render(\core\output\renderable $widget): string {
         global $PAGE, $DB;
 
         // Render the course content based on Core templates.
@@ -929,7 +929,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_move $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_move(course_action_section_move $action) {
         $data = $action->export_for_template($this);
@@ -939,7 +939,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_visibility $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_visibility(course_action_section_visibility $action) {
         $data = $action->export_for_template($this);
@@ -949,7 +949,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_highlight $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_highlight(course_action_section_highlight $action) {
         $data = $action->export_for_template($this);
@@ -959,7 +959,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_delete $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_delete(course_action_section_delete $action) {
         $data = $action->export_for_template($this);
@@ -969,7 +969,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_duplicate $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_duplicate(course_action_section_duplicate $action) {
         $data = $action->export_for_template($this);
@@ -979,7 +979,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_extra_menu $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_extra_menu(course_action_section_extra_menu $action) {
         $data = $action->export_for_template($this);
@@ -989,7 +989,7 @@ trait format_section_trait {
     /**
      * @param course_action_section_permalink $action
      * @return mixed
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function render_course_action_section_permalink(course_action_section_permalink $action) {
         $data = $action->export_for_template($this);

@@ -90,9 +90,9 @@ class ws_course_sections extends external_api {
      * @param int $value
      * @param bool $loadmodules only used when action == 'visibility'
      * @return array
-     * @throws \coding_exception
-     * @throws \moodle_exception
-     * @throws \required_capability_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
+     * @throws \core\exception\required_capability_exception
      */
     public static function service($courseshortname, $action, $sectionnumber, $value, $loadmodules) {
         $service = course::service();
@@ -106,6 +106,6 @@ class ws_course_sections extends external_api {
             case 'toc':
                 return $service->toc($courseshortname);
         }
-        throw new \coding_exception('Invalid action selected :' . $action);
+        throw new \core\exception\coding_exception('Invalid action selected :' . $action);
     }
 }

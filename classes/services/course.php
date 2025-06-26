@@ -170,7 +170,7 @@ class course {
 
         $filefromdraft = $fs->get_file($usercontext->id, 'user', 'draft', $fileid, '/', $filename);
         if ($filefromdraft->get_filesize() > get_max_upload_file_size($CFG->maxbytes)) {
-            throw new \moodle_exception('error:coverimageexceedsmaxbytes', 'theme_snap');
+            throw new \core\exception\moodle_exception('error:coverimageexceedsmaxbytes', 'theme_snap');
         }
 
         if ($context->contextlevel === CONTEXT_COURSE) {
@@ -206,7 +206,7 @@ class course {
             // Purge course image cache in case image has been updated.
             \cache::make('core', 'course_image')->delete($context->instanceid);
         } else {
-            throw new coding_exception('Unsupported context level '.$context->contextlevel);
+            throw new \core\exception\coding_exception('Unsupported context level '.$context->contextlevel);
         }
 
         // Create new cover image file and process it.
@@ -281,7 +281,7 @@ class course {
      * Get courses for current user split by favorite status.
      *
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function my_courses_split_by_favorites() {
         $courses = enrol_get_my_courses('enddate', 'fullname ASC, id DESC');
@@ -466,7 +466,7 @@ class course {
      * @param string $shortname
      * @param int $sectionnumber
      * @param boolean $highlight
-     * @throws \required_capability_exception
+     * @throws \core\exception\required_capability_exception
      * @return array
      */
     public function highlight_section($shortname, $sectionnumber, $highlight) {
@@ -502,8 +502,8 @@ class course {
      * @param boolean $visible
      * @param bool $loadmodules Should modules be loaded.
      * @return array
-     * @throws \moodle_exception
-     * @throws \required_capability_exception
+     * @throws \core\exception\moodle_exception
+     * @throws \core\exception\required_capability_exception
      */
     public function set_section_visibility($shortname, $sectionnumber, $visible, $loadmodules = true) {
         global $OUTPUT;
@@ -554,7 +554,7 @@ class course {
      * Get course TOC.
      * @param string $shortname Course short name
      * @return array
-     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public function toc($shortname) {
         global $OUTPUT;
@@ -574,9 +574,9 @@ class course {
      * Toggle module completion state.
      * @param int $id (cmid)
      * @param int $completionstate
-     * @throws \coding_exception
-     * @throws \moodle_exception
-     * @throws moodle_exception
+     * @throws \core\exception\coding_exception
+     * @throws \core\exception\moodle_exception
+     * @throws \core\exception\moodle_exception
      * @return string
      */
     public function module_toggle_completion($id, $completionstate) {
@@ -593,12 +593,12 @@ class course {
         // Set up completion object and check it is enabled.
         $completion = new \completion_info($course);
         if (!$completion->is_enabled()) {
-            throw new \moodle_exception('completionnotenabled', 'completion');
+            throw new \core\exception\moodle_exception('completionnotenabled', 'completion');
         }
 
         // Check completion state is manual.
         if ($cminfo->completion != COMPLETION_TRACKING_MANUAL) {
-            throw new \moodle_exception('cannotmanualctrack', $cminfo->modname);
+            throw new \core\exception\moodle_exception('cannotmanualctrack', $cminfo->modname);
         }
 
         $completion->update_state($cminfo, $completionstate);

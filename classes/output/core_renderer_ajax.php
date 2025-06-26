@@ -24,7 +24,7 @@
 
 namespace theme_snap\output;
 
-class core_renderer_ajax extends \core_renderer_ajax {
+class core_renderer_ajax extends \core\output\core_renderer_ajax {
 
     public function image_url($imagename, $component = 'moodle') {
         // Strip -24, -64, -256  etc from the end of filetype icons so we

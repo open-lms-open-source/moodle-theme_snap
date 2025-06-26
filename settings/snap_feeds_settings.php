@@ -23,15 +23,15 @@ $snapsettings = new admin_settingpage('themesnapfeeds', get_string('snapfeeds', 
 // Snap feeds settings.
 $advancedfeedsdependants = [];
 $name = 'theme_snap/mycoursessnapfeedsheading';
-$title = new lang_string('mycoursessnapfeedsheading', 'theme_snap');
-$description = new lang_string('mycoursessnapfeedsdesc', 'theme_snap');
+$title = new \core\lang_string('mycoursessnapfeedsheading', 'theme_snap');
+$description = new \core\lang_string('mycoursessnapfeedsdesc', 'theme_snap');
 $setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
 // Deadlines on/off.
 $name = 'theme_snap/deadlinestoggle';
-$title = new lang_string('deadlinestoggle', 'theme_snap');
-$description = new lang_string('deadlinestoggledesc', 'theme_snap');
+$title = new \core\lang_string('deadlinestoggle', 'theme_snap');
+$description = new \core\lang_string('deadlinestoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $advancedfeedsdependencies[] = $setting->name;
@@ -39,8 +39,8 @@ $snapsettings->add($setting);
 
 // Recent feedback & grading on/off.
 $name = 'theme_snap/feedbacktoggle';
-$title = new lang_string('feedbacktoggle', 'theme_snap');
-$description = new lang_string('feedbacktoggledesc', 'theme_snap');
+$title = new \core\lang_string('feedbacktoggle', 'theme_snap');
+$description = new \core\lang_string('feedbacktoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $advancedfeedsdependencies[] = $setting->name;
@@ -48,8 +48,8 @@ $snapsettings->add($setting);
 
 // Messages on/off.
 $name = 'theme_snap/messagestoggle';
-$title = new lang_string('messagestoggle', 'theme_snap');
-$description = new lang_string('messagestoggledesc', 'theme_snap');
+$title = new \core\lang_string('messagestoggle', 'theme_snap');
+$description = new \core\lang_string('messagestoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $advancedfeedsdependencies[] = $setting->name;
@@ -57,8 +57,8 @@ $snapsettings->add($setting);
 
 // Forum posts on/off.
 $name = 'theme_snap/forumpoststoggle';
-$title = new lang_string('forumpoststoggle', 'theme_snap');
-$description = new lang_string('forumpoststoggledesc', 'theme_snap');
+$title = new \core\lang_string('forumpoststoggle', 'theme_snap');
+$description = new \core\lang_string('forumpoststoggledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $advancedfeedsdependencies[] = $setting->name;
@@ -66,15 +66,15 @@ $snapsettings->add($setting);
 
 // Enable advanced feeds.
 $name = 'theme_snap/advancedfeedsenable';
-$title = new lang_string('advancedfeedsenable', 'theme_snap');
-$description = new lang_string('advancedfeedsenabledesc', 'theme_snap');
+$title = new \core\lang_string('advancedfeedsenable', 'theme_snap');
+$description = new \core\lang_string('advancedfeedsenabledesc', 'theme_snap');
 $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/advancedfeedsperpage';
-$title = new lang_string('advancedfeedsperpage', 'theme_snap');
-$description = new lang_string('advancedfeedsperpagedesc', 'theme_snap');
+$title = new \core\lang_string('advancedfeedsperpage', 'theme_snap');
+$description = new \core\lang_string('advancedfeedsperpagedesc', 'theme_snap');
 $default = '3';
 $snapfeedperpagechoices = [
     '3' => '3',
@@ -86,22 +86,22 @@ $setting = new admin_setting_configselect($name, $title, $description, $default,
 $snapsettings->add($setting);
 
 $name = 'theme_snap/advancedfeedslifetime';
-$title = new lang_string('advancedfeedslifetime', 'theme_snap');
-$description = new lang_string('advancedfeedslifetimedesc', 'theme_snap');
+$title = new \core\lang_string('advancedfeedslifetime', 'theme_snap');
+$description = new \core\lang_string('advancedfeedslifetimedesc', 'theme_snap');
 $default = 30 * MINSECS;
 $setting = new admin_setting_configduration($name, $title, $description, $default, MINSECS);
 $snapsettings->add($setting);
 
 // Refresh deadlines task settings.
 $name = 'theme_snap/refreshdeadlinestasksettingheading';
-$title = new lang_string('refreshdeadlinestasksettingheading', 'theme_snap');
+$title = new \core\lang_string('refreshdeadlinestasksettingheading', 'theme_snap');
 $description = '';
 $setting = new admin_setting_heading($name, $title, $description);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/refreshdeadlines';
-$title = new lang_string('refreshdeadlines', 'theme_snap');
-$description = new lang_string('refreshdeadlinesdesc', 'theme_snap');
+$title = new \core\lang_string('refreshdeadlines', 'theme_snap');
+$description = new \core\lang_string('refreshdeadlinesdesc', 'theme_snap');
 $default = !$checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);

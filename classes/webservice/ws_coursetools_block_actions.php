@@ -69,12 +69,12 @@ class ws_coursetools_block_actions extends external_api {
         try {
             $course = $DB->get_record('course', ['id' => $params['params']['courseid']]);
             if (!$course) {
-                throw new \moodle_exception('invalidcourseid');
+                throw new \core\exception\moodle_exception('invalidcourseid');
             }
             $context = \context_course::instance($course->id);
             // Load the block instances for all the regions.
             if (!$PAGE->has_set_url()) {
-                $PAGE->set_url(new \moodle_url('/course/view.php', array('id' => $params['params']['courseid'])));
+                $PAGE->set_url(new \core\url('/course/view.php', array('id' => $params['params']['courseid'])));
                 $PAGE->set_context($context);
                 $PAGE->set_course($course);
                 $PAGE->set_pagelayout('course');
@@ -87,7 +87,7 @@ class ws_coursetools_block_actions extends external_api {
             if (!$PAGE->user_can_edit_blocks() ||
                 !$block->user_can_edit() ||
                 !$block->user_can_addto($PAGE)) {
-                throw new \moodle_exception('nopermissions');
+                throw new \core\exception\moodle_exception('nopermissions');
             }
 
             if ($params['params']['action'] == "bui_hideid") {
@@ -99,14 +99,14 @@ class ws_coursetools_block_actions extends external_api {
             } elseif ($params['params']['action'] == "bui_deleteid") {
                 if (in_array($block->instance->blockname, \block_manager::get_undeletable_block_types()) ||
                     in_array($block->instance->blockname, $PAGE->blocks->get_required_by_theme_block_types())) {
-                    throw new \moodle_exception('nopermissions');
+                    throw new \core\exception\moodle_exception('nopermissions');
                 }
                 blocks_delete_instance($block->instance);
                 // bui_deleteid and bui_confirm should not be in the PAGE url.
                 $PAGE->ensure_param_not_in_url('bui_deleteid');
                 $PAGE->ensure_param_not_in_url('bui_confirm');
             } else {
-                throw new \moodle_exception('invalidaction');
+                throw new \core\exception\moodle_exception('invalidaction');
             }
             return ['success' => true];
         } catch (Exception $e) {

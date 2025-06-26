@@ -106,7 +106,7 @@ class urls_and_strings_check_test extends \advanced_testcase {
         global $PAGE;
 
         $renderer = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $url = new \moodle_url('course/view.php', ['id' => 1]);
+        $url = new \core\url('course/view.php', ['id' => 1]);
         $editbutton = $renderer->edit_button($url);
         $this->assertEquals('', $editbutton);
     }

@@ -53,7 +53,7 @@ if (!empty($PAGE->theme->settings->logo)) {
     $attrs['class'] = 'logo';
 }
 
-echo html_writer::link($defaulthomeurl, $sitefullname, $attrs);
+echo \core\output\html_writer::link($defaulthomeurl, $sitefullname, $attrs);
 ?>
 
 <div class="float-end js-only row">

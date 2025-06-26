@@ -30,7 +30,7 @@ abstract class controller_abstract {
      * Generate a new URL to this page
      *
      * @param array $params
-     * @return \moodle_url
+     * @return \core\url
      */
     public function new_url($params = array()) {
         global $PAGE;
@@ -45,7 +45,7 @@ abstract class controller_abstract {
      * action is invoked.
      *
      * @param string $action This is the action that is about to be invoked
-     * @throws \moodle_exception
+     * @throws \core\exception\moodle_exception
      */
     public function init($action) {
         $this->require_capability($action);
