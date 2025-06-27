@@ -854,7 +854,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 window.addEventListener("scroll", () => {
                     if (!ticking) {
                         window.requestAnimationFrame(() => {
-                            const isScrolled = window.scrollX > 500;
+                            const isScrolled = window.scrollX > 10;
                             const hasClass = goLeftBtn.classList.contains("scrolled");
 
                             if (isScrolled && !hasClass) {
