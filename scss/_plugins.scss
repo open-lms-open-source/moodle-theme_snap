@@ -555,18 +555,18 @@
 // Book mod grid.
 @include media-breakpoint-up(sm) {
     #page-mod-book-view {
-
-        #region-main {
-            width: 70%;
-            float: right;
-        }
-
         #moodle-blocks {
             clear: none;
             width: 30%;
             float: left;
         }
     }
+}
+
+#page-mod-quiz-attempt #page.show-drawer-right,
+#page-mod-book-view #page.show-drawer-right {
+    left: 0;
+    width: 70%;
 }
 
 #page-mod-book-view.editing .book_toc .d-flex {
