@@ -300,13 +300,13 @@ const handleMessagesPopoverClick = (e) => {
  * @return {Promise}
  */
 const setActiveDrawer = async() => {
-    const preferences = await getUserPreferences();
+    const preferences = await getUserPreferences(null, M.cfg.userId);
     const preferencesArray = {};
-    preferences.preferences.forEach(pref => {
+    Object.keys(preferences).forEach(pref => {
         if (M.cfg.behatsiterunning) {
-            preferencesArray[pref.name] = 0;
+            preferencesArray[pref] = 0;
         } else {
-            preferencesArray[pref.name] = pref.value;
+            preferencesArray[pref] = preferences[pref];
         }
     });
     // Review which user preference is set to true, from PREFERENCE_MAP
@@ -337,13 +337,13 @@ const setDrawerPreference = (activeSelector, value) => {
     for (const [preference, selector] of Object.entries(PREFERENCE_MAP)) {
         if (selector.includes(activeSelector) && !isSmall() && value) {
             // Set open status to selected Drawer.
-            setUserPreferences([{name: preference, value: true}]);
+            setUserPreferences([{name: preference, value: true, userid: M.cfg.userId}]);
         } else if (value) {
             // Set closed status to other Drawers.
-            setUserPreferences([{name: preference, value: false}]);
+            setUserPreferences([{name: preference, value: false, userid: M.cfg.userId}]);
         } else if (selector.includes(activeSelector) && !value) {
             // Set closed status to selected Drawer.
-            setUserPreferences([{name: preference, value: false}]);
+            setUserPreferences([{name: preference, value: false, userid: M.cfg.userId}]);
         }
     }
 };
