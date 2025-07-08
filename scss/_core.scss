@@ -5433,8 +5433,21 @@ header#mr-nav {
         max-height: 100%;
     }
 }
-
+#page-course-view-topics, #page-course-view-weeks, #page-course-index-category {
+    #page-header {
+        min-height: 210px;
+    }
+}
 @media (min-width: 992px) {
+    .theme-snap #snap-header {
+        height: 100px;
+    }
+    #page-header {
+        padding-top: 30px;
+        margin-top: 100px!important;
+        background-position: center center;
+        background-size: 100% 100%;
+    }
     header#mr-nav div#snap-custom-menu-header {
         display: block;
     }
@@ -5443,13 +5456,22 @@ header#mr-nav {
     }
     // Spacer to be shown conditionally when custom menu has items to show.
     body:has(header div#snap-custom-menu-header) {
-        .snap-custom-menu-spacer {
-            height: 7.15em;
+        #page-header {
+            margin-top: 150px!important;
         }
     }
 }
 
 @media (max-width: 992px) {
+    .theme-snap #snap-header {
+        height: 50px;
+    }
+    #page-header {
+        padding-top: 30px;
+        margin-top: 50px!important;
+        background-position: center center;
+        background-size: 100% 100%;
+    }
     header#mr-nav div#snap-custom-menu-header {
         display: none;
     }
@@ -5501,11 +5523,6 @@ header#mr-nav {
                     transition: 0.5s;
                 }
             }
-        }
-    }
-    body:has(header div#snap-custom-menu-header) {
-        .snap-custom-menu-spacer {
-            height: 3.1em;
         }
     }
 }
@@ -6248,7 +6265,6 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
 // Styles for course index page with Snap header.
 #page-course-index-category{
     #page {
-        margin-top: 6em;
         @include media-breakpoint-down(md) {
             margin-top: 0;
         }
@@ -6264,11 +6280,6 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
         padding-inline: 4%;
     }
 
-    .breadcrumb-nav {
-        @include media-breakpoint-up(md) {
-            margin-top: -.75em;
-        }
-    }
     #moodle-blocks {
         visibility: visible;
         height: auto;
