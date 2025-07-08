@@ -143,16 +143,18 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
          * Apply listeners to aspect ratio options.
          */
         var aspectRatioOptions = function() {
-            if ($('#page-course-view-topics, #page-course-view-weeks').length) {
+            cropperRatio = 0;
+            if ($('#page-course-view-topics, #page-course-view-weeks, #page-course-index-category').length) {
                 // If the Table of contents display option is set to Top.
                 if ($('#page-header #course-toc').length) {
-                    cropperRatio = 6/2;
-                    cropper.setAspectRatio(cropperRatio);
+                    cropperRatio = 3;
                 } else {
-                    cropperRatio = 6/1;
-                    cropper.setAspectRatio(cropperRatio);
+                    cropperRatio = 6;
                 }
+            } else if ($('#page-site-index').length) {
+                cropperRatio = 3;
             }
+            cropper.setAspectRatio(cropperRatio);
         };
 
         /**
