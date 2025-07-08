@@ -194,6 +194,8 @@ $nav-login-color:                   $nav-button-color;
     $nav-login-bg:                  $nav-button-color;
 }
 
+$nav-text-color: if($nav-color != #ffffff, $nav-color, $nav-bg);
+
 // -------------------------
 // Colour variables for snap home page.
 // -------------------------
