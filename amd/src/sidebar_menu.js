@@ -514,7 +514,7 @@ const toggleSidebarOnHorizontalScroll = (scrollX) => {
         if (lastScrollX === 0) {
             // Hide sidebar
             sidebar.style.right = '-100%';
-            
+            sidebar.classList.remove('show');
             // Hide active drawers
             DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
                 const activeDrawers = queryActiveDrawers(selector); // Use the helper function
@@ -526,7 +526,7 @@ const toggleSidebarOnHorizontalScroll = (scrollX) => {
     } else if (lastScrollX !== 0) {
         // When returning to scroll position 0
         sidebar.style.right = '';
-        
+        sidebar.classList.add('show');
         // Restore active drawers visibility
         DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
             const activeDrawers = queryActiveDrawers(selector); // Use the helper function
