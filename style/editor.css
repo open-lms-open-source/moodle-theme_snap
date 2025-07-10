@@ -6519,11 +6519,6 @@ header#page-header
     display: inline;
 }
 
-#page-mod-book-view #region-main {
-    width: 70%;
-    float: right;
-}
-
 #page-mod-book-view #moodle-blocks {
     clear: none;
     width: 30%;

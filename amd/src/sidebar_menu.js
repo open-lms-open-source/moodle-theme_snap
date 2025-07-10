@@ -84,6 +84,11 @@ const PREFERENCES = {
     MESSAGES_DRAWER: 'snap-message-drawer-open',
 };
 
+const FORCEOPEN_BODY_IDS = [
+    'page-mod-quiz-attempt',
+    'page-mod-book-view'
+];
+
 const PREFERENCE_MAP = {
     [PREFERENCES.BLOCKS_DRAWER]: ACTIVE_SELECTORS.BLOCKS_DRAWER,
     [PREFERENCES.SNAP_FEEDS]: ACTIVE_SELECTORS.SNAP_FEEDS,
@@ -300,13 +305,28 @@ const handleMessagesPopoverClick = (e) => {
  * @return {Promise}
  */
 const setActiveDrawer = async() => {
-    const preferences = await getUserPreferences(null, M.cfg.userId);
+    let preferences = await getUserPreferences(null, M.cfg.userId);
     const preferencesArray = {};
+
+    // Ensure required preference keys exist with default value if missing.
+    const defaultPreferences = {};
+    Object.values(PREFERENCES).forEach(key => {
+        if (!(key in preferences)) {
+            defaultPreferences[key] = 0;
+        }
+    });
+    preferences = { ...defaultPreferences, ...preferences };
+
     Object.keys(preferences).forEach(pref => {
         if (M.cfg.behatsiterunning) {
             preferencesArray[pref] = 0;
         } else {
             preferencesArray[pref] = preferences[pref];
+        }
+        if (pref === PREFERENCES.BLOCKS_DRAWER) {
+            if (FORCEOPEN_BODY_IDS.includes(document.body.id)) {
+                preferencesArray[pref] = 1;
+            }
         }
     });
     // Review which user preference is set to true, from PREFERENCE_MAP
