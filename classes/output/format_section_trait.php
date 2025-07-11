@@ -28,6 +28,7 @@ namespace theme_snap\output;
 use context_course;
 use core_courseformat\base as course_format;
 use core_courseformat\output\local\content;
+use core_courseformat\output\local\content\sectionnavigation;
 use \core\output\html_writer;
 use \core\url as moodle_url;
 use stdClass;
@@ -63,30 +64,45 @@ trait format_section_trait {
         if ($widget instanceof content) {
             $context = \context_course::instance($PAGE->course->id);
             $course = get_course($context->instanceid);
-
             $modinfo = get_fast_modinfo($course);
+            $courseformat = course_get_format($course);
 
-            // Check if we are in a specific section.
+            // Check if we are in a specific section by URL.
             $pagepath = $PAGE->url->get_path();
             $sectionid = optional_param('id', -1, PARAM_INT);
             $sectionnumber = optional_param('section', -1, PARAM_INT);
             $currentsection = null;
             $onsectionpage = false;
 
-            if ($pagepath === '/course/section.php' && $sectionid !== -1) {
+            if ($pagepath === '/course/section.php' && $sectionid !== -1) { // For section.php render
                 $sectionrecord = $DB->get_record('course_sections', ['id' => $sectionid], '*', MUST_EXIST);
                 $currentsection = $modinfo->get_section_info($sectionrecord->section);
                 $onsectionpage = true;
-            } elseif ($sectionnumber !== -1) {
+            } elseif ($sectionnumber !== -1) { // For view.php?section=0 render - (single section via URL parameter)
                 $currentsection = $modinfo->get_section_info($sectionnumber);
                 $onsectionpage = true;
+            } else if ($pagepath === '/course/view.php' && $sectionnumber === -1) { // For view.php render - (Main course view)
+                $startsectionid = $this->get_snap_active_section($course);
+
+                // Set current section to Course.
+                $courseformat->set_sectionnum($startsectionid);
+                $reflection = new \ReflectionClass($widget);
+                $formatProperty = $reflection->getProperty('format');
+                $formatProperty->setAccessible(true);
+                $formatProperty->setValue($widget, $courseformat);
+
+                $currentsection = $modinfo->get_section_info($startsectionid);
+                $onsectionpage = true;
+            } else if ($pagepath === '/') { // For call via AJAX - theme_snap_output_fragment_section
+                $currentsection = $modinfo->get_section_info($courseformat->get_sectionnum());
             }
 
             // Bring core render.
             $corecontent = parent::render($widget);
+            $output = $corecontent;
 
-            if ($onsectionpage && $currentsection) {
-                // When rendering a single section, section.php
+            if ($currentsection) {
+                // For rendering a single section.
                 $sectionheader = $this->section_header(
                     $currentsection,
                     $course,
@@ -103,24 +119,47 @@ trait format_section_trait {
                 }
                 // Add Snap footer navigation for course.
                 $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $currentsection->section));
-                // Output the "Add new section" form.
-                $output .= $this->change_num_sections($course);
-                // Add Snap Course Dashboard.
-                $output .= shared::course_tools(true);
-                return $output;
-            } else {
-                // We are on view.php render.
-                $output = $corecontent;
-                // Output the "Add new section" form.
-                $output .= $this->change_num_sections($course);
-                // Add Snap Course Dashboard.
-                $output .= shared::course_tools(true);
-                return $output;
             }
+            if ($onsectionpage) {
+                $sections = html_writer::start_tag('ul', ['class' => 'sections']);
+                $sections .= $this->render_from_template('theme_snap/course_section_loading', []);
+                $sections .= $output;
+                $sections .= html_writer::end_tag('ul');
+                $output = $sections;
+                // Output the "Add new section" form.
+                $output .= $this->change_num_sections($course);
+                // Add Snap Course Dashboard.
+                $output .= shared::course_tools(true);
+            }
+            return $output;
         }
 
-        // Render as usual.
+        // Render as usual for any other widget.
         return parent::render($widget);
+    }
+
+    /**
+     * Find the active section for main Course view.
+     *
+     * @param stdClass $course The course entry from DB
+     * @return mixed The section to show by default in Snap Course View
+     */
+    protected function get_snap_active_section($course) {
+        $startsectionid = 0; // Default section 0.
+        if ($course->format == 'weeks') {
+            $numsections = course_get_format($course)->get_last_section_number();
+            for ($i = 0; $i <= $numsections; $i++) {
+                if (course_get_format($course)->is_section_current($i)) {
+                    $startsectionid = $i;
+                    break;
+                }
+            }
+        } else if ($course->format == 'topics') {
+            $startsectionid = !empty($course->marker) ? $course->marker : 0;
+        }
+        $startsectionid = !empty($course->sectionreturn) ? $course->sectionreturn : $startsectionid;
+
+        return $startsectionid;
     }
 
     /**

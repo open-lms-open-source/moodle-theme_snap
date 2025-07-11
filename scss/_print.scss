@@ -42,7 +42,7 @@
             page-break-inside: auto;
         }
         // Section at the top of the printout.
-        .course-content > ul li.section.state-visible {
+        .course-content > ul > li.section.state-visible {
             position: absolute;
             page-break-inside: avoid;
         }
