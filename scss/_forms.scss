@@ -55,9 +55,15 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-
 .form-item,
 .path-backup .mform .grouped_settings .fitem,
 .mform .fcontainer > .fitem {
-    margin-bottom: 0;
     padding: 0.5rem;
-
+    display: block;
+    margin: 0 !important;
+    .col-form-label,
+    .felement {
+        max-width: unset;
+        padding-left: unset;
+        padding-right: unset;
+    }
     &:hover {
         background-color: #efefef;
     }
@@ -468,7 +474,6 @@ form.mform {
     }
     .snap-form-advanced fieldset,
     fieldset.clearfix {
-        margin-bottom: 1rem;
         .ftoggler {
             a:hover,
             a:focus {
@@ -481,8 +486,14 @@ form.mform {
         }
         .d-flex {
             margin-bottom: 0 !important;
-            width: 100%;
         }
+    }
+    #fgroup_id_buttonar {
+        display: block;
+    }
+    .row {
+        margin-right: unset;
+        margin-left: unset;
     }
 
     // Colapse/expand toggle on forms.
