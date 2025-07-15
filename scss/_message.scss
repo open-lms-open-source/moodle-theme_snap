@@ -114,7 +114,6 @@
 #page-message-edit,
 #page-message-index {
     .drawer .message-app {
-        height: calc(100% - 10em);
         top: 10em;
         z-index: 1;
         left: 0;
@@ -133,13 +132,7 @@
         background-color: $brand-primary;
         border-color: rgba($brand-primary, 0.3);
     }
-    .drawer.bg-white .message-app {
-        padding: 1em;
-        .body-container {
-            border: 1px solid #dee2e6;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
-        }
-    }
+
     [data-region="button-text"],
     [data-region="searchable"] {
         color: $brand-primary;
