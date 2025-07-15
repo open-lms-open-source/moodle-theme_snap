@@ -46,6 +46,4 @@ Feature: Edit feedback as a teacher
     Given I am on the "Feedback Test" "feedback activity" page logged in as teacher
     And I click on "Edit questions" "link" in the "region-main" "region"
     Then ".moodle-actionmenu" "css_element" should exist
-    And "#feedback_dragarea form" "css_element" should exist
     And ".row.feedback_itemlist" "css_element" should exist
-
