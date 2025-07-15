@@ -72,6 +72,12 @@ class settings_link implements \core\output\renderable {
             if ($isstudent) {
                 return;
             }
+        } else {
+            // The admin user should not see the settings (gear) icon on the message index page.
+            $currenturl = $PAGE->url->get_path();
+            if ($currenturl === '/message/index.php') {
+                return;
+            }
         }
 
         if (!$PAGE->blocks->is_block_present('settings')) {
