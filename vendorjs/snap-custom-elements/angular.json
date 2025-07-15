@@ -20,7 +20,10 @@
             "outputPath": "dist/snap-custom-elements",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+                "src/zone-flags.ts",
+                "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [

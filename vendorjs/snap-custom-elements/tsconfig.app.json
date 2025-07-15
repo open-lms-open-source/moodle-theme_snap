@@ -5,6 +5,7 @@
     "types": []
   },
   "files": [
+    "src/zone-flags.ts",
     "src/main.ts",
   ],
   "include": [

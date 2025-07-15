@@ -24,7 +24,6 @@
 Feature: Check that the correct attributes exists for URL field in a database activity template.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -45,8 +44,7 @@ Feature: Check that the correct attributes exists for URL field in a database ac
     And I add a "data" activity to course "C1" section "1" and I fill the form with:
       | Name              | Test database name |
       | Description       | Test               |
-    And I click on "#course-toc .chapters h3:nth-of-type(2)" "css_element"
-    And I click on "li.modtype_data a.mod-link" "css_element"
+    And I click on "li.modtype_data .activityname > a" "css_element"
     # To generate the default templates.
     And I click on ".action-menu-trigger" "css_element"
     And I click on "URL" "link"
@@ -54,8 +52,7 @@ Feature: Check that the correct attributes exists for URL field in a database ac
     And I click on "Save" "button"
     And I should see "Field added"
     And I am on "Course 1" course homepage
-    And I click on "#course-toc .chapters h3:nth-of-type(2)" "css_element"
-    And I click on "li.modtype_data a.mod-link" "css_element"
+    And I click on "li.modtype_data .activityname > a" "css_element"
     And I follow "Database"
     And I click on "Add entry" "button"
     And the "type" attribute of "input.mod-data-input.form-control.d-inline" "css_element" should contain "url"

@@ -1,0 +1,1 @@
+(window as any).__zone_symbol__UNPATCHED_EVENTS = ['registerComponent:success', 'ComponentRegistration:Success'];
