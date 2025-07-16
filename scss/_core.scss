@@ -4393,6 +4393,10 @@ table th img.iconhelp {
 }
 
 /* Featured category and course link. */
+.frontpage-course-list-all .snap-home-course .favouriteicon {
+    display: none;
+}
+
 .snap-featured-category,
 .snap-featured-course,
 .snap-home-course {
@@ -4468,9 +4472,21 @@ table th img.iconhelp {
                 }
             }
         }
+
+
         .favouriteicon .fa-regular {
             display: inline;
-            -webkit-text-stroke: 1px $brand-primary;
+            text-shadow:
+                    -2px 0 $brand-primary,
+                    2px 0 $brand-primary,
+                    0 -2px $brand-primary,
+                    0 2px $brand-primary,
+                    -1.5px -1.5px $brand-primary,
+                    -1.5px 1.5px $brand-primary,
+                    1.5px -1.5px $brand-primary,
+                    1.5px 1.5px $brand-primary;
+            color: white;
+            font-weight: 900;
         }
     }
     &:not(:hover) {
@@ -4525,8 +4541,15 @@ table th img.iconhelp {
         }
     }
     .favouriteicon .fa-solid {
-        text-shadow: 1px 1px 3px black;
-        -webkit-text-stroke: 1px white;
+        text-shadow:
+                -2px 0 white,
+                2px 0 white,
+                0 -2px white,
+                0 2px white,
+                -1.5px -1.5px white,
+                -1.5px 1.5px white,
+                1.5px -1.5px white,
+                1.5px 1.5px white;
         color: $brand-primary;
     }
     .favouriteicon .fa-regular {

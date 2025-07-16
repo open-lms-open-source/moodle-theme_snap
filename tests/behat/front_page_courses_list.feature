@@ -136,8 +136,6 @@ Feature: Correct functionality of enrolled courses and available courses in the 
     And ".more-info" "css_element" should be visible
     And ".additional-options .coursecategory" "css_element" should be visible
     And I should see "0 students"
-    And ".snap-home-course .favouriteicon .fa-regular" "css_element" should be visible
-    And I press the tab key
     And I press the tab key
     And I press the tab key
     And I press the tab key
