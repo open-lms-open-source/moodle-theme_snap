@@ -612,11 +612,14 @@ body.path-site .block.block_settings {
         }
     }
     // Hide the Turn editing on button from the block settings.
-    a[href*="edit=on"],
-    a[href*="edit=off"],
-    a[href*="edit=1"],
-    a[href*="edit=0"] {
-        display: none;
+    #frontpagesettings_group {
+
+        a[href*="edit=on"],
+        a[href*="edit=off"],
+        a[href*="edit=1"],
+        a[href*="edit=0"] {
+            display: none;
+        }
     }
 
     #settingsnav {
