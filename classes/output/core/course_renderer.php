@@ -1180,7 +1180,6 @@ class course_renderer extends \core_course_renderer {
                 } else {
                     if ($mod->onclick) {
                         $resourceonclick = "onclick=\"{$mod->onclick}\"";
-                        $url = '';
                     }
                 }
             }
