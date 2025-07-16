@@ -104,7 +104,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
         });
 
         var mobileFormChecker = function() {
-            var savebuttonsformrequired = $('div[role=main] .mform div.snap-form-required fieldset > div.form-group.fitem');
+            var savebuttonsformrequired = $('div[role=main] .mform div.snap-form-required fieldset > div.fitem');
             var savebuttonsformadvanced = $('div[role=main] .mform div.snap-form-advanced > div:nth-of-type(3)');
             var width = $(window).width();
             if (width < 992) {
@@ -1192,7 +1192,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                                     {key: 'multimediacard', component: 'theme_snap'}
                                 ]).done(function(stringsjs) {
                                     var activityCards = stringsjs[0];
-                                    var cardmultimedia = $("[id='id_showdescription']").closest('.form-group');
+                                    var cardmultimedia = $("[id='id_showdescription']").closest('.fitem');
                                     $(cardmultimedia).append(activityCards);
                                 });
                             }
@@ -1202,29 +1202,20 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                                 let stringmsg = stringsjs[0];
                                 let modpagelocation = $("#page-mod-page-mod")
                                     .find("#id_coursecontentnotification")
-                                    .closest('.form-group');
+                                    .closest('.fitem');
                                 $(modpagelocation).append(stringmsg);
                             });
                         }
 
                         // Resources - put description in common mod settings.
-                        description = $("#page-mod-resource-mod [data-fieldtype='editor']").closest('.form-group');
-                        var showdescription = $("#page-mod-resource-mod [id='id_showdescription']").closest('.form-group');
+                        description = $("#page-mod-resource-mod [data-fieldtype='editor']").closest('.fitem');
+                        var showdescription = $("#page-mod-resource-mod [id='id_showdescription']").closest('.fitem');
                         $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(description);
                         $("#page-mod-resource-mod .snap-form-advanced #id_modstandardelshdr .fcontainer").append(showdescription);
 
                         // Assignment - put due date in required.
-                        var duedate = $("#page-mod-assign-mod [for='id_duedate']").closest('.form-group');
+                        var duedate = $("#page-mod-assign-mod [for='id_duedate']").closest('.fitem');
                         $("#page-mod-assign-mod .snap-form-required .fcontainer").append(duedate);
-
-                        // Move availablity at the top of advanced settings.
-                        var availablity = $('#id_visible').closest('.form-group').addClass('snap-form-visibility');
-                        var label = $(availablity).find('label');
-                        var select = $(availablity).find('select');
-                        $(label).insertBefore(select);
-
-                        // SHAME - rewrite visibility form lang string to be more user friendly.
-                        $(label).text(M.util.get_string('visibility', 'theme_snap') + ' ');
 
                         if ($("#page-course-edit").length) {
                             // We are in course editing form.
@@ -1262,14 +1253,16 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                                 });
                         }
 
+                        // Move availablity at the top of advanced settings.
+                        var availablity = $('#id_visible').closest('.fitem').addClass('snap-form-visibility');
                         $('.snap-form-advanced').prepend(availablity);
 
                         // Add save buttons.
-                        var savebuttons = $('form[id^="mform1"] > .form-group:last');
+                        var savebuttons = $('form[id^="mform1"] > .fitem:last');
                         $(mainForm).append(savebuttons);
 
                         // Expand collapsed fieldsets when editing a mod that has errors in it.
-                        var errorElements = $('.form-group.has-danger');
+                        var errorElements = $('.fitem.has-danger');
                         if (onModSettings && errorElements.length) {
                             errorElements.closest('.collapsible').removeClass('collapsed');
                         }
@@ -1323,7 +1316,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     }
                     // Remove disabled attribute for section name for topics format.
                     if (onSectionSettings) {
-                        var sectionName = $("#page-course-editsection.format-topics .form-group #id_name_value");
+                        var sectionName = $("#page-course-editsection.format-topics .fitem #id_name_value");
                         if (sectionName.length) {
                             let sectionNameIsDiabled = document.getElementById('id_name_value').hasAttribute("disabled");
                             if (sectionNameIsDiabled) {
@@ -1395,7 +1388,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     }
 
                     // Re position submit buttons for forms when using mobile mode at the bottom of the form.
-                    var savebuttonsformrequired = $('div[role=main] .mform div.snap-form-required fieldset > div.form-group.fitem');
+                    var savebuttonsformrequired = $('div[role=main] .mform div.snap-form-required fieldset > div.fitem');
                     var width = $(window).width();
                     if (width < 767) {
                         $('.snap-form-advanced').append(savebuttonsformrequired);
@@ -1404,7 +1397,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     // Fix a position for the new 'Send content change notification' setting.
                     if ( $('.path-mod.theme-snap #id_coursecontentnotification').length ) {
                         const notificationCheck = document.getElementById('id_coursecontentnotification')
-                            .closest(".form-group.fitem");
+                            .closest(".fitem");
                         const submitButtons = $('.snap-form-required [data-groupname="buttonar"]');
                         if (notificationCheck !== null && submitButtons.length) {
                             notificationCheck.classList.add('snap_content_notification_check');
@@ -1421,7 +1414,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
                         // Making sure that the save buttons are displayed.
                         const notificationCheck = document.getElementById('id_coursecontentnotification')
-                            .closest(".form-group.fitem");
+                            .closest(".fitem");
                         $('.snap-form-advanced').append(notificationCheck);
                         $('.snap-form-advanced').append(savebuttonsformrequired);
                     }

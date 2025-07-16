@@ -82,7 +82,7 @@ Feature: Activity navigation in Snap theme
     And I click on ".modtype_forum .snap-edit-asset-more" "css_element"
     And I click on ".modtype_forum .snap-edit-asset" "css_element"
     And I expand all fieldsets
-    And I set the field "Visibility" to "Make available but don't show on course page"
+    And I set the field "Availability" to "Make available but don't show on course page"
     And I press "Save and return to course"
     # Hidden activity.
     And I scroll to the bottom

@@ -50,8 +50,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And I expand all fieldsets
     And I set the field "Add requirements" to "1"
     And I set the field "View the activity" to "1"
-    And I set the following fields to these values:
-      | Display | 5 |
+    And I set the field "id_display" to "Open"
     And I click on "#id_submitbutton2" "css_element"
     And I follow "Section 1"
     And "span.autocompletion img[title='The system marks this item complete according to conditions: test mp3 file']" "css_element" should exist
@@ -77,7 +76,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And I set the following fields to these values:
       | Description                                    | Description text for MP3 file |
       | showdescription                                | 1                   |
-      | Display | 5 |
+    And I set the field "id_display" to "Open"
     And I click on "#id_submitbutton2" "css_element"
     And I follow "Section 1"
     And I click on ".snap-resource[data-type='mp3'] .snap-asset-link a" "css_element"

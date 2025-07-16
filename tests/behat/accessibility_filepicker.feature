@@ -24,6 +24,7 @@
 Feature: When adding a submission in an assignment, file picker options should exists as buttons.
 
   Background:
+    Given I skip because "Moodle Core does not comply with this VPAT standard"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | student1  | Student    | 1         | student1@example.com  |
