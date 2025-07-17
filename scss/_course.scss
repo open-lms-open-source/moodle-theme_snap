@@ -3642,6 +3642,14 @@ body.path-course-index {
         opacity: 1;
         overflow-y: auto;
     }
+
+    .grader-grading-panel.hidden {
+        right: -430px;
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        transition: right 0.2s ease-in-out, visibility 0s ease-in-out 0.2s, opacity 0s ease-in-out 0.2s;
+    }
 }
 
 body[id^='page-mod-data'] {
