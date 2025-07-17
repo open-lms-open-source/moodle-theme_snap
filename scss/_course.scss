@@ -945,7 +945,7 @@ li.section:focus {
     padding: 0;
 }
 
-.course-content > ul li.section,
+.course-content > ul > li.section,
 #coursetools, #tiles-section,
 #snap-add-new-section {
     visibility: hidden;
@@ -975,12 +975,12 @@ li.section:focus {
     }
 }
 
-.course-content > ul li.section.state-visible, {
+.course-content > ul > li.section.state-visible, {
     overflow: visible;
 }
 
 //Override !important in less/moodle/undo.scss, not needed after 3.2 and BS4.
-.course-content > ul li.section.hidden {
+.course-content > ul > li.section.hidden {
     visibility: hidden !important;
 
     &.state-visible {
@@ -988,7 +988,7 @@ li.section:focus {
     }
 }
 
-.course-content > ul li.section {
+.course-content > ul > li.section {
     .content {
         display: none;
     }
@@ -998,7 +998,7 @@ li.section:focus {
     }
 }
 
-.course-content > ul li.section.state-visible,
+.course-content > ul > li.section.state-visible,
 #snap-add-new-section.state-visible,
 #coursetools.state-visible, #tiles-section.state-visible,
 .format-singleactivity #coursetools {

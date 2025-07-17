@@ -230,7 +230,7 @@ define(
         var renderSection = function(section, html, mod, js) {
             var anchor = $('.course-content');
             var existingSections = [];
-            anchor.find('li[id^=section-]').each(function() {
+            anchor.find('ul.sections>li[id^=section-]').each(function() {
                 existingSections.push(parseInt($(this).attr('id').split('section-')[1]));
             });
             var tempnode = $('<div></div>');
@@ -244,10 +244,10 @@ define(
                 });
 
                 if (closest > section) {
-                    anchor.find('#section-' + closest).before(tempnode.find('li[id^="section-"]'));
+                    anchor.find('#section-' + closest).before(tempnode.contents());
 
                 } else {
-                    anchor.find('#section-' + closest).after(tempnode.find('li[id^="section-"]'));
+                    anchor.find('#section-' + closest).after(tempnode.contents());
 
                 }
             } else {
