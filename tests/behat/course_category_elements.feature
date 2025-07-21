@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2025 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_course_categories
+@theme @theme_snap @theme_snap_course_categories @_file_upload
 
 Feature: Check visual elements in the category and course view
 
