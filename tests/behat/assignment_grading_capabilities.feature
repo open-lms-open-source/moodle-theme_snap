@@ -19,7 +19,7 @@
 # @copyright  Copyright (c) 2018 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_grading
+@theme @theme_snap @theme_snap_grading @_file_upload
 Feature: When the moodle theme is set to Snap, grading activities are shown only if user have grading capabilities.
 
   Background:

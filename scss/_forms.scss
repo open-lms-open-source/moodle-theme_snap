@@ -36,7 +36,7 @@ body:not(.behat-site) {
 }
 
 // Hide show description option. Use of nth-child pseudo selector due to lack of id in div.
-body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-group:nth-child(3) {
+body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.fitem:nth-child(3) {
     display: none;
 }
 
@@ -54,16 +54,24 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-
 
 .form-item,
 .path-backup .mform .grouped_settings .fitem,
-.mform .fcontainer > .fitem {
-    margin-bottom: 0;
+.mform .fcontainer > .fitem,
+.mform .snap-form-advanced > .fitem {
     padding: 0.5rem;
-
+    display: block;
+    margin: 0 !important;
+    .col-form-label,
+    .felement {
+        max-width: unset;
+        padding-left: unset;
+        padding-right: unset;
+    }
     &:hover {
         background-color: #efefef;
     }
 }
 
-.mform #id_general .form-group.fitem.snap_content_notification_check {
+.mform #id_general .fitem.snap_content_notification_check {
+    display: block;
     margin-top: 1rem;
     padding: 0.5rem;
 
@@ -120,12 +128,7 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-
         display: none;
     }
 
-    .form-group.row {
-      margin-left: 0;
-      margin-right: 0;
-      padding-left: 0;
-      padding-right: 0;
-
+    .fitem.row {
       .col-md-9 {
         @extend .col-12;
       }
@@ -160,7 +163,7 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.form-
     }
 }
 
-.moodle-dialogue.filepicker .form-group {
+.moodle-dialogue.filepicker .item {
     margin-left: 0;
     margin-right: 0;
 }
@@ -422,6 +425,7 @@ a[aria-controls="snap-collapse-help"] {
 .snap-form-advanced {
     float: left;
     .snap-form-visibility {
+        display: block;
         padding: 1em;
         background-color: #eee;
     }
@@ -468,7 +472,6 @@ form.mform {
     }
     .snap-form-advanced fieldset,
     fieldset.clearfix {
-        margin-bottom: 1rem;
         .ftoggler {
             a:hover,
             a:focus {
@@ -481,8 +484,14 @@ form.mform {
         }
         .d-flex {
             margin-bottom: 0 !important;
-            width: 100%;
         }
+    }
+    #fgroup_id_buttonar {
+        display: block;
+    }
+    .row {
+        margin-right: unset;
+        margin-left: unset;
     }
 
     // Colapse/expand toggle on forms.
@@ -571,7 +580,7 @@ form.mform {
     }
     .snap-form-advanced {
         max-width: 100%;
-        fieldset#id_reviewoptionshdr #id_reviewoptionshdrcontainer .form-group {
+        fieldset#id_reviewoptionshdr #id_reviewoptionshdrcontainer .fitem {
             width: 20rem;
         }
     }

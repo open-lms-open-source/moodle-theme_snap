@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2020 Open LMS.
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_course @theme_snap_contentbank
+@theme @theme_snap @theme_snap_course @theme_snap_contentbank @_file_upload
 Feature: When the Moodle theme is set to Snap, the content in the content bank can be renamed or deleted if needed.
 
   Background:

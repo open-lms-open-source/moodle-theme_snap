@@ -44,12 +44,12 @@ Feature: When the moodle theme is set to Snap, the user can manipulate the files
     And I click on ".snap-edit-asset-more" "css_element"
     And I click on ".snap-edit-asset" "css_element"
     Then ".filemanager .filemanager-toolbar" "css_element" should exist
-    And I click on "button#displaydetailsbtn" "css_element"
+    And I click on ".fp-vb-details" "css_element"
     And I wait until "div.fp-tableview" "css_element" exists
     And I should see "empty.txt"
-    And "button#deletebtn" "css_element" should exist
+    And ".fp-btn-delete" "css_element" should exist
     And I click on "input[data-fullname=\"empty.txt\"]" "css_element"
-    And I click on "button#deletebtn" "css_element"
+    And I click on ".fp-btn-delete" "css_element"
     Then I should see "Are you sure you want to delete the selected"
     And I click on "Yes" "button"
     Then I should not see "empty.txt"
