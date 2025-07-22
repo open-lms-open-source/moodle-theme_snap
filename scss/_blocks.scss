@@ -267,7 +267,7 @@ body.path-site .block.block_settings {
     }
 
     // Snap Feeds Mobile Menu
-    @media screen and (max-width: 992px) {
+    @media screen and (max-width: 425px) {
         &.state-visible {
             width: 100%;
             z-index: 1030;
@@ -621,6 +621,31 @@ body.path-site .block.block_settings {
 
     #settingsnav {
         padding-top: 0!important;
+    }
+
+    #close-block-settings {
+        display: none;
+        position: absolute;
+        right: 1em;
+        font-size: 1.5rem;
+        opacity: .5;
+    }
+}
+
+// This allow us to test this on Behat sites.
+@media screen and (max-width: 600px) {
+    body.snap_drawer_open.behat-site #page-content .block_settings {
+        #close-block-settings {
+            display: block;
+        }
+    }
+}
+
+@media screen and (max-width: 425px) {
+    body.snap_drawer_open #page-content .block_settings {
+        #close-block-settings {
+            display: block;
+        }
     }
 }
 
