@@ -28,7 +28,6 @@ namespace theme_snap\output;
 use context_course;
 use core_courseformat\base as course_format;
 use core_courseformat\output\local\content;
-use core_courseformat\output\local\content\sectionnavigation;
 use \core\output\html_writer;
 use \core\url as moodle_url;
 use stdClass;
@@ -57,6 +56,81 @@ trait format_section_trait {
         return '';
     }
 
+    /**
+     * Overrides the render_from_template from lib/classes/output/renderer_base.php.
+     * This method is used to intercept the $data that is sent for templates rendering.
+     *
+     * @param string $templatename The template to render
+     * @param array|stdClass $data Context containing data for the template.
+     * @return string|boolean
+     */
+    public function render_from_template($templatename, $data) {
+        global $USER, $DB;
+        // Add data to always display controlmenu for Snap activity cards, when editing is off.
+        if ($templatename === 'core_courseformat/local/content' && isset($data->singlesection->cmlist->cms) && $this->page->user_is_editing() === false) {
+            $course = $this->page->course;
+            $modinfo = get_fast_modinfo($course);
+            $courseformat = course_get_format($course);
+            // Simulate editing On.
+            $USER->editing = true;
+            // Add controlmenu for each course module.
+            foreach ($data->singlesection->cmlist->cms as &$cmsitem) {
+                $cmid = $cmsitem->cmitem->id;
+                $mod = $modinfo->cms[$cmid];
+                $section = $mod->get_section_info();
+
+                $displayoptions = [];
+                // Instance the class controlmenu so data is added for rendering.
+                $controlmenu = new \core_courseformat\output\local\content\cm\controlmenu($courseformat, $section, $mod, $displayoptions);
+
+                // Generate controlmenu data.
+                $newcontrolmenu = $controlmenu->export_for_template($this);
+
+                // Add Data so controlmenu is rendered.
+                $cmsitem->cmitem->cmformat->controlmenu = $newcontrolmenu;
+            }
+            unset($cmsitem);
+
+            // Restore real editing mode.
+            $USER->editing = false;
+        }
+        // Add data to always display controlmenu for Snap subsections, when editing is off.
+        if ($templatename === 'core_courseformat/local/content/delegatedsection' && $this->page->user_is_editing() === false) {
+            $course = $this->page->course;
+            $modinfo = get_fast_modinfo($course);
+            $courseformat = course_get_format($course);
+
+            $sectionrecord = $DB->get_record('course_sections', ['id' => $data->id], '*', MUST_EXIST);
+            $section = $modinfo->get_section_info($sectionrecord->section);
+
+            // Simulate editing On.
+            $USER->editing = true;
+            // Instance the class controlmenu so data is added for rendering.
+            $controlmenuclass = $courseformat->get_output_classname('content\\section\\controlmenu');
+            $controlmenu = new $controlmenuclass($courseformat, $section);
+
+            // Generate controlmenu data.
+            $newcontrolmenu = $controlmenu->export_for_template($this);
+
+            // Add Data so controlmenu is rendered.
+            $data->controlmenu = $newcontrolmenu;
+
+            // Restore real editing mode.
+            $USER->editing = false;
+        }
+
+        // Render the template as usual.
+        return parent::render_from_template($templatename, $data);
+    }
+
+    /**
+     * Overrides the render function from lib/classes/output/renderer_base.php.
+     *
+     * Renders the provided widget and returns the HTML to display it.
+     *
+     * @param \core\output\renderable $widget instance with renderable interface
+     * @return string the widget HTML
+     */
     public function render(\core\output\renderable $widget): string {
         global $PAGE, $DB;
 
