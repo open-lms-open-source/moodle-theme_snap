@@ -549,9 +549,15 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
             });
 
             // Admin drawer: Onclick for toggle of state-visible of admin block and mobile menu.
-            $(document).on("click", "#admin-menu-trigger, #toc-mobile-menu-toggle, [id^=\"message-drawer-toggle-\"]", function(e) {
+            $(document).on(
+                "click",
+                "#admin-menu-trigger, #toc-mobile-menu-toggle, [id^=\"message-drawer-toggle-\"], #close-block-settings",
+                function(e) {
                 var href = this.getAttribute('href');
                 // Make this only happen for settings button.
+                if (this.getAttribute('id') === 'close-block-settings') {
+                    var href = document.getElementById('admin-menu-trigger').getAttribute('href');
+                }
                 if (this.getAttribute('id') === 'admin-menu-trigger'
                     || this.getAttribute('id').startsWith('message-drawer-toggle-')) {
                     $(this).toggleClass('active');
@@ -560,6 +566,15 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         $(this).attr('aria-expanded', false);
                     } else {
                         $(this).attr('aria-expanded', true);
+                    }
+                }
+                if (this.getAttribute('id') === 'close-block-settings') {
+                    $('#admin-menu-trigger').toggleClass('active');
+                    $('#page').toggleClass('offcanvas');
+                    if ($('#admin-menu-trigger').attr('aria-expanded') === 'true') {
+                        $('#admin-menu-trigger').attr('aria-expanded', false);
+                    } else {
+                        $('#admin-menu-trigger').attr('aria-expanded', true);
                     }
                 }
                 // Code for mod_data sticky footer.

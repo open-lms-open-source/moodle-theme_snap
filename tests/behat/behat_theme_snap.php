@@ -1987,4 +1987,30 @@ JS;
             $this->getSession()->wait(300);
         }
     }
+
+    /**
+     * Check that an element click is intercepted.
+     *
+     * @Then /^the click to the element "([^"]*)" was intercepted$/
+     * @param string $selector CSS selector to find the element.
+     */
+    public function click_to_element_was_intercepted($selector) {
+        $session = $this->getSession();
+        $page = $session->getPage();
+        $element = $page->find('css', $selector);
+
+        if (!$element) {
+            throw new ExpectationException("Element not found '$selector'", $session);
+        }
+        try {
+            $element->click();
+            throw new ExpectationException("The element '$selector' was clickable, but it was expected not to be.", $session);
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            if (strpos($message, 'element click intercepted') !== false) {
+                return;
+            }
+            throw new ExpectationException($message, $session);
+        }
+    }
 }

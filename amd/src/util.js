@@ -174,6 +174,23 @@ define(['jquery', 'core/templates', 'core/str'], function($, templates, str) {
                     });
                 }
             }
+        },
+
+        /**
+         * Adds a close button to the Block settings so it can be closed in mobile resolutions.
+         */
+        addCloseButtonToBlockSettings: function() {
+            const settingsBlock = document.querySelector('.block_settings');
+            if (settingsBlock) {
+                const closeBlockButton = document.createElement('button');
+                closeBlockButton.className = 'btn icon-no-margin';
+                closeBlockButton.id = 'close-block-settings';
+                closeBlockButton.setAttribute('data-action', 'closedrawer');
+                const buttonContent = document.createElement('span');
+                buttonContent.textContent = '×';
+                closeBlockButton.appendChild(buttonContent);
+                settingsBlock.firstElementChild.prepend(closeBlockButton);
+            }
         }
     };
 });
