@@ -408,6 +408,7 @@ label[for="toc-search-input"]{
 // -------------------------
 // Mobile toc.
 // -------------------------
+.course-toc-mobile-header,
 #toc-mobile-menu-toggle {
     display: none;
 }
@@ -416,11 +417,15 @@ label[for="toc-search-input"]{
     .theme-snap  a#toc-mobile-menu-toggle {
         display: block;
     }
+    #course-toc.state-visible .course-toc-mobile-header {
+        display: block;
+        padding: 1rem;
+        background-color: $brand-primary;
+    }
     #course-toc {
         position: fixed !important;
-        padding: 3em 4%;
         margin: 0;
-        z-index: 1052;
+        z-index: 1070;
         background-color: transparent !important;
         @include alakazam();
         outline: none;
@@ -430,6 +435,10 @@ label[for="toc-search-input"]{
         #toc-search,
         #toc-desktop-menu-heading {
             display: none;
+        }
+        #chapters,
+        .toc-footer {
+            padding: 0 4%;
         }
     }
 
@@ -459,15 +468,15 @@ label[for="toc-search-input"]{
             text-align: left;
         }
 
-        #toc-mobile-menu-toggle.toc-mobile-menu-toggle-close{
-            position: fixed;
-            box-shadow: none;
-            top: 1.8em;
-            right: 2em;
+        #toc-mobile-menu-toggle.toc-mobile-menu-toggle-close {
+            float: right;
             width: 2em;
-            height: 2em;
-            background: white url("[[pix:theme|close_x]]") no-repeat 50% 50%;
-            background-size: 2em;
+            padding: 0;
+            box-shadow: none;
+            font-size: 1.5rem;
+            background: unset;
+            opacity: .5;
+            line-height: 1;
         }
     }
 
@@ -478,6 +487,7 @@ label[for="toc-search-input"]{
         display: block;
         width: 100%;
         padding-left: 2em;
+        position: relative;
     }
     // Small screen course tools and create new section links.
     #page-header .toc-footer a {
@@ -485,7 +495,7 @@ label[for="toc-search-input"]{
     }
 
     #snap-course-wrapper nav#course-toc {
-        padding-top: 4em;
+        padding-top: 0;
     }
 
     #toc-search-results {

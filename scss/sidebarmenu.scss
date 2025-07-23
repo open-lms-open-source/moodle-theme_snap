@@ -280,10 +280,9 @@ $mobile-sidebar-peek-width: 10px;
     right: $sidebar-width;
     @media screen and (max-width: 992px) {
         right: $mobile-sidebar-width;
+    }
+    @media screen and (max-width: 425px) {
         width: calc(100% - #{$mobile-sidebar-width});
-        .snap-feeds-mobile-menu .nav{
-            width: calc(100% - #{$mobile-sidebar-width});
-        }
     }
 }
 
@@ -381,5 +380,46 @@ body:has(.snap-sidebar-menu.show) #sticky-footer {
     &.show-drawer-right {
         left: 0;
         width: calc(100% - 315px - 50px);
+    }
+}
+
+// Styles for drawer in mobile resolutions.
+@mixin display-drawer-mobile {
+    #mr-nav {
+        will-change: transform;
+        animation-name: snap-rise;
+        animation-timing-function: ease-in-out;
+        animation-duration: 0.4s;
+        animation-fill-mode: forwards;
+    }
+    .snap-sidebar-menu {
+        top: 0 !important;
+        height: 100vh !important;
+    }
+    .block_settings.state-visible,
+    .snap-drawer-headroom:not(.hidden),
+    #theme_snap-drawers-blocks.show,
+    #snap_feeds_side_menu.state-visible {
+        top: 0 !important;
+        right: 0 !important;
+        height: 100vh !important;
+        width: 100vw !important;
+        max-height: 100vh !important;
+        max-width: unset !important;
+        margin-right: 0 !important;
+        z-index: $sidebar-z-index + 5 !important;
+    }
+}
+
+// This allow us to test this on Behat sites.
+@media screen and (max-width: 600px) {
+    body.snap_drawer_open.behat-site {
+        @include display-drawer-mobile;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    body.snap_drawer_open {
+        @include display-drawer-mobile;
     }
 }

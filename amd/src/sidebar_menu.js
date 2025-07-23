@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 import {isSmall} from 'core/pagehelpers';
+import {addCloseButtonToBlockSettings} from './util';
 import {setUserPreferences, getUserPreferences} from 'core_user/repository';
 
 /**
@@ -47,6 +48,7 @@ const CLASSES = {
     ROTATE: 'rotate-180',
     STATE_VISIBLE: 'state-visible',
     POSITIONING_OFFSCREEN: 'positioning-offscreen',
+    DRAWER_OPEN: 'snap_drawer_open',
 };
 
 const DRAWERS = {
@@ -204,9 +206,11 @@ const handleDrawerButtonClick = (e) => {
             closeOtherDrawers(activeSelector, button);
             button.classList.add(CLASSES.ACTIVE);
             setDrawerPreference(activeSelector, true);
+            toggleBodyDrawerClass();
         } else {
             button.classList.remove(CLASSES.ACTIVE);
             setDrawerPreference(activeSelector, false);
+            toggleBodyDrawerClass();
         }
     }, 50); // Small delay to allow the drawer state to update
 };
@@ -377,6 +381,7 @@ const handleCloseDrawerClick = () => {
     // Remove active classes from all drawer buttons
     document.querySelectorAll(SELECTORS.DRAWER_BUTTON).forEach(button => {
         button.classList.remove(CLASSES.ACTIVE);
+        document.body.classList.remove(CLASSES.DRAWER_OPEN);
     });
     
     // Add collapsed class to messages popover if it's open
@@ -443,6 +448,7 @@ const setupEventListeners = () => {
  * Initialize the sidebar menu functionality
  */
 export const init = () => {
+    addCloseButtonToBlockSettings();
     setupEventListeners();
     updateElementPositions();
     
@@ -596,4 +602,34 @@ const setupPopoverClickHandlers = () => {
             }, true);
         });
     });
+};
+
+/**
+ * Toggle the "snap_drawer_open" class in the body, used to apply styles if necessary.
+ */
+const toggleBodyDrawerClass = () => {
+    const drawerButtons = document.querySelectorAll(SELECTORS.DRAWER_BUTTON);
+    let drawerActive = false;
+    drawerButtons.forEach(button => {
+        const activeSelector = button.dataset.activeselector;
+        if (!activeSelector) {
+            return;
+        }
+
+        const activeElements = document.querySelectorAll(activeSelector);
+        const isActive = Array.from(activeElements).some(el =>
+            el.classList.contains(CLASSES.SHOW) ||
+            el.classList.contains(CLASSES.ACTIVE) ||
+            !el.classList.contains(CLASSES.COLLAPSED) // Consider not collapsed as active
+        );
+
+        if (isActive) {
+            drawerActive = true;
+        }
+    });
+    if (drawerActive) {
+        document.body.classList.add(CLASSES.DRAWER_OPEN);
+    } else {
+        document.body.classList.remove(CLASSES.DRAWER_OPEN);
+    }
 };

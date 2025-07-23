@@ -103,3 +103,35 @@ Feature: Users can access the Snap feeds information using the nav button in Sna
       | forumpoststoggle | 0  | theme_snap  |
     And I log in as "teacher1"
     And "#snap_feeds_side_menu_trigger" "css_element" should not exist
+
+  @javascript
+  Scenario: User can see the Snap feeds menu items based on the Snap settings.
+    And I log in as "admin"
+    And I am on "Course 1" course homepage
+    And I change window size to "530x812"
+    And I click on "#admin-menu-trigger" "css_element"
+    And ".snap_drawer_open" "css_element" should exist
+    And the click to the element "#mr-nav #user-menu-toggle" was intercepted
+    And the click to the element "#admin-menu-trigger" was intercepted
+    And I click on "#close-block-settings" "css_element"
+    And I wait until the page is ready
+    And ".snap_drawer_open" "css_element" should not exist
+    And I click on "#mr-nav #user-menu-toggle" "css_element"
+    And I click on ".blocks-drawer-button" "css_element"
+    And ".snap_drawer_open" "css_element" should exist
+    And the click to the element "#mr-nav #user-menu-toggle" was intercepted
+    And the click to the element "#admin-menu-trigger" was intercepted
+    And I click on ".drawertoggle" "css_element"
+    And I click on "[data-region='popover-region-messages']" "css_element"
+    And ".snap_drawer_open" "css_element" should exist
+    And the click to the element "#mr-nav #user-menu-toggle" was intercepted
+    And the click to the element "#admin-menu-trigger" was intercepted
+    And I click on ".closewidget a" "css_element"
+    And I click on "#toc-mobile-menu-toggle" "css_element"
+    And the click to the element "#mr-nav #user-menu-toggle" was intercepted
+    And the click to the element "#admin-menu-trigger" was intercepted
+    And I click on ".course-toc-mobile-header #toc-mobile-menu-toggle" "css_element"
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And ".snap_drawer_open" "css_element" should exist
+    And the click to the element "#mr-nav #user-menu-toggle" was intercepted
+    And the click to the element "#admin-menu-trigger" was intercepted
