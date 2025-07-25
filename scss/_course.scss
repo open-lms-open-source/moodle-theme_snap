@@ -925,11 +925,6 @@ li.section:focus {
     }
 }
 
-.section-modchooser-link,
-.snap-dropzone {
-    margin-top: 1em;
-}
-
 // get rid of js cursor style applied to the whole commands area
 .snap-section-editing[style] {
     cursor: default !important;
@@ -1093,18 +1088,17 @@ body.format-singleactivity {
 // -------------------------
 //  Assets in snap.
 // -------------------------
-.section {
-    .activity:first-child {
-        border-top-style: solid;
-        border-top-width: .3em;
+.theme-snap .section {
+    li.activity {
+        border: none;
     }
-    li.snap-asset.modtype_page .activityinstance {
+    li.activity.modtype_page .activityinstance {
         margin-bottom: 1em;
     }
-    li.snap-asset {
+
+    li.activity .activity-item {
         display: block;
         position: relative;
-        padding: 0;
         margin: 0 auto;
         height: auto;
         font-family: $font-family-system;
@@ -1113,6 +1107,7 @@ body.format-singleactivity {
         border-top-width: 0.3em;
         transition: all 0.4s ease-in-out;
         border-radius: 0.5rem;
+        padding: 0.5em 1em;
 
         // For editors add space for editong tools.
         &.snap-can-edit {
@@ -1140,66 +1135,12 @@ body.format-singleactivity {
             text-transform: uppercase;
         }
 
-        .activityinstance {
-            display: block;
-            padding: 0;
+        .activity-icon.activityiconcontainer {
+            width: 45px;
             height: auto;
-            background-color: rgba(255, 255, 255, 0.9);
-            @include clearfix;
-
-            .activityicon {
-                width: 45px;
-                height: auto;
-                margin-right: 0.5em;
-                @include alakazam;
-                &[src*="snap/core"] {
-                    filter: brightness(0) invert(1);
-                }
-            }
-
-            .snap-resource-card-fadeout {
-                display: none;
-            }
-
-            // Link to the mod (headings in snap).
-            .snap-asset-link {
-                display: flex;
-                font-size: 1em;
-                margin: 0;
-                width: fit-content;
-                overflow: hidden;
-                @include alakazam;
-
-                img.activityicon {
-                    &:hover,
-                    &:focus {
-                        transform: scale(1.25);
-                    }
-                }
-
-                // The link itself.
-                a {
-                    color: $body-color;
-                    display: inline-block;
-                }
-            }
-            .contentafterlink p a {
-                font-weight: 500;
-            }
-            // Size of the icons container.
-            .activityiconcontainer {
-                min-width: 50px;
-                min-height: 50px;
-                padding: 0.3rem;
-            }
-            .snap-header-card {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .editing & {
-                width: 100% !important; // !important to override boost style.
-            }
+            margin-right: 0.5em;
+            padding: 0;
+            @include alakazam;
         }
     }
 }
@@ -1300,11 +1241,6 @@ body.format-singleactivity {
 // title/link on images - css is shame
 .snap-native.snap-image .activityinstance .snap-asset-link a {
     display: none;
-}
-
-.modtype_book,
-.modtype_page {
-    border-bottom: 1px solid #ccc;
 }
 
 .snap-native.modtype_book ol.bookmod-chapters {
@@ -1812,9 +1748,24 @@ body.snap-resource-card {
 }
 
 // -----------------------------------------------------------
+// Change Controlmenu icon for activities in Snap.
+// -----------------------------------------------------------
+
+.course-section .moodle-actionmenu .icon.fa-ellipsis-vertical {
+    transition: transform 0.5s ease;
+    &::before {
+        content: "\f078";
+    }
+}
+
+.course-section .moodle-actionmenu .dropdown.show .icon.fa-ellipsis-vertical {
+    transform: rotate(180deg);
+}
+
+// -----------------------------------------------------------
 // Color for Snap Activities borders and icons (no resources).
 // -----------------------------------------------------------
-.section li {
+.theme-snap .section li {
     &.snap-activity,
     &.launch-tiles-standard,
     &.launch-tiles-module-modal,
@@ -1822,8 +1773,10 @@ body.snap-resource-card {
     &.launch-tiles-url-modal,
     &.activity-wrapper,
     &.snap-asset {
-        margin: 1em 1%;
-        padding-bottom: 2em;
+        .activity-item {
+            margin: 1em 1%;
+            padding-bottom: 2em;
+        }
 
         img.activityicon {
             filter: none;
@@ -1841,14 +1794,18 @@ body.snap-resource-card {
 
         &.modtype_forum,
         &.modtype_chat {
-            border-top-color: $color-communication;
+            .activity-item {
+                border-top-color: $color-communication;
+            }
             .activityiconcontainer img {
                 filter: $communication-filter;
             }
         }
 
         &.modtype_hsuforum {
-            border-top-color: $color-communication;
+            .activity-item {
+                border-top-color: $color-communication;
+            }
             .activityiconcontainer.hsuforum img {
                 height: 25px;
             }
@@ -1858,14 +1815,18 @@ body.snap-resource-card {
         &.modtype_workshop,
         &.modtype_journal,
         &.modtype_attendance {
-            border-top-color: $color-assignment;
+            .activity-item {
+                border-top-color: $color-assignment;
+            }
             .activityiconcontainer img {
                 filter: $assignment-filter;
             }
         }
 
         &.modtype_hvp {
-            border-top-color: $hvp-interactive-content;
+            .activity-item {
+                border-top-color: $hvp-interactive-content;
+            }
             .activityiconcontainer {
                 filter: $hvp-filter;
             }
@@ -1875,7 +1836,9 @@ body.snap-resource-card {
         &.modtype_feedback,
         &.modtype_quiz,
         &.modtype_facetoface {
-            border-top-color: $color-content;
+            .activity-item {
+                border-top-color: $color-content;
+            }
             .activityiconcontainer img {
                 filter: $content-filter;
             }
@@ -1886,21 +1849,27 @@ body.snap-resource-card {
         &.modtype_lesson,
         &.modtype_imscp,
         &.modtype_scorm {
-            border-top-color: $color-questionnaire;
+            .activity-item {
+                border-top-color: $color-questionnaire;
+            }
             .activityiconcontainer img {
                 filter: $questionnaire-filter;
             }
         }
 
         &.modtype_lightboxgallery {
-            border-top-color: $color-lightbox;
+            .activity-item {
+                border-top-color: $color-lightbox;
+            }
             .activityiconcontainer img {
                 filter: $lightbox-filter;
             }
         }
 
         &.modtype_lti, {
-            border-top-color: $color-resource;
+            .activity-item {
+                border-top-color: $color-resource;
+            }
             .activityiconcontainer {
                 img.activityicon {
                     &[src*="lti"][src*="icon"], &[src*="lti"][src*="monologo"] {
@@ -1910,21 +1879,27 @@ body.snap-resource-card {
             }
         }
         &.modtype_h5pactivity {
-            border-top-color: $color-resource;
+            .activity-item {
+                border-top-color: $color-resource;
+            }
         }
 
         &.modtype_data,
         &.modtype_glossary,
         &.modtype_wiki,
         &.modtype_choicegroup {
-            border-top-color: $color-information;
+            .activity-item {
+                border-top-color: $color-information;
+            }
             .activityiconcontainer {
                 filter: $information-filter;
             }
         }
 
         &.modtype_collaborate {
-            border-top-color: $color-collab;
+            .activity-item {
+                border-top-color: $color-collab;
+            }
             .activityiconcontainer img {
                 filter: $collab-filter;
                 height: 30px;
@@ -1932,14 +1907,18 @@ body.snap-resource-card {
         }
 
         &.modtype_folder {
-            border-top-color: $color-folder;
+            .activity-item {
+                border-top-color: $color-folder;
+            }
             .activityiconcontainer {
                 filter: $folder-filter;
             }
         }
 
         &.modtype_livepoll {
-            border-top-color: $color-livepoll;
+            .activity-item {
+                border-top-color: $color-livepoll;
+            }
             .activityiconcontainer {
                 filter: $livepoll-filter;
             }
@@ -1947,32 +1926,40 @@ body.snap-resource-card {
 
         &.modtype_checklist,
         &.modtype_dialogue {
-            border-top-color: $color-checklist;
+            .activity-item {
+                border-top-color: $color-checklist;
+            }
             .activityiconcontainer {
                 filter: $checklist-filter;
             }
         }
 
         &.modtype_resource {
-            border-top-color: $color-resource;
+            .activity-item {
+                border-top-color: $color-resource;
+            }
             .activityiconcontainer {
                 filter: $color-resource; // For Course Tiles format.
             }
         }
 
         &.modtype_url {
-            border-top-color: $color-url;
+            .activity-item {
+                border-top-color: $color-url;
+            }
             .activityiconcontainer {
                 filter: $url-filter;
             }
         }
 
-        &.modtype_label {
+        &.modtype_label .activity-item {
             border: 1px solid $gray-lighter;
         }
 
         &.modtype_book {
-            border-top-color: $color-book;
+            .activity-item {
+                border-top-color: $color-book;
+            }
             .activityiconcontainer {
                 filter: $book-filter;
             }
@@ -1991,7 +1978,9 @@ body.snap-resource-card {
         }
 
         &.modtype_page {
-            border-top-color: $color-page;
+            .activity-item {
+                border-top-color: $color-page;
+            }
             .asset-wrapper .snap-asset-content {
                 .contentafterlink {
                     .summary-figure {
@@ -2048,7 +2037,9 @@ body.snap-resource-card {
         }
 
         &.modtype_zoom {
-            border-top-color: $color-zoom;
+            .activity-item {
+                border-top-color: $color-zoom;
+            }
             .activityiconcontainer {
                 filter: $zoom-filter;
             }
@@ -2056,21 +2047,27 @@ body.snap-resource-card {
 
         &.modtype_quizgame,
         &.modtype_adaptivequiz {
-            border-top-color: $color-quizlms;
+            .activity-item {
+                border-top-color: $color-quizlms;
+            }
             .activityiconcontainer {
                 filter: $quizlms-filter;
             }
         }
 
         &.modtype_goone {
-            border-top-color: $color-go1;
+            .activity-item {
+                border-top-color: $color-go1;
+            }
             .activityiconcontainer {
                 filter: $go1-filter;
             }
         }
 
         &.modtype_customquiz {
-            border-top-color: $color-customquiz;
+            .activity-item {
+                border-top-color: $color-customquiz;
+            }
             .activityiconcontainer {
                 filter: $customquiz-filter;
             }
@@ -2079,13 +2076,17 @@ body.snap-resource-card {
         &.modtype_certificate,
         &.modtype_coursecertificate,
         &.modtype_customcert {
-            border-top-color: $color-certificate;
+            .activity-item {
+                border-top-color: $color-certificate;
+            }
             .activityiconcontainer {
                 filter: $certificate-filter;
             }
         }
         &.modtype_scheduler {
-            border-top-color: $scheduler-filter;
+            .activity-item {
+                border-top-color: $scheduler-filter;
+            }
             .activityiconcontainer {
                 filter: $scheduler-filter;
             }
@@ -2182,12 +2183,6 @@ body.snap-resource-card {
 .format-tiles {
     .section {
         li {
-            &:hover {
-                background-color: #f9f9f9;
-                .cm_action_menu.actions {
-                    background-color: #f9f9f9;
-                }
-            }
             &.activity-wrapper {
                 list-style: none;
             }
@@ -2258,7 +2253,6 @@ body.snap-resource-card {
             &.launch-tiles-url-modal {
 
                 &.modtype_label {
-                    padding-left: 1em;
                     border: none;
                 }
 
@@ -2319,36 +2313,7 @@ body.snap-resource-card {
             border: 3px solid #ababab;
         }
     }
-    // General Tiles activities styles.
-    .section li.activity.activity-wrapper {
-        border: 2px solid lightgray;
-        border-radius: 1rem;
-        padding: 1rem;
-        .activitytitle {
-            border: none;
-        }
-        .activity-altcontent {
-            margin-top: 1rem;
-        }
-        .activity-badges{
-            margin-left: unset;
-        }
-        .cm_action_menu {
-            display: flex;
-            align-items: center;
-        }
-        .dropdown-menu.show {
-            border-radius: 1rem;
-        }
-        .groupmode-information.btn {
-            img.icon {
-                filter: none;
-            }
-            span.groupmode-icon-info {
-                display: none;
-            }
-        }
-    }
+
     .course-section-header {
         .dropdown-menu.show {
             border-radius: 1rem;
@@ -2369,26 +2334,6 @@ body.snap-resource-card {
         width: fit-content;
     }
 
-    .action-menu .menu .dropdown-subpanel {
-        &.dropleft .dropdown-toggle {
-            padding-left: 3%;
-        }
-        .dropdown-subpanel-content {
-            &.show {
-                display: block !important;
-            }
-            .option-icon {
-                margin-right: .5em;
-                .icon {
-                    max-width: unset;
-                    width: 16px;
-                    height: 16px;
-                    opacity: .5;
-                }
-            }
-
-        }
-    }
     .activity-groupmode-info {
         .option-icon {
             margin-right: .5em;
@@ -2407,10 +2352,6 @@ body.snap-resource-card {
                 display: none;
             }
         }
-    }
-    // Hide content divider in Tiles.
-    &.editing .divider.bulk-hidden:not(.always-visible) {
-        display: none !important;
     }
     .activity-item .activity-name-area .activityname .inplaceeditable .quickeditlink {
         position: relative;
@@ -2518,7 +2459,7 @@ body.snap-resource-card {
 // -------------------------
 /* EDIT SUMMARY */
 /* Make it obvious that you can edit a summary - Add text and some styles to that gear thing */
-#page-site-index .sitetopic > a:last-of-type,
+#page-site-index .course-content .mb-2 > a:last-of-type,
 .summary .edit-summary {
     clear: both;
     display: block;
@@ -2530,7 +2471,7 @@ body.snap-resource-card {
 
 #page-site-index {
 
-    .sitetopic > a {
+    .course-content .mb-2 > a {
         &:last-of-type {
             &:after {
                 content: attr(title);
@@ -2812,47 +2753,13 @@ form.togglecompletion {
 // -------------------------
 
 // All the editing options in one region.
-.snap-asset-actions {
-    & > a,
-    .snap-edit-more-dropdown {
-        &:hover,
-        &:focus {
-            .snap-edit-asset-more .icon {
-                transform: scale(1.1);
-                border-color: $gray-light;
-            }
+.moodle-actionmenu {
+    &:hover,
+    &:focus {
+        .icon {
+            transform: scale(1.1);
+            border-color: $gray-light;
         }
-        .snap-edit-asset-more i.icon.fa-chevron-up {
-            display: none;
-        }
-        &.show .snap-edit-asset-more {
-            i.icon.fa-chevron-down {
-                display: none;
-            }
-            i.icon.fa-chevron-up {
-                display: inline-block;
-            }
-        }
-    }
-
-    .snap-edit-more-dropdown .dropdown-toggle::after {
-        // Hide the bootstrap dropdown menu caret.
-        border-width: 0;
-        margin: 0;
-    }
-
-    .dropdown-toggle.snap-edit-asset-more.ajaxing {
-        &:after {
-            @include ajaxing(inline-block, relative, 26px, 7px);
-        }
-        img {
-            display: none;
-        }
-    }
-
-    button.snap-edit-asset-more {
-        border: none;
-        background-color: white;
     }
 
     .dropdown-menu {
@@ -2871,18 +2778,6 @@ form.togglecompletion {
         .editing_backup {
             display: inline-flex;
             align-items: baseline;
-        }
-    }
-
-    input.sr-only[type="checkbox"],
-    span.sr-only {
-        display: none;
-    }
-
-    .snap-asset-move {
-        margin: 0;
-        input.sr-only[type="checkbox"] {
-            display: inherit;
         }
     }
 }

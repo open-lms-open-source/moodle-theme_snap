@@ -1467,34 +1467,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         setHomeCourseFavourite('set-favourite');
                     }
 
-                    // Snapify format site on the front page if needed.
-                    // TODO: Maybe remove this whole piece if MDL-82188 ever gets resolved in our favor.
-                    if ($('body#page-site-index.format-site').length) {
-                        var frontPageActivities = document.querySelector('div[role="main"] ul.section');
-                        var frontPageActObserver = new MutationObserver(function() {
-                            $('div[role="main"] ul.section > li[id^="module"]').each(function() {
-                                if (!$(this).hasClass('snap-activity') && !$(this).hasClass('snap-asset')) {
-                                    let id = $(this).attr('id');
-                                    let moduleid = id.match(/\d+$/)[0];
-                                    $(this).hide(); // Hide it while we finish.
-
-                                    ajax.call([
-                                        {
-                                            methodname: 'theme_snap_course_module',
-                                            args: {cmid: moduleid},
-                                            done: function(response) {
-                                                let html = $.parseHTML(response.html);
-                                                $('#' + id).replaceWith(html[0]);
-                                            }
-                                        }
-                                    ]);
-                                }
-                            });
-                        });
-                        var frontPageActConfig = {childList: true};
-                        frontPageActObserver.observe(frontPageActivities, frontPageActConfig);
-                    }
-
                     // Move My courses button to be centered in the home page.
                     if ($('body#page-site-index.theme-snap .frontpage-course-list-enrolled .paging-morelink').length) {
                         var moreCoursesButton = document.querySelector('.frontpage-course-list-enrolled .paging-morelink');

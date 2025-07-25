@@ -197,10 +197,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
-    hr {
-        background-color: $brand-primary;
-    }
-
     // Calendar
     #dateselector-calendar-panel {
         .yui3-calendar-day {
@@ -751,10 +747,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
 
         #snap-my-courses-trigger {
-            color: $nav-button-color;
-        }
-
-        .dropdown-toggle::after {
             color: $nav-button-color;
         }
 
@@ -1392,6 +1384,15 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             a {
                 color: white !important;
             }
+        }
+    }
+    .action-menu {
+        .dropdown-subpanel.content-displayed,
+        .btn.btn-icon:hover {
+            background-color: unset;
+        }
+        .dropdown-toggle {
+            display: block;
         }
     }
 

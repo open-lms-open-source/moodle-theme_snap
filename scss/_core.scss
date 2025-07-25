@@ -960,15 +960,6 @@ a.yui3-button,
 }
 
 #page-site-index .section-modchooser-link {
-    display: flex !important;
-    flex-direction: column;
-    text-align: center;
-    padding: 1em 8.5em !important;
-
-    @media (max-width: 576px) {
-        padding: 1em 2em !important;
-    }
-
     .activity-add-text {
         color: $brand-primary;
     }
@@ -979,14 +970,11 @@ a.yui3-button,
     display: block;
     width: 32px;
     height: 32px;
-    margin-bottom: 0.5em;
     background: transparent url("[[pix:theme|move_here]]") no-repeat center center;
     background-size: contain;
 }
 
 #page-site-index .sitetopic .divider {
-    margin-top: 4.5rem !important;
-
     hr {
         background-color: initial;
     }
@@ -6873,4 +6861,45 @@ div#snap-course-wrapper #toc-desktop-menu-heading {
 
 li.section.main {
     list-style: none;
+}
+
+.theme-snap .section {
+    li.activity.modtype_page .activityinstance {
+        margin-bottom: 1em;
+    }
+
+    li.activity .activity-item {
+        display: block;
+        position: relative;
+        padding: 0;
+        margin: 0 auto;
+        height: auto;
+        font-family: $font-family-system;
+        background-color: #fff;
+        border: 1px solid $gray-lighter;
+        border-top-width: 0.3em;
+        transition: all 0.4s ease-in-out;
+        border-radius: 0.5rem;
+    }
+}
+
+.theme-snap .sitetopic .section-item {
+    border: none;
+}
+
+.theme-snap.editing .section.main:not(.course-section) {
+    .activity:hover,
+    .activity.action-menu-shown,
+    .sectionname:hover {
+        background-color: unset;
+    }
+}
+
+.activity-groupmode-info .groupmode-information {
+    &:hover {
+        background-color: unset;
+    }
+    img {
+        opacity: 0.5;
+    }
 }
