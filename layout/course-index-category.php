@@ -86,7 +86,7 @@ if (!empty($coverimagecss)) {
                 if (has_capability('moodle/category:manage', $PAGE->context)) {
                     $manageurl = new moodle_url('/course/management.php');
                     if ($iscoursecat) {
-                        echo '<div class="text-right">' . $OUTPUT->cover_image_selector() . '</div>';
+                        echo $OUTPUT->cover_image_selector() ;
                     }
                 }
                 ?>
