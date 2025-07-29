@@ -55,3 +55,21 @@ Feature: Testing sidebarmenu in theme_snap
     And I am on the course main page for "C1"
     And I click on "//a[@title='Test Book']" "xpath"
     And I should see "Table of contents"
+
+  @javascript
+  Scenario: Block drawers dont open by default in small screen sizes
+    Given I am logged in as "admin"
+    And I change window size to "320x480"
+    And the following "courses" exist:
+      | fullname | shortname | format | enablecompletion |
+      | Course 1 | C1        | topics | 1                |
+    And the following "activities" exist:
+      | activity | name      | intro        | course | idnumber | section |
+      | book     | Test Book | Test content | C1     | book1    | 0       |
+    And the following "mod_book > chapter" exists:
+      | book    | Test Book                       |
+      | title   | First chapter                   |
+      | content | This is First chapter's content |
+    And I am on the course main page for "C1"
+    And I click on "//a[@title='Test Book']" "xpath"
+    And I should not see "Table of contents"
