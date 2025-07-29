@@ -3443,11 +3443,7 @@ table#user-grades tr.avg td.cell {
     display:none;
 }
 
-// TODO short term fix for Snap disappearing header interfering with scrolling Gradebook
 #page-grade-report-grader-index {
-    header#mr-nav {
-        animation-name: none;
-    }
     section#region-main {
         display: grid;
     }
@@ -3482,6 +3478,9 @@ table#user-grades tr.avg td.cell {
         tr {
             white-space: normal;
         }
+    }
+    #region-main .tertiary-navigation .navitem .page-toggler a {
+        z-index: auto;
     }
 }
 #page-local-joulegrader-view {

@@ -119,6 +119,16 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
             if (graderHeader.length) {
                 graderHeader.css('top', $('#mr-nav').height() + 'px');
             }
+            if (window.location.pathname === '/grade/report/grader/index.php') {
+                const mrNav = document.getElementById('mr-nav');
+                document.addEventListener("scroll", () => {
+                    if (mrNav.classList.contains('headroom--pinned')) {
+                        graderHeader.css('top', window.getComputedStyle(mrNav).height);
+                    } else if (mrNav.classList.contains('headroom--unpinned')) {
+                        graderHeader.css('top', '0px');
+                    }
+                });
+            }
         };
 
         /**
