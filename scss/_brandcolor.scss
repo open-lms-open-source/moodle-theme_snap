@@ -864,6 +864,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+    .modal-dialog.modal-dialog-centered.modal-dialog-scrollable {
+        outline: none;
+    }
+
     #snap-coverimagecontrol > label.btn-outline-primary.btn-sm {
         background-color: white !important;
         &:hover,

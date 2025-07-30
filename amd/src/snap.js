@@ -1547,6 +1547,42 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
                     // Add the correct section return to the modchooser.
                     util.modchooserSectionReturn();
+
+                    // (Temporary) solution for the error presented in INT-21265
+                    document.addEventListener('click', function(e) {
+                        const regradeBtn = e.target.closest('#regradeattempts');
+                        if (!regradeBtn) {
+                            return;
+                        }
+
+                        let helpIcon = regradeBtn.dataset.helpIcon;
+
+                        // Replace <button> with <a> in data-help-icon to match what Core expects
+                        if (typeof helpIcon === 'string' && helpIcon.includes('<button')) {
+                            helpIcon = helpIcon
+                                .replace('<button', '<a')
+                                .replace('</button>', '</a>');
+                            regradeBtn.dataset.helpIcon = helpIcon;
+                        }
+
+                        // Wait for modal rendering
+                        setTimeout(() => {
+                            const modal = document.querySelector('.modal.show');
+                            if (!modal) {
+                                return;
+                            }
+
+                            const helpAnchor = modal.querySelector('.modal-title a.iconhelp');
+                            if (helpAnchor) {
+                                // Activate Bootstrap popover manually
+                                $(helpAnchor).popover({
+                                    html: true,
+                                    container: 'body',
+                                    trigger: 'focus'
+                                });
+                            }
+                        }, 300);
+                    });
                 });
                 accessibility.snapAxInit();
                 messages.init();
