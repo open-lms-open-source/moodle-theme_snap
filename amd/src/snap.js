@@ -1559,14 +1559,12 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
                         // Replace <button> with <a> in data-help-icon to match what Core expects
                         if (typeof helpIcon === 'string' && helpIcon.includes('<button')) {
-                            helpIcon = helpIcon
-                                .replace('<button', '<a')
-                                .replace('</button>', '</a>');
+                            helpIcon = helpIcon.replace('<button', '<a').replace('</button>', '</a>');
                             regradeBtn.dataset.helpIcon = helpIcon;
                         }
 
-                        // Wait for modal rendering
-                        setTimeout(() => {
+                        // Watch for DOM changes to detect the modal
+                        const observer = new MutationObserver((mutations, obs) => {
                             const modal = document.querySelector('.modal.show');
                             if (!modal) {
                                 return;
@@ -1578,10 +1576,18 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                                 $(helpAnchor).popover({
                                     html: true,
                                     container: 'body',
-                                    trigger: 'focus'
+                                    trigger: 'focus',
                                 });
+
+                                // Stop observing
+                                obs.disconnect();
                             }
-                        }, 300);
+                        });
+
+                        observer.observe(document.body, {
+                            childList: true,
+                            subtree: true,
+                        });
                     });
                 });
                 accessibility.snapAxInit();
