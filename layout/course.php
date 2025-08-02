@@ -30,9 +30,11 @@ $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 $tocformat = ($COURSE->format == 'topics' || $COURSE->format == 'weeks');
 // Check if the toc is displayed list or top - used to add layout in this file.
 $leftnav = true;
+$leftnavclass = 'has-course-leftnav';
 if (!empty($PAGE->theme->settings->leftnav)) {
     if ($PAGE->theme->settings->leftnav == 'top') {
         $leftnav = false;
+        $leftnavclass = '';
     }
 }
 $mastimage = '';
@@ -55,7 +57,7 @@ $pathurl = $OUTPUT->get_path_hiddentoc($pathurl);
 <?php
 echo $OUTPUT->custom_menu_spacer();
 ?>
-<div id="page-header" class="clearfix <?php echo $mastimage; ?>">
+<div id="page-header" class="clearfix <?php echo $mastimage . ' ' . $leftnavclass; ?>">
     <nav class="breadcrumb-nav" aria-label="breadcrumbs"><?php echo $OUTPUT->snapnavbar($mastimage); ?></nav>
 
     <div id="page-mast">

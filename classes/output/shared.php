@@ -316,6 +316,7 @@ EOF;
             'snapfeedsblocktitle',
             'imageproperties',
             'coverimagedesc',
+            'covercategoryimagedesc',
             'coverimagecropperdesc',
             'browserepositories',
             'selectimage',
