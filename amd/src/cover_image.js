@@ -168,6 +168,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             var maxbytesstr = humanFileSize(siteMaxBytes);
             let title = M.util.get_string('imageproperties', 'theme_snap');
             let coverImageDesc = M.util.get_string('coverimagedesc', 'theme_snap', maxbytesstr);
+            let coverCategoryImageDesc = M.util.get_string('covercategoryimagedesc', 'theme_snap', maxbytesstr);
             let coverImageCropperDesc = M.util.get_string('coverimagecropperdesc', 'theme_snap');
             let coverImageSettingsWarning = M.util.get_string('coverimagesettingswarning', 'theme_snap');
             let browseRepositories = M.util.get_string('browserepositories', 'theme_snap');
@@ -185,9 +186,14 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                  previewDisplay = "'display:block'";
             }
 
+            let description = coverImageDesc;
+            if (cropperRatio == 6) {
+                description = coverCategoryImageDesc;
+            }
+
             let content =
                 '<div class="mb-1 snap_cover_image_dialogue">' +
-                    '<p class="snap_cover_image_description">' + coverImageDesc + '</p>' +
+                    '<p class="snap_cover_image_description">' + description + '</p>' +
                     '<p class="snap_cover_image_cropper_description d-none">' + coverImageCropperDesc + '</p>' +
                     '<p class="snap_cover_image_cropper_description d-none">' + coverImageSettingsWarning + '</p>' +
                     '<div class="input-group input-append w-100 snap_cover_image_options">' +

@@ -4801,10 +4801,16 @@ button.snap-icon-toggle {
 }
 
 // Cover image control.
+.has-course-leftnav #page-mast {
+    display: flex;
+}
+#page-site-index #page-mast {
+    display: inline-block;
+}
+
 #snap-coverimagecontrol {
     float: right;
-    margin-left: 1em;
-    display: inline-block;
+    margin: auto 0 auto auto;
     opacity: 0;
     @include alakazam;
 
@@ -4831,13 +4837,6 @@ label[for="snap-coverfiles"],
 #snap-changecoverimageconfirmation button {
     position: relative;
     display: none;
-}
-
-body:not(.pagelayout-coursecategory) {
-    label[for="snap-coverfiles"],
-    #snap-changecoverimageconfirmation button {
-        top: -2.5em;
-    }
 }
 
 #page-course-view-topics #page-header.mast-image .alert-warning {
@@ -5431,10 +5430,9 @@ header#mr-nav {
         max-height: 100%;
     }
 }
-#page-course-view-topics, #page-course-view-weeks, #page-course-index-category {
-    #page-header {
-        min-height: 210px;
-    }
+
+#page-header.mast-image {
+    min-height: calc(100vw/6);
 }
 @media (min-width: 992px) {
     .theme-snap #snap-header {
@@ -5444,7 +5442,6 @@ header#mr-nav {
         padding-top: 30px;
         margin-top: 100px!important;
         background-position: center center;
-        background-size: 100% 100%;
     }
     header#mr-nav div#snap-custom-menu-header {
         display: block;
@@ -5468,7 +5465,6 @@ header#mr-nav {
         padding-top: 30px;
         margin-top: 50px!important;
         background-position: center center;
-        background-size: 100% 100%;
     }
     header#mr-nav div#snap-custom-menu-header {
         display: none;
