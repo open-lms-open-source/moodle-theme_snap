@@ -328,7 +328,8 @@ const setActiveDrawer = async() => {
             preferencesArray[pref] = preferences[pref];
         }
         if (pref === PREFERENCES.BLOCKS_DRAWER) {
-            if (FORCEOPEN_BODY_IDS.includes(document.body.id)) {
+            // Force open but not in small screen sizes.
+            if (FORCEOPEN_BODY_IDS.includes(document.body.id) && window.innerWidth > 500) {
                 preferencesArray[pref] = 1;
             }
         }
