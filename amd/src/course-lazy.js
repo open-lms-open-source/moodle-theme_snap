@@ -222,7 +222,7 @@ define(
                 $('#moodle-blocks').addClass('state-visible');
             }
 
-            // If a modlue was in the hash then scroll to it.
+            // If a module was in the hash then scroll to it.
             if (mod !== null) {
                 $(section).addClass('state-visible');
                 scrollToModule(mod);
@@ -366,35 +366,31 @@ define(
                     }
                 });
                 // Sets the observers for rendering sections on demand.
-                if (self.courseConfig.partialrender) {
+                renderFromHash();
+                $(window).on('hashchange', function() {
                     renderFromHash();
-                    $(window).on('hashchange', function() {
-                        renderFromHash();
-                    });
-                    // Current section might be hidden, at this point should be visible.
-                    var sections = $('.course-content li[id^="section-"]');
-                    var urlParams = location.hash.split("&"),
-                        sectionParam = urlParams[0];
-                    if (sections.length == 1 &&
-                        sectionParam != '#coursetools' &&
-                        sectionParam != '#snap-add-new-section') {
-                        sections.addClass('state-visible');
-                        var section = sections.attr('id').split('section-')[1];
-                        if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && section > 0) {
-                            var title = sections.find('.sectionname').html();
-                            var elements = $('.chapter-title');
-                            var tmpid = 0;
-                            $.each(elements, function(key, element) {
-                                if ($(element).attr('section-number') == section) {
-                                    tmpid = key;
-                                }
-                            });
-                            sections.find('.sectionname').html(title);
-                            sections.find('.sectionnumber').html(tmpid + '.');
-                        }
+                });
+                // Current section might be hidden, at this point should be visible.
+                var sections = $('.course-content li[id^="section-"]');
+                var urlParams = location.hash.split("&"),
+                    sectionParam = urlParams[0];
+                if (sections.length == 1 &&
+                    sectionParam != '#coursetools' &&
+                    sectionParam != '#snap-add-new-section') {
+                    sections.addClass('state-visible');
+                    var section = sections.attr('id').split('section-')[1];
+                    if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && section > 0) {
+                        var title = sections.find('.sectionname').html();
+                        var elements = $('.chapter-title');
+                        var tmpid = 0;
+                        $.each(elements, function(key, element) {
+                            if ($(element).attr('section-number') == section) {
+                                tmpid = key;
+                            }
+                        });
+                        sections.find('.sectionname').html(title);
+                        sections.find('.sectionnumber').html(tmpid + '.');
                     }
-
-
                 }
             }
         };

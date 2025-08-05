@@ -73,7 +73,8 @@ class course_section_navigation implements \core\output\renderable {
                     $sectiontitle = get_string('introduction', 'theme_snap');
                 }
 
-                $this->previous = new course_section_navigation_link($target, $extraclasses, $sectiontitle);
+                $url = course_get_url($course, $target, ['navigation' => true]);
+                $this->previous = new course_section_navigation_link($target, $extraclasses, $sectiontitle, $url);
             }
             $target--;
         }
@@ -94,8 +95,8 @@ class course_section_navigation implements \core\output\renderable {
                 if ($sectiontitle == get_string('general')) {
                     $sectiontitle = get_string('introduction', 'theme_snap');
                 }
-
-                $this->next = new course_section_navigation_link($target, $extraclasses, $sectiontitle);
+                $url = course_get_url($course, $target, ['navigation' => true]);
+                $this->next = new course_section_navigation_link($target, $extraclasses, $sectiontitle, $url);
             }
             $target++;
         }

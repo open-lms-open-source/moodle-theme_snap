@@ -336,22 +336,49 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
         };
 
         /**
-         * Listen for hash changes / popstates.
+         * Listeners for URL changes / popstates.
          * @param {CourseLibAmd} courseLib
          */
-        var listenHashChange = function(courseLib) {
-            var lastHash = location.hash;
+        var ChangeSectionListeners = function(courseLib) {
+            // Listen for URL state changes, when hashchange is fired.
+            var lastUrl = location.href;
             $(window).on('popstate hashchange', function(e) {
-                var newHash = location.hash;
-                log.info('hashchange');
-                if (newHash !== lastHash) {
+                var currentUrl = location.href;
+                log.info('URL or hash changed');
+                if (currentUrl !== lastUrl) {
                     $('#page, #moodle-footer, #logo, .skiplinks').css('display', '');
                     if (onCoursePage()) {
                         log.info('show section', e.target);
                         courseLib.showSection();
                     }
                 }
-                lastHash = newHash;
+                lastUrl = currentUrl;
+            });
+
+            // Listeners for navigation links.
+            var selectors = [
+                '.chapters a',
+                '.section_footer a',
+                ' #toc-search-results a'
+            ];
+
+            $(document).on('click', selectors.join(', '), function(e) {
+                var href = this.getAttribute('href');
+                if (window.history && window.history.pushState) {
+                    history.pushState(null, null, href);
+                    // Force hashchange fix for FF & IE9.
+                    var link = $(this);
+                    var section = link.attr('section-number');
+                    if (typeof section !== 'undefined' && section.length > 0) {
+                        self.courseConfig.sectionnum = parseInt(section);
+                    }
+                    $(window).trigger('hashchange');
+                    courseLib.showSection();
+                    // Prevent scrolling to section.
+                    e.preventDefault();
+                } else {
+                    location.hash = href;
+                }
             });
         };
 
@@ -459,25 +486,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
          * just a wrapper for various snippets that add listeners
          */
         var addListeners = function() {
-            var selectors = [
-                '.chapters a',
-                '.section_footer a',
-                ' #toc-search-results a'
-            ];
-
-            $(document).on('click', selectors.join(', '), function(e) {
-                var href = this.getAttribute('href');
-                if (window.history && window.history.pushState) {
-                    history.pushState(null, null, href);
-                    // Force hashchange fix for FF & IE9.
-                    $(window).trigger('hashchange');
-                    // Prevent scrolling to section.
-                    e.preventDefault();
-                } else {
-                    location.hash = href;
-                }
-            });
-
             // Show fixed header on scroll down
             // using headroom js - http://wicky.nillia.ms/headroom.js/
             var myElement = document.querySelector("#mr-nav");
@@ -969,8 +977,8 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                             // Instantiate course lib.
                             var courseLib = new CourseLibAmd(courseConfig);
 
-                            // Hash change listener goes here because it requires courseLib.
-                            listenHashChange(courseLib);
+                            // URL change listener goes here because it requires courseLib.
+                            ChangeSectionListeners(courseLib);
                         }
                     );
                 }

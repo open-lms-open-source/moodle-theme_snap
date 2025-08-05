@@ -264,26 +264,14 @@ define(
             sections.removeClass('state-visible');
             var id = '#section-' + section;
             $(id).addClass('state-visible');
-            if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && section > 0) {
-                var title = $(id).find('.sectionname').html();
-                var elements = $('.chapter-title');
-                var tmpid = 0;
-                // Find the right toc element.
-                $.each(elements, function(key, element) {
-                    if ($(element).attr('href').split('#section-')[1] == section) {
-                        tmpid = key;
-                    }
-                });
-                $(id).find('.sectionname').html(title);
-                $(id).find('.sectionnumber').html(tmpid + '.');
-            }
             // Leave all course sections as they were.
             sections.show();
-            $(id).find('.section_footer .next_section, .section_footer .icon-arrow-right, ' +
-                '.section_footer .previous_section, .section_footer .icon-arrow-left').click(function(e) {
+            $(id).find('.section_footer a.next_section, ' +
+                '.section_footer a.previous_section').click(function(e) {
                 var link = $(e.target);
                 var section = link.attr('section-number');
                 if(typeof section !== 'undefined' && section.length > 0) {
+                    self.courseConfig.sectionnum = parseInt(section);
                     getSection(section, 0);
                 }
             });
@@ -1719,9 +1707,7 @@ define(
                 groupModeListeners();
                 subPanelListeners();
                 addAfterDrops();
-                if (courseLib.courseConfig.partialrender) {
-                    setCourseSectionObervers();
-                }
+                setCourseSectionObervers();
                 $('body').addClass('snap-course-listening');
             };
 
