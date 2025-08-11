@@ -282,3 +282,16 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I wait until ".btn.ok" "css_element" is visible
     And I click on ".btn.ok" "css_element"
     Then I should not see "This image could have contrast problems due not compliance with the WCAG 2.0 minimum ratio value 4.5:1"
+
+    @javascript
+    Scenario: snap-coverimagecontrol is visible when a section is created in the course.
+      Given the following "courses" exist:
+        | fullname | shortname | category | format |
+        | Course 1 | C1        | 0        | topics |
+    When I log in as "admin"
+    And I am on the course main page for "C1"
+    And I follow "Create a new section"
+    And I set the field "newsection" to "New name"
+    And I press "Create section"
+    And I wait until the page is ready
+    Then I should see "Change cover image"
