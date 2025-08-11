@@ -1046,24 +1046,12 @@ body.format-singleactivity {
 
 // shame - moodle uses ul and li for sections. We have to overspecify and reset the basic dom element styles to account for this
 .section {
-    ul,
-    ol {
-        ul,
-        ol {
-            margin: 0 4%;
-        }
-    }
 
     .activityinstance .contentafterlink,
     .activityinstance .contentwithoutlink {
         ul,
         ol {
             margin: 1.6em 4%;
-
-            ul,
-            ol {
-                margin: 0 4%;
-            }
         }
 
         .contentafterlink p {
@@ -1071,6 +1059,8 @@ body.format-singleactivity {
         }
     }
 }
+
+
 // Bootstrap navtabs do not require margin.
 .section {
     ul,
@@ -1079,6 +1069,10 @@ body.format-singleactivity {
             margin: 0;
         }
     }
+}
+
+.activity.subsection .section .section-item {
+    padding: unset;
 }
 
 // -------------------------
@@ -2636,6 +2630,13 @@ li.section.hidden .snap-asset.stealth-section-hidden .snap-stealth-tag {
         .editing_show {
             display: block;
         }
+    }
+}
+
+// Modules Hidden.
+.theme-snap .section li .activity-item {
+    &.hiddenactivity {
+        border-top-color: #eee !important;
     }
 }
 
