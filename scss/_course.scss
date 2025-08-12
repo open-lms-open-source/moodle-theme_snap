@@ -905,7 +905,7 @@ li.section:focus {
     padding-left: 15px;
 }
 
-.section-modchooser-link {
+.snap-modchooser .section-modchooser-link {
     display: block;
     text-align: center;
     padding: 1em 0;
@@ -1026,11 +1026,6 @@ body.format-singleactivity {
 .visibleifjs.addresourcemodchooser {
     clear: both;
     display: block;
-}
-
-.section-modchooser {
-    text-align: center;
-    padding: 0;
 }
 
 /* MODS & RESOURCES IN COURSE */
@@ -1187,7 +1182,7 @@ body.format-singleactivity {
 // Snap native assets - books, page, images
 // -------------------------
 
-.section li.snap-native {
+.section li.activity {
     height: auto;
     margin: 0.5em auto;
 
@@ -1341,6 +1336,60 @@ body.snap-resource-card li.snap-resource:not(.label) {
 
     .snap-asset-move-label {
         left: 20px;
+    }
+}
+
+// -----------------------------------------------------------
+// Snap alternative content.
+// -----------------------------------------------------------
+
+.theme-snap .activity-item .activity-altcontent.activity-description {
+    border: none;
+    >.no-overflow,
+    .summary-container {
+        background-color: $color-bk-resource;
+        border-radius: 0.5em;
+        padding: 1em;
+        margin: 1em 0;
+        img {
+            border-radius: 0.5em;
+        }
+    }
+}
+.section .activity-item .activity-actions .actions {
+    align-items: center;
+    .action-menu {
+        display: flex;
+    }
+}
+.theme-snap a[id^="snap-restriction-"] {
+    padding: 0;
+    float: right;
+    display: inline-block;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    img {
+        width: 20px;
+        height: 20px;
+        max-width: none;
+        float: right;
+    }
+    &:active {
+        outline: none;
+        border: none;
+        background-color: transparent;
+    }
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+// Hide Core activity availability.
+.format-weeks, .format-topics, .format-tiles {
+    .section .activity-availability.availabilityinfo {
+        display: none;
     }
 }
 
@@ -2754,7 +2803,8 @@ form.togglecompletion {
 // -------------------------
 
 // All the editing options in one region.
-.moodle-actionmenu {
+.moodle-actionmenu,
+.divider-content {
     &:hover,
     &:focus {
         .icon {
@@ -2769,9 +2819,9 @@ form.togglecompletion {
         padding: 10px 0;
         border-radius: 0.5rem;
         min-width: 16.1rem;
+        font-size: 0.8em;
         a {
             font-weight: inherit;
-            font-size: 0.8em;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -2792,6 +2842,9 @@ form.togglecompletion {
     .snap-asset-move-input {
         accent-color: $brand-primary;
     }
+}
+.divider-content .dropdown-menu {
+    min-width: unset;
 }
 
 // Modify H3 size so the chapter title inside a book activity has a correct size between the other words.

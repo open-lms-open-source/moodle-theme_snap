@@ -176,6 +176,48 @@ class course_renderer extends \core_course_renderer {
         return $output;
     }
 
+    /**
+     * Renders HTML to show course module availability information
+     *
+     * @param cm_info $mod
+     * @param array $displayoptions
+     * @return string
+     */
+    public function snap_course_section_cm_availability(cm_info $mod, $displayoptions = []) {
+        $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $mod->context);
+        // If the module isn't available, or we are a teacher (can view hidden activities) then get availability
+        // info. Restrictions will appear on click over a lock image inside the activity header.
+        $coursetoolsicon = '';
+        if (!$mod->available || $canviewhidden) {
+            $availabilityinfo = $this->course_section_cm_availability($mod, []);
+            if ($availabilityinfo) {
+                $ariaconditionaltag = get_string('activityrestriction', 'theme_snap');
+                $conditionaltagsrc = $this->output->image_url('lock', 'theme');
+                $datamodcontext = $mod->context->id;
+                $conditionaliconid = "snap-restriction-$datamodcontext";
+                $restrictionsource = \core\output\html_writer::tag('img', '', [
+                    'class' => 'svg-icon',
+                    'title' => $ariaconditionaltag,
+                    'aria-hidden' => 'true',
+                    'src' => $conditionaltagsrc,
+                ]);
+                $coursetoolsicon = \core\output\html_writer::tag('a', $restrictionsource, [
+                    'tabindex' => '0',
+                    'class' => 'snap-conditional-tag',
+                    'role' => 'button',
+                    'data-toggle' => 'popover',
+                    'data-trigger' => 'focus',
+                    'data-placement' => 'right',
+                    'id' => $conditionaliconid,
+                    'data-html' => 'true',
+                    'clickable' => 'true',
+                    'data-content' => $availabilityinfo,
+                    'aria-label' => $ariaconditionaltag,
+                ]);
+            }
+        }
+        return $coursetoolsicon;
+    }
 
     /**
      * Renders HTML to show course module availability information
@@ -665,7 +707,7 @@ class course_renderer extends \core_course_renderer {
      * @param cm_info $mod
      * @return bool
      */
-    protected function is_image_mod(cm_info $mod) {
+    public function is_image_mod(cm_info $mod) {
         if ($mod->modname == 'resource') {
             $fs = get_file_storage();
             $files = $fs->get_area_files($mod->context->id, 'mod_resource', 'content', 0, 'sortorder DESC, id ASC', false);
@@ -834,7 +876,7 @@ class course_renderer extends \core_course_renderer {
      * @param stdClass $mod
      * @return string
      */
-    protected function mod_image_html($mod) {
+    public function mod_image_html($mod) {
         if (!$mod->uservisible) {
                 return "";
         }
@@ -880,7 +922,7 @@ class course_renderer extends \core_course_renderer {
      * @param cm_info $mod
      * @return string
      */
-    protected function mod_page_html(cm_info $mod) {
+    public function mod_page_html(cm_info $mod) {
         if (!$mod->uservisible) {
             return "";
         }
@@ -930,7 +972,7 @@ class course_renderer extends \core_course_renderer {
                 class='btn collapsed pagemod-readmore readmore-button snap-action-icon btn-outline-primary p-2'
                 {$pmcontextattribute}
                 aria-expanded='false'>
-                <i aria-hidden='true' class='icon fa fa-chevron-down fa-fw' title='{$expand} {$page->name}'></i>
+                <i aria-hidden='true' class='icon fa fa-chevron-down fa-fw m-0' title='{$expand} {$page->name}'></i>
             </button>
         ";
         $o = "
@@ -958,7 +1000,7 @@ class course_renderer extends \core_course_renderer {
         return $o;
     }
 
-    protected function mod_book_html($mod) {
+    public function mod_book_html($mod) {
         if (!$mod->uservisible) {
             return "";
         }

@@ -1503,6 +1503,24 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             background-color: $brand-primary;
         }
     }
+    .divider:has(.btn.add-content:hover) hr {
+        border-color: $brand-primary;
+    }
+    .divider .divider-content .btn.add-content {
+        &.active,
+        &:active,
+        &:hover,
+        &:focus,
+        &:focus-within {
+            opacity: 1;
+        }
+        opacity: 0.6;
+        background-color: $brand-primary;
+        border-radius: 0.2rem;
+        i.icon {
+            color: white;
+        }
+    }
 }
 
 /*

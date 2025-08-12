@@ -65,12 +65,14 @@ trait format_section_trait {
      * @return string|boolean
      */
     public function render_from_template($templatename, $data) {
-        global $USER, $DB;
-        // Add data to always display controlmenu for Snap activity cards, when editing is off.
-        if ($templatename === 'core_courseformat/local/content' && isset($data->singlesection->cmlist->cms) && $this->page->user_is_editing() === false) {
+        global $USER, $DB, $PAGE;
+        // Add data to always display controlmenu, restrictions and alternative content for Snap activity cards.
+        if ($templatename === 'core_courseformat/local/content' && isset($data->singlesection->cmlist->cms)) {
             $course = $this->page->course;
             $modinfo = get_fast_modinfo($course);
             $courseformat = course_get_format($course);
+            $renderer = new course_renderer($PAGE, null);
+            $editingstate = $this->page->user_is_editing();
             // Simulate editing On.
             $USER->editing = true;
             // Add controlmenu for each course module.
@@ -88,11 +90,31 @@ trait format_section_trait {
 
                 // Add Data so controlmenu is rendered.
                 $cmsitem->cmitem->cmformat->controlmenu = $newcontrolmenu;
+
+                // Get custom module content for Snap, or get modules own content.
+                $modmethod = 'mod_'.$mod->modname.'_html';
+                if ($renderer->is_image_mod($mod)) {
+                    $altcontent = $renderer->mod_image_html($mod);
+                } else if (method_exists($renderer,  $modmethod )) {
+                    $altcontent = call_user_func([$renderer, $modmethod], $mod);
+                } else {
+                    $altcontent = $mod->get_formatted_content(
+                        ['overflowdiv' => true, 'noclean' => true]
+                    );
+                }
+                $altcontent = (empty($altcontent)) ? false : $altcontent;
+
+                // Add Module alternative content rendered.
+                $cmsitem->cmitem->cmformat->altcontent = $altcontent;
+
+                // Add Snap restrictions to modules.
+                $coursetoolsicon = $renderer->snap_course_section_cm_availability($mod);
+                $cmsitem->cmitem->cmformat->controlmenu->snapcoursetoolsicon = $coursetoolsicon;
             }
             unset($cmsitem);
 
             // Restore real editing mode.
-            $USER->editing = false;
+            $USER->editing = $editingstate;
         }
         // Add data to always display controlmenu for Snap subsections, when editing is off.
         if ($templatename === 'core_courseformat/local/content/delegatedsection' && $this->page->user_is_editing() === false) {
