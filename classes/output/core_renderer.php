@@ -982,8 +982,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
         // If we are on the main page of a course, add the cover image selector.
         if ($COURSE->id != SITEID) {
             $courseviewpage = local::current_url_path() === '/course/view.php';
-            $coursesectionpage = local::current_url_path() === '/course/section.php';
-            if ($courseviewpage || $coursesectionpage) {
+            $coursesectionviewpage = local::current_url_path() === '/course/section.php';
+            if ($courseviewpage || $coursesectionviewpage) {
                 $heading .= $this->cover_image_selector();
             }
         }
