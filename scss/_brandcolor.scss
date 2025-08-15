@@ -1507,6 +1507,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         border-color: $brand-primary;
     }
     .divider .divider-content .btn.add-content {
+        color: white;
         &.active,
         &:active,
         &:hover,

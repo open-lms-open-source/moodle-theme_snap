@@ -109,7 +109,9 @@ trait format_section_trait {
 
                 // Add Snap restrictions to modules.
                 $coursetoolsicon = $renderer->snap_course_section_cm_availability($mod);
-                $cmsitem->cmitem->cmformat->controlmenu->snapcoursetoolsicon = $coursetoolsicon;
+                if ($cmsitem->cmitem->cmformat->controlmenu !== null) {
+                    $cmsitem->cmitem->cmformat->controlmenu->snapcoursetoolsicon = $coursetoolsicon;
+                }
             }
             unset($cmsitem);
 
