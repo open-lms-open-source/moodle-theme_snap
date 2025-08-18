@@ -163,8 +163,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
         if ($location == 'snapfeedsmenu') {
             if ($snapfeedsurlparam) {
-                if (str_contains($langstring, 'viewmessaging') || str_contains($langstring, 'viewmyfeedback')) {
-                    $link = '<a class="snap-feeds-menu-more" href="' .$url. '?snapfeedsclicked=on" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
+		if ((strpos($langstring, 'viewmessaging') !== false) ||
+    (strpos($langstring, 'viewmyfeedback') !== false)) {
+		    $link = '<a class="snap-feeds-menu-more" href="' .$url. '?snapfeedsclicked=on" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>'; 
                 } else {
                     $link = '<a class="snap-feeds-menu-more" href="' .$url. '&snapfeedsclicked=on" title="'.$text.'"><small>' .$text. '</small>' .$icon. '</a>';
                 }
