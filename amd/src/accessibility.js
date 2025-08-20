@@ -387,6 +387,25 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                         document.addEventListener('keydown', drawerTabListener);
                     }
                     setDrawersTabOrder();
+
+                    const accessibilityIcon = document.getElementById('local-accessibility-buttoncontainer');
+                    const headerButtonsContainer = document.querySelector('#snap-header > div.float-end');
+                    if (accessibilityIcon && headerButtonsContainer.querySelector('.usermenu')) {
+                        const lineSeparator = document.querySelector('#snap-header div.snap_line_separator');
+                        const accessibilityWrapper = document.createElement('div');
+                        accessibilityWrapper.id = 'nav-local-accessibility-popover-container';
+                        const accessibilityPanel = document.querySelector('div.local-accessibility-panel');
+                        accessibilityPanel.classList.remove('border-primary');
+                        accessibilityPanel.classList.remove('card');
+
+                        if (lineSeparator) {
+                            lineSeparator.parentElement.insertBefore(accessibilityWrapper, lineSeparator);
+                        } else {
+                            headerButtonsContainer.insertBefore(accessibilityWrapper, lineSeparator);
+                        }
+                        accessibilityWrapper.appendChild(accessibilityIcon);
+                        accessibilityWrapper.appendChild(accessibilityPanel);
+                    }
                 });
 
                 /**
