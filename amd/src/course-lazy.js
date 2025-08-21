@@ -371,7 +371,7 @@ define(
                     renderFromHash();
                 });
                 // Current section might be hidden, at this point should be visible.
-                var sections = $('.course-content li[id^="section-"]');
+                var sections = $('.course-content .sections > li[id^="section-"]');
                 var urlParams = location.hash.split("&"),
                     sectionParam = urlParams[0];
                 if (sections.length == 1 &&

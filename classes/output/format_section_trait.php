@@ -104,6 +104,13 @@ trait format_section_trait {
                 }
                 $altcontent = (empty($altcontent)) ? false : $altcontent;
 
+                if ($mod->url && $altcontent) {
+                    // Add chevron icon to content.
+                    $altcontent .= '<div class="mt-3">
+                        <a href="'.$mod->url.'&forceview=1" aria-label="'. get_string('gotoactivity', 'theme_snap', $mod->name) .'"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                        </div>';
+                }
+
                 // Add Module alternative content rendered.
                 $cmsitem->cmitem->cmformat->altcontent = $altcontent;
 

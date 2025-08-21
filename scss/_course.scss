@@ -1528,7 +1528,7 @@ body.snap-resource-card {
             }
         }
     }
-    .snap-asset-content {
+    .activity-altcontent {
         .no-overflow {
             background-color: $color-bk-resource;
             border-radius: 0.5em;
@@ -1542,7 +1542,7 @@ body.snap-resource-card {
             padding: 0;
             font-size: 1.2em;
         }
-        .fa-chevron-down {
+        &>.mt-3 {
             display: none;
             text-align: center;
         }
@@ -1596,6 +1596,9 @@ body.snap-resource-list {
     }
 }
 
+// -----------------------------------------------------------
+// Snap Course resources as Cards.
+// -----------------------------------------------------------
 body.snap-resource-card {
     li.modtype_label {
         .snap-header-card-icons {
@@ -1605,6 +1608,30 @@ body.snap-resource-card {
     li.snap-resource-long.modtype_folder .snap-header-card-icons {
         width: 40%;
     }
+    .section li.modtype_lightboxgallery,
+    .section li.resource {
+      height: 14em;
+      width: 31%;
+      margin: 1%;
+      float: left;
+      clear: none;
+      background-repeat: no-repeat;
+      background-position: 50% 70%;
+      background-size: 33px auto;
+      .activity-item {
+        height: 14em;
+        margin: 1%;
+      }
+      .snap-resource-figure {
+        display: none;
+      }
+    }
+}
+body.snap-resource-card.editing {
+  .section li.modtype_lightboxgallery,
+  .section li.resource {
+    height: 18em;
+  }
 }
 
 body.snap-resource-list,
@@ -1623,12 +1650,12 @@ body.snap-resource-card {
         height: 14em;
     }
     // Hide multimedia content on resource cards description.
-    li.snap-resource.snap-resource-long.modtype_url,
-    li.snap-resource.snap-resource-long.modtype_folder,
-    li.snap-resource.snap-resource-long.modtype_resource,
-    li.snap-resource.snap-resource-long.modtype_imscp,
-    li.snap-resource.snap-resource-long.modtype_lightboxgallery,
-    li.snap-resource.snap-resource-long.modtype_scorm {
+    li.activity-wrapper.modtype_url,
+    li.activity-wrapper.modtype_folder,
+    li.activity-wrapper.modtype_resource,
+    li.activity-wrapper.modtype_imscp,
+    li.activity-wrapper.modtype_lightboxgallery,
+    li.activity-wrapper.modtype_scorm {
         div.contentafterlink div.no-overflow img,
         div.contentafterlink div.no-overflow img.img-responsive.atto_image_button_text-bottom,
         div.contentafterlink div.no-overflow iframe,
@@ -1638,7 +1665,8 @@ body.snap-resource-card {
     }
 
     // Modify resource card structure to have ellipsis in the title and a gradient in the description.
-    .snap-resource-long {
+    li.activity-wrapper.resource ,
+    li.activity-wrapper.modtype_lightboxgallery {
         /* mixin for multiline */
         @mixin multiLineEllipsis($lineHeight: 1.25em, $lineCount: 1, $bgColor: white) {
             overflow: hidden;
@@ -1666,8 +1694,8 @@ body.snap-resource-card {
             min-width: fit-content;
         }
 
-        .snap-asset-link {
-            .snap-header-container {
+        .activity-item {
+            .activity-name-area {
                 overflow: hidden;
             }
             .snap-assettype {
@@ -1685,12 +1713,12 @@ body.snap-resource-card {
                     width: 35px;
                 }
             }
-            a.mod-link {
+            .activityname a {
                 display: flex;
                 align-items: baseline;
                 cursor: pointer;
 
-                p.instancename {
+                span.instancename {
                     max-height: 2.5em;
                     display: block;
                     font-size: 0.8em;
@@ -1702,7 +1730,7 @@ body.snap-resource-card {
             }
         }
 
-        .snap-asset-content {
+        .activity-altcontent  {
             .no-overflow {
                 background-color: transparent;
                 padding: unset;
@@ -1716,9 +1744,12 @@ body.snap-resource-card {
                     display: block;
                 }
             }
+            &>.mt-3 {
+                display: block;
+            }
         }
 
-        div.contentafterlink {
+      .activity-altcontent > .no-overflow {
             padding: 1em;
             margin-top: 0.5em;
             background-color: $color-bk-resource;
