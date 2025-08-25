@@ -248,3 +248,14 @@
         }
     }
 }
+
+@media (min-width: 993px) {
+  #page-message-index {
+    #page {
+      margin-top: 2.4em;
+    }
+    &.contains-snap-custom_menu-spacer #page {
+      margin-top: 5.2em;
+    }
+  }
+}
