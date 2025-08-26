@@ -6468,7 +6468,8 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
     }
 
     // Intellicart icon.
-    #nav-intellicart-popover-container .popover-region-toggle.nav-link.icon-no-margin:focus-visible {
+    #nav-intellicart-popover-container .popover-region-toggle.nav-link.icon-no-margin:focus-visible,
+    #nav-local-accessibility-popover-container.focused-icon {
         @extend .fa-beat;
         --fa-animation-duration: 0.5s;
         --fa-animation-iteration-count: 1;
