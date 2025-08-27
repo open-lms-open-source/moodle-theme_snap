@@ -72,6 +72,7 @@ const POPOVERS_DROPDOWNS = {
         '#user-menu-toggle', // User menu
         '#nav-intellicart-popover-container', // Intellicart
         '#nav-notification-popover-container', // Notifications
+        '#local-accessibility-buttoncontainer', // Accessibility
     ]
 };
 

@@ -397,6 +397,12 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                         const accessibilityPanel = document.querySelector('div.local-accessibility-panel');
                         accessibilityPanel.classList.remove('border-primary');
                         accessibilityPanel.classList.remove('card');
+                        accessibilityIcon.querySelector('button').addEventListener('focus', () => {
+                            accessibilityWrapper.classList.add('focused-icon');
+                        });
+                        accessibilityIcon.querySelector('button').addEventListener('blur', () => {
+                            accessibilityWrapper.classList.remove('focused-icon');
+                        });
 
                         if (lineSeparator) {
                             lineSeparator.parentElement.insertBefore(accessibilityWrapper, lineSeparator);
