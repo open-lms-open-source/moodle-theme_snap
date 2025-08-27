@@ -47,7 +47,6 @@ $coursetoc = new course_toc();
 $searchmodule = $OUTPUT->render_from_template('theme_snap/course_toc_module_search', $coursetoc);
 $tocfooter = $OUTPUT->render_from_template('theme_snap/course_toc_footer', $coursetoc->footer);
 
-
 $courseindex = $searchmodule . core_course_drawer() . $tocfooter;
 
 if (!$courseindex) {
@@ -55,6 +54,8 @@ if (!$courseindex) {
 }
 
 $templatecontext = [
+    'iscourseindex' => true,
     'courseindex' => $courseindex,
+    'courseindexopen' => $courseindexopen,
 ];
 echo $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext);

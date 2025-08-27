@@ -28,7 +28,6 @@
 Feature: Check that the correct tab order and focus exists for the page.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - unskip in INT-20707 second acceptance criteria, when the Course Dashboard is available upon course load"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -70,8 +69,8 @@ Feature: Check that the correct tab order and focus exists for the page.
     Given I change window size to "520x2400"
     And I log in as "admin"
     And I am on "Course 1" course homepage
-    And I click on "button.snap-edit-asset-more" "css_element"
-    And I follow "Edit settings"
+    And I am on the "assignment1" "assign activity" page
+    And I navigate to "Settings" in current page administration
     And I expand all fieldsets
     And I follow "Collapse all"
     And I scroll to the bottom

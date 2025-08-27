@@ -53,7 +53,7 @@ Feature: Testing sidebarmenu in theme_snap
       | title   | First chapter                   |
       | content | This is First chapter's content |
     And I am on the course main page for "C1"
-    And I click on "Test Book" "link"
+    And I am on the "Test Book" "book activity" page
     And I should see "Table of contents"
 
   @javascript
@@ -71,5 +71,5 @@ Feature: Testing sidebarmenu in theme_snap
       | title   | First chapter                   |
       | content | This is First chapter's content |
     And I am on the course main page for "C1"
-    And I click on "Test Book" "link"
+    And I am on the "Test Book" "book activity" page
     And I should not see "Table of contents"

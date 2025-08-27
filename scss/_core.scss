@@ -1634,10 +1634,8 @@ footer #moodle-footer
         left: -315px;
     }
     // When Course Index is open.
-    @media (min-width: 992px) {
-        &.show-drawer-left {
-            padding-left: 285px;
-        }
+    &.show-drawer-left #snap-course-wrapper {
+      padding-left: 285px;
     }
 }
 
@@ -6805,6 +6803,7 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
 }
 .drawer-toggles .drawer-left-toggle {
     left: 0;
+    top: 50%;
 }
 .drawer-toggles .drawer-left-toggle .btn {
     border-top-left-radius: 0;
@@ -6828,9 +6827,27 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
     padding-right: 20px;
 }
 
-
-.drawer.drawer-left.d-print-none.show {
-    z-index: 1050;
+.drawer.drawer-left.d-print-none {
+    background-color: #EEF0F6;
+    position: absolute;
+    top: 0 !important;
+    max-height: unset !important;
+    height: unset !important;
+    margin-top: -0.1em;
+    margin-left: -4.5%;
+    bottom: -1em;
+   .drawertoggle,
+   .drawerheadercontent {
+     display: block;
+   }
+    &.show {
+      z-index: 1050;
+      .drawercontent .courseindex {
+        position: relative;
+        height: 50%;
+        overflow: auto;
+      }
+    }
 }
 
 div#snap-course-wrapper #toc-desktop-menu-heading {
@@ -6839,7 +6856,7 @@ div#snap-course-wrapper #toc-desktop-menu-heading {
     border-bottom: 1px solid #dee2e6;
     text-transform: capitalize;
     #toc-search {
-        top: 0;
+      top: 0;
     }
     h2, input {
         font-size: medium;

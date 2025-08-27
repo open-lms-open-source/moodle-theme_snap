@@ -124,6 +124,7 @@ trait format_section_trait {
 
             // Restore real editing mode.
             $USER->editing = $editingstate;
+            parent::render_from_template('theme_snap/courseformat_init', null);
         }
         // Add data to always display controlmenu for Snap subsections, when editing is off.
         if ($templatename === 'core_courseformat/local/content/delegatedsection' && $this->page->user_is_editing() === false) {

@@ -84,6 +84,7 @@ echo $OUTPUT->custom_menu_spacer();
 <?php
 if ($tocformat) {
     echo '<div id="snap-course-wrapper">';
+    require __DIR__ . '/course_index_drawer.php';
     echo '<div class="row">';
     echo '<div class="col-lg-12">';
 }
@@ -101,9 +102,6 @@ echo $OUTPUT->course_content_footer();
 </section>
 <?php
 require __DIR__.'/blocks_drawer.php';
-if ($tocformat) {
-    require __DIR__ . '/course_index_drawer.php';
-}
 echo $OUTPUT->snap_feeds_side_menu();
 
 if ($tocformat) {

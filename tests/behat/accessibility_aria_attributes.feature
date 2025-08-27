@@ -28,7 +28,6 @@
 Feature: Elements for Snap should have the proper aria attributes.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - unskip in INT-20707 second acceptance criteria, when the Course Dashboard is available upon course load"
     Given the following config values are set as admin:
       | enableglobalsearch | true |
     Given the following "courses" exist:
@@ -61,8 +60,8 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I am on the course main page for "C1"
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
-    And I click on "li#section-1 ul.section li:first-child .snap-edit-asset-more" "css_element"
-    And I click on ".snap-asset .snap-edit-asset" "css_element"
+    And I open "Test assignment1" actions menu
+    And I click on "Edit settings" "link" in the "Test assignment1" activity
     And the "aria-label" attribute of "#id_allowsubmissionsfromdate_calendar" "css_element" should contain "Calendar"
     And the "aria-label" attribute of "#id_cutoffdate_calendar" "css_element" should contain "Calendar"
     And the "aria-label" attribute of "#id_gradingduedate_calendar" "css_element" should contain "Calendar"
@@ -112,8 +111,8 @@ Feature: Elements for Snap should have the proper aria attributes.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
-    And I click on ".snap-activity.modtype_assign .snap-edit-asset-more[title='More Options \"Test assignment1\"']" "css_element"
-    And I click on ".snap-activity.modtype_assign .snap-edit-asset[aria-label='Edit activity Test assignment1']" "css_element"
+    And I open "Test assignment1" actions menu
+    And I click on "Edit settings" "link" in the "Test assignment1" activity
     And I wait until the page is ready
     And I click on "//fieldset[@id=\"id_availabilityconditionsheader\"]" "xpath_element"
     And I click on "//button[text()=\"Add restriction...\"]" "xpath_element"

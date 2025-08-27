@@ -31,7 +31,8 @@ const SELECTORS = {
     TRIGGER: '.snap-sidebar-menu-trigger',
     TRIGGER_ICON: '.snap-sidebar-menu-trigger i',
     HEADER: 'header',
-    DRAWER_BUTTON: '.snap-sidebar-menu-item[data-activeselector]',
+    DRAWER_BUTTON: '.snap-sidebar-menu-item[data-activeselector], ' +
+        '.drawer-toggler.drawer-left-toggle [data-activeselector]',
     COURSE_INDEX_DRAWER_BUTTON: '.drawer-toggler.drawer-left-toggle',
     MESSAGES_POPOVER: '[data-region="popover-region-messages"]',
     CLOSE_DRAWER_BUTTON: '[data-action="closedrawer"]',
@@ -39,6 +40,7 @@ const SELECTORS = {
     NAV_UNPINNED: '#mr-nav.headroom--unpinned',
     GOTO_TOP_LINK: '#goto-top-link',
     COURSE_TOC: '#course-toc',
+    PAGE_HEADER: 'page-header',
 };
 
 const CLASSES = {
@@ -60,6 +62,7 @@ const DRAWERS = {
         '.drawer:has(.message-app)'
     ],
     ACTIVE_SELECTORS: [
+        '.drawer-left.drawer.show',
         '.drawer-right.drawer.show',
         '.block_settings.block.state-visible',
         '#snap_feeds_side_menu.state-visible',
@@ -180,11 +183,10 @@ const updateElementPositions = (selectors = null) => {
     // Updates Course Index Button position.
     const courseindexbutton = document.querySelector(SELECTORS.COURSE_INDEX_DRAWER_BUTTON);
     if (courseindexbutton) {
-        if (isNavUnpinned) {
-            courseindexbutton.style.top = '280px';
-        } else {
-            courseindexbutton.style.top = `${topPosition + 260}px`;
-        }
+        const pageHeader = document.getElementById(SELECTORS.PAGE_HEADER);
+        const headerRect = pageHeader.getBoundingClientRect();
+        const headerBottom = headerRect.bottom;
+        courseindexbutton.style.top = (headerBottom + 100) + 'px';
     }
 };
 
