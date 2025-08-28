@@ -1079,58 +1079,75 @@ body.format-singleactivity {
 // -------------------------
 .theme-snap .section {
     li.activity {
-        border: none;
+      border: none;
     }
     li.activity.modtype_page .activityinstance {
-        margin-bottom: 1em;
+      margin-bottom: 1em;
     }
 
     li.activity .activity-item {
-        display: block;
-        position: relative;
-        margin: 0 auto;
-        height: auto;
-        font-family: $font-family-system;
-        background-color: #fff;
-        border: 1px solid $gray-lighter;
-        border-top-width: 0.3em;
+      display: block;
+      position: relative;
+      margin: 0 auto;
+      height: auto;
+      font-family: $font-family-system;
+      background-color: #fff;
+      border: 1px solid $gray-lighter;
+      border-top-width: 0.3em;
+      transition: all 0.4s ease-in-out;
+      border-radius: 0.5rem;
+      padding: 0.5em 1em;
+
+      // For editors add space for editong tools.
+      &.snap-can-edit {
+          padding-bottom: 2em !important;
+      }
+
+      &.draft:not(.snap-can-view-hidden) {
+          display: none;
+      }
+
+      .asset-wrapper {
+          height: auto;
+          overflow-x: hidden;
+          overflow-y: auto;
+          position: static;
+          padding: 0.5em 1em;
+
+          &:has(.completion-dropdown) {
+              overflow: visible;
+          }
+      }
+
+      .snap-assettype {
+          font-size: $font-size-sm;
+          text-transform: uppercase;
+      }
+
+      .activity-icon img.activityicon:hover {
+        transform: scale(1.2);
         transition: all 0.4s ease-in-out;
+      }
+
+      img.icon, img.activityicon  {
+        border-radius: unset;
+      }
+
+      .activity-information button.btn,
+      .completion-dropdown .dropdown-menu {
         border-radius: 0.5rem;
-        padding: 0.5em 1em;
-
-        // For editors add space for editong tools.
-        &.snap-can-edit {
-            padding-bottom: 2em !important;
+        &> i.icon {
+          color: unset;
         }
+      }
 
-        &.draft:not(.snap-can-view-hidden) {
-            display: none;
-        }
-
-        .asset-wrapper {
-            height: auto;
-            overflow-x: hidden;
-            overflow-y: auto;
-            position: static;
-            padding: 0.5em 1em;
-
-            &:has(.completion-dropdown) {
-                overflow: visible;
-            }
-        }
-
-        .snap-assettype {
-            font-size: $font-size-sm;
-            text-transform: uppercase;
-        }
-
-        .activity-icon.activityiconcontainer {
-            width: 45px;
-            height: auto;
-            margin-right: 0.5em;
-            padding: 0;
-            @include alakazam;
-        }
+      .activity-icon.activityiconcontainer {
+          width: 45px;
+          height: auto;
+          margin-right: 0.5em;
+          padding: 0;
+          @include alakazam;
+      }
     }
 }
 
@@ -1387,7 +1404,7 @@ body.snap-resource-card li.snap-resource:not(.label) {
     }
 }
 // Hide Core activity availability.
-.format-weeks, .format-topics, .format-tiles {
+.format-weeks, .format-topics {
     .section .activity-availability.availabilityinfo {
         display: none;
     }
@@ -1528,7 +1545,7 @@ body.snap-resource-card {
             }
         }
     }
-    .snap-asset-content {
+    .activity-altcontent {
         .no-overflow {
             background-color: $color-bk-resource;
             border-radius: 0.5em;
@@ -1542,7 +1559,7 @@ body.snap-resource-card {
             padding: 0;
             font-size: 1.2em;
         }
-        .fa-chevron-down {
+        &>.readmoreicon {
             display: none;
             text-align: center;
         }
@@ -1596,15 +1613,121 @@ body.snap-resource-list {
     }
 }
 
-body.snap-resource-card {
+// -----------------------------------------------------------
+// Snap Course resources as Cards.
+// -----------------------------------------------------------
+@include media-breakpoint-up(md) {
+  body.snap-resource-card.format-weeks,
+  body.snap-resource-card.format-topics {
     li.modtype_label {
-        .snap-header-card-icons {
-            width: 100%;
-        }
+      .snap-header-card-icons {
+        width: 100%;
+      }
     }
+
     li.snap-resource-long.modtype_folder .snap-header-card-icons {
-        width: 40%;
+      width: 40%;
     }
+
+    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
+    li.activity-wrapper.modtype_folder:has(.activity-name-area),
+    li.activity-wrapper.modtype_url,
+    li.activity-wrapper.modtype_imscp,
+    li.activity-wrapper.modtype_lightboxgallery,
+    li.activity-wrapper.modtype_scorm {
+      height: 14em;
+      width: 48%;
+      margin: 1%;
+      float: left;
+      clear: none;
+      background-repeat: no-repeat;
+      background-position: 50% 70%;
+      background-size: 33px auto;
+
+      .activity-item {
+        height: 14em;
+        margin: 1%;
+        .activity-grid {
+          grid-template-areas:  "icon   name          groupmode      completion    actions"
+                                "icon   visibility    groupmode      completion    actions"
+                                "icon   dates         groupmode      completion    actions"
+                                "altcontent   altcontent    altcontent     altcontent    altcontent"
+                                "afterlink   afterlink     afterlink      afterlink     afterlink"
+                                "availability   availability  availability   availability  availability";
+        }
+
+        .activity-completion .activity-information {
+          button.btn {
+            font-size: 0;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: unset;
+            box-shadow: unset;
+            background-color: white;
+            &:after {
+              display: none;
+            }
+            &:focus {
+              outline: 3px solid $brand-primary;
+            }
+            &:hover {
+              transform: scale(1.1);
+              outline: unset;
+            }
+            // Change icon to fa-circle-check for completion button.
+            &::before {
+              content: "\f058";
+              font-family: "Font Awesome 6 Free";
+              font-weight: 900;
+              font-size: 20px;
+              color: #6c757d;
+            }
+            &.btn-success::before {
+              color: #218838;
+            }
+          }
+          // Change icon to fa-circle-exclamation for completion requirements dropdown.
+          .completion-dropdown button.btn {
+            &::before {
+              content: "\f06a";
+            }
+            &.btn-success::before {
+              content: "\f058";
+            }
+          }
+        }
+      }
+    }
+  }
+
+  body.snap-resource-card.editing.format-weeks,
+  body.snap-resource-card.editing.format-topics {
+    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
+    li.activity-wrapper.modtype_folder:has(.activity-name-area),
+    li.activity-wrapper.modtype_url,
+    li.activity-wrapper.modtype_imscp,
+    li.activity-wrapper.modtype_lightboxgallery,
+    li.activity-wrapper.modtype_scorm {
+      height: 16em;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  body.snap-resource-card.format-weeks,
+  body.snap-resource-card.format-topics {
+    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
+    li.activity-wrapper.modtype_folder:has(.activity-name-area),
+    li.activity-wrapper.modtype_url,
+    li.activity-wrapper.modtype_imscp,
+    li.activity-wrapper.modtype_lightboxgallery,
+    li.activity-wrapper.modtype_scorm {
+      width: 31%;
+    }
+  }
 }
 
 body.snap-resource-list,
@@ -1618,159 +1741,170 @@ body.snap-resource-card {
 // -----------------------------------------------------------
 // Cards view - Ellipsis title and gradient content.
 // -----------------------------------------------------------
-body.snap-resource-card {
+@include media-breakpoint-up(md) {
+  body.snap-resource-card.format-weeks,
+  body.snap-resource-card.format-topics {
     li.snap-resource.snap-resource-long {
-        height: 14em;
+      height: 14em;
     }
+
     // Hide multimedia content on resource cards description.
-    li.snap-resource.snap-resource-long.modtype_url,
-    li.snap-resource.snap-resource-long.modtype_folder,
-    li.snap-resource.snap-resource-long.modtype_resource,
-    li.snap-resource.snap-resource-long.modtype_imscp,
-    li.snap-resource.snap-resource-long.modtype_lightboxgallery,
-    li.snap-resource.snap-resource-long.modtype_scorm {
-        div.contentafterlink div.no-overflow img,
-        div.contentafterlink div.no-overflow img.img-responsive.atto_image_button_text-bottom,
-        div.contentafterlink div.no-overflow iframe,
-        div.mediaplugin.mediaplugin_videojs {
-            display: none;
-        }
+    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
+    li.activity-wrapper.modtype_folder:has(.activity-name-area),
+    li.activity-wrapper.modtype_url,
+    li.activity-wrapper.modtype_imscp,
+    li.activity-wrapper.modtype_lightboxgallery,
+    li.activity-wrapper.modtype_scorm {
+      div.contentafterlink div.no-overflow img,
+      div.contentafterlink div.no-overflow img.img-responsive.atto_image_button_text-bottom,
+      div.contentafterlink div.no-overflow iframe,
+      div.mediaplugin.mediaplugin_videojs {
+        display: none;
+      }
     }
 
     // Modify resource card structure to have ellipsis in the title and a gradient in the description.
-    .snap-resource-long {
-        /* mixin for multiline */
-        @mixin multiLineEllipsis($lineHeight: 1.25em, $lineCount: 1, $bgColor: white) {
+    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
+    li.activity-wrapper.modtype_folder:has(.activity-name-area),
+    li.activity-wrapper.modtype_url,
+    li.activity-wrapper.modtype_imscp,
+    li.activity-wrapper.modtype_lightboxgallery,
+    li.activity-wrapper.modtype_scorm {
+      /* mixin for multiline */
+      @mixin multiLineEllipsis($lineHeight: 1.25em, $lineCount: 1, $bgColor: white) {
+        overflow: hidden;
+        position: relative;
+        line-height: $lineHeight;
+        padding-right: 1em;
+        &:before {
+          content: '...';
+          position: absolute;
+          right: 0;
+          bottom: 0;
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          right: 0;
+          width: 1em;
+          height: 1em;
+          margin-top: 0.2em;
+          background: $bgColor;
+        }
+      }
+
+      .snap-header-card-icons {
+        min-width: fit-content;
+      }
+
+      .activity-item {
+        .activity-name-area {
+          overflow: hidden;
+        }
+
+        .snap-assettype {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          width: 100%;
+        }
+
+        .activityiconcontainer {
+          margin-right: 0.5em;
+          max-width: 45px;
+          max-height: 45px;
+          min-height: 45px;
+          min-width: 45px;
+
+          .activityicon {
+            width: 35px;
+          }
+        }
+
+        .activitytitle {
+          width: 100%;
+        }
+
+        .activityname a {
+          display: flex;
+          align-items: baseline;
+          cursor: pointer;
+
+          span.instancename {
+            max-height: 2.5em;
+            display: block;
+            font-size: 0.8em;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             overflow: hidden;
-            position: relative;
-            line-height: $lineHeight;
-            padding-right: 1em;
-            &:before {
-                content: '...';
-                position: absolute;
-                right: 0;
-                bottom: 0;
-            }
-            &:after {
-                content: '';
-                position: absolute;
-                right: 0;
-                width: 1em;
-                height: 1em;
-                margin-top: 0.2em;
-                background: $bgColor;
-            }
+            margin-right: unset;
+          }
+        }
+      }
+
+      .activity-altcontent {
+        .no-overflow {
+          background-color: transparent;
+          padding: unset;
+          margin: unset;
         }
 
-        .snap-header-card-icons {
-            min-width: fit-content;
+        a {
+          &:hover {
+            text-decoration: unset;
+          }
+
+          i.fa-chevron-down {
+            display: block;
+          }
         }
 
-        .snap-asset-link {
-            .snap-header-container {
-                overflow: hidden;
-            }
-            .snap-assettype {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                width: 100%;
-            }
-            .activityiconcontainer {
-                margin-right: 0.5em;
-                max-width: 45px;
-                max-height: 45px;
-                min-height: 45px;
-                min-width: 45px;
-                .activityicon {
-                    width: 35px;
-                }
-            }
-            a.mod-link {
-                display: flex;
-                align-items: baseline;
-                cursor: pointer;
+        & > .readmoreicon {
+          display: block;
+        }
+      }
 
-                p.instancename {
-                    max-height: 2.5em;
-                    display: block;
-                    font-size: 0.8em;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    margin-right: unset;
-                }
-            }
+      .activity-altcontent > .no-overflow {
+        padding: 1em;
+        margin-top: 0.5em;
+        background-color: $color-bk-resource;
+        border-radius: 0.5em;
+
+        .no-overflow {
+          -webkit-line-clamp: 3;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.4em;
+          height: 4.2em;
         }
 
-        .snap-asset-content {
-            .no-overflow {
-                background-color: transparent;
-                padding: unset;
-                margin: unset;
-            }
-            a {
-                &:hover {
-                    text-decoration: unset;
-                }
-                i.fa-chevron-down {
-                    display: block;
-                }
-            }
+        p.snap-resource-card-fadeout {
+          display: inline-block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          text-align: center;
+          margin: 0;
+          color: transparent;
+          // The blank space that achieve the transparent gradient needs to be unselectable.
+          user-select: none; /* supported by Chrome and Opera */
+          -webkit-user-select: none; /* Safari */
+          -khtml-user-select: none; /* Konqueror HTML */
+          -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+          // Transparent needs to be set the color to white with 0 alpha to achieve the gradient. This is because for Safari
+          // transparent is a black color with 0 alpha and this will cause a bug.
+          background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white);
         }
-
-        div.contentafterlink {
-            padding: 1em;
-            margin-top: 0.5em;
-            background-color: $color-bk-resource;
-            border-radius: 0.5em;
-            .no-overflow {
-                -webkit-line-clamp: 3;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                line-height: 1.4em;
-                height: 4.2em;
-            }
-            p.snap-resource-card-fadeout {
-                display: inline-block;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                text-align: center;
-                margin: 0;
-                color: transparent;
-                // The blank space that achieve the transparent gradient needs to be unselectable.
-                user-select: none; /* supported by Chrome and Opera */
-                -webkit-user-select: none; /* Safari */
-                -khtml-user-select: none; /* Konqueror HTML */
-                -moz-user-select: none; /* Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                // Transparent needs to be set the color to white with 0 alpha to achieve the gradient. This is because for Safari
-                // transparent is a black color with 0 alpha and this will cause a bug.
-                background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white);
-            }
-        }
+      }
     }
+  }
 }
 
 // Clear none-cards after floated cards.
 .snap-resource-card li.activity {
     clear: left;
-}
-
-// Resources to full width on tiny screen.
-@include media-breakpoint-down(sm) {
-    body.snap-resource-card li.snap-resource {
-        width: 99%;
-        margin: 1em auto;
-        height: auto;
-        background-image: none !important;
-
-        .activityinstance .activityicon {
-            display: inline;
-        }
-    }
 }
 
 // -------------------------
