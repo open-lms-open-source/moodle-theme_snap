@@ -1096,7 +1096,19 @@ body.format-singleactivity {
       border-top-width: 0.3em;
       transition: all 0.4s ease-in-out;
       border-radius: 0.5rem;
-      padding: 0.5em 1em;
+      padding: 1.5em 1em 2.5em 2em;
+
+      .activityname {
+        margin-left: 1em;
+      }
+
+      .activity-dates > div {
+        display: none;
+      }
+
+      .activity-afterlink {
+        border: unset;
+      }
 
       // For editors add space for editong tools.
       &.snap-can-edit {
@@ -1159,6 +1171,11 @@ body.format-singleactivity {
     &:hover, &:focus {
         background-color: #fff;
     }
+}
+
+.editing.theme-snap .activity-item:hover:not(:has(.activity:hover)),
+.editing.theme-snap .activity-item.selected {
+  outline: 2px solid $brand-primary;
 }
 
 .activity-navigation {
@@ -1635,7 +1652,6 @@ body.snap-resource-list {
     li.activity-wrapper.modtype_imscp,
     li.activity-wrapper.modtype_lightboxgallery,
     li.activity-wrapper.modtype_scorm {
-      height: 14em;
       width: 48%;
       margin: 1%;
       float: left;
@@ -1645,6 +1661,10 @@ body.snap-resource-list {
       background-size: 33px auto;
 
       .activity-item {
+        padding: 0.5em 1em;
+        .activityname {
+          margin-left: unset;
+        }
         height: 14em;
         margin: 1%;
         .activity-grid {
@@ -1937,6 +1957,10 @@ body.snap-resource-card {
 
 .course-section .moodle-actionmenu .dropdown.show .icon.fa-ellipsis-vertical {
     transform: rotate(180deg);
+}
+
+.course-section .section-summary-activities .icon {
+  color: $brand-primary;
 }
 
 // -----------------------------------------------------------
@@ -2747,6 +2771,7 @@ body.snap-resource-card {
     // We need to counteract this for snap for hsu forum for the moment.
     display: block !important;
     clear: both;
+    width: 100%;
 }
 
 // Hide draft tag, unless asset has class draft (can be added by js).
@@ -2873,16 +2898,9 @@ li.section.hidden .snap-asset {
 
 // Sections which are draft.
 .section.hidden {
-    opacity: 1 !important;
-
-    .content {
-        opacity: 0.75;
-    }
-
-    // Draft assets inside hidden section....
-    .snap-asset.draft .activityinstance {
-        opacity: 1;
-    }
+  opacity: 0.75;
+  z-index: 1;
+  position: relative;
 }
 
 // TODO - in course_renderer figure out if completion tracking enabled.
