@@ -73,3 +73,12 @@ Feature: When the moodle theme is set to Snap, the custom snap login form should
     And I press "Access as a guest"
     And "#page-mast" "css_element" should be visible
     And I should not see "Invalid login, please try again"
+
+  @javascript
+  Scenario: Snap displays the Recaptcha on login when configured to do so.
+    Given the following config values are set as admin:
+      | recaptchapublickey   | randompublickey  |
+      | recaptchaprivatekey  | randomprivatekey |
+      | enableloginrecaptcha | true             |
+    And I am on login page
+    Then ".login-form-recaptcha" "css_element" should be visible

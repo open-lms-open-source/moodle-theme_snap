@@ -133,6 +133,11 @@
                 <label for="password" class="sr-only">{{#str}} password {{/str}}*</label>
             </div>
             <a class="small btn btn-link btn-block" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
+            {{#recaptcha}}
+                <div class="login-form-recaptcha mb-3">
+                    {{{recaptcha}}}
+                </div>
+            {{/recaptcha}}
             <button type="submit" class="btn btn-primary btn-block" id="loginbtn">{{#str}}login{{/str}}</button>
         </form>
         {{!Alternative login options}}
