@@ -32,7 +32,9 @@ define(
         'theme_snap/footer_alert',
         'core_filters/events',
         'core/fragment',
-        'core/modal_copy_to_clipboard'
+        'core/modal_copy_to_clipboard',
+        'core_courseformat/local/content/actions',
+        'core_courseformat/courseeditor',
     ],
     function(
         $,
@@ -45,7 +47,9 @@ define(
         footerAlert,
         Event,
         fragment,
-        ModalCopyToClipboard
+        ModalCopyToClipboard,
+        Actions,
+        CourseEditor,
     ) {
 
         var self = this;
@@ -133,6 +137,41 @@ define(
                     }
                 });
             }
+        };
+
+        const setActionsObservers = function() {
+            const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
+            if (reactiveCourseEditor.isEditing) {
+                return;
+            }
+            document.querySelectorAll('a.dropdown-item.editing_movecm.menu-action')
+                .forEach(function(element) {
+                    element.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const actions = new Actions.prototype.constructor({
+                            element: this,
+                            reactive: CourseEditor.getCurrentCourseEditor()
+                        });
+                        if (typeof actions._requestMoveCm === 'function') {
+                            actions._requestMoveCm(this, e);
+                        }
+                    }, {capture: true});
+                });
+            document.querySelectorAll('a.dropdown-item.editing_delete.menu-action')
+                .forEach(function(element) {
+                    element.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const actions = new Actions.prototype.constructor({
+                            element: this,
+                            reactive: CourseEditor.getCurrentCourseEditor()
+                        });
+                        if (typeof actions._requestCmDelete === 'function') {
+                            actions._requestCmDelete(this, e);
+                        }
+                    }, {capture: true});
+                });
         };
 
         /**
@@ -1155,14 +1194,17 @@ define(
              */
             var groupModeListeners = function() {
                 $(document).on('click',
-                    '#snap-groups-menu .dropdown-item-outline, .groups-dropdown-menu .dropdown-item-outline',
+                    '.dropdown-item-outline a[data-action="cmNoGroups"], ' +
+                    'a[data-action="cmSeparateGroups"], ' +
+                    'a[data-action="cmVisibleGroups"]',
                         function(e) {
                         e.preventDefault();
+                        const parent = $(this).parent().parent();
                         const cmIds = [];
                         let courseId = self.courseConfig.id;
-                        let dataId = $(this).find('.option-name a').attr('data-id');
-                        let dataAction = $(this).find('.option-name a').attr('data-action');
-                        let dataOptionNumber = $(this).attr('data-optionnumber');
+                        let dataId = parent.find('.option-name a').attr('data-id');
+                        let dataAction = parent.find('.option-name a').attr('data-action');
+                        let dataOptionNumber = parent.attr('data-optionnumber');
                         let actionText = '';
                         if (dataAction === 'cmNoGroups') {
                             dataAction = 'cm_nogroups';
@@ -1180,84 +1222,48 @@ define(
                                 methodname: 'core_courseformat_update_course',
                                 args: {action: dataAction, courseid: courseId, ids: cmIds},
                                 done: function() {
-                                    let activityCard = $('#module-'+dataId);
-
-                                    let selectedIconUrl = $(activityCard).find(
-                                        '[data-optionnumber='+dataOptionNumber+'] .option-icon img'
-                                    ).attr('src');
-
-                                    $(activityCard).find(
-                                        '.snap-activity-groups-dropdown .snap-groups-more img'
-                                    ).attr('src', selectedIconUrl);
-
-                                    $(activityCard).find(
-                                        '.snap-activity-groups-dropdown .snap-groups-more img'
-                                    ).attr('alt', actionText);
-
-                                    $(activityCard).find(
-                                        '#snap-groups-menu .border.bg-primary-light.selected,' +
-                                        '.groups-dropdown-menu .border.bg-primary-light.selected'
-                                    ).removeClass('border bg-primary-light selected');
-                                    $(activityCard).find(
-                                        '#snap-groups-menu a.selected,' +
-                                        '.groups-dropdown-menu a.selected'
-                                    ).removeClass('selected');
-                                    $(activityCard).find(
-                                        '.option-select-indicator [data-for="checkedIcon"]'
-                                    ).addClass('d-none');
-                                    $(activityCard).find(
-                                        '.option-select-indicator [data-for="uncheckedIcon"]'
-                                    ).removeClass('d-none');
-
-                                    $(activityCard).find(
-                                        '[data-optionnumber='+dataOptionNumber+']'
-                                    ).addClass('border bg-primary-light selected');
-                                    $(activityCard).find(
-                                        '.groups-dropdown-menu a[data-id='+dataId+'], ' +
-                                        '#snap-groups-menu a.selected'
-                                    ).addClass('selected');
-                                    $(activityCard).find(
-                                        '[data-optionnumber='+dataOptionNumber+'] ' +
-                                        '.option-select-indicator [data-for="checkedIcon"]'
-                                    ).removeClass('d-none');
-                                    $(activityCard).find(
-                                        '[data-optionnumber='+dataOptionNumber+'] ' +
-                                        '.option-select-indicator  [data-for="uncheckedIcon"]'
-                                    ).addClass('d-none');
+                                    setTimeout(() => {
+                                        let activityCard = $('#module-'+dataId);
+                                        let selectedIconUrl = $(activityCard).find(
+                                            '[data-optionnumber="' + dataOptionNumber + '"] .option-icon img'
+                                        ).attr('src');
+                                        $(activityCard).find(
+                                            '.groupmode-information img'
+                                        ).attr('src', selectedIconUrl);
+                                        $(activityCard).find(
+                                            '.groupmode-information img'
+                                        ).attr('alt', actionText);
+                                        $(activityCard).find(
+                                            '.dropdown-menu.show div[data-selected=1]'
+                                        ).removeClass('border bg-primary-light selected');
+                                        $(activityCard).find(
+                                            '.dropdown-menu.show a.selected'
+                                        ).removeClass('selected');
+                                        $(activityCard).find(
+                                            '.option-select-indicator [data-for="checkedIcon"]'
+                                        ).addClass('d-none');
+                                        $(activityCard).find(
+                                            '.option-select-indicator [data-for="uncheckedIcon"]'
+                                        ).removeClass('d-none');
+                                        $(activityCard).find(
+                                            '[data-optionnumber="' + dataOptionNumber + '"]'
+                                        ).addClass('border bg-primary-light selected');
+                                        $(activityCard).find(
+                                            '.dropdown-menu.show a.selected'
+                                        ).addClass('selected');
+                                        $(activityCard).find(
+                                            '[data-optionnumber="' +
+                                            dataOptionNumber + '"] .option-select-indicator [data-for="checkedIcon"]'
+                                        ).removeClass('d-none');
+                                        $(activityCard).find(
+                                            '[data-optionnumber="' +
+                                            dataOptionNumber + '"] .option-select-indicator [data-for="uncheckedIcon"]'
+                                        ).addClass('d-none');
+                                    }, 1);
                                 },
                             }
                         ]);
                     });
-            };
-
-            /**
-             * Listen for sub dropdowns changes.
-             */
-            var subPanelListeners = function() {
-                $(document).on('click', '.dropdown-subpanel', function(e) {
-                    e.stopPropagation();
-                    $('.dropdown-subpanel').not(this).find('.dropdown-subpanel-content').hide();
-                    $('.dropdown-subpanel').not(this).find('.dropdown-toggle').removeClass('active');
-                    if ($(this).find('.dropdown-toggle').hasClass('active')) {
-                        // Closing the parent dropdown.
-                        $(this).parent().parent().click();
-                        $(this).parent().parent().blur();
-                        $(this).find('.dropdown-subpanel-content').hide();
-                        $(this).find('.dropdown-toggle').removeClass('active');
-                    } else {
-                        $(this).find('.dropdown-subpanel-content').show();
-                        $(this).find('.dropdown-toggle').addClass('active');
-                    }
-                });
-
-                // If we click outside the subpanel element.
-                $(document).on('click', function(event) {
-                    var subPanelElement = $('.dropdown-subpanel');
-                    if (!subPanelElement.is(event.target) && !subPanelElement.has(event.target).length) {
-                        $('#snap-asset-menu .dropdown-subpanel-content').hide();
-                        $('#snap-asset-menu .dropdown-toggle').removeClass('active');
-                    }
-                });
             };
 
             /**
@@ -1689,6 +1695,7 @@ define(
             var setCourseSectionObervers = function () {
                 setTocObservers();
                 setNavigationFooterObservers();
+                setActionsObservers();
             };
 
             /**
@@ -1705,7 +1712,6 @@ define(
                 assetEditListeners();
                 availabilityListeners();
                 groupModeListeners();
-                subPanelListeners();
                 addAfterDrops();
                 setCourseSectionObervers();
                 $('body').addClass('snap-course-listening');
