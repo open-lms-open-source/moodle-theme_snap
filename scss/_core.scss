@@ -1655,6 +1655,9 @@ body.contains-snap-custom_menu-spacer {
         @include media-breakpoint-up(md) {
             margin-top: -.75em;
         }
+        @include media-breakpoint-down(sm) {
+            margin-top: -1.5em;
+        }
     }
 }
 
@@ -1739,6 +1742,27 @@ header#page-header
     }
     @media (max-width: 465px) {
         padding-top: 7.5rem;
+    }
+}
+
+body#page-site-index #moodle-page #page-header {
+    min-height: 0;
+    aspect-ratio: 3;
+    #page-mast {
+        margin: 0;
+        position: relative;
+        top: 17%;
+        left: 4%;
+    }
+}
+
+body.path-course-view, body#page-course-index-category {
+    #moodle-page #page-header {
+        min-height: 0;
+        aspect-ratio: 6;
+    }
+    .page-context-header {
+        margin-top: -.75rem;
     }
 }
 
