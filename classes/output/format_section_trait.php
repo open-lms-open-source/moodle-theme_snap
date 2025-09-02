@@ -111,6 +111,11 @@ trait format_section_trait {
                         </div>';
                 }
 
+                // Add Module meta html.
+                $metahtml = $renderer->module_meta_html($mod);
+                $metahtml = (empty($metahtml)) ? '' : '<div class="snap-completion-meta">' . $metahtml. '</div>';
+                $cmsitem->cmitem->cmformat->afterlink .= $metahtml;
+
                 // Add Module alternative content rendered.
                 $cmsitem->cmitem->cmformat->altcontent = $altcontent;
 
@@ -218,7 +223,7 @@ trait format_section_trait {
                 $output = $sectionheader;
                 $output .= $corecontent;
 
-                if ($currentsection->uservisible) {
+                if ($currentsection->uservisible && !$PAGE->user_is_editing()) {
                     // Add Snap modchooser and Snap drop file.
                     $sectionfooter = $this->course_section_add_cm_control_snap($course, $currentsection->section, 0);
                     $output .= $sectionfooter;
@@ -1054,7 +1059,7 @@ trait format_section_trait {
         $upload .= '</form>';
         $upload .= '</div>';
 
-        return '<div class="row">'.$modchooser.$upload.'</div>';
+        return '<div class="row mt-3">'.$modchooser.$upload.'</div>';
     }
 
     /**

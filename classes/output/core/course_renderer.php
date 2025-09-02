@@ -757,7 +757,7 @@ class course_renderer extends \core_course_renderer {
      * @param cm_info $mod
      * @return string
      */
-    protected function module_meta_html(cm_info $mod) {
+    public function module_meta_html(cm_info $mod) {
         global $COURSE;
 
         $content = '';
