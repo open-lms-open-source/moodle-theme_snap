@@ -538,9 +538,9 @@ li.section:focus {
     .snap-dropzone-label {
         display: block;
         cursor: pointer;
-        padding: 0.5em 0;
+        padding: .5em 0;
         border: 3px dashed #eee;
-        border-radius: $btn-border-radius;
+        border-radius: 0.5rem;
 
         &:hover,
         &:focus {
@@ -553,7 +553,6 @@ li.section:focus {
         .activityiconcontainer {
             width: 40px;
             height: 40px;
-            margin-bottom: 0.5rem;
             padding: 0.5rem;
         }
     }
@@ -908,8 +907,9 @@ li.section:focus {
 .snap-modchooser .section-modchooser-link {
     display: block;
     text-align: center;
-    padding: 1em 0;
+    padding: 1.2em 0;
     border: 3px solid #eee;
+    border-radius: 0.5rem;
 
     &:hover,
     &:focus {
@@ -923,6 +923,35 @@ li.section:focus {
     img {
         @include svg-icon;
     }
+}
+
+.snap-buttons .snap-icon {
+  font-size: 1.5rem;
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.btn-add-subsection .snap-icon {
+    color: #3B8BB6;
+}
+
+.btn-add-activity .snap-icon {
+  color: #97C15C;
+}
+
+.btn-add-subsection,
+.btn-add-activity {
+  text-decoration: none !important;
+  font-weight: 500;
+
+  &:hover .button-text {
+    text-decoration: underline !important;
+  }
+}
+
+.snap-dropzone-label .dropzone-text {
+    font-weight: 500;
 }
 
 // get rid of js cursor style applied to the whole commands area

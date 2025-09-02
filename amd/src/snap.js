@@ -1569,6 +1569,31 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                             subtree: true,
                         });
                     });
+                    // If editing is inactive, the snap button to create subsections directly accesses the service
+                    document.addEventListener('click', async function(e) {
+                        const btn = e.target.closest('.btn-add-subsection');
+                        if (!btn) {
+                            return;
+                        }
+                        e.preventDefault();
+
+                        const courseId = btn.dataset.courseid;
+                        const sectionId = btn.dataset.sectionid;
+                        const modName = btn.dataset.modname;
+                        const editingActive = document.body.classList.contains('editing');
+                        if (!editingActive) {
+                            await ajax.call([{
+                                methodname: 'core_courseformat_new_module',
+                                args: {
+                                    courseid: courseId,
+                                    modname: modName,
+                                    targetsectionid: sectionId,
+                                    targetcmid: null
+                                }
+                            }])[0];
+                            window.location.reload();
+                        }
+                    });
                 });
                 accessibility.snapAxInit();
                 messages.init();

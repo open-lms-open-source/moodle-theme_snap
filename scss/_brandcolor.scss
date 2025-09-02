@@ -133,11 +133,19 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: #fff !important;
     }
 
-    .snap-dropzone-label:hover .fake-link {
+  .snap-dropzone-label {
+    &:hover {
+      .fake-link {
         color: darken($brand-primary, 8%);
+      }
     }
 
-    .snap-dropzone .activityiconcontainer {
+    .snap-icon {
+      color: $brand-primary;
+    }
+  }
+
+  .snap-dropzone .activityiconcontainer {
         background-color: transparent;
         img.activityicon {
             filter: $resource-filter;

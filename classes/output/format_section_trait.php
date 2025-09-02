@@ -225,7 +225,7 @@ trait format_section_trait {
 
                 if ($currentsection->uservisible && !$PAGE->user_is_editing()) {
                     // Add Snap modchooser and Snap drop file.
-                    $sectionfooter = $this->course_section_add_cm_control_snap($course, $currentsection->section, 0);
+                    $sectionfooter = $this->course_section_add_cm_control_snap($course, $currentsection, 0);
                     $output .= $sectionfooter;
                 }
                 // Add Snap footer navigation for course.
@@ -670,7 +670,7 @@ trait format_section_trait {
             $output .= $renderer->course_section_cm_list_snap($course, $section, 0);
             // SLamour Aug 2015 - make add asset visible without turning editing on
             // N.B. this function handles the can edit permissions.
-            $output .= $this->course_section_add_cm_control_snap($course, $section->section, 0);
+            $output .= $this->course_section_add_cm_control_snap($course, $section, 0);
         }
         $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $section->section));
         $output .= html_writer::end_tag('div');
@@ -1020,46 +1020,71 @@ trait format_section_trait {
             return '';
         }
 
-        $iconurl = $OUTPUT->image_url('move_here', 'theme');
-        $icon = '<img src="'.$iconurl.'" class="svg-icon" role="presentation" alt=""><br>';
+        $subsectionbutton = null;
+        $colclass = "col-12 col-lg-6";
+        $mcclass = 'js-only section-modchooser-link btn btn-link';
+
+        // Button to create subsection
+        $plugininfo = \core_plugin_manager::instance()->get_plugin_info('mod_subsection');
+        if ($plugininfo && $plugininfo->is_enabled()) {
+            $colclass = "col-12 col-lg-4";
+            $iconss = '<i class="fa fa-rectangle-list snap-icon" aria-hidden="true"></i>';
+            $straddsubsection = get_string('addsubsection', 'theme_snap');
+            $textwrappedss = html_writer::tag('span', $straddsubsection, ['class' => 'button-text']);
+            $sslinkcontent = $iconss . $textwrappedss;
+            $subsectioncontent = html_writer::tag('a', $sslinkcontent, [
+                'href' => '#',
+                'data-action' => 'newModule',
+                'data-modname' => 'subsection',
+                'data-sectionid' => $section->id,
+                'data-courseid' => $course->id,
+                'class' => $mcclass . ' btn-add-subsection',
+            ]);
+
+            $subsectionbutton = html_writer::tag('div', $subsectioncontent, [
+                'class' => $colclass . ' mb-3 snap-modchooser',
+                'id' => "snap-create-subsection-" . $section->section,
+            ]);
+        }
+
         // Slamour Aug 2017.
         $straddmod = get_string('addresourceoractivity', 'theme_snap');
-        $mclinkcontent = $icon.$straddmod;
-        $mcclass = 'js-only section-modchooser-link btn btn-link';
+        $textwrappedmod = html_writer::tag('span', $straddmod, ['class' => 'button-text']);
+        $iconmd = '<i class="fa-solid fa-file-circle-plus snap-icon" aria-hidden="true"></i>';
+        $mclinkcontent = $iconmd . $textwrappedmod;
 
         // Render button for new core mod chooser.
         $modchoosercontent = html_writer::tag('button', $mclinkcontent, [
-            'class' => $mcclass,
+            'class' => $mcclass . ' btn-add-activity',
             'data-action' => 'open-chooser',
-            'data-sectionid' => $section,
+            'data-sectionid' => $section->section,
         ]);
 
         // We need to be sure not having the same ID for every mod chooser if multiple sections exists.
-        $modchooserid = "snap-create-activity-$section";
+        $modchooserid = "snap-create-activity-$section->section";
         $modchooser = html_writer::tag('div', $modchoosercontent, [
-            'class' => 'col-sm-6 snap-modchooser',
+            'class' => $colclass.' mb-3 snap-modchooser',
             'id' => $modchooserid,
         ]);
 
         // Add zone for quick uploading of files.
-        $dropfileicon = $OUTPUT->image_url('i/folderdropzone', 'theme_snap');
         $dropzonelabel = get_string('dropzonelabel', 'theme_snap');
-        $upload = '<div class="col-sm-6">';
+        $upload  = '<div class="' . $colclass . '">';
         $upload .= '<form class="snap-dropzone js-only">';
-        $upload .= '<label tabindex="0" for="snap-drop-file-'.$section.'" class="snap-dropzone-label">';
-        $upload .= '<div>';
+        $upload .= '<label tabindex="0" for="snap-drop-file-'.$section->section.'" class="snap-dropzone-label">';
+        $upload .= '<div class="btn">';
         $upload .= '<div class="activityiconcontainer">';
-        $upload .= '<img src="'.$dropfileicon.'" alt="" class="iconlarge activityicon" role="presentation">';
+        $upload .= '<i class="fa-solid fa-file snap-icon" aria-hidden="true"></i>';
         $upload .= '</div>';
-        $upload .= '<div>'.$dropzonelabel.'</div>';
+        $upload .= '<div class="dropzone-text">'.$dropzonelabel.'</div>';
         $upload .= '</div>';
         $upload .= '</label>';
         $upload .= '<input class="js-snap-drop-file sr-only" type="file" multiple
-         name="snap-drop-file-'.$section.'" id="snap-drop-file-'.$section.'">';
+         name="snap-drop-file-'.$section->section.'" id="snap-drop-file-'.$section->section.'">';
         $upload .= '</form>';
         $upload .= '</div>';
 
-        return '<div class="row mt-3">'.$modchooser.$upload.'</div>';
+        return '<div class="row snap-buttons">'.$modchooser.$subsectionbutton.$upload.'</div>';
     }
 
     /**
