@@ -4826,8 +4826,10 @@ button.snap-icon-toggle {
 }
 
 // Cover image control.
-.has-course-leftnav #page-mast {
-    display: flex;
+.has-course-leftnav, #page-header.mast-image {
+    #page-mast {
+        display: flex;
+    }
 }
 #page-site-index #page-mast {
     display: inline-block;
