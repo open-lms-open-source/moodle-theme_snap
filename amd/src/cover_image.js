@@ -240,7 +240,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 // Initialize preview image cropper for the current saved image.
                 var imageToCrop = document.getElementById('id_snap_cover_image_preview');
                 cropper = new Cropper(imageToCrop, {
-                    viewMode: 3,
+                    viewMode: 2, // Changed to avoid pre-cropping by default.
                     aspectRatio: cropperRatio,
                     dragMode: "none",
                     zoomable: false,
@@ -410,7 +410,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                         temporalImageID = urlId[0].match(/\d+/)[0];
                     }
                     cropper = new Cropper(imageToCrop, {
-                        viewMode: 3,
+                        viewMode: 2, // Changed to avoid pre-cropping by default.
                         aspectRatio: cropperRatio,
                         dragMode: "none",
                         zoomable: false,
