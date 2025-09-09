@@ -120,6 +120,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                 input[type="range"] {
                     accent-color: $brand-primary;
                 }
+
+                a.btn-secondary:hover {
+                    color: white;
+                }
             }
         }
     }

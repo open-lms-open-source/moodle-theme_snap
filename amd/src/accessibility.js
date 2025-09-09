@@ -403,6 +403,12 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                         accessibilityIcon.querySelector('button').addEventListener('blur', () => {
                             accessibilityWrapper.classList.remove('focused-icon');
                         });
+                        const userMenuLink = document.querySelector('.usermenu a');
+                        if (userMenuLink) {
+                            userMenuLink.addEventListener('click', () => {
+                                accessibilityPanel.style.display = 'none';
+                            });
+                        }
 
                         if (lineSeparator) {
                             lineSeparator.parentElement.insertBefore(accessibilityWrapper, lineSeparator);
