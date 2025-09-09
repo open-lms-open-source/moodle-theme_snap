@@ -25,6 +25,7 @@ require(['core_courseformat/local/content'], function(component) {
     component.init = function() {
         const instance = originalInit.apply(this, arguments);
         window.componentInstance = instance;
+        instance.selectors.SECTION = "li[data-for='section']";
         instance._scrollHandler = function() {
             return;
         };

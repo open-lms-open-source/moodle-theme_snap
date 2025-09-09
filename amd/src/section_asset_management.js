@@ -255,6 +255,7 @@ define(
                             }
                         }
                     });
+                    setActionsObservers();
                 });
             }
         };
@@ -1199,6 +1200,7 @@ define(
                     'a[data-action="cmVisibleGroups"]',
                         function(e) {
                         e.preventDefault();
+                        e.stopPropagation();
                         const parent = $(this).parent().parent();
                         const cmIds = [];
                         let courseId = self.courseConfig.id;
@@ -1234,10 +1236,10 @@ define(
                                             '.groupmode-information img'
                                         ).attr('alt', actionText);
                                         $(activityCard).find(
-                                            '.dropdown-menu.show div[data-selected=1]'
+                                            '.dropdown-menu.show div[data-selected]'
                                         ).removeClass('border bg-primary-light selected');
                                         $(activityCard).find(
-                                            '.dropdown-menu.show a.selected'
+                                            '.dropdown-menu.show div[data-selected=1]'
                                         ).removeClass('selected');
                                         $(activityCard).find(
                                             '.option-select-indicator [data-for="checkedIcon"]'
@@ -1249,7 +1251,7 @@ define(
                                             '[data-optionnumber="' + dataOptionNumber + '"]'
                                         ).addClass('border bg-primary-light selected');
                                         $(activityCard).find(
-                                            '.dropdown-menu.show a.selected'
+                                            '.dropdown-menu.show div[data-selected=1]'
                                         ).addClass('selected');
                                         $(activityCard).find(
                                             '[data-optionnumber="' +
@@ -1259,6 +1261,7 @@ define(
                                             '[data-optionnumber="' +
                                             dataOptionNumber + '"] .option-select-indicator [data-for="uncheckedIcon"]'
                                         ).addClass('d-none');
+                                        parent.parents('.dropdown.show').click();
                                     }, 1);
                                 },
                             }
