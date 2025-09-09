@@ -655,6 +655,7 @@ i.icon,
 p.tree_item:before {
     color: #999;
 }
+
 p.tree_item.hasicon i.nav-missing-icon:before {
     content: '■'; // Where settings nav icon is missing use this.
 }
@@ -1635,8 +1636,15 @@ footer #moodle-footer
     }
     // When Course Index is open.
     &.show-drawer-left #snap-course-wrapper {
-      padding-left: 285px;
+      padding-left: 300px;
     }
+}
+
+@media (min-width: 1346px) {
+  .drawer.drawer-left {
+    width: 25% !important;
+    max-width: 25% !important;
+  }
 }
 
 // Styles when the custom menu is enabled.
@@ -6647,69 +6655,21 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
 
 // Course Index CSS Styles from Boost
 .courseindex .courseindex-item {
-    padding: 0.5rem 0.5rem;
+    padding: 0 0.5rem;
     border: 1px solid transparent;
     border-radius: 0.5rem;
-}
-.courseindex .courseindex-item.courseindex-section-title a {
-    font-weight: bold;
 }
 .courseindex .courseindex-item .icons-collapse-expand {
     padding-right: 4px;
 }
-.courseindex .courseindex-item .courseindex-link,
-.courseindex .courseindex-item .courseindex-chevron {
-    color: #495057;
-}
 .courseindex .courseindex-item .courseindex-link:hover, .courseindex .courseindex-item .courseindex-link:focus,
 .courseindex .courseindex-item .courseindex-chevron:hover,
 .courseindex .courseindex-item .courseindex-chevron:focus {
-    color: black;
     text-decoration: none;
 }
-.courseindex .courseindex-item:hover, .courseindex .courseindex-item:focus {
-    color: black;
-}
-.courseindex .courseindex-item:hover .courseindex-link,
-.courseindex .courseindex-item:hover .courseindex-chevron, .courseindex .courseindex-item:focus .courseindex-link,
-.courseindex .courseindex-item:focus .courseindex-chevron {
-    color: black;
-    cursor: pointer;
-}
-.courseindex .courseindex-item:hover.dimmed, .courseindex .courseindex-item:focus.dimmed {
-    color: black;
-}
-.courseindex .courseindex-item:hover.dimmed .courseindex-link,
-.courseindex .courseindex-item:hover.dimmed .courseindex-chevron, .courseindex .courseindex-item:focus.dimmed .courseindex-link,
-.courseindex .courseindex-item:focus.dimmed .courseindex-chevron {
-    color: black;
-}
+
 .courseindex .courseindex-item:hover.draggable, .courseindex .courseindex-item:focus.draggable {
     cursor: move;
-}
-.courseindex .courseindex-item:hover.pageitem,
-.courseindex .courseindex-item:hover .pageitem, .courseindex .courseindex-item:focus.pageitem,
-.courseindex .courseindex-item:focus .pageitem {
-    background-color: #0c589c;
-    color: #e6e6e6;
-}
-.courseindex .courseindex-item:hover.pageitem .courseindex-link,
-.courseindex .courseindex-item:hover.pageitem .courseindex-chevron,
-.courseindex .courseindex-item:hover .pageitem .courseindex-link,
-.courseindex .courseindex-item:hover .pageitem .courseindex-chevron, .courseindex .courseindex-item:focus.pageitem .courseindex-link,
-.courseindex .courseindex-item:focus.pageitem .courseindex-chevron,
-.courseindex .courseindex-item:focus .pageitem .courseindex-link,
-.courseindex .courseindex-item:focus .pageitem .courseindex-chevron {
-    color: #e6e6e6;
-}
-.courseindex .courseindex-item:hover.pageitem .courseindex-link a,
-.courseindex .courseindex-item:hover.pageitem .courseindex-chevron a,
-.courseindex .courseindex-item:hover .pageitem .courseindex-link a,
-.courseindex .courseindex-item:hover .pageitem .courseindex-chevron a, .courseindex .courseindex-item:focus.pageitem .courseindex-link a,
-.courseindex .courseindex-item:focus.pageitem .courseindex-chevron a,
-.courseindex .courseindex-item:focus .pageitem .courseindex-link a,
-.courseindex .courseindex-item:focus .pageitem .courseindex-chevron a {
-    color: #e6e6e6;
 }
 .courseindex .courseindex-item.dragging {
     border: 1px solid #b3d9e0;
@@ -6719,32 +6679,15 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
     background-color: #f8f9fa;
     border-color: #dee2e6;
 }
-.courseindex .courseindex-item.dimmed {
-    color: #6a737b;
-}
 .courseindex .courseindex-item.dimmed .courseindex-link,
 .courseindex .courseindex-item.dimmed .courseindex-chevron {
-    color: #6a737b;
-}
-.courseindex .courseindex-item.dimmed.pageitem {
-    color: #fff;
-}
-.courseindex .courseindex-item.dimmed.pageitem a {
-    color: #fff;
+    color: #6a737b !important;
 }
 .courseindex .courseindex-item .courseindex-locked {
     display: none;
 }
 .courseindex .courseindex-item.restrictions .courseindex-locked {
     display: block;
-}
-.courseindex .courseindex-item.pageitem {
-    background-color: #0f6cbf;
-    color: #fff;
-    scroll-margin: 6rem;
-}
-.courseindex .courseindex-item.pageitem a {
-    color: #fff;
 }
 .courseindex .courseindex-item .completioninfo {
     min-width: 24px;
@@ -6766,12 +6709,7 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
     background-color: #e6f2f5;
 }
 .courseindex .courseindex-section .current-badge {
-    line-height: 1.5;
     display: none;
-}
-.courseindex .courseindex-section.current {
-    border-left: solid 3px #0f6cbf;
-    /* Skip current badges in delegated sections. */
 }
 .courseindex .courseindex-section.current .current-badge {
     display: inline-block;
@@ -6790,7 +6728,7 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
     width: 100%;
 }
 .courseindex .icon {
-    font-size: 10px;
+    font-size: 15px;
 }
 .courseindex .d-flex-noedit {
     display: none;
@@ -6863,10 +6801,6 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
     margin-top: -0.1em;
     margin-left: -4.5%;
     bottom: -1em;
-   .drawertoggle,
-   .drawerheadercontent {
-     display: block;
-   }
     &.show {
       z-index: 1050;
       .drawercontent .courseindex {
@@ -6879,14 +6813,16 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
 
 div#snap-course-wrapper #toc-desktop-menu-heading {
     margin-bottom: 1em;
-    padding: 0 1em;
     border-bottom: 1px solid #dee2e6;
     text-transform: capitalize;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
     #toc-search {
-      top: 0;
+      font-size: 1rem;
     }
     h2, input {
-        font-size: medium;
+      font-size: 1.1rem;
+      color: gray;
     }
     #toc-search:focus-within {
         width: 90%;
@@ -6941,4 +6877,27 @@ li.section.main {
     img {
         opacity: 0.5;
     }
+}
+
+#toc-desktop-menu-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 70%;
+}
+
+.drawerheadercontent,
+.drawerheader .drawertoggle {
+  position: static;
+}
+
+.drawerheader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-right: .5rem;
 }

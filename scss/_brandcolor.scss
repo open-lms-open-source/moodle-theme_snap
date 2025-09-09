@@ -137,19 +137,19 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: #fff !important;
     }
 
-  .snap-dropzone-label {
-    &:hover {
-      .fake-link {
-        color: darken($brand-primary, 8%);
+    .snap-dropzone-label {
+      &:hover {
+        .fake-link {
+          color: darken($brand-primary, 8%);
+        }
+      }
+
+      .snap-icon {
+        color: $brand-primary;
       }
     }
 
-    .snap-icon {
-      color: $brand-primary;
-    }
-  }
-
-  .snap-dropzone .activityiconcontainer {
+    .snap-dropzone .activityiconcontainer {
         background-color: transparent;
         img.activityicon {
             filter: $resource-filter;
@@ -503,6 +503,32 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             border-bottom: 1px solid $brand-primary;
             outline: 3px auto $brand-primary;
         }
+    }
+
+    .drawer .btn.drawertoggle {
+      background-color: $brand-primary;
+    }
+
+    .courseindex-section .pageitem .courseindex-link {
+      background-color: $brand-primary;
+    }
+
+    .courseindex .courseindex-section.current .current-badge.bg-primary {
+      background-color: color-mix(in srgb, $brand-primary, white 25%) !important;
+    }
+
+    .courseindex .courseindex-section.current {
+      border-left: solid 3px $brand-primary;
+    }
+
+    .courseindex-section-title.pageitem:hover {
+        .courseindex-link {
+          background-color: color-mix(in srgb, $brand-primary, white 25%) !important;
+        }
+    }
+
+   .courseindex .courseindex-section.current .courseindex-item.pageitem {
+      background-color: $brand-primary;
     }
 
     // workaround for #notices with buttons outside the div#notice

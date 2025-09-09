@@ -121,12 +121,6 @@ div[data-flexitour="step-background"] {
         outline: none;
     }
 
-    /* TOC heading. */
-    #toc-desktop-menu-heading {
-        padding: 1em 0;
-        border-bottom: 1px solid $gray-lighter;
-    }
-
     /* TOC list. */
     #chapters {
         @include list-unstyled();
@@ -288,7 +282,6 @@ div[data-flexitour="step-background"] {
 // Course search.
 // -------------------------
 #toc-search {
-    position: absolute;
     top: 1.25em;
     right: 0;
     max-width: 100%;
@@ -309,7 +302,6 @@ div[data-flexitour="step-background"] {
 #toc-search-input {
     border-radius: 50%;
     width: 3em;
-    height: 3em;
     padding: 0 1.5em;
     background-color: transparent;
     border: 1px solid transparent;
@@ -387,7 +379,6 @@ label[for="toc-search-input"]{
     }
 
     #toc-search {
-        position: absolute;
         top: 0.5em;
         right: 0;
     }
@@ -484,6 +475,12 @@ label[for="toc-search-input"]{
     #toc-desktop-menu-heading {
         display: none;
     }
+
+    .drawerheader {
+      position: relative;
+      left: 67%;
+    }
+
     #toc-search {
         display: block;
         width: 100%;
@@ -504,10 +501,152 @@ label[for="toc-search-input"]{
     }
 }
 
+#toc-search:before {
+  content: '';
+  background: transparent url("[[pix:theme|search]]") no-repeat 50% 50%;
+  display: inline-block;
+  height: 1.5em;
+  width: 1.5em;
+  margin-right: -4em;
+  margin-bottom: -0.3em;
+}
+
+#toc-search-input.state-active,
+#toc-search-input:focus {
+  border-radius: 0;
+  box-shadow: none;
+  width: 320px;
+  background-color: white;
+  margin-left: -3em;
+}
+
 // -------------------------
 // Moving sections.
 // -------------------------
 #course-toc .section-moving {
     border-left: 0.3em solid;
     padding-left: 0.3em;
+}
+
+.drawerheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .drawertoggle {
+    margin-left: auto;
+  }
+}
+
+.drawerheadercontent {
+  order: -1;
+  margin-left: 0.5rem;
+}
+
+#courseindexdrawercontrols {
+  padding: 0;
+  margin: 0;
+  width: 29px;
+}
+
+.btn {
+    &.drawertoggle {
+      padding: 0;
+      margin: 0;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: none;
+
+        i.icon {
+          color: white;
+          font-size: .75rem;
+        }
+    }
+
+    &.btn-icon {
+        i.fa-ellipsis-v {
+          font-size: 27px;
+        }
+
+        &.rounded-circle {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+    }
+}
+
+.toc-footer {
+  padding: 1em 0;
+
+  @media (min-width: 1277px) and (max-width: 1449px) {
+    padding: 1em 1em;
+  }
+
+  @media (min-width: 1450px) {
+    padding: 1em 2em;
+  }
+}
+
+.courseindex-item {
+  position: relative;
+}
+
+#course-index .courseindex-section.current .courseindex-item.pageitem i.icon {
+  color: white;
+}
+
+.courseindex-section {
+    .pageitem {
+        .courseindex-link {
+          border-radius: 0.5rem;
+          font-size: 1rem;
+          margin: 1px;
+          color: white !important;
+          width: 100%;
+        }
+    }
+
+    .courseindex-link {
+      padding: 5px 10px;
+      display: inline-block !important;
+      max-width: 70%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative;
+      z-index: 1;
+    }
+
+    &.current {
+        .courseindex-link {
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding-right: 50px;
+        }
+
+        .current-badge {
+          position: absolute;
+          top: 32%;
+          right: 0.5rem;
+          transform: translateY(-50%);
+          z-index: 2;
+          pointer-events: none;
+          margin: 0.5em 0;
+        }
+    }
+}
+
+#course-index i.icon,
+#course-index p.tree_item:before {
+  color: inherit;
 }

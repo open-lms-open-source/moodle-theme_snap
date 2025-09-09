@@ -1569,6 +1569,16 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                             subtree: true,
                         });
                     });
+                    // Add "Title" attribute to TOC links
+                    const observer = new MutationObserver(() => {
+                        document.querySelectorAll(".courseindex-link").forEach(link => {
+                            if (!link.hasAttribute("title")) {
+                                link.setAttribute("title", link.textContent.trim());
+                            }
+                        });
+                    });
+                    observer.observe(document.body, {childList: true, subtree: true});
+
                     // If editing is inactive, the snap button to create subsections directly accesses the service
                     document.addEventListener('click', async function(e) {
                         const btn = e.target.closest('.btn-add-subsection');

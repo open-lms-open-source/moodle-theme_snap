@@ -41,6 +41,7 @@ const SELECTORS = {
     GOTO_TOP_LINK: '#goto-top-link',
     COURSE_TOC: '#course-toc',
     PAGE_HEADER: 'page-header',
+    DRAWER_LEFT: '.drawer-left.drawer',
 };
 
 const CLASSES = {
@@ -182,11 +183,34 @@ const updateElementPositions = (selectors = null) => {
 
     // Updates Course Index Button position.
     const courseindexbutton = document.querySelector(SELECTORS.COURSE_INDEX_DRAWER_BUTTON);
-    if (courseindexbutton) {
-        const pageHeader = document.getElementById(SELECTORS.PAGE_HEADER);
-        const headerRect = pageHeader.getBoundingClientRect();
-        const headerBottom = headerRect.bottom;
-        courseindexbutton.style.top = (headerBottom + 100) + 'px';
+    const drawer = document.querySelector(SELECTORS.DRAWER_LEFT);
+    if (courseindexbutton && drawer) {
+        const updateButtonVisibility = () => {
+            const isDrawerShowing = drawer.classList.contains(CLASSES.SHOW);
+
+            if (isDrawerShowing) {
+                courseindexbutton.style.display = 'none';
+            } else {
+                courseindexbutton.style.display = 'block';
+
+                const pageHeader = document.getElementById(SELECTORS.PAGE_HEADER);
+                const headerRect = pageHeader.getBoundingClientRect();
+                const headerBottom = headerRect.bottom;
+
+                let newTop = Math.max(topPosition + 260, headerBottom + 20);
+
+                if (window.innerWidth > 1610) {
+                    newTop += 20;
+                }
+
+                courseindexbutton.style.top = `${newTop}px`;
+            }
+        };
+
+        updateButtonVisibility();
+
+        const observer = new MutationObserver(updateButtonVisibility);
+        observer.observe(drawer, {attributes: true, attributeFilter: ['class']});
     }
 };
 
@@ -519,7 +543,7 @@ const repositionGotoTopLink = () => {
             if (activeDrawers.length > 0) {
                 // Get the first active drawer found for this selector type
                 const drawer = activeDrawers[0];
-                if (drawer.offsetWidth > 0) {
+                if (drawer.offsetWidth > 0 && !drawer.classList.contains('drawer-left')) {
                     // Get the width of the drawer
                     const drawerWidth = drawer.offsetWidth;
                     // Add margin to position the link to the left of the drawer
