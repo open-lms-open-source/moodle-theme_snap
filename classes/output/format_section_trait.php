@@ -1013,7 +1013,6 @@ trait format_section_trait {
      * @return string
      */
     public function course_section_add_cm_control_snap($course, $section, $sectionreturn = null, $displayoptions = array()) {
-        global $OUTPUT;
         // Check to see if user can add menus and there are modules to add.
         if (!has_capability('moodle/course:manageactivities', context_course::instance($course->id))
                 || !($modnames = get_module_types_names()) || empty($modnames)) {
@@ -1026,7 +1025,7 @@ trait format_section_trait {
 
         // Button to create subsection
         $plugininfo = \core_plugin_manager::instance()->get_plugin_info('mod_subsection');
-        if ($plugininfo && $plugininfo->is_enabled()) {
+        if ($plugininfo && $plugininfo->is_enabled() && $section->component !== 'mod_subsection') {
             $colclass = "col-12 col-lg-4";
             $iconss = '<i class="fa fa-rectangle-list snap-icon" aria-hidden="true"></i>';
             $straddsubsection = get_string('addsubsection', 'theme_snap');
