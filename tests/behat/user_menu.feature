@@ -24,6 +24,7 @@
 Feature: When the moodle theme is set to Snap and can open the user menu from the header
 
   Background:
+    Given I skip because "Front page redirects to login page when user is not logged in - INT-21237"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |

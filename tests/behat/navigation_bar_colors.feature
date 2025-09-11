@@ -22,6 +22,9 @@
 @theme @theme_snap @theme_snap_color_check
 Feature: When the moodle theme is set to Snap, admins can change the color of the Navigation bar buttons.
 
+  Background:
+    Given I skip because "Front page redirects to login page when user is not logged in - INT-21237"
+
   @javascript
   Scenario: Go to Snap Navigation bar settings page and set colors for My Courses and Login button.
     Given I log in as "admin"
