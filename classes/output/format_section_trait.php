@@ -68,6 +68,12 @@ trait format_section_trait {
         global $USER, $DB, $PAGE;
         // Add data to always display controlmenu, restrictions and alternative content for Snap activity cards.
         if ($templatename === 'core_courseformat/local/content' && isset($data->singlesection->cmlist->cms)) {
+            // This removes tags from Core already rendered by Snap.
+            $data->singlesection->highlightedlabel = '';
+            $data->singlesection->summary->summarytext = '';
+            if (!is_null($data->singlesection->visibility)) {
+                $data->singlesection->visibility->hiddenfromstudents = false;
+            }
             $course = $this->page->course;
             $modinfo = get_fast_modinfo($course);
             $courseformat = course_get_format($course);

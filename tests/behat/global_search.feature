@@ -23,6 +23,7 @@
 Feature: When the moodle theme is set to Snap, and global search is enabled, users should see a global search interface.
 
   Background:
+    Given I skip because "Front page redirects to login page when user is not logged in - INT-21237"
     Given the following config values are set as admin:
       | enableglobalsearch | true |
 
