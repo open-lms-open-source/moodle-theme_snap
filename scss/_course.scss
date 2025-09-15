@@ -3925,3 +3925,10 @@ body[id^='page-mod-data'] {
         }
     }
 }
+
+#page-course-view-weeks,
+#page-course-view-topics {
+  &.editing .course-section-header .sectionbadges .badge.bg-primary {
+    display: none;
+  }
+}
