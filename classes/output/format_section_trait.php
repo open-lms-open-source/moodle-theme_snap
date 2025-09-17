@@ -73,6 +73,7 @@ trait format_section_trait {
             $data->singlesection->summary->summarytext = '';
             if (!is_null($data->singlesection->visibility)) {
                 $data->singlesection->visibility->hiddenfromstudents = false;
+                $data->singlesection->visibility->dropwdown = '';
             }
             $course = $this->page->course;
             $modinfo = get_fast_modinfo($course);
