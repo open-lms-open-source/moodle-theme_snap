@@ -1939,6 +1939,7 @@ HTML;
      * This renders the navbar.
      * Uses bootstrap compatible html.
      * @param string $coverimage
+     * #TODO: to be removed on INT-21222
      */
     public function snapnavbar($coverimage = '') {
         global $COURSE, $CFG;
@@ -2313,6 +2314,15 @@ HTML;
     }
 
     /**
+     * This renders the navbar.
+     * Same as lib/classes/output/core_renderer.php.
+     */
+    public function navbar(): string
+    {
+        return $this->render_from_template('core/navbar', $this->page->navbar);
+    }
+
+    /**
      * My courses page content.
      *
      */
@@ -2340,7 +2350,7 @@ HTML;
 
         $data = (object) [
             'custommenuspacer' => $this->custom_menu_spacer(),
-            'snapnavbar' => $this->snapnavbar(''),
+            'snapnavbar' => $this->navbar(),
             'pageheading' => $this->page_heading(),
             'courseheader' => $this->course_header(),
             'browseallcourses' => $browseallcourses,
