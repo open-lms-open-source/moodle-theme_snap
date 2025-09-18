@@ -105,6 +105,10 @@ require __DIR__.'/blocks_drawer.php';
 echo $OUTPUT->snap_feeds_side_menu();
 
 if ($tocformat) {
+    // Call listeners for Section actions from Core.
+    if (!$this->page->user_is_editing()) {
+        $PAGE->requires->js_call_amd('core_course/actions', 'initCoursePage', array($COURSE->format));
+    }
     echo '</div> <!-- close section -->';
     echo '</div> <!-- close row -->';
     echo '</div> <!-- close course wrapper -->';

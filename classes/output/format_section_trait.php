@@ -577,8 +577,9 @@ trait format_section_trait {
             if (!empty($sectiontoolsarray)) {
                 $sectiontools = implode(' ', $sectiontoolsarray);
                 $o .= html_writer::tag('div', $sectiontools, array(
-                    'class' => 'js-only snap-section-editing actions',
+                    'class' => 'js-only snap-section-editing actions section-actions',
                     'role' => 'region',
+                    'data-sectionid' => $section->id,
                     'aria-label' => get_string('topicactions', 'theme_snap'),
                 ));
             }

@@ -39,12 +39,17 @@ class course_action_section_duplicate extends course_action_section_base {
      * @param bool $onsectionpage 
      */
     public function __construct($course, section_info $section, $onsectionpage = false) {
+        if ($section->component == 'mod_subsection') {
+            return '';
+        }
         if ($onsectionpage) {
             $baseurl = course_get_url($course, $section->section);
         } else {
             $baseurl = course_get_url($course);
         }
         $baseurl->param('sesskey', sesskey());
+        $baseurl->param('sectionid', $section->id);
+        $baseurl->param('duplicatesection', 1);
         $coursecontext = context_course::instance($course->id);
         if (has_capability('moodle/course:update', $coursecontext)) {
             $duplicatesectionurl = clone($baseurl);

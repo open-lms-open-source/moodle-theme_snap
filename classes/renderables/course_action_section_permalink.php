@@ -43,12 +43,12 @@ class course_action_section_permalink extends course_action_section_base {
             ], $coursecontext)
         ) {
             $this->url = new moodle_url(
-                '/course/view.php',
-                ['id' => $course->id],
-                "sectionid-{$section->id}-title"
+                '/course/section.php',
+                ['id' => $section->id]
             );
             $this->arialabel = "aria-label='".get_string('sectionlink', 'course')."'";
             $this->title = get_string('sectionlink', 'course');
+            $this->dataaction = 'permalink';
         }
     }
 }

@@ -1474,7 +1474,9 @@ define(
 
             /**
              * Delete section on click.
+             * #TODO: to be removed on INT-21222
              */
+            // eslint-disable-next-line no-unused-vars
             var deleteSectionListener = function() {
                 $(document).on('click', '.snap-section-editing.actions .snap-delete', function(e) {
                     sectionDelete(e, this);
@@ -1483,7 +1485,9 @@ define(
 
             /**
              * Show section permalink on click.
+             * #TODO: to be removed on INT-21222
              */
+            // eslint-disable-next-line no-unused-vars
             var permalinkSectionListener = function() {
                 $(document).on('click', '.snap-section-editing.actions .snap-permalink', function(e) {
                     e.preventDefault();
@@ -1542,7 +1546,9 @@ define(
 
             /**
              * When section move link is clicked, get the data we need and start the move.
+             * #TODO: to be removed
              */
+            // eslint-disable-next-line no-unused-vars
             var moveSectionListener = function() {
                 // Listen clicks on move links.
                 $("#region-main").on('click', '.snap-section-editing.actions .snap-move', function(e) {
@@ -1705,11 +1711,11 @@ define(
              * Add listeners.
              */
             var addListeners = function() {
-                moveSectionListener();
+                // moveSectionListener(); #TODO: to be removed on INT-21222
                 toggleSectionListener();
                 highlightSectionListener();
-                deleteSectionListener();
-                permalinkSectionListener();
+                // deleteSectionListener(); #TODO: to be removed on INT-21222
+                // permalinkSectionListener(); #TODO: to be removed on INT-21222
                 assetMoveListener();
                 movePlaceListener();
                 assetEditListeners();
