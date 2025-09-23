@@ -120,19 +120,12 @@ define(
          */
         var setNavigationFooterObservers = function () {
             if (self.courseConfig.format == 'weeks' || self.courseConfig.format == 'topics') {
-                $('.section_footer .next_section, .section_footer .icon-arrow-right, ' +
-                    '.section_footer .previous_section, .section_footer .icon-arrow-left').click(function(e) {
-                    var link = $(e.target);
+                $('.section_footer a.next_section, .section_footer a.previous_section').click(function(e) {
+                    e.preventDefault();
+                    var link = $(this);
                     var section = link.attr('section-number');
                     if(typeof section !== 'undefined' && section.length > 0) {
-                        getSection(section, 0);
-                    }
-                });
-
-                $('.section_footer .text').click(function (e) {
-                    var node = $(e.target);
-                    var section = node.find('.nav_guide').attr('section-number');
-                    if(typeof section !== 'undefined' && section.length > 0) {
+                        self.courseConfig.sectionnum = parseInt(section);
                         getSection(section, 0);
                     }
                 });
@@ -234,7 +227,7 @@ define(
          * @param {string} mod
          */
         var getSection = function (section, mod) {
-            var node = $('#section-' + section);
+            var node = $('ul.sections > #section-' + section);
             if (node.length == 0 && sectionsProcess.indexOf(section) == -1) {
                 sectionsProcess.push(section);
                 var params = {courseid: self.courseConfig.id, section: section};
@@ -257,6 +250,8 @@ define(
                     });
                     setActionsObservers();
                 });
+            } else {
+                $(window).trigger('hashchange');
             }
         };
 
@@ -284,10 +279,10 @@ define(
                 });
 
                 if (closest > section) {
-                    anchor.find('#section-' + closest).before(tempnode.contents());
+                    anchor.find('ul.sections > #section-' + closest).before(tempnode.contents());
 
                 } else {
-                    anchor.find('#section-' + closest).after(tempnode.contents());
+                    anchor.find('ul.sections > #section-' + closest).after(tempnode.contents());
 
                 }
             } else {
@@ -299,30 +294,14 @@ define(
             $('.sk-fading-circle').hide();
             // Notify filters about the new section.
             Event.notifyFilterContentUpdated($('.course-content .' + self.courseConfig.format));
-            var sections = anchor.find('li[id^="section-"]');
+            var sections = anchor.find('ul.sections>li[id^="section-"]');
             // When not present the section, the first one will be shown as default, remove all classes to prevent that.
             sections.removeClass('state-visible');
-            var id = '#section-' + section;
+            var id = 'ul.sections>#section-' + section;
             $(id).addClass('state-visible');
             // Leave all course sections as they were.
             sections.show();
-            $(id).find('.section_footer a.next_section, ' +
-                '.section_footer a.previous_section').click(function(e) {
-                var link = $(e.target);
-                var section = link.attr('section-number');
-                if(typeof section !== 'undefined' && section.length > 0) {
-                    self.courseConfig.sectionnum = parseInt(section);
-                    getSection(section, 0);
-                }
-            });
-
-            $(id).find('.section_footer .text').click(function (e) {
-                var node = $(e.target);
-                var section = node.find('.nav_guide').attr('section-number');
-                if(typeof section !== 'undefined' && section.length > 0) {
-                    getSection(section, 0);
-                }
-            });
+            setNavigationFooterObservers();
 
             // Set observer for mod chooser.
             $(id + ' .section-modchooser-link').click(function() {
@@ -369,8 +348,6 @@ define(
             // Add the correct section return to the modchooser.
             util.modchooserSectionReturn();
         };
-
-
 
     return {
         init: function(courseLib) {

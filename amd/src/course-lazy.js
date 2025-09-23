@@ -114,7 +114,7 @@ define(
 
             // Redirect to the correct section when doing /course/section.php.
             if (section === '' && location.pathname === '/course/section.php' && self.courseConfig.sectionnum) {
-                section = '#section-' + self.courseConfig.sectionnum;
+                section = 'ul.sections > #section-' + self.courseConfig.sectionnum;
             }
 
             var sectionId = false;
@@ -129,7 +129,7 @@ define(
                 if ($chapter.length > 0) {
                     // Get the section-number associated.
                     section = $chapter.attr('section-number');
-                    section = '#section-' + section;
+                    section = 'ul.sections > #section-' + section;
                 }
             }
 
@@ -141,7 +141,7 @@ define(
             var sectionSetByServer = '';
 
             if ($('.section.main.state-visible.set-by-server').length) {
-                sectionSetByServer = '#' + $('.section.main.state-visible.set-by-server').attr('id');
+                sectionSetByServer = 'ul.sections > #' + $('.section.main.state-visible.set-by-server').attr('id');
                 $('.section.main.state-visible.set-by-server').removeClass('set-by-server');
             } else {
                 $('.course-content .section.main, #moodle-blocks,#coursetools, #snap-add-new-section,' +
@@ -154,7 +154,7 @@ define(
                 sparameters.forEach(function(param) {
                     if (param.indexOf('section=') >= 0) {
                         param.replace(param);
-                        section = '#' + param.replace('=', '-');
+                        section = 'ul.sections > #' + param.replace('=', '-');
                     }
                 });
             }
