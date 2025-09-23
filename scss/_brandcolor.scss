@@ -1227,6 +1227,15 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: white;
     }
 
+    &.editing .activity-item:hover:not(:has(.activity:hover)),
+    &.editing .activity-item.selected {
+      outline: 2px solid $brand-primary;
+    }
+
+    .course-section .section-summary-activities .icon {
+      color: $brand-primary;
+    }
+
     .section_footer {
         .previous_section,
         .next_section {

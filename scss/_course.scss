@@ -1202,11 +1202,6 @@ body.format-singleactivity {
     }
 }
 
-.editing.theme-snap .activity-item:hover:not(:has(.activity:hover)),
-.editing.theme-snap .activity-item.selected {
-  outline: 2px solid $brand-primary;
-}
-
 .activity-navigation {
     // Undo row negative margins.
     margin-left: 15px;
@@ -1681,8 +1676,8 @@ body.snap-resource-list {
     li.activity-wrapper.modtype_imscp,
     li.activity-wrapper.modtype_lightboxgallery,
     li.activity-wrapper.modtype_scorm {
-      width: 48%;
-      margin: 1%;
+      width: 50%;
+      padding: 1%;
       float: left;
       clear: none;
       background-repeat: no-repeat;
@@ -1774,7 +1769,7 @@ body.snap-resource-list {
     li.activity-wrapper.modtype_imscp,
     li.activity-wrapper.modtype_lightboxgallery,
     li.activity-wrapper.modtype_scorm {
-      width: 31%;
+      width: 33.3%;
     }
   }
 }
@@ -1986,10 +1981,6 @@ body.snap-resource-card {
 
 .course-section .moodle-actionmenu .dropdown.show .icon.fa-ellipsis-vertical {
     transform: rotate(180deg);
-}
-
-.course-section .section-summary-activities .icon {
-  color: $brand-primary;
 }
 
 // -----------------------------------------------------------

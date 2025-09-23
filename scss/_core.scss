@@ -1798,6 +1798,11 @@ body.path-course-view #moodle-page #page-header:not(.has-course-leftnav){
     }
 }
 
+// Hide the "Site pages" breadcrumb item from My courses view.
+#page-my-index.page-mycourses .breadcrumb .breadcrumb-item:nth-child(2) {
+  display: none;
+}
+
 // SHAME - what is this?
 // -------------------------
 
