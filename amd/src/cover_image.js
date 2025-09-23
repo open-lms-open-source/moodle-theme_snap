@@ -71,7 +71,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             temporalFileName = '';
             $('#page-header').css('background-image', savedImageURL);
             if (savedImageURL === "none") {
-                $('.path-course-view #page-header').removeClass('mast-image');
+                $('.path-course-view #page-header, .path-course-index #page-header').removeClass('mast-image');
                 $('.path-course-view #page-header .breadcrumb-item a').removeClass('mast-breadcrumb');
             }
             $('#snap-alert-cover-image-size').remove();
@@ -252,7 +252,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                     if (cropper.getCroppedCanvas() !== null) {
                         var croppedImage = cropper.getCroppedCanvas().toDataURL("image/png");
                         // Ensure that the page-header in courses has the mast-image class.
-                        $('.path-course-view #page-header').addClass('mast-image');
+                        $('.path-course-view #page-header, .path-course-index #page-header').addClass('mast-image');
                         $('.path-course-view #page-header .breadcrumb-item a').addClass('mast-breadcrumb');
 
                         $('#page-header').css('background-image', 'url(' + croppedImage + ')');
@@ -422,7 +422,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 $('#id_snap_cover_image_save_button').click(function() {
                     var croppedImage = cropper.getCroppedCanvas().toDataURL("image/png");
                     // Ensure that the page-header in courses has the mast-image class.
-                    $('.path-course-view #page-header').addClass('mast-image');
+                    $('.path-course-view #page-header, .path-course-index #page-header').addClass('mast-image');
                     $('.path-course-view #page-header .breadcrumb-item a').addClass('mast-breadcrumb');
 
                     $('#page-header').css('background-image', 'url(' + croppedImage + ')');
@@ -568,7 +568,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                                     temporalImageID = 0;
                                     temporalFileName = '';
                                     $('#page-header').css('background-image', savedImageURL);
-                                    $('#page-header').addClass('mast-image');
+                                    if (!document.getElementById('page-site-index')) {
+                                        $('#page-header').addClass('mast-image');
+                                    }
                                     $('#page-header .breadcrumb-item a').addClass('mast-breadcrumb');
                                     $('#page-header').data('servercoverfile', $('#page-header').css('background-image'));
                                     $('#snap-changecoverimageconfirmation .ok').off("click");
