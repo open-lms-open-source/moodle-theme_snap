@@ -1231,7 +1231,7 @@ class local {
                 return $originalfile;
             }
             $filename = $originalfile->get_filename();
-            if ($filename === 'rawcoverimage.jpg') {
+            if (stripos($filename, 'rawcoverimage.jpg') !== false) {
                 // Since this is a course card image, the new file name should not have 'raw' or 'coverimage' in it,
                 // as that would be confusing on inspection!
                 $filename = 'image.jpg';
