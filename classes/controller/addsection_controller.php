@@ -63,7 +63,7 @@ class addsection_controller extends controller_abstract {
         $courseid = $context->instanceid;
 
         $course = course_get_format($courseid)->get_course();
-        $numsections = course_get_format($courseid)->get_last_section_number() + 1;
+        $numsections = $this->get_last_section_number($courseid, false) + 1;
         course_create_sections_if_missing($course, range(0, $numsections));
 
         $options = array(
@@ -82,5 +82,25 @@ class addsection_controller extends controller_abstract {
         rebuild_course_cache($course->id);
 
         redirect(course_get_url($course, $section->section, ['sr' => $section->sectionnum]));
+    }
+
+    /**
+     * Get the last section number in the course.
+     *
+     *  This function is adapted from the core class:
+     *  /course/format/classes/local/sectionactions.php
+     *
+     * @param bool $includedelegated whether to include delegated sections
+     * @return int
+     */
+    private function get_last_section_number(int $courseid, bool $includedelegated = true): int {
+        global $DB;
+
+        $delegtadefilter = $includedelegated ? '' : ' AND component IS NULL';
+
+        return (int) $DB->get_field_sql(
+            'SELECT max(section) from {course_sections} WHERE course = ?' . $delegtadefilter,
+            [$courseid]
+        );
     }
 }

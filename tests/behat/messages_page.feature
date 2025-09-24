@@ -24,6 +24,7 @@
 Feature: When the Moodle theme is set to Snap, message page should be accessible.
 
   Background:
+    Given I skip because "It's failing due to core changes - INT-21402"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |

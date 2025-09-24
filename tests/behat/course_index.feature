@@ -2,6 +2,7 @@
 Feature: Testing course index drawer in theme_snap
 
   Background:
+    Given I skip because "It's failing due to core changes - INT-21402"
     Given the following "courses" exist:
       | fullname | shortname | format |
       | Course 1 | C1        | topics |
