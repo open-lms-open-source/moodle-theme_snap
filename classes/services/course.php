@@ -164,7 +164,7 @@ class course {
             return ['success' => false, 'warning' => get_string('unsupportedcoverimagetype', 'theme_snap', $ext)];
         }
 
-        $newfilename = 'rawcoverimage.'.$ext;
+        $newfilename = time().'rawcoverimage.'.$ext;
 
         $usercontext = \context_user::instance($USER->id);
 
