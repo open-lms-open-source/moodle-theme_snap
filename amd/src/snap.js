@@ -1525,9 +1525,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         }
                     }
 
-                    // Add the correct section return to the modchooser.
-                    util.modchooserSectionReturn();
-
                     // (Temporary) solution for the error presented in INT-21265
                     document.addEventListener('click', function(e) {
                         const regradeBtn = e.target.closest('#regradeattempts');

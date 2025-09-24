@@ -1065,6 +1065,7 @@ trait format_section_trait {
             'class' => $mcclass . ' btn-add-activity',
             'data-action' => 'open-chooser',
             'data-sectionid' => $section->section,
+            'data-sectionreturnnum' => $section->section,
         ]);
 
         // We need to be sure not having the same ID for every mod chooser if multiple sections exists.

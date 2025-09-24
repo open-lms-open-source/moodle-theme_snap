@@ -344,9 +344,6 @@ define(
                 '</a>' +
                 '</div>' +
                 '</li>');
-
-            // Add the correct section return to the modchooser.
-            util.modchooserSectionReturn();
         };
 
     return {
