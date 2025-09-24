@@ -1763,6 +1763,9 @@ body.path-course-view, body#page-course-index-category {
         margin-top: -.75rem;
     }
 }
+body.path-course-view #moodle-page #page-header:not(.has-course-leftnav){
+  aspect-ratio: unset;
+}
 
 // Breadcrumb - not really a breadcrumb like on the web, but something moodley
 // -------------------------
@@ -4847,7 +4850,7 @@ button.snap-icon-toggle {
 }
 
 // Cover image control.
-.has-course-leftnav, #page-header.mast-image {
+.has-course-leftnav, #page-header.snap-category-header.mast-image {
     #page-mast {
         display: flex;
     }

@@ -3824,6 +3824,16 @@ body[id^='page-mod-data'] {
         .snap_cover_image_preview {
             width: 450px;
         }
+        .cropper-bg {
+          background-image: unset;
+        }
+        .cropper-drag-box {
+          border-radius: 0.5rem;
+        }
+        .cropper-crop-box {
+          border: 2px solid black;
+          box-shadow: black 0px 0px 10px;
+        }
     }
     .snap_cover_image_options {
         margin-top: 2em;
