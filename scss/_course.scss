@@ -1097,6 +1097,12 @@ body.format-singleactivity {
 
 .activity.subsection .section .section-item {
     padding: unset;
+
+    .content.course-content-item-content {
+        &.collapse:not(.show) {
+            display: none;
+        }
+    }
 }
 
 // -------------------------
