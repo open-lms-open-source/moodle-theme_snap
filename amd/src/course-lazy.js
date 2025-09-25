@@ -138,6 +138,11 @@ define(
                 return;
             }
 
+            // Let Core handle modules behavior.
+            if (section.startsWith('#module-')) {
+                return;
+            }
+
             var sectionSetByServer = '';
 
             if ($('.section.main.state-visible.set-by-server').length) {
