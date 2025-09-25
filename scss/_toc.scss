@@ -96,9 +96,6 @@
     .text small {
         font-weight: 300;
     }
-    .conditional .published-status {
-        color: $brand-warning;
-    }
 }
 
 div[data-flexitour="step-background"] {
@@ -209,9 +206,6 @@ div[data-flexitour="step-background"] {
             column-count: 3;
         }
         span {
-            .published-status {
-                color: $brand-warning;
-            }
             &.completionstatus {
                 color: #666;
             }

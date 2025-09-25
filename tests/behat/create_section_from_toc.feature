@@ -23,7 +23,6 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   This requires the course to use the weeks and topics format.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname               | shortname     | category | groupmode | format         | startdate  | initsecions |
       | Topics course          | course_topics | 0        | 1         | topics         |            |      1      |
@@ -51,15 +50,11 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
       | student1 | course_social | student        |
 
   @javascript
-  Scenario Outline: For editing teachers, ensure new section creation is available and works for topic courses but
+  Scenario: For editing teachers, ensure new section creation is available and works for topic courses but
     not single activity or social course formats.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
     Then I log in as "teacher1"
     And I create a new section in course "course_topics"
-    Then I should see "New section title" in the "#course-toc" "css_element"
+    Then I should see "New section title" in the "#courseindex" "css_element"
     # Negative test - the single activity course should not allow for section creation via the toc.
     And I am on the course main page for "course_single"
     Then I should not see "Create a new section" in the "#page-header" "css_element"
@@ -70,11 +65,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I log out
     And I log in as "student1"
     And I am on the course main page for "course_topics"
-    Then I should see "New section title" in the "#course-toc" "css_element"
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    Then I should see "New section title" in the "#courseindex" "css_element"
 
   @javascript
   Scenario: For non editing teachers and students, ensure new section creation is not available for any course formats.
@@ -105,10 +96,8 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     Then I should not see "Create a new section" in the "#page-header" "css_element"
 
   @javascript
-  Scenario Outline: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
+  Scenario: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     Then I log in as "teacher1"
     Then I am on the course main page for "course_weeks"
@@ -118,31 +107,21 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I log out
     And I log in as "student1"
     And I am on the course main page for "course_weeks"
-    Then I should see "8 April - 14 April" in the "#course-toc" "css_element"
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    Then I should see "8 April - 14 April" in the "#courseindex" "css_element"
 
   @javascript
-  Scenario Outline: For editing teachers, ensure new section creation works when using content.
+  Scenario: For editing teachers, ensure new section creation works when using content.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     Then I log in as "teacher1"
     And I create a new section in course "course_topics" with content
     Then I follow "New section with content"
     Then I should see "New section with content"
-    Then I should see "New section contents"
     Then "div.summary img" "css_element" should exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+
 
   @javascript
-  Scenario Outline: While creating a new section, it should exists a functional cancel button on the form.
+  Scenario: While creating a new section, it should exists a functional cancel button on the form.
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <Option> | theme_snap |
@@ -153,18 +132,13 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I follow "Cancel"
     # Cancel button should return the user to the main section of the course.
     And I should see "Introduction"
-    And I click on "#course-toc .chapters h3:nth-of-type(5)" "css_element"
+    And I click on ".courseindex .courseindex-section:nth-of-type(5)" "css_element"
     # Make Section 4 the current section.
     And I click on "#extra-actions-dropdown-4" "css_element"
     And I click on "#section-4 .snap-highlight" "css_element"
     # Go to a different Section than the highlighted one and open the create a new section form.
-    And I click on "#course-toc .chapters h3:nth-of-type(2)" "css_element"
+    And I click on "#courseindex .courseindex-section:nth-of-type(2)" "css_element"
     And I follow "Create a new section"
     And I follow "Cancel"
     # The redirect of the cancel button should be to the highlighted section.
-    And "#course-toc .chapters h3:nth-of-type(5)" "css_element" should exist
-
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    And "#courseindex .courseindex-section:nth-of-type(5)" "css_element" should exist

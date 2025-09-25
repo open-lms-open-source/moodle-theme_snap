@@ -210,13 +210,7 @@ class behat_theme_snap extends behat_base {
     public function i_can_see_course_in_all_sections_mode($shortname) {
         $this->i_am_on_course_page($shortname);
         $this->i_go_to_single_course_section(1);
-
-        // In the selector below, .section-navigation.navigationtitle relates to the element which contains the single
-        // section at a time navigation. Visually you would see a link on the left entitled "General" and a link on the
-        // right entitled "Topic 2"
-        // This test ensures you do not see those elements. If you swap to clean theme in a single section mode at a
-        // time course you will see that navigation after clicking on topic 1.
-        $this->execute('behat_general::should_not_exist', ['.section-navigation.navigationtitle', 'css_element']);
+        $this->execute('behat_general::should_exist', ['ul.topics', 'css_element']);
     }
 
     /**
@@ -227,9 +221,6 @@ class behat_theme_snap extends behat_base {
     public function i_create_a_new_section_in_course($shortname) {
 
         $this->i_am_on_course_page($shortname);
-
-        $this->execute('behat_general::i_change_window_size_to', ['window', '600x1000']);
-        $this->execute('behat_general::i_click_on', ['#toc-mobile-menu-toggle', 'css_element']);
         $this->execute('behat_general::click_link', ['Create a new section']);
         $this->execute('behat_forms::i_set_the_field_to', ['Title', 'New section title']);
         $this->execute('behat_general::i_click_on', ['Create section', 'button']);
@@ -262,9 +253,7 @@ class behat_theme_snap extends behat_base {
         $fs->create_file_from_pathname($fileinfo, $CFG->dirroot . "/theme/snap/tests/fixtures/testpng.png");
 
         $this->i_am_on_course_page($shortname);
-        $this->execute('behat_general::i_change_window_size_to', ['window', '600x1000']);
-        $this->execute('behat_general::i_click_on', ['#toc-mobile-menu-toggle', 'css_element']);
-        $this->execute('behat_general::i_click_on', ['.col-lg-3 .toc-footer #snap-new-section', 'css_element']);
+        $this->execute('behat_general::click_link', ['Create a new section']);
         $this->execute('behat_forms::i_set_the_field_to', ['Title', 'New section with content']);
         $javascript = "var value = document.getElementById('summary-editor_ifr').contentDocument.querySelectorAll('body');";
         $javascript .= "document.getElementById('summary-editor_ifr').contentDocument.body.innerHTML = '<p>New section contents</p>';";
@@ -1319,8 +1308,8 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see asset delete dialog$/
      */
     public function i_should_see_asset_delete_dialog() {
-        $element = 'div.modal[data-region="modal-container"] .modal-dialog .modal-content';
-        $text = 'Are you sure that you want to delete';
+        $element = '.modal-dialog .modal-content .modal-header';
+        $text = 'Delete activity?';
         $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
     }
 
@@ -1328,7 +1317,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should not see asset delete dialog$/
      */
     public function i_should_not_see_asset_delete_dialog() {
-        $element = 'div.modal[data-region="modal-container"] .modal-dialog .modal-content';
+        $element = '.modal-dialog .modal-content';
         try {
             $nodes = $this->find_all('css', $element);
         } catch (Exception $e) {

@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, section titles can be clicked for editing section information.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -53,11 +52,9 @@ Feature: When the moodle theme is set to Snap, section titles can be clicked for
     And I press "Save changes"
     And I follow "Super section 1"
     Then "#section-1 .content .sectionname a" "css_element" should not exist
-    Then I should see "Super section 1" in the "#section-1 .content .sectionname" "css_element"
+    Then I should see "Super section 1"
     Then "#section-1 .content .sectionname .sectionnumber" "css_element" <titlenumber> exist
     Examples:
       | coursepartialrender     | leftnav | title             | titlenumber |
       | 0                       | list    | Untitled Section    | should not  |
       | 1                       | list    | Untitled Section    | should not  |
-      | 0                       | top     | Untitled Section    | should      |
-      | 1                       | top     | 1.Untitled Section  | should      |

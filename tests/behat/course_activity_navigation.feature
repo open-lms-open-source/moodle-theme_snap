@@ -30,7 +30,6 @@ Feature: Activity navigation in Snap theme
   I need to use the activity navigation controls in activities
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given I enable "chat" "mod" plugin
     And I enable "survey" "mod" plugin
     Given the following config values are set as admin:
@@ -73,32 +72,30 @@ Feature: Activity navigation in Snap theme
       | url        | Url 1        | Test url description        | C1     | url1      | 6       |
       | wiki       | Wiki 1       | Test wiki description       | C1     | wiki1     | 6       |
       | workshop   | Workshop 1   | Test workshop description   | C1     | workshop1 | 6       |
-      | assign     | Assignment 1 | Test assignment description | C2     | assign21  | 0       |
-      | assign     | Assignment 1 | Test assignment description | C3     | assign31  | 3       |
+      | assign     | Assignment 2 | Test assignment description | C2     | assign21  | 0       |
+      | assign     | Assignment 3 | Test assignment description | C3     | assign31  | 3       |
     And I log in as "admin"
-    And I reset session storage
     And I am on "Course 1" course homepage
     # Stealth activity.
     And I follow "Section 2"
-    And I click on ".modtype_forum .snap-edit-asset-more" "css_element"
-    And I click on ".modtype_forum .snap-edit-asset" "css_element"
+    And I open "Forum 1" actions menu
+    And I click on "Edit settings" "link" in the "Forum 1" activity
     And I expand all fieldsets
     And I set the field "Availability" to "Make available but don't show on course page"
     And I press "Save and return to course"
     # Hidden activity.
-    And I scroll to the bottom
+    And I am on "Course 1" course homepage
     And I follow "Section 2"
-    And I click on ".snap-activity[data-type='Glossary'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Glossary'] .dropdown .availability-dropdown" "css_element"
-    And I click on ".snap-activity[data-type='Glossary'] a[data-action='cmHide']" "css_element"
+    And I open "Glossary 1" actions menu
+    And I choose "Availability > Hide on course page" in the open action menu
     # Hidden section.
     And I follow "Section 5"
     And I wait until the page is ready
     And I click on "#section-5 a.snap-visibility.snap-hide" "css_element"
     # Set up book.
-    And I follow "Introduction"
-    And I click on ".modtype_book .mod-link" "css_element"
-    And I should see "Add new chapter"
+    And I am on the "Book 1" "book activity editing" page
+    And I press "Save and display"
+    And I should see "Book 1"
     And I set the following fields to these values:
       | Chapter title | Chapter 1                             |
       | Content       | In the beginning... blah, blah, blah. |
@@ -109,7 +106,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Step through activities in the course as a teacher.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I click on ".modtype_assign .mod-link" "css_element"
+    And I am on the "Assignment 1" "assign activity" page
     # The first activity won't have the previous activity link.
     Then "#prev-activity-link" "css_element" should not exist
     And I should see "Book 1" in the "#next-activity-link" "css_element"
@@ -181,7 +178,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Step through activities in the course as a student.
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".modtype_assign .mod-link" "css_element"
+    And I am on the "Assignment 1" "assign activity" page
     # The first activity won't have the previous activity link.
     Then "#prev-activity-link" "css_element" should not exist
     And I should see "Book 1" in the "#next-activity-link" "css_element"
@@ -236,7 +233,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Jump to another activity as a teacher
     Given I log in as "teacher1"
     When I am on "Course 1" course homepage
-    And I click on ".modtype_assign .mod-link" "css_element"
+    And I am on the "Assignment 1" "assign activity" page
     Then "Jump to..." "field" should exist
     # The current activity will not be listed.
     And the "Jump to..." select box should not contain "Assignment 1"
@@ -286,7 +283,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Jump to another activity as a student
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".modtype_assign .mod-link" "css_element"
+    And I am on the "Assignment 1" "assign activity" page
     And "Jump to..." "field" should exist
     # The current activity will not be listed.
     And the "Jump to..." select box should not contain "Assignment 1"
@@ -332,7 +329,7 @@ Feature: Activity navigation in Snap theme
   Scenario: Open an activity in a course that only has a single activity
     Given I log in as "student1"
     And I am on "Course 2" course homepage
-    And I click on ".modtype_assign .mod-link" "css_element"
+    And I am on the "Assignment 2" "assign activity" page
     Then "#prev-activity-link" "css_element" should not exist
     And "#next-activity-link" "css_element" should not exist
     And "Jump to..." "field" should not exist
@@ -352,7 +349,7 @@ Feature: Activity navigation in Snap theme
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I click on "Section 4" "text"
-    And I click on ".modtype_quiz .mod-link" "css_element"
+    And I am on the "Quiz 1" "quiz activity" page
     And "#prev-activity-link" "css_element" should be visible
     And "#next-activity-link" "css_element" should be visible
     And "Jump to..." "field" should be visible
@@ -366,42 +363,31 @@ Feature: Activity navigation in Snap theme
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Section 2"
-    And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
-    And I click on ".snap-activity[data-type='Forum'] a[data-action='cmHide']" "css_element"
-    Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists
+    And I open "Forum 1" actions menu
+    And I choose "Availability > Hide on course page" in the open action menu
     # Click on the dropdown button.
-    And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
-    And I click on ".snap-activity[data-type='Forum'] a[data-action='cmStealth']" "css_element"
-    Then I wait until ".snap-activity[data-type='Forum'].stealth" "css_element" exists
+    And I open "Forum 1" actions menu
+    And I choose "Availability > Availability > Make available but don't show on course page" in the open action menu
     And I should see "Available but not shown on course page"
     # Click on the dropdown button.
-    And I click on ".snap-activity[data-type='Forum'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Forum'] .dropdown .availability-dropdown" "css_element"
-    And I click on ".snap-activity[data-type='Forum'] a[data-action='cmHide']" "css_element"
-    Then I wait until ".snap-activity[data-type='Forum'].draft" "css_element" exists
-    And I should see "Not published to students"
+    And I open "Forum 1" actions menu
+    And I choose "Availability > Hide on course page" in the open action menu
+    And I should see "Hidden from students"
 
   @javascript
   Scenario: Set the activity as stealth from the activity quick menu when Section is hidden.
     And I log in as "admin"
+    And I change window size to "large"
     And I am on "Course 1" course homepage
     And I follow "Section 4"
     And I click on "li#section-4 div.snap-section-editing a.snap-visibility.snap-hide" "css_element"
-    And "li.draft.snap-visible-section span.text small.published-status" "css_element" should exist
-    And I click on ".snap-activity[data-type='External tool'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='External tool'] .dropdown .availability-dropdown" "css_element"
-    And I click on ".snap-activity[data-type='External tool'] a[data-action='cmShow']" "css_element"
-    And I reload the page
-    And I should see "Available but not shown on course page"
-    And I click on ".snap-activity[data-type='External tool'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='External tool'] .dropdown .availability-dropdown" "css_element"
-    And I hover ".snap-activity[data-type='External tool'] a[data-action='cmHide']" "css_element"
-    And I click on ".snap-activity[data-type='External tool'] a[data-action='cmHide']" "css_element"
-    And I reload the page
+    And I follow "Section 4"
+    And I open "Lti 1" actions menu
+    And I choose "Availability > Make available but don't show on course page" in the open action menu
+    Then "Available but not shown on course page" "text" should exist
+    And I open "Lti 1" actions menu
+    And I choose "Availability > Hide on course page" in the open action menu
     And I should not see "Available but not shown on course page"
-    And I click on ".snap-activity[data-type='External tool'] button.snap-edit-asset-more" "css_element"
 
   @javascript
   Scenario: Navigate to a weeks format course, into an activity, and return to the activity's section.
@@ -411,7 +397,7 @@ Feature: Activity navigation in Snap theme
     And I click on "#section-3 .edit-summary" "css_element"
     And I set the section name to "Weeks testing season session"
     And I press "Save changes"
-    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I follow "Edit settings"
+    And I open "Assignment 3" actions menu
+    And I click on "Edit settings" "link" in the "Assignment 3" activity
     And I press "Save and return to course"
-    Then I should see "Assignment 1"
+    Then I should see "Assignment 3"

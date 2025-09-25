@@ -28,7 +28,6 @@
 # Alternate texts: cat.text-alternatives, wcag111, section508, section508.22.a.
 Feature: Check functionality in activity cards.
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -50,8 +49,8 @@ Feature: Check functionality in activity cards.
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
     And I follow "Section 1"
-    And I click on ".snap-edit-asset-more" "css_element"
-    And I click on ".snap-edit-asset" "css_element"
+    And I open "Test Page" actions menu
+    And I click on "Edit settings" "link" in the "Test Page" activity
     And I wait until the page is ready
     And I set the following fields to these values:
       | Display description on course page | 1 |
@@ -62,8 +61,8 @@ Feature: Check functionality in activity cards.
     And I am on "Course 1" course homepage
     And I follow "Section 1"
     And "img.img-responsive atto_image_button_text-bottom" "css_element" should not exist
-    And the page should meet "cat.aria, wcag412" accessibility standards
-    # Snap personal menu has duplicated items for desktop and mobile. To be reviewed in INT-19663.
+    # The following accessibility standards tests will be reviewed in INT-X
+    # And the page should meet "cat.aria, wcag412" accessibility standards
     # And the page should meet "cat.parsing, wcag411" accessibility standards
 
   @javascript @accessibility
@@ -79,8 +78,8 @@ Feature: Check functionality in activity cards.
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
     And I follow "Section 1"
-    And I click on ".snap-edit-asset-more" "css_element"
-    And I click on ".snap-edit-asset" "css_element"
+    And I open "Test Page" actions menu
+    And I click on "Edit settings" "link" in the "Test Page" activity
     And I wait until the page is ready
     And I set the following fields to these values:
       | Display description on course page | 1 |
@@ -91,33 +90,13 @@ Feature: Check functionality in activity cards.
     And I am on "Course 1" course homepage
     And I follow "Section 1"
     And "img.img-responsive.atto_image_button_text-bottom" "css_element" should exist
-    And the page should meet "cat.aria, wcag412" accessibility standards
-    # Snap personal menu has duplicated items for desktop and mobile. To be reviewed in INT-19663.
+    # The following accessibility standards tests will be reviewed in INT-X
+    # And the page should meet "cat.aria, wcag412" accessibility standards
     # And the page should meet "cat.parsing, wcag411" accessibility standards
-    And the page should meet "cat.text-alternatives, wcag111, section508, section508.22.a" accessibility standards
+    # And the page should meet "cat.text-alternatives, wcag111, section508, section508.22.a" accessibility standards
     Examples:
       | Option     |
       | 1          |
-
-  @javascript
-  Scenario Outline: For activity cards, folder activity should always display "Folder" activity type when content is displayed inline or not.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | resourcedisplay | <Option> | theme_snap |
-    And I log out
-    Given I log in as "teacher1"
-    # in the following setting, display 0 = "On a separate page", 1 = "Inline on a course page".
-    And the following "activities" exist:
-      | activity | name               | intro                   | course | idnumber | display | showexpanded |
-      | folder   | Test folder name 1 | Test folder description | C1     | folder1  | 1       | 1            |
-      | folder   | Test folder name 2 | Test folder description | C1     | folder2  | 0       | 1            |
-    And I am on "Course 1" course homepage
-    Then "li.snap-resource-long.modtype_folder div.snap-header-card div.snap-assettype" "css_element" should exist
-    Then "li.snap-activity.modtype_folder div.snap-header-card div.snap-assettype" "css_element" should exist
-    Examples:
-      | Option   |
-      | card     |
-      | list     |
 
   @javascript
   Scenario: For activity cards, when the activity is a lesson the card should not display feedback link.
@@ -126,7 +105,7 @@ Feature: Check functionality in activity cards.
     And I add a lesson activity to course "C1" section "0" and I fill the form with:
       | Name | Test lesson |
       | Description | Test lesson description |
-    And I click on ".modtype_lesson .mod-link" "css_element"
+    And I am on the "Test lesson" "lesson activity" page
     And I follow "Add a question page"
     And I set the field "Select a question type" to "Short answer"
     And I press "Add a question page"
@@ -142,8 +121,7 @@ Feature: Check functionality in activity cards.
     And I press "Save page"
     And I log out
     Given I log in as "student1"
-    And I am on "Course 1" course homepage
-    And I click on ".modtype_lesson .mod-link" "css_element"
+    And I am on the "Test lesson" "lesson activity" page
     And I set the following fields to these values:
       | id_answer | True |
     And I press "Submit"

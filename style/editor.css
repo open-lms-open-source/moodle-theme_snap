@@ -5951,11 +5951,6 @@ fieldset[disabled] #page-site-index .section-modchooser-link .section-modchooser
     text-decoration: none;
 }
 
-.published-status {
-    opacity: 0.75;
-    font-size: small;
-}
-
 .userpicture,
 .message_stream_user_picture_icon {
     border-radius: 50%;
@@ -12148,12 +12143,6 @@ fieldset[disabled] a#changenumsections .reduce-sections {
 .courseinfo .coursegrade {
     display: block;
     line-height: 2.5em;
-}
-
-.courseinfo .published-status {
-    clear: both;
-    float: left;
-    margin-bottom: -1em;
 }
 
 .courseinfo .completionstatus {
