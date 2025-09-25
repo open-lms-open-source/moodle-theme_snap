@@ -28,6 +28,7 @@ namespace theme_snap\output;
 use context_course;
 use core_courseformat\base as course_format;
 use core_courseformat\output\local\content;
+use \core_courseformat\output\local\content\delegatedsection;
 use \core\output\html_writer;
 use \core\url as moodle_url;
 use stdClass;
@@ -65,7 +66,7 @@ trait format_section_trait {
      * @return string|boolean
      */
     public function render_from_template($templatename, $data) {
-        global $USER, $DB, $PAGE;
+        global $CFG, $DB, $PAGE, $USER;
         // Add data to always display controlmenu, restrictions and alternative content for Snap activity cards.
         if ($templatename === 'core_courseformat/local/content' && isset($data->singlesection->cmlist->cms)) {
             // This removes tags from Core already rendered by Snap.
@@ -162,6 +163,10 @@ trait format_section_trait {
             // Restore real editing mode.
             $USER->editing = false;
         }
+        if ($templatename === 'core_courseformat/local/content/cm/completion_dialog' && empty($CFG->theme_snap_internal_store_real_edit_mode)) {
+            // Simulate editing off, because the real one is off, but if the code got here it means it was on, on another simulation.
+            $data->editing = false;
+        }
 
         // Render the template as usual.
         return parent::render_from_template($templatename, $data);
@@ -176,7 +181,7 @@ trait format_section_trait {
      * @return string the widget HTML
      */
     public function render(\core\output\renderable $widget): string {
-        global $PAGE, $DB;
+        global $CFG, $DB, $PAGE, $USER;
 
         // Render the course content based on Core templates.
         if ($widget instanceof content) {
@@ -250,6 +255,49 @@ trait format_section_trait {
                 $output .= shared::course_tools(true);
             }
             return $output;
+        }
+        else if ($widget instanceof delegatedsection) {
+            // Let's simulate Edit mode, we know how Snap loves this.
+            $fakeeditmode = false;
+            $output = '';
+            if ($this->page->user_is_editing() === false) {
+                $USER->editing = true;
+                $fakeeditmode = true;
+                $CFG->theme_snap_internal_store_real_edit_mode = false;
+            } else {
+                $CFG->theme_snap_internal_store_real_edit_mode = true;
+            }
+
+            $templatedata = $widget->export_for_template($this);
+            if (!$templatedata->iscoursedisplaymultipage || !empty($CFG->theme_snap_internal_store_real_edit_mode)) {
+
+                $course = $this->page->course;
+                $modinfo = get_fast_modinfo($course);
+                $renderer = new course_renderer($PAGE, null);
+                foreach ($templatedata->cmlist->cms as &$cmsitem) {
+                    $cmid = $cmsitem->cmitem->id;
+                    $mod = $modinfo->cms[$cmid];
+                    $coursetoolsicon = $renderer->snap_course_section_cm_availability($mod);
+                    $cmsitem->cmitem->cmformat->controlmenu->snapcoursetoolsicon = $coursetoolsicon;
+                    $metahtml = $renderer->module_meta_html($mod);
+                    $metahtml = (empty($metahtml)) ? '' : '<div class="snap-completion-meta">' . $metahtml. '</div>';
+                    $cmsitem->cmitem->cmformat->afterlink .= $metahtml;
+                }
+
+                $output = $this->render_from_template(
+                    $widget->get_template_name($this),
+                    $templatedata
+                );
+
+            }
+
+            // Return to normalcy.
+            if ($fakeeditmode === true) {
+                $USER->editing = false;
+            }
+            if (!empty($output)) {
+                return $output;
+            }
         }
 
         // Render as usual for any other widget.
