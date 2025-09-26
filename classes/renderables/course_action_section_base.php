@@ -59,6 +59,18 @@ abstract class course_action_section_base implements \core\output\renderable, \c
      */
     public $isinmenu;
 
+    /**
+     * "data-action" to fire Core events for section controlmenu, see course/format/classes/output/local/content/section/controlmenu.php
+     * @var string
+     */
+    public $dataaction;
+
+    /**
+     * "data-id" corresponds to the id of the section, see course/format/classes/output/local/content/section/controlmenu.php
+     * @var string
+     */
+    public $dataid;
+
     abstract public function __construct($course, section_info $section, $onsectionpage = false);
 
 }

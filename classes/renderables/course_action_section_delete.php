@@ -42,8 +42,22 @@ class course_action_section_delete extends course_action_section_base {
                 $this->title = get_string('deletesection');
                 $this->arialabel = "aria-label='".get_string('deletesection')."'";
             }
-            $this->url = new moodle_url('/course/editsection.php', array('id' => $section->id,
-                'sr' => $onsectionpage ? $section->section : 0, 'delete' => 1, ));
+            if ($section->component == 'mod_subsection') {
+                // Subsections are modules.
+                $cm = $section->delegateinstance->get_cm();
+                $this->dataaction = 'cmDelete';
+                $this->dataid = $cm->id;
+                $url = new moodle_url('/course/mod.php');
+                $url->param('sesskey', sesskey());
+                $url->param('delete', $cm->id);
+                $url->param('sr', $cm->sectionnum);
+                $this->url = $url;
+            } else {
+                $this->dataaction = 'deleteSection';
+                $this->dataid = $section->id;
+                $this->url = new moodle_url('/course/editsection.php', array('id' => $section->id,
+                    'sr' => $onsectionpage ? $section->section : 0, 'delete' => 1, ));
+            }
         }
     }
 }

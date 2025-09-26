@@ -22,7 +22,7 @@
 {{#isinmenu}}
     {{#url}}
         <li>
-            <a class="dropdown-item" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}>
+            <a class="dropdown-item" {{#dataaction}}data-action="{{dataaction}}"{{/dataaction}} data-id="{{{dataid}}}" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}>
                 <div class="d-inline-block menu-icon {{{class}}}" {{{ariapressed}}}>
                     {{{title}}}
                 </div>
@@ -34,7 +34,7 @@
 {{^isinmenu}}
     {{#url}}
         <li>
-            <a title="{{{title}}}" class="{{class}}" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}></a>
+            <a title="{{{title}}}" {{#dataaction}}data-action="{{dataaction}}"{{/dataaction}} data-id="{{{dataid}}}" class="{{class}}" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}></a>
         </li>
     {{/url}}
 {{/isinmenu}}

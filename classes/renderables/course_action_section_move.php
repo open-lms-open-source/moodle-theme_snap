@@ -37,10 +37,16 @@ class course_action_section_move extends course_action_section_base {
         $coursecontext = context_course::instance($course->id);
 
         if ($onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
-            $this->url = '#section-'.$section->section;
+            $url = course_get_url($course, $section);
+            $url->param('sesskey', sesskey());
+            $url->param('movesection', $section->section);
+            $url->param('section', $section->section);
+            $this->url = clone ($url);
             $sectionname = !empty($section->name) ? $section->name : get_section_name($course, $section);
             $this->title = s(get_string('move', 'theme_snap', $sectionname));
             $this->arialabel = "aria-label='".s(get_string('move', 'theme_snap', $sectionname))."'";
+            $this->dataaction = 'moveSection';
+            $this->dataid = $section->id;
         }
     }
 }

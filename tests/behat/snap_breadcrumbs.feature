@@ -43,7 +43,7 @@ Feature: Check that the breadcrumbs are being shown correctly.
     And I log in as "<user>"
     And I am on the course main page for "C1"
     And I should see "<homepage>" in the ".breadcrumb" "css_element"
-    And I should see "My Courses" in the ".breadcrumb" "css_element"
+    And I should see "My courses" in the ".breadcrumb" "css_element"
     Examples:
       | user     | defaulthomepage | homepage  |
       | admin    | 0               | Home      |
