@@ -1591,6 +1591,20 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                             window.location.reload();
                         }
                     });
+
+                    // Detectamos si estamos en un curso con courseindex.
+                    const courseIndex = document.querySelector('.courseindex');
+                    if (courseIndex) {
+                        console.log('si hay course index nanan 1');
+                        require(
+                            ['theme_snap/courseindex_adjustments'],
+                            function(CourseIndexAdjustments) {
+                                CourseIndexAdjustments.init();
+                            }
+                        );
+                    }
+
+
                 });
                 accessibility.snapAxInit();
                 messages.init();
