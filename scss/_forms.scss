@@ -70,7 +70,8 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.fitem
     }
 }
 
-.mform #id_general .fitem.snap_content_notification_check {
+.mform #id_general .fitem.snap_content_notification_check,
+.mform #id_generalhdr .fitem.snap_content_notification_check {
     display: block;
     margin-top: 1rem;
     padding: 0.5rem;

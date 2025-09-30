@@ -695,6 +695,11 @@ li.section:focus {
             filter: $go1-filter;
         }
     }
+    div[data-internal="pld"] .modicon_pld {
+        img.activityicon {
+          filter: unset;
+        }
+    }
 
     .activityiconcontainer {
         &.modicon_hotpot {
@@ -898,6 +903,13 @@ li.section:focus {
     .page-header-image .activityiconcontainer .activityicon {
         filter: $go1-filter;
     }
+}
+
+#page-mod-pld-view,
+#page-mod-pld-mod {
+  .page-header-image .activityiconcontainer .activityicon {
+    filter: unset;
+  }
 }
 
 #page-mod-quiz-view.pagelayout-secure #page.container{
@@ -3931,5 +3943,12 @@ body[id^='page-mod-data'] {
 #page-course-view-topics {
   &.editing .course-section-header .sectionbadges .badge.bg-primary {
     display: none;
+  }
+}
+
+// Mod PLD view page styles.
+#page-mod-pld-view {
+  section#region-main .page-context-header {
+    padding: 1em 2em 0 2em;
   }
 }
