@@ -61,7 +61,7 @@ Feature: Check functionality in activity cards.
     And I am on "Course 1" course homepage
     And I follow "Section 1"
     And "img.img-responsive atto_image_button_text-bottom" "css_element" should not exist
-    # The following accessibility standards tests will be reviewed in INT-X
+    # The following accessibility standards tests will be reviewed in INT-21424
     # And the page should meet "cat.aria, wcag412" accessibility standards
     # And the page should meet "cat.parsing, wcag411" accessibility standards
 
@@ -90,7 +90,7 @@ Feature: Check functionality in activity cards.
     And I am on "Course 1" course homepage
     And I follow "Section 1"
     And "img.img-responsive.atto_image_button_text-bottom" "css_element" should exist
-    # The following accessibility standards tests will be reviewed in INT-X
+    # The following accessibility standards tests will be reviewed in INT-21424
     # And the page should meet "cat.aria, wcag412" accessibility standards
     # And the page should meet "cat.parsing, wcag411" accessibility standards
     # And the page should meet "cat.text-alternatives, wcag111, section508, section508.22.a" accessibility standards

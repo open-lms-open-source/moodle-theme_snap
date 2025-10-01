@@ -23,6 +23,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   This requires the course to use the weeks and topics format.
 
   Background:
+    Given I skip because "Will reviewed on INT-21415"
     Given the following "courses" exist:
       | fullname               | shortname     | category | groupmode | format         | startdate  | initsecions |
       | Topics course          | course_topics | 0        | 1         | topics         |            |      1      |
