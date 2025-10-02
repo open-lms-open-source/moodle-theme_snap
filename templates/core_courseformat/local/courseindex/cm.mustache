@@ -47,15 +47,12 @@
     {{^hasdelegatedsection}}
         <span class="completioninfo" data-for="cm_completion" data-value="NaN"></span>
         {{#uservisible}}
+            <span class="activityiconcontainer {{modshortname}}icon" data-cmid="{{id}}">{{iconurl}}</span>
             <a class="courseindex-link text-truncate"
                 {{#url}} href="{{{url}}}" {{/url}}{{^url}} href="#{{{anchor}}}" data-anchor="true" {{/url}}
                data-for="cm_name"
                tabindex="-1"
             >
-                <span class="activityiconcontainer modicon-{{modname}}" data-cmid="{{id}}">{{iconurl}}</span>
-
-
-
                 <span class="courseindex-link-text">{{{name}}}</span>
             </a>
         {{/uservisible}}

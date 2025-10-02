@@ -1,4 +1,4 @@
-@theme @theme_snap
+@theme @theme_snap @theme_snap_course_index
 Feature: Testing course index drawer in theme_snap
 
   Background:
