@@ -40,6 +40,7 @@ use theme_snap\renderables\course_action_section_delete;
 use theme_snap\renderables\course_action_section_highlight;
 use theme_snap\renderables\course_action_section_permalink;
 use theme_snap\renderables\course_section_navigation;
+use theme_snap\sectionsactions;
 
 trait format_section_trait {
 
@@ -903,6 +904,7 @@ trait format_section_trait {
     private function change_num_sections($course) {
 
         $course = course_get_format($course)->get_course();
+        $actions = new sectionsactions($course);
         $context = context_course::instance($course->id);
         if (!has_capability('moodle/course:update', $context)) {
             return '';
@@ -916,7 +918,7 @@ trait format_section_trait {
 
         $required = '';
         $defaulttitle = get_string('title', 'theme_snap');
-        $sectionnum = course_get_format($course)->get_last_section_number();
+        $sectionnum = $actions->get_last_section_number_public(false);
         if ($course->format === 'topics') {
             // Make sure that section does not have leading or trailing spaces and at least one character.
             $required = 'required pattern=".*\S+.*"';
