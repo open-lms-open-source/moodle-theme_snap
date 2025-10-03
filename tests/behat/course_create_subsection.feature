@@ -24,25 +24,26 @@ Feature: The Snap button for creating subsections works with editing turned off.
   As an admin
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following config values are set as admin:
       | theme | snap |
     And the following "users" exist:
       | username | firstname | lastname |
       | teacher1 | Teacher   | 1        |
     And the following "courses" exist:
-      | fullname | shortname | category | groupmode | theme | initsections |
-      | Course 1 |    C1     |    0     |     1     |       |       0      |
+      | fullname | shortname | category | groupmode | theme | initsections | numsections |
+      | Course 1 |    C1     |    0     |     1     |       |       0      |      1      |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
     And the following "activities" exist:
-      | activity   | name            | course | idnumber    | section |
-      | subsection | Subsection1     | C1     | Subsection1 | 0       |
+      | activity   | name                   | course | idnumber    | section | duedate          |
+      | subsection | Subsection1            | C1     | Subsection1 | 0       |                  |
+      | assign     | Assign1 in Subsection1 | C1     | assign11    | 2       | ## 2026-05-01 ## |
     And I enable "subsection" "mod" plugin
 
   @javascript
   Scenario: The teacher can see the create subsections button, with editing turned off.
+    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     When I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode off
     Then I wait until the page is ready
@@ -57,3 +58,9 @@ Feature: The Snap button for creating subsections works with editing turned off.
     And I am on "Course 1" course homepage
     And I should not see "Add a subsection"
 
+  Scenario: Subsections must display a trove of course info, an assignment with a due date must show it.
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage with editing mode off
+    And I should see "Subsection1"
+    And I should see "Assign1 in Subsection1"
+    Then I should see "Due 1 May 2026"
