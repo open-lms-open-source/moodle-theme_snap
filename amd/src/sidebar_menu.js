@@ -302,6 +302,23 @@ const handleMessagesPopoverClick = (e) => {
             e.currentTarget.classList.add(CLASSES.COLLAPSED);
         }
     }
+
+    // We have an event from Core subscribed with PubSub, that always runs after Snap has run,
+    // and it creates the unwanted modal backdrop, see message/amd/src/message_drawer.js.
+    const dismissCoreModalBackdrop = function(mutations) {
+        if (sidebarItem) {
+            for (const mutation of mutations) {
+                if (mutation.type === 'childList') {
+                    const messagesPopoverCoreModalBackdrop = document.querySelector('body > div > div.modal-backdrop');
+                    if (messagesPopoverCoreModalBackdrop) {
+                        messagesPopoverCoreModalBackdrop.remove();
+                    }
+                }
+            }
+        }
+    };
+    const messageDrawerObserver = new MutationObserver(dismissCoreModalBackdrop);
+    messageDrawerObserver.observe(document.body, {subtree: true, childList: true});
 };
 
 /**
