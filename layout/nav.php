@@ -169,7 +169,6 @@ if (isloggedin() && !isguestuser()) {
                 ['name' => 'toggler', 'value' => 'drawers'],
                 ['name' => 'action', 'value' => 'toggle'],
                 ['name' => 'target', 'value' => 'theme_snap-drawers-blocks'],
-                ['name' => 'original-title', 'value' => get_string('toggleblockdrawer', 'theme_snap')],
                 ['name' => 'placement', 'value' => 'right'],
                 ['name' => 'activeselector', 'value' => '#theme_snap-drawers-blocks.show']
             ],
