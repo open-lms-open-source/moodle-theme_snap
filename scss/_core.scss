@@ -2973,6 +2973,10 @@ ul.events-new + ul.events-underway {
     margin: 1em 0;
 }
 
+#page-mod-quiz-attempt .que {
+    display: block;
+}
+
 .que .info,
 .que .content {
     background-color: transparent;
