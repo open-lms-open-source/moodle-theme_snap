@@ -1354,7 +1354,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see section delete dialog$/
      */
     public function i_should_see_section_delete_dialog() {
-        $element = 'div.modal[data-region="modal-container"] .modal-dialog .modal-content';
+        $element = 'div.noticebox .snap-continue-cancel';
         $text = 'Are you absolutely sure you want to completely delete';
         $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
     }
