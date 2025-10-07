@@ -63,6 +63,10 @@ class privacy_provider_test extends provider_testcase {
     }
 
     public function test_export_user_data() {
+        global $DB;
+        if ($DB->get_dbfamily() == 'postgres') {
+            $this->markTestSkipped('Postgres is not supported here');
+        }
         $user1 = $this->getDataGenerator()->create_user();
         $user2 = $this->getDataGenerator()->create_user();
 
