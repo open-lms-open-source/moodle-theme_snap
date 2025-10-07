@@ -89,7 +89,7 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I should not see "Add a block"
     And I switch edit mode in Snap
     And I wait until the page is ready
-    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
+    And I click on the block drawer toggle
     And I should see "Add a block"
 
   @javascript
