@@ -42,6 +42,7 @@ const SELECTORS = {
     COURSE_TOC: '#course-toc',
     PAGE_HEADER: 'page-header',
     DRAWER_LEFT: '.drawer-left.drawer',
+    SNAP_COURSE_FOOTER: 'snap-course-footer',
 };
 
 const CLASSES = {
@@ -181,36 +182,37 @@ const updateElementPositions = (selectors = null) => {
         });
     }
 
-    // Updates Course Index Button position.
+    /**
+     * Updates the vertical position of the course index button so that it:
+     * - Is positioned at 40% of the viewport height by default,
+     * - Never overlaps or sits above the bottom of the page header,
+     * - Never overlaps or goes below the top of the footer,
+     *
+     * Ensures the button stays visible and properly positioned between header and footer,
+     * and updates its position dynamically on window resize and scroll events.
+     */
     const courseindexbutton = document.querySelector(SELECTORS.COURSE_INDEX_DRAWER_BUTTON);
     const drawer = document.querySelector(SELECTORS.DRAWER_LEFT);
+    const footer = document.getElementById(SELECTORS.SNAP_COURSE_FOOTER);
+
     if (courseindexbutton && drawer) {
         const updateButtonVisibility = () => {
-            const isDrawerShowing = drawer.classList.contains(CLASSES.SHOW);
+            const pageHeader = document.getElementById(SELECTORS.PAGE_HEADER);
+            const headerRect = pageHeader.getBoundingClientRect();
+            const footerRect = footer.getBoundingClientRect();
 
-            if (isDrawerShowing) {
-                courseindexbutton.style.display = 'none';
-            } else {
-                courseindexbutton.style.display = 'block';
+            const top40Percent = window.innerHeight * 0.4;
 
-                const pageHeader = document.getElementById(SELECTORS.PAGE_HEADER);
-                const headerRect = pageHeader.getBoundingClientRect();
-                const headerBottom = headerRect.bottom;
+            const buttonHeight = courseindexbutton.offsetHeight || 0;
+            const maxTop = footerRect.top - buttonHeight - 10;
 
-                let newTop = Math.max(topPosition + 260, headerBottom + 20);
+            let newTop = Math.max(headerRect.bottom + 1, top40Percent);
 
-                if (window.innerWidth > 1610) {
-                    newTop += 20;
-                }
+            newTop = Math.min(newTop, maxTop);
+            courseindexbutton.style.top = `${newTop}px`;
 
-                courseindexbutton.style.top = `${newTop}px`;
-            }
         };
-
         updateButtonVisibility();
-
-        const observer = new MutationObserver(updateButtonVisibility);
-        observer.observe(drawer, {attributes: true, attributeFilter: ['class']});
     }
 };
 

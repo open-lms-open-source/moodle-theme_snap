@@ -6662,7 +6662,7 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
 
 // Course Index CSS Styles from Boost
 .courseindex .courseindex-item {
-    padding: 0 0.5rem;
+    padding: 0.2em 0.5em;
     border: 1px solid transparent;
     border-radius: 0.5rem;
 }
@@ -6894,12 +6894,12 @@ li.section.main {
   width: 70%;
 }
 
-.drawerheadercontent,
-.drawerheader .drawertoggle {
+[id*="courseindex"].drawer-left .drawerheadercontent,
+[id*="courseindex"].drawer-left .drawerheader .drawertoggle {
   position: static;
 }
 
-.drawerheader {
+[id*="courseindex"].drawer-left .drawerheader {
   position: absolute;
   top: 0;
   right: 0;

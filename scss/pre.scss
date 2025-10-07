@@ -113,7 +113,7 @@ $hvp-interactive-content:            #000000; // HVP
 // Coloring activity icons using filter.
 $communication-filter: invert(55%) sepia(61%) saturate(423%) hue-rotate(49deg) brightness(89%) contrast(92%);; // Forums, Chat, Open forum
 $assignment-filter:    invert(32%) sepia(48%) saturate(3787%) hue-rotate(173deg) brightness(97%) contrast(101%); // Assignment, Workshop, Attendance, H5P, Journal
-$content-filter:       invert(85%) sepia(40%) saturate(5001%) hue-rotate(348deg) brightness(84%) contrast(82%); // Quiz, choice, feedback
+$content-filter:       invert(85%) sepia(40%) saturate(5001%) hue-rotate(348deg) brightness(84%) contrast(82%); // Quiz, choice, feedback, facetoface
 $information-filter:   invert(33%) sepia(97%) saturate(3270%) hue-rotate(155deg) brightness(100%) contrast(101%); // Wiki, glossary, Database, Choice Group
 $collab-filter:        invert(25%) sepia(52%) saturate(2509%) hue-rotate(285deg) brightness(88%) contrast(88%); // Collaborate
 $hvp-filter:           brightness(0%) contrast(100%); // HVP
@@ -165,14 +165,14 @@ $color-go1:                          #3A7E98; // GO1 content item
 $certificate-filter: invert(26%) sepia(32%) saturate(4543%) hue-rotate(274deg) brightness(86%) contrast(89%); // Course certificate
 $customquiz-filter: invert(39%) sepia(84%) saturate(431%) hue-rotate(280deg) brightness(87%) contrast(96%); // Custom Quiz
 $livepoll-filter: invert(31%) sepia(14%) saturate(2379%) hue-rotate(314deg) brightness(102%) contrast(92%); // Livepoll
-$checklist-filter: invert(48%) sepia(82%) saturate(346%) hue-rotate(101deg) brightness(85%) contrast(87%); // Checklist Dialogue
+$checklist-filter: invert(48%) sepia(82%) saturate(346%) hue-rotate(101deg) brightness(85%) contrast(87%); // Checklist, Dialogue
 $quizlms-filter: $content-filter; // Adaptive quiz, Quiz game
 $zoom-filter: invert(21%) sepia(52%) saturate(2247%) hue-rotate(265deg) brightness(95%) contrast(94%); // Zoom
 $go1-filter: invert(40%) sepia(35%) saturate(400%) hue-rotate(180deg) brightness(90%) contrast(85%); // GO1 content item
 $url-filter: invert(49%) sepia(52%) saturate(4675%) hue-rotate(156deg) brightness(89%) contrast(102%); // Andresco
-$ebcwep-filter: invert(36%) sepia(98%) saturate(6969%) hue-rotate(315deg) brightness(90%) contrast(119%); // EBC Wooclap Event Participation
-$groupselect-filter: invert(25%) sepia(54%) saturate(6226%) hue-rotate(245deg) brightness(100%) contrast(102%); // Group self-selection
-$imscp-filter: invert(25%) sepia(63%) saturate(1152%) hue-rotate(344deg) brightness(94%) contrast(91%); // IMS content package
+$ebcwep-filter: invert(36%) sepia(98%) saturate(6969%) hue-rotate(315deg) brightness(90%) contrast(119%); // EBC Wooclap Event Participation, coursecertificate
+$groupselect-filter: invert(25%) sepia(54%) saturate(6226%) hue-rotate(245deg) brightness(100%) contrast(102%); // Group self-selection, data
+$imscp-filter: invert(25%) sepia(63%) saturate(1152%) hue-rotate(344deg) brightness(94%) contrast(91%); // IMS content package, SCORM
 $scheduler-filter: invert(45%) sepia(46%) saturate(3819%) hue-rotate(260deg) brightness(101%) contrast(87%); // Scheduler
 
 // -------------------------

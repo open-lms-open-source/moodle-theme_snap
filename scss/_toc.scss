@@ -605,11 +605,11 @@ label[for="toc-search-input"]{
           margin: 1px;
           color: white !important;
           width: 100%;
+          padding-left: 0.5em;
         }
     }
 
     .courseindex-link {
-      padding: 5px 10px;
       display: inline-block !important;
       max-width: 70%;
       white-space: nowrap;
@@ -617,6 +617,10 @@ label[for="toc-search-input"]{
       text-overflow: ellipsis;
       position: relative;
       z-index: 1;
+
+      .activityiconcontainer.Forumicon {
+        filter: $communication-filter;
+      }
     }
 
     &.current {
@@ -643,4 +647,177 @@ label[for="toc-search-input"]{
 #course-index i.icon,
 #course-index p.tree_item:before {
   color: inherit;
+}
+
+#course-index .completioninfo i.icon  {
+  font-size: 11px;
+  position: relative;
+  left: 8px;
+  bottom: 2px;
+}
+
+#courseindex #courseindex-content {
+  padding-left: 15px;
+}
+
+.courseindex .courseindex-item-content .courseindex-item {
+  padding: 0.1em 0.5em;
+}
+
+[id*="courseindex"].drawer-left .btn.drawertoggle i.icon {
+  font-size: 14px;
+}
+// -------------------------
+// courseindex icons
+// -------------------------
+.courseindex-section {
+    .activityiconcontainer {
+        display: inline-flex;
+        vertical-align: text-bottom;
+        padding: unset;
+        margin: unset;
+
+        .forum.icon,
+        .hsuforum.icon,
+        .chat.icon {
+            filter: $communication-filter;
+        }
+
+        .assignment.icon,
+        .assign.icon,
+        .workshop.icon,
+        .h5pactivity.icon,
+        .journal.icon,
+        .attendance.icon {
+          filter: $assignment-filter;
+        }
+
+        .quiz.icon,
+        .choice.icon,
+        .feedback.icon,
+        .facetoface.icon{
+          filter: $content-filter;
+        }
+
+        .wiki.icon,
+        .glossary.icon,
+        .choicegroup.icon,
+        .Database.icon {
+          filter: $information-filter;
+        }
+
+        .collaborate.icon {
+          filter: $collab-filter;
+        }
+
+        .questionnaire.icon,
+        .imscp.icon,
+        .survey.icon,
+        .lesson.icon {
+          filter: $questionnaire-filter;
+        }
+
+        .lightbox.icon {
+          filter: $lightbox-filter;
+        }
+
+        .resource.icon,
+        .lti.icon {
+          filter: $resource-filter;
+        }
+
+        .book.icon {
+          filter: $book-filter;
+        }
+
+        .folder.icon {
+          filter: $folder-filter;
+        }
+
+        .url.icon,
+        .kalvidres.icon,
+        .andrescosearch.icon{
+          filter: $url-filter;
+        }
+
+        .label.icon {
+          filter: $label-filter;
+        }
+
+        .page.icon {
+          filter: $page-filter;
+        }
+
+        .customcert.icon,
+        .certificate.icon {
+          filter: $certificate-filter;
+        }
+
+        .customquiz.icon {
+          filter: $customquiz-filter;
+        }
+
+        .livepoll.icon {
+          filter: $livepoll-filter;
+        }
+
+        .checklist.icon,
+        .dialogue.icon {
+          filter: $checklist-filter;
+        }
+
+        .adaptivequiz.icon,
+        .quizgame.icon {
+          filter: $quizlms-filter;
+        }
+
+        .zoom.icon {
+          filter: $zoom-filter;
+        }
+
+        .goone.icon {
+          filter: $go1-filter;
+        }
+
+        .ebcwep.icon,
+        .threesixo.icon,
+        .coursecertificate.icon,
+        .kalvidassign.icon {
+          filter: $ebcwep-filter;
+        }
+
+        .groupselect.icon,
+        .mindmap.icon,
+        .oublog.icon,
+        .data.icon {
+          filter: $groupselect-filter;
+        }
+
+        .imscp.icon,
+        .scorm.icon {
+          filter: $imscp-filter;
+        }
+
+        .scheduler.icon {
+          filter: $scheduler-filter;
+        }
+
+      .activityicon {
+          width: 13px;
+          height: 13px;
+          bottom: 10px;
+          position: absolute;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+  #course-index {
+    .completioninfo i.icon {
+      bottom: 0;
+    }
+    .activityicon {
+      bottom: 6px;
+    }
+  }
 }
