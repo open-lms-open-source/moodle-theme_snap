@@ -566,7 +566,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 var href = this.getAttribute('href');
                 // Make this only happen for settings button.
                 if (this.getAttribute('id') === 'close-block-settings') {
-                    href = document.getElementById('admin-menu-trigger').getAttribute('href');
+                    var href = document.getElementById('admin-menu-trigger').getAttribute('href');
                 }
                 if (this.getAttribute('id') === 'admin-menu-trigger'
                     || this.getAttribute('id').startsWith('message-drawer-toggle-')) {
@@ -592,14 +592,12 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
                 }
 
-                if (typeof href !== 'string') {
-                    $(href).attr('tabindex', '0');
-                    $(href).toggleClass('state-visible').focus();
-                }
+                $(href).attr('tabindex', '0');
+                $(href).toggleClass('state-visible').focus();
                 e.preventDefault();
 
                 // Toggle accessibility visibility for screen readers using aria-hidden.
-                if (typeof href !== 'string' && $(href).hasClass('state-visible')) {
+                if ($(href).hasClass('state-visible')) {
                     Aria.unhide(document.querySelector('#settingsnav'));
                 } else {
                     Aria.hide(document.querySelector('#settingsnav'));
@@ -1493,10 +1491,8 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                                 }
                             });
                         });
-                        if (frontPageActivities) {
-                            var frontPageActConfig = {childList: true};
-                            frontPageActObserver.observe(frontPageActivities, frontPageActConfig);
-                        }
+                        var frontPageActConfig = {childList: true};
+                        frontPageActObserver.observe(frontPageActivities, frontPageActConfig);
                     }
 
                     // Move My courses button to be centered in the home page.
@@ -1592,27 +1588,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                             childList: true,
                             subtree: true,
                         });
-                    });
-
-                    // We have an event from Core subscribed with PubSub, that always runs after Snap has run,
-                    // and it creates the unwanted modal backdrop, see message/amd/src/message_drawer.js.
-                    const messageDrawerPopover = document.querySelector('[id^="message-drawer-toggle-"]');
-                    const messageDrawerCloseIcon = document.querySelector('[id^="message-drawer-"] a[data-action="closedrawer"]');
-                    const dismissCoreModalBackdrop = function(mutations) {
-                        for (const mutation of mutations) {
-                            if (mutation.type === 'childList') {
-                                const messagesPopoverCoreModalBackdrop =
-                                    document.querySelector('body > div > div.modal-backdrop');
-                                if (messagesPopoverCoreModalBackdrop && document.activeElement === messageDrawerPopover
-                                    || document.activeElement === messageDrawerCloseIcon) {
-                                    messagesPopoverCoreModalBackdrop.remove();
-                                }
-                            }
-                        }
-                    };
-                    const messageDrawerObserver = new MutationObserver(dismissCoreModalBackdrop);
-                    messageDrawerPopover.addEventListener('click', () => {
-                        messageDrawerObserver.observe(document.body, {subtree: true, childList: true});
                     });
                 });
                 accessibility.snapAxInit();
