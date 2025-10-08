@@ -2002,4 +2002,13 @@ JS;
             throw new ExpectationException($message, $session);
         }
     }
+
+    /**
+     * Clicks on the block drawer toggle button.
+     * 
+     * @Given /^I click on the block drawer toggle$/
+     */
+    public function i_click_on_block_drawer_toggle() {
+        $this->execute('behat_general::i_click_on', ["button[title='Toggle block drawer']", 'css_element']);
+    }
 }

@@ -30,7 +30,7 @@ Feature: Testing sidebarmenu in theme_snap
     And ".block_settings.state-visible" "css_element" should exist
     Then I click on ".usermenu .dropdown-toggle" "css_element"
     And ".block_settings.state-visible" "css_element" should not exist
-    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
+    And I click on the block drawer toggle
     And ".drawer.show" "css_element" should exist
     And I click on "#nav-intellicart-popover-container" "css_element"
     And ".drawer.show" "css_element" should not exist

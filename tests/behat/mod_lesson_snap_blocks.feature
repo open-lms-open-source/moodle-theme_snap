@@ -62,5 +62,5 @@ Feature: Display navigation menu in the Lesson activity
     And I set the following fields to these values:
       | Display menu | Yes |
     And I press "Save and display"
-    And I click on "button[data-original-title='Toggle block drawer']" "css_element"
+    And I click on the block drawer toggle
     And I should see "Lesson menu"
