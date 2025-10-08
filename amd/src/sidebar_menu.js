@@ -38,7 +38,6 @@ const SELECTORS = {
     NAV_UNPINNED: '#mr-nav.headroom--unpinned',
     GOTO_TOP_LINK: '#goto-top-link',
     COURSE_TOC: '#course-toc',
-    MODAL_BACKDROP: 'body > div > div.modal-backdrop',
 };
 
 const CLASSES = {
@@ -302,9 +301,6 @@ const handleMessagesPopoverClick = (e) => {
         } else {
             e.currentTarget.classList.add(CLASSES.COLLAPSED);
         }
-        window.messageDrawerObserver.observe(document.body, {subtree: true, childList: true});
-    } else {
-        window.messageDrawerObserver.disconnect();
     }
 };
 
@@ -439,21 +435,6 @@ const setupEventListeners = () => {
     const messagesPopover = document.querySelector(SELECTORS.MESSAGES_POPOVER);
     if (messagesPopover) {
         messagesPopover.addEventListener('click', handleMessagesPopoverClick);
-
-        // We have an event from Core subscribed with PubSub, that always runs after Snap has run,
-        // and it creates the unwanted modal backdrop, see message/amd/src/message_drawer.js.
-        const dismissCoreModalBackdrop = function(mutations) {
-            for (const mutation of mutations) {
-                if (mutation.type === 'childList') {
-                    const messagesPopoverCoreModalBackdrop =
-                        document.querySelector(SELECTORS.MODAL_BACKDROP);
-                    if (messagesPopoverCoreModalBackdrop) {
-                        messagesPopoverCoreModalBackdrop.remove();
-                    }
-                }
-            }
-        };
-        window.messageDrawerObserver = new MutationObserver(dismissCoreModalBackdrop);
     }
     
     // Add click event listeners to elements with data-action="closedrawer"
