@@ -301,24 +301,10 @@ const handleMessagesPopoverClick = (e) => {
         } else {
             e.currentTarget.classList.add(CLASSES.COLLAPSED);
         }
+        window.messageDrawerObserver.observe(document.body, {subtree: true, childList: true});
+    } else {
+        window.messageDrawerObserver.disconnect();
     }
-
-    // We have an event from Core subscribed with PubSub, that always runs after Snap has run,
-    // and it creates the unwanted modal backdrop, see message/amd/src/message_drawer.js.
-    const dismissCoreModalBackdrop = function(mutations) {
-        if (sidebarItem) {
-            for (const mutation of mutations) {
-                if (mutation.type === 'childList') {
-                    const messagesPopoverCoreModalBackdrop = document.querySelector('body > div > div.modal-backdrop');
-                    if (messagesPopoverCoreModalBackdrop) {
-                        messagesPopoverCoreModalBackdrop.remove();
-                    }
-                }
-            }
-        }
-    };
-    const messageDrawerObserver = new MutationObserver(dismissCoreModalBackdrop);
-    messageDrawerObserver.observe(document.body, {subtree: true, childList: true});
 };
 
 /**
@@ -452,6 +438,21 @@ const setupEventListeners = () => {
     const messagesPopover = document.querySelector(SELECTORS.MESSAGES_POPOVER);
     if (messagesPopover) {
         messagesPopover.addEventListener('click', handleMessagesPopoverClick);
+
+        // We have an event from Core subscribed with PubSub, that always runs after Snap has run,
+        // and it creates the unwanted modal backdrop, see message/amd/src/message_drawer.js.
+        const dismissCoreModalBackdrop = function(mutations) {
+            for (const mutation of mutations) {
+                if (mutation.type === 'childList') {
+                    const messagesPopoverCoreModalBackdrop =
+                        document.querySelector('body > div > div.modal-backdrop');
+                    if (messagesPopoverCoreModalBackdrop) {
+                        messagesPopoverCoreModalBackdrop.remove();
+                    }
+                }
+            }
+        };
+        window.messageDrawerObserver = new MutationObserver(dismissCoreModalBackdrop);
     }
     
     // Add click event listeners to elements with data-action="closedrawer"
