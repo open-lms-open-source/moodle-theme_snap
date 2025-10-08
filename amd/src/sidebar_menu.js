@@ -38,6 +38,7 @@ const SELECTORS = {
     NAV_UNPINNED: '#mr-nav.headroom--unpinned',
     GOTO_TOP_LINK: '#goto-top-link',
     COURSE_TOC: '#course-toc',
+    MODAL_BACKDROP: 'body > div > div.modal-backdrop',
 };
 
 const CLASSES = {
@@ -445,7 +446,7 @@ const setupEventListeners = () => {
             for (const mutation of mutations) {
                 if (mutation.type === 'childList') {
                     const messagesPopoverCoreModalBackdrop =
-                        document.querySelector('body > div > div.modal-backdrop');
+                        document.querySelector(SELECTORS.MODAL_BACKDROP);
                     if (messagesPopoverCoreModalBackdrop) {
                         messagesPopoverCoreModalBackdrop.remove();
                     }
