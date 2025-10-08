@@ -56,34 +56,34 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I go to course section 1
+    And I go to section 1 of course "C1"
     And I restrict course asset "S1 Restricted" by completion of "S2 Restricted"
     And I am on the course main page for "C1"
-    And I go to course section 1
+    And I go to section 1 of course "C1"
     And I click on "li.modtype_assign a.snap-conditional-tag" "css_element"
     And I should see "Not available unless: The activity S2 Restricted is marked complete"
-    And I restrict course section 1 by date to "yesterday"
+    And I restrict course section 1 by date to "yesterday" in course "C1"
     And I am on the course main page for "C1"
-    And I restrict course section 2 by date to "tomorrow"
+    And I restrict course section 2 by date to "tomorrow" in course "C1"
     And I should see "Conditional" in TOC item 1
     And I should see "Conditional" in TOC item 2
     And I should not see "Conditional" in TOC item 3
     And I am on the course main page for "C1"
-    And I go to course section 1
+    And I go to section 1 of course "C1"
     And I should see available from date of "yesterday" in section 1
-    And I go to course section 2
+    And I go to section 2 of course "C1"
     And I should see available from date of "tomorrow" in section 2
-    And I go to course section 4
+    And I go to section 4 of course "C1"
     And I click on "#section-4 .edit-summary" "css_element"
     And I set the section name to "Section 4"
     And I apply asset completion restriction "S3 Completion - view" to section
     And I am on the course main page for "C1"
-    And I go to course section 4
+    And I go to section 4 of course "C1"
     And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
-    And I go to course section 3
+    And I go to section 3 of course "C1"
     And I click on "//li[contains(@class, 'modtype_assign')]//a/p[contains(text(), 'S3 Completion - view')]" "xpath_element"
     And I am on the course main page for "C1"
-    And I go to course section 4
+    And I go to section 4 of course "C1"
     And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
     And I log out
     # Check the restrictions as student.
@@ -92,19 +92,19 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I should not see "Conditional" in TOC item 1
     And I should see "Conditional" in TOC item 2
     And I should not see "Conditional" in TOC item 3
-    And I go to course section 1
+    And I go to section 1 of course "C1"
     And I should not see available from date of "yesterday" in section 1
     And I click on "li.modtype_assign a.snap-conditional-tag" "css_element"
     And I should see "Not available unless: The activity S2 Restricted is marked complete"
-    And I go to course section 2
+    And I go to section 2 of course "C1"
     And I should see available from date of "tomorrow" in section 2
     And "#section-2 li.snap-activity" "css_element" should not exist
-    And I go to course section 4
+    And I go to section 4 of course "C1"
     And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
-    And I go to course section 3
+    And I go to section 3 of course "C1"
     And I click on "//li[contains(@class, 'modtype_assign')]//a/p[contains(text(), 'S3 Completion - view')]" "xpath_element"
     And I am on the course main page for "C1"
-    And I go to course section 4
+    And I go to section 4 of course "C1"
     And I should not see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
     Examples:
       | Option     |
@@ -121,20 +121,20 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I go to course section 1
+    And I go to section 1 of course "C1"
     And I restrict course asset "S1 Restricted" by belong to the group "Grou'p1"
     And I am on the course main page for "C1"
-    And I go to course section 1
+    And I go to section 1 of course "C1"
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     And I should see "Not available unless: You belong to Grou'p1"
     And I log out
     # Scenario if an assignment has an apostrophe in the title.
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I go to course section 2
+    And I go to section 2 of course "C1"
     And I restrict course asset "S3 Restricted" by completion of "S6 Activ'ity"
     And I am on the course main page for "C1"
-    And I go to course section 2
+    And I go to section 2 of course "C1"
     And I click on "//li[@id='section-2']//a[@class='snap-conditional-tag']" "xpath_element"
     And I should see "Not available unless: The activity S6 Activ'ity is marked complete"
     Examples:

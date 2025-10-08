@@ -24,7 +24,6 @@
 Feature: Aria label validation for core forum options.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "users" exist:
       | username | firstname | lastname | email                 |
       | teacher1 | Teacher   | 1        | teacher1@example.com  |
@@ -45,7 +44,7 @@ Feature: Aria label validation for core forum options.
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on "//h3/div/a/p[contains(text(),'Test forum 1')]" "xpath_element"
+    And I am on the "Test forum 1" "forum activity" page
     And I add a new discussion to "Test forum 1" forum with:
       | Subject | Discussion 1 |
       | Message | Test post message |
@@ -53,7 +52,7 @@ Feature: Aria label validation for core forum options.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on "//h3/div/a/p[contains(text(),'Test forum 1')]" "xpath_element"
+    And I am on the "Test forum 1" "forum activity" page
     And I click on "//th//a[contains(text(),'Discussion 1')]" "xpath_element"
     And "div[data-content='forum-discussion'] div.singleselect" "css_element" should exist
     And "div[data-content='forum-discussion'] div.movediscussionoption" "css_element" should exist

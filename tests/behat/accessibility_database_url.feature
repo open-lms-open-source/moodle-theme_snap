@@ -44,6 +44,7 @@ Feature: Check that the correct attributes exists for URL field in a database ac
     And I add a "data" activity to course "C1" section "1" and I fill the form with:
       | Name              | Test database name |
       | Description       | Test               |
+    And I go to section 1 of course "C1"
     And I click on "li.modtype_data .activityname > a" "css_element"
     # To generate the default templates.
     And I click on ".action-menu-trigger" "css_element"
@@ -51,7 +52,7 @@ Feature: Check that the correct attributes exists for URL field in a database ac
     And I set the field "Field name" to "Data URL"
     And I click on "Save" "button"
     And I should see "Field added"
-    And I am on "Course 1" course homepage
+    And I go to section 1 of course "C1"
     And I click on "li.modtype_data .activityname > a" "css_element"
     And I follow "Database"
     And I click on "Add entry" "button"

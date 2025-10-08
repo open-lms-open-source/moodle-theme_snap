@@ -187,20 +187,32 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Go to a specific course section by its section number and course shortname.
+     *
+     * Example:
+     *   Given I go to section 3 of course "C1"
+     *
      * @param int $section
-     * @Given /^I go to course section (\d+)$/
+     * @param string $shortname
+     * @Given /^I go to section (\d+) of course "([^"]+)"$/
      */
-    public function i_go_to_course_section($section) {
+    public function i_go_to_section_of_course($section, $shortname) {
+        global $DB;
+
+        $courseid = $DB->get_field('course', 'id', ['shortname' => $shortname], MUST_EXIST);
+        $sectionid = $DB->get_field('course_sections', 'id', [
+            'course' => $courseid,
+            'section' => $section
+        ], MUST_EXIST);
+
+        $url = new moodle_url('/course/section.php', ['id' => $sectionid]);
+
+        $this->getSession()->visit($url->out(false));
         $generalcontext = behat_context_helper::get('behat_general');
         $generalcontext->wait_until_the_page_is_ready();
-        $session = $this->getSession();
-        $currenturl = $session->getCurrentUrl();
-        if (stripos($currenturl, 'course/view.php') === false) {
-            throw new ExpectationException('Current page is not a course page!', $session);
-        }
-        $session->executeScript('location.hash = "'.'section-'.$section.'";');
-        $this->i_wait_until_is_visible('#section-'.$section, 'css_element');
+        $this->i_wait_until_is_visible('.course-content', 'css_element');
     }
+
 
     /**
      * @param string $shortname
@@ -466,20 +478,29 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * Restrict a course section by date.
+     * Restrict a specific course section by date.
+     *
+     * Example:
+     *   And I restrict course section 1 by date to "tomorrow" in course "C1"
+     *
      * @param int $section
      * @param string $date
-     * @Given /^I restrict course section (?P<section_int>(?:\d+)) by date to "(?P<date_string>(?:[^"]|\\")*)"$/
+     * @param string $shortname
+     * @Given /^I restrict course section (\d+) by date to "([^"]+)" in course "([^"]+)"$/
      */
-    public function i_restrict_course_section_by_date($section, $date) {
+    public function i_restrict_course_section_by_date($section, $date, $shortname) {
         $datetime = strtotime($date);
         $helper = behat_context_helper::get('behat_general');
-        $this->i_go_to_course_section($section);
-        $this->execute('behat_general::i_click_on', ['#section-'.$section.' .edit-summary', 'css_element']);
+        $this->i_go_to_section_of_course($section, $shortname);
+        $this->execute('behat_general::i_click_on', ['#section-' . $section . ' .edit-summary', 'css_element']);
         $helper->wait_until_the_page_is_ready();
-        $this->execute('behat_forms::i_set_the_field_to', ['name', 'Topic '.$date.' '.$section]);
+        $this->execute('behat_forms::i_set_the_field_to', [
+            'name',
+            'Topic ' . $date . ' ' . $section
+        ]);
         $this->add_date_restriction($datetime, 'Save changes');
     }
+
 
     /**
      * Restrict a course asset by date.
@@ -570,9 +591,9 @@ class behat_theme_snap extends behat_base {
     public function i_restrict_asset_by_completion($asset1, $asset2) {
         /** @var behat_general $helper */
         $helper = behat_context_helper::get('behat_general');
-        $xpathassetmore = "//p[contains(@class, 'instancename')][contains(text(), '$asset1')]/ancestor::div[contains(@class, 'activityinstance')]//button[contains(@class, 'snap-edit-asset-more')]";
+        $xpathassetmore = "//li[contains(@class, 'activity')][.//span[contains(@class, 'instancename') and contains(text(), '$asset1')]]//a[contains(@class, 'dropdown-toggle') and contains(@id, 'action-menu-toggle')]";
         $helper->i_click_on($xpathassetmore, 'xpath_element');
-        $xpathedit = "//p[contains(@class, 'instancename')][contains(text(), '$asset1')]/ancestor::div[contains(@class, 'activityinstance')]//a[contains(@class, 'snap-edit-asset')]";
+        $xpathedit = "//li[contains(@class, 'activity')][.//span[contains(@class, 'instancename') and contains(text(), '$asset1')]]//a[contains(@data-action, 'update') and contains(@class, 'editing_update')]";
         $helper->i_click_on($xpathedit, 'xpath_element');
         $this->apply_completion_restriction($asset2, 'Save and return to course');
     }
@@ -1520,13 +1541,20 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @Given /^I highlight section (?P<section_int>(?:\d+))$/
+     * Highlight a specific course section.
+     *
+     * Example:
+     *   Given I highlight section 1
+     *
+     * @Given /^I highlight section (?P<section_int>\d+)$/
      * @param int $section
      */
     public function i_highlight_section($section) {
-        $this->execute('behat_general::i_click_on', ['#section-'.$section.' .extra-actions-menu', 'css_element']);
-        $this->execute('behat_general::i_click_on', ['#section-'.$section.' .extra-actions-menu .snap-highlight', 'css_element']);
+        $this->i_wait_until_is_visible('#extra-actions-dropdown-' . $section, 'css_element');
+        $this->execute('behat_general::i_click_on', ['#extra-actions-dropdown-' . $section, 'css_element']);
+        $this->execute('behat_general::i_click_on', ['#section-' . $section . ' .snap-highlight', 'css_element']);
     }
+
 
     /**
      * @codingStandardsIgnoreStart
