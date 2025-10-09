@@ -27,8 +27,9 @@
  */
 define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/util', 'theme_snap/cover_image',
         'theme_snap/progressbar', 'core/templates', 'core/str', 'core/ajax', 'theme_snap/accessibility',
-        'theme_snap/messages', 'theme_snap/scroll'],
-    function($, log, Aria, Headroom, util, coverImage, ProgressBar, templates, str, ajax, accessibility, messages, Scroll) {
+        'theme_snap/messages', 'theme_snap/scroll', 'core/custom_interaction_events'],
+    function($, log, Aria, Headroom, util, coverImage, ProgressBar, templates, str, ajax, accessibility, messages, Scroll,
+             CustomEvents) {
 
         'use strict';
 
@@ -974,6 +975,16 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         }
                     );
                 }
+
+                // We need this loaded super fast, before Core. If we wait for page load, sometimes Core registers theirs first.
+                $(document).on(CustomEvents.events.activate, e => {
+                    const messagePopoverIsVisible =
+                        !document.querySelector('div[id^=\'drawer-\'] > div.message-app')
+                            .parentElement.classList.contains('hidden');
+                    if (messagePopoverIsVisible) {
+                        e.stopImmediatePropagation();
+                    }
+                });
 
                 // When document has loaded.
                 /* eslint-disable complexity */
