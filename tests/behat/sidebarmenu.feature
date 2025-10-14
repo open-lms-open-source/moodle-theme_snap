@@ -73,3 +73,10 @@ Feature: Testing sidebarmenu in theme_snap
     And I am on the course main page for "C1"
     And I am on the "Test Book" "book activity" page
     And I should not see "Table of contents"
+
+  @javascript
+  Scenario: The message drawer opens without producing a modal backdrop.
+    Given I log in as "admin"
+    And I click on "[id^='message-drawer-toggle-']" "css_element"
+    Then "div.message-app" "css_element" should exist
+    Then "div.modal_backdrop" "css_element" should not exist

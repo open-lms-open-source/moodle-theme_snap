@@ -43,6 +43,10 @@ const SELECTORS = {
     PAGE_HEADER: 'page-header',
     DRAWER_LEFT: '.drawer-left.drawer',
     SNAP_COURSE_FOOTER: 'snap-course-footer',
+    MODAL_BACKDROP: 'body > div > div.modal-backdrop',
+    CLOSE_MESSAGE_DRAWER_BUTTON: '[id^="message-drawer-"] a[data-action="closedrawer"]',
+    MESSAGE_APP_CLASS: 'div[id^=\'drawer-\'] > div.message-app',
+    MESSAGE_DRAWER_TOGGLE: 'a[id^="message-drawer-toggle"]',
 };
 
 const CLASSES = {
@@ -474,6 +478,33 @@ const setupEventListeners = () => {
     const messagesPopover = document.querySelector(SELECTORS.MESSAGES_POPOVER);
     if (messagesPopover) {
         messagesPopover.addEventListener('click', handleMessagesPopoverClick);
+
+        // We have an event from Core subscribed with PubSub, that always runs after Snap has run,
+        // and it creates the unwanted modal backdrop, see message/amd/src/message_drawer.js.
+        const messageDrawerPopover = document.querySelector(SELECTORS.MESSAGES_POPOVER);
+        const messageDrawerCloseIcon = document.querySelector(SELECTORS.CLOSE_MESSAGE_DRAWER_BUTTON);
+        const dismissCoreModalBackdrop = function(mutations) {
+            for (const mutation of mutations) {
+                if (mutation.type === 'childList') {
+                    const messagesPopoverCoreModalBackdrop =
+                        document.querySelector(SELECTORS.MODAL_BACKDROP);
+                    if (messagesPopoverCoreModalBackdrop && (document.activeElement === messageDrawerPopover
+                        || document.activeElement === messageDrawerCloseIcon)) {
+                        messagesPopoverCoreModalBackdrop.remove();
+                    }
+                    const messagePopoverIsHidden =
+                        document.querySelector(SELECTORS.MESSAGE_APP_CLASS)
+                            .parentElement.classList.contains('hidden');
+                    const messageDrawerIcon = document.querySelector(SELECTORS.MESSAGE_DRAWER_TOGGLE);
+
+                    if (messagePopoverIsHidden && messageDrawerIcon === document.activeElement) {
+                        messageDrawerIcon.blur();
+                    }
+                }
+            }
+        };
+        const messageDrawerObserver = new MutationObserver(dismissCoreModalBackdrop);
+        messageDrawerObserver.observe(document.body, {subtree: true, childList: true});
     }
     
     // Add click event listeners to elements with data-action="closedrawer"
