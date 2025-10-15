@@ -2044,6 +2044,22 @@ body.snap-resource-card {
         &.modtype_hsuforum {
             .activity-item {
                 border-top-color: $color-communication;
+                .activity-afterlink.afterlink {
+                    flex-direction: column;
+                    margin: 0;
+                    .unread {
+                        align-self: flex-end;
+                        padding: .5em;
+                        font-size: .75rem;
+                        font-weight: 500;
+                        border-radius: 1em;
+                        background-color: $brand-success;
+                        &:hover {
+                          background-color: darken($brand-success, 10%);
+                          color: #fff;
+                        }
+                    }
+                }
             }
             .activityiconcontainer.hsuforum img {
                 height: 25px;

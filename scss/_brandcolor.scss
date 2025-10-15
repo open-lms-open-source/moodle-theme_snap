@@ -72,7 +72,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
-    a:not(.btn):not(.dropdown-item):not(.badge-info):not(._blanktarget):not(.snap-due-date, .snap-open-date, .snap-opened-date):not(.yui3-button):not(.mast-breadcrumb):not(.active):not(.disabled):not(.dimmed),
+    a:not(.btn):not(.dropdown-item):not(.badge-info):not(._blanktarget):not(.snap-due-date, .snap-open-date, .snap-opened-date, .path-course-view .unread):not(.yui3-button):not(.mast-breadcrumb):not(.active):not(.disabled):not(.dimmed),
     .btn-link,
     .fake-link {
         color: $brand-primary;
