@@ -156,8 +156,8 @@
 // Center play button.
 .video-js {
     .vjs-big-play-button {
-        top: calc(50% - 2rem);
-        left: calc(50% - 2rem);
+        margin-top: -1.2em;
+        margin-left: -1.2em;
         line-height: 4rem;
         height: 4rem;
         width: 4rem;
