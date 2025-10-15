@@ -24,7 +24,6 @@
 Feature: Configure new external tool type to test it on a course.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | category |
       | Course 1 | C1        | 0        |
@@ -51,6 +50,6 @@ Feature: Configure new external tool type to test it on a course.
     And I follow "Teaching Tool 1"
     And I set the field "Activity name" to "External tool test"
     And I press "Save and return to course"
-    And I click on "li.modtype_lti a.mod-link" "css_element"
+    And I am on the "External tool test" "lti activity" page
     And The document should open in a new tab
     And I should see "This represents a tool provider"

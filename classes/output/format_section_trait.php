@@ -198,14 +198,14 @@ trait format_section_trait {
             $currentsection = null;
             $onsectionpage = false;
 
-            if ($pagepath === '/course/section.php' && $sectionid !== -1) { // For section.php render
+            if (str_contains($PAGE->pagetype, 'course-view-section') && $sectionid !== -1) { // For section.php render
                 $sectionrecord = $DB->get_record('course_sections', ['id' => $sectionid], '*', MUST_EXIST);
                 $currentsection = $modinfo->get_section_info($sectionrecord->section);
                 $onsectionpage = true;
             } elseif ($sectionnumber !== -1) { // For view.php?section=0 render - (single section via URL parameter)
                 $currentsection = $modinfo->get_section_info($sectionnumber);
                 $onsectionpage = true;
-            } else if ($pagepath === '/course/view.php' && $sectionnumber === -1) { // For view.php render - (Main course view)
+            } else if (str_contains($PAGE->pagetype, 'course-view') && $sectionnumber === -1) { // For view.php render - (Main course view)
                 $startsectionid = $this->get_snap_active_section($course);
 
                 // Set current section to Course.

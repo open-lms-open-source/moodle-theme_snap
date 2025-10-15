@@ -43,7 +43,6 @@ Feature: The Snap button for creating subsections works with editing turned off.
 
   @javascript
   Scenario: The teacher can see the create subsections button, with editing turned off.
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     When I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode off
     Then I wait until the page is ready

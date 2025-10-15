@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, section names should not be empty.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -59,14 +58,14 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I wait until the page is ready
     And "body#page-course-editsection" "css_element" should not exist
     #Names with trailing spaces are allowed too
-    And I click on "#course-toc a[section-number='1']" "css_element"
+    And I go to section 1 of course "C1"
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section name to "Section one   "
     And I press "Save changes"
     And I wait until the page is ready
     And "body#page-course-editsection" "css_element" should not exist
     #Valid name is allowed
-    And I click on "#course-toc a[section-number='1']" "css_element"
+    And I go to section 1 of course "C1"
     And I click on "#section-1 .edit-summary" "css_element"
     Then I set the section name to "Section one"
     And I press "Save changes"
@@ -128,7 +127,7 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
       | id_format | weeks |
       | id_enddate_enabled | 0 |
     And I press "Save and display"
-    And I follow "Section 1"
+    And I go to section 1 of course "C1"
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section name to ""
     And I press "Save changes"

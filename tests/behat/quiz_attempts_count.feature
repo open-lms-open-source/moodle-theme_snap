@@ -25,7 +25,6 @@ Feature: Quiz attempts from suspended users and previews from admin or teachers
   should not be count.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | teacher1    | Teacher1 | teacher1@example.com |
@@ -67,7 +66,7 @@ Feature: Quiz attempts from suspended users and previews from admin or teachers
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".snap-asset-link a" "css_element"
+    And I am on the "Quiz" "quiz activity" page
     And I press "Attempt quiz"
     And I click on "True" "radio" in the "First question" "question"
     And I click on "False" "radio" in the "Second question" "question"
@@ -82,7 +81,7 @@ Feature: Quiz attempts from suspended users and previews from admin or teachers
     And I log out
     And I log in as "student2"
     And I am on "Course 1" course homepage
-    And I click on ".snap-asset-link a" "css_element"
+    And I am on the "Quiz" "quiz activity" page
     And I press "Attempt quiz"
     And I click on "True" "radio" in the "First question" "question"
     And I click on "False" "radio" in the "Second question" "question"

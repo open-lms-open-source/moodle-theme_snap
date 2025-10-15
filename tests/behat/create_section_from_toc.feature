@@ -23,7 +23,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   This requires the course to use the weeks and topics format.
 
   Background:
-    Given I skip because "Will reviewed on INT-21415"
+    Given I skip because "It's failing due to New Snap Course sections - INT-21427"
     Given the following "courses" exist:
       | fullname               | shortname     | category | groupmode | format         | startdate  | initsecions |
       | Topics course          | course_topics | 0        | 1         | topics         |            |      1      |
@@ -104,7 +104,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     Then I am on the course main page for "course_weeks"
     And I follow "Create a new section"
     Then I should see "Title: 8 April - 14 April"
-    And I click on "Create section" "button"
+    And I press "Create section"
     And I log out
     And I log in as "student1"
     And I am on the course main page for "course_weeks"
