@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2024 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2025 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,6 @@ $string['action:highlightsectionvisibility'] = 'evidenzia visibilità delle sezi
 $string['action:sectiontoc'] = 'ottieni sommario sezione';
 $string['addanewsection'] = 'Crea una nuova sezione';
 $string['addresourceoractivity'] = 'Crea attività di apprendimento';
-$string['admin'] = 'Amministratore';
 $string['advancedbrandingheading'] = 'Branding avanzato';
 $string['ago'] = 'fa';
 $string['answered'] = 'Risposta';
@@ -48,17 +47,20 @@ $string['cachedef_activity_deadlines'] = 'Archivio cache per scadenze attività 
 $string['cachedef_generalstaticappcache'] = 'Cache livello applicazione statica generale Snap';
 $string['cachedef_course_completion_progress'] = 'Viene utilizzato per salvare nella cache i dati di completamento per corso / utente.';
 $string['cachedef_course_completion_progress_ts'] = 'Viene utilizzato in modo da poter annullare le cache a livello di sessione, se vengono modificate le impostazioni di completamento del corso o del modulo.';
+$string['cachedef_course_users_assign_ungraded'] = 'Memorizzazione in cache degli utenti che hanno la capacità mod/assign:submit in un determinato corso';
+$string['cachedef_course_users_quiz_ungraded'] = 'Memorizzazione in cache degli utenti che non hanno la capacità moodle/grade:viewall in un dato corso';
 $string['cachedef_webservicedefinitions'] = 'Memorizzazione in cache per le definizioni del servizio web generate automaticamente.';
 $string['card'] = 'Scheda';
 $string['categoryedit'] = 'Modifica categoria';
 $string['category_color'] = 'Colore categoria';
 $string['category_color_description'] = 'Colore categoria del corso. I corsi secondari utilizzano la configurazione della categoria dell\'elemento principale più vicino.';
 $string['category_color_palette'] = 'Tavolozza dei colori';
-$string['category_color_palette_description'] = 'Vedere il valore esadecimale corrispondente per il colore specificato. L\'operazione non influisce sulla configurazione, si tratta solo di un esempio per aiutare gli utenti a creare il valore di configurazione.';
+$string['category_color_palette_description'] = 'Vedere il valore esadecimale corrispondente per il colore specificato. Questo non avrà ripercussioni sulle configurazioni,
+si tratta solo di un esempio per aiutare gli utenti a creare il valore di configurazione.';
 $string['changecoverimage'] = 'Cambia immagine di copertina';
 $string['changefullname'] = 'Modifica nome sito';
 $string['chapters'] = 'Capitoli';
-$string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['choosereadme'] = 'Il design user-friendly e reattivo di Snap elimina le barriere all\'apprendimento online, consentendoti di creare l\'esperienza moderna e coinvolgente che gli utenti si aspettano oggi sul web. Il suo layout intuitivo è ottimizzato per l\'apprendimento online e si concentra sull\'essenziale: le attività e i contenuti didattici.';
 $string['close'] = 'Chiudi';
 $string['conditional'] = 'Condizionale';
 $string['contents'] = 'Contenuti';
@@ -92,8 +94,10 @@ $string['covervideo'] = 'Video di copertina';
 $string['comingsoon'] = 'Presto disponibile!';
 $string['createsection'] = 'Crea sezione';
 $string['current'] = 'Corrente';
-$string['customcss'] = 'Personalizza CSS';
-$string['customcssdesc'] = 'Da un grande potere derivano grandi responsabilità. È necessario risolvere i problemi causati dal codice CSS aggiunto qui. Il supporto Open LMS non risolve i problemi né fornisce alcun aiuto per i contenuti relativi ai CSS.';
+$string['customcss'] = 'CSS personalizzato (obsoleto)';
+$string['customscss'] = 'SCSS personalizzato';
+$string['customcssdesc'] = 'Il supporto Open LMS non risolve i problemi relativi ai contenuti CSS. Questo campo è obsoleto e dovrebbe essere utilizzato solo per scopi legacy. Per le personalizzazioni future, occorre utilizzare il campo "SCSS personalizzato".';
+$string['customscssdesc'] = 'Il supporto Open LMS non risolve problemi per i contenuti relativi ai CSS.';
 $string['customtopbar'] = 'Barra di navigazione';
 $string['customisenavbar'] = 'Modifica colori barra di navigazione';
 $string['customisenavbutton'] = 'Modifica colori pulsante I miei corsi';
@@ -103,17 +107,18 @@ $string['deadlines'] = 'Scadenze';
 $string['deadlinestoggle'] = 'Scadenze';
 $string['deadlinestoggledesc'] = 'Mostrare agli utenti le scadenze attività imminenti dei corsi a cui sono iscritti.';
 $string['defaultsummary'] = 'Usa quest\'area per descrivere l\'argomento, con contenuti testuali, immagini, audio e video.';
-$string['defaultintrosummary'] = 'Benvenuto nel tuo nuovo corso {$a}.<br>Inizia con una descrizione degli argomenti del corso usando contenuti testuali, immagini, audio e video.';
+$string['defaultintrosummary'] = 'Ti diamo il benvenuto nel tuo nuovo corso {$a}.
+<br>Inizia con una descrizione degli argomenti del corso usando contenuti testuali, immagini, audio e video.';
 $string['defaultsectiontitle'] = 'Sezione senza titolo';
 $string['debugerrors'] = 'Errori di debug';
 $string['deleteassetconfirm'] = 'Elimina {$a}';
-$string['deletingasset'] = 'Eliminazione di {$a}';
-$string['deletingassetname'] = 'Eliminazione di {$a->type} "{$a->name}"';
+$string['deletingasset'] = 'Eliminazione di {$a} in corso';
+$string['deletingassetname'] = 'Eliminazione di {$a->type} "{$a->name}" in corso';
 $string['deletesectionconfirm'] = 'Elimina sezione';
-$string['deletingsection'] = 'Eliminazione sezione "{$a}"';
+$string['deletingsection'] = 'Eliminazione della sezione "{$a}"';
 $string['draft'] = 'Non pubblicato per gli studenti';
-$string['dropzonelabel'] = 'Trascinare i file da allegare o utilizzare <span class="fake-link">Sfoglia</span>';
-$string['due'] = 'Scadenza {$a}';
+$string['dropzonelabel'] = 'Trascina i file da allegare o utilizza <span class="fake-link">Sfoglia</span>';
+$string['due'] = 'Scadenza: {$a}';
 $string['edit'] = 'Modifica "{$a}"';
 $string['editcoursecontent'] = 'Modifica blocchi';
 $string['editcoursesettings'] = 'Impostazioni corso';
@@ -145,7 +150,7 @@ $string['favorited'] = 'Aggiunto ai preferiti {$a}';
 $string['featurespots'] = 'Aree funzione';
 $string['featurespotsedit'] = 'Modifica aree funzione';
 $string['featurespotshelp'] = '<p>Aggiungere fino a 6 aree funzione alla pagina iniziale del sito per evidenziare i vantaggi principali offerti agli utenti attuali e potenziali.</p>
-<p>È possibile aggiungere un\'immagine, un titolo e una descrizione del contenuto a ciascuna funzione. <strong>Per visualizzare la funzione nella prima pagina, è necessario immettere un titolo.</strong> Le sezioni di descrizione dell\'immagine e del contenuto sono opzionali.</p>
+<p>È possibile aggiungere un\'immagine, un titolo e una descrizione del contenuto a ciascuna funzione.<strong>Per visualizzare la funzione nella prima pagina, è necessario immettere un titolo.</strong>Le sezioni di descrizione dell\'immagine e del contenuto sono opzionali.</p>
 <p>Si consigliano immagini quadrate e non più grandi di 200 x 200 px.</p>';
 $string['featurespotsheading'] = 'Intestazione aree funzione';
 $string['featureonetitle'] = 'Titolo funzionalità 1';
@@ -240,8 +245,7 @@ $string['headingfont_desc'] = 'Questo carattere sans-serif è utilizzato nei tit
 $string['helpwithlogin'] = 'Aiuto con il login';
 $string['helpwithloginandguest'] = 'Aiuto con il login / accesso ospite';
 $string['loginrequiredmessage'] = '* indica un campo obbligatorio';
-$string['hiddencoursestoggle'] = 'Corsi nascosti';
-$string['highlightedsection'] = 'in evidenza';
+$string['highlightedsection'] = 'Evidenziata';
 $string['home'] = 'home';
 $string['image'] = 'immagine';
 $string['images'] = 'Immagini';
@@ -249,11 +253,19 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'URL dell\'account Instagram.';
 $string['introduction'] = 'Introduzione';
 $string['jsontext'] = 'Testo JSON';
-$string['jsontextdescription'] = 'L\'area di testo convalida il codice JSON fornito, in modo che siano ammesse solo categorie esistenti, siano validi solo valori numerici come record ID (record categoria) e siano accettati solo i colori come valori esadecimali. Ecco un esempio:<br>{"1":"#FAAFFF",<br>"45":"#AFF",<br>"65":"#FFF228",<br>"12":"#CC0084",<br>"56":"#CC0087",<br>"89":"#CCF084"}';
+$string['jsontextdescription'] = 'L\'area di testo convalida il codice JSON specificato, in modo che siano ammesse solo categorie esistenti,
+siano validi solo valori numerici come record ID (record categoria) e siano accettati solo i valori esadecimali come colori.
+Ecco un esempio:<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Apri Knowledge Base LMS';
 $string['list'] = 'Liste';
 $string['linkedin'] = 'LinkedIn';
-$string['linkedindesc'] = 'L\'URL della pagina LinkedIn dell\'organizzazione.';
+$string['linkedindesc'] = 'URL della pagina LinkedIn dell\'organizzazione.';
 $string['leftnav'] = 'Sommario';
 $string['leftnavdesc'] = 'Selezionare la posizione di visualizzazione del sommario. L\'elenco consente maggiore spazio per il contenuto e risulta particolarmente funzionale per i corsi che coprono molti argomenti.';
 $string['loading'] = 'Caricamento in corso...';
@@ -263,7 +275,7 @@ $string['loggedoutmsgtitle'] = 'Non sei connesso';
 $string['loggedoutfailmsg'] = 'È necessario aver effettuato l\'accesso a {$a}.';
 $string['loginform'] = 'Login';
 $string['logo'] = 'Logo';
-$string['logodesc'] = 'Il logo viene visualizzato nell\'intestazione in tutto il sito..';
+$string['logodesc'] = 'Il logo viene visualizzato nell\'intestazione in tutto il sito.';
 $string['menu'] = 'I miei corsi';
 $string['messageread'] = 'Messaggio letto';
 $string['messages'] = 'Messaggi';
@@ -274,7 +286,7 @@ $string['morenews'] = 'Altre notizie';
 $string['moreoptionslabel'] = 'Altre opzioni';
 $string['movingstartedhelp'] = 'Accedi alla posizione in cui desideri mettere la sezione "{$a}"';
 $string['movingdropsectionhelp'] = 'Posiziona la sezione "{$a->moving}" prima della sezione "{$a->before}"';
-$string['moving'] = 'Spostamento di "{$a}"';
+$string['moving'] = 'Spostamento di "{$a}" in corso';
 $string['movingcount'] = 'Spostamento di {$a} oggetti';
 $string['movefailed'] = 'Spostamento di "{$a}" non riuscito';
 $string['move'] = 'Sposta "{$a}"';
@@ -298,22 +310,16 @@ $string['notsubmitted'] = 'Non consegnato';
 $string['overdue'] = 'Fuori tempo massimo';
 $string['pausegraphicsanim'] = 'Mette in pausa l\'animazione GIF.';
 $string['personalmenu'] = 'Menu personale';
-$string['personalmenuandsnapfeeds'] = 'Menu personale e feed istantanei';
+$string['snapfeeds'] = 'Feed istantanei';
 $string['personalmenufeatures'] = 'Elementi del menu personale';
-$string['personalmenulogintoggle'] = 'Mostra menu personale al login';
-$string['personalmenulogintoggledesc'] = 'Apre il menu personale subito dopo il login';
-$string['personalmenuadvancedfeedsenable'] = 'Abilita Feed avanzati';
-$string['personalmenuadvancedfeedsenabledesc'] = 'Feed avanzati carica elementi personali del menu che consentono di velocizzare i tempi di caricamento e di aggiornamento dei contenuti su richiesta.';
-$string['personalmenuadvancedfeedsperpage'] = 'Numero di elementi Feed avanzati visualizzati';
-$string['personalmenuadvancedfeedsperpagedesc'] = 'Scegli il numero di elementi da visualizzare nel feed. Gli utenti possono selezionare <strong>Visualizza altro</strong> per visualizzare altri elementi.';
-$string['personalmenuadvancedfeedslifetime'] = 'Durata dei feed avanzati';
-$string['personalmenuadvancedfeedslifetimedesc'] = 'Scegliere l\'intervallo temporale durante il quale i feed rimarranno salvati nella cache del browser dopo il login. Se si imposta il valore su 0, i feed non saranno salvati nella cache del browser.';
-$string['personalmenurefreshdeadlines'] = 'Aggiorna le scadenze usando le attività pianificate.';
-$string['personalmenurefreshdeadlinesdesc'] = 'Quando l’attività è in corso, i dati delle scadenze saranno aggiornati con tempi di caricamento pagina più rapidi.';
-$string['personalmenuenablepersonalmenu'] = 'Abilita menu personale';
-$string['personalmenuenablepersonalmenuheading'] = 'Menu personale';
-$string['personalmenuenablepersonalmenuheadingdesc'] = 'Nota: se il Menu personale è disattivato, sarà possibile accedere ai corsi dalla pagina I miei corsi. Assicurarsi che il blocco Panoramica del corso sia abilitato, in modo che i corsi siano visibili nella pagina.';
-$string['personalmenuenablepersonalmenudesc'] = 'Il collegamento I miei corsi aprirà il menu personale. Se disabilitato, porterà alla pagina I miei corsi.';
+$string['advancedfeedsenable'] = 'Abilita Feed avanzati';
+$string['advancedfeedsenabledesc'] = 'Feed avanzati carica elementi che consentono di velocizzare i tempi di caricamento e di aggiornamento dei contenuti su richiesta.';
+$string['advancedfeedsperpage'] = 'Numero di elementi Feed avanzati visualizzati';
+$string['advancedfeedsperpagedesc'] = 'Scegli il numero di elementi da visualizzare nel feed. Gli utenti possono selezionare <strong>Visualizza altro</strong> per visualizzare altri elementi.';
+$string['advancedfeedslifetime'] = 'Durata dei feed avanzati';
+$string['advancedfeedslifetimedesc'] = 'Scegliere l\'intervallo temporale durante il quale i feed rimarranno salvati nella cache del browser dopo il login. Se si imposta il valore su 0, i feed non saranno salvati nella cache del browser.';
+$string['refreshdeadlines'] = 'Aggiorna le scadenze usando le attività pianificate.';
+$string['refreshdeadlinesdesc'] = 'Quando l’attività è in corso, i dati delle scadenze saranno aggiornati con tempi di caricamento pagina più rapidi.';
 $string['mycoursessnapfeedsheading'] = 'Feed istantanei';
 $string['mycoursessnapfeedsdesc'] = 'Nota: i <strong>Feed avanzati</strong> diventano disponibili solo quando almeno una delle opzioni <strong>Scadenze</strong>, <strong>Feedback e valutazione</strong>, <strong>Messaggi</strong> o <strong>Post del forum</strong> è selezionata.';
 $string['refreshdeadlinestasksettingheading'] = 'Aggiorna le attività pianificate delle scadenze';
@@ -321,7 +327,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Immagine di copertina';
 $string['posterdesc'] = 'Un\'immagine grande dell\'intestazione per la pagina principale del sito. Le immagini orizzontali (1200 x 600 pixel) o più grandi forniscono risultati migliori.';
-$string['poweredbyrunby'] = 'Realizzato con <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>, un prodotto basato su <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>Copyright © {$a->year} Open LMS, tutti i diritti riservati.';
+$string['poweredbyrunby'] = 'Creato con <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+un prodotto basato su <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+Copyright © {$a->year} Open LMS, tutti i diritti riservati.';
 $string['previoussection'] = 'Sezione precedente';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ID del corso che l\'utente ha contrassegnato come preferito';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'L\'ID utente dell\'utente che ha contrassegnato come preferito il corso';
@@ -335,9 +343,9 @@ $string['recentfeedback'] = 'Commento';
 $string['region-main'] = 'Principale';
 $string['region-side-main-box'] = 'Principale';
 $string['region-side-post'] = 'Destro';
-$string['region-side-pre'] = 'Sinistro';
+$string['region-side-pre'] = 'Sinistra';
 $string['region-side-top'] = 'Superiore';
-$string['released'] = 'Rilascio: {$a}';
+$string['released'] = 'Rilasciato: {$a}';
 $string['reopened'] = 'Riaperto';
 $string['resourcedisplay'] = 'Visualizzazione risorsa';
 $string['resourcedisplayhelp'] = 'Seleziona la modalità di visualizzazione di allegati e collegamenti nel corso. Il tema Snap non supporta file multimediali nella scheda descrizione attività e risorse.';
@@ -345,10 +353,8 @@ $string['resumegraphicsanim'] = 'Riprende l\'animazione GIF.';
 $string['displaydescription'] = 'Visualizza la descrizione';
 $string['displaydescriptionhelp'] = 'Selezionare per visualizzare la descrizione della risorsa prima in una nuova pagina. Gli studenti accederanno ai contenuti dalla descrizione.';
 $string['search'] = 'Cerca contenuti';
-$string['showcoursegradepersonalmenu'] = 'Voti';
-$string['showcoursegradepersonalmenudesc'] = 'Mostra agli utenti il voto delle schede del corso nel menu personale';
 $string['socialmedia'] = 'Social media';
-$string['submitted'] = 'Consegne';
+$string['submitted'] = 'Consegnato';
 $string['sitedescription'] = 'Descrizione del sito';
 $string['subtitle'] = 'Sottotitolo';
 $string['subtitle_desc'] = 'Breve descrizione del sito per gli utenti.';
@@ -362,12 +368,12 @@ $string['topbarlinkcolor'] = 'Collegamento e colore icona della barra di navigaz
 $string['topbarbuttoncolor'] = 'Sfondo I miei corsi';
 $string['togglenavigation'] = 'Attiva/disattiva navigazione';
 $string['topicactions'] = 'Azioni argomento';
-$string['xakatwitterdesc'] = 'URL dell\'account .';
+$string['xakatwitter'] = '𝕏';
+$string['xakatwitterdesc'] = 'URL dell\'account 𝕏.';
 $string['unenrolme'] = 'Annulla la mia iscrizione';
 $string['enrolme'] = 'Iscrivimi';
 $string['unread'] = 'non letto';
 $string['unsupportedcoverimagetype'] = 'Tipo di immagine di copertina non supportato ({$a})';
-$string['via'] = 'via';
 $string['viewcourse'] = 'Visualizza corso';
 $string['viewmore'] = 'Visualizza altro';
 $string['viewyourprofile'] = 'Visualizza il profilo';
@@ -377,20 +383,23 @@ $string['viewforumposts'] = 'Visualizza i miei messaggi del forum';
 $string['viewmessaging'] = 'Visualizza i miei messaggi';
 $string['vieworiginalimage'] = 'Visualizza immagine originale';
 $string['visibility'] = 'Visibilità';
-$string['xofyanswered'] = '{$a->completed} di {$a->participants} risposte fornite';
-$string['xofyattempted'] = '{$a->completed} di {$a->participants} tentativi fatti';
-$string['xofycontributed'] = '{$a->completed} di {$a->participants} con contributo';
-$string['xofysubmitted'] = '{$a->completed} di {$a->participants} consegnati';
-$string['xungraded'] = '{$a} non valutato';
+$string['xofyanswered'] = '{$a->completed} di {$a->participants} con risposta';
+$string['xofyattempted'] = '{$a->completed} di {$a->participants} con tentativi effettuati';
+$string['xofycontributed'] = '{$a->completed} di {$a->participants} con contributi';
+$string['xofysubmitted'] = '{$a->completed} di {$a->participants} con consegne';
+$string['xungraded'] = '{$a} senza voto';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'URL del canale YouTube.';
 $string['showallsectionsdisabled'] = 'Per via della sua lingua di progettazione, "Visualizza le sezioni nella stessa pagina" non è disponibile in Snap.';
 $string['disabled'] = 'Disattivato';
 $string['showappearancedisabled'] = 'La lingua di progettazione di Snap impedisce le modifiche alle impostazioni di "Aspetto".';
 $string['pbb'] = 'Branding basato sul profilo';
-$string['pbb_description'] = 'Attivando il <strong>Branding basato sul profilo</strong>, si potrà personalizzare l\'esperienza di branding per un gruppo specifico di utenti in base al campo profilo utente scelto.<ul><li>Il valore del campo utente sarà <em>slugified</em>; convertire tutti i caratteri in minuscole e separarli con un trattino (-)</li>
+$string['pbb_description'] = 'Attivando il <strong>Branding basato sul profilo</strong>, si potrà personalizzare l\'esperienza di branding per un gruppo specifico di utenti in base al campo profilo utente scelto.
+<ul><li>Il valore del campo utente sarà <em>slugified</em>; convertire tutti i caratteri in minuscole e separarli con un trattino (-)</li>
 <li>La stringa <code>snap-pbb-</code> sarà anteposta</li>
-<li>Questa classe sarà aggiunta al tag html <code>body</code></li></ul>Ad esempio, il valore del campo utente <em>Blueberry Extravaganza</em> sarà slugified per essere <code>snap-pbb-blueberry-extravaganza</code><br /><br />Questa funzione è usata insieme a CSS personalizzato nel caso in cui occorra aggiungere selettori CSS usando le nuove classi nella sezione <a class="snap-settings-tab-link" href="#themesnapbranding">Elementi di base</a>.';
+<li>Questa classe sarà aggiunta al tag Html <code>body</code></li></ul>
+Ad esempio, il valore del campo utente <em>Blueberry Extravaganza</em> sarà slugified per essere <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+Questa funzione è usata insieme a CSS personalizzato nel caso in cui occorra aggiungere selettori CSS usando le nuove classi nella sezione <a class="snap-settings-tab-link" href="#themesnapbranding">Elementi di base</a>.';
 $string['pbb_enable'] = 'Attiva profilo in base al branding';
 $string['pbb_enable_description'] = 'Aggiunge solo la classe al tag del corpo se attivo.';
 $string['pbb_field'] = 'Campo utente da usare';
@@ -408,16 +417,21 @@ $string['gotocalendarsnap'] = 'aprire il calendario del sito.';
 $string['quizattemptswarn'] = 'Esclude i tentativi degli utenti sospesi';
 $string['quizfeedback'] = 'Commento';
 $string['validratio'] = 'Questa combinazione di colori rispetta il valore minimo di proporzioni WCAG 2.0 di 4.5:1';
-$string['invalidratio'] = 'Questa combinazione di colori non rispetta il <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valore minimo di proporzioni WCAG 2.0 di 4.5:1</a>. Valore: "{$a}"';
+$string['invalidratio'] = 'Questa combinazione di colori non rispetta il
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valore minimo di proporzioni WCAG 2.0 di 4.5:1</a>. Valore: "{$a}"';
 $string['imageinvalidratio'] = 'Quest\'immagine potrebbe riscontrare problemi di contrasto poiché non rispetta il valore minimo di proporzioni WCAG 2.0 di 4.5:1. Valore medio dei pixel: "{$a}"';
-$string['catinvalidratio'] = 'Le seguenti categorie di colore non rispettano il <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valore minimo di proporzioni WCAG 2.0 di 4.5:1</a>: rispetto al colore dello sfondo del sito (bianco): "{$a->white}".Rispetto al colore dello sfondo della barra di navigazione: "{$a->custombar}". Rispetto al colore dello sfondo del pulsante I miei corsi: "{$a->customnav}"';
-$string['spotinvalidratio'] = 'Il colore dello sfondo non rispetta il <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valore minimo di proporzioni WCAG 2.0 di 4.5:1</a>. Valore corrente rispetto a {$a->name}: {$a->value}.';
+$string['catinvalidratio'] = 'Le seguenti categorie di colore non rispettano il
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valore minimo di proporzioni WCAG 2.0 di 4.5:1</a>:
+Rispetto al colore di sfondo del sito (bianco): "{$a->white}". Rispetto al colore di sfondo della barra di navigazione: "{$a->custombar}". Rispetto al colore di sfondo del pulsante I miei corsi: "{$a->customnav}"';
+$string['spotinvalidratio'] = 'Il colore dello sfondo non è conforme a quello del
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valore minimo di proporzioni WCAG 2.0 di 4.5:1</a>.
+Valore corrente rispetto a {$a->name}: {$a->value}.';
 $string['imageinvalidratiocategory'] = 'Questa immagine potrebbe riscontrare problemi di contrasto con il colore del tema poiché non rispetta il valore minimo di proporzioni WCAG 2.0 di 4.5.1. Valore medio dei pixel: "{$a}"';
 $string['browseallcategories'] = 'Sfoglia tutte le categorie';
 $string['lazyload_mod_page'] = 'Abilita il caricamento lazy predefinito per le risorse della pagina';
 $string['lazyload_mod_page_description'] = 'Se abilitata, questa impostazione riduce in modo significativo i tempi di caricamento delle pagine per i corsi con molte pagine.';
-$string['pmadvancedfeed_viewmore'] = 'Visualizza altro';
-$string['pmadvancedfeed_reload'] = 'Aggiorna';
+$string['advancedfeed_viewmore'] = 'Visualizza altro';
+$string['advancedfeed_reload'] = 'Aggiorna';
 $string['multimediacard'] = 'I file multimediali non verranno visualizzati nella scheda delle attività per il tema Snap. Questo vale solo per la home page e per le pagine dei corsi per le schede delle attività e delle risorse.';
 $string['enabledlogin'] = 'Opzioni di accesso visualizzate';
 $string['enabledlogindesc'] = 'Selezionare le opzioni di accesso da visualizzare.';
@@ -429,28 +443,26 @@ $string['enabledloginorderdesc'] = 'Selezionare l\'opzione di accesso da visuali
 $string['moodleloginfirst'] = 'Visualizza prima l\'accesso Moodle';
 $string['alternativeloginfirst'] = 'Visualizza prima le opzioni di accesso alternative';
 $string['alternativeloginoptions'] = 'Opzioni di accesso alternative';
-$string['openmessagedrawer'] = 'Aprire il cassetto dei messaggi.';
 $string['refreshdeadlinestask'] = 'Aggiorna i dati cache scadenze prima di ogni accesso utente.';
 $string['resetdeadlinesquerycounttask'] = 'Reimposta totale query scadenze';
-$string['refreshdeadlinestaskoff'] = 'Dati da inserire non cercati. Attivare "Aggiorna scadenze mediante attività pianificate" nelle impostazioni menu Personale di Snap per consentire a questa attività di inserire i dati cache delle scadenze.';
+$string['refreshdeadlinestaskoff'] = 'Dati da inserire non cercati. Attivare "Aggiorna scadenze mediante attività pianificate" nelle impostazioni dei feed istantanei per consentire a questa attività di inserire i dati cache delle scadenze.';
 $string['activityrestriction'] = 'Limite attività';
 $string['hideandshowactioncb'] = 'Nascondi e mostra azione casella di controllo attività';
 $string['retryfeed'] = 'Questo feed non è attualmente disponibile, verificare nuovamente più tardi. Feed: {$a}';
 $string['loadingfeed'] = 'Il caricamento può richiedere tempo';
 $string['hvpcustomcss'] = 'CSS personalizzato H5P';
 $string['hvpcustomcssdesc'] = 'CSS personalizzato per il modulo H5P (moodle.org/plugins/mod_hvp) installato.';
-$string['courselimitstrdanger'] = 'Non apparirà la barra di stato del limite corso raggiunto.';
-$string['courselimitstrwarning'] = 'Non apparirà la barra di stato se sono elencati più di {$a} corsi';
 $string['tilesformatcoursehomealttext'] = 'Home page del corso';
 $string['editmodetiles'] = 'Modifica contenuto';
 $string['totop'] = 'Vai all’inizio';
+$string['toleft'] = 'Vai a sinistra';
 $string['loginsetting'] = 'Pagina di accesso';
 $string['loginbgimgheading'] = 'Modello pagina di accesso';
 $string['loginbgimgheadingdesc'] = 'Snap consente di passare da un modello di pagina di accesso all\'altro. Scegliere tra le varie opzioni nel menu a discesa sottostante.';
 $string['loginpagetemplate'] = 'Seleziona il modello della pagina di accesso da utilizzare';
 $string['classic_template'] = 'Modello classico';
 $string['loginbgimg'] = 'Immagine sfondo pagina di accesso';
-$string['loginbgimgdesc'] = 'Selezionare l\'immagine che verrà visualizzata sullo sfondo della pagina di accesso. Per una migliore esperienza di visualizzazione delle immagini, caricare file in formato 16:9 (risoluzione di 720&nbsp;p o dimensioni pari a 1280x720 pixel). Le immagini caricate devono avere le stesse dimensioni per una corretta visualizzazione.';
+$string['loginbgimgdesc'] = 'Selezionare l\'immagine che verrà visualizzata sullo sfondo della pagina di accesso. Per una migliore esperienza di visualizzazione delle immagini, caricare file in formato 16:9 (risoluzione di 720 p o dimensioni pari a 1280x720 pixel). Le immagini caricate devono avere le stesse dimensioni per una corretta visualizzazione.';
 $string['stylish_template'] = 'Modello elegante';
 $string['activityedit'] = 'Modifica attività';
 $string['snapfeedsblocktitle'] = 'Feed istantanei';
@@ -475,9 +487,15 @@ $string['selectimage'] = 'Seleziona immagine';
 $string['deleteimage'] = 'Elimina l\'immagine di copertina';
 $string['confirmdeletefile'] = 'Questa azione eliminerà l\'immagine di copertina. Confermi l\'eliminazione del file salvato?';
 $string['coverimagesettingswarning'] = 'Aggiornando l\'immagine di copertina direttamente dalla pagina delle impostazioni del corso, il ritaglio dell\'immagine di copertina verrà eliminato. Ricordarsi di effettuare nuovamente il ritaglio desiderato successivamente.';
-$string['opens'] = 'Apre {$a}';
-$string['opened'] = 'Aperto {$a}';
+$string['opens'] = 'Si apre: {$a}';
+$string['opened'] = 'Apertura effettuata: {$a}';
 $string['year'] = 'Anno';
 $string['homepage'] = 'Home page';
 $string['allyears'] = 'Tutti gli anni';
 $string['courselink'] = 'Vai al corso';
+$string['student'] = 'Studente';
+$string['showcourseinformation'] = 'Mostra informazioni del corso';
+$string['pageactivitywithnodescription'] = 'Se la Descrizione della pagina è vuota e il contenuto della pagina contiene meno di 200 caratteri, l\'icona Espandi non verrà visualizzata per l\'attività della pagina nella pagina del corso, poiché il contenuto della pagina fungerà da Descrizione della pagina.';
+$string['toggleadmindrawer'] = 'Attiva/Disattiva cassetto amministratore';
+$string['toggleblockdrawer'] = 'Attiva/Disattiva cassetto blocco';
+$string['togglesnapfeedsdrawer'] = 'Attiva/Disattiva cassetto feed istantanei';
