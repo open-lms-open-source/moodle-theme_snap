@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2024 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2025 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,6 @@ $string['action:highlightsectionvisibility'] = 'セクションの可視性を�
 $string['action:sectiontoc'] = 'セクションの目次を取得する';
 $string['addanewsection'] = '新しい問題を作成する ...';
 $string['addresourceoractivity'] = '学習アクティビティを作成する';
-$string['admin'] = '管理';
 $string['advancedbrandingheading'] = '高度なブランディング';
 $string['ago'] = '前';
 $string['answered'] = '解答済み';
@@ -48,17 +47,20 @@ $string['cachedef_activity_deadlines'] = 'ユーザアクティビティ期限�
 $string['cachedef_generalstaticappcache'] = '一般的な静的アプリケーションレベルのキャッシュをスナップする';
 $string['cachedef_course_completion_progress'] = 'これは完了データをコース/ユーザごとにキャッシュするために使用されます。';
 $string['cachedef_course_completion_progress_ts'] = 'これは、コースまたはモジュールのコース完了設定が変更された場合にセッションレベルキャッシュを無効にするのに使用されます。';
+$string['cachedef_course_users_assign_ungraded'] = '特定のコースのmod/assign:submitケイパビリティを持つユーザをキャッシュしています';
+$string['cachedef_course_users_quiz_ungraded'] = '特定のコースのmoodle/grade:viewallケイパビリティを持たないユーザをキャッシュしています';
 $string['cachedef_webservicedefinitions'] = '自動生成されたウェブサービス定義のキャッシュ';
 $string['card'] = 'カード';
 $string['categoryedit'] = 'カテゴリを編集する';
 $string['category_color'] = 'カテゴリの色';
 $string['category_color_description'] = 'コースカテゴリの色。子コースは最も近い親カテゴリの設定を使用します';
 $string['category_color_palette'] = 'カラーパレット';
-$string['category_color_palette_description'] = '指定された色に対応する16進値を参照してください。これはすべての設定に影響を与えるわけではなく、ユーザが設定値を作成する上でのサンプルです。';
+$string['category_color_palette_description'] = '指定された色に対応する16進値を参照してください。これは
+すべての設定に影響を与えるわけではなく、ユーザが設定値を作成する上でのサンプルです。';
 $string['changecoverimage'] = 'カバーイメージを変更する';
 $string['changefullname'] = 'サイト名を変更する';
 $string['chapters'] = '章';
-$string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['choosereadme'] = 'スナップの使いやすくレスポンシブなデザインは、オンライン学習の障壁を取り除き、今日のウェブにユーザが期待するモダンで魅力的な体験を作成できるようにします。その直感的なレイアウトは、オンライン学習に最適化されており、学習アクティビティとコンテンツという本質的な要素に焦点を当てています。';
 $string['close'] = 'クローズ';
 $string['conditional'] = '条件付き';
 $string['contents'] = 'コンテンツ';
@@ -69,7 +71,7 @@ $string['coursedisplay'] = 'コース表示';
 $string['coursefootertoggle'] = 'コースフッタ';
 $string['coursefootertoggledesc'] = 'コースフッタには、コース管理者、コース説明、コースでの最近のアクティビティなど、コースページのユーザに役立つ情報が表示されます。';
 $string['courseformatnotification'] = '現在お使いのコース形式はSnapテーマでは完全にサポートされていません。Open LMSで最高のエクスペリエンスを実現するには、トピックまたは週次コースの形式をSnapテーマと共に使用することをお勧めします。コース形式は<a href="{$a}">コース設定</a>で変更できます。';
-$string['coursefixydefaulttext'] = '現在、いずれのコースにも登録されていません。<br>登録済みのコースは、ここに表示されます。';
+$string['coursefixydefaulttext'] = '現在どのコースにも登録されていません。<br>登録済みのコースはここに表示されます。';
 $string['coursegrade'] = 'コース評定：';
 $string['coursepartialrender'] = 'コースセクションの遅延読み込みを有効にする';
 $string['coursepartialrenderdesc'] = '有効にした場合、コースセクションの読み込みは、学生が選択したときにオンデマンドで行われます。これにより、コンテンツが大量にあるコースの読み込みが速くなります。';
@@ -92,8 +94,10 @@ $string['covervideo'] = 'カバービデオ';
 $string['comingsoon'] = '準備中です！';
 $string['createsection'] = 'セクションを作成する';
 $string['current'] = '処理後';
-$string['customcss'] = 'カスタムCSS';
-$string['customcssdesc'] = '大きな力には大きな責任が伴うことに注意してください。ここで追加されたCSSによって問題が生じた場合、あなたが解決する責任があります。Open LMSサポートはCSS関連のコンテンツに関してトラブルシューティングやヘルプを提供しません。';
+$string['customcss'] = 'カスタムCSS（非推奨）';
+$string['customscss'] = 'カスタムSCSS';
+$string['customcssdesc'] = 'Open LMSサポートでは、CSS関連コンテンツのトラブルシューティングには対応していません。このフィールドは非推奨であり、レガシー目的でのみ使用してください。今後のカスタマイズには[カスタムSCSS]フィールドを使用してください。';
+$string['customscssdesc'] = 'Open LMSサポートでは、CSS関連コンテンツのトラブルシューティングには対応していません。';
 $string['customtopbar'] = 'ナビゲーションバー';
 $string['customisenavbar'] = 'ナビゲーションバーの色を変更する';
 $string['customisenavbutton'] = '[マイコース]ボタンの色を変更する';
@@ -103,18 +107,19 @@ $string['deadlines'] = '期限';
 $string['deadlinestoggle'] = '期限';
 $string['deadlinestoggledesc'] = 'ユーザに対して、登録済みコースの今後のアクティビティの終了日時が表示されます。';
 $string['defaultsummary'] = 'この領域では、テキスト、画像、音声、動画を使用してこのトピックを説明します。';
-$string['defaultintrosummary'] = '新しいコース {$a} へようこそ。<br>テキスト、画像、音声、動画を使用して、コースについて説明します。';
+$string['defaultintrosummary'] = '新しいコース {$a} へようこそ。
+<br>テキスト、画像、音声、動画を使用して、コースについて説明します。';
 $string['defaultsectiontitle'] = '無題セクション';
 $string['debugerrors'] = 'デバッグエラー';
 $string['deleteassetconfirm'] = '{$a} を削除する';
-$string['deletingasset'] = '{$a} の削除';
-$string['deletingassetname'] = '{$a->type} "{$a->name}"を削除中';
+$string['deletingasset'] = '{$a} を削除しています';
+$string['deletingassetname'] = '{$a->type} "{$a->name}" を削除しています';
 $string['deletesectionconfirm'] = 'セクションを削除する';
-$string['deletingsection'] = 'セクション「 {$a} 」の削除中';
+$string['deletingsection'] = 'セクション「{$a}」の削除中';
 $string['draft'] = '学生には非公開';
 $string['dropzonelabel'] = '添付するファイルをドロップするか、<span class="fake-link">参照する</span>';
 $string['due'] = '期日 {$a}';
-$string['edit'] = '"{$a}" を編集する';
+$string['edit'] = '"{$a}"を編集する';
 $string['editcoursecontent'] = 'ブロックを編集する';
 $string['editcoursesettings'] = 'コース設定';
 $string['editcoursetopic'] = 'セクションを編集する';
@@ -124,8 +129,8 @@ $string['error'] = 'エラー';
 $string['errorgettingfeed'] = 'フィード項目の取得中にエラーが発生しました。';
 $string['error:categorycolorinvalidjson'] = 'コースカテゴリのJSONフォーマットが正しくありません';
 $string['error:categorycolorinvalidvalue'] = 'カテゴリ"{$a}"のレコードIDまたはカラー値が無効です';
-$string['error:categorynotfound'] = 'ID"{$a}"のカテゴリレコードは見つかりませんでした';
-$string['error:coverimageexceedsmaxbytes'] = 'カバーイメージがサイトレベルの最大許容ファイルサイズ ({$a}) を超えています。';
+$string['error:categorynotfound'] = 'ID "{$a}"のカテゴリレコードは見つかりませんでした';
+$string['error:coverimageexceedsmaxbytes'] = 'カバーイメージがサイトレベルの最大許容ファイルサイズ（{$a}）を超えています。';
 $string['error:coverimageresolutionlow'] = '最適な品質を得るためには、幅1024px以上の大きなイメージを推奨します。';
 $string['error:duplicatedcategoryids'] = 'JSONフォーマットが正しくありません。いくつかのIDが重複しています';
 $string['error:failedtochangeassetvisibility'] = 'アセットの表示/非表示に失敗しました';
@@ -145,7 +150,7 @@ $string['favorited'] = 'お気に入りとしてマーク {$a}';
 $string['featurespots'] = '注目スポット';
 $string['featurespotsedit'] = '注目スポットを編集する';
 $string['featurespotshelp'] = '<p>既存および潜在的ユーザに主なメリットを強調するため、サイトのフロントページに最大6つの注目スポットを追加します。</p>
-<p>注目スポットごとにイメージ、タイトル、コンテンツの説明を追加できます。<strong>注目スポットをフロントページに掲載するには、タイトルを入力する必要があります。</strong>イメージとコンテンツの説明セクションはオプションです。</p>
+<p>注目スポットごとに画像、タイトル、コンテンツの説明を追加できます。<strong>注目スポットをフロントページに掲載するには、タイトルを入力する必要があります。</strong>画像とコンテンツの説明セクションはオプションです。</p>
 <p>推奨される画像サイズは正方形で、200 x 200ピクセル以下です。</p>';
 $string['featurespotsheading'] = '注目スポットのヘッダ';
 $string['featureonetitle'] = '注目スポット1のタイトル';
@@ -219,8 +224,8 @@ $string['feedbacktoggle'] = '最新のフィードバック';
 $string['feedbacktoggledesc'] = '学習者に最新のフィードバックを、教育者に最新の提出物で要評定のものを表示します。';
 $string['footnote'] = 'サイトフッタ';
 $string['footnotedesc'] = 'サイト情報をHTMLとして追加し、リンク、画像、イベントリストを含めることができます。';
-$string['forcepwdwarningpersonalmenu'] = 'パーソナルメニューを使用する前に、<a href="{$a}">パスワードを変更する</a>必要があります。';
-$string['forumauthor'] = '著者';
+$string['forcepwdwarningpersonalmenu'] = 'パーソナルメニューを使用する前に、<a href="{$a}">パスワードを変更</a>する必要があります。';
+$string['forumauthor'] = '作成者';
 $string['forumlastpost'] = '最新の投稿';
 $string['forumpicturegroup'] = 'グループ';
 $string['forumreplies'] = '返信';
@@ -240,7 +245,6 @@ $string['headingfont_desc'] = 'このサンセリフフォントは、サイト�
 $string['helpwithlogin'] = 'ログインのヘルプ';
 $string['helpwithloginandguest'] = 'ログイン/ゲストアクセスのヘルプ';
 $string['loginrequiredmessage'] = '* 必須フィールドを示します';
-$string['hiddencoursestoggle'] = '非表示のコース';
 $string['highlightedsection'] = '反転表示';
 $string['home'] = 'ホーム';
 $string['image'] = 'イメージ';
@@ -249,7 +253,15 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'あなたのInstagramアカウントのURLです。';
 $string['introduction'] = 'イントロダクション';
 $string['jsontext'] = 'JSONテキスト';
-$string['jsontextdescription'] = 'テキストエリアは指定されたJSONを検証するため、既存のカテゴリのみが許可され、IDレコード（カテゴリレコード）としての数値のみが有効で、16進値のみを色として受け付けます。以下に例を示します。<br>{"1":"#FAAFFF",<br>"45":"#AFF",<br>"65":"#FFF228",<br>"12":"#CC0084",<br>"56":"#CC0087",<br>"89":"#CCF084"}';
+$string['jsontextdescription'] = 'テキストエリアは指定されたJSONを検証するため、既存のカテゴリのみが許可され、
+IDレコード（カテゴリレコード）としての数値のみが有効で、16進値のみを色として受け付けます。以下に例を示します。
+例を示します。<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Open LMSナレッジベース';
 $string['list'] = '一覧から選ぶ';
 $string['linkedin'] = 'LinkedIn';
@@ -260,7 +272,7 @@ $string['loading'] = 'ロード中...';
 $string['loggedinasguest'] = 'ゲストとしてログインしています';
 $string['loggedoutmsg'] = 'あなたは現在ログアウトしています。引き続きこのサイトを使用するには、ログインしてください。';
 $string['loggedoutmsgtitle'] = 'ログアウトされました';
-$string['loggedoutfailmsg'] = '{$a}にログインする必要があります。';
+$string['loggedoutfailmsg'] = '{$a} にログインする必要があります。';
 $string['loginform'] = 'ログイン';
 $string['logo'] = 'ロゴ';
 $string['logodesc'] = 'ロゴはサイト全体にわたってヘッダに表示されます。';
@@ -272,12 +284,12 @@ $string['messagestoggledesc'] = '過去12週間に受信した最新のメッセ
 $string['more'] = '詳細';
 $string['morenews'] = 'その他のニュース';
 $string['moreoptionslabel'] = 'その他のオプション';
-$string['movingstartedhelp'] = 'セクション "{$a}" を配置したい場所に移動します';
-$string['movingdropsectionhelp'] = 'セクション "{$a->moving}" をセクション "{$a->before}" の前に配置します';
-$string['moving'] = '"{$a}" を移動しています';
+$string['movingstartedhelp'] = 'セクション"{$a}"を配置したい場所に移動します';
+$string['movingdropsectionhelp'] = 'セクション"{$a->moving}"をセクション"{$a->before}"の前に配置します';
+$string['moving'] = '"{$a}"を移動しています';
 $string['movingcount'] = '{$a} オブジェクトを移動しています';
-$string['movefailed'] = '"{$a}" の移動に失敗しました';
-$string['move'] = '"{$a}" を移動する';
+$string['movefailed'] = '"{$a}"の移動に失敗しました';
+$string['move'] = '"{$a}"を移動する';
 $string['movehere'] = 'ここに移動する';
 $string['movesection'] = 'セクションを移動する';
 $string['navbarbg'] = '背景色';
@@ -298,22 +310,16 @@ $string['notsubmitted'] = '未提出';
 $string['overdue'] = '期限切れ';
 $string['pausegraphicsanim'] = 'GIFアニメーションを一時停止します。';
 $string['personalmenu'] = 'パーソナルメニュー';
-$string['personalmenuandsnapfeeds'] = 'パーソナルメニューとスナップフィード';
+$string['snapfeeds'] = 'スナップフィード';
 $string['personalmenufeatures'] = 'パーソナルメニュー機能';
-$string['personalmenulogintoggle'] = 'ログイン時に個人用メニューを表示する';
-$string['personalmenulogintoggledesc'] = 'ログイン後は個人用メニューを開く';
-$string['personalmenuadvancedfeedsenable'] = '高度なフィードを有効にする';
-$string['personalmenuadvancedfeedsenabledesc'] = '高度なフィードでは、読み込み時間の高速化を可能にし、コンテンツをオンデマンドでリフレッシュする、個人的なメニュー項目が読み込みまれます。';
-$string['personalmenuadvancedfeedsperpage'] = '高度なフィード項目の表示数';
-$string['personalmenuadvancedfeedsperpagedesc'] = 'フィードで表示する項目の数を選択します。ユーザは[<strong>さらに表示</strong>]を選択して追加項目を表示できます。';
-$string['personalmenuadvancedfeedslifetime'] = '高度なフィードの有効期間';
-$string['personalmenuadvancedfeedslifetimedesc'] = 'ログイン後にフィードがブラウザにキャッシュされる時間を選択します。0を選択するとフィードはブラウザにキャッシュされません。';
-$string['personalmenurefreshdeadlines'] = 'スケジュールタスクを使用して終了日時をリフレッシュします。';
-$string['personalmenurefreshdeadlinesdesc'] = 'タスクを実行したときに、終了日時データはより速いページロード時間でリフレッシュされます。';
-$string['personalmenuenablepersonalmenu'] = 'パーソナルメニューを有効にする';
-$string['personalmenuenablepersonalmenuheading'] = 'パーソナルメニュー';
-$string['personalmenuenablepersonalmenuheadingdesc'] = '注意：パーソナルメニューが無効になっている場合は、マイコースページからコースにアクセスできます。コースの概要ブロックが有効になっており、コースがページに表示されることを確認してください。';
-$string['personalmenuenablepersonalmenudesc'] = 'マイコースリンクでパーソナルメニューを開きます。無効になっている場合、マイコースページにリダイレクトされます。';
+$string['advancedfeedsenable'] = '高度なフィードを有効にする';
+$string['advancedfeedsenabledesc'] = '高度なフィードでは、読み込み時間の高速化を可能にし、コンテンツをオンデマンドでリフレッシュする項目が読み込みまれます。';
+$string['advancedfeedsperpage'] = '高度なフィード項目の表示数';
+$string['advancedfeedsperpagedesc'] = 'フィードで表示する項目の数を選択します。ユーザは[<strong>さらに表示</strong>]を選択して追加項目を表示できます。';
+$string['advancedfeedslifetime'] = '高度なフィードの有効期間';
+$string['advancedfeedslifetimedesc'] = 'ログイン後にフィードがブラウザにキャッシュされる時間を選択します。0を選択するとフィードはブラウザにキャッシュされません。';
+$string['refreshdeadlines'] = 'スケジュールタスクを使用して終了日時をリフレッシュします。';
+$string['refreshdeadlinesdesc'] = 'タスクを実行したときに、終了日時データはより速いページロード時間でリフレッシュされます。';
 $string['mycoursessnapfeedsheading'] = 'スナップフィード';
 $string['mycoursessnapfeedsdesc'] = '注意：[<strong>高度なフィード</strong>]は、[<strong>期限</strong>]、[<strong>フィードバックと評定</strong>]、[<strong>メッセージ</strong>]、または[<strong>フォーラム投稿</strong>]のオプションのうち少なくとも1つが選択されている場合にのみ使用可能になります。';
 $string['refreshdeadlinestasksettingheading'] = 'スケジュール済みタスクで期限をリフレッシュする';
@@ -321,7 +327,9 @@ $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'カバーイメージ';
 $string['posterdesc'] = 'サイトのフロントページ用の大きいヘッダイメージです。横向きイメージ (1200 x 600ピクセル) 以上が最適です。';
-$string['poweredbyrunby'] = '<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品である<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>を使用して構築されています。<br>Copyright © {$a->year} Open LMS, All Rights Reserved.';
+$string['poweredbyrunby'] = '<a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>で構築、
+<a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>ベースの製品です。<br>
+Copyright © {$a->year} Open LMS, All Rights Reserved.';
 $string['previoussection'] = '前のセクション';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'ユーザがお気に入りとしてマークしたコースのコースID';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'コースをお気に入りにマークしたユーザのユーザID';
@@ -345,8 +353,6 @@ $string['resumegraphicsanim'] = 'GIFアニメーションを再開します。';
 $string['displaydescription'] = '説明を表示する';
 $string['displaydescriptionhelp'] = '選択すると、最初に新しいページにリソースアクティビティの説明が表示されます。学生は、説明からコンテンツにアクセスします。';
 $string['search'] = 'コンテンツを検索する';
-$string['showcoursegradepersonalmenu'] = '成績';
-$string['showcoursegradepersonalmenudesc'] = 'パーソナルメニューのコースカードにユーザの評定を表示します';
 $string['socialmedia'] = 'ソーシャルメディア';
 $string['submitted'] = '提出済み';
 $string['sitedescription'] = 'サイト説明';
@@ -362,12 +368,12 @@ $string['topbarlinkcolor'] = 'ナビゲーションバーのリンクとアイ�
 $string['topbarbuttoncolor'] = 'マイコースの背景';
 $string['togglenavigation'] = 'ナビゲーションに切り替える';
 $string['topicactions'] = 'トピックアクション';
-$string['xakatwitterdesc'] = 'あなたのアカウントのURLです。';
+$string['xakatwitter'] = '𝕏';
+$string['xakatwitterdesc'] = 'あなたの𝕏アカウントのURLです。';
 $string['unenrolme'] = '登録抹消する';
 $string['enrolme'] = '受講登録する';
 $string['unread'] = '未読';
-$string['unsupportedcoverimagetype'] = 'サポートされていないカバーイメージタイプ ({$a}) です';
-$string['via'] = '方法：';
+$string['unsupportedcoverimagetype'] = 'サポートされていないカバーイメージタイプ（{$a}）です';
 $string['viewcourse'] = 'コースを表示する';
 $string['viewmore'] = 'さらに表示する';
 $string['viewyourprofile'] = 'プロファイルを表示する';
@@ -377,10 +383,10 @@ $string['viewforumposts'] = '私のフォーラム投稿を表示する';
 $string['viewmessaging'] = '私のメッセージを表示する';
 $string['vieworiginalimage'] = '元のイメージを表示する';
 $string['visibility'] = '表示';
-$string['xofyanswered'] = '{$a->completed} / {$a->participants} 解答済み';
-$string['xofyattempted'] = '{$a->completed} / {$a->participants} 受験済み';
-$string['xofycontributed'] = '{$a->completed} / {$a->participants} 寄稿済み';
-$string['xofysubmitted'] = '{$a->completed} / {$a->participants} 提出済み';
+$string['xofyanswered'] = '{$a->participants} 人中 {$a->completed} 人が回答しました';
+$string['xofyattempted'] = '{$a->participants} 人中 {$a->completed} 人が受験しました';
+$string['xofycontributed'] = '{$a->participants} 人中 {$a->completed} 人が寄稿しました';
+$string['xofysubmitted'] = '{$a->participants} 人中 {$a->completed} 人が提出しました';
 $string['xungraded'] = '{$a} 未評点';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'あなたのYouTubeチャンネルのURLです。';
@@ -388,9 +394,12 @@ $string['showallsectionsdisabled'] = 'デザイン言語のため、Snapでは�
 $string['disabled'] = '無効';
 $string['showappearancedisabled'] = 'Snapの設計言語は"アピアランス"設定の変更を防ぎます。';
 $string['pbb'] = 'プロファイルベースのブランディング';
-$string['pbb_description'] = '[<strong>プロファイルベースのブランディング</strong>]を有効にすると、選択したユーザプロファイルフィールドに基づいて、特定のユーザのグループのブランドエクスペリエンスをカスタマイズできます。<ul><li>ユーザのフィールド値は<em>スラッグ化</em>され、すべての文字が小文字に変換され、ダッシュ（-）で分割されます。</li>
-<li>文字列<code>snap-pbb-</code>が先頭に追加されます</li>
-<li>このクラスは、<code>body</code> Htmlタグに追加されます。</li></ul>たとえば、ユーザフィールド値<em>Blueberry Extravaganza</em>は、<code>snap-pbb-blueberry-extravaganza</code>のようにスラッグ化されます。<br /><br />この機能はカスタムCSSと組み合わせて使用されます。このため、<a class="snap-settings-tab-link" href="#themesnapbranding">基本</a>セクションで新しいクラスを使用して、CSSセレクタを追加する必要があります。';
+$string['pbb_description'] = '[<strong>プロファイルベースのブランディング</strong>]を有効にすると、選択したユーザプロファイルフィールドに基づいて、特定のユーザのグループのブランドエクスペリエンスをカスタマイズできます。
+<ul><li>ユーザのフィールド値は<em>スラッグ化</em>され、すべての文字が小文字に変換され、ダッシュ（-）で分割されます。</li>
+<li>文字列<code>snap-pbb-</code>が先頭に追加されます。</li>
+<li>このクラスは、<code>body</code> Htmlタグに追加されます。</li></ul>
+たとえば、ユーザフィールド値<em>Blueberry Extravaganza</em>は、<code>snap-pbb-blueberry-extravaganza</code>のようにスラッグ化されます。<br /><br />
+この機能はカスタムCSSと組み合わせて使用されます。このため、<a class="snap-settings-tab-link" href="#themesnapbranding">基本</a>セクションで新しいクラスを使用して、CSSセレクタを追加する必要があります。';
 $string['pbb_enable'] = 'プロファイルベースのブランディングを有効にする';
 $string['pbb_enable_description'] = 'アクティブな場合、bodyタグへのクラスの追加のみ行います。';
 $string['pbb_field'] = '使用するユーザフィールド';
@@ -408,16 +417,21 @@ $string['gotocalendarsnap'] = 'サイトカレンダーに移動します。';
 $string['quizattemptswarn'] = '一時停止ユーザの受験を除外する';
 $string['quizfeedback'] = 'フィードバック';
 $string['validratio'] = 'この色の組み合わせは、WCAG 2.0の最小比率値4.5:1に準拠しています';
-$string['invalidratio'] = 'この色の組み合わせは、<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません。値：「{$a}」';
+$string['invalidratio'] = 'この色の組み合わせは、
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません。値：「{$a}」';
 $string['imageinvalidratio'] = 'このイメージは、WCAG 2.0の最小比率値4.5:1に準拠していないため、コントラストに問題がある可能性があります。平均ピクセル値：「{$a}」';
-$string['catinvalidratio'] = '以下の色のカテゴリは、<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません：サイトの背景色 (白) に対して：「{$a->white}」。ナビゲーションバーの背景色に対して：「{$a->custombar}」。[マイコース]ボタンの背景色に対して：「{$a->customnav}」';
-$string['spotinvalidratio'] = '背景色は、<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません。{$a->name} に対する現在の値：{$a->value}。';
+$string['catinvalidratio'] = '次のカラーカテゴリは、
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比率値4.5:1</a>に準拠していません：
+サイトの背景色（白）に対して：「{$a->white}」。バーの背景色に対して：「{$a->custombar}」。[マイコース]ボタンの背景色に対して：「{$a->customnav}」';
+$string['spotinvalidratio'] = 'この背景色は、
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">WCAG 2.0の最小比値4.5:1</a>に準拠していません。
+{$a->name} に対する現在の値：{$a->value}。';
 $string['imageinvalidratiocategory'] = 'このイメージは、WCAG 2.0最小比率値4.5:1に準拠していないため、テーマの色とのコントラストに問題がある可能性があります。平均ピクセル値：「{$a}」';
 $string['browseallcategories'] = 'すべてのカテゴリを参照する';
 $string['lazyload_mod_page'] = 'ページリソースのデフォルトの遅延読み込みを有効にする';
 $string['lazyload_mod_page_description'] = '有効にした場合、この設定は、大量のページがあるコースページの読み込み時間を大幅に短縮します。';
-$string['pmadvancedfeed_viewmore'] = 'さらに表示する';
-$string['pmadvancedfeed_reload'] = 'リフレッシュ';
+$string['advancedfeed_viewmore'] = 'さらに表示する';
+$string['advancedfeed_reload'] = 'リフレッシュ';
 $string['multimediacard'] = 'マルチメディアファイルは、Snapテーマのアクティビティカード表示では表示されません。これは小さいアクティビティとリソースカードのホームページとコースページにのみ適用されます。';
 $string['enabledlogin'] = '表示するログインオプション';
 $string['enabledlogindesc'] = '表示する必要があるログインオプションを選択します。';
@@ -429,21 +443,19 @@ $string['enabledloginorderdesc'] = '最初に表示するログインオプシ�
 $string['moodleloginfirst'] = '最初にMoodleログインを表示する';
 $string['alternativeloginfirst'] = '最初に代替ログインオプションを表示する';
 $string['alternativeloginoptions'] = '代替ログインオプション';
-$string['openmessagedrawer'] = 'メッセージングドロワーを開きます。';
 $string['refreshdeadlinestask'] = '終了日時のキャッシュされたデータをリフレッシュします。これはすべてのユーザがログインする前に実行される必要があります。';
 $string['resetdeadlinesquerycounttask'] = '期限のクエリ数をリセットする';
-$string['refreshdeadlinestaskoff'] = '投入するデータを検索しませんでした。Snapの個人メニュー設定の「スケジュール済みタスクを使用して期限をリフレッシュ」設定をオンにし、このタスクが期限キャッシュデータを投入できるようにします。';
+$string['refreshdeadlinestaskoff'] = '投入するデータを検索しませんでした。スナップフィード設定の[スケジュール済みタスクを使用して終了日時をリフレッシュします]設定をオンにし、このタスクが期限キャッシュデータを投入できるようにします。';
 $string['activityrestriction'] = 'アクティビティの制限';
 $string['hideandshowactioncb'] = 'アクティビティのチェックボックスアクションを非表示および表示します';
 $string['retryfeed'] = 'このフィードは現在利用できません。後でもう一度確認してください。フィード：{$a}';
 $string['loadingfeed'] = 'ロード中...時間がかかる場合があります';
 $string['hvpcustomcss'] = 'H5PカスタムCSS';
 $string['hvpcustomcssdesc'] = 'H5Pモジュール (moodle.org/plugins/mod_hvp) 用のカスタムCSS (インストールされている場合)。';
-$string['courselimitstrdanger'] = 'コースの制限に到達しました。進行状況バーが表示されなくなります。';
-$string['courselimitstrwarning'] = '{$a} を超えるコースがリストされている場合、進行状況バーは表示されません';
 $string['tilesformatcoursehomealttext'] = 'コースホーム';
 $string['editmodetiles'] = 'コンテンツを編集する';
 $string['totop'] = 'トップに移動する';
+$string['toleft'] = '左に移動する';
 $string['loginsetting'] = 'ログインページ';
 $string['loginbgimgheading'] = 'ログインページのテンプレート';
 $string['loginbgimgheadingdesc'] = 'スナップを使用すると、ログインページに表示するテンプレートを変更できます。以下のドロップダウンメニューでオプションを選択してください。';
@@ -475,9 +487,15 @@ $string['selectimage'] = 'イメージを選択する';
 $string['deleteimage'] = 'カバーイメージを削除する';
 $string['confirmdeletefile'] = 'この操作でカバーイメージが削除されます。保存したファイルを削除しますか？';
 $string['coverimagesettingswarning'] = 'コース設定ページから直接カバーイメージを更新すると、トリミングされたカバーイメージはリセットされます。その後、必ず希望のトリミングを再度選択してください。';
-$string['opens'] = '{$a} を開く';
-$string['opened'] = '{$a} を開きました';
+$string['opens'] = '{$a} に開始';
+$string['opened'] = '{$a} に開始済み';
 $string['year'] = '年';
 $string['homepage'] = 'ホームページ';
 $string['allyears'] = 'すべての年';
 $string['courselink'] = 'コースに移動する';
+$string['student'] = '学生';
+$string['showcourseinformation'] = 'コース情報を表示する';
+$string['pageactivitywithnodescription'] = 'ページの説明が空で、ページコンテンツが200文字未満の場合、ページコンテンツがページの説明として機能するため、コースページのページアクティビティに展開アイコンは表示されません。';
+$string['toggleadmindrawer'] = '管理者ドロワーに切り替える';
+$string['toggleblockdrawer'] = 'ブロックドロワーに切り替える';
+$string['togglesnapfeedsdrawer'] = 'スナップフィードドロワーに切り替える';
