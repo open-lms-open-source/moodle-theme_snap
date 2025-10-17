@@ -55,6 +55,10 @@ Feature: Testing sidebarmenu in theme_snap
     And I am on the course main page for "C1"
     And I am on the "Test Book" "book activity" page
     And I should see "Table of contents"
+    And I turn editing mode on
+    When I click on "//div[contains(@class, 'action-list')]/a[last()]" "xpath"
+    And I should see "Chapter title"
+    And I should not see "Table of contents"
 
   @javascript
   Scenario: Block drawers dont open by default in small screen sizes

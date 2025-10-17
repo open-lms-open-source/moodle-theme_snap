@@ -102,6 +102,10 @@ const FORCEOPEN_BODY_IDS = [
     'page-mod-book-view'
 ];
 
+const FORCEBLOCK_BODY_IDS = [
+    'page-mod-book-edit',
+];
+
 const PREFERENCE_MAP = {
     [PREFERENCES.BLOCKS_DRAWER]: ACTIVE_SELECTORS.BLOCKS_DRAWER,
     [PREFERENCES.SNAP_FEEDS]: ACTIVE_SELECTORS.SNAP_FEEDS,
@@ -348,9 +352,16 @@ const handleMessagesPopoverClick = (e) => {
 };
 
 /**
- * Set the Actual Drawer based on user preferences.
+ * Applies initial drawer state based on user preferences and page context.
  *
- * @return {Promise}
+ * This function runs on page load to restore the drawer (e.g. blocks drawer)
+ * according to saved preferences. It may also force the drawer to open or remain
+ * closed based on specific page conditions.
+ *
+ * Should only be used during initialization. Calling it later may cause
+ * inconsistent UI behavior.
+ *
+ * @return {Promise<void>}
  */
 const setActiveDrawer = async() => {
     let preferences = await getUserPreferences(null, M.cfg.userId);
@@ -372,9 +383,14 @@ const setActiveDrawer = async() => {
             preferencesArray[pref] = preferences[pref];
         }
         if (pref === PREFERENCES.BLOCKS_DRAWER) {
+            let bodyId = document.body.id;
             // Force open but not in small screen sizes.
-            if (FORCEOPEN_BODY_IDS.includes(document.body.id) && window.innerWidth > 500) {
+            if (FORCEOPEN_BODY_IDS.includes(bodyId) && window.innerWidth > 500) {
                 preferencesArray[pref] = 1;
+            }
+            // Prevents the drawer from opening automatically on specific pages, but does not disable manual opening.
+            if (FORCEBLOCK_BODY_IDS.includes(bodyId)) {
+                preferencesArray[pref] = 0;
             }
         }
     });
