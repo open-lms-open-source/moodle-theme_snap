@@ -2047,6 +2047,9 @@ body.snap-resource-card {
                 .activity-afterlink.afterlink {
                     flex-direction: column;
                     margin: 0;
+                    .hsuforum-recent {
+                        align-self: normal;
+                    }
                     .unread {
                         align-self: flex-end;
                         padding: .5em;
