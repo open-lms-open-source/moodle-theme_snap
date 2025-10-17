@@ -677,6 +677,10 @@ label[for="toc-search-input"]{
         padding: unset;
         margin: unset;
 
+        .lightboxgallery.icon {
+          filter: $lightbox-filter;
+        }
+
         .forum.icon,
         .hsuforum.icon,
         .chat.icon {
@@ -686,7 +690,6 @@ label[for="toc-search-input"]{
         .assignment.icon,
         .assign.icon,
         .workshop.icon,
-        .h5pactivity.icon,
         .journal.icon,
         .attendance.icon {
           filter: $assignment-filter;
@@ -702,7 +705,7 @@ label[for="toc-search-input"]{
         .wiki.icon,
         .glossary.icon,
         .choicegroup.icon,
-        .Database.icon {
+        .data.icon {
           filter: $information-filter;
         }
 
@@ -788,8 +791,7 @@ label[for="toc-search-input"]{
 
         .groupselect.icon,
         .mindmap.icon,
-        .oublog.icon,
-        .data.icon {
+        .oublog.icon {
           filter: $groupselect-filter;
         }
 
