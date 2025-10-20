@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2024 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2025 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,6 @@ $string['action:highlightsectionvisibility'] = 'destaca la visibilitat de la sec
 $string['action:sectiontoc'] = 'obté l\'índex de la secció';
 $string['addanewsection'] = 'Crea una secció nova';
 $string['addresourceoractivity'] = 'Crea activitats d\'aprenentatge';
-$string['admin'] = 'Admin';
 $string['advancedbrandingheading'] = 'Construcció de marca avançada';
 $string['ago'] = 'enrere';
 $string['answered'] = 'Contestades';
@@ -48,17 +47,20 @@ $string['cachedef_activity_deadlines'] = 'Emmagatzematge a la memòria cau per a
 $string['cachedef_generalstaticappcache'] = 'Ajusta la memòria cau a nivell d\'aplicació estàtica general';
 $string['cachedef_course_completion_progress'] = 'Això s’utilitza per completar les dades de memòria cau per curs o per usuari.';
 $string['cachedef_course_completion_progress_ts'] = 'Això s’utilitza perquè puguem invalidar la memòria cau a nivell de sessió si canvien els paràmetres de compleció de curs per a un determinat curs o mòdul.';
+$string['cachedef_course_users_assign_ungraded'] = 'S\'estan desant a la memòria cau els usuaris que tenen la capacitat mod/assign:submit en un curs determinat';
+$string['cachedef_course_users_quiz_ungraded'] = 'S\'estan desant a la memòria cau els usuaris que no tenen la capacitat moodle/grade:viewall en un curs determinat';
 $string['cachedef_webservicedefinitions'] = 'Emmagatzematge de la memòria cau per a les definicions autogenerades del servei web.';
 $string['card'] = 'Targeta';
 $string['categoryedit'] = 'Edita categoria';
 $string['category_color'] = 'Color de categoria';
 $string['category_color_description'] = 'Color de categoria del curs. Els cursos secundaris adopten la configuració de la categoria primària més propera';
 $string['category_color_palette'] = 'Paleta de colors';
-$string['category_color_palette_description'] = 'Vegeu el valor hexadecimal corresponent del color determinat. No afectarà cap configuració; és només una mostra per ajudar els usuaris a crear un valor de configuració.';
+$string['category_color_palette_description'] = 'Vegeu el valor hexadecimal corresponent del color determinat. No
+afectarà cap configuració; és només una mostra per ajudar els usuaris a crear un valor de configuració.';
 $string['changecoverimage'] = 'Canvia la imatge de portada';
 $string['changefullname'] = 'Canvia el nom del lloc';
 $string['chapters'] = 'Capítols';
-$string['choosereadme'] = '<div class="clearfix"><div class="theme_screenshot"><h2>Snap</h2><img class=img-polaroid src="snap/pix/screenshot.jpg" /></div></div>';
+$string['choosereadme'] = 'El disseny responsiu i fàcil de fer servir de Snap elimina les barreres de l\'aprenentatge en línia perquè pugueu crear l\'experiència moderna i atractiva que els usuaris esperen a internet avui en dia. L\'aspecte intuïtiu està optimitzat per a l\'aprenentatge en línia i se centra en l\'important: el contingut i les activitats d\'aprenentatge.';
 $string['close'] = 'Tanca';
 $string['conditional'] = 'Condicional';
 $string['contents'] = 'Continguts';
@@ -68,8 +70,8 @@ $string['coursecontacts'] = 'Contactes del curs';
 $string['coursedisplay'] = 'Visualització del curs';
 $string['coursefootertoggle'] = 'Peu de pàgina del curs';
 $string['coursefootertoggledesc'] = 'El peu de pàgina del curs mostra informació útil als usuaris en una pàgina del curs que inclou els contactes, la descripció i l’activitat recent del curs.';
-$string['courseformatnotification'] = 'El format actual del curs que feu servir no és totalment compatible amb el tema Snap. Per a obtenir la millor experiència, Open LMS recomana utilitzar els formats de curs per Tema o Setmanals amb el tema Snap. El format del curs es pot canviar als <a href="{$a}">paràmetres del curs</a>.';
-$string['coursefixydefaulttext'] = 'Actualment no esteu inscrit a cap curs.<br>Els cursos als quals us matriculeu es mostraran aquí.';
+$string['courseformatnotification'] = 'El format actual del curs que feu servir no és totalment compatible amb el tema Snap. Per gaudir de la millor experiència, Open LMS recomana utilitzar els formats de curs Temes o Setmanal amb el tema Snap. El format del curs es pot canviar als <a href="{$a}">paràmetres del curs</a>.';
+$string['coursefixydefaulttext'] = 'Actualment no us heu inscrit en cap curs.<br>Els cursos als quals us inscriviu es mostraran aquí.';
 $string['coursegrade'] = 'Qualificació del curs:';
 $string['coursepartialrender'] = 'Habilita la càrrega lenta per a les seccions del curs';
 $string['coursepartialrenderdesc'] = 'Si s\'habilita, les seccions del curs es carreguen a petició quan les selecciona un usuari. Això ajuda a fer que els cursos amb una gran quantitat de continguts es carreguin més ràpidament.';
@@ -82,8 +84,8 @@ $string['coverdisplay'] = 'Pantalla de portada';
 $string['covercarousel'] = 'Carrusel de portada';
 $string['covercarousellabel'] = 'Carrusel';
 $string['covercarouselon'] = 'Utilitza el carrusel de portada';
-$string['covercarouseldescription'] = '<p>El carrusel és un conjunt de bàners rotatius o una presentació de diapositives que mostra la pàgina d\'inici del vostre lloc en comptes de la imatge de portada.</p>
-<p>Afegiu fins a 3 imatges, un títol per a cada diapositiva, i un subtítol opcional. Recomanem fer servir imatges de 1200 x 600 píxels.</p>';
+$string['covercarouseldescription'] = '<p>El carrusel és un conjunt de bàners rotatius o una presentació de diapositives que es mostra a la pàgina d\'inici del vostre lloc en comptes de la imatge de portada.</p>
+<p>Afegiu fins a 3 imatges, un títol per a cada diapositiva i un subtítol opcional. Recomanem fer servir imatges de 1200 x 600 píxels.</p>';
 $string['covercarouselsronly'] = 'Es tracta d\'un carrusel amb diapositives autogiratòries. Activeu qualsevol dels botons per deshabilitar la rotació. Utilitzeu els botons Següent i Anterior per navegar o saltar a una diapositiva amb els punts de lliscament.';
 $string['covercarouselplaybutton'] = 'Repreneu les diapositives autogiratòries per al carrusel.';
 $string['covercarouselpausebutton'] = 'Posa en pausa les diapositives autogiratòries per al carrusel.';
@@ -92,8 +94,10 @@ $string['covervideo'] = 'Vídeo de portada';
 $string['comingsoon'] = 'Properament';
 $string['createsection'] = 'Crea una secció';
 $string['current'] = 'Actual';
-$string['customcss'] = 'Personalitza CSS';
-$string['customcssdesc'] = 'Tingueu en compte que el poder ha d\'anar acompanyat d\'una gran responsabilitat. Resoldre els problemes causats pel CSS que heu afegit aquí és la vostra responsabilitat. El servei d\'assistència d\'Open LMS no soluciona problemes ni proporciona cap ajuda en relació amb el CSS.';
+$string['customcss'] = 'CSS personalitzat (obsolet)';
+$string['customscss'] = 'SCSS personalitzat';
+$string['customcssdesc'] = 'El servei d\'assistència tècnica d\'Open LMS no soluciona problemes del contingut relacionat amb CSS. Aquest camp està obsolet i només s\'ha d\'utilitzar per finalitats heretades. Utilitzeu el camp "SCSS personalitzat" per a futures personalitzacions.';
+$string['customscssdesc'] = 'El servei d\'assistència tècnica d\'Open LMS no soluciona problemes del contingut relacionat amb CSS.';
 $string['customtopbar'] = 'Barra de navegació';
 $string['customisenavbar'] = 'Canvia els colors de la barra de navegació';
 $string['customisenavbutton'] = 'Canvia el color del botó Els meus cursos';
@@ -103,17 +107,18 @@ $string['deadlines'] = 'Dates límit';
 $string['deadlinestoggle'] = 'Dates límit';
 $string['deadlinestoggledesc'] = 'Mostra als usuaris totes les properes dates límit d\'activitats dels cursos als quals s\'han matriculat.';
 $string['defaultsummary'] = 'Utilitzeu aquesta àrea per descriure sobre què tracta aquest tema (amb text, imatges, àudio i vídeo).';
-$string['defaultintrosummary'] = 'Us donem la benvinguda al vostre curs nou {$a}.<br>Comenceu per descriure de què tracta el curs amb text, imatges, àudio i vídeo.';
+$string['defaultintrosummary'] = 'Us donem la benvinguda al curs nou {$a}.
+<br>Per començar, expliqueu de què tracta el curs amb text, imatges, àudio i vídeo.';
 $string['defaultsectiontitle'] = 'Secció sense títol';
 $string['debugerrors'] = 'Errors de depuració';
-$string['deleteassetconfirm'] = 'Esborra {$a}';
+$string['deleteassetconfirm'] = 'Suprimeix {$a}';
 $string['deletingasset'] = 'S\'està suprimint {$a}';
-$string['deletingassetname'] = 'S’està suprimint {$a->type} "{$a->name}"';
+$string['deletingassetname'] = 'S\'està suprimint {$a->type} "{$a->name}"';
 $string['deletesectionconfirm'] = 'Esborra la secció';
-$string['deletingsection'] = 'S’està suprimint "{$a}"';
+$string['deletingsection'] = 'Suprimeix la secció "{$a}"';
 $string['draft'] = 'No publicat per als estudiants';
-$string['dropzonelabel'] = 'Deixeu anar fitxers per adjuntar o <span class="fake-link">navegueu</span>';
-$string['due'] = 'Data límit {$a}';
+$string['dropzonelabel'] = 'Deixeu anar fitxers per adjuntar-los o <span class="fake-link">navegueu</span>';
+$string['due'] = 'Data de venciment: {$a}';
 $string['edit'] = 'Edita "{$a}"';
 $string['editcoursecontent'] = 'Edita els blocs';
 $string['editcoursesettings'] = 'Paràmetres del curs';
@@ -123,7 +128,7 @@ $string['editcustommenu'] = 'Edita el menú personalitzat';
 $string['error'] = 'Error';
 $string['errorgettingfeed'] = 'S\'ha produït un error en obtenir els elements del canal de continguts.';
 $string['error:categorycolorinvalidjson'] = 'Format JSON incorrecte per a les categories de curs';
-$string['error:categorycolorinvalidvalue'] = 'L\'ID de registre o el valor de color per a la categoria "{$a}" no són vàlids';
+$string['error:categorycolorinvalidvalue'] = 'L\'ID de registre o el valor de color de la categoria "{$a}" no són vàlids';
 $string['error:categorynotfound'] = 'No s\'ha trobat el registre de categoria amb ID "{$a}"';
 $string['error:coverimageexceedsmaxbytes'] = 'La imatge de portada supera la mida màxima de fitxer permesa al nivell de lloc ({$a})';
 $string['error:coverimageresolutionlow'] = 'Si voleu que la qualitat sigui millor, us recomanem una imatge més gran de com a mínim 1024px d’ample.';
@@ -134,19 +139,19 @@ $string['error:failedtohighlightsection'] = 'No s’ha pogut destacar la secció
 $string['error:failedtoduplicateasset'] = 'No s’ha pogut duplicar';
 $string['error:failedtodeleteasset'] = 'Error en suprimir l\'element';
 $string['error:failedtotoc'] = 'No s’ha pogut obtenir el TOC.';
-$string['extension'] = 'Pròrroga {$a}';
+$string['extension'] = 'Extensió {$a}';
 $string['extra_section_menu'] = 'Menú de seccions addicionals';
 $string['facebook'] = 'Facebook';
 $string['facebookdesc'] = 'L’URL de la vostra pàgina de Facebook';
 $string['favicon'] = 'Icona de web';
 $string['favicondesc'] = 'Les icones de web apareixen a la barra d\'adreces del navegador, als marcadors de l\'usuari i a les dreceres per a mòbils.';
-$string['favorite'] = 'Preferit {$a}';
-$string['favorited'] = 'Marcat com a preferit {$a}';
+$string['favorite'] = 'Afegeix {$a} als preferits';
+$string['favorited'] = 'S\'ha afegit {$a} als preferits';
 $string['featurespots'] = 'Inclou espots';
 $string['featurespotsedit'] = 'Edita els espots de presentació de funcions';
-$string['featurespotshelp'] = '<p>Afegiu fins a 6 espots de funcions a la pàgina principal del vostre lloc per destacar els avantatges principals als usuaris actuals i als potencials.</p>
-<p>Podeu afegir una imatge, un títol i una descripció del contingut a cada funció. <strong>Per veure la funció a la primera pàgina, cal que introduïu un títol.</strong> La imatge i la descripció del contingut són opcionals.</p>
-<p>La mida de la imatge recomanada és un quadrat que no sigui més gran que 200&nbsp;x&nbsp;200&nbsp;píxels.</p>';
+$string['featurespotshelp'] = '<p>Afegiu fins a 6 espais per a funcions a la pàgina principal del vostre lloc per destacar els avantatges principals als usuaris actuals i als potencials.</p>
+<p>Podeu afegir una imatge, un títol i una descripció del contingut a cada funció. <strong>Per veure la funció a la pàgina principal, cal que introduïu un títol.</strong> La imatge i la descripció del contingut són opcionals.</p>
+<p>La mida de la imatge recomanada és un quadrat que no sigui més gran que 200 x 200 píxels.</p>';
 $string['featurespotsheading'] = 'Encapçalament d\'espots de presentació de funcions';
 $string['featureonetitle'] = 'Títol de la funció 1';
 $string['featuretwotitle'] = 'Títol de la funció 2';
@@ -196,7 +201,7 @@ $string['featuredcoursesedit'] = 'Edita els cursos destacats';
 $string['featuredcoursesbrowseall'] = 'Navega per tots els cursos';
 $string['featuredcoursesbrowsealldesc'] = 'Afegeix un enllaç per navegar per tots els cursos';
 $string['featuredcategories'] = 'Categories destacades';
-$string['featuredcategorieshelp'] = 'Destaqueu fins a 8&nbsp;categories a la pàgina principal del vostre lloc. Escriviu l\'identificador de la categoria per destacar-la.';
+$string['featuredcategorieshelp'] = 'Destaqueu fins a 8 categories a la pàgina principal del vostre lloc. Escriviu l\'ID de la categoria per destacar-la.';
 $string['featuredcategoriesheading'] = 'Capçalera de les categories destacades';
 $string['featuredcategoryone'] = 'Categoria destacada 1';
 $string['featuredcategorytwo'] = 'Categoria destacada 2';
@@ -230,18 +235,17 @@ $string['forumpoststoggle'] = 'Apunts al fòrum';
 $string['forumpoststoggledesc'] = 'Mostra als usuaris els 10 apunts al fòrum més recents dels seus cursos';
 $string['fullname'] = 'Nom del lloc';
 $string['fullnamedesc'] = 'El nom del vostre lloc.';
-$string['gotoactivity'] = 'Ves a l’activitat {$a}';
+$string['gotoactivity'] = 'Ves a l\'activitat {$a}';
 $string['graderadviseuserreport'] = 'L’"informe del qualificador" no funciona bé en dispositius mòbils. Es recomana fer servir l’"informe d’usuari"';
 $string['grading'] = 'Qualificació';
 $string['help'] = 'Ajuda';
 $string['helpguide'] = 'Guia d\'ajuda';
 $string['headingfont'] = 'Font de la capçalera';
-$string['headingfont_desc'] = 'Aquest tipus de lletra Sans Serif s\'utilitza als encapçalaments (elements h1-h6) del vostre lloc. Si incloeu un tipus de lletra web personalitzat, recordeu que cal afegir-lo a l’HTML addicional de Moodle. Si voleu modificar els tipus de lletra d\'altres elements, feu servir l\'opció de CSS personalitzat; per obtenir exemples sobre com fer-ho, doneu una ullada a aquesta <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">documentació</a>.';
+$string['headingfont_desc'] = 'Aquest tipus de lletra Sans Serif s\'utilitza als encapçalaments (elements h1-h6) del vostre lloc. Si incloeu un tipus de lletra web personalitzat, recordeu que cal afegir-lo a l\'HTML addicional de Moodle. Si voleu modificar els tipus de lletra d\'altres elements, feu servir l\'opció de CSS personalitzat; per obtenir exemples sobre com fer-ho, doneu una ullada a aquesta <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">documentació</a>.';
 $string['helpwithlogin'] = 'Ajuda amb l’inici de sessió';
 $string['helpwithloginandguest'] = 'Ajuda amb l’inici de sessió / accés de convidat';
 $string['loginrequiredmessage'] = '* indica un camp necessari';
-$string['hiddencoursestoggle'] = 'Cursos ocults';
-$string['highlightedsection'] = 'destacat';
+$string['highlightedsection'] = 'Destacada';
 $string['home'] = 'Inici';
 $string['image'] = 'imatge';
 $string['images'] = 'Imatges';
@@ -249,7 +253,15 @@ $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'L’URL del vostre compte d’Instagram.';
 $string['introduction'] = 'Introducció';
 $string['jsontext'] = 'Text JSON';
-$string['jsontextdescription'] = 'L\'àrea de text valida el JSON determinat, de manera que només es permeten les categories existents, només són vàlids els valors numèrics com a registres d\'ID (registres de categoria) i només s\'accepten valors hexadecimals com a colors. A continuació se\'n mostra un exemple:<br>{"1":"#FAAFFF",<br>"45":"#AFF",<br>"65":"#FFF228",<br>"12":"#CC0084",<br>"56":"#CC0087",<br>"89":"#CCF084"}';
+$string['jsontextdescription'] = 'L\'àrea de text valida el JSON determinat, de manera que només es permeten les categories existents,
+només són vàlids els valors numèrics com a registres d\'ID (registres de categoria) i només s\'accepten valors hexadecimals com a colors.
+Aquí teniu un exemple:<br>
+{"1":"#FAAFFF",<br>
+"45":"#AFF",<br>
+"65":"#FFF228",<br>
+"12":"#CC0084",<br>
+"56":"#CC0087",<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'Base de coneixements d\'Open LMS';
 $string['list'] = 'Llista';
 $string['linkedin'] = 'LinkedIn';
@@ -260,7 +272,7 @@ $string['loading'] = 'S\'està carregant...';
 $string['loggedinasguest'] = 'Heu iniciat sessió com a convidat';
 $string['loggedoutmsg'] = 'Ara no teniu la sessió iniciada. Si voleu continuar fent servir aquest lloc, torneu a iniciar la sessió.';
 $string['loggedoutmsgtitle'] = 'No teniu la sessió iniciada.';
-$string['loggedoutfailmsg'] = 'Cal que inicieu la sessió per {$a}.';
+$string['loggedoutfailmsg'] = 'Cal que inicieu la sessió a {$a}.';
 $string['loginform'] = 'Inici de sessió';
 $string['logo'] = 'Logotip';
 $string['logodesc'] = 'El vostre logotip es mostra a la capçalera a tot el lloc.';
@@ -273,10 +285,10 @@ $string['more'] = 'Més';
 $string['morenews'] = 'Més notícies';
 $string['moreoptionslabel'] = 'Més opcions';
 $string['movingstartedhelp'] = 'Navegueu fins on voleu col·locar la secció "{$a}"';
-$string['movingdropsectionhelp'] = 'Col·loqueu la secció "{$a->moving}" abans de la secció "{$a->before}"';
-$string['moving'] = 'S’està movent "{$a}"';
-$string['movingcount'] = 'S’estan movent {$a} objectes';
-$string['movefailed'] = 'No s’han pogut moure "{$a}"';
+$string['movingdropsectionhelp'] = 'Col·loca la secció "{$a->moving}" abans de la secció "{$a->before}"';
+$string['moving'] = 'S\'està movent "{$a}"';
+$string['movingcount'] = 'S\'estan movent {$a} objectes';
+$string['movefailed'] = 'No s\'ha pogut moure "{$a}"';
 $string['move'] = 'Mou "{$a}"';
 $string['movehere'] = 'Mou aquí';
 $string['movesection'] = 'Mou la secció';
@@ -295,33 +307,29 @@ $string['notattempted'] = 'No intentat';
 $string['notcontributed'] = 'No contribuït';
 $string['notpublished'] = 'No publicat per als estudiants';
 $string['notsubmitted'] = 'No tramès';
-$string['overdue'] = 'Venciment';
+$string['overdue'] = 'Vençut';
 $string['pausegraphicsanim'] = 'Posa en pausa l\'animació GIF.';
 $string['personalmenu'] = 'Menú personal';
-$string['personalmenuandsnapfeeds'] = 'Menú personal i canals Snap';
+$string['snapfeeds'] = 'Canals snap';
 $string['personalmenufeatures'] = 'Funcions de menú personal';
-$string['personalmenulogintoggle'] = 'Mostra el menú personal a l’inici de sessió';
-$string['personalmenulogintoggledesc'] = 'Obre el menú personal immediatament després d’iniciar la sessió';
-$string['personalmenuadvancedfeedsenable'] = 'Habilita els canals de continguts avançats';
-$string['personalmenuadvancedfeedsenabledesc'] = 'Els canals de continguts avançats carreguen alguns elements del menú personal que permeten reduir el temps de càrrega i actualitzen el contingut a petició.';
-$string['personalmenuadvancedfeedsperpage'] = 'Recompte dels elements de canals de continguts avançats mostrats';
-$string['personalmenuadvancedfeedsperpagedesc'] = 'Trieu el nombre d\'elements que es mostraran al canal de continguts. Els usuaris poden seleccionar <strong>Mostra\'n més</strong> perquè es mostrin elements addicionals.';
-$string['personalmenuadvancedfeedslifetime'] = 'Durada dels canals de continguts avançats';
-$string['personalmenuadvancedfeedslifetimedesc'] = 'Trieu la quantitat de temps que es desaran els canals de continguts a la memòria cau del navegador després d\'iniciar la sessió. Si l\'establiu en el valor 0, no s\'hi desaran.';
-$string['personalmenurefreshdeadlines'] = 'Actualitza els terminis mitjançant una tasca programada.';
-$string['personalmenurefreshdeadlinesdesc'] = 'Quan s\'executa la tasca, les dades dels terminis s\'actualitzaran perquè la pàgina es carregui més de pressa.';
-$string['personalmenuenablepersonalmenu'] = 'Habilita el menú personal';
-$string['personalmenuenablepersonalmenuheading'] = 'Menú personal';
-$string['personalmenuenablepersonalmenuheadingdesc'] = 'Nota: si el menú personal està inhabilitat, podreu accedir als vostres cursos des de la pàgina Els meus cursos. Assegureu-vos que el bloc de visió general del curs està habilitat, de manera que els cursos es podran veure a la pàgina.';
-$string['personalmenuenablepersonalmenudesc'] = 'L\'enllaç d\'Els meus cursos obrirà el menú personal. Si s\'inhabilita, es redirigirà a la pàgina Els meus cursos.';
+$string['advancedfeedsenable'] = 'Habilita els canals de continguts avançats';
+$string['advancedfeedsenabledesc'] = 'Els canals de continguts avançats carreguen alguns elements que permeten reduir el temps de càrrega i actualitzen el contingut a petició.';
+$string['advancedfeedsperpage'] = 'Recompte dels elements de canals de continguts avançats mostrats';
+$string['advancedfeedsperpagedesc'] = 'Trieu el nombre d\'elements que es mostraran al canal de continguts. Els usuaris poden seleccionar <strong>Mostra\'n més</strong> perquè es mostrin elements addicionals.';
+$string['advancedfeedslifetime'] = 'Durada dels canals de continguts avançats';
+$string['advancedfeedslifetimedesc'] = 'Trieu la quantitat de temps que es desaran els canals de continguts a la memòria cau del navegador després d\'iniciar la sessió. Si l\'establiu en el valor 0, no s\'hi desaran.';
+$string['refreshdeadlines'] = 'Actualitza els terminis mitjançant una tasca programada.';
+$string['refreshdeadlinesdesc'] = 'Quan s\'executa la tasca, les dades dels terminis s\'actualitzaran perquè la pàgina es carregui més de pressa.';
 $string['mycoursessnapfeedsheading'] = 'Canals snap';
-$string['mycoursessnapfeedsdesc'] = 'Nota: els <strong>canals de continguts avançats</strong> només estan disponibles quan se selecciona almenys una de les opcions <strong>Terminis</strong>, <strong>Comentaris i qualificacions</strong>, <strong>Missatges</strong> o <strong>Apunts al fòrum</strong>.';
+$string['mycoursessnapfeedsdesc'] = 'Nota: els <strong>canals de continguts avançats</strong> només estan disponibles quan se selecciona almenys una de les opcions <strong>Terminis</strong>, <strong>Comentaris i qualificacions</strong>, <strong>Missatges</strong> o <strong>Publicacions al fòrum</strong>.';
 $string['refreshdeadlinestasksettingheading'] = 'Tasca programada per actualitzar els terminis';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'Snap';
 $string['poster'] = 'Imatge de portada';
 $string['posterdesc'] = 'Una imatge de capçalera gran per a la pàgina principal del vostre lloc. Les imatges en format horitzontal de 1200 x 600 píxels o més van millor.';
-$string['poweredbyrunby'] = 'Creat amb <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>, un producte basat en <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>Copyright © {$a->any} Open LMS. Tots els drets reservats.';
+$string['poweredbyrunby'] = 'S\'ha creat amb <a href="https://{$a->subdomain}.openlms.net/" target="_blank" rel="noopener">Open LMS</a>,
+un producte basat en <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+Copyright © {$a->year} Open LMS, tots els drets reservats.';
 $string['previoussection'] = 'Secció anterior';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'L\'ID del curs que l\'usuari ha marcat com a favorit';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'L\'ID de l\'usuari que va marcar el curs com a favorit';
@@ -329,15 +337,15 @@ $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'L\'indi
 $string['privacy:metadata:theme_snap_course_favorites'] = 'Emmagatzema els favorits de l\'usuari per a Snap';
 $string['problemsfound'] = 'S’han trobat problemes';
 $string['progress'] = 'Progrés';
-$string['readmore'] = 'Obteniu més informació';
+$string['readmore'] = 'Obteniu més informació&nbsp;»';
 $string['recentactivity'] = 'Activitat recent';
 $string['recentfeedback'] = 'Comentaris';
 $string['region-main'] = 'Principal';
 $string['region-side-main-box'] = 'Principal';
-$string['region-side-post'] = 'Right';
-$string['region-side-pre'] = 'Left';
+$string['region-side-post'] = 'Dreta';
+$string['region-side-pre'] = 'Esquerra';
 $string['region-side-top'] = 'Part superior';
-$string['released'] = 'Publicat: {$a}';
+$string['released'] = 'Data de publicació: {$a}';
 $string['reopened'] = 'Reoberta';
 $string['resourcedisplay'] = 'Visualització de recurs';
 $string['resourcedisplayhelp'] = 'Seleccioneu com han d\'aparèixer els fitxers adjunts i els enllaços al vostre curs. El tema Snap no admet fitxers multimèdia a l\'activitat petita i la descripció de les targetes de recursos.';
@@ -345,8 +353,6 @@ $string['resumegraphicsanim'] = 'Reprèn l\'animació GIF.';
 $string['displaydescription'] = 'Descripció de la pantalla';
 $string['displaydescriptionhelp'] = 'Seleccioneu-ho perquè es mostri una descripció de les activitats del recurs en una pàgina nova. Els estudiants accediran al contingut des de la descripció.';
 $string['search'] = 'Cerca contingut';
-$string['showcoursegradepersonalmenu'] = 'Notes';
-$string['showcoursegradepersonalmenudesc'] = 'Mostra la seva qualificació als usuaris en targetes de curs al menú pesonal';
 $string['socialmedia'] = 'Xarxes socials';
 $string['submitted'] = 'S\'han tramès';
 $string['sitedescription'] = 'Descripció del lloc';
@@ -367,8 +373,7 @@ $string['xakatwitterdesc'] = 'L’URL del vostre compte de 𝕏.';
 $string['unenrolme'] = 'Cancel·la la matrícula';
 $string['enrolme'] = 'Inscriu-me';
 $string['unread'] = 'no llegit';
-$string['unsupportedcoverimagetype'] = 'El tipus d’imatge de portada no és compatible ({$a})';
-$string['via'] = 'via';
+$string['unsupportedcoverimagetype'] = 'El tipus d\'imatge de portada no és compatible ({$a})';
 $string['viewcourse'] = 'Mostra el curs';
 $string['viewmore'] = 'Mostra\'n més';
 $string['viewyourprofile'] = 'Mostra el vostre perfil';
@@ -378,24 +383,27 @@ $string['viewforumposts'] = 'Mostra els meu apunts als fòrums';
 $string['viewmessaging'] = 'Mostra els meus missatges';
 $string['vieworiginalimage'] = 'Mostra la imatge original';
 $string['visibility'] = 'Visibilitat';
-$string['xofyanswered'] = '{$a->completed} de {$a->participants} contestades';
-$string['xofyattempted'] = '{$a->completed} de {$a->participants} intentades';
-$string['xofycontributed'] = '{$a->completed} de {$a->participants} contribuïdes';
-$string['xofysubmitted'] = '{$a->completed} de {$a->participants} trameses';
-$string['xungraded'] = '{$a} No qualificat';
+$string['xofyanswered'] = '{$a->completed}/{$a->participants} han respost';
+$string['xofyattempted'] = '{$a->completed}/{$a->participants} han fet algun intent';
+$string['xofycontributed'] = '{$a->completed}/{$a->participants} han contribuït';
+$string['xofysubmitted'] = '{$a->completed}/{$a->participants} han fet una tramesa';
+$string['xungraded'] = '{$a} sense qualificar';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'L’URL del vostre canal de YouTube';
 $string['showallsectionsdisabled'] = 'Pel seu llenguatge de disseny, l\'opció "Mostra totes les seccions en una pàgina" no està disponible al tema Snap.';
-$string['disabled'] = 'Desactivada';
+$string['disabled'] = 'Inhabilitada';
 $string['showappearancedisabled'] = 'El llenguatge de disseny de Snap impedeix que es produeixin canvis en la configuració d\'"Aparença".';
 $string['pbb'] = 'Construcció de marca basada en el perfil';
-$string['pbb_description'] = 'En habilitar <strong>Construcció de marca basada en el perfill</strong>, podreu personalitzar l\'experiència de marca per a un grup d\'usuaris específic segons el camp de perfil d\'usuari escollit.<ul><li>El valor del camp d\'usuari se <em>se simplificarà</em>; tots els caràcters es convertiran a minúscula i se separaran amb un guió (-)</li>
-<li>S\'hi afegirà el prefix <code>snap-pbb-</code></li>
-<li>Aquesta classe s\'afegirà a l\'etiqueta HTML <code>body</code></li></ul>Per exemple, el valor de camp de l\'usuari <em>Blueberry Extravaganza</em> se simplificarà per ser <code>snap-pbb-blueberry-extravaganza</code><br /><br />Si aquesta funció es fa servir juntament amb Custom CSS, haureu d\'afegir selectors CSS utilitzant les noves classes en la secció <a class="snap-settings-tab-link" href="#themesnapbranding">Basics</a>.';
+$string['pbb_description'] = 'En habilitar <strong>Construcció de marca basada en el perfil</strong>, podreu personalitzar l\'experiència de marca per a un grup d\'usuaris específic segons el camp de perfil d\'usuari escollit.
+<ul><li>El valor del camp d\'usuari <em>se simplificarà</em>; tots els caràcters es convertiran a minúscula i se separaran amb un guió (-).</li>
+<li>S\'hi afegirà el prefix <code>snap-pbb-</code>.</li>
+<li>Aquesta classe s\'afegirà a l\'etiqueta HTML <code>body</code>.</li></ul>
+Per exemple, el valor de camp d\'usuari <em>Blueberry Extravaganza</em> se simplificarà en <code>snap-pbb-blueberry-extravaganza</code>.<br /><br />
+Si aquesta funció es fa servir juntament amb CSS personalitzat, haureu d\'afegir selectors CSS utilitzant les classes noves de la secció <a class="snap-settings-tab-link" href="#themesnapbranding">Basics</a>.';
 $string['pbb_enable'] = 'Habilita Construcció de marca basada en el perfil';
 $string['pbb_enable_description'] = 'Només afegeix la classe a l\'etiqueta "body" si està activa.';
 $string['pbb_field'] = 'Camp d\'usuari que s\'ha d\'utilitzar';
-$string['pbb_field_description'] = 'Es netejarà i simplificarà el valor del camp i es farà servir com un nom de classe CSS al qual se li anteposarà <code>snap-pbb-</code>.';
+$string['pbb_field_description'] = 'Se simplificarà el valor del camp i es farà servir com un nom de classe CSS al qual s\'afegirà el prefix <code>snap-pbb-</code>.';
 $string['cachedef_profile_based_branding'] = 'Emmagatzemament en memòria cau de la construcció de marca basada en el perfil.';
 $string['cachedef_course_card_bg_image'] = 'Emmagatzemament en memòria cau de la imatge de fons del curs.';
 $string['cachedef_course_card_teacher_avatar'] = 'Emmagatzemament en memòria cau dels avatars dels professors.';
@@ -409,16 +417,21 @@ $string['gotocalendarsnap'] = 'aneu al calendari del lloc.';
 $string['quizattemptswarn'] = 'Exclou els intents dels usuaris amb la inscripció suspesa';
 $string['quizfeedback'] = 'Comentaris';
 $string['validratio'] = 'Aquesta combinació de colors no compleix amb el valor de relació mínima que estableix la WCAG 2.0 de 4,5:1';
-$string['invalidratio'] = 'Aquesta combinació de colors no compleix amb el <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de relació mínima que estableix la WCAG 2.0 de 4,5:1</a>. Valor: "{$a}"';
-$string['imageinvalidratio'] = 'Aquesta imatge pot tenir problemes de contrast amb el valor de relació mínima que estableix la WCAG 2.0 de 4,5:1. Valor mitjà del píxel: "{$a}"';
-$string['catinvalidratio'] = 'Aquestes categories de color no compleixen el <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de relació mínima que estableix la WCAG 2.0 de 4,5:1</a>: Contra un fons de color (blanc): "{$a->white}". Contra el color de fons de la barra de navegació: "{$a->custombar}". Contra el color de fons del botó Els meus cursos: "{$a->customnav}"';
-$string['spotinvalidratio'] = 'El color de fons no compleix amb el <a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de relació mínima que estableix la WCAG 2.0 de 4,5:1</a>. Valor actual contra {$a>name}: {$a->value}.';
-$string['imageinvalidratiocategory'] = 'Aquesta imatge pot tenir problemes de contrast amb el color del tema amb el valor de la relació mínima que estableix la WCAG 2.0 de 4,5:1. Valor mitjà del píxel: "{$a}"';
+$string['invalidratio'] = 'Aquesta combinació de colors no compleix el
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de relació mínima que estableixen les WCAG 2.0 de 4,5:1</a>. Valor: "{$a}"';
+$string['imageinvalidratio'] = 'Aquesta imatge pot tenir problemes de contrast amb el valor de relació mínima que estableixen les WCAG 2.0 de 4,5:1. Valor mitjà del píxel: "{$a}"';
+$string['catinvalidratio'] = 'Les següents categories de color no compleixen el
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de relació mínima que estableixen les WCAG 2.0 de 4,5: 1</a>:
+En comparació amb el color de fons del lloc (blanc): "{$a->white}". En comparació amb el color de fons de la barra de navegació: "{$a->custombar}". En comparació amb el color de fons del botó Els meus cursos: "{$a->customnav}"';
+$string['spotinvalidratio'] = 'El color de fons no compleix el
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">valor de relació mínima que estableixen les WCAG 2.0 de 4,5: 1</a>.
+El valor actual en comparació amb {$a->name}: {$a->value}.';
+$string['imageinvalidratiocategory'] = 'Aquesta imatge pot tenir problemes de contrast amb el color del tema perquè no compleix el valor de la relació mínima que estableixen les WCAG 2.0 de 4,5:1. Valor mitjà del píxel: "{$a}"';
 $string['browseallcategories'] = 'Navega per totes les categories';
 $string['lazyload_mod_page'] = 'Habilita la càrrega lenta per defecte per als recursos de pàgina';
 $string['lazyload_mod_page_description'] = 'Si s\'habilita, aquesta opció disminueix considerablement els temps de càrrega de les pàgines del curs per als cursos amb moltes pàgines.';
-$string['pmadvancedfeed_viewmore'] = 'Mostra\'n més';
-$string['pmadvancedfeed_reload'] = 'Actualitzar';
+$string['advancedfeed_viewmore'] = 'Mostra\'n més';
+$string['advancedfeed_reload'] = 'Actualitzar';
 $string['multimediacard'] = 'Els fitxers multimèdia no es mostraran a les visualitzacions de targeta d\'activitat per al tema Snap. Això s\'aplicarà a la pàgina principal i a les pàgines del curs només per a l\'activitat petita i les targetes de recursos.';
 $string['enabledlogin'] = 'Opcions d\'inici de sessió que es mostren';
 $string['enabledlogindesc'] = 'Seleccioneu les opcions d\'inici de sessió que s\'han de mostrar.';
@@ -430,21 +443,19 @@ $string['enabledloginorderdesc'] = 'Seleccioneu quina opció d\'inici de sessió
 $string['moodleloginfirst'] = 'Mostra l\'inici de la sessió de Moodle primer';
 $string['alternativeloginfirst'] = 'Mostra les opcions alternatives d\'inici de sessió primer';
 $string['alternativeloginoptions'] = 'Opcions alternatives d\'inici de sessió';
-$string['openmessagedrawer'] = 'Obre el calaix de missatgeria.';
 $string['refreshdeadlinestask'] = 'Actualitza les dades de terminis a la memòria cau. S\'ha d\'executar abans que tots els usuaris iniciïn sessió.';
 $string['resetdeadlinesquerycounttask'] = 'Restablir el recompte de consultes de terminis';
-$string['refreshdeadlinestaskoff'] = 'No s\'han cercat dades per a omplir. Activeu el paràmetre "Actualitza els terminis mitjançant una tasca programada" en els paràmetres del menú Personal de Snap per permetre que aquesta tasca ompli les dades de terminis de la memòria cau.';
+$string['refreshdeadlinestaskoff'] = 'No s\'han cercat dades per emplenar. Activeu el paràmetre "Actualitza els terminis mitjançant una tasca programada" als paràmetres de Canals Snap per permetre que aquesta tasca empleni les dades de terminis de la memòria cau.';
 $string['activityrestriction'] = 'Restricció d\'activitat';
 $string['hideandshowactioncb'] = 'Oculta i mostra l\'acció de la casella de selecció d\'activitat';
-$string['retryfeed'] = 'Aquest canal no està disponible actualment; torneu-ho a comprovar més tard. Canal {$a}';
+$string['retryfeed'] = 'Aquest canal no està disponible actualment; torneu-ho a comprovar més tard. Canal: {$a}';
 $string['loadingfeed'] = 'S\'està carregant... pot trigar temps';
 $string['hvpcustomcss'] = 'CSS personalitzat H5P';
 $string['hvpcustomcssdesc'] = 'CSS personalitzat per al mòdul H5P (moodle.org/plugins/mod_hvp) si està instal·lat.';
-$string['courselimitstrdanger'] = 'La barra de progrés de límit de curs assolit no es mostrarà.';
-$string['courselimitstrwarning'] = 'Si hi ha més de {$a} cursos a la llista, no es mostrarà la barra de progrés';
 $string['tilesformatcoursehomealttext'] = 'Inici de curs';
 $string['editmodetiles'] = 'Edita contingut';
 $string['totop'] = 'Vés a la part superior';
+$string['toleft'] = 'Ves a l\'esquerra';
 $string['loginsetting'] = 'Pàgina d’inici de sessió';
 $string['loginbgimgheading'] = 'Plantilla de la pàgina d\'inici de sessió';
 $string['loginbgimgheadingdesc'] = 'Snap permet canviar entre diferents plantilles que es mostraran a la pàgina d’inici de sessió. Seleccioneu entre les diferents opcions del menú desplegable a continuació.';
@@ -468,7 +479,7 @@ $string['enableblockmyoverviewwarning'] = 'El bloc del resum del curs s\'ha inha
 $string['collapseicon'] = 'Contrau el contingut de';
 $string['expandicon'] = 'Amplia el contingut de';
 $string['imageproperties'] = 'Propietats de la imatge';
-$string['coverimagedesc'] = 'Seleccioneu la imatge que apareix a la portada i assegureu-vos que està en format .jpeg, .png o .gif. No ha d\'excedir la mida màxima de fitxer permesa al nivell de lloc ({$a}). Per garantir una visualització òptima, opteu per una relació d\'aspecte de 4:3 (1042&nbsp;×&nbsp;768&nbsp;píxels). A més, teniu en compte que les combinacions de colors que compleixen les directrius WCAG&nbsp;2.0, sobretot pel que fa al títol blanc del curs, milloren l\'experiència de l\'usuari.';
+$string['coverimagedesc'] = 'Seleccioneu la imatge que es mostrarà a la portada i assegureu-vos que estigui en format .jpeg, .png o .gif. No ha d\'excedir la mida màxima de fitxer permesa al nivell de lloc ({$a}). Per garantir una visualització òptima, opteu per una relació d\'aspecte de 4:3 (1024 × 768 píxels). A més, tingueu en compte que les combinacions de colors que compleixen les directrius WCAG 2.0, sobretot pel que fa al títol blanc del curs, milloren l\'experiència de l\'usuari.';
 $string['coverimagecropperdesc'] = 'Amb el quadre d\'escapçament, seleccioneu l\'àrea de la imatge que es mostrarà.';
 $string['browserepositories'] = 'Puja una nova imatge';
 $string['saveimage'] = 'Desa la imatge';
@@ -476,9 +487,15 @@ $string['selectimage'] = 'Selecciona imatge';
 $string['deleteimage'] = 'Suprimeix la imatge de portada';
 $string['confirmdeletefile'] = 'Aquesta acció suprimirà la imatge de portada. Confirmeu que voleu suprimir el fitxer desat?';
 $string['coverimagesettingswarning'] = 'Si actualitzeu la imatge de portada directament des de la pàgina de configuració del curs, la imatge de portada retallada es restablirà. Recordeu que haureu de seleccionar de nou l\'escapçament que vulgueu a continuació.';
-$string['opens'] = 'Obre {$a}';
+$string['opens'] = 'S\'obre {$a}';
 $string['opened'] = 'S\'ha obert {$a}';
 $string['year'] = 'Any';
 $string['homepage'] = 'Pàgina d\'inici';
 $string['allyears'] = 'Tots els anys';
 $string['courselink'] = 'Aneu al curs';
+$string['student'] = 'Estudiant';
+$string['showcourseinformation'] = 'Mostra la informació del curs';
+$string['pageactivitywithnodescription'] = 'Si la descripció de la pàgina està buida i el contingut de la pàgina té menys de 200 caràcters, no es mostrarà la icona per desplegar l\'activitat de la pàgina a la pàgina de curs, ja que el contingut de la pàgina servirà com a descripció de la pàgina.';
+$string['toggleadmindrawer'] = 'Commuta el calaix d\'administració';
+$string['toggleblockdrawer'] = 'Commuta el calaix del bloc';
+$string['togglesnapfeedsdrawer'] = 'Commuta el calaix de canals de Snap';
