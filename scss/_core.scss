@@ -590,7 +590,7 @@ blockquote {
 
 // Although this is kinda general, we need to leave like it is,
 // because Snap is using these width and heights for some designs.
-img {
+img:not([height]) {
     max-width: 100%;
     height: auto;
 }
@@ -738,10 +738,6 @@ body#page-mod-resource-view.path-mod-resource.pagelayout-frametop {
     height: 80%;
 }
 
-.mediaplugin_videojs > div {
-    max-width: none !important;
-}
-
 .media-responsive {
     width: 100%;
     display: block;
@@ -759,12 +755,6 @@ body#page-mod-resource-view.path-mod-resource.pagelayout-frametop {
 
 .media-responsive-pad {
     display: block;
-}
-
-// Responsive video for HTML5 only.
-video {
-    width: 100% !important;
-    height: auto !important;
 }
 
 li {
@@ -1227,6 +1217,12 @@ footer #moodle-footer
 // -------------------------
 // Mr.nav - he's there, fixed to the top of your page
 // -------------------------
+
+.tox-fullscreen {
+    #mr-nav {
+        z-index: 1050; // Behind the editor when its fullscreen.
+    }
+}
 
 #mr-nav {
     #snap-header {

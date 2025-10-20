@@ -5445,7 +5445,7 @@ blockquote {
     font-size: 1em;
 }
 
-img {
+img:not([height]) {
     max-width: 100%;
     height: auto;
 }
@@ -5499,10 +5499,6 @@ img.icon {
     vertical-align: middle;
 }
 
-.mediaplugin_videojs > div {
-    max-width: none !important;
-}
-
 .media-responsive {
     width: 100%;
     display: block;
@@ -5534,11 +5530,6 @@ img.icon {
     width: 100%;
     margin: 0 auto;
     max-height: 90vh;
-}
-
-video {
-    width: 100% !important;
-    height: auto !important;
 }
 
 /* mdl hide stuff icon - hide in bs has different meaning*/
