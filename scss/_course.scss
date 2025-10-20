@@ -1718,47 +1718,15 @@ body.snap-resource-list {
                                 "availability   availability  availability   availability  availability";
         }
 
+        .activity-completion {
+            grid-area: none;
+            grid-column: 1 / -1;
+            width: 100%;
+        }
+
         .activity-completion .activity-information {
           button.btn {
-            font-size: 0;
-            width: 20px;
-            height: 20px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: unset;
-            box-shadow: unset;
-            background-color: white;
-            &:after {
-              display: none;
-            }
-            &:focus {
-              outline: 3px solid $brand-primary;
-            }
-            &:hover {
-              transform: scale(1.1);
-              outline: unset;
-            }
-            // Change icon to fa-circle-check for completion button.
-            &::before {
-              content: "\f058";
-              font-family: "Font Awesome 6 Free";
-              font-weight: 900;
-              font-size: 20px;
-              color: #6c757d;
-            }
-            &.btn-success::before {
-              color: #218838;
-            }
-          }
-          // Change icon to fa-circle-exclamation for completion requirements dropdown.
-          .completion-dropdown button.btn {
-            &::before {
-              content: "\f06a";
-            }
-            &.btn-success::before {
-              content: "\f058";
-            }
+            width: 100%;
           }
         }
       }
