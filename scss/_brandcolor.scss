@@ -521,14 +521,14 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
       width: 100%;
     }
 
-  .courseindex .courseindex-section .courseindex-item.pageitem .snap-section-label {
-    background-color: $brand-primary;
-    border-radius: .5rem;
-    width: 75%;
-    &:hover {
-      background-color: color-mix(in srgb, $brand-primary, white 25%);
+    .courseindex .courseindex-section .courseindex-item.pageitem .snap-section-label {
+      background-color: $brand-primary;
+      border-radius: .5rem;
+      width: 75%;
+      &:hover {
+        background-color: color-mix(in srgb, $brand-primary, white 25%);
+      }
     }
-  }
 
     .courseindex .courseindex-section.current .courseindex-item.pageitem .snap-section-label {
       background-color: $brand-primary;
