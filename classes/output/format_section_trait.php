@@ -279,7 +279,9 @@ trait format_section_trait {
                     $cmid = $cmsitem->cmitem->id;
                     $mod = $modinfo->cms[$cmid];
                     $coursetoolsicon = $renderer->snap_course_section_cm_availability($mod);
-                    $cmsitem->cmitem->cmformat->controlmenu->snapcoursetoolsicon = $coursetoolsicon;
+                    if (isset($cmsitem->cmitem->cmformat->controlmenu)) {
+                        $cmsitem->cmitem->cmformat->controlmenu->snapcoursetoolsicon = $coursetoolsicon;
+                    }
                     $metahtml = $renderer->module_meta_html($mod);
                     $metahtml = (empty($metahtml)) ? '' : '<div class="snap-completion-meta">' . $metahtml. '</div>';
                     $cmsitem->cmitem->cmformat->afterlink .= $metahtml;

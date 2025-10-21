@@ -31,6 +31,7 @@ Feature: When the moodle theme is set to Snap, course layout cannot be changed t
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
+      | student1 | student | 1 | student1@example.com |
     And the following "course enrolments" exist:
       | user | course | role |
       | teacher1 | C1 | editingteacher |
@@ -45,3 +46,22 @@ Feature: When the moodle theme is set to Snap, course layout cannot be changed t
     Then I should see "Due to its design language, \"Show all sections on one page\" isn't available in Snap."
     And I click on "[name=\"coursedisplay\"]" "css_element"
     Then I should see "Show all sections on one page (Disabled)"
+
+  @javascript
+  Scenario: When there is a Course with "Show all sections" in snap, the student does not see the error when entering the section with subsections
+    # "Show all sections" is coursedisplay = 0, "Show one section per page" is coursedisplay = 1
+    Given the following "courses" exist:
+      | fullname | shortname| category | format | coursedisplay |
+      | Course 2 | C2       | 0        | topics | 0             |
+    And the following "course enrolments" exist:
+      | user | course | role    |
+      | student1 | C2 | student |
+    And the following "activities" exist:
+      | activity   | name        | course | idnumber    | section |
+      | subsection | Subsection1 | C2     | Subsection1 | 0       |
+      | assign     | Assign1     | C2     | assign11    | 0       |
+    And I log in as "student1"
+    And I am on "Course 2" course homepage
+    Then I wait until the page is ready
+    And I should see "Introduction"
+    And I should see "Assign1"

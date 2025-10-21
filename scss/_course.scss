@@ -3977,3 +3977,10 @@ body[id^='page-mod-data'] {
     padding: 1em 2em 0 2em;
   }
 }
+
+// Prevent editing options (core) from being displayed when editing is turned off.
+// This error is caused by the coursedisplay->0 value.
+body:not(.editing) .quickediticon.visibleifjs,
+body:not(.editing) .divider.bulk-hidden {
+  display: none !important;
+}
