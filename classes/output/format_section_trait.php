@@ -312,6 +312,7 @@ trait format_section_trait {
      * @return mixed The section to show by default in Snap Course View
      */
     protected function get_snap_active_section($course) {
+        $modinfo = get_fast_modinfo($course);
         $startsectionid = 0; // Default section 0.
         if ($course->format == 'weeks') {
             $numsections = course_get_format($course)->get_last_section_number();
@@ -322,7 +323,7 @@ trait format_section_trait {
                 }
             }
         } else if ($course->format == 'topics') {
-            $startsectionid = !empty($course->marker) ? $course->marker : 0;
+            $startsectionid = !empty($course->marker) && $modinfo->get_section_info($course->marker) ? $course->marker : 0;
         }
         $startsectionid = !empty($course->sectionreturn) ? $course->sectionreturn : $startsectionid;
 

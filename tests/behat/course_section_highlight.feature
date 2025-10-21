@@ -129,3 +129,29 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I am on the course main page for "C2"
     Then "#section-1" "css_element" should exist
     Then I should see "Current week" in the "#section-1" "css_element"
+
+  @javascript
+  # When a highlighted section is deleted, the next added section becomes highlighted.
+    Scenario: Delete a highlighted section
+      Given the following "courses" exist:
+        | fullname | shortname | format | coursedisplay | numsections |
+        | Course 3 | C3        | topics | 0             | 3           |
+      And I log in as "admin"
+      And I am on the course main page for "C1"
+      When I click on "#courseindexsection1 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
+      And I wait until "#extra-actions-dropdown-1" "css_element" exists
+      And I click on "#extra-actions-dropdown-1" "css_element"
+      And I click on "#section-1 .snap-highlight" "css_element"
+      And I wait until "#section-1 .snap-highlight" "css_element" exists
+      And "#extra-actions-dropdown-1" "css_element" should exist
+      And I click on "#extra-actions-dropdown-1" "css_element"
+      And I click on "#section-1 .snap-delete" "css_element"
+      Then I should see section delete dialog
+      When I press "Delete"
+      Then I should not see "Highlighted"
+      And I follow "Create a new section"
+      And I set the field "newsection" to "Test new section"
+      And I press "Create section"
+      And I wait until the page is ready
+      Then I should see "Test new section"
+      And I should see " Highlighted"
