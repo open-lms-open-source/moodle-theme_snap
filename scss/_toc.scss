@@ -593,10 +593,6 @@ label[for="toc-search-input"]{
   position: relative;
 }
 
-#course-index .courseindex-section.current .courseindex-item.pageitem i.icon {
-  color: white;
-}
-
 .courseindex-section {
     .pageitem {
         .courseindex-link {
@@ -611,7 +607,6 @@ label[for="toc-search-input"]{
 
     .courseindex-link {
       display: inline-block !important;
-      max-width: 70%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -634,8 +629,8 @@ label[for="toc-search-input"]{
 
         .current-badge {
           position: absolute;
-          top: 32%;
-          right: 0.5rem;
+          top: 30%;
+          right: 0.8rem;
           transform: translateY(-50%);
           z-index: 2;
           pointer-events: none;
@@ -657,7 +652,7 @@ label[for="toc-search-input"]{
 }
 
 #courseindex #courseindex-content {
-  padding-left: 15px;
+  padding-left: calc(15px + 0.8em);
 }
 
 .courseindex .courseindex-item-content .courseindex-item {

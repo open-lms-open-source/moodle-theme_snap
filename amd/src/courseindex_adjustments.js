@@ -22,6 +22,7 @@
  */
 
 import cfg from 'core/config';
+import ajax from "core/ajax";
 
 /**
  * Build the URL for a module icon.
@@ -95,6 +96,17 @@ const processNode = (node) => {
     injectTitles(node);
 };
 
+const getCourseState = async() => {
+
+    const courseStateData = await ajax.call([{
+        methodname: 'core_courseformat_get_state',
+        args: {
+            courseid: M.cfg.courseId,
+        }
+    }])[0];
+    return JSON.parse(courseStateData);
+};
+
 /**
  * Initializes the course index adjustments.
  *
@@ -111,6 +123,32 @@ export const init = () => {
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((m) => {
                 m.addedNodes.forEach(processNode);
+            });
+            getCourseState().then(courseState => {
+                const sections = document.querySelectorAll('#courseindex-content .courseindex-section');
+                const currentSectionId = courseState.section.filter(el => el.current)[0].id;
+                sections.forEach(section => {
+                    if (currentSectionId === section.dataset.id) {
+                        section.classList.add('current');
+                        if (document.querySelector('body:not(.path-course-view-section)')) {
+                            section.querySelector('.courseindex-item').classList.add('pageitem');
+                        }
+                    } else {
+                        section.classList.remove('current');
+                        if (document.querySelector('body:not(.path-course-view-section)')) {
+                            section.querySelector('.courseindex-item').classList.remove('pageitem');
+                        }
+                    }
+                });
+            });
+            const sectionsInView = document.querySelectorAll('body:not(.path-course-view-section)' +
+                ' #courseindex-content .courseindex-section');
+            sectionsInView.forEach((section) => {
+                if (section.classList.contains('current')) {
+                    section.querySelector('.courseindex-item').classList.add('pageitem');
+                } else {
+                    section.querySelector('.courseindex-item').classList.remove('pageitem');
+                }
             });
         });
         observer.observe(target, {childList: true, subtree: true});

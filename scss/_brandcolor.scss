@@ -509,9 +509,26 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
       background-color: $brand-primary;
     }
 
-    .courseindex-section .pageitem .courseindex-link {
-      background-color: $brand-primary;
+    .courseindex-section.current .pageitem {
+      a.courseindex-chevron i.icon {
+        color: $brand-primary;
+      }
+      .courseindex-link {
+        background-color: $brand-primary;
+        padding: 2px 5px;
+      }
     }
+
+    .courseindex-section:not(.current) .pageitem {
+      a.courseindex-chevron i.icon {
+        color: $brand-primary;
+      }
+      .courseindex-link {
+        background-color: $brand-primary;
+        max-width: 70%;
+      }
+    }
+
 
     .courseindex .courseindex-section.current .current-badge.bg-primary {
       background-color: color-mix(in srgb, $brand-primary, white 25%) !important;
@@ -525,10 +542,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         .courseindex-link {
           background-color: color-mix(in srgb, $brand-primary, white 25%) !important;
         }
-    }
-
-   .courseindex .courseindex-section.current .courseindex-item.pageitem {
-      background-color: $brand-primary;
     }
 
     // workaround for #notices with buttons outside the div#notice
