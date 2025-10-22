@@ -22,6 +22,14 @@
  */
 
 import $ from 'jquery';
+/** @var {Object}  The icon configurations */
+const icon = {
+    // Actions
+    'backup': {
+        css: 'editing_backup',
+        iconClass: 'fa fa-frown-o',
+    },
+};
 
 export default class SharingCartForSnap {
     constructor(courseSections) {
@@ -39,10 +47,16 @@ export default class SharingCartForSnap {
     };
     /**
      * Sets a create command pointer
-     * @param {string} create_command
+     * @param {string} name
      */
-    setCreateCommand = (create_command) => {
-        this.create_command = create_command;
+    create_command = (name) => {
+        const iconElement = $('<i/>')
+            .attr('alt', this.str(name))
+            .attr('class', icon[name].iconClass);
+        return $('<a href="javascript:void(0)"/>')
+            .addClass(icon[name].css)
+            .attr('title', this.str(name))
+            .append(iconElement);
     };
     /**
      *  Create a custom command icon
@@ -230,6 +244,7 @@ export default class SharingCartForSnap {
         const on_section_backup = input.on_section_backup;
         const on_backup = input.on_backup;
         const _this = this;
+        //_this.create_command = this.create_command;
 
         if(course.is_frontpage)
         {
