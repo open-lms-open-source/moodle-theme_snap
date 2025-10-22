@@ -607,7 +607,6 @@ label[for="toc-search-input"]{
 
     .courseindex-link {
       display: inline-block !important;
-      max-width: 70%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -631,7 +630,7 @@ label[for="toc-search-input"]{
         .current-badge {
           position: absolute;
           top: 30%;
-          right: 1.5rem;
+          right: 0.8rem;
           transform: translateY(-50%);
           z-index: 2;
           pointer-events: none;

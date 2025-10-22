@@ -509,6 +509,27 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
       background-color: $brand-primary;
     }
 
+    .courseindex-section.current .pageitem {
+      a.courseindex-chevron i.icon {
+        color: $brand-primary;
+      }
+      .courseindex-link {
+        background-color: $brand-primary;
+        padding: 2px 5px;
+      }
+    }
+
+    .courseindex-section:not(.current) .pageitem {
+      a.courseindex-chevron i.icon {
+        color: $brand-primary;
+      }
+      .courseindex-link {
+        background-color: $brand-primary;
+        max-width: 70%;
+      }
+    }
+
+
     .courseindex .courseindex-section.current .current-badge.bg-primary {
       background-color: color-mix(in srgb, $brand-primary, white 25%) !important;
     }
@@ -517,26 +538,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
       border-left: solid 3px $brand-primary;
     }
 
-    .courseindex .courseindex-section .courseindex-item .snap-section-label {
-      width: 100%;
-    }
-
-    .courseindex .courseindex-section .courseindex-item.pageitem .snap-section-label {
-      background-color: $brand-primary;
-      border-radius: .5rem;
-      width: 75%;
-      &:hover {
-        background-color: color-mix(in srgb, $brand-primary, white 25%);
-      }
-    }
-
-    .courseindex .courseindex-section.current .courseindex-item.pageitem .snap-section-label {
-      background-color: $brand-primary;
-      border-radius: .5rem;
-      width: 100%;
-      &:hover {
-        background-color: color-mix(in srgb, $brand-primary, white 25%);
-      }
+    .courseindex-section-title.pageitem:hover {
+        .courseindex-link {
+          background-color: color-mix(in srgb, $brand-primary, white 25%) !important;
+        }
     }
 
     // workaround for #notices with buttons outside the div#notice
