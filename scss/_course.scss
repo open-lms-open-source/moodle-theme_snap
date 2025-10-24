@@ -1718,10 +1718,14 @@ body.snap-resource-list {
                                 "availability   availability  availability   availability  availability";
         }
 
-        .activity-completion {
+        .activity-completion, .activity-altcontent {
             grid-area: none;
             grid-column: 1 / -1;
             width: 100%;
+        }
+
+        .activity-altcontent {
+            margin-top: 2rem;
         }
 
         .activity-completion .activity-information {

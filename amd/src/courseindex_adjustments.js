@@ -73,7 +73,7 @@ const injectIcons = (root) => {
  * @param {HTMLElement|Document} root - The root node to search for course index links.
  */
 const injectTitles = (root) => {
-    root.querySelectorAll('a.courseindex-link').forEach((link) => {
+    root.querySelectorAll('a.courseindex-link, a.aalink.stretched-link').forEach((link) => {
         if (!link.hasAttribute('title')) {
             const text = link.textContent.trim();
             if (text) {
@@ -126,7 +126,7 @@ export const init = () => {
             });
             getCourseState().then(courseState => {
                 const sections = document.querySelectorAll('#courseindex-content .courseindex-section');
-                const currentSectionId = courseState.section.filter(el => el.current)[0].id;
+                const currentSectionId = courseState.section.filter(el => el.current)[0]?.id;
                 sections.forEach(section => {
                     if (currentSectionId === section.dataset.id) {
                         section.classList.add('current');
