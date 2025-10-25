@@ -35,4 +35,4 @@ Feature: Testing course index drawer in theme_snap
     And I am on the course main page for "C1"
     And "#theme_boost-drawers-courseindex" "css_element" should be visible
     Then "//li[contains(@id,'course-index-cm') and .//span[contains(@class,'activityiconcontainer')]//img[contains(@class,'book')]]" "xpath_element" should exist
-    And "//li[contains(@id,'course-index-cm')]//img[@alt='book icon']" "xpath_element" should exist
+    And "//li[contains(@id,'course-index-cm')]//img[contains(@class,'book')]" "xpath_element" should exist

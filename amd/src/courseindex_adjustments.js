@@ -21,51 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import cfg from 'core/config';
 import ajax from "core/ajax";
-
-/**
- * Build the URL for a module icon.
- *
- * @param {string} modname - The short name of the module (e.g. quiz, forum).
- * @returns {string} The absolute URL of the icon.
- */
-const getIconUrl = (modname) => {
-    return `${cfg.wwwroot}/theme/image.php/${cfg.theme}/${modname}/${cfg.themerev}/monologo?filtericon=1`;
-};
-
-/**
- * Injects icons into activity containers that do not already have one.
- *
- * @param {HTMLElement|Document} root - The root node to search for activity containers.
- */
-const injectIcons = (root) => {
-    root.querySelectorAll('.activityiconcontainer[data-cmid]').forEach((container) => {
-        if (container.dataset.iconInjected) {
-            return;
-        }
-        container.dataset.iconInjected = '1';
-
-        const link = container.closest('li.courseindex-item')?.querySelector('a.courseindex-link');
-        if (!link) {
-            return;
-        }
-
-        const href = link.getAttribute('href') || '';
-        const match = href.match(/\/mod\/([^/]+)\//);
-        if (!match) {
-            return;
-        }
-        const modname = match[1];
-        const iconurl = getIconUrl(modname);
-
-        const img = document.createElement('img');
-        img.src = iconurl;
-        img.alt = `${modname} icon`;
-        img.className = `${modname} icon activityicon`;
-        container.appendChild(img);
-    });
-};
 
 /**
  * Ensures that all course index links have a title attribute for accessibility.
@@ -92,7 +48,6 @@ const processNode = (node) => {
     if (node.nodeType !== 1) {
         return;
     }
-    injectIcons(node);
     injectTitles(node);
 };
 
@@ -110,12 +65,10 @@ const getCourseState = async() => {
 /**
  * Initializes the course index adjustments.
  *
- * - Injects icons into existing activities.
  * - Adds missing title attributes to links.
  * - Observes changes in the course index and applies the same adjustments to new nodes.
  */
 export const init = () => {
-    injectIcons(document);
     injectTitles(document);
 
     const target = document.querySelector('#courseindex');

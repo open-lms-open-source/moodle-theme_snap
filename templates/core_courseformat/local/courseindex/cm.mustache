@@ -17,7 +17,7 @@
 {{!
     @template core_courseformat/local/courseindex/cm
 
-    Displays a course index course-module entry.
+    Displays a course index course-module entry with Snap custom icons.
 
     Example context (json):
     {
@@ -29,7 +29,8 @@
         "uniqid": "0",
         "accessvisible": 1,
         "hascmrestrictions": 0,
-        "indent": 1
+        "indent": 1,
+        "module": "forum"
     }
 }}
 <li class="courseindex-item
@@ -46,8 +47,15 @@
 >
     {{^hasdelegatedsection}}
         <span class="completioninfo" data-for="cm_completion" data-value="NaN"></span>
+        <span class="activityiconcontainer icon {{module}}icon" data-cmid="{{id}}">
+            {{#module}}
+                <img src="/theme/image.php?theme=snap&component={{module}}&image=monologo&filtericon=1"
+                     class="{{module}} icon activityicon"
+                     alt="{{modname}}"
+                     aria-hidden="true">
+            {{/module}}
+        </span>
         {{#uservisible}}
-            <span class="activityiconcontainer {{modshortname}}icon" data-cmid="{{id}}">{{iconurl}}</span>
             <a class="courseindex-link text-truncate"
                 {{#url}} href="{{{url}}}" {{/url}}{{^url}} href="#{{{anchor}}}" data-anchor="true" {{/url}}
                data-for="cm_name"
