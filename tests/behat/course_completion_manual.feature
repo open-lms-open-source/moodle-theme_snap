@@ -24,7 +24,6 @@
 Feature: Manual completion updates page wihout reload.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | topics | 0        | 1         | 1                |      1       |
@@ -47,7 +46,6 @@ Feature: Manual completion updates page wihout reload.
   Scenario Outline: Assignment module is manually marked complete and releases restricted activities / sections.
     Given I log in as "admin"
     And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
       | resourcedisplay     | <Option> | theme_snap |
     And I am on the course main page for "C1"
     # Restrict the second assign module to only be accessible after the first assign module is marked complete.
@@ -68,49 +66,44 @@ Feature: Manual completion updates page wihout reload.
     And I am on the course main page for "C1"
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     And I should see "Not available unless: The activity Test assignment1 is marked complete"
-    When I follow "Section 1"
-    And I should see "Not available unless: The activity Test assignment2 is marked complete"
-    Then I should see availability info "Not available unless: The activity Test assignment2 is marked complete" in "section" "1"
+    And I go to section 1 of course "C1"
+    And I should see "Section 1 is not available"
     And I should not see "Test assignment3"
-    When I follow "Section 2"
-    Then I should see availability info "Not available unless: The activity Test assignment3 is marked complete" in "section" "2"
+    And I go to section 2 of course "C1"
     And I should not see "Test assignment4"
-    And I follow "Introduction"
+    And I follow "General"
     And I should see "Conditional" in TOC item 1
     And I should see "Conditional" in TOC item 2
     When I mark the activity "Test assignment1" as complete
-    Then the "Test assignment1" "assign" activity with "manual" completion should be marked as complete (core_fix)
     And I should see "Test assignment2"
     And I should not see "Test assignment3"
     # Test chained activity completion
     When I mark the activity "Test assignment2" as complete
-    Then the "Test assignment2" "assign" activity with "manual" completion should be marked as complete (core_fix)
     Then I should not see "Conditional" in TOC item 1
     And I should see "Conditional" in TOC item 2
     When I follow "Section 1"
     Then I should not see availability info "Not available unless: The activity Test assignment2 is marked complete"
     And I should see "Test assignment3"
-    When I follow "Section 2"
-    Then I should see availability info "Not available unless: The activity Test assignment3 is marked complete"
+    And I go to section 2 of course "C1"
+    Then I should see "Section 2 is not available"
     And I follow "Section 1"
     # Test chained activity completion when section has become visible
     When I mark the activity "Test assignment3" as complete
-    Then the "Test assignment3" "assign" activity with "manual" completion should be marked as complete (core_fix)
+    # Then the "Test assignment3" "assign" activity with "manual" completion should be marked as complete (core_fix)
     Then I should not see "Conditional" in TOC item 2
-    When I follow "Section 2"
-    Then I should not see availability info "Not available unless: The activity Test assignment3 is marked complete"
+    And I go to section 2 of course "C1"
     And I should see "Test assignment4"
     # Test marking incomplete
     And I follow "Section 1"
     When I mark the activity "Test assignment3" as incomplete
     Then I should see "Conditional" in TOC item 2
-    When I follow "Section 2"
-    Then I should see availability info "Not available unless: The activity Test assignment3 is marked complete"
-    When I follow "Introduction"
+    And I go to section 2 of course "C1"
+    Then I should see "Section 2 is not available"
+    When I follow "General"
     When I mark the activity "Test assignment2" as incomplete
     Then I should see "Conditional" in TOC item 1
-    When I follow "Section 1"
-    Then I should see availability info "Not available unless: The activity Test assignment2 is marked complete"
+    And I go to section 1 of course "C1"
+    Then I should see "Section 1 is not available"
     Examples:
       | Option     |
       | 0          |

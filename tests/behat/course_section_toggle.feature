@@ -19,12 +19,11 @@
 # @copyright  2015 Guy Thomas
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap @theme_snap_course @theme_snap_course
+@theme @theme_snap @theme_snap_course
 Feature: When the moodle theme is set to Snap, teachers can toggle the visibility of course sections in read mode and
   edit mode.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -39,51 +38,48 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | student1 | C1 | student |
 
   @javascript
-  Scenario Outline: In read mode, teacher hides section.
+  Scenario: In read mode, teacher hides section.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     Then I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 2"
     Then "#section-2" "css_element" should exist
-    And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
+    And "#course-index div.courseindex-section:nth-of-type(3)" "css_element" should exist
     And "#section-2.hidden" "css_element" should not exist
     And I click on "#section-2 .snap-visibility.snap-hide" "css_element"
+    And I follow "Section 2"
     And I wait until "#section-2 .snap-visibility.snap-show" "css_element" exists
     Then "#section-2.hidden" "css_element" should exist
-    And "#chapters h3:nth-of-type(3) li.snap-visible-section" "css_element" should exist
+    And "#course-index div.courseindex-section:nth-of-type(3)" "css_element" should exist
     # Make sure that the navigation either side of section 2 has the dimmed class - i.e. to reflect section 2's hidden status.
     And I follow "Section 3"
-    And I follow "Section 2"
     And the previous navigation for section "3" shows as hidden
     And I follow "Section 1"
-    And I follow "Section 2"
+    # And I follow "Section 2"
     And the next navigation for section "1" shows as hidden
     # Note, the Not published to students message is in the 3rd element of the TOC because element 1 is section 0.
-    And I should see "Not published to students" in the "#chapters h3:nth-of-type(3)" "css_element"
+    And "#course-index div.courseindex-section div.courseindex-section-title.dimmed" "css_element" should be visible
     # Let's make the section visible again
+    And I follow "Section 2"
     Given I click on "#section-2 .snap-visibility.snap-show" "css_element"
+    And I follow "Section 2"
     And I wait until "#section-2 .snap-visibility.snap-hide" "css_element" exists
     Then "#section-2.hidden" "css_element" should not exist
-    And I should not see "Not published to students" in the "#chapters h3:nth-of-type(3)" "css_element"
+    And "#course-index div.courseindex-section div.courseindex-section-title.dimmed" "css_element" should not be visible
     # Make sure that the navigation either side of section 2 does not have the dimmed class - i.e. to reflect section 2's visible status.
+    And I follow "Section 3"
     And the previous navigation for section "3" shows as visible
+    And I follow "Section 1"
     And the next navigation for section "1" shows as visible
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
-  Scenario Outline: In read mode, teacher hides section and show an activity.
+  Scenario: In read mode, teacher hides section and show an activity.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I am on the course main page for "C1"
     And I follow "Section 1"
     And I click on "#section-1 .snap-visibility.snap-hide" "css_element"
+    And I follow "Section 1"
     And I wait until "#section-1 .snap-visibility.snap-show" "css_element" exists
     And I reload the page
     And I add a assign activity to course "C1" section "1" and I fill the form with:
@@ -92,20 +88,15 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | visible         | 1                       |
     And I am on the course main page for "C1"
     And I follow "Section 1"
-    And I should see "Available but not shown on course page"
+    And "Available but not shown on course page" "text" should exist in the "Assignment One" "activity"
     And I click on "#section-1 .snap-visibility.snap-show" "css_element"
+    And I follow "Section 1"
     And I wait until "#section-1 .snap-visibility.snap-hide" "css_element" exists
-    Then I should not see "Available but not shown on course page"
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    Then "Available but not shown on course page" "text" should not exist in the "Assignment One" "activity"
 
   @javascript
-  Scenario Outline: In read mode, teacher hides section and hide an activity.
+  Scenario: In read mode, teacher hides section and hide an activity.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I am on the course main page for "C1"
     And I add a assign activity to course "C1" section "1" and I fill the form with:
       | Assignment name | Assignment One          |
@@ -113,18 +104,15 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | visible         | 0                       |
     And I am on the course main page for "C1"
     And I follow "Section 1"
-    Then I should see "Not published to students"
+    Then I should see "Hidden from students"
     And I click on "#section-1 .snap-visibility.snap-hide" "css_element"
+    And I follow "Section 1"
     And I wait until "#section-1 .snap-visibility.snap-show" "css_element" exists
     Then ".snap-asset.draft .snap-draft-tag" "css_element" should not be visible
     And I click on "#section-1 .snap-visibility.snap-show" "css_element"
+    And I follow "Section 1"
     And I wait until "#section-1 .snap-visibility.snap-hide" "css_element" exists
-    Then ".snap-asset.draft .snap-draft-tag" "css_element" should be visible
-    Then I should see "Not published to students"
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    Then I should see "Hidden from students"
 
   @javascript
   Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
@@ -134,15 +122,12 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
-    And I click on "#section-1 .snap-visibility.snap-hide" "css_element"
-    Then I should see "Failed to hide/show section"
+    And "#section-1 .snap-visibility.snap-hide" "css_element" should not exist
 
   @javascript
   Scenario: Teacher loses teacher capability whilst course open and when rendering using the fragment api the edition
   button should not appear.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | 1 | theme_snap |
     And I log out
     Then I log in as "teacher1"
     And I am on the course main page for "C1"
@@ -152,16 +137,10 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And "#section-1 .snap-visibility.snap-hide" "css_element" should not exist
 
   @javascript
-  Scenario Outline: In read mode, student cannot hide section.
+  Scenario: In read mode, student cannot hide section.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     Then I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Section 2"
     Then "#section-2 .snap-visibility" "css_element" should not exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |

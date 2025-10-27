@@ -25,7 +25,6 @@ Feature: Open page module inline
   I need to view page modules inline and have auto completion tracking updated.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | topics | 0        | 1         | 1                |      1       |
@@ -40,10 +39,8 @@ Feature: Open page module inline
       | lazyload_mod_page | 0 | theme_snap |
 
   @javascript
-  Scenario Outline: Page mod is created and opened inline.
+  Scenario: Page mod is created and opened inline.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And the following "activities" exist:
       | activity | course | idnumber | name       | intro        | content       | completion | completionview |
       | page     | C1     | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              |
@@ -51,14 +48,10 @@ Feature: Open page module inline
     Then I log in as "student1"
     And I am on the course main page for "C1"
     And I should not see "page content1"
-    And I click on "li .contentafterlink .pagemod-readmore" "css_element"
+    And I click on "button.pagemod-readmore" "css_element"
     And I wait until "#pagemod-content-container" "css_element" is visible
     # The above step basically waits for the page content to load up.
     And I should see "page content1"
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
   Scenario Outline: Page mod completion updates on read more and affects availability for other modules and sections.
@@ -72,7 +65,6 @@ Feature: Open page module inline
       | assign   | C1     | assigntest   | Assignment Test | 2       |
     And I log in as "admin"
     And the following config values are set as admin:
-      | coursepartialrender | <Option>   | theme_snap |
       | resourcedisplay     | <Option 2> | theme_snap |
     And I am on the course main page for "C1"
     # Restrict the second page module to only be accessible after the first page module is marked complete.
@@ -91,42 +83,37 @@ Feature: Open page module inline
     And I am on the course main page for "C1"
     Then I should not see "page content2"
     # Note: nth-of-type(2) corresponds to the second section in the TOC.
-    And I should see "Conditional" in the "#chapters h3:nth-of-type(2)" "css_element"
-    And I should see "Conditional" in the "#chapters h3:nth-of-type(3)" "css_element"
-    And "img[alt*='Not completed: Page completion']" "css_element" should exist
+    And I should see "Conditional" in TOC item 1
+    And I should see "Conditional" in TOC item 2
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
-    And I should see "Not available unless: The activity Page completion is marked complete"
+    And I follow "Section 2"
+    And I should see "Section 2 is not available"
     And I follow "Section 1"
-    And "#chapters h3:nth-of-type(2) li.snap-visible-section" "css_element" should exist
     # Make sure Section 1 show section availability info.
-    Then I should see availability info "Not available unless: The activity Page completion is marked complete"
-    And I follow "Introduction"
-    And I click on "li .contentafterlink .pagemod-readmore" "css_element"
+    And I should see "Section 1 is not available"
+    And I follow "General"
+    And I click on "button.pagemod-readmore" "css_element"
     And I wait until "#section-0 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page module content to load up.
     Then I should see "Page completion content"
+    And I mark the activity "Page completion" as complete
     And I should not see availability info "Not available unless: The activity Page completion is marked complete"
-    And I should not see "Conditional" in the "#chapters h3:nth-of-type(2)" "css_element"
-    And I should see "Progress: 1 / 1" in the "#chapters h3:nth-of-type(1)" "css_element"
-    And "#chapters h3:nth-of-type(1) li.snap-visible-section" "css_element" should exist
+    And I should not see "Conditional" in TOC item 1
     And ".snap-conditional-tag[data-content*='Page completion']" "css_element" should not exist
-    And "img[alt='Completed: Page completion. Select to mark as not complete.']" "css_element" should exist
+    And I wait until "Done" "button" exists
     And I follow "Section 1"
     # Make sure Section 1 does not show section availability info.
     Then I should not see availability info "Not available unless: The activity Page completion is marked complete"
     And I should see "Page completion 2"
-    And "img[alt*='Not completed: Page completion 2']" "css_element" should exist
     And I click on "li[aria-label='Section 1']" "css_element"
-    And I click on "//p[contains(text(), 'Page completion 2')]/ancestor::div[contains(@class, 'activityinstance')]//button[contains(@class, 'pagemod-readmore')]" "xpath_element"
+    And I click on "button.pagemod-readmore" "css_element"
     And I wait until "#section-1 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
-    Then "img[alt*='Not completed: Page completion 2']" "css_element" should not exist
-    And "img[alt='Completed: Page completion 2. Select to mark as not complete.']" "css_element" should exist
-    And "#chapters h3:nth-of-type(2) li.snap-visible-section" "css_element" should exist
-    And I should not see "Conditional" in the "#chapters h3:nth-of-type(3)" "css_element"
+    And I click on "Mark as done" "button"
+    And I should not see "Conditional" in TOC item 3
     Examples:
-      | Option     | Option 2 |
-      | 0          | list     |
-      | 1          | card     |
+      | Option 2 |
+      | list     |
+      | card     |
 
   @javascript
   Scenario Outline: Page mod is opened in a new window by default.
@@ -142,6 +129,6 @@ Feature: Open page module inline
     Examples:
       | Page resource selector                                            |
       # Open with read more button link.
-      | li .contentafterlink .pagemod-readmore                            |
+      | button.pagemod-readmore                           |
       # Open with page resource title link.
-      | li[data-type='Page'] h3.snap-asset-link a.mod-link p.instancename |
+      | .activityname |

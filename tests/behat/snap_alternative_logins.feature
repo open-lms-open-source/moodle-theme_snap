@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, the login options should be shown
 
   Background:
-    Given I skip because "Front page redirects to login page when user is not logged in - INT-21237"
     Given the following config values are set as admin:
       |  config   |    value        | plugin   |
       | hostname  | host.domain.com | auth_cas |

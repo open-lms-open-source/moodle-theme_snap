@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, a course tools section is available.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -190,7 +189,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on the course main page for "C1"
     And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
-    And I click on "a[href=\"#section-1\"].chapter-title" "css_element"
+    And I follow "New section"
     And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
 
@@ -204,7 +203,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I switch edit mode in Snap
     And I wait until the page is ready
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
-    And I click on "a[href='#section-1'].chapter-title" "css_element"
+    And I follow "New section"
     And I switch edit mode in Snap
     And I wait until the page is ready
     And I should not see "Course Dashboard" in the "#coursetools" "css_element"
@@ -216,7 +215,3 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I switch edit mode in Snap
     And I wait until the page is ready
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
-    And I click on "a[href='#section-1'].chapter-title" "css_element"
-    And I switch edit mode in Snap
-    And I wait until the page is ready
-    Then I should not see "Course Dashboard" in the "#coursetools" "css_element"

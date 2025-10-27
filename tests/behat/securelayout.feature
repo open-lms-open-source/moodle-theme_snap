@@ -22,7 +22,6 @@
 @theme @theme_snap
 Feature: Using the snap theme page displaying with secure layout
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | format |
       | Course 1 | C1        | topics |
@@ -52,7 +51,7 @@ Feature: Using the snap theme page displaying with secure layout
     And the following config values are set as admin:
       | logininfoinsecurelayout | 1 |
     And I am on "Course 1" course homepage
-    And I click on ".snap-asset-link a" "css_element"
+    And I click on ".aalink" "css_element" in the "Quiz" activity
     And I press "Preview quiz"
     Then I should see "You are logged in as Admin User" in the "nav" "css_element"
     But "Logout" "link" should not exist
@@ -63,7 +62,7 @@ Feature: Using the snap theme page displaying with secure layout
       | langmenuinsecurelayout | 1 |
       | custommenuitems | -This is a custom item\|/customurl/ |
     And I am on "Course 1" course homepage
-    And I click on ".snap-asset-link a" "css_element"
+    And I click on ".aalink" "css_element" in the "Quiz" activity
     And I press "Preview quiz"
     Then I should not see "This is a custom item" in the "nav" "css_element"
 

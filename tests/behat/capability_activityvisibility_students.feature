@@ -24,7 +24,6 @@
 Feature: When theme is set to Snap, and course:activityvisibility is set for students, a student should be able to hide an activity.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -48,8 +47,8 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
 
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    Then I should see "Hide"
+    And I open "Test assignment1" actions menu
+    And I choose "Hide" in the open action menu
 
   @javascript
   Scenario: Student should not see the activity after hiding it
@@ -60,11 +59,11 @@ Feature: When theme is set to Snap, and course:activityvisibility is set for stu
 
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
+    And I open "Test assignment1" actions menu
+    And I choose "Hide" in the open action menu
 
   @javascript
   Scenario: Student should not be able to hide an activity if the course doesn't have course:activityvisibility for students
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" should not exist
+    And "div.action-menu" "css_element" should not exist

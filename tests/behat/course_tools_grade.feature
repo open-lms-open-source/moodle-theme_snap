@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   the grade information about the student.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -56,7 +55,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Given I log in as "student1"
     And I follow "My Courses"
     And I am on "Course 1" course homepage
-    And I follow "Introduction"
+    And I follow "General"
     And I should see "A1"
     And I follow "Not Submitted"
     And I reload the page
@@ -70,7 +69,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Then I log in as "student2"
     And I follow "My Courses"
     And I am on "Course 1" course homepage
-    And I follow "Introduction"
+    And I follow "General"
     And I should see "A1"
     And I follow "Not Submitted"
     And I reload the page
@@ -90,13 +89,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | student2 | 50.756      | I'm the teacher feedback |
     And I log out
         # By default, Gradebook displays grades with two decimals numbers.
-    Then I log in as "admin"
-    And I follow "My Courses"
-    And I am on "Course 1" course homepage
-    And I follow "Course Dashboard"
-    And I follow "Gradebook"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Setup > Course grade settings" in current page administration
+    And I am on the "Course 1" "grades > course grade settings" page logged in as "admin"
     And I set the field "Grade display type" to "Percentage"
     And I click on "Save changes" "button"
     And I log out
@@ -105,7 +98,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.33%" in the ".progressbar-text" "css_element"
-    And I follow "Gradebook"
+    When I am on the "Course 1" "grades > User report > View" page
     And I should see "50.33 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "student2"
@@ -116,13 +109,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Gradebook"
     And I should see "50.76 %" in the "td.column-percentage" "css_element"
     And I log out
-    Then I log in as "admin"
-    And I follow "My Courses"
-    And I am on "Course 1" course homepage
-    And I follow "Course Dashboard"
-    And I follow "Gradebook"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Setup > Course grade settings" in current page administration
+    And I am on the "Course 1" "grades > course grade settings" page logged in as "admin"
     And I set the field "Overall decimal places" to "0"
     And I click on "Save changes" "button"
     And I log out
@@ -139,16 +126,10 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "51%" in the ".progressbar-text" "css_element"
-    And I follow "Gradebook"
+    When I am on the "Course 1" "grades > User report > View" page
     And I should see "51 %" in the "td.column-percentage" "css_element"
     And I log out
-    Then I log in as "admin"
-    And I follow "My Courses"
-    And I am on "Course 1" course homepage
-    And I follow "Course Dashboard"
-    And I follow "Gradebook"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Setup > Course grade settings" in current page administration
+    And I am on the "Course 1" "grades > course grade settings" page logged in as "admin"
     And I set the field "Overall decimal places" to "3"
     And I click on "Save changes" "button"
     And I log out
@@ -157,7 +138,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.330%" in the ".progressbar-text" "css_element"
-    And I follow "Gradebook"
+    When I am on the "Course 1" "grades > User report > View" page
     And I should see "50.330 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "student2"
@@ -165,16 +146,10 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.756%" in the ".progressbar-text" "css_element"
-    And I follow "Gradebook"
+    When I am on the "Course 1" "grades > User report > View" page
     And I should see "50.756 %" in the "td.column-percentage" "css_element"
     And I log out
-    Then I log in as "admin"
-    And I follow "My Courses"
-    And I am on "Course 1" course homepage
-    And I follow "Course Dashboard"
-    And I follow "Gradebook"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Setup > Course grade settings" in current page administration
+    And I am on the "Course 1" "grades > course grade settings" page logged in as "admin"
     And I set the field "Overall decimal places" to "4"
     And I click on "Save changes" "button"
     And I log out
@@ -183,7 +158,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.3297%" in the ".progressbar-text" "css_element"
-    And I follow "Gradebook"
+    When I am on the "Course 1" "grades > User report > View" page
     And I should see "50.3297 %" in the "td.column-percentage" "css_element"
     And I log out
     Then I log in as "student2"
@@ -191,7 +166,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
     And I should see "50.7560%" in the ".progressbar-text" "css_element"
-    And I follow "Gradebook"
+    When I am on the "Course 1" "grades > User report > View" page
     And I should see "50.7560 %" in the "td.column-percentage" "css_element"
     And I log out
 
@@ -200,7 +175,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Given I log in as "student1"
     And I follow "My Courses"
     And I am on "Course 1" course homepage
-    And I follow "Introduction"
+    And I follow "General"
     And I should see "A1"
     And I follow "Not Submitted"
     And I reload the page
@@ -218,13 +193,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | username | grade       | feedback                 |
       | student1 | 50.32973    | I'm the teacher feedback |
     And I log out
-    Then I log in as "admin"
-    And I follow "My Courses"
-    And I am on "Course 1" course homepage
-    And I follow "Course Dashboard"
-    And I follow "Gradebook"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Setup > Course grade settings" in current page administration
+    And I am on the "Course 1" "grades > course grade settings" page logged in as "admin"
     And I set the field "Grade display type" to "Letter"
     And I click on "Save changes" "button"
     And I log out
@@ -234,13 +203,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Course Dashboard"
     And I should see "F" in the ".progressbar-text" "css_element"
     And I log out
-    Then I log in as "admin"
-    And I follow "My Courses"
-    And I am on "Course 1" course homepage
-    And I follow "Course Dashboard"
-    And I follow "Gradebook"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Setup > Course grade settings" in current page administration
+    And I am on the "Course 1" "grades > course grade settings" page logged in as "admin"
     And I set the field "Grade display type" to "Letter (real)"
     And I click on "Save changes" "button"
     And I log out
@@ -250,13 +213,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I follow "Course Dashboard"
     And I should see "F" in the ".progressbar-text" "css_element"
     And I log out
-    Then I log in as "admin"
-    And I follow "My Courses"
-    And I am on "Course 1" course homepage
-    And I follow "Course Dashboard"
-    And I follow "Gradebook"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I navigate to "Setup > Course grade settings" in current page administration
+    And I am on the "Course 1" "grades > course grade settings" page logged in as "admin"
     And I set the field "Grade display type" to "Letter (percentage)"
     And I click on "Save changes" "button"
     And I log out
@@ -284,6 +241,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I switch edit mode in Snap
     And I am on "Course 1" course homepage
     # Edit mode persit when changing page.
+    And I click on "Open course index" "button"
     And I follow "Course Dashboard"
     Then course page should be in edit mode
     And I log out
@@ -331,6 +289,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I switch edit mode in Snap
     And I am on "Course 1" course homepage
     # Edit mode does persist between courses.
+    And I click on "Open course index" "button"
     And I follow "Course Dashboard"
     Then course page should be in edit mode
     And I log out

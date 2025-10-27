@@ -316,7 +316,13 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 var matches = [];
                 for (i = 0; i < dataList.length; i++) {
                     var dataItem = dataList[i];
-                    if (processSearchString($(dataItem).text()).indexOf(searchString) > -1) {
+                    var $dataItem = $(dataItem);
+                    var dataId = $dataItem.attr('data-id');
+                    // Check if an li with the same data-id actually exists in the DOM
+                    if (
+                        processSearchString($dataItem.text()).indexOf(searchString) > -1 &&
+                        $('.course-content li[data-id="' + dataId + '"]').length > 0
+                    ) {
                         matches.push(dataItem);
                     }
                 }

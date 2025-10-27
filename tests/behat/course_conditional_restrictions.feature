@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, conditional restrictions work as normal.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | 0        | 1         | 1                |      1       |
@@ -51,7 +50,6 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
   Scenario Outline: Conditionally restricted section notices show for students only when restrictions not met but always show for teachers.
     Given I log in as "admin"
     And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
       | resourcedisplay     | <Option> | theme_snap |
     And I log out
     And I log in as "teacher1"
@@ -81,7 +79,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I go to section 4 of course "C1"
     And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
     And I go to section 3 of course "C1"
-    And I click on "//li[contains(@class, 'modtype_assign')]//a/p[contains(text(), 'S3 Completion - view')]" "xpath_element"
+    And I am on the "S3 Completion - view" "assign activity" page
     And I am on the course main page for "C1"
     And I go to section 4 of course "C1"
     And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
@@ -97,12 +95,12 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I click on "li.modtype_assign a.snap-conditional-tag" "css_element"
     And I should see "Not available unless: The activity S2 Restricted is marked complete"
     And I go to section 2 of course "C1"
-    And I should see available from date of "tomorrow" in section 2
+    And I should see "Topic tomorrow 2 is not available"
     And "#section-2 li.snap-activity" "css_element" should not exist
     And I go to section 4 of course "C1"
-    And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
+    And I should see "Section 4 is not available"
     And I go to section 3 of course "C1"
-    And I click on "//li[contains(@class, 'modtype_assign')]//a/p[contains(text(), 'S3 Completion - view')]" "xpath_element"
+    And I am on the "S3 Completion - view" "assign activity" page
     And I am on the course main page for "C1"
     And I go to section 4 of course "C1"
     And I should not see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
@@ -116,7 +114,6 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     # Scenario if the group has an apostrophe in the title.
     Given I log in as "admin"
     And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
       | resourcedisplay     | <Option> | theme_snap |
     And I log out
     And I log in as "teacher1"

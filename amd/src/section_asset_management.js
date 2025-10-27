@@ -133,6 +133,10 @@ define(
         };
 
         const setActionsObservers = function() {
+            const isLoggedIn = document.body.classList.contains('logged-in');
+            if (!isLoggedIn) {
+                return;
+            }
             const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
             if (reactiveCourseEditor.isEditing) {
                 return;
