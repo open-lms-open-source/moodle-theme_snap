@@ -1866,6 +1866,13 @@ HTML;
             require_once(__DIR__ . '/../../../../local/intellicart/lib.php');
             $navoutput .= local_intellicart_render_navbar_output($OUTPUT);
         }
+        // CC-6181: Call navbar render of BFPlus.
+        if (\core_component::get_component_directory('local_bfguides') !== null &&
+                !((defined('PHPUNIT_TEST') && PHPUNIT_TEST) ||
+                  (defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING))) {
+            require_once(__DIR__ . '/../../../../local/bfguides/lib.php');
+            $navoutput .= local_bfguides_render_navbar_output();
+        }
         $messagingenabled = $CFG->messaging;
         $CFG->messaging = false;
         $navoutput .= message_popup_render_navbar_output($OUTPUT);
