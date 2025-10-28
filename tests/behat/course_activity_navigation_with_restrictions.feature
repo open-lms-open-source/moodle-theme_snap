@@ -26,9 +26,6 @@ Feature: Activity navigation involving activities with access restrictions in Sn
   I need to be able to use the activity navigation feature to access the activity after satisfying its access conditions
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
-    Given the following config values are set as admin:
-      | theme | snap |
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -49,8 +46,8 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     # Set completion for Forum 1.
-    And I click on ".modtype_forum .snap-edit-asset-more" "css_element"
-    And I click on ".modtype_forum .snap-edit-asset" "css_element"
+    And I open "Forum 1" actions menu
+    And I choose "Edit settings" in the open action menu
     And I expand all fieldsets
     And I set the field "None" to "1"
     And I should not see "Expect completed on"
@@ -64,8 +61,8 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I set the field "View the activity" to "1"
     And I press "Save and return to course"
     # Require Forum 1 to be completed first before Book 1 can be accessed.
-    And I click on ".modtype_book .snap-edit-asset-more" "css_element"
-    And I click on ".modtype_book .snap-edit-asset" "css_element"
+    And I open "Book 1" actions menu
+    And I choose "Edit settings" in the open action menu
     # And I click on "Edit settings" "link" in the "Book 1" activity.
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
@@ -78,7 +75,7 @@ Feature: Activity navigation involving activities with access restrictions in Sn
   Scenario: Activity navigation involving activities with access restrictions
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on ".modtype_assign .mod-link" "css_element"
+    And I am on the "Assignment 1" "assign activity" page
     Then I should see "Forum 1" in the "#next-activity-link" "css_element"
     # Activity that has access restriction should not show up in the dropdown.
     And the "Jump to..." select box should not contain "Book 1"

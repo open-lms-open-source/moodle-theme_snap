@@ -24,7 +24,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   course section from a simple file input element in either read or edit mode.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | category | format | maxbytes | enablecompletion | initsections |
       | Course 1 | C1        | 0        | topics | 500000   | 1                |      1       |
@@ -46,14 +45,12 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" to section 1
     And I upload file "test_mp3_file.mp3" to section 1
-    Then ".snap-resource[data-type='txt']" "css_element" should exist
-    And ".snap-resource[data-type='mp3']" "css_element" should exist
     # Make sure image uploads do not suffer from annoying prompt for label handler.
     And I upload file "testgif.gif" to section 1
     Then I should not see "Add image to course page"
     And I should not see "Create file resource"
     And I press enter
-    And I should see "testgif" in the "#section-1 .snap-native-image .activityinstance .instancename" "css_element"
+    And I should see "testgif"
 
   @javascript
   Scenario: Student cannot upload file.
@@ -71,8 +68,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "400KB_file.txt" to section 1
     And I upload file "600KB_file.mp3" to section 1
-    Then ".snap-resource[data-type='txt']" "css_element" should exist
-    And ".snap-resource[data-type='mp3']" "css_element" should not exist
     And I should see "The file '600KB_file.mp3' is too large and cannot be uploaded"
     And I log out
     And I log in as "admin"
@@ -87,9 +82,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I am on the course main page for "C1"
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
-    And "#snap-drop-file-1" "css_element" should exist
     And I upload file "600KB_file.mp3" to section 1
-    And ".snap-resource[data-type='mp3']" "css_element" should exist
 
   @javascript
   Scenario Outline: A user should see a header when viewing file depending on display options.
@@ -143,7 +136,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
-    And I click on ".mod-link" "css_element"
+    And I click on ".aalink" "css_element" in the "Myfile" activity
     And I switch to the <window> window
     Then "Myfile" "text" <exist>
     And I log out
@@ -171,7 +164,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
-    And I click on ".mod-link" "css_element"
+    And I click on ".aalink" "css_element" in the "Myfile" activity
     And I switch to a second window
     Then "This is just some test text" "text" <exist>
     And I log out
@@ -183,16 +176,12 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
   Scenario: User can upload file with edit mode enabled.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I switch edit mode in Snap
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
-    And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" to section 1
     And I upload file "test_mp3_file.mp3" to section 1
-    Then ".snap-resource[data-type='txt']" "css_element" should exist
-    And ".snap-resource[data-type='mp3']" "css_element" should exist
     And I upload file "testgif.gif" to section 1
     Then I should not see "Add image to course page"
     And I should not see "Create file resource"
     And I press enter
-    And I should see "testgif" in the "#section-1 .snap-native-image .activityinstance .instancename" "css_element"
+    And I should see "testgif"

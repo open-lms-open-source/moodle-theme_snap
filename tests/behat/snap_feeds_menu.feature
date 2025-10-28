@@ -24,7 +24,6 @@
 Feature: Users can access the Snap feeds information using the nav button in Snap.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1 | Teacher     | 1         | teacher1@example.com  |
@@ -50,8 +49,8 @@ Feature: Users can access the Snap feeds information using the nav button in Sna
     And I should see "Test assignment1 is due"
     And I should see "Today"
     And I am on "Course 1" course homepage
-    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    Then I follow "Edit settings"
+    And I open "Test assignment1" actions menu
+    And I choose "Edit settings" in the open action menu
     And I expand all fieldsets
     And I set the following fields to these values:
       | Due date | ##tomorrow## |
@@ -72,8 +71,8 @@ Feature: Users can access the Snap feeds information using the nav button in Sna
     And I should see "Test assignment1 is due"
     And I should see "Today"
     And I am on "Course 1" course homepage
-    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    Then I follow "Edit settings"
+    And I open "Test assignment1" actions menu
+    And I choose "Edit settings" in the open action menu
     And I expand all fieldsets
     And I set the following fields to these values:
       | Due date | ##tomorrow## |
@@ -122,16 +121,16 @@ Feature: Users can access the Snap feeds information using the nav button in Sna
     And ".snap_drawer_open" "css_element" should exist
     And the click to the element "#mr-nav #user-menu-toggle" was intercepted
     And the click to the element "#admin-menu-trigger" was intercepted
-    And I click on ".drawertoggle" "css_element"
+    And I use js to click on ".drawer-left .drawertoggle"
     And I click on "[data-region='popover-region-messages']" "css_element"
     And ".snap_drawer_open" "css_element" should exist
     And the click to the element "#mr-nav #user-menu-toggle" was intercepted
     And the click to the element "#admin-menu-trigger" was intercepted
     And I click on ".closewidget a" "css_element"
-    And I click on "#toc-mobile-menu-toggle" "css_element"
+    And I click on "Open course index" "button"
     And the click to the element "#mr-nav #user-menu-toggle" was intercepted
     And the click to the element "#admin-menu-trigger" was intercepted
-    And I click on ".course-toc-mobile-header #toc-mobile-menu-toggle" "css_element"
+    And I click on "Close course index" "button"
     And I click on "#snap_feeds_side_menu_trigger" "css_element"
     And ".snap_drawer_open" "css_element" should exist
     And the click to the element "#mr-nav #user-menu-toggle" was intercepted

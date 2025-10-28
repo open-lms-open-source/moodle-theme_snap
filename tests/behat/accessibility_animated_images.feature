@@ -26,7 +26,6 @@
 Feature: Animated images should be accessible.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | category | format | maxbytes | enablecompletion | initsections |
       | Course 1 | C1        | 0        | topics | 500000   | 1                |       1      |
@@ -37,18 +36,17 @@ Feature: Animated images should be accessible.
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
 
-  @javascript
+  @javascript @_file_upload
   Scenario: Animated images can be paused, and their animation can be resumed afterwards.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I upload file "testgif_small.gif" to section 1
     And I follow "Section 1"
-    And I wait "3" seconds
-    And I hover ".snap-animated-image img" "css_element"
-    And I wait until ".anim-pause-button" "css_element" is visible
+    And I upload file "testgif_small.gif" to section 1
+    And I reload the page
+    And I hover over the element ".snap-animated-image img"
     Then I click on ".anim-pause-button" "css_element"
     And "img[src$='.gif']" "css_element" should not be visible
-    And I hover ".snap-animated-image" "css_element"
+    And I hover over the element ".snap-animated-image img"
     And I wait until ".anim-play-button" "css_element" is visible
     And I click on ".anim-play-button" "css_element"
     And "img[src$='.gif']" "css_element" should be visible

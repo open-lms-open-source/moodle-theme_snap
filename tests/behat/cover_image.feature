@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, cover image can be set for site and courses.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following config values are set as admin:
       | defaulthomepage                | 0 |            |
 
@@ -195,6 +194,7 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
       | name  | category | idnumber |
       | Cat 1 | 0        | CAT1     |
     And I log in as "admin"
+    And I change window size to "large"
     And I am on the course category page for category with idnumber "CAT1"
     Then I should see "Change cover image"
     And I should not see cover image in page header

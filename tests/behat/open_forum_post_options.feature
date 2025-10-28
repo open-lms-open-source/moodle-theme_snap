@@ -26,7 +26,6 @@ Feature: In Open forums while using Snap, the student should see the options
   unsubscribe from the post.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
@@ -44,9 +43,10 @@ Feature: In Open forums while using Snap, the student should see the options
   Scenario: Check that the links for Open forums options exists and can be activated
 
     And I log in as "student1"
+    And I change window size to "large"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on ".modtype_hsuforum .mod-link" "css_element"
+    And I click on ".aalink" "css_element" in the "Test forum name" activity
     And I add a new discussion to "Test forum name" Open Forum with:
       | Subject | Forum discussion 1                    |
       | Message | How awesome is this forum discussion? |
@@ -54,7 +54,7 @@ Feature: In Open forums while using Snap, the student should see the options
     And I should see "View posters"
     And I should see "Unsubscribe from this forum"
     And I click on "li.exportdiscussions-url a" "css_element"
-    And I should see "Export attachments"
+    And "Export attachments" "text" should exist
     And I click on "Cancel" "button"
     And I click on "li.subscribeforum-url a" "css_element"
     And I should see "Subscribe to this forum"
@@ -68,7 +68,7 @@ Feature: In Open forums while using Snap, the student should see the options
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on ".modtype_hsuforum .mod-link" "css_element"
+    And I click on ".aalink" "css_element" in the "Test forum name" activity
     And I should see "Subscribe to this forum"
     And I click on "li.subscribeforum-url a" "css_element"
     And I should see "Subscribe to this forum"

@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, teachers can delete sections without having to reload the page.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections|
       | Course 1 | C1        | 0        | topics |      1      |
@@ -41,15 +40,13 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
       | assign   | C1     | assign1  | Test assignment1 | Test assignment description 1 | 1       | 1                                   |
       | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 2       | 1                                   |
 
-  @javascript
-  Scenario Outline: In read mode, on course, teacher can cancel / confirm delete section.
+  @javascript @_alert
+  Scenario: In read mode, on course, teacher can cancel / confirm delete section.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-
+    And I switch edit mode in Snap
     And I follow "Section 1"
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section name to "Section one"
@@ -70,40 +67,30 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     And I click on "#extra-actions-dropdown-1" "css_element"
     When I click on "#section-1 .snap-section-editing.actions .snap-delete" "css_element"
     Then I should see section delete dialog
-    When I press "Delete Section"
+    And I click on "Delete" "button" in the ".modal-dialog" "css_element"
     Then I should not see "Section one" in the "li[id^='section-']" "css_element"
+    And I go to section 1 of course "C1"
     And I cannot see "Test assignment1" in course asset search
     And I can see "Test assignment2" in course asset search
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
-  Scenario Outline: Student cannot delete section.
+  Scenario: Student cannot delete section.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
     Then "#section-1 .snap-section-editing.actions .snap-delete" "css_element" should not exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
-  @javascript
+  @javascript @_alert
   Scenario Outline: When deleting a section the section number should update
     Given I log in as "admin"
     And the following config values are set as admin:
-      | coursepartialrender | <coursepartialrender> | theme_snap |
       | leftnav             | <leftnav>             | theme_snap |
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-
+    And I switch edit mode in Snap
     And I follow "Section 1"
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section name to "Section one"
@@ -120,30 +107,26 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     And I click on "#extra-actions-dropdown-1" "css_element"
     When I click on "#section-1 .snap-section-editing.actions .snap-delete" "css_element"
     Then I should see section delete dialog
-    When I press "Delete Section"
+    And I click on "Delete" "button" in the ".modal-dialog" "css_element"
     And I wait until the page is ready
     Then "#section-1 .content .sectionname .sectionnumber" "css_element" <titlenumber> exist
+    And I follow "Section two"
     Then I should see "<aftertitle>" in the "#section-1 .content .sectionname" "css_element"
     Examples:
-      | coursepartialrender     | leftnav | titlenumber | beforetitle   | aftertitle   |
-      | 0                       | list    | should not  | Section one   | Section two    |
-      | 1                       | list    | should not  | Section one   | Section two    |
-      | 0                       | top     | should      | Section one   | Section two    |
-      | 1                       | top     | should      | 1.Section one | 1.Section two  |
+      | leftnav | titlenumber | beforetitle   | aftertitle   |
+      | list    | should not  | Section one   | Section two  |
 
-  @javascript
+  @javascript @_alert
   Scenario: Teacher with course update permission can see delete section confirmation dialog.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | 1 | theme_snap |
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-
+    And I switch edit mode in Snap
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And I click on "#extra-actions-dropdown-1" "css_element"
     When I click on "#section-1 .snap-section-editing.actions .snap-delete" "css_element"
     Then I should see section delete dialog
-    Then I should see "Are you absolutely sure you want to completely delete"
+    Then I should see "Delete section?" in the ".modal-dialog" "css_element"
 

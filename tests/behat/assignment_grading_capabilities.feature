@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, grading activities are shown only if user have grading capabilities.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given I log in as "admin"
     And I navigate to "Users > Permissions > Define roles" in current page administration
     And I click on "Add a new role" "button"
@@ -58,7 +57,8 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
     Then I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    And I click on "//a[@class='mod-link']//p[text()='Assignment One']" "xpath_element"
+    And I am on the "Assignment One" "assign activity" page
+    And I follow "Assignment One"
     And I reload the page
     When I press "Add submission"
     And I upload "lib/tests/fixtures/empty.txt" file to "File submissions" filemanager
@@ -66,8 +66,7 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
     Then I log out
     Given I log in as "student1"
     And I am on "Course 2" course homepage
-    And I click on "//a[@class='mod-link']//p[text()='Assignment Two']" "xpath_element"
-    And I reload the page
+    And I am on the "Assignment Two" "assign activity" page
     When I press "Add submission"
     And I upload "lib/tests/fixtures/empty.txt" file to "File submissions" filemanager
     And I press "Save changes"

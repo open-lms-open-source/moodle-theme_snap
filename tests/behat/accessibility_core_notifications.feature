@@ -25,7 +25,6 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
   screen readers functionality.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
@@ -51,10 +50,7 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
   @javascript
   Scenario: Success notification should have close dialog as aria-label attribute to be accessible
     When I log in as "student1"
-    And I am on "Course 1" course homepage
-    And I follow "Section 1"
-    And I click on "li.modtype_forum a.mod-link" "css_element"
-    And I wait until the page is ready
+    And I am on the "Test forum name" "forum activity" page
     When I add a new discussion to "Test forum name" forum with:
       | Subject | Test discussion 1 |
       | Message | Test discussion 1 description |

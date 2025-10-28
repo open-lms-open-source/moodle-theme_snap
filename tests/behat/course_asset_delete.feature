@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, teachers can delete course resources and activities without having to reload the page.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | format | initsections |
       | Course 1 | C1        | 0        | topics |      1       |
@@ -44,79 +43,60 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
       | assign   | Acceptance test site | assign2  | Test assignment2 | Test assignment description 2 | 1       | 1                                   |
 
   @javascript
-  Scenario Outline: In read mode, on front page, admin can cancel / confirm delete activity.
+  Scenario: In read mode, on front page, admin can cancel / confirm delete activity.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Settings" in current page administration
     And I set the following fields to these values:
       | Add custom content | 1 |
-    And I am on site homepage
-    And I should see "Test assignment1"
-    When I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
+    And I am on the course main page for "C1"
+    And I follow "Section 1"
+    And I switch edit mode in Snap
+    And I open "Test assignment1" actions menu
+    And I choose "Delete" in the open action menu
     Then I should see asset delete dialog
     And I cancel dialog
     Then I should not see asset delete dialog
-    And I should see "Test assignment1"
-    When I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
+    And I open "Test assignment1" actions menu
+    And I choose "Delete" in the open action menu
     Then I should see asset delete dialog
-    When I press "Delete Assign"
-    Then I should not see "Test assignment1"
+    When I click on "Delete" "button" in the "Delete activity?" "dialogue"
+    Then I should not see "Test assignment1" in the "page-content" "region"
     # This is to test that the deletion persists.
     And I reload the page
     Then I should not see "Test assignment1"
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
-  Scenario Outline: In read mode, on course, teacher can cancel / confirm delete activity.
+  Scenario: In read mode, on course, teacher can cancel / confirm delete activity.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     Then I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I switch edit mode in Snap
     Then "#section-1" "css_element" should exist
-    When I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
+    And I open "Test assignment1" actions menu
+    And I choose "Delete" in the open action menu
     Then I should see asset delete dialog
     And I cancel dialog
     Then I should not see asset delete dialog
     And I should see "Test assignment1"
-    When I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element"
+    And I open "Test assignment1" actions menu
+    And I choose "Delete" in the open action menu
     Then I should see asset delete dialog
-    When I press "Delete Assign"
+    When I click on "Delete" "button" in the "Delete activity?" "dialogue"
     Then I should not see "Test assignment1" in the "#section-1" "css_element"
     And I cannot see "Test assignment1" in course asset search
     # This is to test that the deletion persists.
     And I reload the page
     Then I should not see "Test assignment1" in the "#section-1" "css_element"
     And I cannot see "Test assignment1" in course asset search
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
-  Scenario Outline: Student cannot delete activity.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
-    Then I log in as "student1"
+  Scenario: Student cannot delete activity.
+    Given I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
-    Then ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" should not exist
-    And ".snap-activity[data-type='Assignment'] a.js_snap_delete" "css_element" should not exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    And "Actions" "icon" should not exist in the "#section-1" "css_element"
+  

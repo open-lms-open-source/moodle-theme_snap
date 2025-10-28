@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap and there is a page resource, appearance options should not appear.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following "courses" exist:
       | fullname | shortname | category | groupmode | theme |
       | Course 1 | C1 | 0 | 1 | |
@@ -41,8 +40,8 @@ Feature: When the moodle theme is set to Snap and there is a page resource, appe
   Scenario: Page description checkbox is not shown when using Snap.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I click on ".snap-edit-asset-more" "css_element"
-    And I click on ".snap-edit-asset" "css_element"
+    And I open "Test page1" actions menu
+    And I choose "Edit settings" in the open action menu
     And I wait until the page is ready
     And I should not see "Display description on course page"
 
@@ -50,8 +49,8 @@ Feature: When the moodle theme is set to Snap and there is a page resource, appe
   Scenario: Teacher sees a warning message and is unable to choose any appearance options on page resource.
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I click on ".snap-edit-asset-more" "css_element"
-    And I click on ".snap-edit-asset" "css_element"
+    And I open "Test page1" actions menu
+    And I choose "Edit settings" in the open action menu
     And I wait until the page is ready
     And I expand all fieldsets
     And I should see "Snap's design language prevents changes to \"Appearance\" settings."

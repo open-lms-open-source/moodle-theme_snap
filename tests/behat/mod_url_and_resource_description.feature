@@ -24,7 +24,6 @@
 Feature: When the moodle theme is set to Snap, the users see an intermediate page to display the description in mod_url and mod_resource.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Content - INT-21155"
     Given the following config values are set as admin:
       | theme           | snap |
     And the following config values are set as admin:
@@ -44,20 +43,19 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
       | activity   | name         | intro                       | course | idnumber  | section | showdescription | printintro |
       | resource   | Resource 1   | Test resource description   | C1     | resource1 | 0       | 1               | 1          |
 
+  @javascript @_switch_window
   Scenario: As a teacher I should see an intermediate page with the description in mod_resource.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on ".modtype_resource a.mod-link" "css_element"
-    Then I should see "Test resource description"
-    And "resource1.txt" "link" should exist
+    And I click on ".aalink" "css_element" in the "Resource 1" activity
+    Then I should see "Test resource resource1.txt file"
     And the following config values are set as admin:
       | resourcedisplay | list | theme_snap |
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on ".modtype_resource a.mod-link" "css_element"
+    And I click on ".aalink" "css_element" in the "Resource 1" activity
     And I should not see "Test resource description"
-    And "resource1.txt" "link" should not exist
 
   @javascript @_switch_window
   Scenario Outline: Add a URL and ensure it is displayed correctly.
@@ -75,7 +73,7 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I click on ".modtype_url a.mod-link" "css_element"
+    And I click on ".aalink" "css_element" in the "Url 1" activity
     And I switch to the <window> window
     And I should <expect1> "URL description"
     Then "Url 1" "link" should <expect2>

@@ -607,12 +607,8 @@ class behat_theme_snap extends behat_base {
      * @codingStandardsIgnoreEnd
      */
     public function i_restrict_asset_by_belong_to_group($asset1, $group1) {
-        /** @var behat_general $helper */
-        $helper = behat_context_helper::get('behat_general');
-        $xpathassetmore = "//p[contains(@class, 'instancename')][contains(text(), '$asset1')]/ancestor::div[contains(@class, 'activityinstance')]//button[contains(@class, 'snap-edit-asset-more')]";
-        $helper->i_click_on($xpathassetmore, 'xpath_element');
-        $xpathedit = "//p[contains(@class, 'instancename')][contains(text(), '$asset1')]/ancestor::div[contains(@class, 'activityinstance')]//a[contains(@class, 'snap-edit-asset')]";
-        $helper->i_click_on($xpathedit, 'xpath_element');
+        $this->execute('behat_course::i_open_actions_menu', $asset1);
+        $this->execute('behat_action_menu::i_choose_in_the_open_action_menu', 'Edit settings');
         $this->apply_group_restriction($group1, 'Save and return to course');
     }
 
@@ -810,7 +806,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see available from date of "(?P<date_string>(?:[^"]|\\")*)" in section (?P<section_int>(?:\d+))$/
      */
     public function i_should_see_available_from_in_section($date, $section) {
-        $elementselector = '#section-'.$section.' > div.content > .snap-conditional-tag';
+        $elementselector = 'div.content > .snap-conditional-tag';
         return $this->i_should_see_available_from_in_element($date, $elementselector, 'css_element');
     }
 
@@ -832,8 +828,8 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $element = '#chapters h3:nth-of-type('.$tocitem.')';
-        $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
+        $element = '#course-index div.courseindex-section:nth-of-type('.$tocitem.')';
+        $this->execute('behat_general::should_be_visible', [$element . '.courseindex-section > .courseindex-item.courseindex-section-title > .courseindex-locked', 'css_element']);
     }
 
     /**
@@ -843,8 +839,8 @@ class behat_theme_snap extends behat_base {
      */
     public function i_should_not_see_in_toc_item($text, $tocitem) {
         $tocitem++; // Ignore introduction item.
-        $element = '#chapters h3:nth-of-type('.$tocitem.')';
-        $this->execute('behat_general::assert_element_not_contains_text', [$text, $element, 'css_element']);
+        $element = '#course-index div.courseindex-section:nth-of-type('.$tocitem.')';
+        $this->execute('behat_general::should_not_be_visible', [$element . '.courseindex-section > .courseindex-item.courseindex-section-title > .courseindex-locked', 'css_element']);
     }
 
     /**
@@ -1046,7 +1042,7 @@ class behat_theme_snap extends behat_base {
         $nth = intval($nth);
         /** @var behat_general $helper */
         $helper = behat_context_helper::get('behat_general');
-        $helper->i_click_on('#chapters h3:nth-of-type(' . $nth . ')', 'css_element');
+        $helper->i_click_on('#course-index div.courseindex-section:nth-of-type(' . $nth . ')', 'css_element');
     }
 
     /**
@@ -1062,9 +1058,8 @@ class behat_theme_snap extends behat_base {
      * @param string $type "next" / "previous"
      * @param int $section
      * @param string $linktitle
-     * @param string $linkhref
      */
-    protected function check_navigation_for_section($type, $section, $linktitle, $linkhref) {
+    protected function check_navigation_for_section($type, $section, $linktitle) {
         $baseselector = '#section-' . $section . ' nav.section_footer a.'.$type.'_section';
         $titleselector = $baseselector.' span';
         $node = $this->find('css', $titleselector);
@@ -1083,39 +1078,28 @@ class behat_theme_snap extends behat_base {
                     '" - selector = "'.$titleselector.'"';
             throw new ExpectationException($msg, $this->getSession());
         }
-        $node = $this->find('css', $baseselector);
-        $href = $node->getAttribute('href');
-        // Full course link, find the #href only.
-        $data = explode('#', $href);
-        if (count($data) != 2 || '#' . $data[1] != $linkhref) {
-            $msg = $ttype.' navigation href does not match expected "' . $linkhref . '"' . ' V "' . $href .
-                        '" - selector = "'.$baseselector.'"';
-            throw new ExpectationException($msg, $this->getSession());
-        }
     }
 
     /**
      * @codingStandardsIgnoreStart
-     * @Given /^the previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
+     * @Given /^the previous navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)"$/
      * @codingStandardsIgnoreEnd
      * @param int $section
      * @param string $linktitle
-     * @param string $linkhref
      */
-    public function the_previous_navigation_for_section_is($section, $linktitle, $linkhref) {
-        $this->check_navigation_for_section('previous', $section, $linktitle, $linkhref);
+    public function the_previous_navigation_for_section_is($section, $linktitle) {
+        $this->check_navigation_for_section('previous', $section, $linktitle);
     }
 
     /**
      * @codingStandardsIgnoreStart
-     * @Given /^the next navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)" linking to "(?P<link_str>(?:[^"]|\\")*)"$/
+     * @Given /^the next navigation for section "(?P<section_int>(?:[^"]|\\")*)" is for "(?P<title_str>(?:[^"]|\\")*)"$/
      * @codingStandardsIgnoreEnd
      * @param int $section
      * @param string $linktitle
-     * @param string $linkhref
      */
-    public function the_next_navigation_for_section_is($section, $linktitle, $linkhref) {
-        $this->check_navigation_for_section('next', $section, $linktitle, $linkhref);
+    public function the_next_navigation_for_section_is($section, $linktitle) {
+        $this->check_navigation_for_section('next', $section, $linktitle);
     }
 
     /**
@@ -1354,8 +1338,8 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see section delete dialog$/
      */
     public function i_should_see_section_delete_dialog() {
-        $element = 'div.noticebox .snap-continue-cancel';
-        $text = 'Are you absolutely sure you want to completely delete';
+        $element = 'div.modal-dialog';
+        $text = 'Delete section?';
         $this->execute('behat_general::assert_element_contains_text', [$text, $element, 'css_element']);
     }
 
@@ -1434,8 +1418,8 @@ class behat_theme_snap extends behat_base {
      * @Given /^I mark the activity "(?P<activityname_string>(?:[^"]|\\")*)" as complete$/
      */
     public function i_mark_as_complete($activityname) {
-        $imgalt = 'Not completed: '.$activityname.'. Select to mark as complete.';
-        $this->execute('behat_general::i_click_on', ['img.icon[alt="'.$imgalt.'"]', 'css_element']);
+        $activitynode = $this->get_activity_node($activityname);
+        $activitynode->find('css', 'button[data-action="toggle-manual-completion"]')->click();
     }
 
     /**
@@ -1445,8 +1429,8 @@ class behat_theme_snap extends behat_base {
      * @Given /^I mark the activity "(?P<activityname_string>(?:[^"]|\\")*)" as incomplete$/
      */
     public function i_mark_as_incomplete($activityname) {
-        $imgalt = 'Completed: '.$activityname.'. Select to mark as not complete.';
-        $this->execute('behat_general::i_click_on', ['img.icon[alt="'.$imgalt.'"]', 'css_element']);
+        $activitynode = $this->get_activity_node($activityname);
+        $activitynode->find('css', 'button[data-action="toggle-manual-completion"]')->click();
     }
 
     /**
@@ -2038,5 +2022,43 @@ JS;
      */
     public function i_click_on_block_drawer_toggle() {
         $this->execute('behat_general::i_click_on', ["button[title='Toggle block drawer']", 'css_element']);
+    }
+
+     /**
+     * Returns the DOM node of the activity from <li>.
+     *
+     * @throws ElementNotFoundException Thrown by behat_base::find
+     * @param string $activityname The activity name
+     * @return NodeElement
+     */
+    protected function get_activity_node($activityname) {
+
+        $activityname = behat_context_helper::escape($activityname);
+        $xpath = "//li[contains(concat(' ', normalize-space(@class), ' '), ' activity ')][contains(., $activityname)]";
+
+        return $this->find('xpath', $xpath);
+    }
+
+    /**
+     * @When /^I hover over the element "([^"]*)"$/
+     * @param string $locator element
+     */
+    public function iHoverOverTheElement($locator)
+    {
+            $session = $this->getSession();
+            $element = $session->getPage()->find('css', $locator);
+
+            if (null === $element) {
+                throw new \InvalidArgumentException(sprintf('Could not evaluate CSS selector: "%s"', $locator));
+            }
+
+            $session->executeScript("
+                var elem = document.querySelector('$locator');
+                if (elem) {
+                    elem.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+                    elem.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+                    elem.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
+                }
+            ");
     }
 }

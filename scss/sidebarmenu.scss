@@ -423,3 +423,9 @@ body:has(.snap-sidebar-menu.show) #sticky-footer {
         @include display-drawer-mobile;
     }
 }
+
+body.snap_drawer_open {
+    header#mr-nav, .snap-sidebar-menu {
+        z-index: 1040;
+    }
+}

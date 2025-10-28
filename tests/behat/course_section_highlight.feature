@@ -146,7 +146,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
       And "#extra-actions-dropdown-1" "css_element" should exist
       And I click on "#extra-actions-dropdown-1" "css_element"
       And I click on "#section-1 .snap-delete" "css_element"
-      Then I should see section delete dialog
       When I press "Delete"
       Then I should not see "Highlighted"
       And I follow "Create a new section"

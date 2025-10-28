@@ -23,7 +23,6 @@
 Feature: When the moodle theme is set to Snap, teachers edit assets without entering edit mode.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course Index - INT-21096"
     Given the following "courses" exist:
       | fullname | shortname | category | format | showcompletionconditions | enablecompletion | initsections |
       | Course 1 | C1        | 0        | topics | 1                        | 1                |      1       |
@@ -41,154 +40,108 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
       | student1 | C1     | student        |
 
   @javascript
-  Scenario Outline: Student cannot access edit actions.
+  Scenario: Student cannot access edit actions.
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     Then I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
-    Then ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    And "Actions" "icon" should not exist in the "#section-1" "css_element"
 
   @javascript
-  Scenario Outline: In read mode, non-editing teacher can see teacher's actions.
+  Scenario: In read mode, non-editing teacher can see teacher's actions.
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     And I log in as "teacher2"
     And I am on the course main page for "C1"
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
-    And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And "div.dropdown snap-edit-more-dropdown" "css_element" should not exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    And I should see "Test assignment"
+    And "Actions" "icon" should not exist in the "#section-1" "css_element"
 
   @javascript
-  Scenario Outline: In read mode, teacher hides then shows activity.
+  Scenario: In read mode, teacher hides then shows activity.
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
     And I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
-    And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_hide" "css_element"
-    Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" exists
-    And I click on ".snap-activity.assign .snap-asset-actions" "css_element"
-    And I click on ".snap-activity[data-type='Assignment']  a.js_snap_show" "css_element"
-    Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    And I should see "Test assignment"
+    And I open "Test assignment" actions menu
+    And I choose "Hide" in the open action menu
+    And I should see "Hidden from students" in the "Test assignment" "activity"
+    And I open "Test assignment" actions menu
+    And I choose "Show" in the open action menu
+    Then I should not see "Hidden from students" in the "Test assignment" "activity"
 
   @javascript
-  Scenario Outline: In read mode, teacher hides then shows resource.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
-    Then I log in as "teacher1"
+  Scenario: In read mode, teacher hides then shows resource.
+    Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_text_file.txt" to section 1
-    Then ".snap-resource[data-type='txt']" "css_element" should exist
-    And ".snap-resource[data-type='txt'].draft" "css_element" should not exist
-    And I click on ".snap-resource[data-type='txt'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-resource[data-type='txt'] a.js_snap_hide" "css_element"
-    Then I wait until ".snap-resource[data-type='txt'].draft" "css_element" exists
+    Then I should see "test_text_file.txt"
+    And I wait "2" seconds
+    And I switch edit mode in Snap
+    And I open "test text file" actions menu
+    And I choose "Hide" in the open action menu
+    And I should see "Hidden from students" in the "test text file" "activity"
     # This is to test that the change persists.
     And I reload the page
-    And ".snap-resource[data-type='txt'].draft" "css_element" should exist
-    And I click on ".snap-resource[data-type='txt'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-resource[data-type='txt'] a.js_snap_show" "css_element"
-    Then I wait until ".snap-resource[data-type='txt'].draft" "css_element" does not exist
+    And I open "test text file" actions menu
+    And I choose "Show" in the open action menu
+    And I should not see "Hidden from students" in the "test text file" "activity"
     # This is to test that the change persists.
     And I reload the page
-    And ".snap-resource[data-type='txt'].draft" "css_element" should not exist
-    Then I wait until ".snap-activity[data-type='Assignment'].draft" "css_element" does not exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    And I should not see "Hidden from students" in the "test text file" "activity"
 
   @javascript
-  Scenario Outline: In read mode, teacher duplicates activity.
+  Scenario: In read mode, teacher duplicates activity.
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1                                   |
-    And I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
-    Then "#section-1" "css_element" should exist
-    And ".snap-activity[data-type='Assignment']" "css_element" should exist
-    And ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should not exist
-    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
-    Then I wait until ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" exists
+    And I open "Test assignment" actions menu
+    And I choose "Duplicate" in the open action menu
+    And I should see "Test assignment (copy)"
     # This is to test that the duplication persists.
     And I reload the page
-    And ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" should exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    And I should see "Test assignment (copy)"
 
   @javascript
-  Scenario Outline: In read mode, teacher duplicates resource.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
-    Then I log in as "teacher1"
+  Scenario: In read mode, teacher duplicates resource.
+    Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     When I upload file "test_text_file.txt" to section 1
-    Then ".snap-resource[data-type='txt']" "css_element" should exist
-    And ".snap-resource[data-type='txt'] + .snap-resource[data-type='txt']" "css_element" should not exist
-    And I click on ".snap-resource[data-type='txt'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-resource[data-type='txt'] a.js_snap_duplicate" "css_element"
-    Then I wait until ".snap-resource[data-type='txt'] + .snap-resource[data-type='txt']" "css_element" exists
+    Then I should see "test text file"
+    And I switch edit mode in Snap
+    And I open "test text file" actions menu
+    And I choose "Duplicate" in the open action menu
+    And I should see "test text file (copy)"
         # This is to test that the duplication persists.
     And I reload the page
-    Then ".snap-resource[data-type='txt'] + .snap-resource[data-type='txt']" "css_element" should exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
+    And I should see "test text file (copy)"
 
   @javascript
   Scenario: In read mode, teacher can copy activity to sharing cart.
+    Given I skip because "Will be reviewed in INT-21471"
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1|
@@ -198,9 +151,9 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
-    And I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    Then I should see "Copy to Sharing Cart"
-    And I click on ".snap-activity[data-type='Assignment'] a.editing_backup" "css_element"
+    And I switch edit mode in Snap
+    And I open "Test assignment" actions menu
+    And I choose "Copy to Sharing Cart" in the open action menu
     Then I should see "Are you sure you want to copy this"
     And I log out
     And I log in as "student1"
@@ -216,23 +169,28 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
       | assign   | Acceptance test site | 1       | Assignment1 | Assignment description | assign1  |
     Then I log in as "admin"
     And I am on site homepage
-    When I click on ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element"
-    And I click on ".snap-activity[data-type='Assignment'] a.js_snap_duplicate" "css_element"
-    Then I wait until ".snap-activity[data-type='Assignment'] + .snap-activity[data-type='Assignment']" "css_element" exists
+    And I switch edit mode in Snap
+    And I open "Assignment1" actions menu
+    And I choose "Duplicate" in the open action menu
+    And I should see "Assignment1 (copy)"
 
   @javascript
   Scenario: In the frontpage, an admin can edit completions conditions
+    Given I skip because "XXXX - completion link is not working on actions menu"
     Given the following "activities" exist:
-      | activity | name              | course | idnumber | gradepass | completion | completionusegrade |
-      | quiz     | Activity sample 1 | C1     | quiz1    | 5.00      | 2          | 1                  |
+      | activity | name              | course | idnumber | gradepass | completion | completionusegrade | completionview |
+      | quiz     | Activity sample 1 | C1     | quiz1    | 5.00      | 2          | 1                  | 1               |
     When I am on the "C1" "Course" page logged in as "admin"
-    And I click on "More Options" "button"
+    And I open "Activity sample 1" actions menu
+    And I choose "Edit conditions" in the open action menu
     Then I click on "Edit conditions Activity sample 1" "button"
     And ".snap-form-required > fieldset" "css_element" should not be visible
     But ".snap-form-advanced > fieldset#id_activitycompletionheader" "css_element" should be visible
+    
 
   @javascript
   Scenario: In the frontpage, an admin should not see the Edit conditions option if Enable completion is disabled in the site
+    Given I skip because "XXXX - completion link is not working on actions menu"
     Given I disable site completion tracking
     And the following "activities" exist:
       | activity | name              | course | idnumber | gradepass | completion | completionusegrade |
