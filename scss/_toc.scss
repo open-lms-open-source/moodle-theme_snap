@@ -470,7 +470,7 @@ label[for="toc-search-input"]{
         display: none;
     }
 
-    .drawerheader {
+    .drawer.drawer-left .drawerheader {
       position: relative;
       left: 67%;
     }
@@ -543,7 +543,7 @@ label[for="toc-search-input"]{
   width: 29px;
 }
 
-.btn {
+.drawer.drawer-left .btn {
     &.drawertoggle {
       padding: 0;
       margin: 0;

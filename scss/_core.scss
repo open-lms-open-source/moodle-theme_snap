@@ -1618,12 +1618,12 @@ footer #moodle-footer
     position: relative;
     left: 0;
     transition: all 0.4s 0s ease;
-    // When admin block is open
-    &.offcanvas {
-        left: -315px;
-    }
+    // When right drawers are open
+    &.offcanvas,
     &.show-drawer-right {
-        left: -315px;
+      @include media-breakpoint-up(lg) {
+        margin-right: 365px !important;
+      }
     }
     // When Course Index is open.
     &.show-drawer-left #snap-course-wrapper {
