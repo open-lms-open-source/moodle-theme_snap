@@ -91,7 +91,7 @@ Feature: Activity navigation in Snap theme
     # Hidden section.
     And I follow "Section 5"
     And I wait until the page is ready
-    And I click on "#section-5 a.snap-visibility.snap-hide" "css_element"
+    And I click on "#section-5 a.snap-visibility[data-action='sectionHide']" "css_element"
     # Set up book.
     And I am on the "Book 1" "book activity editing" page
     And I press "Save and display"
@@ -380,7 +380,7 @@ Feature: Activity navigation in Snap theme
     And I change window size to "large"
     And I am on "Course 1" course homepage
     And I follow "Section 4"
-    And I click on "li#section-4 div.snap-section-editing a.snap-visibility.snap-hide" "css_element"
+    And I click on "li#section-4 div.snap-section-editing a.snap-visibility[data-action='sectionHide']" "css_element"
     And I follow "Section 4"
     And I open "Lti 1" actions menu
     And I choose "Availability > Make available but don't show on course page" in the open action menu

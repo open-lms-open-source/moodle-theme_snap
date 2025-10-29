@@ -131,44 +131,37 @@ define(
                 });
             }
         };
-
-        const setActionsObservers = function() {
+        const setCmActionsObservers = function() {
             const isLoggedIn = document.body.classList.contains('logged-in');
             if (!isLoggedIn) {
                 return;
             }
-            const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
-            if (reactiveCourseEditor.isEditing) {
-                return;
-            }
-            document.querySelectorAll('a.dropdown-item.editing_movecm.menu-action')
-                .forEach(function(element) {
-                    element.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const actions = new Actions.prototype.constructor({
-                            element: this,
-                            reactive: CourseEditor.getCurrentCourseEditor()
-                        });
-                        if (typeof actions._requestMoveCm === 'function') {
-                            actions._requestMoveCm(this, e);
-                        }
-                    }, {capture: true});
+            const selector = '.action-menu a[data-action], ' +
+                '.section-actions a[data-action], ' +
+                '[data-action="newModule"].section-modchooser-link';
+
+            document.body.addEventListener('click', function(e) {
+                const actionLink = e.target.closest(selector);
+
+                // Check if we are clicking on action button, permalink has another observer.
+                if (!actionLink || actionLink.dataset.action === 'permalink') {
+                    return; // Do nothing.
+                }
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
+                const actions = new Actions.prototype.constructor({
+                    element: actionLink,
+                    reactive: reactiveCourseEditor
                 });
-            document.querySelectorAll('a.dropdown-item.editing_delete.menu-action')
-                .forEach(function(element) {
-                    element.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const actions = new Actions.prototype.constructor({
-                            element: this,
-                            reactive: CourseEditor.getCurrentCourseEditor()
-                        });
-                        if (typeof actions._requestCmDelete === 'function') {
-                            actions._requestCmDelete(this, e);
-                        }
-                    }, {capture: true});
-                });
+
+                if (typeof actions._dispatchClick === 'function') {
+                    actions._dispatchClick(e);
+                }
+
+            }, {capture: true});
         };
 
         /**
@@ -252,7 +245,6 @@ define(
                             }
                         }
                     });
-                    setActionsObservers();
                 });
             } else {
                 $(window).trigger('hashchange');
@@ -734,7 +726,7 @@ define(
 
                 updateSectionNavigation().done(function() {
                     if (courseLib.courseConfig.partialrender) {
-                        setCourseSectionObervers();
+                        setCourseSectionObservers();
                     }
                 });
             };
@@ -851,14 +843,15 @@ define(
              * Generic action handler for all asset actions.
              * @param {event} e
              * @param {domNode} triggerEl
+             * TODO: to be removed
              */
             var assetAction = function(e, triggerEl) {
                 e.preventDefault();
 
-                var assetEl = $($(triggerEl).parents('.snap-asset')[0]),
+                var assetEl = $($(triggerEl).parents('.activity-wrapper')[0]),
                     cmid = Number(assetEl[0].id.replace('module-', '')),
                     instanceName = assetEl.find('.instancename').text().trim(),
-                    action = $(triggerEl).data('action'),
+                    action = $(triggerEl)[0].className.match(/(?:^|\s)editing_([a-z0-9_-]+)/i)?.[1],
                     errActionKey = '',
                     errMessageKey = '',
                     errAction = '',
@@ -872,7 +865,7 @@ define(
                 }
 
                 var actionAJAX = function() {
-                    if (!ajaxTracker.start(jsPendingKey, assetEl, '.snap-edit-asset-more')) {
+                    if (!ajaxTracker.start(jsPendingKey, assetEl, '.section-cm-edit-actions')) {
                         // Request already made.
                         return;
                     }
@@ -1085,7 +1078,9 @@ define(
 
             /**
              * Listen for edit action clicks, hide, show, duplicate, etc..
+             * TODO: to be removed, no longer needed.
              */
+                // eslint-disable-next-line no-unused-vars
             var assetEditListeners = function() {
                 var actionSelectors = '.snap-asset-actions .js_snap_hide, ';
                 actionSelectors += '.snap-asset-actions .js_snap_show, ';
@@ -1100,7 +1095,9 @@ define(
 
             /**
              * Listen for availability actions, hide, show, stealth.
+             * TODO: to be removed
              */
+                // eslint-disable-next-line no-unused-vars
             var availabilityListeners = function() {
                 $(document).on('click', '#availability-menu .choicelist div[data-optionnumber]',
                     function(e) {
@@ -1170,7 +1167,9 @@ define(
 
             /**
              * Listen for group mode actions.
+             * TODO: to be removed.
              */
+                // eslint-disable-next-line no-unused-vars
             var groupModeListeners = function() {
                 $(document).on('click',
                     '.dropdown-item-outline a[data-action="cmNoGroups"], ' +
@@ -1413,7 +1412,9 @@ define(
 
             /**
              * Highlight section on click.
+             * #TODO: to be removed on INT-21222
              */
+                // eslint-disable-next-line no-unused-vars
             var highlightSectionListener = function() {
                 sectionActionListener('highlight', function(sectionNumber) {
                     $('#section-' + sectionNumber).toggleClass('current');
@@ -1478,7 +1479,9 @@ define(
 
             /**
              * Toggle section visibility on click.
+             * #TODO: to be removed on INT-21222
              */
+                // eslint-disable-next-line no-unused-vars
             var toggleSectionListener = function() {
                 /**
                  * Toggle hidden class and update section navigation.
@@ -1679,10 +1682,14 @@ define(
             /**
              * Set observers for TOC and navigation buttons in the footer.
              */
-            var setCourseSectionObervers = function () {
+            var setCourseSectionObservers = function () {
                 setTocObservers();
                 setNavigationFooterObservers();
-                setActionsObservers();
+                // Event listeners for Course modules actions, when editing is off.
+                const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
+                if (!reactiveCourseEditor.isEditing) {
+                    setCmActionsObservers();
+                }
             };
 
             /**
@@ -1690,17 +1697,17 @@ define(
              */
             var addListeners = function() {
                 // moveSectionListener(); #TODO: to be removed on INT-21222
-                toggleSectionListener();
-                highlightSectionListener();
+                // toggleSectionListener();
+                // highlightSectionListener();
                 // deleteSectionListener(); #TODO: to be removed on INT-21222
                 // permalinkSectionListener(); #TODO: to be removed on INT-21222
                 assetMoveListener();
                 movePlaceListener();
-                assetEditListeners();
-                availabilityListeners();
-                groupModeListeners();
+                // assetEditListeners(); #TODO: to be removed on INT-21222
+                // availabilityListeners(); #TODO: to be removed on INT-21222
+                // groupModeListeners(); #TODO: to be removed on INT-21222
                 addAfterDrops();
-                setCourseSectionObervers();
+                setCourseSectionObservers();
                 $('body').addClass('snap-course-listening');
             };
 

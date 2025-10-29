@@ -24,7 +24,8 @@
         <li>
             <a class="dropdown-item" {{#dataaction}}data-action="{{dataaction}}"{{/dataaction}} data-id="{{{dataid}}}" href="{{{url}}}" role="button" {{{ariapressed}}} {{{arialabel}}}>
                 <div class="d-inline-block menu-icon {{{class}}}" {{{ariapressed}}}>
-                    {{{title}}}
+                    <span class="menu-action-text main">{{{title}}}</span>
+                    <span class="menu-action-text optional">{{{untitle}}}</span>
                 </div>
             </a>
         </li>

@@ -44,6 +44,10 @@ class course_action_section_highlight extends course_action_section_base {
      * @param bool $onsectionpage
      */
     public function __construct($course, section_info $section, $onsectionpage = false) {
+        // Highlight not available for subsections.
+        if ($section->component == 'mod_subsection') {
+            return '';
+        }
 
         if ($onsectionpage) {
             $baseurl = course_get_url($course, $section->section);
@@ -60,7 +64,10 @@ class course_action_section_highlight extends course_action_section_base {
                 $marker = optional_param('marker', '', PARAM_INT);
                 $marker = $marker === '' ? $course->marker : $marker;
                 $this->title = get_string('highlight');
+                $this->untitle = get_string('highlightoff');
                 $this->arialabel = "aria-label='".get_string('highlight')."'";
+                $this->dataaction = 'sectionHighlight';
+                $this->dataid = $section->id;
                 // Note if the new target section is 0 then it means the requested action is to have no current section
                 // highlighted.
                 if ($marker == $section->section || $section->section === 0) {
@@ -68,8 +75,8 @@ class course_action_section_highlight extends course_action_section_base {
                     $url->param('marker', 0);
                     $this->url = $url;
                     $this->ariapressed = 'aria-pressed="true"';
-                    $this->title = get_string('highlightoff');
                     $this->arialabel = "aria-label='".get_string('highlightoff')."'";
+                    $this->dataaction = 'sectionUnhighlight';
                 } else {
                     $url->param('marker', $section->section);
                     $this->url = $url;
