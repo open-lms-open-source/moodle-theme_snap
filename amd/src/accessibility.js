@@ -388,6 +388,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     }
                     setDrawersTabOrder();
 
+                    // Local accessibility plugin button from Snap header
                     const accessibilityIcon = document.getElementById('local-accessibility-buttoncontainer');
                     const headerButtonsContainer = document.querySelector('#snap-header > div.float-end');
                     if (accessibilityIcon && headerButtonsContainer.querySelector('.usermenu')) {
@@ -417,6 +418,61 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                         }
                         accessibilityWrapper.appendChild(accessibilityIcon);
                         accessibilityWrapper.appendChild(accessibilityPanel);
+
+                        let animationTimeout = null;
+                        let isClosingAnim = false;
+
+                        /**
+                         * Handles opening animation for accessibility panel.
+                         */
+                        const handlePanelOpen = () => {
+                            // Clear any pending close animations
+                            if (animationTimeout) {
+                                clearTimeout(animationTimeout);
+                                animationTimeout = null;
+                            }
+
+                            accessibilityPanel.style.display = 'block';
+                            requestAnimationFrame(() => {
+                                accessibilityPanel.classList.add('is-visible');
+                            });
+                        };
+
+                        /**
+                         * Handles closing animation for accessibility panel.
+                         */
+                        const handlePanelClose = () => {
+                            if (isClosingAnim) {
+                                return;
+                            }
+                            isClosingAnim = true;
+                            accessibilityPanel.style.display = 'block';
+
+                            requestAnimationFrame(() => {
+                                accessibilityPanel.classList.remove('is-visible');
+                                animationTimeout = setTimeout(() => {
+                                    if (isClosingAnim && !accessibilityPanel.classList.contains('is-visible')) {
+                                        accessibilityPanel.style.display = 'none';
+                                    }
+                                    isClosingAnim = false;
+                                    animationTimeout = null;
+                                }, 300);
+                            });
+                        };
+
+                        // Required to apply the required transition in the Snap header
+                        const observer = new MutationObserver(() => {
+                            const isDisplayed = window.getComputedStyle(accessibilityPanel).display !== 'none';
+                            const isVisible = accessibilityPanel.classList.contains('is-visible');
+                            if (isDisplayed && !isVisible) {
+                                handlePanelOpen();
+                            }
+                            if (!isDisplayed && isVisible) {
+                                handlePanelClose();
+                            }
+                        });
+
+                        observer.observe(accessibilityPanel, {attributes: true, attributeFilter: ['style']});
                     }
                 });
 
