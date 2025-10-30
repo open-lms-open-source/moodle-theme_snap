@@ -24,7 +24,6 @@
 Feature: When the Moodle theme is set to Snap, message page should be accessible.
 
   Background:
-    Given I skip because "It's failing due to core changes - INT-21402"
     Given the following "courses" exist:
       | fullname | shortname | category | format |
       | Course 1 | C1        | 0        | topics |
@@ -56,6 +55,7 @@ Feature: When the Moodle theme is set to Snap, message page should be accessible
     And I should see "Requests"
     And I click on "div.message-app.main div.body-container a[data-action='show-contacts-section']" "css_element"
     And I click on "div.message-app.main div.body-container a[data-action='show-requests-section']" "css_element"
+    And I click on "#admin-menu-trigger" "css_element"
 
   @javascript
   Scenario: When admin review messages preferences of other users, message drawer should not appear
