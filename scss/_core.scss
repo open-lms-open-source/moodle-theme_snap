@@ -1735,7 +1735,6 @@ header#page-header
 }
 
 body#page-site-index #moodle-page #page-header {
-    min-height: 0;
     aspect-ratio: 3;
     #page-mast {
         margin: 0;
@@ -1934,8 +1933,6 @@ body.path-course-view #moodle-page #page-header:not(.has-course-leftnav){
 
     #page-header,
     .carousel-slide {
-        // background-color: $brand-primary; customisable
-        min-height: 405px;
         position: relative;
         padding: 0;
         margin: 0;
@@ -1953,15 +1950,6 @@ body.path-course-view #moodle-page #page-header:not(.has-course-leftnav){
         padding: 1em 2%;
         margin: 10em 4% 1em;
         word-break: break-word;
-    }
-}
-
-@include media-breakpoint-up(lg) {
-    #page-site-index {
-        #page-header,
-        .carousel-slide {
-            min-height: 600px;
-        }
     }
 }
 
