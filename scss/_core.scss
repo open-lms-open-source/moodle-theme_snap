@@ -6635,3 +6635,7 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
     display: none;
   }
 }
+
+.modal {
+    z-index: 1052; // Higher than Snap header.
+}
