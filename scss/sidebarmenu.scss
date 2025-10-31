@@ -281,7 +281,7 @@ $mobile-sidebar-peek-width: 10px;
     @media screen and (max-width: 992px) {
         right: $mobile-sidebar-width;
     }
-    @media screen and (max-width: 425px) {
+    @media screen and (max-width: 480px) {
         width: calc(100% - #{$mobile-sidebar-width});
     }
 }
@@ -375,11 +375,11 @@ body:has(.snap-sidebar-menu.show) #sticky-footer {
 // Styles to handle the special quiz and book behavior for the sidebar displaying the blocks.
 #page-mod-quiz-attempt #page,
 #page-mod-book-view #page {
-    width: calc(100% - 50px);
-
     &.show-drawer-right {
+      @include media-breakpoint-up(lg) {
         left: 0;
         width: calc(100% - 315px - 50px);
+      }
     }
 }
 
@@ -418,7 +418,7 @@ body:has(.snap-sidebar-menu.show) #sticky-footer {
     }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 480px) {
     body.snap_drawer_open {
         @include display-drawer-mobile;
     }

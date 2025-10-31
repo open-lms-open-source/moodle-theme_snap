@@ -267,7 +267,7 @@ body.path-site .block.block_settings {
     }
 
     // Snap Feeds Mobile Menu
-    @media screen and (max-width: 425px) {
+    @media screen and (max-width: 480px) {
         &.state-visible {
             width: 100%;
             z-index: 1030;
@@ -644,7 +644,7 @@ body.path-site .block.block_settings {
     }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 480px) {
     body.snap_drawer_open #page-content .block_settings {
         #close-block-settings {
             display: block;
