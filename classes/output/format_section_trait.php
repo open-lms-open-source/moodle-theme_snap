@@ -81,7 +81,8 @@ trait format_section_trait {
                 $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
             }
             $currentsection = $modinfo->get_section_info($data->singlesection->num);
-//            $data->singlesection->summary->summarytext = $this->add_snap_custom_section_summary($courseformat, $currentsection);
+            // Set editing true, so section badges are rendered.
+            $data->singlesection->editing = true;
             $data->singlesection->summary->summarytext = '';
             $data->singlesection->snapsectionsummary = $this->add_snap_custom_section_summary($courseformat, $currentsection);
 
@@ -268,6 +269,8 @@ trait format_section_trait {
         // Add Snap custom summary instead of core one.
         $sectiondata->summary->summarytext = '';
         $sectiondata->snapsectionsummary = $this->add_snap_custom_section_summary($format, $section);
+        // Set editing true, so section badges are rendered.
+        $sectiondata->editing = true;
 
         // Add snap content to each activity module.
         foreach ($sectiondata->cmlist->cms as &$cmsitem) {
@@ -290,38 +293,43 @@ trait format_section_trait {
      */
     public function add_snap_custom_section_summary(course_format $format, section_info $section) {
         global $PAGE, $USER;
-        // Section summary/body text.
-        $summarylabel = get_string('summarylabel', 'theme_snap');
-        $output = "<div class='summary' role='group' aria-label='$summarylabel'>";
-
         // Get Moodle Core summary.
         $summaryclass = $format->get_output_classname('content\\section\\summary');
         $summary = new $summaryclass($format, $section);
         $summarytext = $summary->format_summary_text();
 
+        // Check capabilities.
         $context = \context_course::instance($PAGE->course->id);
         $canupdatecourse = has_capability('moodle/course:update', $context);
 
         // Welcome message when no summary text.
         if (empty($summarytext) && $canupdatecourse) {
-            $summarytext = "<p>".get_string('defaultsummary', 'theme_snap')."</p>";
+            $summarytext = \html_writer::tag('p', get_string('defaultsummary', 'theme_snap'));
             if ($section->section == 0) {
                 $editorname = format_string(fullname($USER));
-                $summarytext = "<p>".get_string('defaultintrosummary', 'theme_snap', $editorname)."</p>";
+                $summarytext = \html_writer::tag('p', get_string('defaultintrosummary', 'theme_snap', $editorname));
             }
         } else {
-            $summarytext = "<div>" . $summarytext . "</div>";
+            $summarytext = \html_writer::tag('div', $summarytext);
         }
-        $output .= $summarytext;
 
+        // Get edit section HTML.
+        $editbutton_html = '';
         if ($canupdatecourse) {
-            $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $section->id));
+            $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $section->sectionnum));
             $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" alt="" src="';
             $icon .= $this->output->image_url('pencil', 'theme').'" /><br/>';
-            $output .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
+            $editbutton_html .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
         }
-        $output .= "</div>";
-        return $output;
+        $summarylabel = get_string('summarylabel', 'theme_snap');
+        $wrapper_attributes = [
+            'class' => 'summary',
+            'role' => 'group',
+            'aria-label' => $summarylabel
+        ];
+        $final_content = $summarytext . $editbutton_html;
+
+        return \html_writer::tag('div', $final_content, $wrapper_attributes);
     }
 
      /**

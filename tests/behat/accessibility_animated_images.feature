@@ -43,10 +43,10 @@ Feature: Animated images should be accessible.
     And I follow "Section 1"
     And I upload file "testgif_small.gif" to section 1
     And I reload the page
-    And I hover over the element ".snap-animated-image img"
+    And I hover over the element ".snap-animated-image"
     Then I click on ".anim-pause-button" "css_element"
     And "img[src$='.gif']" "css_element" should not be visible
-    And I hover over the element ".snap-animated-image img"
+    And I hover over the element ".snap-animated-image"
     And I wait until ".anim-play-button" "css_element" is visible
     And I click on ".anim-play-button" "css_element"
     And "img[src$='.gif']" "css_element" should be visible

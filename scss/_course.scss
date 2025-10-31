@@ -2780,7 +2780,7 @@ body.snap-resource-card {
     .sectionbadges.d-flex,
     .sectionbadges .badge:not(.d-none) {
       display: block !important;
-      width: -webkit-fill-available;
+      width: 100%;
     }
     .sectionbadges .badge {
       padding: .5em 1em;

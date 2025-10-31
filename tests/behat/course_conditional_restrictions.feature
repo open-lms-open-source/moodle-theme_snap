@@ -77,12 +77,12 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I apply asset completion restriction "S3 Completion - view" to section
     And I am on the course main page for "C1"
     And I go to section 4 of course "C1"
-    And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
+    And I should see "Not available unless: The activity S3 Completion - view is marked complete"
     And I go to section 3 of course "C1"
     And I am on the "S3 Completion - view" "assign activity" page
     And I am on the course main page for "C1"
     And I go to section 4 of course "C1"
-    And I should see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
+    And I should see "Not available unless: The activity S3 Completion - view is marked complete"
     And I log out
     # Check the restrictions as student.
     And I log in as "student1"
@@ -103,7 +103,7 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
     And I am on the "S3 Completion - view" "assign activity" page
     And I am on the course main page for "C1"
     And I go to section 4 of course "C1"
-    And I should not see availability info "Not available unless: The activity S3 Completion - view is marked complete" in "section" "4"
+    And I should not see "Not available unless: The activity S3 Completion - view is marked complete"
     Examples:
       | Option     |
       | 0          |

@@ -613,107 +613,6 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @param string $str
-     * @param string $baseselector
-     * @throws ExpectationException
-     * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)"$/
-     */
-    public function i_see_availabilityinfo($str, $baseselector = '') {
-        $str = trim($str);
-        $nodes = $this->find_all('xpath', $baseselector.'//div[contains(@class, \'snap-conditional-tag\')]');
-
-        // @codingStandardsIgnoreLine
-        /** @var NodeElement $node */
-        foreach ($nodes as $node) {
-            $nodetext = trim($node->getText());
-            if (stripos($nodetext, $str) !== false) {
-                return;
-            }
-        }
-
-        $session = $this->getSession();
-        throw new ExpectationException('Failed to find availability notice of "'.$str.'"', $session);
-    }
-
-    /**
-     * Get base selector for availabilityinfo dending on type and elementstr.
-     *
-     * @param string $type
-     * @param string $elementstr
-     * @return string
-     */
-    private function base_selector_availabilityinfo($type, $elementstr) {
-        if ($type === 'section') {
-            $baseselector = '//li[@id="section-'.$elementstr.'"]';
-        } else if ($type === 'asset') {
-            $baseselector = '(//li[contains(@class, \'snap-asset\')]'. // Selection when editing teacher.
-                '//h3[contains(@class, \'snap-asset-link\')]'.
-                '//span[contains(text(), \''.$elementstr.'\')]'.
-                '/parent::a/parent::h3/parent::div'.
-                '|'.
-                '//li[contains(@class, \'snap-asset\')]'. // Selection when anyone else.
-                '//h3[contains(@class, \'snap-asset-link\')]'.
-                '//*[contains(text(),  \''.$elementstr.'\')]'.
-                '/parent::h3/parent::div)';
-        } else {
-            throw new \core\exception\coding_exception('Unknown element type ('.$type.')');
-        }
-        return $baseselector;
-    }
-
-    /**
-     * @param string $str
-     * @param string $type
-     * @param string $elementstr
-     * @throws ExpectationException
-     * @codingStandardsIgnoreStart
-     * @Given /^I should see availability info "(?P<str>(?:[^"]|\\")*)" in "(?P<elementtype>section|asset)" "(?P<elementstr>(?:[^"]|\\")*)"$/
-     * @codingStandardsIgnoreEnd
-     */
-    public function i_see_availabilityinfo_in($str, $type, $elementstr) {
-        $this->i_see_availabilityinfo($str, $this->base_selector_availabilityinfo($type, $elementstr));
-    }
-
-    /**
-     * @param string $str
-     * @param string $baseselector
-     * @throws ExpectationException
-     * @Given /^I should not see availability info "(?P<str>(?:[^"]|\\")*)"$/
-     */
-    public function i_dont_see_availabilityinfo($str, $baseselector = '') {
-        try {
-            $nodes = $this->find_all('xpath', $baseselector.'//div[contains(@class, \'snap-conditional-tag\')]');
-        } catch (Exception $e) {
-            if (empty($nodes)) {
-                return;
-            }
-        }
-        // @codingStandardsIgnoreStart
-        /** @var NodeElement $node */
-        foreach ($nodes as $node) {
-            if ($node->getText() === $str) {
-                $session = $this->getSession();
-                $msg = 'Availability notice found in element '.$node->getXpath().' of "'.$str.'"';
-                throw new ExpectationException($msg, $session);
-            }
-        }
-        // @codingStandardsIgnoreEnd
-    }
-
-    /**
-     * @param string $str
-     * @param string $type
-     * @param string $elementstr
-     * @throws ExpectationException
-     * @codingStandardsIgnoreStart
-     * @Given /^I should not see availability info "(?P<str>(?:[^"]|\\")*)" in "(?P<elementtype>section|asset)" "(?P<elementstr>(?:[^"]|\\")*)"$/
-     * @codingStandardsIgnoreEnd
-     */
-    public function i_dont_see_availabilityinfo_in($str, $type, $elementstr) {
-        $this->i_dont_see_availabilityinfo($str, $this->base_selector_availabilityinfo($type, $elementstr));
-    }
-
-    /**
      * Check conditional date message in given element.
      * @param string $date
      * @param string $element
@@ -806,7 +705,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should see available from date of "(?P<date_string>(?:[^"]|\\")*)" in section (?P<section_int>(?:\d+))$/
      */
     public function i_should_see_available_from_in_section($date, $section) {
-        $elementselector = 'div.content > .snap-conditional-tag';
+        $elementselector = 'div.content .section_availability';
         return $this->i_should_see_available_from_in_element($date, $elementselector, 'css_element');
     }
 
@@ -817,7 +716,7 @@ class behat_theme_snap extends behat_base {
      * @Given /^I should not see available from date of "(?P<date_string>(?:[^"]|\\")*)" in section (?P<section_int>(?:\d+))$/
      */
     public function i_should_not_see_available_from_in_section($date, $section) {
-        $elementselector = '#section-'.$section.' > div.content > .snap-conditional-tag';
+        $elementselector = '#section-'.$section.' > div.content .section_availability';
         return $this->i_should_not_see_available_from_in_element($date, $elementselector, 'css_element');
     }
 
