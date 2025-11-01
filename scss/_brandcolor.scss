@@ -509,7 +509,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
       background-color: $brand-primary;
     }
 
-    .courseindex-section.current .pageitem {
+    .courseindex-section.current > .pageitem {
       a.courseindex-chevron i.icon {
         color: $brand-primary;
       }
