@@ -6889,3 +6889,7 @@ li.section.main {
   gap: 1rem;
   padding-right: .5rem;
 }
+
+.modal {
+  z-index: 1052; // Higher than Snap header.
+}
