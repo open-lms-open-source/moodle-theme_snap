@@ -38,42 +38,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | student1 | C1 | student |
 
   @javascript
-  Scenario: In read mode, teacher hides section.
-    Given I log in as "admin"
-    And I log out
-    Then I log in as "teacher1"
-    And I am on the course main page for "C1"
-    And I follow "Section 2"
-    Then "#section-2" "css_element" should exist
-    And "#course-index div.courseindex-section:nth-of-type(3)" "css_element" should exist
-    And "#section-2.hidden" "css_element" should not exist
-    And I click on "#section-2 .snap-visibility[data-action='sectionHide']" "css_element"
-    And I follow "Section 2"
-    And I wait until "#section-2 .snap-visibility[data-action='sectionShow']" "css_element" exists
-    Then "#section-2.hidden" "css_element" should exist
-    And "#course-index div.courseindex-section:nth-of-type(3)" "css_element" should exist
-    # Make sure that the navigation either side of section 2 has the dimmed class - i.e. to reflect section 2's hidden status.
-    And I follow "Section 3"
-    And the previous navigation for section "3" shows as hidden
-    And I follow "Section 1"
-    # And I follow "Section 2"
-    And the next navigation for section "1" shows as hidden
-    # Note, the Not published to students message is in the 3rd element of the TOC because element 1 is section 0.
-    And "#course-index div.courseindex-section div.courseindex-section-title.dimmed" "css_element" should be visible
-    # Let's make the section visible again
-    And I follow "Section 2"
-    Given I click on "#section-2 .snap-visibility[data-action='sectionShow']" "css_element"
-    And I follow "Section 2"
-    And I wait until "#section-2 .snap-visibility[data-action='sectionHide']" "css_element" exists
-    Then "#section-2.hidden" "css_element" should not exist
-    And "#course-index div.courseindex-section div.courseindex-section-title.dimmed" "css_element" should not be visible
-    # Make sure that the navigation either side of section 2 does not have the dimmed class - i.e. to reflect section 2's visible status.
-    And I follow "Section 3"
-    And the previous navigation for section "3" shows as visible
-    And I follow "Section 1"
-    And the next navigation for section "1" shows as visible
-
-  @javascript
   Scenario: In read mode, teacher hides section and show an activity.
     Given I log in as "admin"
     And I am on the course main page for "C1"

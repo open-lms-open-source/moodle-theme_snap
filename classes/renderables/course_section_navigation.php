@@ -24,6 +24,7 @@
 
 namespace theme_snap\renderables;
 use context_course;
+use theme_snap\var_nodescription;
 
 /**
  * Renderable class for course section navigation.
@@ -45,6 +46,11 @@ class course_section_navigation implements \core\output\renderable {
     public $next;
 
     /**
+     * @var int sectionid
+     */
+    public $sectionid;
+
+    /**
      * course_section_navigation constructor.
      * @param stdClass $course
      * @param section_info[] $sections
@@ -54,51 +60,97 @@ class course_section_navigation implements \core\output\renderable {
         $course = course_get_format($course)->get_course();
 
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
-        || !$course->hiddensections;
+            || !$course->hiddensections;
 
-        $this->previous = false;
-        $target = $sectionno - 1;
-        while ($target >= 0 && empty($this->previous)) {
-            $extraclasses = '';
-            if ($canviewhidden
-                || $sections[$target]->uservisible
-                || $sections[$target]->availableinfo) {
-                if (!$sections[$target]->visible) {
-                    $extraclasses = ' dimmed_text';
+        $navigablesections = $this->get_navigable_sections($sections, $sectionno);
+        $sectionid = $sections[$sectionno]->id;
+
+        $this->sectionid = $sectionid;
+        $this->previous = $this->find_navigation_link($course, $navigablesections, $sectionid, -1, $canviewhidden);
+        $this->next     = $this->find_navigation_link($course, $navigablesections, $sectionid, 1, $canviewhidden);
+    }
+
+    /**
+     * Returns an ordered array of navigable sections for the current section.
+     *
+     * @param section_info[] $sections Array of section_info objects for the course.
+     * @param int $sectionno The current section number.
+     * @return section_info[] Associative array of section_id => section_info, in navigable order.
+     */
+    private function get_navigable_sections(array $orderedsections, int $sectionno): array {
+        $issubsection = $orderedsections[$sectionno]->is_delegated();
+
+        $navigablesections = [];
+        if (!$issubsection) {
+            foreach ($orderedsections as $section) {
+                /** @var \section_info $section */
+                if (!$section->is_delegated()) {
+                    $navigablesections[$section->id] = $section;
                 }
+            }
+        } else {
+            /** @var \section_info $parentsection */
+            $parentsection = $orderedsections[$sectionno]->get_component_instance()->get_parent_section();
+            if (!$parentsection) {
+                return [];
+            }
 
-                $sectiontitle = get_section_name($course, $sections[$target]);
-                // Better first section title.
+            // The sectionno may not match the actual order if subsections were moved, so cm order is used.
+            foreach ($parentsection->get_sequence_cm_infos() as $cm) {
+                /** @var \cm_info $cm */
+                $customdata = $cm->get_custom_data();
+                if (isset($customdata['sectionid'])) {
+                    $navigablesections[$customdata['sectionid']] = null;
+                }
+            }
+            foreach ($orderedsections as $section) {
+                if (array_key_exists($section->id, $navigablesections)) {
+                    $navigablesections[$section->id] = $section;
+                }
+            }
+        }
+
+        return $navigablesections;
+    }
+
+    /**
+     * Finds the previous or next navigation link relative to a given section.
+     *
+     * Iterates through $orderedsections in the given $direction until a visible or viewable section is found.
+     *
+     * @param stdClass $course The course object.
+     * @param section_info[] $orderedsections Ordered array of sections.
+     * @param int $sectionid The current section id.
+     * @param int $direction Direction to search: -1 for previous, 1 for next.
+     * @param bool $canviewhidden Whether the user can view hidden sections.
+     * @return course_section_navigation_link|false The navigation link object, or false if none.
+     */
+    private function find_navigation_link($course, array $orderedsections, int $sectionid, int $direction, bool $canviewhidden) {
+        $keys = array_keys($orderedsections);
+        $currentindex = array_search($sectionid, $keys, true);
+        if ($currentindex === false) {
+            return false;
+        }
+
+        $index = $currentindex + $direction;
+        while (isset($keys[$index])) {
+            $target = $keys[$index];
+            $section = $orderedsections[$target];
+
+            if ($canviewhidden || $section->uservisible || $section->availableinfo) {
+                $extraclasses = $section->visible ? '' : ' dimmed_text';
+                $sectiontitle = get_section_name($course, $section);
                 if ($sectiontitle === get_string('general')) {
                     $sectiontitle = get_string('introduction', 'theme_snap');
                 }
 
-                $url = course_get_url($course, $target, ['navigation' => true]);
-                $this->previous = new course_section_navigation_link($target, $extraclasses, $sectiontitle, $url);
+                $url = course_get_url($course, $section->sectionnum, ['navigation' => true]);
+                return new course_section_navigation_link($section->sectionnum, $extraclasses, $sectiontitle, $url);
             }
-            $target--;
+
+            $index += $direction;
         }
 
-        $this->next = false;
-        $target = $sectionno + 1;
-        $lastsectionno = course_get_format($course)->get_last_section_number();
-        while ($target <= $lastsectionno && empty($this->next)) {
-            $extraclasses = '';
-            if ($canviewhidden
-                || $sections[$target]->uservisible
-                || $sections[$target]->availableinfo) {
-                if (!$sections[$target]->visible) {
-                    $extraclasses = ' dimmed_text';
-                }
-                $sectiontitle = get_section_name($course, $sections[$target]);
-                // Better first section title.
-                if ($sectiontitle == get_string('general')) {
-                    $sectiontitle = get_string('introduction', 'theme_snap');
-                }
-                $url = course_get_url($course, $target, ['navigation' => true]);
-                $this->next = new course_section_navigation_link($target, $extraclasses, $sectiontitle, $url);
-            }
-            $target++;
-        }
+        return false;
     }
 }

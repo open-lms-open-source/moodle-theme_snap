@@ -36,9 +36,9 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
     And the following "activities" exist:
-      | activity | course               | idnumber | name             | intro                         | section |
-      | assign   | C1                   | assign1  | Test assignment1 | Test assignment description 1 | 1       |
-      | assign   | C1                   | assign2  | Test assignment2 | Test assignment description 2 | 1       |
+      | activity   | course  | idnumber    | name             | intro                         | section |
+      | assign     | C1      | assign1     | Test assignment1 | Test assignment description 1 | 1       |
+      | assign     | C1      | assign2     | Test assignment2 | Test assignment description 2 | 1       |
 
   @javascript
   Scenario: In read mode, teacher moves section 1 before section 4 (section 3).
@@ -108,3 +108,19 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I am on the course main page for "C1"
     And I follow "Section 1"
     Then "a[title=Move section]" "css_element" should not exist
+
+  @javascript
+  Scenario: Only navigation between sections is possible.
+    Given I log in as "teacher1"
+    And I enable "subsection" "mod" plugin
+    And the following "activities" exist:
+      | activity   | name        | course | idnumber    | section |
+      | subsection | Subsection 1 | C1     | Subsection1 | 1      |
+      | subsection | Subsection 2 | C1     | Subsection2 | 1      |
+    And I am on the course main page for "C1"
+    And "//span[contains(@class, \"nav_guide\") and normalize-space(text()) = \"Next section\"]" "xpath" should be visible
+    And "//span[contains(@class, \"nav_guide\") and normalize-space(text()) = \"Previous section\"]" "xpath" should not be visible
+    And I follow "Section 5"
+    And "//span[contains(@class, \"nav_guide\") and normalize-space(text()) = \"Next section\"]" "xpath" should not be visible
+    And "//span[contains(@class, \"nav_guide\") and normalize-space(text()) = \"Previous section\"]" "xpath" should be visible
+    And I follow "Section 1"
