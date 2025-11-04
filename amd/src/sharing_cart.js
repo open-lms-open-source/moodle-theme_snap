@@ -22,6 +22,9 @@
  */
 
 import $ from 'jquery';
+import ModalFactory from 'core/modal_factory';
+import ModalEvents from 'core/modal_events';
+
 /** @var {Object}  The icon configurations */
 const icon = {
     // Actions
@@ -32,9 +35,10 @@ const icon = {
 };
 
 export default class SharingCartForSnap {
-    constructor(courseSections) {
+    constructor(params) {
         this.snapSpinner = '';
-        this.courseSections = courseSections;
+        this.courseSections = params.courseSections;
+        this.params = params;
     }
 
     /**
@@ -94,29 +98,46 @@ export default class SharingCartForSnap {
             this.snapSpinner.hide();
         }
     };
+
+    /**
+     *  Get an action URL
+     *
+     *  @param {String} name   The action name
+     *  @param {Object} [args] The action parameters
+     *  @return {String}
+     */
+    get_action_url = (name, args) => {
+        let url = M.cfg.wwwroot + '/blocks/sharing_cart/' + name + '.php';
+        if (args) {
+            const q = [];
+            for (let k in args) {
+                q.push(k + '=' + encodeURIComponent(args[k]));
+            }
+            url += '?' + q.join('&');
+        }
+        return url;
+    };
+
     /**
      * Creates a custom modal when restoring a sharing cart activity/module
      * @param {Object} input
      */
     onRestore = (input) => {
         const restore_targets = input.restore_targets;
-        const course = input.course;
-        const param = input.param;
+        const course = input.params.course;
         const get_action_url = input.get_action_url;
-        const ModalFactory = input.ModalFactory;
-        const ModalEvents = input.ModalEvents;
         const id = input.id;
-
         var sectionsURLs = [];
-        this.courseSections.forEach(function(section) {
+        this.params.sectionsjs.forEach(function(section) {
             var urlArray = {
                 'directory': restore_targets.is_directory,
                 'target': id,
                 'course'   : course.id,
                 'section'  : section.num,
-                'sesskey'  : M.cfg.sesskey
+                'sesskey'  : M.cfg.sesskey,
+                'returnurl': document.URL,
+                'in_section': $('#copy-section-form').data('in-section')
             };
-            urlArray[param] = id;
             var url = get_action_url('restore', urlArray);
 
             var sectionName = null;
@@ -244,7 +265,6 @@ export default class SharingCartForSnap {
         const on_section_backup = input.on_section_backup;
         const on_backup = input.on_backup;
         const _this = this;
-        //_this.create_command = this.create_command;
 
         if(course.is_frontpage)
         {
