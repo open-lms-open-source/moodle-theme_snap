@@ -131,44 +131,48 @@ define(
                 });
             }
         };
+        const setCmActionsObservers = function() {
+            const selector = '.action-menu a[data-action],' +
+                '.section-actions a[data-action],' +
+                '[data-action="newModule"].section-modchooser-link';
 
-        const setActionsObservers = function() {
-            const isLoggedIn = document.body.classList.contains('logged-in');
-            if (!isLoggedIn) {
-                return;
+            const sections = document.querySelector('ul.sections');
+            if (sections) {
+                sections.addEventListener('click', function(e) {
+                    const actionLink = e.target.closest(selector);
+                    let actionName = actionLink.dataset.action;
+
+                    // Check if we are clicking on action button, permalink & update had another observers.
+                    if (!actionLink || actionName === 'permalink' || actionName === 'update') {
+                        return; // Do nothing.
+                    }
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
+                    // In topics format we need to initialize the reactive component for highlight sections.
+                    if (self.courseConfig.format == 'topics') {
+                        require(
+                            ['format_topics/section',], function(SectionModule) {
+                                let editMode = reactiveCourseEditor.isEditing;
+                                // We need editing mode On, so topics module is initialized properly.
+                                reactiveCourseEditor._editing = true;
+                                SectionModule.init();
+                                reactiveCourseEditor._editing = editMode;
+                            }
+                        );
+                    }
+                    // Init observers for other section and modules actions.
+                    const actions = new Actions.prototype.constructor({
+                        element: actionLink,
+                        reactive: reactiveCourseEditor
+                    });
+                    // Handle the action.
+                    if (typeof actions._dispatchClick === 'function') {
+                        actions._dispatchClick(e);
+                    }
+                }, {capture: true});
             }
-            const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
-            if (reactiveCourseEditor.isEditing) {
-                return;
-            }
-            document.querySelectorAll('a.dropdown-item.editing_movecm.menu-action')
-                .forEach(function(element) {
-                    element.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const actions = new Actions.prototype.constructor({
-                            element: this,
-                            reactive: CourseEditor.getCurrentCourseEditor()
-                        });
-                        if (typeof actions._requestMoveCm === 'function') {
-                            actions._requestMoveCm(this, e);
-                        }
-                    }, {capture: true});
-                });
-            document.querySelectorAll('a.dropdown-item.editing_delete.menu-action')
-                .forEach(function(element) {
-                    element.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const actions = new Actions.prototype.constructor({
-                            element: this,
-                            reactive: CourseEditor.getCurrentCourseEditor()
-                        });
-                        if (typeof actions._requestCmDelete === 'function') {
-                            actions._requestCmDelete(this, e);
-                        }
-                    }, {capture: true});
-                });
         };
 
         /**
@@ -237,7 +241,7 @@ define(
                 var params = {courseid: self.courseConfig.id, section: section};
                 $('.sk-fading-circle').show();
                 // We need to prevent the DOM to show the default section.
-                $('.course-content .' + self.courseConfig.format + ' li[id^="section-"]').hide();
+                $('.course-content .' + self.courseConfig.format + 'ul.sections > li[id^="section-"]').hide();
                 fragment.loadFragment('theme_snap', 'section', self.courseConfig.contextid, params).done(function(html, js) {
                     var node = $(html);
                     renderSection(section, node, mod, js);
@@ -252,7 +256,6 @@ define(
                             }
                         }
                     });
-                    setActionsObservers();
                 });
             } else {
                 $(window).trigger('hashchange');
@@ -734,7 +737,7 @@ define(
 
                 updateSectionNavigation().done(function() {
                     if (courseLib.courseConfig.partialrender) {
-                        setCourseSectionObervers();
+                        setCourseSectionObservers();
                     }
                 });
             };
@@ -851,14 +854,15 @@ define(
              * Generic action handler for all asset actions.
              * @param {event} e
              * @param {domNode} triggerEl
+             * TODO: to be removed
              */
             var assetAction = function(e, triggerEl) {
                 e.preventDefault();
 
-                var assetEl = $($(triggerEl).parents('.snap-asset')[0]),
+                var assetEl = $($(triggerEl).parents('.activity-wrapper')[0]),
                     cmid = Number(assetEl[0].id.replace('module-', '')),
                     instanceName = assetEl.find('.instancename').text().trim(),
-                    action = $(triggerEl).data('action'),
+                    action = $(triggerEl)[0].className.match(/(?:^|\s)editing_([a-z0-9_-]+)/i)?.[1],
                     errActionKey = '',
                     errMessageKey = '',
                     errAction = '',
@@ -872,7 +876,7 @@ define(
                 }
 
                 var actionAJAX = function() {
-                    if (!ajaxTracker.start(jsPendingKey, assetEl, '.snap-edit-asset-more')) {
+                    if (!ajaxTracker.start(jsPendingKey, assetEl, '.section-cm-edit-actions')) {
                         // Request already made.
                         return;
                     }
@@ -1085,7 +1089,9 @@ define(
 
             /**
              * Listen for edit action clicks, hide, show, duplicate, etc..
+             * TODO: to be removed, no longer needed.
              */
+                // eslint-disable-next-line no-unused-vars
             var assetEditListeners = function() {
                 var actionSelectors = '.snap-asset-actions .js_snap_hide, ';
                 actionSelectors += '.snap-asset-actions .js_snap_show, ';
@@ -1100,7 +1106,9 @@ define(
 
             /**
              * Listen for availability actions, hide, show, stealth.
+             * TODO: to be removed
              */
+                // eslint-disable-next-line no-unused-vars
             var availabilityListeners = function() {
                 $(document).on('click', '#availability-menu .choicelist div[data-optionnumber]',
                     function(e) {
@@ -1170,7 +1178,9 @@ define(
 
             /**
              * Listen for group mode actions.
+             * TODO: to be removed.
              */
+                // eslint-disable-next-line no-unused-vars
             var groupModeListeners = function() {
                 $(document).on('click',
                     '.dropdown-item-outline a[data-action="cmNoGroups"], ' +
@@ -1413,7 +1423,9 @@ define(
 
             /**
              * Highlight section on click.
+             * #TODO: to be removed on INT-21222
              */
+                // eslint-disable-next-line no-unused-vars
             var highlightSectionListener = function() {
                 sectionActionListener('highlight', function(sectionNumber) {
                     $('#section-' + sectionNumber).toggleClass('current');
@@ -1478,7 +1490,9 @@ define(
 
             /**
              * Toggle section visibility on click.
+             * #TODO: to be removed on INT-21222
              */
+                // eslint-disable-next-line no-unused-vars
             var toggleSectionListener = function() {
                 /**
                  * Toggle hidden class and update section navigation.
@@ -1585,7 +1599,9 @@ define(
 
             /**
              * Add listener for move checkbox.
+             * #TODO: to be removed
              */
+            // eslint-disable-next-line no-unused-vars
             var assetMoveListener = function() {
                 $("#region-main").on('change', '.js-snap-asset-move', function(e) {
                     e.stopPropagation();
@@ -1654,7 +1670,9 @@ define(
 
             /**
              * When an asset or drop zone is clicked, execute move.
+             * #TODO: to be removed
              */
+            // eslint-disable-next-line no-unused-vars
             var movePlaceListener = function() {
                 $(document).on('click', '.snap-move-note, .snap-drop', function(e) {
                     log.debug('Snap drop clicked', e);
@@ -1679,10 +1697,21 @@ define(
             /**
              * Set observers for TOC and navigation buttons in the footer.
              */
-            var setCourseSectionObervers = function () {
+            var setCourseSectionObservers = function () {
                 setTocObservers();
                 setNavigationFooterObservers();
-                setActionsObservers();
+                // Check user is logged in, in order to use CourseEditor.
+                const isLoggedIn = document.querySelector('#snap-header  .usermenu');
+                // Only on course page.
+                const onCoursePage = document.body.classList.contains('path-course-view');
+                if (!isLoggedIn || !onCoursePage) {
+                    return; // If not, do nothing.
+                }
+                // Event listeners for Course modules actions, when editing is off.
+                const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
+                if (!reactiveCourseEditor.isEditing) {
+                    setCmActionsObservers();
+                }
             };
 
             /**
@@ -1690,17 +1719,17 @@ define(
              */
             var addListeners = function() {
                 // moveSectionListener(); #TODO: to be removed on INT-21222
-                toggleSectionListener();
-                highlightSectionListener();
+                // toggleSectionListener(); #TODO: to be removed on INT-21222
+                // highlightSectionListener(); #TODO: to be removed on INT-21222
                 // deleteSectionListener(); #TODO: to be removed on INT-21222
                 // permalinkSectionListener(); #TODO: to be removed on INT-21222
-                assetMoveListener();
-                movePlaceListener();
-                assetEditListeners();
-                availabilityListeners();
-                groupModeListeners();
+                // assetMoveListener(); #TODO: to be removed on INT-21222
+                // movePlaceListener(); #TODO: to be removed on INT-21222
+                // assetEditListeners(); #TODO: to be removed on INT-21222
+                // availabilityListeners(); #TODO: to be removed on INT-21222
+                // groupModeListeners(); #TODO: to be removed on INT-21222
                 addAfterDrops();
-                setCourseSectionObervers();
+                setCourseSectionObservers();
                 $('body').addClass('snap-course-listening');
             };
 

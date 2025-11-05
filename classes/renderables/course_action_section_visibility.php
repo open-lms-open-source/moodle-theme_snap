@@ -45,18 +45,22 @@ class course_action_section_visibility extends course_action_section_base {
 
         $url = clone($baseurl);
         if (has_capability('moodle/course:sectionvisibility', $coursecontext)) {
+            $this->title = get_string('hidefromothers', 'format_'.$course->format) . '/' . get_string('showfromothers', 'format_'.$course->format);
+
             if ($section->visible) { // Show the hide/show eye.
-                $this->title = get_string('hidefromothers', 'format_'.$course->format);
                 $url->param('hide', $section->section);
                 $this->url = $url;
-                $this->class .= ' snap-hide';
+                $this->class .= ' snap-hide dropdown-item editing_showhide menu-action';
                 $this->arialabel = "aria-label='".get_string('hidefromothers', 'format_'.$course->format)."'";
+                $this->dataaction = 'sectionHide';
+                $this->dataid = $section->id;
             } else {
-                $this->title = get_string('showfromothers', 'format_'.$course->format);
                 $url->param('show',  $section->section);
                 $this->url = $url;
-                $this->class .= ' snap-show';
+                $this->class .= ' snap-show dropdown-item editing_showhide menu-action';
                 $this->arialabel = "aria-label='".get_string('showfromothers', 'format_'.$course->format)."'";
+                $this->dataaction = 'sectionShow';
+                $this->dataid = $section->id;
             }
         }
     }

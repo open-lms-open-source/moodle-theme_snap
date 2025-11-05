@@ -34,6 +34,11 @@ abstract class course_action_section_base implements \core\output\renderable, \c
     public $title;
 
     /**
+     * @var string
+     */
+    public $untitle;
+
+    /**
      * @var \moodle_url
      */
     public $url;

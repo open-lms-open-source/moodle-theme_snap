@@ -316,7 +316,7 @@ li.section:focus {
         text-align: center;
         overflow: hidden;
         &:hover,
-        &.snap-show,
+        &[data-action="sectionShow"],
         &[aria-pressed="true"] {
             background-color: $gray-lighter;
         }
@@ -339,13 +339,13 @@ li.section:focus {
         }
     }
 
-    .snap-visibility.snap-show {
+    .snap-visibility[data-action="sectionShow"] {
         &:after, &:before {
             background-image: url([[pix:core|i/show]]);
         }
     }
 
-    .snap-visibility.snap-hide {
+    .snap-visibility[data-action="sectionHide"]  {
         &:after, &:before {
             background-image: url([[pix:core|i/hide]]);
         }
@@ -355,6 +355,17 @@ li.section:focus {
         &:after, &:before {
             background-image: url([[pix:core|t/delete]]);
         }
+    }
+
+    [data-action="sectionHighlight"] {
+      .menu-action-text.optional {
+        display: none;
+      }
+    }
+    [data-action="sectionUnhighlight"] {
+      .menu-action-text.main {
+        display: none;
+      }
     }
 
     .snap-highlight {
@@ -418,7 +429,7 @@ li.section:focus {
             height: auto;
             padding: 0.5em;
 
-            &.snap-show,
+            &[data-action="sectionShow"],
             &[aria-pressed="true"] {
                 background-color: initial;
             }
@@ -2763,37 +2774,50 @@ body.snap-resource-card {
 
 
 // Conditional information styled as fauz alerts.
-.snap-conditional-tag,
-.snap-stealth-tag,
-.snap-draft-tag,
-.snap-current-tag {
-    font-family: $font-family-system;
-    background-color: #eee;
-    margin: 0.5em 0;
-    border-radius: 0.5rem;
-    padding: 0.5em 1em;
-    font-weight: 500;
-
-    .availabilityinfo {
-        display: inline;
-        margin-left: 0.5em;
+.course-section:not(.delegated-section) > .section-item {
+  > .course-section-header.d-flex {
+    display: block !important;
+    .sectionbadges.d-flex,
+    .sectionbadges .badge:not(.d-none) {
+      display: block !important;
+      width: 100%;
     }
-
-    .svg-icon {
-        width: 1.3rem;
-        height: auto;
+    .sectionbadges .badge {
+      padding: .5em 1em;
+      .icon,
+      &.bg-primary.text-white::before {
+        font-size: 22px;
+        width: 22px;
+        height: 22px;
+      }
     }
-
-    ul {
-        margin: 0 !important; // SHAME - lists in lists in lists in lists....
-        list-style: none;
-        padding: 0;
+  }
+  .sectionbadges .badge {
+    margin: .5em 0;
+    border-radius: .5rem !important;
+    font-weight: 500 !important;
+    text-align: start;
+    background-color: #eee !important;
+    &.bg-secondary.text-dark {
+      color: #565656 !important;
     }
-
-    strong {
-        font-weight: normal;
+    &.bg-primary.text-white {
+      color: $brand-success !important;
+      &::before {
+        @extend .fa-solid;
+        content: fa-content($fa-var-highlighter);
+      }
     }
+    .icon,
+    &.bg-primary.text-white::before {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #565656;
+    }
+  }
 }
+
 
 .snap-completion-meta {
     // SHAME - hsuforum sets div inline block to overcome other themes moodle css...
@@ -2801,14 +2825,6 @@ body.snap-resource-card {
     display: block !important;
     clear: both;
     width: 100%;
-}
-
-// Hide draft tag, unless asset has class draft (can be added by js).
-.snap-draft-tag,
-.snap-current-tag,
-.snap-stealth-tag {
-    display: none !important; // SHAME - overcome bad overspecificity...
-    font-size: $font-size-sm;
 }
 
 // Hide draft and stealth tag if the sections has hidden class.
@@ -2820,24 +2836,6 @@ li.section.hidden {
     .snap-asset.stealth.stealth-section-hidden .snap-stealth-tag {
         display: block !important;
     }
-}
-
-// Show stealth tag when the section is hidden and the activity has the snap-stealth-tag.
-li.section.hidden .snap-asset.stealth-section-hidden .snap-stealth-tag {
-    display: block !important;
-}
-
-// Show draft for mods & sections.
-.hidden .content .snap-draft-section,
-.snap-asset.draft .snap-draft-tag,
-.snap-asset.stealth .snap-stealth-tag {
-    display: block !important; // SHAME - overcome bad overspecificity...
-}
-
-// Show current tag if parent has current class.
-.current .snap-current-tag {
-    display: block !important; // SHAME - overcome bad overspecificity...
-    color: $brand-success;
 }
 
 // Draft hide/show.
@@ -3934,13 +3932,6 @@ body[id^='page-mod-data'] {
             }
         }
     }
-}
-
-#page-course-view-weeks,
-#page-course-view-topics {
-  &.editing .course-section-header .sectionbadges .badge.bg-primary {
-    display: none;
-  }
 }
 
 // Mod PLD view page styles.

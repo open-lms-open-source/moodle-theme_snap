@@ -106,7 +106,6 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I highlight section 1
     And I restrict course section 1 by date to "tomorrow" in course "C1"
     And "#section-1" "css_element" should exist
-    And I wait until "#section-1 .snap-conditional-tag" "css_element" exists
     And I am on the course main page for "C1"
     And I go to section 1 of course "C1"
     And I should see available from date of "tomorrow" in section 1

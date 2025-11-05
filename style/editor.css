@@ -9997,11 +9997,11 @@ li.section:focus {
     background-size: 100%;
 }
 
-.snap-section-editing .snap-visibility.snap-show:after {
+.snap-section-editing .snap-visibility[data-action="sectionShow"]:after {
     background-image: url([[pix:core|i/show]]);
 }
 
-.snap-section-editing .snap-visibility.snap-hide:after {
+.snap-section-editing .snap-visibility[data-action="sectionHide"]:after {
     background-image: url([[pix:core|i/hide]]);
 }
 

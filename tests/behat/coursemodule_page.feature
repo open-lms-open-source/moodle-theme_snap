@@ -97,13 +97,13 @@ Feature: Open page module inline
     # The above step basically waits for the page module content to load up.
     Then I should see "Page completion content"
     And I mark the activity "Page completion" as complete
-    And I should not see availability info "Not available unless: The activity Page completion is marked complete"
+    And I should not see "Not available unless: The activity Page completion is marked complete"
     And I should not see "Conditional" in TOC item 1
     And ".snap-conditional-tag[data-content*='Page completion']" "css_element" should not exist
     And I wait until "Done" "button" exists
     And I follow "Section 1"
     # Make sure Section 1 does not show section availability info.
-    Then I should not see availability info "Not available unless: The activity Page completion is marked complete"
+    Then I should not see "Not available unless: The activity Page completion is marked complete"
     And I should see "Page completion 2"
     And I click on "li[aria-label='Section 1']" "css_element"
     And I click on "button.pagemod-readmore" "css_element"

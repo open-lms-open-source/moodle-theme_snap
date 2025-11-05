@@ -387,6 +387,7 @@ class services_course_test extends \advanced_testcase {
         $this->assertStringContainsString('marker=3', $actionmodel->url);
     }
 
+    // TODO: To be removed, most of this features now rely on core.
     public function test_set_section_visibility() {
         $this->markTestSkipped('To be reviewed in INT-20323');
         $generator = $this->getDataGenerator();

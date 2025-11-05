@@ -82,7 +82,7 @@ Feature: Manual completion updates page wihout reload.
     Then I should not see "Conditional" in TOC item 1
     And I should see "Conditional" in TOC item 2
     When I follow "Section 1"
-    Then I should not see availability info "Not available unless: The activity Test assignment2 is marked complete"
+    Then I should not see "Not available unless: The activity Test assignment2 is marked complete"
     And I should see "Test assignment3"
     And I go to section 2 of course "C1"
     Then I should see "Section 2 is not available"
