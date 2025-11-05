@@ -144,7 +144,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
          */
         var aspectRatioOptions = function() {
             cropperRatio = 0;
-            if ($('#page-course-view-topics, #page-course-view-weeks, #page-course-index-category').length) {
+            if ($('#page-course-view-topics, #page-course-view-weeks, #page-course-index-category,' +
+                '#page-course-view-tiles').length) {
                 // If the Table of contents display option is set to Top.
                 if ($('#page-header #course-toc').length) {
                     cropperRatio = 3;
