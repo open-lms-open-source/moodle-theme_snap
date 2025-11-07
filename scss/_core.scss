@@ -502,7 +502,7 @@ body:not(.snap-js-loaded) .js-only {
     }
 
     100% {
-        transform: matrix(1, 0, 0, 1, 0, -600);
+        transform: matrix(1, 0, 0, 1, 0, -785);
     }
 }
 
@@ -6528,6 +6528,70 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
         --fa-animation-iteration-count: 1;
         .icon.fa-search {
             -webkit-text-stroke-width: 1px;
+        }
+    }
+    #nav-local-accessibility-popover-container {
+        padding: .12rem .3rem .45rem .3rem;
+        &.focused-icon {
+          height: 100%;
+          border-radius: .5rem;
+        }
+        #local-accessibility-buttoncontainer {
+            position: inherit;
+            button:focus {
+              border: none;
+              outline: none;
+              box-shadow: none;
+            }
+        }
+
+        div.local-accessibility-panel {
+            position: absolute;
+            top: 4rem;
+            right: 11rem;
+            transform-origin: top center;
+            border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0;
+            height: fit-content;
+            clip-path: inset(0 0 100% 0);
+            opacity: 0;
+            transition: clip-path 300ms ease, opacity 250ms ease-out;
+            will-change: clip-path, opacity;
+            box-shadow: none !important;
+            &.is-visible {
+              clip-path: inset(0 0 0 0);
+              opacity: 1;
+            }
+            div.card-body {
+                background-color: white;
+                max-height: 70vh;
+
+                a.btn-secondary:hover {
+                  color: white;
+                }
+            }
+            > .card-body {
+              border: 1px solid #ddd;
+              border-top: none;
+              border-radius: 0 0 .6rem .6rem;
+            }
+
+            @media screen and (max-width: 992px) {
+              right: 1rem;
+              left: auto;
+              width: calc(100vw - 2rem);
+              max-width: 73%;
+            }
+            @media screen and (max-width: 600px) {
+              left: 0.1rem;
+              width: calc(100vw - 1rem);
+              max-width: none;
+              min-width: auto;
+            }
+            @media screen and (max-width: 767px) {
+                .card {
+                  margin: 0.5em 0;
+                }
+            }
         }
     }
 }

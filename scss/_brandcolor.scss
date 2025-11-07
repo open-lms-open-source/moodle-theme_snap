@@ -84,45 +84,18 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     }
 
     #snap-header #nav-local-accessibility-popover-container {
-        padding: .12rem .3rem .45rem .3rem;
         &.focused-icon {
             outline: $brand-primary solid 3px;
-            height: 100%;
-            border-radius: .5rem;
-        }
-
-        #local-accessibility-buttoncontainer {
-            position: inherit;
-            button:focus {
-                border: none;
-                outline: none;
-                box-shadow: none;
-            }
         }
 
         div.local-accessibility-panel {
-            position: absolute;
-            top: 4rem;
-            right: 11rem;
-            border-top: none;
-            box-shadow: 0 0 5px #000;
-            border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0;
-            height: fit-content;
-
             div.card-header {
                 background-color: $brand-primary !important;
             }
 
             div.card-body {
-                background-color: white;
-                max-height: 80vh;
-
                 input[type="range"] {
                     accent-color: $brand-primary;
-                }
-
-                a.btn-secondary:hover {
-                    color: white;
                 }
             }
         }
@@ -1622,6 +1595,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         i.icon {
             color: white;
         }
+    }
+    #course-toc.state-visible .course-toc-mobile-header {
+      background-color: $brand-primary;
     }
 }
 
