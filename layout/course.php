@@ -28,15 +28,7 @@ require(__DIR__.'/header.php');
 
 $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 $tocformat = ($COURSE->format == 'topics' || $COURSE->format == 'weeks');
-// Check if the toc is displayed list or top - used to add layout in this file.
-$leftnav = true;
-$leftnavclass = 'has-course-leftnav';
-if (!empty($PAGE->theme->settings->leftnav)) {
-    if ($PAGE->theme->settings->leftnav == 'top') {
-        $leftnav = false;
-        $leftnavclass = '';
-    }
-}
+
 $mastimage = '';
 // Check we are in a course (not the site level course), and the course is using a cover image.
 if ($COURSE->id != SITEID && !empty($coverimagecss)) {
@@ -57,7 +49,7 @@ $pathurl = $OUTPUT->get_path_hiddentoc($pathurl);
 <?php
 echo $OUTPUT->custom_menu_spacer();
 ?>
-<div id="page-header" class="clearfix <?php echo $mastimage . ' ' . $leftnavclass; ?>">
+<div id="page-header" class="clearfix <?php echo $mastimage; ?>">
     <nav class="breadcrumb-nav" aria-label="breadcrumbs"><?php echo $OUTPUT->navbar(); ?></nav>
 
     <div id="page-mast">

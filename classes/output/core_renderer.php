@@ -1224,11 +1224,6 @@ HTML;
         // Add theme-snap class so modules can customise css for snap.
         $classes[] = 'theme-snap';
 
-        if (get_config('theme_snap', 'coursepartialrender') && get_config('theme_snap', 'leftnav') == 'top'
-            && $COURSE->format == 'topics') {
-            $classes[] = 'no-number-toc';
-        }
-
         if (!empty($CFG->allowcategorythemes)) {
             // This duplicates code triggered by allowcategorythemes, so no
             // need to repeat it if that setting is on.

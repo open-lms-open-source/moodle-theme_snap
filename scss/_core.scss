@@ -1753,7 +1753,7 @@ body.path-course-view, body#page-course-index-category {
         margin-top: -.75rem;
     }
 }
-body.path-course-view #moodle-page #page-header:not(.has-course-leftnav){
+body.path-course-view #moodle-page #page-header {
   aspect-ratio: unset;
 }
 
@@ -4835,7 +4835,7 @@ button.snap-icon-toggle {
 }
 
 // Cover image control.
-.has-course-leftnav, #page-header.snap-category-header.mast-image {
+#page-header.snap-category-header.mast-image {
     #page-mast {
         display: flex;
     }

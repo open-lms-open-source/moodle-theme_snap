@@ -706,9 +706,6 @@ define(
                         var chapterTitle = getSectionTitle(key);
                         var fullTitle = chapterTitle;
                         $(obj).attr('id', 'section-' + key);
-                        if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && key > 0) {
-                            fullTitle = `<span class='sectionnumber'> ${key}.</span>${chapterTitle}`;
-                        }
                         $('#section-' + key + ' .content .sectionname').html(fullTitle);
                         loadedSections.push(key);
                         // Update the attribute.
@@ -726,9 +723,6 @@ define(
                         // for weekly topic courses where the section title needs to stay the
                         // same as the TOC.
                         var fullTitle = chapterTitle;
-                        if (self.courseConfig.toctype == 'top' && self.courseConfig.format == 'topics' && idx > 0) {
-                            fullTitle = `<span class='sectionnumber'></span>${chapterTitle}`;
-                        }
                         $('#section-' + idx + ' .content .sectionname').html(fullTitle);
                         // Update section data attribute to reflect new section idx.
                         $(this).find('.section-modchooser-link').attr('data-sectionid', idx);

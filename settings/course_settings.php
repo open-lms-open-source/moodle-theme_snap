@@ -19,17 +19,6 @@ use theme_snap\admin_setting_configradiobuttons;
 
 $snapsettings = new admin_settingpage('themesnapcoursedisplay', get_string('coursedisplay', 'theme_snap'));
 
-// Course toc display options.
-$name = 'theme_snap/leftnav';
-$title = new \core\lang_string('leftnav', 'theme_snap');
-$list = get_string('list', 'theme_snap');
-$top = get_string('top', 'theme_snap');
-$radios = array('list' => $list, 'top' => $top);
-$default = 'list';
-$description = new \core\lang_string('leftnavdesc', 'theme_snap');
-$setting = new admin_setting_configradiobuttons($name, $title, $description, $default, $radios);
-$snapsettings->add($setting);
-
 // Resource display options.
 $name = 'theme_snap/resourcedisplay';
 $title = new \core\lang_string('resourcedisplay', 'theme_snap');

@@ -344,8 +344,6 @@
         margin-bottom: 1rem;
     }
 
-    #s_theme_snap_leftnav_list,
-    #s_theme_snap_leftnav_top,
     #s_theme_snap_resourcedisplay_list,
     #s_theme_snap_resourcedisplay_card {
         @include make-col(6);
@@ -358,12 +356,6 @@
         &:before {
             display: block;
         }
-    }
-    #s_theme_snap_leftnav_list:before {
-        content: url("[[pix:theme|toc_list]]");
-    }
-    #s_theme_snap_leftnav_top:before {
-        content: url("[[pix:theme|toc_top]]");
     }
 
     #s_theme_snap_resourcedisplay_list:before {

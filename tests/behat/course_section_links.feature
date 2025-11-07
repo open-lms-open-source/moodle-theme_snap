@@ -39,7 +39,6 @@ Feature: When the moodle theme is set to Snap, section titles can be clicked for
     Given I log in as "admin"
     And the following config values are set as admin:
       | coursepartialrender | <coursepartialrender> | theme_snap |
-      | leftnav             | <leftnav>             | theme_snap |
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
@@ -55,6 +54,6 @@ Feature: When the moodle theme is set to Snap, section titles can be clicked for
     Then I should see "Super section 1"
     Then "#section-1 .content .sectionname .sectionnumber" "css_element" <titlenumber> exist
     Examples:
-      | coursepartialrender     | leftnav | title             | titlenumber |
-      | 0                       | list    | Untitled Section    | should not  |
-      | 1                       | list    | Untitled Section    | should not  |
+      | coursepartialrender     | title             | titlenumber |
+      | 0                       | Untitled Section    | should not  |
+      | 1                       | Untitled Section    | should not  |

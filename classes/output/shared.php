@@ -398,7 +398,6 @@ EOF;
             'enablecompletion' => isloggedin() && $COURSE->enablecompletion,
             'format' => $COURSE->format,
             'partialrender' => !empty(get_config('theme_snap', 'coursepartialrender')),
-            'toctype' => get_config('theme_snap', 'leftnav'),
         ];
 
         if (!empty($sectionnum)) {

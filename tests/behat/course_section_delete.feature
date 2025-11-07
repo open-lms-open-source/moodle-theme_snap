@@ -85,8 +85,6 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
   @javascript @_alert
   Scenario Outline: When deleting a section the section number should update
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | leftnav             | <leftnav>             | theme_snap |
     And I log out
     And I log in as "teacher1"
     And I am on the course main page for "C1"
@@ -99,7 +97,6 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     And I click on "#section-2 .edit-summary" "css_element"
     And I set the section name to "Section two"
     And I press "Save changes"
-
     And I follow "Section one"
     And I wait until the page is ready
     Then "#section-1 .content .sectionname .sectionnumber" "css_element" <titlenumber> exist
@@ -113,8 +110,8 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     And I follow "Section two"
     Then I should see "<aftertitle>" in the "#section-1 .content .sectionname" "css_element"
     Examples:
-      | leftnav | titlenumber | beforetitle   | aftertitle   |
-      | list    | should not  | Section one   | Section two  |
+      | titlenumber | beforetitle | aftertitle  |
+      | should not  | Section one | Section two |
 
   @javascript @_alert
   Scenario: Teacher with course update permission can see delete section confirmation dialog.
