@@ -618,7 +618,7 @@ label[for="toc-search-input"]{
     }
 
     &.current {
-        .courseindex-link {
+        & > .courseindex-item > .courseindex-link:has(+ .current-badge) {
           display: block;
           white-space: nowrap;
           overflow: hidden;
@@ -633,7 +633,7 @@ label[for="toc-search-input"]{
           transform: translateY(-50%);
           z-index: 2;
           pointer-events: none;
-          margin: 0.5em 0;
+          margin: 0.55em 0;
         }
     }
 }
