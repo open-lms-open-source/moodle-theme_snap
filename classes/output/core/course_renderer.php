@@ -1132,8 +1132,6 @@ class course_renderer extends \core_course_renderer {
         // Multimedia mods we want to open in the same window.
         $snapmultimedia = $this->snap_multimedia();
 
-        $resourcedisplay = get_config('theme_snap', 'resourcedisplay');
-        $displaydescription = get_config('theme_snap', 'displaydescription');
         $resourceonclick = "";
         if ($mod->modname === 'resource') {
             $extension = $this->get_mod_type($mod)[1];
@@ -1145,12 +1143,8 @@ class course_renderer extends \core_course_renderer {
                     $url = '';
                 }
             } else {
-                if ($resourcedisplay == 'card' && $displaydescription) {
-                    $url .= "&amp;forceview=1";
-                } else {
-                    if ($mod->onclick) {
-                        $resourceonclick = "onclick=\"{$mod->onclick}\"";
-                    }
+                if ($mod->onclick) {
+                    $resourceonclick = "onclick=\"{$mod->onclick}\"";
                 }
             }
         }

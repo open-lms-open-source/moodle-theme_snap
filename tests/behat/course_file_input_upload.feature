@@ -124,7 +124,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     Given I log in as "admin"
     And the following config values are set as admin:
       | displayoptions     | <display>| resource   |
-      | displaydescription | 0        | theme_snap |
     And I am on "Course 1" course homepage
     And I add a resource activity to course "Course 1" section "1"
     And I expand all fieldsets
@@ -152,7 +151,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     Given I am logged in as "admin"
     And the following config values are set as admin:
       | displayoptions     | <display> | resource   |
-      | displaydescription | 0         | theme_snap |
     And I am on "Course 1" course homepage
     And I add a resource activity to course "Course 1" section "1"
     And I expand all fieldsets

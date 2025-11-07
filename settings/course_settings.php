@@ -30,14 +30,6 @@ $description = get_string('resourcedisplayhelp', 'theme_snap');
 $setting = new admin_setting_configradiobuttons($name, $title, $description, $default, $radios);
 $snapsettings->add($setting);
 
-// Resource and URL description display options.
-$name = 'theme_snap/displaydescription';
-$title = new \core\lang_string('displaydescription', 'theme_snap');
-$default = $unchecked;
-$description = new \core\lang_string('displaydescriptionhelp', 'theme_snap');
-$setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
-$snapsettings->add($setting);
-
 // Course footer on/off.
 $name = 'theme_snap/coursefootertoggle';
 $title = new \core\lang_string('coursefootertoggle', 'theme_snap');

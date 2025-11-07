@@ -29,7 +29,6 @@ Feature: When the moodle theme is set to Snap, the users see an intermediate pag
     And the following config values are set as admin:
       | displayoptions     | 0,1,2,3,4,5,6 | url        |
       | resourcedisplay    | card          | theme_snap |
-      | displaydescription | 1             | theme_snap |
     Given the following "users" exist:
       | username  | firstname  | lastname  | email                 |
       | teacher1  | Teacher    | 1         | teacher1@example.com  |
