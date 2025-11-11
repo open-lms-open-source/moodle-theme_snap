@@ -182,5 +182,13 @@ function xmldb_theme_snap_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025042100, 'theme', 'snap');
     }
 
+    if ($oldversion < 2025111000) {
+        // Remove snap settings related to Refactor of deprecated code.
+        unset_config('leftnav', 'theme_snap');
+        unset_config('displaydescription', 'theme_snap');
+        unset_config('coursepartialrender', 'theme_snap');
+        upgrade_plugin_savepoint(true, 2025111000, 'theme', 'snap');
+    }
+
     return true;
 }
