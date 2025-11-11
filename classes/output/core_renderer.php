@@ -1938,93 +1938,6 @@ HTML;
     }
 
     /**
-     * This renders the navbar.
-     * Uses bootstrap compatible html.
-     * @param string $coverimage
-     * #TODO: to be removed on INT-21222
-     */
-    public function snapnavbar($coverimage = '') {
-        global $COURSE, $CFG;
-
-        require_once($CFG->dirroot.'/course/lib.php');
-
-        $breadcrumbs = '';
-        $courseitem = null;
-        $attrs['class'] = '';
-        if (!empty($coverimage)) {
-            $attrs['class'] .= ' mast-breadcrumb';
-        }
-        $snapmycourses = \core\output\html_writer::link(new moodle_url('/my/courses.php'), get_string('menu', 'theme_snap'), $attrs);
-        $filteredbreadcrumbs = $this->remove_duplicated_breadcrumbs($this->page->navbar->get_items());
-        foreach ($filteredbreadcrumbs as $item) {
-            $item->hideicon = true;
-
-            // Add Breadcrumb links to all users types.
-            if ($item->key === 'myhome') {
-                $breadcrumbs .= '<li class="breadcrumb-item">';
-                $breadcrumbs .= \core\output\html_writer::link(new moodle_url('/my'), get_string($item->key), $attrs);
-                $breadcrumbs .= '</li>';
-                continue;
-            }
-
-            if ($item->key === 'home') {
-                $breadcrumbs .= '<li class="breadcrumb-item">';
-                $breadcrumbs .= \core\output\html_writer::link(new moodle_url('/'), get_string($item->key), $attrs);
-                $breadcrumbs .= '</li>';
-                continue;
-            }
-
-            // Replace my courses none-link with link to snap personal menu.
-            if ($item->key === 'mycourses') {
-                $breadcrumbs .= '<li class="breadcrumb-item">' .$snapmycourses. '</li>';
-                continue;
-            }
-
-            if ($item->type == \navigation_node::TYPE_COURSE) {
-                $courseitem = $item;
-            }
-
-            if ($item->type == \navigation_node::TYPE_SECTION) {
-                if ($courseitem != null) {
-                    $url = $courseitem->action->out(false);
-                    $item->action = $courseitem->action;
-                    $sectionnumber = $this->get_section_for_id($item->key);
-
-                    // Append section focus hash only for topics and weeks formats because we can
-                    // trust the behaviour of these formats.
-                    if ($COURSE->format == 'topics' || $COURSE->format == 'weeks') {
-                        $url .= '#section-'.$sectionnumber;
-                        if ($item->text == get_string('general')) {
-                            $item->text = get_string('introduction', 'theme_snap');
-                        }
-                    } else {
-                        $url = course_get_url($COURSE, $sectionnumber);
-                    }
-                    $item->action = new moodle_url($url);
-                }
-            }
-
-            // Only output breadcrumb items which have links.
-            if ($item->action !== null) {
-                $attr = [];
-                if (!empty($coverimage)) {
-                    $attr = ['class' => 'mast-breadcrumb'];
-                }
-                if (!is_string($item->action) && !empty($item->action->url)) {
-                    $link = \core\output\html_writer::link($item->action->url, $item->text, $attr);
-                } else {
-                    $link = \core\output\html_writer::link($item->action, $item->text, $attr);
-                }
-                $breadcrumbs .= '<li class="breadcrumb-item">' .$link. '</li>';
-            }
-        }
-
-        if (!empty($breadcrumbs)) {
-            return '<ol class="breadcrumb">' .$breadcrumbs .'</ol>';
-        }
-    }
-
-    /**
      * Renders a div that is only shown when there are configured custom menu items.
      *
      * @return string
@@ -2136,24 +2049,6 @@ HTML;
             }
         }
         return $path;
-    }
-
-    /**
-     * When there are two or more breadcrumbs with the same name, remove the others and just leave one.
-     * @param $breadcrumbs array.
-     * @return array
-     */
-    public function remove_duplicated_breadcrumbs($breadcrumbs): array {
-        $breadcrumbskeys = [];
-        $filtereditems = array_filter($breadcrumbs, function($item) use (&$breadcrumbskeys) {
-            $text = $item->text instanceof lang_string ? $item->text->out() : $item->text;
-            if (array_key_exists($text, $breadcrumbskeys)) {
-                return false;
-            }
-            $breadcrumbskeys[$text] = $item->key;
-            return true;
-        });
-        return $filtereditems;
     }
 
     /**
