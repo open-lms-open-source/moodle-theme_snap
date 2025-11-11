@@ -40,16 +40,12 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | student2 | C1 | student |
 
   @javascript
-  Scenario Outline: Student sees correct meta data against course activities
+  Scenario: Student sees correct meta data against course activities
     Given the following "activities" exist:
       | activity | course | idnumber | name             | intro             | assignsubmission_onlinetext_enabled | assignfeedback_comments_enabled | section | duedate         |
       | assign   | C1     | assign1  | Test assignment1 | Test assignment 1 | 1                                   | 1                               | 1       | ##tomorrow##    |
       | assign   | C1     | assign2  | Test assignment2 | Test assignment 2 | 1                                   | 1                               | 1       | ##next week##   |
       | assign   | C1     | assign3  | Test assignment3 | Test assignment 3 | 1                                   | 1                               | 1       | ##yesterday##   |
-    And I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
@@ -97,13 +93,9 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And Activity "assign" "Test assignment1" is deleted
     And Activity "assign" "Test assignment2" is deleted
     And Activity "assign" "Test assignment3" is deleted
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
-  Scenario Outline: Student that belongs to a specific group sees correct meta data against course activities
+  Scenario: Student that belongs to a specific group sees correct meta data against course activities
     And the following "users" exist:
       | username | firstname | lastname | email         |
       | student3 | Student   | 3 | student3@example.com |
@@ -122,10 +114,6 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
       | student2 | GI1   |
       | student3 | GI2   |
       | student4 | GI2   |
-    And I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
@@ -166,17 +154,9 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I should see "Test assign"
     And assignment entitled "Test assign" shows as submitted in metadata
     And I log out
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
-  Scenario Outline: Student sees correct feedback with multiple outcomes configured
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
+  Scenario: Student sees correct feedback with multiple outcomes configured
     Then I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I click on "#admin-menu-trigger" "css_element"
@@ -254,10 +234,6 @@ Feature: When the moodle theme is set to Snap, students see meta data against co
     And I am on "Course 1" course homepage
     And I follow "Section 1"
     And assignment entitled "Test assignment name" does not have feedback metadata
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
   Scenario: Correct pending submissions for grading in course view for Snap

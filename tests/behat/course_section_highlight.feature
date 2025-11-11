@@ -36,11 +36,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
       | student1 | C1 | student |
 
   @javascript
-  Scenario Outline: In read mode, teacher toggles section as Highlighted and student sees appropriate status.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
+  Scenario: In read mode, teacher toggles section as Highlighted and student sees appropriate status.
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     Then "#courseindexsection1" "css_element" should exist
@@ -75,10 +71,6 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     And I am on the course main page for "C1"
     And I click on "#courseindexsection2 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
     Then I should not see "Highlighted" in the "#section-2" "css_element"
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
 # This scenario is necessary to make sure the correct error message comes back when an AJAX request fails but it is
@@ -93,32 +85,13 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
     Then "#section-1" "css_element" should exist
     And "#extra-actions-dropdown-1" "css_element" should not exist
     And "#section-1 .snap-highlight" "css_element" should not exist
-    Then I log out
-    And I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | 1 | theme_snap |
-    And I log out
-    And I log in as "teacher1"
-    Given I am on the course main page for "C1"
-    And  I click on "#courseindexsection1 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
-    Then "#section-1" "css_element" should exist
-    And "#extra-actions-dropdown-1" "css_element" should not exist
-    And "#section-1 .snap-highlight" "css_element" should not exist
 
   @javascript
-  Scenario Outline: Student cannot mark section highlighted.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
+  Scenario: Student cannot mark section highlighted.
     And I log in as "student1"
     And I am on the course main page for "C1"
     And I click on "#courseindexsection2 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
     Then "#section-2 .snap-highlight" "css_element" should not exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   Scenario: For Weeks Format, the "current week" should be highlighted in the course.
     Given the following "courses" exist:

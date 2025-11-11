@@ -76,8 +76,6 @@ $string['coursefootertoggledesc'] = 'The Course footer shows useful information 
 $string['courseformatnotification'] = 'The current course format you are using is not fully supported by the Snap theme. For the best experience Open LMS recommends using the Topics or Weekly course formats with the Snap theme. The course format can be changed in the <a href="{$a}">course settings</a>.';
 $string['coursefixydefaulttext'] = 'You are currently not enrolled in any courses.<br>Courses you are enrolled in will be shown here.';
 $string['coursegrade'] = 'Course grade:';
-$string['coursepartialrender'] = 'Enable lazy loading for course sections';
-$string['coursepartialrenderdesc'] = 'If enabled, course sections load on demand when selected by a user. This helps courses with large amounts of content load faster.';
 $string['coursenavigation'] = 'Course navigation';
 $string['coursesummaryfilesunsuitable'] = 'Please empty your course summary files before you attempt to change the cover image';
 $string['courseactionslabel'] = 'actions';

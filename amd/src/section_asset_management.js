@@ -330,12 +330,6 @@ define(
                 updateSectionDropMsg(sectionName);
             }
 
-            var movingId = $('#region-main .section-moving').attr('id');
-            if (typeof movingId !== 'undefined' && movingId.length > 0) {
-                $('#section-' + (parseInt(movingId.split('section-')[1]) + 1) +
-                    ' .snap-drop.section-drop').removeClass('partial-render');
-            }
-
             $('#course-toc #chapters li').removeClass('snap-visible-section');
             $('#course-toc #chapters li a').attr("aria-current", "false");
             // Set link as current.
@@ -429,11 +423,7 @@ define(
              * @returns {number}
              */
             var sectionNumber = function(el) {
-                if (self.courseConfig.partialrender) {
-                    return (parseInt($(el).attr('id').split('section-')[1]));
-                } else {
-                    return (parseInt($(el).attr('id').replace('section-', '')));
-                }
+                return (parseInt($(el).attr('id').split('section-')[1]));
             };
 
             /**
@@ -461,9 +451,6 @@ define(
                 $('.snap-asset-move-input').prop('checked', false);
                 $('.readmore-container').removeAttr('hidden');
                 movingObjects = [];
-                if (self.courseConfig.partialrender) {
-                    $('.snap-drop.section-drop').addClass('partial-render');
-                }
             };
 
             /**
@@ -563,12 +550,8 @@ define(
              * @returns {*|jQuery}
              */
             var getSectionTitle = function(section) {
-                // Get title from TOC.
-                if (self.courseConfig.partialrender) {
-                    return  $('#course-toc #chapters > h3 li a[href="#section-' + section + '"]').text();
-                } else {
-                    return $('#chapters h3:nth-of-type(' + (section + 1) + ') .chapter-title').html();
-                }
+                // Get title from content.
+                return $('#chapters h3:nth-of-type(' + (section + 1) + ') .chapter-title').html();
             };
 
             /**
@@ -580,47 +563,25 @@ define(
                 var dfd = $.Deferred();
                 var sections, totalSectionCount;
                 if (!selector) {
-                    if (self.courseConfig.partialrender) {
-                        selector = '#course-toc #chapters > h3 li a';
-                    } else {
-                        selector = '#region-main .course-content > ul li.section';
-                    }
+                    selector = '#region-main .course-content > ul li.section';
                     sections = $(selector);
                     totalSectionCount = sections.length;
                 } else {
                     sections = $(selector);
-                    if (self.courseConfig.partialrender) {
-                        var allSections = $('#course-toc #chapters > h3 li a');
-                    } else {
-                        var allSections = $('#region-main .course-content > ul li.section');
-                    }
+                    var allSections = $('#region-main .course-content > ul li.section');
                     totalSectionCount = allSections.length;
                 }
 
                 var completed = 0;
                 $.each(sections, function(idx, el) {
-                    if (self.courseConfig.partialrender) {
-                        var href = $(el).attr('href');
-                        var sectionNum;
-                        if (typeof href !== typeof undefined && href !== false) {
-                            sectionNum = parseInt($(el).attr('href').split('#section-')[1]);
-                        } else {
-                            sectionNum = parseInt($(el).attr('id').split('section-')[1]);
-                        }
-                    } else {
-                        var sectionNum = sectionNumber(el);
-                    }
+                    var sectionNum = sectionNumber(el);
                     var previousSection = sectionNum - 1;
                     var nextSection = sectionNum + 1;
                     var previous = false;
                     var next = false;
                     var hidden, extraclasses;
                     if (previousSection > -1) {
-                        if (self.courseConfig.partialrender) {
-                            hidden = $('#section-' + previousSection).hasClass('draft');
-                        } else {
-                            hidden = $('#section-' + previousSection).hasClass('hidden');
-                        }
+                        hidden = $('#section-' + previousSection).hasClass('hidden');
                         extraclasses = hidden ? ' dimmed_text' : '';
                         previous = {
                             section: previousSection,
@@ -629,11 +590,7 @@ define(
                         };
                     }
                     if (nextSection < totalSectionCount) {
-                        if (self.courseConfig.partialrender) {
-                            hidden = $('#section-' + nextSection).hasClass('draft');
-                        } else {
-                            hidden = $('#section-' + nextSection).hasClass('hidden');
-                        }
+                        hidden = $('#section-' + nextSection).hasClass('hidden');
                         extraclasses = hidden ? ' dimmed_text' : '';
                         next = {
                             section: nextSection,
@@ -687,52 +644,32 @@ define(
              * @param {string} deletedSection
              */
             var updateSections = function(current, target, predeleteSections, deletedSection) {
-                if (courseLib.courseConfig.partialrender) {
-                    var loadedSections = [];
-                    var sections = [];
-                    if (current != 0 && target != 0) {
-                        $.each($('#course-toc #chapters li a'), function (idx, obj) {
-                            sections.push($(obj).attr('href').split('#section-')[1]);
-                        });
-                        var newOrder = calculateSections(sections, current, target);
-                    } else {
-                        sections = predeleteSections;
-                        predeleteSections.splice(deletedSection, 1);
-                        var newOrder = predeleteSections;
-                    }
-                    $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
-                        var value = $(obj).attr('id').split('section-')[1];
-                        var key = newOrder.indexOf(value);
-                        var chapterTitle = getSectionTitle(key);
-                        var fullTitle = chapterTitle;
-                        $(obj).attr('id', 'section-' + key);
-                        $('#section-' + key + ' .content .sectionname').html(fullTitle);
-                        loadedSections.push(key);
-                        // Update the attribute.
-                        $(obj).find('.section-modchooser-link').attr('data-sectionid', key);
+                var loadedSections = [];
+                var sections = [];
+                if (current != 0 && target != 0) {
+                    $.each($('#course-toc #chapters li a'), function (idx, obj) {
+                        sections.push($(obj).attr('href').split('#section-')[1]);
                     });
-                    sectionsProcess = loadedSections;
+                    var newOrder = calculateSections(sections, current, target);
                 } else {
-                    // Renumber section ids, rename section titles.
-                    $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
-                        $(obj).attr('id', 'section-' + idx);
-                        // Get title from TOC (note that its idx + 1 because first entry is
-                        // introduction.
-                        var chapterTitle = getSectionTitle(idx);
-                        // Update section title with corresponding TOC title - this is necessary
-                        // for weekly topic courses where the section title needs to stay the
-                        // same as the TOC.
-                        var fullTitle = chapterTitle;
-                        $('#section-' + idx + ' .content .sectionname').html(fullTitle);
-                        // Update section data attribute to reflect new section idx.
-                        $(this).find('.section-modchooser-link').attr('data-sectionid', idx);
-                    });
+                    sections = predeleteSections;
+                    predeleteSections.splice(deletedSection, 1);
+                    var newOrder = predeleteSections;
                 }
-
+                $.each($('#region-main .course-content > ul li.section'), function(idx, obj) {
+                    var value = $(obj).attr('id').split('section-')[1];
+                    var key = newOrder.indexOf(value);
+                    var chapterTitle = getSectionTitle(key);
+                    var fullTitle = chapterTitle;
+                    $(obj).attr('id', 'section-' + key);
+                    $('#section-' + key + ' .content .sectionname').html(fullTitle);
+                    loadedSections.push(key);
+                    // Update the attribute.
+                    $(obj).find('.section-modchooser-link').attr('data-sectionid', key);
+                });
+                sectionsProcess = loadedSections;
                 updateSectionNavigation().done(function() {
-                    if (courseLib.courseConfig.partialrender) {
                         setCourseSectionObservers();
-                    }
                 });
             };
 
@@ -796,26 +733,19 @@ define(
                                     section.remove();
                                     updateSections(0, 0, sections, sectionNum);
                                     // Current section no longer exists so change location to previous section.
-                                    if (self.courseConfig.partialrender) {
-                                        var chapters = $('.chapter-title');
-                                        var ids = [];
-                                        $.each(chapters, function (key, element) {
-                                            ids.push($(element).attr('href').split('#section-')[1]);
-                                        });
-                                        var closest = ids.reduce(function(prev, curr) {
-                                            return (Math.abs(curr - sectionNum) < Math.abs(prev - sectionNum) ? curr : prev);
-                                        });
-                                        location.hash = 'section-' + closest;
-                                        if ($('li#section-' + closest).length == 1) {
-                                            courseLib.showSection();
-                                        } else {
-                                            getSection(closest, 0);
-                                        }
-                                    } else {
-                                        if (sectionNum >= $('.course-content > ul li.section').length) {
-                                            location.hash = 'section-' + (sectionNum - 1);
-                                        }
+                                    var chapters = $('.chapter-title');
+                                    var ids = [];
+                                    $.each(chapters, function (key, element) {
+                                        ids.push($(element).attr('href').split('#section-')[1]);
+                                    });
+                                    var closest = ids.reduce(function(prev, curr) {
+                                        return (Math.abs(curr - sectionNum) < Math.abs(prev - sectionNum) ? curr : prev);
+                                    });
+                                    location.hash = 'section-' + closest;
+                                    if ($('li#section-' + closest).length == 1) {
                                         courseLib.showSection();
+                                    } else {
+                                        getSection(closest, 0);
                                     }
                                     // We can't complete the action in the 'always' section because we want it to
                                     // definitely be called after the section is removed from the DOM.
@@ -1386,25 +1316,8 @@ define(
                             $('#course-toc').html($(result).html());
                             $(document).trigger('snapTOCReplaced');
                             if (onComplete && typeof (onComplete) === 'function') {
-                                var completion = onComplete(sectionNumber, toggle);
-                                if (self.courseConfig.partialrender) {
-                                    if (typeof onComplete === 'function') {
-                                        ajaxTracker.complete('section_' + action);
-                                    }
-                                } else {
-                                    if (completion && typeof (completion.always) === 'function') {
-                                        // Callback returns a promise, js no longer running.
-                                        completion.always(
-                                            function() {
-                                                // Allow another request now this has finished.
-                                                ajaxTracker.complete('section_' + action);
-                                            }
-                                        );
-                                    } else {
-                                        // Callback does not return a promise, js no longer running.
-                                        // Allow another request now this has finished.
-                                        ajaxTracker.complete('section_' + action);
-                                    }
+                                if (typeof onComplete === 'function') {
+                                    ajaxTracker.complete('section_' + action);
                                 }
                             } else {
                                 // Allow another request now this has finished.
@@ -1557,9 +1470,6 @@ define(
                     section.addClass('section-moving');
                     $('a[href="#section-' + sectionNumber + '"]').parent('li').addClass('section-moving');
                     $('body').addClass('snap-move-section');
-                    if (self.courseConfig.partialrender) {
-                        $('#section-' + (sectionNumber + 1) + ' .snap-drop.section-drop').removeClass('partial-render');
-                    }
                     var title = M.util.get_string('moving', 'theme_snap', sectionName);
                     footerAlert.setTitle(title);
                     updateSectionDropMsg(sectionName);

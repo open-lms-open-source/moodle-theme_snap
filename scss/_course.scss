@@ -3477,7 +3477,7 @@ span.editinstructions {
 // Hide section drop on moving section, the following section and when not moving.
 .section-drop,
 .section-moving a.section-drop,
-.section-moving + .section .section-drop:not(.partial-render) {
+.section-moving + .section .section-drop{
     display: none;
 }
 

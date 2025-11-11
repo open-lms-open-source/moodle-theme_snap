@@ -366,9 +366,6 @@ define(
                 self.showSection();
                 $(document).on('snapTOCReplaced', function() {
                     self.setTOCVisibleSection();
-                    if (self.courseConfig.partialrender) {
-                        sectionAssetManagement.setTocObserver();
-                    }
                 });
                 // Sets the observers for rendering sections on demand.
                 renderFromHash();

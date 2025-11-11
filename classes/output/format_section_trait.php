@@ -733,8 +733,7 @@ trait format_section_trait {
         // Section drop zone.
         $caneditcourse = has_capability('moodle/course:update', $context);
         if ($caneditcourse && $section->section != 0) {
-            $extradropclass = !empty(get_config('theme_snap', 'coursepartialrender')) ? 'partial-render' : '';
-            $o .= "<a class='snap-drop section-drop " . $extradropclass . "' data-title='".
+            $o .= "<a class='snap-drop section-drop' data-title='".
                     s($sectiontitle)."' href='#'>_</a>";
         }
 
@@ -823,34 +822,29 @@ trait format_section_trait {
         echo html_writer::start_tag('ul', ['class' => 'sections']);
         $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id));
         $numsections = course_get_format($course)->get_last_section_number();
-        if (get_config('theme_snap', 'coursepartialrender')) {
-            echo $this->render_from_template('theme_snap/course_section_loading', []);
-            $startsectionid = 0;
-            if ($course->format == 'topics') {
-                $startsectionid = !empty($course->marker) ? $course->marker : 0;
-            } else if ($course->format == 'weeks') {
-                if ($pagepath !== '/course/section.php') {
-                    for ($i = 0; $i <= $numsections; $i++) {
-                        if (course_get_format($course)->is_section_current($i)) {
-                            $startsectionid = $i;
-                            break;
-                        }
+        echo $this->render_from_template('theme_snap/course_section_loading', []);
+        $startsectionid = 0;
+        if ($course->format == 'topics') {
+            $startsectionid = !empty($course->marker) ? $course->marker : 0;
+        } else if ($course->format == 'weeks') {
+            if ($pagepath !== '/course/section.php') {
+                for ($i = 0; $i <= $numsections; $i++) {
+                    if (course_get_format($course)->is_section_current($i)) {
+                        $startsectionid = $i;
+                        break;
                     }
-                } elseif ($sectionid !== -1) {
-                    $startsectionid = !empty($course->marker) ? $course->marker : 0;
                 }
+            } elseif ($sectionid !== -1) {
+                $startsectionid = !empty($course->marker) ? $course->marker : 0;
             }
-            $startsectionid = !empty($course->sectionreturn) ? $course->sectionreturn : $startsectionid;
-            $mainsection = $modinfo->get_section_info($startsectionid);
-            // Marker can be set to a deleted section.
-            if (!empty($mainsection) && (!empty($mainsection->visible) || $canviewhidden)) {
-                $sections[$startsectionid] = $mainsection;
-            } else {
-                $sections[0] = $modinfo->get_section_info(0);
-            }
-
+        }
+        $startsectionid = !empty($course->sectionreturn) ? $course->sectionreturn : $startsectionid;
+        $mainsection = $modinfo->get_section_info($startsectionid);
+        // Marker can be set to a deleted section.
+        if (!empty($mainsection) && (!empty($mainsection->visible) || $canviewhidden)) {
+            $sections[$startsectionid] = $mainsection;
         } else {
-            $sections = $modinfo->get_section_info_all();
+            $sections[0] = $modinfo->get_section_info(0);
         }
 
         foreach ($sections as $section => $thissection) {

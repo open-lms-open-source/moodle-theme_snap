@@ -39,11 +39,7 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
       | assign   | C1     | assign2  | Test assignment2 | Test assignment description 2 | 2       | 1                                   |
 
   @javascript
-  Scenario Outline: When editing a section name, the name should be at least one character.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
+  Scenario: When editing a section name, the name should be at least one character.
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
@@ -71,17 +67,9 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I press "Save changes"
     And I wait until the page is ready
     And "body#page-course-editsection" "css_element" should not exist
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
-  Scenario Outline: When creating a section, the name should be at least one character.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
-    And I log out
+  Scenario: When creating a section, the name should be at least one character.
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I click on "#snap-new-section" "css_element"
@@ -107,16 +95,10 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I wait until the page is ready
     And "section#snap-add-new-section" "css_element" should not be visible
     And I follow "New section"
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |
 
   @javascript
-  Scenario Outline: When creating a section in weekly format, changing the name should update TOC.
+  Scenario: When creating a section in weekly format, changing the name should update TOC.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I am on the course main page for "C1"
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
@@ -132,7 +114,3 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I set the section name to ""
     And I press "Save changes"
     And I should see "1 January - 7 January"
-    Examples:
-      | Option     |
-      | 0          |
-      | 1          |

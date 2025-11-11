@@ -35,25 +35,17 @@ Feature: When the moodle theme is set to Snap, section titles can be clicked for
       | teacher1 | C1 | editingteacher |
 
   @javascript
-  Scenario Outline: Untitled section titles direct to section edition when using topics format.
-    Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <coursepartialrender> | theme_snap |
-    And I log out
+  Scenario: Untitled section titles direct to section edition when using topics format.
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
     And I wait until the page is ready
-    Then "#section-1 .content .sectionname .sectionnumber" "css_element" <titlenumber> exist
-    Then I should see "<title>" in the "#section-1 .content .sectionname" "css_element"
+    Then "#section-1 .content .sectionname .sectionnumber" "css_element" should not exist
+    Then I should see "Untitled Section" in the "#section-1 .content .sectionname" "css_element"
     And I click on "#section-1 .content .sectionname a" "css_element"
     And I set the section name to "Super section 1"
     And I press "Save changes"
     And I follow "Super section 1"
     Then "#section-1 .content .sectionname a" "css_element" should not exist
     Then I should see "Super section 1"
-    Then "#section-1 .content .sectionname .sectionnumber" "css_element" <titlenumber> exist
-    Examples:
-      | coursepartialrender     | title             | titlenumber |
-      | 0                       | Untitled Section    | should not  |
-      | 1                       | Untitled Section    | should not  |
+    Then "#section-1 .content .sectionname .sectionnumber" "css_element" should not exist

@@ -124,8 +124,6 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   @javascript
   Scenario: While creating a new section, it should exists a functional cancel button on the form.
     Given I log in as "admin"
-    And the following config values are set as admin:
-      | coursepartialrender | <Option> | theme_snap |
     And I am on the course main page for "course_topics"
     And I follow "Create a new section"
     # Visibility of the cancel button.
