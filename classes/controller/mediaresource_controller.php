@@ -114,12 +114,6 @@ class mediaresource_controller extends controller_abstract {
 
         $resource->content = $this->get_media_html($resource, $context, $cm);
 
-        // Update 'viewed' state if required by completion system.
-        $completion = new \completion_info($COURSE);
-        $completion->set_module_viewed($cm);
-        $renderer = $PAGE->get_renderer('core', 'course');
-        $resource->completionhtml = $renderer->snap_course_section_cm_completion($COURSE, $completion, $cm);
-
         return $resource;
     }
 
@@ -133,7 +127,6 @@ class mediaresource_controller extends controller_abstract {
 
         return json_encode(array(
             'html' => $media->content,
-            'completionhtml' => $media->completionhtml,
         ));
     }
 

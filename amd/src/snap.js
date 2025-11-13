@@ -1014,9 +1014,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     // Make sure that the blocks are always within page-content for assig view page.
                     $('#page-mod-assign-view #page-content').append($('#moodle-blocks'));
 
-                    // Remove from Dom the completion tracking when it is disabled for an activity.
-                    $('.snap-header-card .snap-header-card-icons .disabled-snap-asset-completion-tracking').remove();
-
                     // Prepend asset type when activity is a folder to appear in the card header instead of the content.
                     var folders = $('li.snap-activity.modtype_folder');
                     $.each(folders, function(index, folder) {

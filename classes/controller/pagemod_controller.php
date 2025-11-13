@@ -76,8 +76,6 @@ class pagemod_controller extends controller_abstract {
         // Update 'viewed' state if required by completion system.
         $completion = new \completion_info($COURSE);
         $completion->set_module_viewed($cm);
-        $renderer = $PAGE->get_renderer('core', 'course');
-        $page->completionhtml = $renderer->snap_course_section_cm_completion($COURSE, $completion, $cm);
 
         return $page;
     }
@@ -93,7 +91,6 @@ class pagemod_controller extends controller_abstract {
         return json_encode(array(
             'html' => $page->content,
             'cmid' => $page->cmid,
-            'completionhtml' => $page->completionhtml,
         ));
     }
 
@@ -108,7 +105,6 @@ class pagemod_controller extends controller_abstract {
         return json_encode(array(
             'id' => $page->id,
             'cmid' => $page->cmid,
-            'completionhtml' => $page->completionhtml,
         ));
     }
 

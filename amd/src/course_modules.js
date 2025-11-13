@@ -35,69 +35,11 @@ define(
     function($, ajax, util, ajaxNotify, str, Event) {
 
         /**
-         * Module has been completed.
-         * @param {jQuery} module
-         * @param {string} completionhtml
-         */
-        var updateModCompletion = function(module, completionhtml) {
-            // Update completion tracking icon.
-            module.find('.snap-asset-completion-tracking').html(completionhtml);
-            module.find('.btn-link').focus();
-            $(document).trigger('snapModuleCompletionChange', module);
-        };
-
-        /**
-         * Listen for manual completion toggle.
-         */
-        var listenManualCompletion = function() {
-            $('.course-content').on('submit', 'form.togglecompletion', function(e) {
-                e.preventDefault();
-                var form = $(this);
-
-                if (form.hasClass('ajaxing')) {
-                    // Request already in progress.
-                    return;
-                }
-
-                var id = $(form).find('input[name="id"]').val();
-                var completionState = $(form).find('input[name="completionstate"]').val();
-                var module = $(form).parents('li.snap-asset').first();
-                form.addClass('ajaxing');
-
-                ajax.call([
-                    {
-                        methodname: 'theme_snap_course_module_completion',
-                        args: {id: id, completionstate: completionState},
-                        done: function(response) {
-
-                            ajaxNotify.ifErrorShowBestMsg(response).done(function(errorShown) {
-                                form.removeClass('ajaxing');
-                                if (errorShown) {
-                                    return;
-                                } else {
-                                    // No errors, update completion html for this module instance.
-                                    updateModCompletion(module, response.completionhtml);
-                                }
-                            });
-                        },
-                        fail: function(response) {
-                            ajaxNotify.ifErrorShowBestMsg(response).then(function() {
-                                form.removeClass('ajaxing');
-                            });
-                        }
-                    }
-                ], true, true);
-
-            });
-        };
-
-        /**
          * Reveal page module content.
          *
          * @param {jQuery} pageMod
-         * @param {string} completionHTML - updated completionHTML
          */
-        var revealPageMod = function(pageMod, completionHTML) {
+        var revealPageMod = function(pageMod) {
             pageMod.find('.pagemod-content').slideToggle("fast", function() {
                 // Animation complete.
                 if (pageMod.is('.state-expanded')) {
@@ -110,10 +52,6 @@ define(
                 }
 
             });
-
-            if (completionHTML) {
-                updateModCompletion(pageMod, completionHTML);
-            }
         };
 
         /**
@@ -144,9 +82,6 @@ define(
                                 ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
                                     if (errorShown) {
                                         return;
-                                    } else {
-                                        // No errors, update completion html for this page mod instance.
-                                        updateModCompletion(pageMod, data.completionhtml);
                                     }
                                 });
                             }
@@ -176,7 +111,7 @@ define(
                                         pageModContent.find('#pagemod-content-container').prepend(data.html);
                                         pageModContent.data('content-loaded', 1);
                                         pageMod.find('.contentafterlink .ajaxstatus').remove();
-                                        revealPageMod(pageMod, data.completionhtml);
+                                        revealPageMod(pageMod);
                                         Event.notifyFilterContentUpdated('.pagemod-content');
                                     }
                                 });
@@ -195,123 +130,12 @@ define(
             });
         };
 
-        /**
-         * Light box media.
-         * @param {str|jQuery} resourcemod
-         */
-        var lightboxMedia = function(resourcemod) {
-            /**
-             * Ensure lightbox container exists.
-             *
-             * @param {string} appendto
-             * @param {function} onclose
-             * @returns {*|jQuery|HTMLElement}
-             */
-            var lightbox = function(appendto, onclose) {
-                var lbox = $('#snap-light-box');
-                if (lbox.length === 0) {
-                    $(appendto).append('<div id="snap-light-box" tabindex="-1">' +
-                        '<div id="snap-light-box-content"></div>' +
-                        '<a id="snap-light-box-close" class="float-end snap-action-icon snap-icon-close" href="#">' +
-                        '<small>Close</small>' +
-                        '</a>' +
-                        '</div>');
-                    $('#snap-light-box-close').click(function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        lightboxclose();
-                        if (typeof (onclose) === 'function') {
-                            onclose();
-                        }
-                    });
-                    lbox = $('#snap-light-box');
-                }
-                return lbox;
-            };
-
-            /**
-             * Close lightbox.
-             */
-            var lightboxclose = function() {
-                var lbox = lightbox();
-                lbox.remove();
-            };
-
-            /**
-             * Open lightbox and set content if necessary.
-             *
-             * @param {string} content
-             * @param {*} appendto
-             * @param {function} onclose
-             */
-            var lightboxopen = function(content, appendto, onclose) {
-                appendto = appendto ? appendto : $('body');
-                var lbox = lightbox(appendto, onclose);
-                if (content) {
-                    var contentdiv = $('#snap-light-box-content');
-                    contentdiv.html('');
-                    contentdiv.append(content);
-                }
-                lbox.addClass('state-visible');
-            };
-
-            var appendto = $('body');
-            var spinner = '<div class="loadingstat three-quarters">' +
-                M.util.get_string('loading', 'theme_snap') +
-                '</div>';
-            lightboxopen(spinner, appendto, function() {
-                $(resourcemod).attr('tabindex', '-1').focus();
-                $(resourcemod).removeAttr('tabindex');
-            });
-
-            $.ajax({
-                type: "GET",
-                async: true,
-                url: M.cfg.wwwroot + '/theme/snap/rest.php?action=get_media&contextid=' + $(resourcemod).data('modcontext'),
-                success: function(data) {
-                    ajaxNotify.ifErrorShowBestMsg(data).done(function(errorShown) {
-                        if (errorShown) {
-                            return;
-                        } else {
-                            // No errors, open lightbox and update module completion.
-                            lightboxopen(data.html, appendto);
-                            updateModCompletion($(resourcemod), data.completionhtml);
-                            $(document).trigger('snapContentRevealed');
-                            $('#snap-light-box').focus();
-                        }
-                    });
-                }
-            });
-
-        };
-
         return {
 
             init: function() {
 
                 // Listeners.
                 listenPageModuleReadMore();
-                listenManualCompletion();
-
-                // Add toggle class for hide/show activities/resources - additional to moodle adding dim.
-                $(document).on("click", '[data-action=hide],[data-action=show],[data-action=stealth]', function() {
-                    if ($(this).attr('data-action') === 'hide' ) {
-                        $(this).closest('li.activity').addClass('draft');
-                        $(this).closest('li.activity').removeClass('stealth');
-                    } else if ($(this).attr('data-action') === 'stealth') {
-                        $(this).closest('li.activity').removeClass('draft');
-                        $(this).closest('li.activity').addClass('stealth');
-                    } else if ($(this).attr('data-action') === 'show') {
-                        $(this).closest('li.activity').removeClass('draft');
-                        $(this).closest('li.activity').removeClass('stealth');
-                    }
-                });
-
-                // Make lightbox for list display of resources.
-                $(document).on('click', '.js-snap-media .snap-asset-link [href*="/mod/resource/view.php?id="]', function(e) {
-                    lightboxMedia($(this).closest('.snap-resource, .snap-extended-resource'));
-                    e.preventDefault();
-                });
             }
         };
     }

@@ -350,17 +350,6 @@ define(
             sectionAssetManagement.init(self);
             courseModules.init(courseConfig);
 
-            // Only load the conditionals library if it's enabled for the course, viva la HTTP2!
-            if (self.courseConfig.enablecompletion) {
-                require(
-                    [
-                        'theme_snap/course_conditionals-lazy'
-                    ], function(conditionals) {
-                        conditionals(courseConfig);
-                    }
-                );
-            }
-
             // SL - 19th aug 2014 - check we are in a course and if so, show current section.
             if (onCoursePage()) {
                 self.showSection();

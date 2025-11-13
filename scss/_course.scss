@@ -1581,38 +1581,6 @@ body.snap-resource-card {
                     transform: scale(1.1);
                 }
             }
-            .snap-asset-completion-tracking {
-                display: inline-block;
-                float: right;
-            }
-            .snap-asset-completion-tracking {
-                .autocompletion {
-                    display: flex;
-                }
-                div:not(.completion-dropdown div) {
-                    display: flex;
-                }
-
-                .completion-dropdown {
-                    .dropdown-menu {
-                        min-width: 15em;
-                        border-radius: 0.5rem;
-                        // Copying font styles from .popover
-                        font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-                        font-style: normal;
-                        font-weight: 400;
-                        font-size: .75rem;
-                    }
-
-                    .completion-dialog .icon { // Copying the sizes from Boost.
-                        font-size: 0.8203125rem;
-                        width: 0.8203125rem;
-                        height: 0.8203125rem;
-                        margin-right: 0.25rem;
-                        max-width: unset;
-                    }
-                }
-            }
         }
     }
     .activity-altcontent {
@@ -3737,10 +3705,6 @@ body.path-course-index {
 // Fix options lenght in menu.
 .dropdown.snap-edit-more-dropdown .dropdown-menu.show {
     display: table;
-}
-
-.modtype_page .asset-wrapper .snap-asset-completion-tracking {
-    margin-right: 0.3em;
 }
 
 // Fix mark as done button for Tiles
