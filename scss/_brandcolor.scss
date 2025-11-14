@@ -415,11 +415,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: $brand-primary;
     }
 
-    #course-toc .snap-visible-section .chapter-title {
-        background-color: $brand-primary;
-        opacity: 0.8;
-    }
-
     .mast-image {
         .breadcrumb {
             li,
@@ -1595,9 +1590,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         i.icon {
             color: white;
         }
-    }
-    #course-toc.state-visible .course-toc-mobile-header {
-      background-color: $brand-primary;
     }
 }
 

@@ -22,82 +22,6 @@
 
 /* stylelint-disable declaration-no-important*/
 
-// -------------------------
-// Course toc & appendicies.
-// -------------------------
-#course-toc {
-    z-index: 1;
-    /* TOC heading. */
-    #toc-desktop-menu-heading {
-        text-transform: uppercase;
-        font-size: 1em;
-    }
-
-    /* TOC list. */
-    #chapters {
-        padding: 0;
-
-        h3 {
-            font-size: 1em;
-            margin-bottom: initial;
-        }
-
-        li {
-            padding-bottom: 0.3em;
-            line-height: 1;
-            h3 {
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Chapter link */
-        .chapter-title {
-            display: inline-block;
-            margin-bottom: -0.3em;
-            line-height: 1.75;
-            width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .snap-visible-section .chapter-title {
-            margin-bottom: 0;
-        }
-        span.text {
-            display: inline-block;
-        }
-    }
-
-    /* Section currently displayed. */
-    .snap-visible-section {
-        padding-left: 0.5em;
-        color: #fff;
-        .chapter-title {
-            border-radius: 0.5rem;
-            padding-right: 0.5rem;
-            padding-left: 0.5rem;
-        }
-        a,
-        span {
-            color: #fff;
-            text-decoration: none;
-        }
-        .completionstatus {
-            color: #666;
-        }
-    }
-
-    /* Completed section icon. */
-    .snap-section-complete {
-        width: 1.3em;
-        height: 1.3em;
-    }
-
-    .text small {
-        font-weight: 300;
-    }
-}
-
 div[data-flexitour="step-background"] {
     margin: 0;
 }
@@ -112,7 +36,6 @@ div[data-flexitour="step-background"] {
 }
 
 #snap-course-wrapper, div[data-flexitour="step-background"] {
-    #course-toc,
     #region-main {
         padding-top: 1em;
         outline: none;
@@ -186,17 +109,6 @@ div[data-flexitour="step-background"] {
 // Display when toc is part of page header.
 // -------------------------
 #page-header {
-    #course-toc {
-        border-top-left-radius: 0.5rem;
-        border-top-right-radius: 0.5rem;
-        margin: 2.5em auto -.5em;
-    }
-
-    .mast-image {
-        #course-toc {
-            margin-top: 6.6vh;
-        }
-    }
 
     #chapters {
         column-count: 2;
@@ -368,10 +280,6 @@ label[for="toc-search-input"]{
 // Course search in page header.
 // -------------------------
 #page-header {
-    #course-toc {
-        position: relative;
-    }
-
     #toc-search {
         top: 0.5em;
         right: 0;
@@ -391,79 +299,7 @@ label[for="toc-search-input"]{
     }
 }
 
-// -------------------------
-// Mobile toc.
-// -------------------------
-.course-toc-mobile-header,
-#toc-mobile-menu-toggle {
-    display: none;
-}
-
 @include media-breakpoint-down(md) {
-    .theme-snap  a#toc-mobile-menu-toggle {
-        display: block;
-    }
-    #course-toc.state-visible .course-toc-mobile-header {
-        display: block;
-        padding: 1rem;
-    }
-    #course-toc {
-        position: fixed !important;
-        margin: 0;
-        z-index: 1070;
-        background-color: transparent !important;
-        @include alakazam();
-        outline: none;
-
-        #chapters,
-        .toc-footer,
-        #toc-search,
-        #toc-desktop-menu-heading {
-            display: none;
-        }
-        #chapters,
-        .toc-footer {
-            padding: 0 4%;
-        }
-    }
-
-    #course-toc.state-visible {
-        top: 0;
-        left: 0;
-        bottom: 0;
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding-top: 1em;
-        background-color: white !important;
-        overflow-y: scroll;
-
-        #chapters {
-            margin-top: 3rem;
-        }
-
-        #toc-search {
-            display: block;
-        }
-
-        #chapters,
-        .toc-footer {
-            display: block;
-            column-count: 1;
-            text-align: left;
-        }
-
-        #toc-mobile-menu-toggle.toc-mobile-menu-toggle-close {
-            float: right;
-            width: 2em;
-            padding: 0;
-            box-shadow: none;
-            font-size: 1.5rem;
-            background: unset;
-            opacity: .5;
-            line-height: 1;
-        }
-    }
 
     #toc-desktop-menu-heading {
         display: none;
@@ -483,10 +319,6 @@ label[for="toc-search-input"]{
     // Small screen course tools and create new section links.
     #page-header .toc-footer a {
         display: block;
-    }
-
-    #snap-course-wrapper nav#course-toc {
-        padding-top: 0;
     }
 
     #toc-search-results {
@@ -511,14 +343,6 @@ label[for="toc-search-input"]{
   width: 320px;
   background-color: white;
   margin-left: -3em;
-}
-
-// -------------------------
-// Moving sections.
-// -------------------------
-#course-toc .section-moving {
-    border-left: 0.3em solid;
-    padding-left: 0.3em;
 }
 
 .drawerheader {

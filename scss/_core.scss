@@ -1800,17 +1800,6 @@ body.path-course-view #moodle-page #page-header {
     margin-top: 0;
 }
 
-// -------------------------
-// Header in course layout (we have extra stuff)
-// -------------------------
-/***************
-	div#page-mast
-		nav#course-toc
-				ol #chapters
-				search stuff SHAME
-
- ****************************/
-
 // If the page has an image - courses & categories.
 .mast-image {
     #page-mast {
@@ -1820,10 +1809,6 @@ body.path-course-view #moodle-page #page-header {
             color: white;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
-    }
-    // Add a bg colur to the toc in page header.
-    #course-toc {
-        background-color: rgba(255, 255, 255, 0.95);
     }
 }
 

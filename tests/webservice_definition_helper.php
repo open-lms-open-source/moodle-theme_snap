@@ -17,7 +17,6 @@ namespace theme_snap;
 defined('MOODLE_INTERNAL') || die();
 
 use theme_snap\webservice\definition_helper;
-use theme_snap\renderables\course_toc;
 use core_external\external_value;
 
 /**
@@ -158,35 +157,6 @@ class wsparam_notype {
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class webservice_definition_helper extends \advanced_testcase {
-
-    public function test_classname() {
-        $this->resetAfterTest();
-        $course = $this->getDataGenerator()->create_course();
-        $toc = new course_toc($course);
-        $definitionhelper = new definition_helper_testable($toc);
-        $classname = $definitionhelper->classname;
-        $this->assertTrue(!empty($classname));
-    }
-
-    public function test_usenamespaces() {
-        $this->resetAfterTest();
-        $course = $this->getDataGenerator()->create_course();
-        $toc = new course_toc($course);
-        $definitionhelper = new definition_helper_testable($toc);
-        $namespaces = $definitionhelper->usenamespaces;
-        $this->assertTrue(!empty($namespaces));
-    }
-
-    public function test_structure() {
-        $this->resetAfterTest();
-        $course = $this->getDataGenerator()->create_course();
-        $toc = new course_toc($course);
-        $definitionhelper = new definition_helper($toc);
-        $definition = $definitionhelper->get_definition();
-        $this->assertTrue(isset($definition['formatsupportstoc']));
-        $this->assertTrue($definition['formatsupportstoc'] instanceof external_value);
-    }
-
     public function test_wsdocs() {
         $definitionhelper = new definition_helper('wsdocs_testing');
         $definition = $definitionhelper->get_definition();
@@ -238,84 +208,6 @@ class webservice_definition_helper extends \advanced_testcase {
             $this->assertEquals($expected['allownull'], $definition[$name]->allownull);
         }
 
-    }
-
-    public function test_convert_ws_param_to_object() {
-
-        $this->resetAfterTest();
-
-        $comment = <<<EOF
-     * @wsparam {
-     *     "complete": {
-     *         "type": PARAM_INT,
-     *         "required": true,
-     *         "description": "Number of items completed"
-     *     },
-     *     "total": {
-     *         "type": PARAM_INT,
-     *         "required": true,
-     *         "description": "Total items to complete"
-     *     }
-     * };
-EOF;
-
-        $course = $this->getDataGenerator()->create_course();
-        $toc = new course_toc($course);
-        $definitionhelper = new definition_helper_testable($toc);
-        $retval = $definitionhelper->convert_ws_param_to_object($comment);
-        $this->assertTrue(is_array($retval));
-        $this->assertCount(2, $retval);
-        $obj = $retval[0];
-        $isarr = $retval[1];
-        $this->assertTrue(is_object($obj));
-        $this->assertFalse($isarr);
-        $this->assertTrue(!empty($obj->complete));
-        $this->assertTrue($obj->complete instanceof external_value);
-        $this->assertTrue(!empty($obj->complete->type));
-        $this->assertTrue(!empty($obj->complete->required));
-        $this->assertTrue(!empty($obj->complete->desc));
-        $this->assertEquals(PARAM_INT, $obj->complete->type);
-        $this->assertEquals(true, $obj->complete->required);
-        $this->assertEquals('Number of items completed', $obj->complete->desc);
-    }
-
-    public function test_convert_ws_param_array_to_object() {
-
-        $this->resetAfterTest();
-
-        $comment = <<<EOF
-     * @wsparam {
-     *     "complete": {
-     *         "type": PARAM_INT,
-     *         "required": true,
-     *         "description": "Number of items completed"
-     *     },
-     *     "total": {
-     *         "type": PARAM_INT,
-     *         "required": true,
-     *         "description": "Total items to complete"
-     *     }
-     * }[];
-EOF;
-
-        $course = $this->getDataGenerator()->create_course();
-        $toc = new course_toc($course);
-        $definitionhelper = new definition_helper_testable($toc);
-        $retval = $definitionhelper->convert_ws_param_to_object($comment);
-        $this->assertTrue(is_array($retval));
-        $this->assertCount(2, $retval);
-        $obj = $retval[0];
-        $isarr = $retval[1];
-        $this->assertTrue(is_object($obj));
-        $this->assertTrue($isarr);
-        $this->assertTrue(!empty($obj->complete));
-        $this->assertTrue($obj->complete instanceof external_value);
-        $this->assertTrue(!empty($obj->complete->type));
-        $this->assertTrue(!empty($obj->complete->required));
-        $this->assertTrue(!empty($obj->complete->desc));
-        $this->assertEquals(PARAM_INT, $obj->complete->type);
-        $this->assertEquals(true, $obj->complete->required);
-        $this->assertEquals('Number of items completed', $obj->complete->desc);
     }
 
     public function test_convert_ws_param_no_type() {

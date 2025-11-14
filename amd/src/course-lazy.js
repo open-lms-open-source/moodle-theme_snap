@@ -69,24 +69,6 @@ define(
 
             $(targmod).find('.instancename').prepend(searchpin);
             $(targmod).attr('tabindex', '-1').focus();
-            $('#course-toc').removeClass('state-visible');
-        };
-
-        /**
-         * Mark the section shown to user with a class in the TOC.
-         */
-        this.setTOCVisibleSection = function() {
-            var sectionIdSel = '.section.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible';
-            var currentSectionId = $(sectionIdSel).attr('id');
-
-            // Remove snap-visible-section class and reset aria-current to false for all chapters
-            $('#chapters li').removeClass('snap-visible-section');
-            $('#chapters li a').attr('aria-current', 'false');
-
-            // Find the correct chapter link and update class and aria-current
-            var visibleSectionLink = $('#chapters a[href$="' + currentSectionId + '"]');
-            visibleSectionLink.parent('li').addClass('snap-visible-section');
-            visibleSectionLink.attr('aria-current', 'true');
         };
 
         /**
@@ -279,9 +261,6 @@ define(
             $('li.snap-activity:visible, li.snap-resource:visible').on('click', 'a.mod-link', function() {
                 sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
             });
-
-
-            this.setTOCVisibleSection();
         };
 
         /**
@@ -353,9 +332,6 @@ define(
             // SL - 19th aug 2014 - check we are in a course and if so, show current section.
             if (onCoursePage()) {
                 self.showSection();
-                $(document).on('snapTOCReplaced', function() {
-                    self.setTOCVisibleSection();
-                });
                 // Sets the observers for rendering sections on demand.
                 renderFromHash();
                 $(window).on('hashchange', function() {

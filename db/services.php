@@ -42,24 +42,6 @@ $functions = [
         'loginrequired'   => true,
         'readonlysession' => true, // We don't modify the session.
     ],
-    'theme_snap_course_toc_chapters'      => [
-        'classname'       => 'theme_snap\\webservice\\ws_course_toc_chapters',
-        'methodname'      => 'service',
-        'description'     => 'Get course TOC chapters',
-        'type'            => 'read',
-        'ajax'            => true,
-        'loginrequired'   => true,
-        'readonlysession' => true, // We don't modify the session.
-    ],
-    'theme_snap_course_sections'          => [
-        'classname'       => 'theme_snap\\webservice\\ws_course_sections',
-        'methodname'      => 'service',
-        'description'     => 'Manage course sections',
-        'type'            => 'write',
-        'ajax'            => true,
-        'loginrequired'   => true,
-        'readonlysession' => true, // We don't modify the session.
-    ],
     'theme_snap_course_cards_categories'  => [
         'classname'       => 'theme_snap\\webservice\\ws_course_cards_categories',
         'methodname'      => 'service',

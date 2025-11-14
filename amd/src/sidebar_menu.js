@@ -39,7 +39,6 @@ const SELECTORS = {
     SIDEBAR_MENU_ITEM: '.snap-sidebar-menu-item',
     NAV_UNPINNED: '#mr-nav.headroom--unpinned',
     GOTO_TOP_LINK: '#goto-top-link',
-    COURSE_TOC: '#course-toc',
     PAGE_HEADER: 'page-header',
     DRAWER_LEFT: '.drawer-left.drawer',
     SNAP_COURSE_FOOTER: 'snap-course-footer',

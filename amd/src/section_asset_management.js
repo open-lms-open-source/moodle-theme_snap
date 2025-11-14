@@ -50,7 +50,6 @@ define(
 
         var self = this;
 
-        var ajaxTracker;
 
         /**
          * Sections that are being retrieved by the API.
@@ -59,15 +58,9 @@ define(
         var sectionsProcess = [];
 
         /**
-         * Progress caching.
-         * @type {Array|null}
-         */
-        var progressCache = null;
-
-        /**
          * Sets observers for the TOC drawer elements.
          */
-        var setTocObservers = function () {
+        var setTocObservers = function() {
             if (self.courseConfig.format == 'weeks' || self.courseConfig.format == 'topics') {
                 $('#toc-searchables li a').click(function(e) {
                     var link = $(e.target);
@@ -159,7 +152,6 @@ define(
 
             $(targmod).find('.instancename').prepend(searchpin);
             $(targmod).attr('tabindex', '-1').focus();
-            $('#course-toc').removeClass('state-visible');
         };
 
         /**
@@ -264,71 +256,6 @@ define(
             self.courseConfig = courseLib.courseConfig;
 
             /**
-             * AJAX tracker class - for tracking chained AJAX requests (prevents behat intermittent faults).
-             * Also, sets and unsets ajax classes on trigger element / child of trigger if specified.
-             */
-            var AjaxTracker = function() {
-
-                var triggersByKey = {};
-
-                /**
-                 * Starts tracking.
-                 * @param {string} jsPendingKey
-                 * @param {domElement} trigger
-                 * @param {string} subSelector
-                 * @returns {boolean}
-                 */
-                this.start = function(jsPendingKey, trigger, subSelector) {
-                    if (this.ajaxing(jsPendingKey)) {
-                        log.debug('Skipping ajax request for ' + jsPendingKey + ', AJAX already in progress');
-                        return false;
-                    }
-                    M.util.js_pending(jsPendingKey);
-                    triggersByKey[jsPendingKey] = {trigger: trigger, subSelector: subSelector};
-                    if (trigger) {
-                        if (subSelector) {
-                            $(trigger).find(subSelector).addClass('ajaxing');
-                        } else {
-                            $(trigger).addClass('ajaxing');
-                        }
-                    }
-                    return true;
-                };
-
-                /**
-                 * Is there an AJAX request in progress.
-                 * @param {string} jsPendingKey
-                 * @returns {boolean}
-                 */
-                this.ajaxing = function(jsPendingKey) {
-                    return M.util.pending_js.indexOf(jsPendingKey) > -1;
-                };
-
-                /**
-                 * Completes tracking.
-                 * @param {string} jsPendingKey
-                 */
-                this.complete = function(jsPendingKey) {
-                    var trigger, subSelector;
-                    if (triggersByKey[jsPendingKey]) {
-                        trigger = triggersByKey[jsPendingKey].trigger;
-                        subSelector = triggersByKey[jsPendingKey].subSelector;
-                    }
-                    if (trigger) {
-                        if (subSelector) {
-                            $(trigger).find(subSelector).removeClass('ajaxing');
-                        } else {
-                            $(trigger).removeClass('ajaxing');
-                        }
-                    }
-                    delete triggersByKey[jsPendingKey];
-                    M.util.js_complete(jsPendingKey);
-                };
-            };
-
-            ajaxTracker = new AjaxTracker();
-
-            /**
              * Set observers for TOC and navigation buttons in the footer.
              */
             var setCourseSectionObservers = function() {
@@ -371,70 +298,11 @@ define(
             };
 
             /**
-             * Make an Ajax request for caching the TOC so it's not so expensive to hide and show sections.
-             */
-            var cacheTOC = function() {
-                if ($('.snap-section-editing.actions').length === 0) {
-                    // Only cache the TOC if there are sections.
-                    return;
-                }
-
-                var action = 'toc';
-
-                var trigger = $('#region-main');
-
-                if (!ajaxTracker.start('section_' + action, trigger)) {
-                    // Request already in progress.
-                    return;
-                }
-
-                // Make ajax call.
-                var ajaxPromises = ajax.call([
-                    {
-                        methodname: 'theme_snap_course_sections',
-                        args : {
-                            courseshortname: courseLib.courseConfig.shortname,
-                            action: action,
-                            sectionnumber: 0,
-                            value: 0,
-                            loadmodules: 0,
-                        }
-                    }
-                ], true, true);
-
-                // Handle ajax promises.
-                ajaxPromises[0]
-                .fail(function(response) {
-                    var errMessage, errAction;
-                    errMessage = M.util.get_string('error:failedtotoc', 'theme_snap');
-                    errAction = M.util.get_string('action:sectiontoc', 'theme_snap');
-                    ajaxNotify.ifErrorShowBestMsg(response, errAction, errMessage).done(function() {
-                        // Allow another request now this has finished.
-                        ajaxTracker.complete('section_' + action);
-                    });
-                }).always(function() {
-                    $(trigger).removeClass('ajaxing');
-                }).done(function(response) {
-
-                    // Caching progress for future use.
-                    progressCache = [];
-                    $.each(response.toc.chapters.chapters, function(index, value) {
-                        progressCache.push(value.progress);
-                    });
-
-                    ajaxTracker.complete('section_' + action);
-                });
-            };
-
-            /**
              * Initialise script.
              */
             var initialise = function() {
                 // Add listeners.
                 addListeners();
-
-                // Cache TOC.
-                cacheTOC();
 
                 // Override core functions
                 util.whenTrue(function() {

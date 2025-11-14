@@ -33,19 +33,13 @@ use context_system;
 use \core\exception\coding_exception;
 use \core\output\single_button;
 use DateTime;
-use \core\output\html_writer;
 use \core\url as moodle_url;
 use navigation_node;
-use \core\output\user_picture;
 use theme_snap\local;
-use theme_snap\services\course;
 use theme_snap\renderables\settings_link;
 use theme_snap\renderables\genius_dashboard_link;
-use theme_snap\renderables\course_card;
-use theme_snap\renderables\course_toc;
 use theme_snap\renderables\featured_courses;
 use theme_snap\renderables\featured_categories;
-use \core\lang_string as lang_string;
 use core_course_category;
 use core\navigation\output\primary;
 
@@ -122,15 +116,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         return $this->heading($image.$text.$help, $level, $classnames);
-    }
-
-    /**
-     * @return bool|string
-     * @throws \core\exception\moodle_exception
-     */
-    public function course_toc() {
-        $coursetoc = new course_toc();
-        return $this->render_from_template('theme_snap/course_toc', $coursetoc);
     }
 
     /**
