@@ -27,6 +27,7 @@ Feature: Manual completion updates page wihout reload.
     Given the following "courses" exist:
       | fullname | shortname | format | category | groupmode | enablecompletion | initsections |
       | Course 1 | C1        | topics | 0        | 1         | 1                |      1       |
+      | Course 2 | C2        | topics | 0        | 1         | 0                |      1       |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | student1 | Student | 1 | student1@example.com |
@@ -108,3 +109,29 @@ Feature: Manual completion updates page wihout reload.
       | Option     |
       | 0          |
       | 1          |
+
+  @javascript
+  Scenario: Course progress bar is displayed and updated depending on the course completion.
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And "#course-toc-progress-bar" "css_element" should exist
+    And I should see "Progress: 0/3"
+    And I should see "0%"
+    Then I press "Mark as done"
+    And I should see "Progress: 1/3"
+    And I should see "33%"
+    And I open "Test assignment1" actions menu
+    And I choose "Duplicate" in the open action menu
+    And I should see "Progress: 1/4"
+    And I should see "25%"
+    Then I press "Done"
+    And I should see "Progress: 0/4"
+    And I should see "0%"
+    And I open "Test assignment1" actions menu
+    And I choose "Delete" in the open action menu
+    Then I should see asset delete dialog
+    And I click on "Delete" "button" in the "Delete activity?" "dialogue"
+    And I should see "Progress: 0/3"
+    And I should see "0%"
+    And I am on the course main page for "C2"
+    And "#course-toc-progress-bar" "css_element" should not exist

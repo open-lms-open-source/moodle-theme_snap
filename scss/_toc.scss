@@ -817,3 +817,44 @@ label[for="toc-search-input"]{
     }
   }
 }
+
+// -------------------------
+// Course progress bar
+// -------------------------
+
+.drawer.drawer-left #course-toc-progress-bar {
+  color: gray;
+  background-color: #fff;
+  width: 90%;
+  font-size: 1.1rem;
+  border-radius: 1rem;
+  margin: 5% auto;
+  padding: 4% 5%;
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .progress {
+    height: .5rem;
+  }
+  .progress,
+  .progress-bar {
+    border-radius: 0.5rem;
+  }
+  @for $i from 0 through 100 {
+    .progress-bar[aria-valuenow="#{$i}"] {
+      @if $i < 20 {
+        background-color: $red;
+        color: white;
+      } @else if $i < 80 {
+        background-color: $yellow;
+        color: black;
+      } @else {
+        background-color: $green;
+        color: white;
+      }
+    }
+  }
+}

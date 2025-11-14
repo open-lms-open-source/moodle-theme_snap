@@ -45,9 +45,11 @@ $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 // For Snap we add some HTML to Course Index.
 $coursetoc = new course_toc();
 $searchmodule = $OUTPUT->render_from_template('theme_snap/course_toc_module_search', $coursetoc);
+$progressbar = $OUTPUT->render_from_template('theme_snap/course_toc_progress_bar',
+    $OUTPUT->get_course_completion_data($COURSE, $USER));
 $tocfooter = $OUTPUT->render_from_template('theme_snap/course_toc_footer', $coursetoc->footer);
 
-$courseindex = $searchmodule . core_course_drawer() . $tocfooter;
+$courseindex = $searchmodule . $progressbar . core_course_drawer() . $tocfooter;
 
 if (!$courseindex) {
     $courseindexopen = false;

@@ -141,4 +141,13 @@ $functions = [
         'loginrequired'   => true,
         'readonlysession' => true, // We don't modify the session.
     ],
+    'theme_snap_update_course_toc_progressbar'              => [
+        'classname'       => 'theme_snap\\webservice\\ws_course_toc_progressbar',
+        'methodname'      => 'service',
+        'description'     => 'Update the course TOC progressbar when changing any activity completion status',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
+    ],
 ];

@@ -2510,4 +2510,34 @@ HTML;
     protected function snap_page_is_user_view() {
         return $this->page->pagetype === 'user-view';
     }
+
+    /**
+     * Return the course completion progress and course percentage data.
+     * @param $course : Should contain the course fullname
+     * @param $user : Should contain the course fullname
+     * @return array
+     */
+    public static function get_course_completion_data($course, $user) {
+        global $CFG;
+        require_once($CFG->libdir . '/completionlib.php');
+
+        $completion = new \completion_info($course);
+        $modules = $completion->get_activities();
+        $count = count($modules);
+        $totalcompleted = $completion->count_modules_completed($user->id);
+        $courseprogress = $totalcompleted.'/'.$count;
+        $progresspercentage = \core_completion\progress::get_course_progress_percentage($course);
+        $hasprogress = false;
+        if ($progresspercentage === 0 || $progresspercentage > 0) {
+            $hasprogress = true;
+        }
+        $progresspercentage = floor($progresspercentage ?? 0);
+        return [
+            'userid' => $user->id,
+            'courseid' => $course->id,
+            'courseprogress' => $courseprogress,
+            'progresspercentage' => $progresspercentage,
+            'hasprogress' => $hasprogress,
+        ];
+    }
 }
