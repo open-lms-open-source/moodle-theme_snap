@@ -996,6 +996,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     bodyClasses(); // Add body classes
                     mobileFormChecker();
                     util.processAnimatedImages();
+                    util.addTitleAttributeInCourseName();
 
                     // Make sure that the blocks are always within page-content for assig view page.
                     $('#page-mod-assign-view #page-content').append($('#moodle-blocks'));

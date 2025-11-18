@@ -1756,7 +1756,7 @@ body#page-site-index #moodle-page #page-header {
 }
 
 body.path-course-view, body#page-course-index-category {
-    #moodle-page #page-header {
+    #moodle-page #page-header.mast-image {
         min-height: 0;
         aspect-ratio: 6;
     }
@@ -4828,15 +4828,46 @@ button.snap-icon-toggle {
 }
 
 #snap-coverimagecontrol {
-    float: right;
     margin: auto 0 auto auto;
     opacity: 0;
+    flex-shrink: 0;
     @include alakazam;
 
     .btn {
         border-color: transparent;
         margin-left: 1em;
     }
+}
+
+#page-header.mast-image .page-context-header .page-header-headings {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 959px) {
+  #page-header.mast-image .page-context-header .page-header-headings {
+    -webkit-line-clamp: 1;
+  }
+}
+
+@media (min-width: 960px) and (max-width: 1299px) {
+  #page-header.mast-image .page-context-header .page-header-headings {
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media (min-width: 1300px) and (max-width: 1760px) {
+  #page-header.mast-image .page-context-header .page-header-headings {
+    -webkit-line-clamp: 3;
+  }
+}
+
+@media (min-width: 1600px) {
+  .text h1 {
+    -webkit-line-clamp: unset;
+  }
 }
 
 #snap-changecoverimageconfirmation {
