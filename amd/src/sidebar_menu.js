@@ -447,6 +447,7 @@ const handleCloseDrawerClick = () => {
     // Add collapsed class to messages popover if it's open
     const messagesPopover = document.querySelector(SELECTORS.MESSAGES_POPOVER);
     if (messagesPopover && !messagesPopover.classList.contains(CLASSES.COLLAPSED)) {
+        setDrawerPreference(ACTIVE_SELECTORS.MESSAGES_DRAWER, false);
         messagesPopover.classList.add(CLASSES.COLLAPSED);
     }
 };
@@ -487,6 +488,7 @@ const setupEventListeners = () => {
     // Add click event listeners to drawer buttons
     document.querySelectorAll(SELECTORS.DRAWER_BUTTON).forEach(button => {
         button.addEventListener('click', handleDrawerButtonClick);
+        blockUnwantedFocus(button);
     });
     
     // Add click event listener to messages popover
@@ -719,4 +721,54 @@ const toggleBodyDrawerClass = () => {
     } else {
         document.body.classList.remove(CLASSES.DRAWER_OPEN);
     }
+};
+
+// Shared global state needed for blockUnwantedFocus.
+let userInitiated = false;
+
+// Global listeners (run once)
+window.addEventListener("mousedown", () => { userInitiated = true; }, true);
+window.addEventListener("mouseup",   () => { userInitiated = false; }, true);
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === "Tab") {
+        userInitiated = true;
+    }
+}, true);
+
+window.addEventListener("keyup", () => { userInitiated = false; }, true);
+
+/**
+ * Block unwanted focus on drawer buttons. This is a needed patch because Core has
+ * some focus handling on these buttons that we need to override.
+ * @param {*} button 
+ */
+const blockUnwantedFocus = (button) => {
+    if (!button) {
+        return;
+    }
+
+    button.addEventListener(
+        "focus", (e) => {
+            const target = e.target;
+
+            if (!userInitiated) {
+                const prevOutline = target.style.outline;
+                const prevBoxShadow = target.style.boxShadow;
+
+                target.style.outline = "none";
+                target.style.boxShadow = "none";
+
+                requestAnimationFrame(() => {
+                    if (document.activeElement === target) {
+                        target.blur();
+                    }
+
+                    requestAnimationFrame(() => {
+                        target.style.outline = prevOutline;
+                        target.style.boxShadow = prevBoxShadow;
+                    });
+                });
+            }
+        }, true);
 };

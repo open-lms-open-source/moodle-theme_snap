@@ -286,9 +286,27 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                                 .filter(el => {
                                     return el !== null;
                                 });
-                            let beforeDrawers = document.querySelector('#snap-custom-menu-header div > ul > li:nth-child(2) > a');
-                            beforeDrawers = beforeDrawers ?
-                                beforeDrawers : document.querySelector('#snap-custom-menu-header > nav > div > ul > li > a');
+                            // Dynamically get the last link from the custom menu header
+                            let beforeDrawers = (document.querySelectorAll('#snap-custom-menu-header div > ul > li > a') ||
+                                document.querySelectorAll('#snap-custom-menu-header > nav > div > ul > li > a'));
+                            beforeDrawers = beforeDrawers.length > 0 ? beforeDrawers[beforeDrawers.length - 1] : null;
+                            // If custom menu header doesn't exist, get the last focusable item in snap-header
+                            if (!beforeDrawers) {
+                                let focusables = '[tabindex]:not([tabindex="-1"]),' +
+                                    ' a[href]:not([tabindex]),' +
+                                    ' button:not([disabled]):not([tabindex]),' +
+                                    ' input:not([disabled]):not([tabindex]),' +
+                                    ' textarea:not([disabled]):not([tabindex]),' +
+                                    ' select:not([disabled]):not([tabindex]), details:not([tabindex])';
+                                let snapHeader = document.getElementById('snap-header');
+                                if (snapHeader) {
+                                    let headerFocusables = Array.from(snapHeader.querySelectorAll(focusables)).filter(el => {
+                                        return el.checkVisibility();
+                                    });
+                                    beforeDrawers = headerFocusables.length > 0 ?
+                                        headerFocusables[headerFocusables.length - 1] : null;
+                                }
+                            }
                             let afterDrawers = document.querySelector('#snap-sidebar-menu > button.snap-sidebar-menu-trigger');
 
                             let adminDrawerFirst = null;
