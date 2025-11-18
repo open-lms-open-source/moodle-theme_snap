@@ -116,7 +116,7 @@ $assignment-filter:    invert(32%) sepia(48%) saturate(3787%) hue-rotate(173deg)
 $content-filter:       invert(85%) sepia(40%) saturate(5001%) hue-rotate(348deg) brightness(84%) contrast(82%); // Quiz, choice, feedback
 $information-filter:   invert(33%) sepia(97%) saturate(3270%) hue-rotate(155deg) brightness(100%) contrast(101%); // Wiki, glossary, Database, Choice Group
 $collab-filter:        invert(25%) sepia(52%) saturate(2509%) hue-rotate(285deg) brightness(88%) contrast(88%); // Collaborate
-$hvp-filter:           brightness(0%) contrast(100%); // HVP
+$hvp-filter:           contrast(100%); // HVP
 
 // Resource icons
 $color-lightbox:                     #008C5E; // Lightbox gallery
