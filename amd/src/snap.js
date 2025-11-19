@@ -372,7 +372,8 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
             var selectors = [
                 '.chapters a',
                 '.section_footer a',
-                ' #toc-search-results a'
+                '#toc-search-results a',
+                '#courseindex-content .courseindex-section-title a.courseindex-link'
             ];
 
             $(document).on('click', selectors.join(', '), function(e) {
@@ -382,6 +383,14 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     // Force hashchange fix for FF & IE9.
                     var link = $(this);
                     var section = link.attr('section-number');
+                    // For TOC, section number resides on parent div.
+                    if (!section) {
+                        // Avoid running Behat, as it behaves randomly in Gitlab.
+                        if (M.cfg.behatsiterunning) {
+                            return;
+                        }
+                        section = link.closest('.courseindex-section').attr('data-number');
+                    }
                     if (typeof section !== 'undefined' && section.length > 0) {
                         self.courseConfig.sectionnum = parseInt(section);
                     }

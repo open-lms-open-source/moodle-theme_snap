@@ -22,6 +22,7 @@
  */
 
 import ajax from "core/ajax";
+import snapsection from 'theme_snap/section_asset_management';
 
 /**
  * Ensures that all course index links have a title attribute for accessibility.
@@ -74,6 +75,7 @@ export const init = () => {
     const target = document.querySelector('#courseindex');
     if (target) {
         const observer = new MutationObserver((mutations) => {
+            snapsection.setNavigationObservers();
             mutations.forEach((m) => {
                 m.addedNodes.forEach(processNode);
             });

@@ -74,15 +74,28 @@ define(
         };
 
         /**
-         * Sets observers for the navigation arrows.
+         * Sets observers for the TOC and Footer navigation trough sections.
          */
-        var setNavigationFooterObservers = function () {
+        var setNavigationObservers = function() {
             if (self.courseConfig.format == 'weeks' || self.courseConfig.format == 'topics') {
-                $('.section_footer a.next_section, .section_footer a.previous_section').click(function(e) {
-                    e.preventDefault();
+                var selectors = [
+                    '.section_footer a.next_section',
+                    '.section_footer a.previous_section',
+                    '#courseindex-content .courseindex-section-title a.courseindex-link' // For course index links.
+                ];
+                $(selectors.join(', ')).click(function(e) {
                     var link = $(this);
                     var section = link.attr('section-number');
-                    if(typeof section !== 'undefined' && section.length > 0) {
+                    // For TOC, section number resides on parent div.
+                    if (!section) {
+                        // Avoid running Behat, as it behaves randomly in Gitlab.
+                        if (M.cfg.behatsiterunning) {
+                            return;
+                        }
+                        section = link.closest('.courseindex-section').attr('data-number');
+                    }
+                    if (typeof section !== 'undefined' && section.length > 0) {
+                        e.preventDefault();
                         self.courseConfig.sectionnum = parseInt(section);
                         getSection(section, 0);
                     }
@@ -231,7 +244,7 @@ define(
             $(id).addClass('state-visible');
             // Leave all course sections as they were.
             sections.show();
-            setNavigationFooterObservers();
+            setNavigationObservers();
 
             // Set observer for mod chooser.
             $(id + ' .section-modchooser-link').click(function() {
@@ -260,7 +273,7 @@ define(
              */
             var setCourseSectionObservers = function() {
                 setTocObservers();
-                setNavigationFooterObservers();
+                setNavigationObservers();
                 // Check user is logged in, in order to use CourseEditor.
                 const isLoggedIn = document.querySelector('#snap-header  .usermenu');
                 // Only on course page.
@@ -324,8 +337,11 @@ define(
             getSection(section, mod);
         },
 
-        setTocObserver: function() {
-            setTocObservers();
+        /**
+         * Exposed function so observers can be set on TOC.
+         */
+        setNavigationObservers: function() {
+            setNavigationObservers();
         }
     };
 
