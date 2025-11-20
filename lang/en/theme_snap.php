@@ -104,6 +104,7 @@ $string['customisenavbar'] = 'Change navigation bar colors';
 $string['customisenavbutton'] = 'Change My Courses button colors';
 $string['customisecustommenu'] = 'Change custom menu text color';
 $string['custommenutext'] = 'Custom menu text color';
+$string['custommenutitle'] = 'Custom Menu';
 $string['deadlines'] = 'Deadlines';
 $string['deadlinestoggle'] = 'Deadlines';
 $string['deadlinestoggledesc'] = 'Show users any upcoming activity deadlines from enrolled courses.';

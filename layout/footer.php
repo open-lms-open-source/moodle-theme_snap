@@ -80,6 +80,7 @@ echo '</div>';
 
 if (!empty($custommenu)) {
     echo '<div id="snap-custom-menu-footer"><br>';
+    echo '<h3 class="mx-4">' . get_string('custommenutitle', 'theme_snap') . '</h3>';
     echo $custommenu;
     echo '</div>';
 }

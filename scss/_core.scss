@@ -5399,6 +5399,7 @@ header#mr-nav {
         ul.snap-navbar-content {
             margin: 0;
             padding: 0;
+            flex-wrap: wrap;
             li.nav-item {
                 list-style: none;
                 max-width: 20em;
@@ -5439,6 +5440,9 @@ header#mr-nav {
                 }
             }
         }
+    }
+    #snap-custom-menu-header div.container-fluid {
+        height: 50px;
     }
 }
 
@@ -5492,6 +5496,9 @@ header#mr-nav {
     }
     footer#moodle-footer div#snap-custom-menu-footer {
         display: block;
+        background-color: #2d2d2d;
+        border-radius: 0.5rem;
+        
         nav.navbar {
             max-height: 100%;
             ul.snap-navbar-content {

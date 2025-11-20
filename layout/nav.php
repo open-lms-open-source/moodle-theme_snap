@@ -87,7 +87,7 @@ if (!empty($custommenu)) {
     if (!($PAGE->pagetype === 'login-index') &&
         !($PAGE->pagetype === 'login-signup') &&
         !($PAGE->pagetype === 'login-forgot_password')) {
-        echo '<div id="snap-custom-menu-header">';
+        echo '<div id="snap-custom-menu-header" class="invisible">';
         echo $custommenu;
         echo '</div>';
     }

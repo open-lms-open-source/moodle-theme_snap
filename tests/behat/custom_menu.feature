@@ -95,9 +95,7 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
     And I should not see "Moodle community"
     And I log in as "admin"
     And I am on site homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I follow "Plugins"
+    And I go to "Site administration > Plugins" in snap administration
     And I follow "Category: Authentication"
     And I follow "Manage authentication"
     And I set the field with xpath "//select[@id='id_s__registerauth']" to "Email-based self-registration"
