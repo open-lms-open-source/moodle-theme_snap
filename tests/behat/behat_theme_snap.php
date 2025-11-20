@@ -972,7 +972,8 @@ class behat_theme_snap extends behat_base {
         }
 
         $expectedtitle = '<span class="nav_guide">' . $ttype
-            . ' section</span><span class="nav_title" aria-label="' . htmlentities($linktitle, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) . '">'
+            . ' section</span><span class="nav_title" aria-label="' . htmlentities($linktitle, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) . '"'.
+            ' title="' . htmlentities($linktitle, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) . '">'
             . htmlentities($linktitle, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) . '</span>';
 
         $decodedTitle = html_entity_decode($title, ENT_QUOTES | ENT_HTML401);

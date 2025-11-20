@@ -211,6 +211,7 @@ export default class SectionNavigation extends BaseComponent {
                 if (titleEl) {
                     titleEl.textContent = data.title || '';
                     titleEl.setAttribute('aria-label', data.title || '');
+                    titleEl.setAttribute('title', data.title || '');
                 }
             } else {
                 btnElement.classList.add(this.classes.DISABLED);
@@ -219,6 +220,7 @@ export default class SectionNavigation extends BaseComponent {
                 if (titleEl) {
                     titleEl.textContent = '';
                     titleEl.removeAttribute('aria-label');
+                    titleEl.removeAttribute('title');
                 }
             }
         };

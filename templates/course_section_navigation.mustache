@@ -28,8 +28,17 @@
             <i class="icon-arrow-left" section-number="{{#previous}}{{section}}{{/previous}}"></i>
         </div>
         <div class="nav_text">
+        {{#issubsection}}
+            <span class="nav_guide">{{#str}}previoussubsection, theme_snap{{/str}}</span>
+        {{/issubsection}}
+        {{^issubsection}}
             <span class="nav_guide">{{#str}}previoussection, theme_snap{{/str}}</span>
-            <span class="nav_title" aria-label="{{#previous}}{{{title}}}{{/previous}}">{{#previous}}{{{title}}}{{/previous}}</span>
+        {{/issubsection}}
+            <span class="nav_title"
+                  aria-label="{{#previous}}{{{title}}}{{/previous}}"
+                  title="{{#previous}}{{{title}}}{{/previous}}">
+                {{#previous}}{{{title}}}{{/previous}}
+            </span>
         </div>
     </a>
 
@@ -40,8 +49,17 @@
             <i class="icon-arrow-right" section-number="{{#next}}{{section}}{{/next}}"></i>
         </div>
         <div class="nav_text">
-            <span class="nav_guide">{{#str}}nextsection, theme_snap{{/str}}</span>
-            <span class="nav_title" aria-label="{{#next}}{{{title}}}{{/next}}">{{#next}}{{{title}}}{{/next}}</span>
+            {{#issubsection}}
+                <span class="nav_guide">{{#str}}nextsubsection, theme_snap{{/str}}</span>
+            {{/issubsection}}
+            {{^issubsection}}
+                <span class="nav_guide">{{#str}}nextsection, theme_snap{{/str}}</span>
+            {{/issubsection}}
+            <span class="nav_title"
+                  aria-label="{{#next}}{{{title}}}{{/next}}"
+                  title="{{#next}}{{{title}}}{{/next}}">
+                {{#next}}{{{title}}}{{/next}}
+            </span>
         </div>
     </a>
 </nav>
