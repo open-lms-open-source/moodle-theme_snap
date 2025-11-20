@@ -20,17 +20,33 @@
  @copyright Copyright (c) 2016 Open LMS
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
-<nav class="section_footer">
-    {{#previous}}
-    <a class="previous_section {{classes}}" href="{{url}}" section-number="{{section}}">
-        <div class="nav_icon"><i class="icon-arrow-left" section-number="{{section}}"></i></div>
-        <span class="text"><span class="nav_guide" section-number="{{section}}">{{#str}}previoussection, theme_snap{{/str}}</span><br>{{{title}}}</span>
+<nav class="section_footer" data-sectionid="{{sectionid}}">
+    <a class="previous_section {{classes}} {{^previous}}disabled{{/previous}}"
+       section-number="{{#previous}}{{section}}{{/previous}}"
+       href="{{#previous}}{{url}}{{/previous}}{{^previous}}#{{/previous}}" >
+        <div class="nav_icon">
+            <i class="icon-arrow-left" section-number="{{#previous}}{{section}}{{/previous}}"></i>
+        </div>
+        <div class="nav_text">
+            <span class="nav_guide">{{#str}}previoussection, theme_snap{{/str}}</span>
+            <span class="nav_title" aria-label="{{#previous}}{{{title}}}{{/previous}}">{{#previous}}{{{title}}}{{/previous}}</span>
+        </div>
     </a>
-    {{/previous}}
-    {{#next}}
-    <a class="next_section {{classes}}" href="{{url}}" section-number="{{section}}">
-        <div class="nav_icon"><i class="icon-arrow-right" section-number="{{section}}"></i></div>
-        <span class="text"><span class="nav_guide" section-number="{{section}}">{{#str}}nextsection, theme_snap{{/str}}</span><br>{{{title}}}</span>
+
+    <a class="next_section {{classes}} {{^next}}disabled{{/next}}"
+       section-number="{{#next}}{{section}}{{/next}}"
+       href="{{#next}}{{url}}{{/next}}{{^next}}#{{/next}}" >
+        <div class="nav_icon">
+            <i class="icon-arrow-right" section-number="{{#next}}{{section}}{{/next}}"></i>
+        </div>
+        <div class="nav_text">
+            <span class="nav_guide">{{#str}}nextsection, theme_snap{{/str}}</span>
+            <span class="nav_title" aria-label="{{#next}}{{{title}}}{{/next}}">{{#next}}{{{title}}}{{/next}}</span>
+        </div>
     </a>
-    {{/next}}
 </nav>
+{{#js}}
+    require(['theme_snap/section_navigation'], function(component) {
+        component.init('.section_footer[data-sectionid="{{sectionid}}"]', {{sectionid}});
+    });
+{{/js}}

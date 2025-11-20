@@ -960,7 +960,7 @@ class behat_theme_snap extends behat_base {
      */
     protected function check_navigation_for_section($type, $section, $linktitle) {
         $baseselector = '#section-' . $section . ' nav.section_footer a.'.$type.'_section';
-        $titleselector = $baseselector.' span';
+        $titleselector = $baseselector.' .nav_text';
         $node = $this->find('css', $titleselector);
         $title = $node->getHtml();
         // Title case version of type.
@@ -970,10 +970,18 @@ class behat_theme_snap extends behat_base {
         } else {
             $sectionnumber = $section - 1;
         }
-        $expectedtitle = '<span class="nav_guide" section-number="' . $sectionnumber . '">' . $ttype
-            . ' section</span><br>'.htmlentities($linktitle, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401);
-        if (strtolower($title) !== strtolower($expectedtitle)) {
-            $msg = $ttype.' title does not match expected "' . $expectedtitle . '"' . ' V "' . $title .
+
+        $expectedtitle = '<span class="nav_guide">' . $ttype
+            . ' section</span><span class="nav_title" aria-label="' . htmlentities($linktitle, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) . '">'
+            . htmlentities($linktitle, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) . '</span>';
+
+        $decodedTitle = html_entity_decode($title, ENT_QUOTES | ENT_HTML401);
+        $decodedExpected = html_entity_decode($expectedtitle, ENT_QUOTES | ENT_HTML401);
+        $cleanTitle = strtolower(trim(preg_replace('/\s+/', '', $decodedTitle)));
+        $cleanExpected = strtolower(trim(preg_replace('/\s+/', '', $decodedExpected)));
+
+        if ($cleanTitle !== $cleanExpected) {
+            $msg = $ttype.' title does not match expected "' . $cleanExpected . '"' . ' V "' . $cleanTitle .
                     '" - selector = "'.$titleselector.'"';
             throw new ExpectationException($msg, $this->getSession());
         }

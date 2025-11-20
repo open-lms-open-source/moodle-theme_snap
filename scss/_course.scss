@@ -470,6 +470,18 @@ li.section:focus {
     }
 }
 
+.nav_title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav_text {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 #snap-modchooser-modal {
 
     .tab-content > .active {
@@ -1078,6 +1090,10 @@ body.format-singleactivity {
 .visibleifjs.addresourcemodchooser {
     clear: both;
     display: block;
+}
+
+.section_footer .disabled {
+  display: none;
 }
 
 /* MODS & RESOURCES IN COURSE */
