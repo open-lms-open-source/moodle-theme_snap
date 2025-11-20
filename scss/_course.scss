@@ -252,6 +252,9 @@ li.section:focus {
     ul.topics,
     ul.sections {
         list-style: none;
+        // Enable container queries for responsive cards based on container width
+        container-type: inline-size;
+        container-name: sections-container;
     }
 }
 
@@ -1154,6 +1157,7 @@ body.format-singleactivity {
 .theme-snap .section {
     li.activity {
       border: none;
+      margin-top: inherit;
     }
     li.activity.modtype_page .activityinstance {
       margin-bottom: 1em;
@@ -1171,9 +1175,9 @@ body.format-singleactivity {
       transition: all 0.4s ease-in-out;
       border-radius: 0.5rem;
       padding: 1.5em 1em 2.5em 2em;
-
-      .activityname {
-        margin-left: 1em;
+      @include media-breakpoint-down(md) {
+        padding: 1.5em .5em 2.5em .7em;
+        min-width: 190px;
       }
 
       .activity-dates > div {
@@ -1234,6 +1238,23 @@ body.format-singleactivity {
           padding: 0;
           @include alakazam;
       }
+      .activity-badges {
+          margin-left: unset;
+          grid-column: 2 / -2;
+          max-width: none;
+          width: auto;
+
+        .badge {
+          max-width: 100%;
+          white-space: normal;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          display: inline-block;
+          line-height: 1.3;
+          font-size: 0.6em;
+        }
+      }
+
     }
 }
 
@@ -1287,7 +1308,6 @@ body.format-singleactivity {
 
 .section li.activity {
     height: auto;
-    margin: 0.5em auto;
 
     .contentafterlink {
         font-size: 1em;
@@ -1402,6 +1422,15 @@ body.snap-resource-list .section li.snap-resource {
 // -------------------------
 // Snap resources as cards.
 // -------------------------
+@container sections-container (max-width: 768px) {
+  .snap-buttons {
+    > .allbuttons {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+    min-width: 190px;
+  }
+}
 body.snap-resource-card li.snap-resource:not(.label) {
     height: 200px;
     width: 31%;
@@ -1412,7 +1441,7 @@ body.snap-resource-card li.snap-resource:not(.label) {
     background-position: 50% 70%;
     background-size: 33px auto;
 
-    @media screen and (max-width: 768px) {
+    @container sections-container (max-width: 768px) {
         width: 100%;
     }
 
@@ -1670,7 +1699,7 @@ body.snap-resource-list {
 // -----------------------------------------------------------
 // Snap Course resources as Cards.
 // -----------------------------------------------------------
-@include media-breakpoint-up(md) {
+@container sections-container (min-width: 600px) {
   body.snap-resource-card.format-weeks,
   body.snap-resource-card.format-topics {
     li.modtype_label {
@@ -1730,6 +1759,12 @@ body.snap-resource-list {
         }
       }
     }
+    .snap-buttons {
+      > .allbuttons {
+        flex: 0 0 50%;
+        max-width: 50%;
+      }
+    }
   }
 
   body.snap-resource-card.editing.format-weeks,
@@ -1745,7 +1780,7 @@ body.snap-resource-list {
   }
 }
 
-@media screen and (min-width: 1024px) {
+@container sections-container (min-width: 861px) {
   body.snap-resource-card.format-weeks,
   body.snap-resource-card.format-topics {
     li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
@@ -1755,6 +1790,12 @@ body.snap-resource-list {
     li.activity-wrapper.modtype_lightboxgallery,
     li.activity-wrapper.modtype_scorm {
       width: 33.3%;
+    }
+    .snap-buttons {
+      > .allbuttons {
+        flex: 0 0 33.3%;
+        max-width: 33.3%;
+      }
     }
   }
 }

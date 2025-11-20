@@ -875,7 +875,7 @@ trait format_section_trait {
         // Button to create subsection
         $plugininfo = \core_plugin_manager::instance()->get_plugin_info('mod_subsection');
         if ($plugininfo && $plugininfo->is_enabled() && $section->component !== 'mod_subsection') {
-            $colclass = "col-12 col-lg-4";
+            $colclass = "col-12 col-lg-4 allbuttons";
             $iconss = '<i class="fa fa-rectangle-list snap-icon" aria-hidden="true"></i>';
             $straddsubsection = get_string('addsubsection', 'theme_snap');
             $textwrappedss = html_writer::tag('span', $straddsubsection, ['class' => 'button-text']);
@@ -918,8 +918,8 @@ trait format_section_trait {
 
         // Add zone for quick uploading of files.
         $dropzonelabel = get_string('dropzonelabel', 'theme_snap');
-        $upload  = '<div class="' . $colclass . '">';
-        $upload .= '<form class="snap-dropzone js-only">';
+        $upload  = '<div class="' . $colclass . ' snap-dropzone">';
+        $upload .= '<form class="js-only">';
         $upload .= '<label tabindex="0" for="snap-drop-file-'.$section->section.'" class="snap-dropzone-label">';
         $upload .= '<div class="btn">';
         $upload .= '<div class="activityiconcontainer">';
