@@ -6973,3 +6973,11 @@ li.section.main {
 .modal {
   z-index: 1052; // Higher than Snap header.
 }
+
+// Remove "Powered by Moodle" Core icon and message.
+#page-footer {
+  &.footer-popover .btn-footer-popover,
+  .footer-content-popover {
+    display: none;
+  }
+}
