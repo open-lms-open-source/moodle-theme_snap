@@ -156,7 +156,7 @@ export default class SharingCartForSnap {
      */
     add_backup_command = ($activity, iconBackup, on_backup) => {
         var $menu = $activity.find("ul[role='menu']");
-
+//
         if($menu.length)
         {
             var li = $menu.find('li').first().clone();
@@ -185,7 +185,8 @@ export default class SharingCartForSnap {
             if ($('#page-course-view-tiles').length) {
                 $menu = $activity.find('div[role="menu"]');
             } else {
-                $menu = $activity.find('div.snap-edit-more-dropdown ul.dropdown-menu');
+                // $menu = $activity.find('div.snap-edit-more-dropdown ul.dropdown-menu');
+                $menu = $activity.find('div.cm_action_menu > * > * > * > div.dropdown-menu');
             }
             if($menu.length)
             {
