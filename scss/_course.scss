@@ -1254,7 +1254,14 @@ body.format-singleactivity {
           font-size: 0.6em;
         }
       }
+    }
 
+    @container sections-container (max-width: 380px) {
+        li.activity .activity-item .activity-grid {
+          grid-template-columns: min-content 1fr min-content min-content min-content;
+          grid-template-rows: 1fr repeat(4, min-content);
+          grid-template-areas: "icon          name          actions" "icon          visibility    actions" "dates         dates         dates" "groupmode     groupmode     groupmode" "completion    completion    completion" "altcontent    altcontent    altcontent" "afterlink     afterlink     afterlink" "availability  availability  availability";
+        }
     }
 }
 
@@ -2074,6 +2081,18 @@ body.snap-resource-card {
             }
             .activityiconcontainer.hsuforum img {
                 height: 25px;
+            }
+
+            @container sections-container (max-width: 600px) {
+                .hsuforum-recent {
+                    .snap-media-object {
+                      width: 100%;
+                      float: none;
+                    }
+                    .snap-media-body {
+                      width: auto;
+                    }
+                }
             }
         }
 
