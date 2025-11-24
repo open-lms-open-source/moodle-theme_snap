@@ -1699,6 +1699,20 @@ body.snap-resource-list {
 // -----------------------------------------------------------
 // Snap Course resources as Cards.
 // -----------------------------------------------------------
+
+// If you modify this mixin’s selectors, also update
+// isResourceCardType() in snap.js to keep the logic in sync.
+@mixin snap-resource-card-selectors {
+  li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
+  li.activity-wrapper.modtype_folder:has(.activity-name-area),
+  li.activity-wrapper.modtype_url,
+  li.activity-wrapper.modtype_imscp,
+  li.activity-wrapper.modtype_lightboxgallery,
+  li.activity-wrapper.modtype_scorm {
+    @content;
+  }
+}
+
 @container sections-container (min-width: 600px) {
   body.snap-resource-card.format-weeks,
   body.snap-resource-card.format-topics {
@@ -1712,12 +1726,7 @@ body.snap-resource-list {
       width: 40%;
     }
 
-    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
-    li.activity-wrapper.modtype_folder:has(.activity-name-area),
-    li.activity-wrapper.modtype_url,
-    li.activity-wrapper.modtype_imscp,
-    li.activity-wrapper.modtype_lightboxgallery,
-    li.activity-wrapper.modtype_scorm {
+    @include snap-resource-card-selectors {
       width: 50%;
       padding: 1%;
       float: left;
@@ -1769,12 +1778,7 @@ body.snap-resource-list {
 
   body.snap-resource-card.editing.format-weeks,
   body.snap-resource-card.editing.format-topics {
-    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
-    li.activity-wrapper.modtype_folder:has(.activity-name-area),
-    li.activity-wrapper.modtype_url,
-    li.activity-wrapper.modtype_imscp,
-    li.activity-wrapper.modtype_lightboxgallery,
-    li.activity-wrapper.modtype_scorm {
+    @include snap-resource-card-selectors {
       height: 16em;
     }
   }
@@ -1783,12 +1787,7 @@ body.snap-resource-list {
 @container sections-container (min-width: 861px) {
   body.snap-resource-card.format-weeks,
   body.snap-resource-card.format-topics {
-    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
-    li.activity-wrapper.modtype_folder:has(.activity-name-area),
-    li.activity-wrapper.modtype_url,
-    li.activity-wrapper.modtype_imscp,
-    li.activity-wrapper.modtype_lightboxgallery,
-    li.activity-wrapper.modtype_scorm {
+    @include snap-resource-card-selectors {
       width: 33.3%;
     }
     .snap-buttons {
@@ -1819,12 +1818,7 @@ body.snap-resource-card {
     }
 
     // Hide multimedia content on resource cards description.
-    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
-    li.activity-wrapper.modtype_folder:has(.activity-name-area),
-    li.activity-wrapper.modtype_url,
-    li.activity-wrapper.modtype_imscp,
-    li.activity-wrapper.modtype_lightboxgallery,
-    li.activity-wrapper.modtype_scorm {
+    @include snap-resource-card-selectors {
       div.contentafterlink div.no-overflow img,
       div.contentafterlink div.no-overflow img.img-responsive.atto_image_button_text-bottom,
       div.contentafterlink div.no-overflow iframe,
@@ -1834,12 +1828,7 @@ body.snap-resource-card {
     }
 
     // Modify resource card structure to have ellipsis in the title and a gradient in the description.
-    li.activity-wrapper.modtype_resource:not(:has(.snap-resource-figure)),
-    li.activity-wrapper.modtype_folder:has(.activity-name-area),
-    li.activity-wrapper.modtype_url,
-    li.activity-wrapper.modtype_imscp,
-    li.activity-wrapper.modtype_lightboxgallery,
-    li.activity-wrapper.modtype_scorm {
+    @include snap-resource-card-selectors {
       /* mixin for multiline */
       @mixin multiLineEllipsis($lineHeight: 1.25em, $lineCount: 1, $bgColor: white) {
         overflow: hidden;
