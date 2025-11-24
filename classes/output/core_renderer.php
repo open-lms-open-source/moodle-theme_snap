@@ -1020,6 +1020,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $context = $item->export_for_template($this);
             $content .= $this->render_from_template('theme_snap/custom_menu_item', $context);
         }
+        // Add the more button and dropdown regions for responsive menu collapse.
+        $content .= '<li role="none" class="nav-item dropdown dropdownmoremenu d-none" data-region="morebutton">';
+        $content .= '<a class="dropdown-toggle nav-link" href="#" role="menuitem" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="-1">';
+        $content .= get_string('moremenu', 'core');
+        $content .= '</a>';
+        $content .= '<ul class="dropdown-menu dropdown-menu-left" data-region="moredropdown" role="menu">';
+        $content .= '</ul>';
+        $content .= '</li>';
 
         return $content.'</ul>'.'</div>'.'</nav>';
     }

@@ -1167,11 +1167,12 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
             ul.snap-navbar-content {
                 li.nav-item {
-                    div.dropdown-menu {
+                    div.dropdown-menu, ul.dropdown-menu {
                         background-color: rgba($brand-primary, 0.8);
                     }
 
                     a {
+                        height: 50px;
                         color: $custom-menu-text-color;
 
                         &:focus,
