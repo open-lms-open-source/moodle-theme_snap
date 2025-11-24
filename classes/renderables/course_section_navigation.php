@@ -51,6 +51,11 @@ class course_section_navigation implements \core\output\renderable {
     public $sectionid;
 
     /**
+     * @var boolean issubsection
+     */
+    public $issubsection;
+
+    /**
      * course_section_navigation constructor.
      * @param stdClass $course
      * @param section_info[] $sections
@@ -66,6 +71,7 @@ class course_section_navigation implements \core\output\renderable {
         $sectionid = $sections[$sectionno]->id;
 
         $this->sectionid = $sectionid;
+        $this->issubsection = $sections[$sectionno]->is_delegated();
         $this->previous = $this->find_navigation_link($course, $navigablesections, $sectionid, -1, $canviewhidden);
         $this->next     = $this->find_navigation_link($course, $navigablesections, $sectionid, 1, $canviewhidden);
     }
@@ -99,6 +105,11 @@ class course_section_navigation implements \core\output\renderable {
             foreach ($parentsection->get_sequence_cm_infos() as $cm) {
                 /** @var \cm_info $cm */
                 $customdata = $cm->get_custom_data();
+
+                // The method get_custom_data() may return stdClass or null for some modules.
+                if (!is_array($customdata)) {
+                    continue;
+                }
                 if (isset($customdata['sectionid'])) {
                     $navigablesections[$customdata['sectionid']] = null;
                 }

@@ -289,6 +289,7 @@ $string['navbarlink'] = 'Text color';
 $string['navbarbuttoncolor'] = 'Background color';
 $string['navbarbuttonlink'] = 'Text color';
 $string['nextsection'] = 'Next section';
+$string['nextsubsection'] = 'Next subsection';
 $string['nodeadlines'] = 'You have no upcoming deadlines.';
 $string['noforumposts'] = 'You have no relevant forum posts.';
 $string['nograded'] = 'You have no recent feedback.';
@@ -323,6 +324,7 @@ $string['poweredbyrunby'] = 'Built with <a href="https://{$a->subdomain}.openlms
     a <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>-based product.<br>
     Copyright &#169; {$a->year} Open LMS, All Rights Reserved.';
 $string['previoussection'] = 'Previous section';
+$string['previoussubsection'] = 'Previous subsection';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'The course ID of the course that the user favorited';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'The user ID of the user that favorited the course';
 $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'The timestamp of when the user favorited the course';
