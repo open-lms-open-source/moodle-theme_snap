@@ -494,3 +494,4 @@ $string['toggleadmindrawer'] = 'Toggle admin drawer';
 $string['toggleblockdrawer'] = 'Toggle block drawer';
 $string['togglesnapfeedsdrawer'] = 'Toggle Snap feeds drawer';
 $string['addsubsection'] = 'Add a subsection';
+$string['tableofcontents'] = 'Table of contents';

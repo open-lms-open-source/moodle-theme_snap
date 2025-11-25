@@ -300,22 +300,6 @@ label[for="toc-search-input"]{
 }
 
 @include media-breakpoint-down(md) {
-
-    #toc-desktop-menu-heading {
-        display: none;
-    }
-
-    .drawer.drawer-left .drawerheader {
-      position: relative;
-      left: 67%;
-    }
-
-    #toc-search {
-        display: block;
-        width: 100%;
-        padding-left: 2em;
-        position: relative;
-    }
     // Small screen course tools and create new section links.
     #page-header .toc-footer a {
         display: block;
@@ -679,6 +663,57 @@ label[for="toc-search-input"]{
         background-color: $green;
         color: white;
       }
+    }
+  }
+}
+
+body.snap_drawer_open {
+  .modal-backdrop.show {
+    display: none;
+  }
+}
+
+.snap-drawer-mobile-header {
+  display: none;
+}
+
+@media screen and (max-width: 480px) {
+  div.drawer-left#theme_boost-drawers-courseindex {
+    position: fixed !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+  }
+
+  .drawerheader{
+    top: auto !important;
+
+    #courseindexdrawercontrolsmenubutton {
+      margin-top: -1rem;
+      margin-left: -2rem !important;
+    }
+
+    button.btn.drawertoggle  {
+      position: fixed !important;
+      top: 1.3rem;
+
+      .icon {
+        font-size: 20px !important;
+      }
+    }
+  }
+
+  #toc-desktop-menu-heading {
+    width: 85%;
+  }
+
+  .snap-drawer-mobile-header {
+    display: block;
+    padding: 1rem;
+    color: white;
+    h2 {
+      color: white;
     }
   }
 }

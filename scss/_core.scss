@@ -1625,9 +1625,11 @@ footer #moodle-footer
         margin-right: 365px !important;
       }
     }
-    // When Course Index is open.
-    &.show-drawer-left #snap-course-wrapper {
-      padding-left: 17em;
+    @include media-breakpoint-up(lg) {
+        // When Course Index is open.
+        &.show-drawer-left #snap-course-wrapper {
+          padding-left: 17em;
+        }
     }
 }
 
