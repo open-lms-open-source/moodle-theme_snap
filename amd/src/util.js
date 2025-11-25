@@ -191,13 +191,6 @@ define(['jquery', 'core/templates', 'core/str'], function($, templates, str) {
                 closeBlockButton.appendChild(buttonContent);
                 settingsBlock.firstElementChild.prepend(closeBlockButton);
             }
-        },
-
-        addTitleAttributeInCourseName: function () {
-            let courseTitle = document.querySelector('#page-header #page-mast .page-header-headings h1');
-            if (courseTitle) {
-                courseTitle.setAttribute("title", courseTitle.innerText);
-            }
         }
     };
 });
