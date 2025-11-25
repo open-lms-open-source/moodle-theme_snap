@@ -46,6 +46,47 @@ require_once("$CFG->libdir/resourcelib.php");
 class course_renderer extends \core_course_renderer {
 
     /**
+     * Output frontpage summary text and frontpage modules (stored as section 1 in site course)
+     *
+     * This may be disabled in settings
+     * Copied from course/renderer.php. Exactly the same just to change frontpage to use our site_render.
+     *
+     */
+    public function frontpage_section1() {
+        global $SITE, $USER;
+
+        $output = '';
+        $editingmode = $this->page->user_is_editing();
+
+        // Simulate editing On for rendering controlmenu.
+        $USER->editing = true;
+
+        if ($editingmode) {
+            // Make sure section with number 1 exists.
+            course_create_sections_if_missing($SITE, 1);
+        }
+
+        $modinfo = get_fast_modinfo($SITE);
+        $section = $modinfo->get_section_info(1);
+
+        if (($section && (!empty($modinfo->sections[1]) or !empty($section->summary)))) {
+
+            $format = course_get_format($SITE);
+
+            $frontpageclass = $format->get_output_classname('content\\frontpagesection');
+            $frontpagesection = new $frontpageclass($format, $section);
+
+            // Use Snap site render instead of core one.
+            $renderer = new \theme_snap\output\site_renderer($this->page, null);
+
+            $output .= $renderer->render($frontpagesection);
+        }
+        $USER->editing = $editingmode;
+
+        return $output;
+    }
+
+    /**
      * Renders HTML to show course module availability information
      *
      * @param cm_info $mod

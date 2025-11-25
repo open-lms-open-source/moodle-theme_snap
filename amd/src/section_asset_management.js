@@ -111,10 +111,13 @@ define(
             if (sections) {
                 sections.addEventListener('click', function(e) {
                     const actionLink = e.target.closest(selector);
+                    if (!actionLink) {
+                        return; // Do nothing.
+                    }
                     let actionName = actionLink.dataset.action;
 
                     // Check if we are clicking on action button, permalink & update had another observers.
-                    if (!actionLink || actionName === 'permalink' || actionName === 'update') {
+                    if (actionName === 'permalink' || actionName === 'update') {
                         return; // Do nothing.
                     }
                     e.preventDefault();

@@ -26,7 +26,6 @@ Feature: Open page (front page) module inline
   I need to view page modules inline at front page.
 
   Background:
-    Given I skip because "It's failing due to New Snap Frontpage - To be reviewed on INT-21296"
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
@@ -44,7 +43,7 @@ Feature: Open page (front page) module inline
     And I log in as "admin"
     And I am on site homepage
     And I should not see "page content1"
-    And I click on "li .contentafterlink .pagemod-readmore" "css_element"
+    And I click on "li.activity .pagemod-readmore" "css_element"
     And I should not see an error dialog
     And I wait until "#pagemod-content-container" "css_element" is visible
     # The above step basically waits for the page content to load up.
@@ -59,8 +58,8 @@ Feature: Open page (front page) module inline
     And the following config values are set as admin:
       | resourcedisplay | <Option> | theme_snap |
     And I am on site homepage
-    And I click on ".modtype_page .snap-edit-asset-more" "css_element"
-    And I click on ".modtype_page .snap-edit-asset" "css_element"
+    And I click on ".activity.modtype_page .moodle-actionmenu" "css_element"
+    And I click on ".activity.modtype_page .editing_update" "css_element"
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
     And I click on "User profile" "button"
@@ -77,7 +76,7 @@ Feature: Open page (front page) module inline
     And I log out
     And I log in as "student2"
     And I am on site homepage
-    And I click on "li .contentafterlink .pagemod-readmore" "css_element"
+    And I click on "li.activity .pagemod-readmore" "css_element"
     And I should not see an error dialog
     And I wait until "#pagemod-content-container" "css_element" is visible
     Then I should see "Page content"
