@@ -308,7 +308,7 @@ $mobile-sidebar-peek-width: 10px;
 
 .snap-sidebar-menu {
     &.show {
-        & ~ #page {
+        & ~ #page, ~ #page div.ai-drawer.show {
             margin-right: $sidebar-width;
             @media screen and (max-width: 992px) {
                 margin-right: $mobile-sidebar-width;
