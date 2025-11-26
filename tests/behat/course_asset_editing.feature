@@ -141,7 +141,6 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
 
   @javascript
   Scenario: In read mode, teacher can copy activity to sharing cart.
-    Given I skip because "Will be reviewed in INT-21471"
     Given the following "activities" exist:
       | activity | course | idnumber | name            | intro           | section | assignsubmission_onlinetext_enabled |
       | assign   | C1     | assign1  | Test assignment | Test assignment | 1       | 1|
