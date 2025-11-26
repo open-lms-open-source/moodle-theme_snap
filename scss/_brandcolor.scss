@@ -1013,8 +1013,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
-    &#page-course-view-topics,
-    &#page-course-view-weeks {
+    &.path-course-view.format-topics,
+    &.path-course-view.format-weeks {
         .sk-fading-circle {
             margin: 100px auto;
             width: 5em;
