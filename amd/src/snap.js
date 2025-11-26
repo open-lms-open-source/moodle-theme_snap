@@ -622,6 +622,12 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     $('#sticky-footer').toggleClass('snap-mod-data-sticky-footer');
                 }
 
+                // Early return for placeholder links.
+                if (!href || href.trim() === '#') {
+                    e.preventDefault();
+                    return;
+                }
+
                 $(href).attr('tabindex', '0');
                 $(href).toggleClass('state-visible').focus();
                 e.preventDefault();

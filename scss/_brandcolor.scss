@@ -23,6 +23,29 @@
 // Everything affected by brand-color choice to allow per category customisation.
 // Wrap in a .theme-snap class so that it can be replaced with .category-x later.
 
+@function _brightness($c) {
+  @return (red($c) * 0.299) + (green($c) * 0.587) + (blue($c) * 0.114);
+}
+
+@function fix-background($bg, $against, $min-diff: 60) {
+  $diff: abs(_brightness($bg) - _brightness($against));
+
+  // Good contrast → keep original
+  @if $diff >= $min-diff {
+    @return $bg;
+  }
+
+  // Bad contrast → auto-fix background
+  @if _brightness($against) > 128 {
+    // light foreground → darken background
+    @return darken($bg, 40%);
+  } @else {
+    // dark foreground → lighten background
+    @return lighten($bg, 40%);
+  }
+}
+
+
 $darker-grey-btn: #999;
 $dark-grey-btn: #adadad;
 $light-grey-btn: #ccc;
@@ -86,6 +109,20 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     #snap-header #nav-local-accessibility-popover-container {
         &.focused-icon {
             outline: $brand-primary solid 3px;
+            @if $nav-bg != rgba(255, 255, 255, .95) {
+                        outline: fix-background($nav-color, $brand-primary, 60) solid 3px;
+            }
+            height: 100%;
+            border-radius: .5rem;
+        }
+
+        #local-accessibility-buttoncontainer {
+            position: inherit;
+            button:focus {
+                border: none;
+                outline: none;
+                box-shadow: none;
+            }
         }
 
         div.local-accessibility-panel {
@@ -134,6 +171,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .dropdown-toggle {
         &:focus {
             outline: 3px solid $brand-primary;
+            @if $nav-bg != rgba(255, 255, 255, .95) {
+                        outline: 3px auto fix-background($nav-color, $brand-primary, 60);
+            }
         }
 
         &:active,
@@ -913,6 +953,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .snap-dropzone > .snap-dropzone-label {
         &:focus {
             outline: 3px auto $brand-primary;
+            @if $nav-bg != rgba(255, 255, 255, .95) {
+                        outline: 3px auto fix-background($nav-color, $brand-primary, 60);
+            }
         }
     }
 
