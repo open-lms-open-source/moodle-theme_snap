@@ -114,6 +114,15 @@ trait format_section_trait {
             $data->editing = false;
         }
 
+        if ($templatename === 'core_courseformat/local/content/frontpagesection' && isset($data->sections[0]->cmlist->cms)) {
+            // Add Snap additional HTML and data for each course module on Front page.
+            foreach ($data->sections[0]->cmlist->cms as &$cmsitem) {
+                $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
+            }
+            unset($cmsitem);
+            parent::render_from_template('theme_snap/courseformat_init', null);
+        }
+
         // Render the template as usual.
         return parent::render_from_template($templatename, $data);
     }

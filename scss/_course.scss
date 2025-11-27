@@ -1169,7 +1169,6 @@ body.format-singleactivity {
       margin: 0 auto;
       height: auto;
       font-family: $font-family-system;
-      background-color: #fff;
       border: 1px solid $gray-lighter;
       border-top-width: 0.3em;
       transition: all 0.4s ease-in-out;
@@ -1526,7 +1525,7 @@ body.snap-resource-card li.snap-resource:not(.label) {
     }
 }
 // Hide Core activity availability.
-.format-weeks, .format-topics {
+.format-weeks, .format-topics, .format-site {
     .section .activity-availability.availabilityinfo {
         display: none;
     }
@@ -3015,8 +3014,7 @@ form.togglecompletion {
 // -------------------------
 
 // All the editing options in one region.
-.moodle-actionmenu,
-.divider-content {
+#region-main .course-content li.activity {
     &:hover,
     &:focus {
         .icon {
@@ -3025,13 +3023,13 @@ form.togglecompletion {
         }
     }
 
-    .dropdown-menu {
+    .dropdown-menu.show {
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
         border: 0;
         padding: 10px 0;
         border-radius: 0.5rem;
         min-width: 16.1rem;
-        font-size: 0.8em;
+        font-size: 0.8rem;
         a {
             font-weight: inherit;
             overflow: hidden;
@@ -3045,15 +3043,22 @@ form.togglecompletion {
     }
 }
 
-.snap-asset-move-wrapper .snap-asset-move-label {
-    position: absolute;
-    left: 0;
-    text-align: center;
-    width: 8%;
-    cursor: pointer;
-    .snap-asset-move-input {
-        accent-color: $brand-primary;
+// Hide Elements on Snap Frontpage when editing mode is Off.
+.layout-frontpage:not(.editing) {
+  .activity-item {
+    cursor: unset;
+    .editing_move {
+      display: none;
     }
+  }
+  .course-content > .mb-2 {
+    display: none;
+  }
+}
+.layout-frontpage .course-content > .mb-2 {
+  i.fa-gear {
+    display: none;
+  }
 }
 .divider-content .dropdown-menu {
     min-width: unset;
