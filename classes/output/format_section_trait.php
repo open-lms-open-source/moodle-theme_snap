@@ -224,7 +224,9 @@ trait format_section_trait {
             }
 
             $templatedata = $widget->export_for_template($this);
-            if (!$templatedata->iscoursedisplaymultipage || !empty($CFG->theme_snap_internal_store_real_edit_mode)) {
+            if ((!$templatedata->iscoursedisplaymultipage
+                || !empty($CFG->theme_snap_internal_store_real_edit_mode))
+                && isset($templatedata->cmlist->cms)) {
 
                 $course = $this->page->course;
                 $modinfo = get_fast_modinfo($course);
