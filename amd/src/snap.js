@@ -1027,7 +1027,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
          * Gets the visible height and the top position of a given element.
          * @param {mixed} reference The element we take as reference for the visible height and top position.
          * @param {mixed} positionedElement The element we are repositioning.
-         * @returns {{visibleHeight: number, topPosition: number}}
          */
         function repositionHeightAndTopPosition(reference, positionedElement) {
             const elementRect = reference.getBoundingClientRect();
