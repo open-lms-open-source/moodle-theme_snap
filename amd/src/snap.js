@@ -547,9 +547,13 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
             // Listener for toc search.
             var dataList = $("#toc-searchables").find('li').clone(true);
             if ($('#theme_boost-drawers-courseindex').length) {
-                var headerDiv = $('<div class="snap-drawer-mobile-header"><h2>' +
-                    M.util.get_string('tableofcontents', 'theme_snap') + '</h2></div>');
-                $('#theme_boost-drawers-courseindex').prepend(headerDiv);
+                str.get_strings([
+                    {key: 'tableofcontents', component: 'theme_snap'}
+                ]).done(function(stringsjs) {
+                    var headerDiv = $('<div class="snap-drawer-mobile-header"><h2>' +
+                        stringsjs[0] + '</h2></div>');
+                    $('#theme_boost-drawers-courseindex').prepend(headerDiv);
+                });
             }
             $('#theme_boost-drawers-courseindex').on('keyup', '#toc-search-input', function() {
                 tocSearchCourse(dataList);
