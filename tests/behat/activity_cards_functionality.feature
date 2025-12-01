@@ -128,3 +128,26 @@ Feature: Check functionality in activity cards.
     And I press "Continue"
     And I am on "Course 1" course homepage
     Then I should not see "Feedback available"
+
+  @javascript
+  Scenario: Activity card dropdown subpanel opens on click
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | resourcedisplay | card | theme_snap |
+    And the following config values are set as admin:
+      | allowstealth | 1 |
+    And I log out
+    Given I log in as "teacher1"
+    And the following "activities" exist:
+      | activity | name            | course | idnumber  |
+      | url      | Test URL 1      | C1     | url1      |
+    And I am on "Course 1" course homepage
+    And "body.snap-resource-card" "css_element" should exist
+    And I click on "li.activity-wrapper.modtype_url [data-toggle='dropdown']" "css_element"
+    And "li.activity-wrapper.modtype_url .dropdown-menu.show" "css_element" should exist
+    And I click on "li.activity-wrapper.modtype_url [data-toggle='dropdown-subpanel']" "css_element"
+    And "li.activity-wrapper.modtype_url .dropdown-subpanel-content.show" "css_element" should be visible
+    And "li.activity-wrapper.modtype_url .dropdown-subpanel-content[data-open='true']" "css_element" should exist
+    And I should see "Show on course page"
+    And I should see "Hide on course page"
+    And I should see "Make available but don't show on course page"

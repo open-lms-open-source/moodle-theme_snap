@@ -96,18 +96,12 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
         };
 
         /**
-         * mobileFormChecker: Change save and cancel buttons from forms to the bottom on mobile mode.
-         * updateResourceCardClasses: Execute AFTER Moodle core updates dropdowns (core uses 400ms debounce).
+         * Change save and cancel buttons from forms to the bottom on mobile mode.
          */
-        var resizeTimeout = null;
         $(window).on('resize', function() {
             mobileFormChecker();
             updateGraderHeadersTop();
             updateSubmissionsHeaderTop();
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
-                updateResourceCardClasses();
-            }, 450);
         });
 
         var mobileFormChecker = function() {
@@ -875,69 +869,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     };
 
                     return ajax.call([request])[0];
-                });
-            });
-        };
-
-         /**
-          * Determines if an item is a Snap resource card.
-          * @param {string} item
-         */
-        var isSnapResourceCard = function(item) {
-            if (item.classList.contains('modtype_resource')) {
-                return !item.querySelector('.snap-resource-figure');
-
-            } else if (item.classList.contains('modtype_folder')) {
-                return !!item.querySelector('.activity-name-area');
-
-            } else if (
-                item.classList.contains('modtype_url') ||
-                item.classList.contains('modtype_imscp') ||
-                item.classList.contains('modtype_lightboxgallery') ||
-                item.classList.contains('modtype_scorm')
-            ) {
-                return true;
-            }
-
-            return false;
-        };
-
-        /**
-        * Fix dropdown positioning for resource cards.
-        * Must match module types in scss/_course.scss (search: Snap Course resources as Cards.).
-         */
-        var updateResourceCardClasses = function() {
-            const sections = document.querySelectorAll('ul.section');
-            if (!document.body.classList.contains('snap-resource-card') || !sections.length) {
-                return;
-            }
-            const BREAKPOINT_MIN = 600;
-            const BREAKPOINT_THREE_COLUMNS = 861;
-
-            sections.forEach(function(section) {
-                const containerWidth = section.offsetWidth;
-
-                if (containerWidth < BREAKPOINT_MIN) {
-                    return;
-                }
-                const columnsPerRow = containerWidth >= BREAKPOINT_THREE_COLUMNS ? 3 : 2;
-                const allItems = section.querySelectorAll('li.activity-wrapper');
-                let resourceCounter = 0;
-
-                allItems.forEach(function(item) {
-                    var isResource = isSnapResourceCard(item);
-
-                    if (isResource) {
-                        resourceCounter++;
-                        var isNotLastInRow = (resourceCounter - 1) % columnsPerRow !== (columnsPerRow - 1);
-                        var subpanels = item.querySelectorAll('.dropdown-subpanel');
-                        subpanels.forEach(function(subpanel) {
-                            subpanel.classList.remove('dropleft', 'dropright');
-                            subpanel.classList.add(isNotLastInRow ? 'dropright' : 'dropleft');
-                        });
-                    } else {
-                        resourceCounter = 0;
-                    }
                 });
             });
         };
@@ -1766,27 +1697,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     if (blockisediting === true) {
                         $(noneditingblocks[block]).removeClass('editing');
                     }
-                }
-
-                // Run resource card positioning on page loud
-                updateResourceCardClasses();
-
-                // Re-run when activities are moved.
-                const sections = document.querySelectorAll('ul.section');
-                if (sections.length > 0) {
-                    sections.forEach(section => {
-                        const sectionResizeObserver = new ResizeObserver(() => {
-                            updateResourceCardClasses();
-                        });
-                        sectionResizeObserver.observe(section);
-
-                        const sectionMutationObserver = new MutationObserver(() => {
-                            updateResourceCardClasses();
-                        });
-                        sectionMutationObserver.observe(section, {childList: true, subtree: true});
-
-                    });
-
                 }
             }
         };

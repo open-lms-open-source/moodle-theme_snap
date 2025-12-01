@@ -28,9 +28,10 @@ define(
         'theme_snap/util',
         'theme_snap/section_asset_management',
         'theme_snap/course_modules',
-        'core/str'
+        'core/str',
+        'theme_snap/activity_cards',
     ],
-    function($, util, sectionAssetManagement, courseModules, str) {
+    function($, util, sectionAssetManagement, courseModules, str, activityCards) {
 
     /**
      * Return class(has private and public methods).
@@ -346,6 +347,7 @@ define(
                     sectionParam != '#snap-add-new-section') {
                     sections.addClass('state-visible');
                 }
+                activityCards.init();
             }
         };
 

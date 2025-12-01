@@ -248,13 +248,13 @@ li.section:focus {
 }
 
 .course-content {
+    // Enable container queries for responsive cards based on container width
+    container-type: inline-size;
+    container-name: course-container;
     ul.weeks,
     ul.topics,
     ul.sections {
         list-style: none;
-        // Enable container queries for responsive cards based on container width
-        container-type: inline-size;
-        container-name: sections-container;
     }
 }
 
@@ -1255,7 +1255,7 @@ body.format-singleactivity {
       }
     }
 
-    @container sections-container (max-width: 380px) {
+    @container course-container (max-width: 380px) {
         li.activity .activity-item .activity-grid {
           grid-template-columns: min-content 1fr min-content min-content min-content;
           grid-template-rows: 1fr repeat(4, min-content);
@@ -1428,7 +1428,7 @@ body.snap-resource-list .section li.snap-resource {
 // -------------------------
 // Snap resources as cards.
 // -------------------------
-@container sections-container (max-width: 768px) {
+@container course-container (max-width: 768px) {
   .snap-buttons {
     > .allbuttons {
       flex: 0 0 100%;
@@ -1447,7 +1447,7 @@ body.snap-resource-card li.snap-resource:not(.label) {
     background-position: 50% 70%;
     background-size: 33px auto;
 
-    @container sections-container (max-width: 768px) {
+    @container course-container (max-width: 768px) {
         width: 100%;
     }
 
@@ -1719,7 +1719,7 @@ body.snap-resource-list {
   }
 }
 
-@container sections-container (min-width: 600px) {
+@container course-container (min-width: 600px) {
   body.snap-resource-card.format-weeks,
   body.snap-resource-card.format-topics {
     li.modtype_label {
@@ -1773,6 +1773,11 @@ body.snap-resource-list {
           }
         }
       }
+      .dropdown-subpanel .dropdown-menu {
+        right: auto;
+        left: auto;
+        top: 30px;
+      }
     }
     .snap-buttons {
       > .allbuttons {
@@ -1790,7 +1795,7 @@ body.snap-resource-list {
   }
 }
 
-@container sections-container (min-width: 861px) {
+@container course-container (min-width: 861px) {
   body.snap-resource-card.format-weeks,
   body.snap-resource-card.format-topics {
     @include snap-resource-card-selectors {
@@ -2071,7 +2076,7 @@ body.snap-resource-card {
                 height: 25px;
             }
 
-            @container sections-container (max-width: 600px) {
+            @container course-container (max-width: 600px) {
                 .hsuforum-recent {
                     .snap-media-object {
                       width: 100%;

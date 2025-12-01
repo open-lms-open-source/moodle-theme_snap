@@ -33,6 +33,7 @@ define(
         'core/fragment',
         'core_courseformat/local/content/actions',
         'core_courseformat/courseeditor',
+        'theme_snap/activity_cards',
     ],
     function(
         $,
@@ -46,6 +47,7 @@ define(
         fragment,
         Actions,
         CourseEditor,
+        activityCards,
     ) {
 
         var self = this;
@@ -248,6 +250,7 @@ define(
             // Leave all course sections as they were.
             sections.show();
             setNavigationObservers();
+            activityCards.init();
 
             // Set observer for mod chooser.
             $(id + ' .section-modchooser-link').click(function() {
