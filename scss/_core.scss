@@ -1746,8 +1746,8 @@ body#page-site-index #moodle-page #page-header {
     }
 }
 
-body.path-course-view, body#page-course-index-category {
-    #moodle-page #page-header {
+body.path-course, body#page-course-index-category {
+    #moodle-page #page-header.mast-image {
         min-height: 0;
         aspect-ratio: 6;
     }
@@ -1755,7 +1755,7 @@ body.path-course-view, body#page-course-index-category {
         margin-top: -.75rem;
     }
 }
-body.path-course-view #moodle-page #page-header {
+body.path-course #moodle-page #page-header {
   aspect-ratio: unset;
 }
 
@@ -1780,16 +1780,23 @@ body.path-course-view #moodle-page #page-header {
     }
 }
 
-.breadcrumb {
-    background-color: transparent;
-    padding: 0;
-    font-size: $font-size-sm;
-    display: block;
-    li.breadcrumb-item {
-        display: inline-block;
-    }
-}
+.theme-snap {
+  .breadcrumb {
+      background-color: transparent;
+      padding: 0;
+      font-size: $font-size-sm;
+      display: block;
+      li.breadcrumb-item {
+          display: inline-block;
+          a {
+              @include media-breakpoint-down(sm) {
+                  white-space: unset;
+              }
 
+          }
+      }
+  }
+}
 // Hide the "Site pages" breadcrumb item from My courses view.
 #page-my-index.page-mycourses .breadcrumb .breadcrumb-item:nth-child(2) {
   display: none;
@@ -4822,7 +4829,8 @@ button.snap-icon-toggle {
 }
 
 // Cover image control.
-#page-header.snap-category-header.mast-image {
+#page-header.snap-category-header.mast-image,
+.pagelayout-course #page-header {
     #page-mast {
         display: flex;
     }
@@ -4832,9 +4840,9 @@ button.snap-icon-toggle {
 }
 
 #snap-coverimagecontrol {
-    float: right;
     margin: auto 0 auto auto;
     opacity: 0;
+    flex-shrink: 0;
     @include alakazam;
 
     .btn {
@@ -4891,7 +4899,7 @@ label.state-visible[for="snap-coverfiles"] {
     }
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(md) {
     label.state-visible[for="snap-coverfiles"] {
         span {
             display: none;
