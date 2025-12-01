@@ -2645,6 +2645,32 @@ body.snap-resource-card {
             display: block;
         }
     }
+
+    .course-section .d-flex.align-items-start {
+      align-items: center !important;
+    }
+
+    .course-section-header.d-flex {
+      align-items: center !important;
+    }
+
+    .course-section-header .flex-fill.d-flex {
+      margin-top: 0.7em !important;
+    }
+
+    li.section,
+    li.activity.subsection {
+        li.activity.subtile {
+            .availabilityinfo,
+            .contentafterlink {
+              margin: 0;
+              font-size: initial;
+            }
+        }
+        .sectionbutton:focus,  {
+          outline: none;
+        }
+    }
 }
 
 // --------------------------------------------------------------------

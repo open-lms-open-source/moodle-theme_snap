@@ -1659,3 +1659,37 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 :root {
     --brand-primary: #{$brand-primary};
 }
+// -------------------------
+// Tiles course format.
+// -------------------------
+body#page-course-view-tiles.theme-snap {
+    #course-addsection {
+        a.add-section {
+          color: $brand-primary;
+        }
+
+        .btn.add-section:hover,
+        .btn.add-section:focus,
+        .btn.add-section:focus-visible {
+          border: solid $brand-primary;
+          outline: none;
+        }
+
+        .btn.add-section{
+          border: 2px dashed $brand-primary;
+        }
+    }
+
+    li.section,
+    li.activity.subsection {
+        .sectionname {
+            color: $brand-primary;
+        }
+        .btn.btn-icon.icons-collapse-expand:hover {
+          outline: 2px solid $brand-primary;
+        }
+        .btn.btn-icon.icons-collapse-expand {
+          color: $brand-primary;
+        }
+    }
+}
