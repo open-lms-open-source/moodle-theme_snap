@@ -446,6 +446,15 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: $brand-primary;
     }
 
+    .courseindex-section.snap-visible-section > .courseindex-item {
+      background-color: $brand-primary;
+      a.courseindex-chevron,
+      a.courseindex-link,
+      span {
+        color: white!important;
+      }
+    }
+
     &#page-site-index #page-header,
     &#page-login-index #page,
     .news-article-image,
@@ -520,38 +529,12 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: $brand-primary;
     }
 
-    .courseindex-section.current > .pageitem {
-      a.courseindex-chevron i.icon {
-        color: $brand-primary;
-      }
-      .courseindex-link {
-        background-color: $brand-primary;
-        padding: 2px 5.5em 2px 5px;
-      }
-    }
-
-    .courseindex-section:not(.current) .pageitem {
-      a.courseindex-chevron i.icon {
-        color: $brand-primary;
-      }
-      .courseindex-link {
-        background-color: $brand-primary;
-      }
-    }
-
-
     .courseindex .courseindex-section.current .current-badge.bg-primary {
       background-color: color-mix(in srgb, $brand-primary, white 25%) !important;
     }
 
     .courseindex .courseindex-section.current {
       border-left: solid 3px $brand-primary;
-    }
-
-    .courseindex-section-title.pageitem:hover {
-        .courseindex-link {
-          background-color: color-mix(in srgb, $brand-primary, white 25%) !important;
-        }
     }
 
     // workaround for #notices with buttons outside the div#notice
@@ -1018,7 +1001,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     &.path-course-view.format-topics,
     &.path-course-view.format-weeks {
         .sk-fading-circle {
-            margin: 100px auto;
+            margin: 300px auto;
             width: 5em;
             height: 5em;
             position: relative;
@@ -1185,12 +1168,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             40% {
                 opacity: 1;
             }
-        }
-
-        .courseindex-section.current > .pageitem {
-          .courseindex-link {
-            padding: 2px 6.2em 2px 5px
-          }
         }
     }
 

@@ -337,7 +337,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
         };
 
         /**
-         * Listeners for URL changes / popstates.
+         * Listeners for URL changes.
          * @param {CourseLibAmd} courseLib
          */
         var ChangeSectionListeners = function(courseLib) {
@@ -345,17 +345,29 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
             var lastUrl = location.href;
             $(window).on('popstate hashchange', function(e) {
                 var currentUrl = location.href;
+                var currentHash = location.hash;
                 log.info('URL or hash changed');
                 if (currentUrl !== lastUrl) {
                     $('#page, #moodle-footer, #logo, .skiplinks').css('display', '');
                     if (onCoursePage()) {
                         log.info('show section', e.target);
                         courseLib.showSection();
+
+                        // Update editing Toggle with new URL.
+                        var $form = $('.editmode-switch-form');
+                        var urlObj = new URL(currentUrl);
+                        if (currentHash) {
+                            // In order to make switch toggle reload the page,
+                            // we add timestamp (ts) so it detects URL has changed.
+                            urlObj.searchParams.set('ts', Date.now());
+                        }
+                        var urlForToggle = urlObj.toString();
+                        $form.find('.custom-control-input').attr('data-pageurl', urlForToggle);
+                        $form.find('input[name="pageurl"]').val(urlForToggle);
                     }
                 }
                 lastUrl = currentUrl;
             });
-
             // Listeners for navigation links.
             var selectors = [
                 '.chapters a',
@@ -368,7 +380,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 var href = this.getAttribute('href');
                 if (window.history && window.history.pushState) {
                     history.pushState(null, null, href);
-                    // Force hashchange fix for FF & IE9.
                     var link = $(this);
                     var section = link.attr('section-number');
                     // For TOC, section number resides on parent div.
@@ -769,44 +780,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     }
                 }
             });
-        };
-
-        /**
-         * Edit url for edit toggle in course page.
-         * @param {string} courseFormat
-         */
-        var editToggleURL = function(courseFormat) {
-
-            // We use this MutationObserver because modifying the URL with a hash for navigation does not trigger a page
-            // reload. Specifically, the `window.location` statement in `lib/amd/src/edit_switch.js` does not cause a
-            // reload. To work around this, we need to manually reload the page, but only after confirming that the
-            // edit mode was successfully enabled. To do this, we observe the `aria-checked` attribute, which is added
-            // by the `toggleEditSwitch` function in `lib/amd/src/edit_switch.js` when the edit mode was changed.
-            const editModeToggleObserver = function(mutationsList, observer) {
-                for (const mutation of mutationsList) {
-                    if (mutation.type === 'attributes') {
-                        const editToggle = document.querySelector('.editmode-switch-form .custom-control-input');
-                        if (editToggle.hasAttribute('aria-checked')) {
-                            observer.disconnect();
-                            location.reload();
-                        }
-                    }
-                }
-            };
-            var courseEditSwitch = document.querySelector(
-                '#page-course-view-' + courseFormat + ' .editmode-switch-form .custom-control-input');
-            if (courseEditSwitch) {
-                var urlHash = window.location.hash;
-                var originalUrl = courseEditSwitch.getAttribute('data-pageurl');
-                var modifiedURL = originalUrl+urlHash;
-                courseEditSwitch.setAttribute('data-pageurl', modifiedURL);
-                window.onhashchange = function() {
-                    urlHash = window.location.hash;
-                    courseEditSwitch.setAttribute('data-pageurl', originalUrl+urlHash);
-                };
-                const observer = new MutationObserver(editModeToggleObserver);
-                observer.observe(document.body, {attributes: true});
-            }
         };
 
         /**
@@ -1568,10 +1541,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                             userCompetency.parent().addClass('ms-4');
                         }
                     }
-
-                    // To update the edit toggle URL in course page.
-                    editToggleURL('topics');
-                    editToggleURL('weeks');
 
                     // Modify Hide / Show / Delete actions for blocks in coursetools section to be redirected to the
                     // course dashboard instead of course main page.

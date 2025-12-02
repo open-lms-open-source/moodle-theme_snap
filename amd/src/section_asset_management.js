@@ -85,7 +85,9 @@ define(
                     '.section_footer a.previous_section',
                     '#courseindex-content .courseindex-section-title a.courseindex-link' // For course index links.
                 ];
-                $(selectors.join(', ')).click(function(e) {
+                var $elements = $(selectors.join(', '));
+                $elements.off('click');
+                $elements.click(function(e) {
                     var link = $(this);
                     var section = link.attr('section-number');
                     // For TOC, section number resides on parent div.
@@ -102,6 +104,7 @@ define(
                         getSection(section, 0);
                     }
                 });
+                setTOCVisibleSection();
             }
         };
         const setCmActionsObservers = function() {
@@ -178,6 +181,27 @@ define(
             $(targmod).attr('tabindex', '-1').focus();
         };
 
+
+        /**
+         * Mark the section shown to user with a class in the TOC.
+         */
+        var setTOCVisibleSection = function() {
+            var sectionIdSel = '.section.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible';
+            if (!sectionIdSel) {
+                return;
+            }
+            var currentSectionId = $(sectionIdSel).attr('data-id');
+
+            // Remove snap-visible-section class and reset aria-current to false for all sections.
+            $('#courseindex .courseindex-section').removeClass('snap-visible-section');
+            $('#courseindex .courseindex-section a.courseindex-link').attr('aria-current', 'false');
+
+            // Find the correct Section link and update class and aria-current.
+            var visibleSection = $(`#courseindex .courseindex-section[data-id="${currentSectionId}"]`);
+            visibleSection.addClass('snap-visible-section');
+            visibleSection.find('a.courseindex-link').attr('aria-current', 'true');
+        };
+
         /**
          * Gets a specific section for the current course and if an activity module is passed sets focus on it.
          * @param {string} section
@@ -209,6 +233,75 @@ define(
             } else {
                 $(window).trigger('hashchange');
             }
+            updateBreadcrumb(section);
+        };
+
+        /**
+         * Update site breadcrumb when navigating through sections.
+         * @param {string} sectionId the ID of the current section to show.
+         */
+        var updateBreadcrumb = function(sectionId) {
+            // Use reactive Instances for getting course State.
+            const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
+            const state = reactiveCourseEditor.state;
+
+            if (!state || !state.section) {
+                return;
+            }
+
+            // Get Visible section from State.
+            const targetSection = Array.from(state.section.values()).find(sec => sec.section == sectionId);
+            if (!targetSection) {
+                return;
+            }
+
+            let breadcrumbSections = [];
+
+            // Manage subsections.
+            if (targetSection.component === 'mod_subsection' && targetSection.parentsectionid) {
+                // Let's search for parent of subsection.
+                const parentSection = state.section.find(sec => sec.id == targetSection.parentsectionid);
+                if (parentSection) {
+                    // Add parent section to Breadcrumb.
+                    breadcrumbSections.push({
+                        id: parentSection.id,
+                        name: parentSection.title,
+                        url: parentSection.sectionurl,
+                        isCurrent: false
+                    });
+                }
+            }
+
+            // Add current section to Breadcrumb.
+            breadcrumbSections.push({
+                id: targetSection.id,
+                name: targetSection.title,
+                url: targetSection.sectionurl,
+                isCurrent: true
+            });
+
+            // Generate new HTML for section nodes.
+            let html = '';
+            breadcrumbSections.forEach(step => {
+                const ariaCurrent = step.isCurrent ? 'aria-current="page"' : '';
+                html += `<li class="breadcrumb-item">
+                            <a href="${step.url}" ${ariaCurrent} data-section-name-for="${step.id}" >${step.name}</a>
+                         </li>`;
+            });
+
+            // Inject the Breadcrumb Nodes.
+            const breadcrumbList = document.querySelector('ol.breadcrumb');
+
+            // Remove old section/s from Breadcrumb.
+            const oldDynamicItems = breadcrumbList.querySelectorAll('a[data-section-name-for]');
+            oldDynamicItems.forEach(link => {
+                const listItem = link.closest('li.breadcrumb-item');
+                if (listItem) {
+                    listItem.remove();
+                }
+            });
+            // Update or insert new sections.
+            breadcrumbList.insertAdjacentHTML('beforeend', html);
         };
 
         /**
@@ -354,6 +447,13 @@ define(
          */
         setNavigationObservers: function() {
             setNavigationObservers();
+        },
+
+        /**
+         * Exposed function so Section in TOC is highlighted.
+         */
+        setTOCVisibleSection: function() {
+            setTOCVisibleSection();
         }
     };
 

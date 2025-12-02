@@ -262,6 +262,7 @@ define(
             $('li.snap-activity:visible, li.snap-resource:visible').on('click', 'a.mod-link', function() {
                 sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
             });
+            sectionAssetManagement.setTOCVisibleSection();
         };
 
         /**
