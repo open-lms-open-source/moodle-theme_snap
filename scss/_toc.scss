@@ -425,6 +425,12 @@ label[for="toc-search-input"]{
       }
     }
 
+    & .courseindex-item.restrictions {
+      & .courseindex-link:has(+ .current-badge + .courseindex-locked), & .courseindex-link:has(+ .courseindex-locked) {
+        margin-right: 2em;
+      }
+    }
+
     &.current {
         & > .courseindex-item > .courseindex-link:has(+ .current-badge) {
           display: block;
@@ -443,6 +449,14 @@ label[for="toc-search-input"]{
           pointer-events: none;
           margin: 0.55em 0;
         }
+
+        & > .courseindex-item.restrictions .current-badge:has(+ .courseindex-locked) {
+          right: 2.8rem;
+        }
+    }
+    .courseindex-locked {
+      position: absolute;
+      right: 0.25rem;
     }
 }
 
@@ -478,6 +492,7 @@ label[for="toc-search-input"]{
         vertical-align: text-bottom;
         padding: unset;
         margin: unset;
+        width: 50%;
 
         .lightboxgallery.icon {
           filter: $lightbox-filter;
