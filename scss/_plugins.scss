@@ -1829,3 +1829,23 @@ body#page-admin-plugins {
         }
     }
 }
+// Turnitin course end date modal
+#page-admin-mod-turnitintooltwo-settings_extras {
+    .edit_end_date_form {
+        #cboxWrapper,
+        #cboxContent,
+        #cboxLoadedContent {
+            min-height: 25em !important;
+        }
+        @media (max-width: 576px) {
+            #cboxLoadedContent .mform .fitem .felement {
+                width: 100% !important;
+            }
+            #cboxWrapper,
+            #cboxContent,
+            #cboxLoadedContent {
+                min-height: 30em !important;
+            }
+        }
+    }
+}
