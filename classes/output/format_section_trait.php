@@ -641,25 +641,16 @@ trait format_section_trait {
             $sectiontitle = get_string('introduction', 'theme_snap');
         }
 
-        // Untitled topic title.
-        $testemptytitle = get_string('section').' '.$section->section;
         $sectionid = "sectionid-{$section->id}-title";
-        if ($sectiontitle == $testemptytitle && has_capability('moodle/course:update', $context)) {
-            $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-            $o .= "<h2 id='{$sectionid}' class='sectionname' data-id='{$section->id}'>";
-            $o .= "<a href='$url' title='".s(get_string('editcoursetopic', 'theme_snap'))."'>";
-            $o .= get_string('defaultsectiontitle', 'theme_snap')."</a></h2>";
-        } else {
-            $htmlheading = html_writer::tag(
-                'h' . 2,
-                $sectiontitle,
-                array(
-                    'id' => $sectionid,
-                    'class' => 'sectionname',
-                    'data-id' => $section->id
-                ));
-            $o .= "<div>" . $htmlheading . "</div>";
-        }
+        $htmlheading = html_writer::tag(
+            'h' . 2,
+            $sectiontitle,
+            array(
+                'id' => $sectionid,
+                'class' => 'sectionname',
+                'data-id' => $section->id
+            ));
+        $o .= "<div>" . $htmlheading . "</div>";
 
         // Section drop zone.
         $caneditcourse = has_capability('moodle/course:update', $context);

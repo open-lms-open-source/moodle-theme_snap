@@ -51,7 +51,7 @@ Feature: When the moodle theme is set to Snap, teachers can duplicate sections i
     Scenario: Duplicate a named section
         Given I am on the course main page for "C1"
         And I follow "Section 1"
-        And I click on "[title='Edit section']" "css_element"
+        And I click on "Edit section" "link"
         And I set the field "Section name" to "New name"
         And I press "Save changes"
         And I follow "New name"

@@ -111,7 +111,6 @@ $string['deadlinestoggledesc'] = 'Show users any upcoming activity deadlines fro
 $string['defaultsummary'] = 'Use this area to describe what this topic is about - with text, images, audio & video.';
 $string['defaultintrosummary'] = 'Welcome to your new course {$a}.
 <br>Start by describing what your course is about using text, images, audio & video.';
-$string['defaultsectiontitle'] = 'Untitled Section';
 $string['debugerrors'] = 'Debug Errors';
 $string['deleteassetconfirm'] = 'Delete {$a}';
 $string['deletingasset'] = 'Deleting {$a}';

@@ -48,7 +48,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I switch edit mode in Snap
     And I am on the course main page for "C1"
     And I follow "Section 1"
-    And I follow "Untitled Section"
+    And I click on "Edit section" "link"
     And I set the section name to "My & < > Section"
     And I press "Save changes"
     And I follow "My & < > Section"
@@ -90,7 +90,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I am on the course main page for "C1"
     And I switch edit mode in Snap
     And I follow "Section 1"
-    And I follow "Untitled Section"
+    And I click on "Edit section" "link"
     And I set the section name to "My & < > Section"
     And I press "Save changes"
     And I follow "My & < > Section"
