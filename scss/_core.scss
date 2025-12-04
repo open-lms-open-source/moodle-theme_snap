@@ -6778,6 +6778,9 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
 .courseindex .courseindex-section .courseindex-sectioncontent .courseindex-item {
     padding-left: 0.5rem;
     padding-right: 0;
+    &:has(> .delegated-section) {
+      border-right-width: 0;
+    }
 }
 .courseindex .courseindex-section.delegated-section {
     width: 100%;
