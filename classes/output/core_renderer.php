@@ -954,7 +954,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
             $heading = format_string($COURSE->fullname);
             $heading = \core\output\html_writer::link($courseurl, $heading);
-            if (!$this->snap_page_is_activity_view() && !$this->snap_page_is_edit_section() && !$this->snap_page_is_activity_mod() && !$this->snap_page_is_user_view()) {
+            if (!$this->snap_page_is_activity_view() && !$this->snap_page_is_activity_mod() && !$this->snap_page_is_user_view()) {
                 $heading = $this->context_header(['heading' => $heading]);
             } else {
                 $heading = \core\output\html_writer::tag($tag, $heading);

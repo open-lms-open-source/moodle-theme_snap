@@ -455,16 +455,15 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         background-color: $brand-primary;
     }
 
-    .mast-image {
-        .breadcrumb {
-            li,
-            li:before,
-            > li + li:before,
-            a {
-                color: $brand-primary;
-            }
+    .breadcrumb {
+        li,
+        li:before,
+        > li + li:before,
+        a {
+            color: $brand-primary;
         }
     }
+
 
     #snap-pm-mobilemenu {
         a {

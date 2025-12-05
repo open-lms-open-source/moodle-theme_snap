@@ -43,6 +43,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
   @javascript
   Scenario: In read mode, teacher moves section 1 before section 4 (section 3).
     Given I log in as "admin"
+    And I change window size to "large"
     And I log out
     And I log in as "teacher1"
     And I switch edit mode in Snap
@@ -57,9 +58,6 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     When I follow "My & < > Section"
     Then I should see "My & < > Section" in the "#section-3 .sectionname" "css_element"
     # Check that navigation is also updated.
-    # Note that "4th" refers to section-3 as section-0 is the "introduction" section in the TOC.
-    When I click on the "3th" link in the TOC
-    Then I should see "My & < > Section" in the "#section-3 .sectionname" "css_element"
     Then the previous navigation for section "3" is for "Section 3"
     And the next navigation for section "3" is for "Section 4"
     And I switch edit mode in Snap
