@@ -1628,15 +1628,15 @@ footer #moodle-footer
     @include media-breakpoint-up(lg) {
         // When Course Index is open.
         &.show-drawer-left #snap-course-wrapper {
-          padding-left: 17em;
+          padding-left: 19.5em;
         }
     }
 }
 
 @media (min-width: 1346px) {
   .drawer.drawer-left {
-    width: 25% !important;
-    max-width: 25% !important;
+    width: 30% !important;
+    max-width: 30% !important;
   }
 }
 
@@ -6777,6 +6777,10 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
 }
 .courseindex .courseindex-section .courseindex-sectioncontent .courseindex-item {
     padding-left: 0.5rem;
+    padding-right: 0;
+    &:has(> .delegated-section) {
+      border-right-width: 0;
+    }
 }
 .courseindex .courseindex-section.delegated-section {
     width: 100%;
