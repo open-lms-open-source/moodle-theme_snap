@@ -287,8 +287,13 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                                     return el !== null;
                                 });
                             // Dynamically get the last link from the custom menu header
-                            let beforeDrawers = (document.querySelectorAll('#snap-custom-menu-header div > ul > li > a') ||
-                                document.querySelectorAll('#snap-custom-menu-header > nav > div > ul > li > a'));
+                            let beforeDrawers =
+                              document.querySelectorAll(
+                                "#snap-custom-menu-header div > ul > li:not(.d-none) > a"
+                              ) ||
+                              document.querySelectorAll(
+                                "#snap-custom-menu-header > nav > ul > li:not(.d-none) > a"
+                              );
                             beforeDrawers = beforeDrawers.length > 0 ? beforeDrawers[beforeDrawers.length - 1] : null;
                             // If custom menu header doesn't exist, get the last focusable item in snap-header
                             if (!beforeDrawers) {
