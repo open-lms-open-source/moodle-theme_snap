@@ -146,6 +146,12 @@ define(
                     // Handle the action.
                     if (typeof actions._dispatchClick === 'function') {
                         actions._dispatchClick(e);
+                        if (actionName === "cmDelete") {
+                            // If deleting an activity, update toc Searchable for Snap.
+                            // We should use reactive components instead.
+                            let cmid = actionLink.dataset.id;
+                            $('#toc-searchables li[data-id="' + cmid + '"]').remove();
+                        }
                     }
                 }, {capture: true});
             }
