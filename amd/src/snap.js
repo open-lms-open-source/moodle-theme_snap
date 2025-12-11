@@ -599,7 +599,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
             // Admin drawer: Onclick for toggle of state-visible of admin block and mobile menu.
             $(document).on(
                 "click",
-                "#admin-menu-trigger, [id^=\"message-drawer-toggle-\"], #close-block-settings, #ai-drawer-close",
+                "#admin-menu-trigger, [id^=\"message-drawer-toggle-\"], #close-block-settings",
                 function(e) {
                 var href = this.getAttribute('href');
                 // Make this only happen for settings button.

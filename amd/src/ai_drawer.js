@@ -142,18 +142,20 @@ const setupClickHandlers = () => {
 
     POPOVERS_AND_DRAWERS.CLICKABLE_SELECTORS.forEach(selector => {
         const element = document.querySelector(selector);
-        // Handle mouse clicks
-        element.addEventListener('click', () => {
-            checkAndCloseAIDrawer();
-        }, true);
-
-        // Handle keyboard events (Enter key)
-        element.addEventListener('keydown', (e) => {
-            // Check if the Enter key was pressed
-            if (e.key === 'Enter' || e.keyCode === 13) {
+        if (element) {
+            // Handle mouse clicks
+            element.addEventListener('click', () => {
                 checkAndCloseAIDrawer();
-            }
-        }, true);
+            }, true);
+
+            // Handle keyboard events (Enter key)
+            element.addEventListener('keydown', (e) => {
+                // Check if the Enter key was pressed
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    checkAndCloseAIDrawer();
+                }
+            }, true);
+        }
     });
 
     /**
