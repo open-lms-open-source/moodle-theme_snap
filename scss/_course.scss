@@ -485,6 +485,13 @@ li.section:focus {
   overflow: hidden;
 }
 
+body.snap-resource-card.format-weeks,
+body.snap-resource-card.format-topics {
+    .course-content ul.section {
+        min-height: 8em;
+    }
+}
+
 #snap-modchooser-modal {
 
     .tab-content > .active {

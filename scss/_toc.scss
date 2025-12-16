@@ -33,6 +33,7 @@ div[data-flexitour="step-background"] {
 #snap-course-wrapper {
     margin: 0 4%;
     position: relative;
+    min-height: calc(100vh - 25rem);
 }
 
 #snap-course-wrapper, div[data-flexitour="step-background"] {

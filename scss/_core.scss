@@ -6865,6 +6865,9 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
         position: relative;
         overflow: auto;
       }
+      .drawercontent {
+          height: calc(100% - 10px);
+      }
     }
 }
 
