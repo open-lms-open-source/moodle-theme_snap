@@ -25,8 +25,8 @@
  * JS code to assign attributes and expected behavior for elements in the Dom regarding accessibility.
  */
 define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/bootstrap/tools/sanitizer', 'theme_boost/popover',
-    'core/moremenu'],
-    function($, str, Event, FormEvents, { DefaultWhitelist }, Popover, coreMoreMenu) {
+    'core/moremenu', 'core/log'],
+    function($, str, Event, FormEvents, { DefaultWhitelist }, Popover, coreMoreMenu, log) {
         return {
             snapAxInit: function(localJouleGrader, allyReport, blockReports, localCatalogue) {
 
@@ -502,9 +502,15 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     const snapCustomheader = document.getElementById('snap-custom-menu-header');
                     const menu = document.querySelector('.snap-navbar-content');
                     if (menu && snapCustomheader) {
-                        coreMoreMenu(menu);
-                        if (snapCustomheader.classList.contains('invisible')) {
-                            snapCustomheader.classList.remove('invisible');
+                        try {
+                            coreMoreMenu(menu);
+                        } catch (e) {
+                            menu.classList.add('flex-nowrap');
+                            log.error(e);
+                        } finally {
+                            if (snapCustomheader.classList.contains('invisible')) {
+                                snapCustomheader.classList.remove('invisible');
+                            }
                         }
                     }
                 });
