@@ -145,7 +145,8 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
         var aspectRatioOptions = function() {
             cropperRatio = 0;
             if ($('#page-course-view-topics, #page-course-view-weeks, #page-course-index-category,' +
-                '#page-course-view-tiles').length) {
+                '#page-course-view-tiles, #page-course-view-section-topics, #page-course-view-section-weeks,' +
+                '#page-course-view-section-tiles').length) {
                 cropperRatio = 6;
             } else if ($('#page-site-index').length) {
                 cropperRatio = 3;
