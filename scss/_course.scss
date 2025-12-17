@@ -473,6 +473,13 @@ li.section:focus {
     }
 }
 
+// Hide the Move Left & Move Right Buttons from Snap.
+// Since it does not have any effect on snap activities.
+.theme-snap .cm_action_menu.actions .editing_moveright,
+.theme-snap .cm_action_menu.actions .editing_moveleft {
+    display: none;
+}
+
 .nav_title {
   white-space: nowrap;
   overflow: hidden;
