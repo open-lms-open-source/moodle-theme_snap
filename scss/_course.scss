@@ -1253,6 +1253,24 @@ body.format-singleactivity {
           font-size: 0.6em;
         }
       }
+
+        .inplaceeditable.inplaceeditable-text {
+            display: inline-flex;
+            align-items: center;
+            max-width: 100%;
+
+            .quickediticon{
+                width: 3rem;
+            }
+        }
+
+        .badge {
+            padding: 0.25em 0.65em;
+
+            i.icon {
+                color: white !important;
+            }
+        }
     }
 
     @container course-container (max-width: 380px) {
@@ -1764,7 +1782,7 @@ body.snap-resource-list {
         }
 
         .activity-altcontent {
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
 
         .activity-completion .activity-information {
@@ -1791,6 +1809,10 @@ body.snap-resource-list {
   body.snap-resource-card.editing.format-topics {
     @include snap-resource-card-selectors {
       height: 16em;
+
+      .activity-badges .badge {
+        width: 100%;
+      }
     }
   }
 }
@@ -1882,7 +1904,6 @@ body.snap-resource-card {
           margin-right: 0.5em;
           max-width: 45px;
           max-height: 45px;
-          min-height: 45px;
           min-width: 45px;
 
           .activityicon {
@@ -1898,6 +1919,8 @@ body.snap-resource-card {
           display: flex;
           align-items: baseline;
           cursor: pointer;
+          min-width: 0;
+          flex-shrink: 1;
 
           span.instancename {
             max-height: 2.5em;
