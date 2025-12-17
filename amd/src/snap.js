@@ -926,48 +926,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
         }
 
         /**
-         * Gets the visible height and the top position of a given element.
-         * @param {mixed} reference The element we take as reference for the visible height and top position.
-         * @param {mixed} positionedElement The element we are repositioning.
-         */
-        function repositionHeightAndTopPosition(reference, positionedElement) {
-            const elementRect = reference.getBoundingClientRect();
-            const visibleHeight = window.innerHeight;
-            const topPosition = Math.max(0, elementRect.bottom);
-            positionedElement.style.top = `${topPosition}px`;
-            positionedElement.style.height = `${visibleHeight - topPosition}px`;
-        }
-
-        /**
-         * Setup the AI summary position dynamically if needed.
-         */
-        function setupAISummary() {
-            // Don't spend time if we don't need to set up anything at all.
-            const AISummaryButton = document.querySelector('button.btn[aria-controls="ai-drawer"]');
-            const header = document.querySelector('header');
-            if (AISummaryButton && header) {
-                // Set the position of the AISummary on page load.
-                const AISummary = document.querySelector('div.ai-drawer');
-                if (AISummary) {
-                    repositionHeightAndTopPosition(header, AISummary);
-                }
-                // Set the position of the AISummary if the user scrolls.
-                window.addEventListener('scroll', function() {
-                    const isNavUnpinned = document.querySelector('#mr-nav.headroom--unpinned');
-                    const AISummary = document.querySelector('div.ai-drawer');
-                    if (AISummary) {
-                        if (isNavUnpinned) {
-                            AISummary.style.top = '0px';
-                            AISummary.style.height = '100vh';
-                        } else {
-                            repositionHeightAndTopPosition(header, AISummary);
-                        }
-                    }
-                });
-            }
-        }
-
-        /**
          * AMD return object.
          */
         return {
@@ -1462,7 +1420,13 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         $('#mr-nav').removeClass('headroom--pinned').addClass('headroom--unpinned');
                     }
 
-                    setupAISummary();
+                    // The ai_drawer module is necessary if and only if the AI Summary button is present on the page.
+                    const AISummaryButton = document.querySelector('button.btn[aria-controls="ai-drawer"]');
+                    if (AISummaryButton) {
+                        require(['theme_snap/ai_drawer'], function(aiDrawer) {
+                            aiDrawer.init();
+                        });
+                    }
 
                     // Re position submit buttons for forms when using mobile mode at the bottom of the form.
                     var savebuttonsformrequired = $('div[role=main] .mform div.snap-form-required fieldset > div.fitem');
