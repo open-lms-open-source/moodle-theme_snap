@@ -130,7 +130,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I should see "Cancel"
     And I follow "Cancel"
     # Cancel button should return the user to the main section of the course.
-    And I should see "Introduction"
+    And I should see "General"
     And I click on ".courseindex .courseindex-section:nth-of-type(5)" "css_element"
     # Make Section 4 the current section.
     And I click on "#extra-actions-dropdown-4" "css_element"
