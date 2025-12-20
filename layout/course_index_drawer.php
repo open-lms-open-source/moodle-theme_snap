@@ -27,7 +27,7 @@ use theme_snap\renderables\course_toc_module;
 
 defined('MOODLE_INTERNAL') || die();
 
-global $OUTPUT, $PAGE, $COURSE, $USER;
+global $OUTPUT, $PAGE, $COURSE, $USER, $DB;
 
 if (isloggedin()) {
     $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
@@ -42,8 +42,23 @@ if ($courseindexopen) {
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 
+// Load hidden TOC activities for this Course.
+$hiddencmids = [];
+
+if (!empty($COURSE->id)) {
+    $sql = "
+        SELECT h.cmid
+          FROM {theme_snap_toc_hidden} h
+          JOIN {course_modules} cm ON cm.id = h.cmid
+         WHERE cm.course = :courseid
+    ";
+
+    $records = $DB->get_records_sql($sql, ['courseid' => $COURSE->id]);
+    $hiddencmids = array_keys($records);
+}
+
 // Add snap activities for course index search.
-$coursetocmodules = get_modules();
+$coursetocmodules = get_modules($hiddencmids);
 $tocmodules = (object) [
     'modules' => $coursetocmodules,
 ];
@@ -67,6 +82,13 @@ if (!$courseindex) {
     $courseindexopen = false;
 }
 
+// Pass hidden TOC activities list to JavaScript.
+$PAGE->requires->js_amd_inline("
+    require(['core/config'], function(cfg) {
+        cfg.hiddenTocActivities = " . json_encode($hiddencmids) . ";
+    });
+");
+
 $templatecontext = [
     'iscourseindex' => true,
     'courseindex' => $courseindex,
@@ -79,7 +101,7 @@ echo $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext);
  * Get modules for course index search tool.
  * @throws \core\exception\coding_exception
  */
-function get_modules() {
+function get_modules(array $hiddencmids) {
     global $OUTPUT, $PAGE;
     // If course does not have any sections then exit - note, module search is not supported in course formats
     // that don't have sections.
@@ -100,6 +122,11 @@ function get_modules() {
         }
         if (!$cm->uservisible && (empty($cm->availableinfo))) {
             continue; // Hidden completely.
+        }
+
+        // Skip modules that are hidden in TOC.
+        if (in_array($cm->id, $hiddencmids)) {
+            continue;
         }
 
         $module = new course_toc_module();

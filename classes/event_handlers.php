@@ -132,8 +132,11 @@ class event_handlers {
      * @param course_module_deleted $event
      */
     public static function course_module_deleted(course_module_deleted $event) {
+        global $DB;
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
+        // Delete the TOC hidden record if it exists.
+        $DB->delete_records('theme_snap_toc_hidden', ['cmid' => $event->objectid]);
     }
 
     /**

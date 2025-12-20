@@ -18,5 +18,18 @@
         <INDEX NAME="userid-courseid" UNIQUE="true" FIELDS="userid, courseid"/>
       </INDEXES>
     </TABLE>
+    <TABLE NAME="theme_snap_toc_hidden" COMMENT="Stores course modules that should be hidden from Table of Contents">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="cmid" UNIQUE="true" FIELDS="cmid"/>
+      </INDEXES>
+    </TABLE>
   </TABLES>
 </XMLDB>
