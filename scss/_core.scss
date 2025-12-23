@@ -5613,7 +5613,6 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 
 .theme-snap [data-region=right-hand-drawer].drawer:not([data-origin^="message-drawer-toggle-"]) {
     z-index: 12;
-    position: fixed;
     right: 0;
     height: 100%;
     width: 22.3em;
@@ -5627,14 +5626,8 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
     }
 }
 
-#page-mod-forum-view.theme-snap [data-region=right-hand-drawer].drawer {
-    position: absolute;
-    z-index: 0;
-}
-
 .theme-snap .snap-drawer-headroom {
     top: 6em;
-    z-index: 1052;
     @media (max-width: 992px) {
         top: 3.5em;
     }
