@@ -151,3 +151,14 @@ Feature: Check functionality in activity cards.
     And I should see "Show on course page"
     And I should see "Hide on course page"
     And I should see "Make available but don't show on course page"
+
+  @javascript
+  Scenario: Activity cards does not have the Move Right/Left option available on Snap.
+    Given I log in as "admin"
+    And the following "activities" exist:
+      | activity | name            | course | idnumber  |
+      | url      | Test URL 1      | C1     | url1      |
+    And I am on "Course 1" course homepage
+    And I open "Test URL 1" actions menu
+    And I should not see "Move right"
+    And I should not see "Move left"
