@@ -494,3 +494,6 @@ $string['toggleblockdrawer'] = 'Toggle block drawer';
 $string['togglesnapfeedsdrawer'] = 'Toggle Snap feeds drawer';
 $string['addsubsection'] = 'Add a subsection';
 $string['tableofcontents'] = 'Table of contents';
+$string['snap_toc_settings'] = 'Table of Contents settings';
+$string['hideintoc'] = 'Hide this activity in the Table of contents';
+$string['hideintoc_help'] = 'If enabled, the current activity will not be displayed in the Table of Contents menu. The activity will remain accessible via the link on the main course page. Use this to hide decorative resources or non-mandatory elements.';

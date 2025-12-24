@@ -52,6 +52,39 @@ const processNode = (node) => {
     injectTitles(node);
 };
 
+/**
+ * Get hidden TOC activities list from config.
+ * @returns {number[]} Array of hidden course module IDs
+ */
+const getHiddenTocActivities = () => {
+    const config = require('core/config');
+    return config.hiddenTocActivities || [];
+};
+
+/**
+ * Remove hidden activities from the course index DOM.
+ */
+const filterHiddenActivitiesFromDOM = () => {
+    const hiddencmids = getHiddenTocActivities();
+    if (!hiddencmids || hiddencmids.length === 0) {
+        return;
+    }
+
+    const courseindex = document.querySelector('#courseindex');
+    if (!courseindex) {
+        return;
+    }
+
+    // Remove activities that are marked as hidden.
+    // Course index activities use data-id and data-for="cm" attributes.
+    hiddencmids.forEach(cmid => {
+        const activityElement = courseindex.querySelector(`[data-id="${cmid}"][data-for="cm"]`);
+        if (activityElement) {
+            activityElement.remove();
+        }
+    });
+};
+
 const getCourseState = async() => {
 
     const courseStateData = await ajax.call([{
@@ -74,11 +107,15 @@ export const init = () => {
 
     const target = document.querySelector('#courseindex');
     if (target) {
+        // Filter hidden activities immediately and after DOM changes.
+        filterHiddenActivitiesFromDOM();
         const observer = new MutationObserver((mutations) => {
             snapsection.setNavigationObservers();
             mutations.forEach((m) => {
                 m.addedNodes.forEach(processNode);
             });
+            // Filter hidden activities after DOM mutations.
+            filterHiddenActivitiesFromDOM();
             getCourseState().then(courseState => {
                 const sections = document.querySelectorAll('#courseindex-content .courseindex-section');
                 const currentSectionId = courseState.section.filter(el => el.current)[0]?.id;

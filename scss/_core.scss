@@ -6965,3 +6965,13 @@ li.section.main {
     display: none;
   }
 }
+
+// Fix help button width for snap_hide_in_toc checkbox to match other form elements.
+#id_snap_toc_settingscontainer {
+    .checkbox {
+        max-width: 100% !important;
+        button.iconhelp {
+            min-width: 40px;
+        }
+    }
+}

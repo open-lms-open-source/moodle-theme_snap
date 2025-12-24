@@ -582,3 +582,77 @@ function theme_snap_user_preferences(): array {
         ],
     ];
 }
+
+/**
+ * Add checkbox to hide activity from Table of Contents in the activity form.
+ *
+ * @param moodleform_mod $formwrapper The form wrapper instance
+ * @param MoodleQuickForm $mform The form instance
+ */
+function theme_snap_coursemodule_standard_elements($formwrapper, $mform) {
+
+    // Snap-specific settings header.
+    $mform->addElement('header', 'snap_toc_settings',get_string('snap_toc_settings', 'theme_snap'));
+
+    // Checkbox to hide activity from the Table of Contents.
+    $mform->addElement('advcheckbox', 'snap_hide_in_toc', get_string('hideintoc', 'theme_snap'));
+    $mform->addHelpButton('snap_hide_in_toc', 'hideintoc', 'theme_snap');
+    $mform->setType('snap_hide_in_toc', PARAM_BOOL);
+
+    $mform->setDefault('snap_hide_in_toc', 0);
+}
+
+/**
+ * Load existing value when editing a module.
+ *
+ * @param moodleform_mod $formwrapper The form wrapper instance
+ * @param MoodleQuickForm $mform The form instance
+ */
+function theme_snap_coursemodule_definition_after_data($formwrapper, $mform) {
+    global $DB;
+
+    // Only apply when editing an existing module.
+    $cm = $formwrapper->get_coursemodule();
+    if (!$cm || empty($cm->id)) {
+        return;
+    }
+
+    // Check if the activity is hidden in TOC.
+    $hidden = $DB->record_exists(
+        'theme_snap_toc_hidden',
+        ['cmid' => $cm->id]
+    );
+
+    $mform->setDefault('snap_hide_in_toc', $hidden);
+}
+
+/**
+ * Save or delete the hide-in-TOC setting when a module is created or updated..
+ *
+ * @param stdClass $moduleinfo The module info object
+ * @param stdClass $course The course object
+ * @return stdClass The moduleinfo object (unchanged)
+ */
+function theme_snap_coursemodule_edit_post_actions($moduleinfo, $course) {
+    global $DB;
+
+    $cmid = $moduleinfo->coursemodule ?? 0;
+    if (!$cmid) {
+        return $moduleinfo;
+    }
+
+    if (!empty($moduleinfo->snap_hide_in_toc)) {
+
+        if (!$DB->record_exists('theme_snap_toc_hidden', ['cmid' => $cmid])) {
+            $DB->insert_record('theme_snap_toc_hidden', [
+                'cmid'        => $cmid,
+                'timecreated' => time(),
+            ]);
+        }
+
+    } else {
+        $DB->delete_records('theme_snap_toc_hidden', ['cmid' => $cmid]);
+    }
+
+    return $moduleinfo;
+}
