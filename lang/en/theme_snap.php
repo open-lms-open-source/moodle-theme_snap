@@ -252,7 +252,6 @@ $string['image'] = 'image';
 $string['images'] = 'Images';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'The url of your instagram account.';
-$string['introduction'] = 'Introduction';
 $string['jsontext'] = 'JSON Text';
 $string['jsontextdescription'] = 'The text area validates the given JSON, so only existing categories are allowed,
 only numerical values as id records (category records) are valid and only hexadecimal values are accepted as colors.
