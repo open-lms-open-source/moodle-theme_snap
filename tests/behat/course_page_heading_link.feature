@@ -41,7 +41,7 @@ Feature: When the moodle theme is set to Snap, users can link back to the course
     And I should see "Edit section settings"
     And I follow the page heading course link
     Then I should see "Contents"
-    And I should see "Introduction"
+    And I should see "General"
     # Check that the site page heading does not have a link back
     And I am on site homepage
     Then I cannot follow the page heading

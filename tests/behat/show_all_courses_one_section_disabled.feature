@@ -63,5 +63,5 @@ Feature: When the moodle theme is set to Snap, course layout cannot be changed t
     And I log in as "student1"
     And I am on "Course 2" course homepage
     Then I wait until the page is ready
-    And I should see "Introduction"
+    And I should see "General"
     And I should see "Assign1"

@@ -151,9 +151,6 @@ class course_section_navigation implements \core\output\renderable {
             if ($canviewhidden || $section->uservisible || $section->availableinfo) {
                 $extraclasses = $section->visible ? '' : ' dimmed_text';
                 $sectiontitle = get_section_name($course, $section);
-                if ($sectiontitle === get_string('general')) {
-                    $sectiontitle = get_string('introduction', 'theme_snap');
-                }
 
                 $url = course_get_url($course, $section->sectionnum, ['navigation' => true]);
                 return new course_section_navigation_link($section->sectionnum, $extraclasses, $sectiontitle, $url);

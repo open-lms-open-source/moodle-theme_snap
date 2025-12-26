@@ -40,13 +40,13 @@ Feature: Entering a Snap course without specifying a section will take you to th
   Scenario: Before a topic is highlighted, section 0 is the default
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    Then I should see "Introduction" in the ".section.state-visible" "css_element"
+    Then I should see "General" in the ".section.state-visible" "css_element"
 
   @javascript
   Scenario: Once a topic is highlighted, that section is shown on entering the course
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    Then I should see "Introduction" in the ".section.state-visible" "css_element"
+    Then I should see "General" in the ".section.state-visible" "css_element"
     And "#courseindexsection0" "css_element" should exist
     And I click on "#courseindexsection1 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
     And I highlight section 1
@@ -58,16 +58,16 @@ Feature: Entering a Snap course without specifying a section will take you to th
     Given I skip because "It's failing due to New Snap Course sections - INT-21427"
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    Then I should see "Introduction" in the ".section.state-visible" "css_element"
+    Then I should see "General" in the ".section.state-visible" "css_element"
     And I follow "New section"
     And I highlight section 1
     And I follow "Hide"
     And I am on the course main page for "C1"
-    Then I should see "Introduction" in the ".section.state-visible" "css_element"
+    Then I should see "General" in the ".section.state-visible" "css_element"
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    Then I should see "Introduction" in the ".section.state-visible" "css_element"
+    Then I should see "General" in the ".section.state-visible" "css_element"
     And I should see "Not available" in TOC item 1
 
   @javascript
@@ -84,5 +84,5 @@ Feature: Entering a Snap course without specifying a section will take you to th
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    Then I should see "Introduction" in the ".section.state-visible" "css_element"
+    Then I should see "General" in the ".section.state-visible" "css_element"
     And I wait until "#courseindexsection1 .courseindex-locked" "css_element" exists
