@@ -212,6 +212,11 @@ function theme_snap_send_file($context, $filearea, $args, $forcedownload, $optio
  * @return bool
  */
 function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+    global $PAGE;
+
+    if (!isset($PAGE->context)) {
+        $PAGE->set_context($context);
+    }
 
     $coverimagecontexts = [CONTEXT_SYSTEM, CONTEXT_COURSE, CONTEXT_COURSECAT];
 
