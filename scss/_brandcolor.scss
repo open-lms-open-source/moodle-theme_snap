@@ -446,7 +446,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: $brand-primary;
     }
 
-    .courseindex-section.snap-visible-section > .courseindex-item {
+    .courseindex-section.snap-visible-section > .courseindex-item,
+    .courseindex-section[aria-selected='true'] > .courseindex-item {
       background-color: $brand-primary;
       a.courseindex-chevron,
       a.courseindex-link,

@@ -6871,7 +6871,14 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
       }
       .drawercontent {
           height: calc(100% - 10px);
+          padding-top: 3em;
       }
+    }
+}
+.format-topics,
+.format-weeks {
+    .drawer.drawer-left.d-print-none .drawercontent {
+        padding-top: .4rem;
     }
 }
 

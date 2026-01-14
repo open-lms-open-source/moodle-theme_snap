@@ -60,8 +60,6 @@ define(
             // strip hash then add just in case
             $('#toc-search-results').html('');
             var targmod = $("#" + modid.replace('#', ''));
-            // http://stackoverflow.com/questions/6677035/jquery-scroll-to-element
-            util.scrollToElement(targmod);
 
             var searchpin = $("#searchpin");
             if (!searchpin.length) {
@@ -73,17 +71,58 @@ define(
         };
 
         /**
-         * Check if current url is having specific parameter on it.
-         * @param {string} checkParameter
+         * Change visibility of sections.
+         * @param {string} section The section ID to be shown.
+         * @param {string} modid The module ID to set focus.
          */
-        var checkToolParameter = function(checkParameter) {
-            return window.location.href.indexOf(checkParameter) != -1;
+        var switchSectionVisibility = function(section, modid = null) {
+            var visibleSections = $(
+                'ul.sections > .section.main.state-visible,' +
+                '#coursetools.state-visible,' +
+                '#snap-add-new-section.state-visible'
+            );
+            // If no visible section, then make one visible.
+            if (!visibleSections.length) {
+                if (section !== '') {
+                    $('ul.sections > #section-' + section).removeClass('hidden').addClass('state-visible').focus();
+                } else if ($('.section.main.current').length) {
+                    $('ul.sections > .section.main.current').addClass('state-visible').focus();
+                } else {
+                    $('ul.sections > #section-0').addClass('state-visible').focus();
+                }
+                sectionAssetManagement.setTOCVisibleSection();
+                scrollBack();
+                return;
+            }
+            // Depending on the section, change the selector.
+            let sectiontarget = '';
+            if (section === '#coursetools' || section === '#snap-add-new-section') {
+                sectiontarget = section;
+            } else {
+                sectiontarget = 'ul.sections > #section-' + section;
+            }
+
+            if (section !== '') {
+                // If already a visible section, show the new section instead.
+                visibleSections.removeClass('state-visible').addClass('hidden');
+                $(sectiontarget).removeClass('hidden').addClass('state-visible');
+            }
+
+            // If a module was in the hash then scroll to it.
+            if (modid !== null) {
+                scrollToModule(modid);
+            } else {
+                // Faux link click behaviour - scroll to page top.
+                scrollBack();
+            }
+
+            sectionAssetManagement.setTOCVisibleSection();
         };
 
         /**
-         * When on course page, show the section currently referenced in the location hash.
+         * Main function to manage section visualization.
          */
-        this.showSection = function() {
+        this.sectionRouter = function() {
             if (!onCoursePage()) {
                 // Only relevant for main course page.
                 return;
@@ -92,177 +131,40 @@ define(
             // We know the params at 0 is a section id.
             // Params will be in the format: #section-[number]&module-[cmid], e.g: #section-1&module-7255.
             var urlParams = location.hash.split("&"),
-                section = urlParams[0],
+                section = urlParams[0] || '',
                 mod = urlParams[1] || null;
 
+            // Let Core handle some Modules behavior.
+            if (section.startsWith('#h5pbook') || section.startsWith('#module-')) {
+                return;
+            } else if (section.startsWith('#section-')) {
+                // Get section number.
+                section = section.match(/\d+/)[0];
+            }
+
             // Redirect to the correct section when doing /course/section.php.
-            if (section === '' && location.pathname === '/course/section.php' && self.courseConfig.sectionnum) {
-                section = 'ul.sections > #section-' + self.courseConfig.sectionnum;
+            if (section === '' && location.pathname === '/course/section.php' && self.courseConfig.sectionnum !== undefined) {
+                section = self.courseConfig.sectionnum;
             }
 
-            var sectionId = false;
-            if (section.indexOf('#sectionid') != -1) {
-                sectionId = section.match(/#sectionid-(\d+)-title/)[1];
-            }
-
-            // Check if we are using permalinks like #sectionid-{id}-title.
-            if (sectionId) {
-                // Search element with section-id.
-                var $chapter = $('.chapters .chapter-title[section-id="' + sectionId + '"]');
-                if ($chapter.length > 0) {
-                    // Get the section-number associated.
-                    section = $chapter.attr('section-number');
-                    section = 'ul.sections > #section-' + section;
-                }
-            }
-
-            // We are done here. H5P will handle the section shown within its iframe.
-            if (section.startsWith('#h5pbook')) {
-                return;
-            }
-
-            // Let Core handle modules behavior.
-            if (section.startsWith('#module-')) {
-                return;
-            }
-
-            var sectionSetByServer = '';
-
-            if ($('.section.main.state-visible.set-by-server').length) {
-                sectionSetByServer = 'ul.sections > #' + $('.section.main.state-visible.set-by-server').attr('id');
-                $('.section.main.state-visible.set-by-server').removeClass('set-by-server');
+            var $sectionNode = $('ul.sections > #section-' + section);
+            if (section === '#coursetools' || section === '#snap-add-new-section') {
+                // Make visible the Dashboard or New section Form.
+                switchSectionVisibility(section, null);
+            } else if (section !== '' && !($sectionNode.length > 0)) {
+                // Section does not exist in DOM, render it.
+                sectionAssetManagement.getSection(section, mod, switchSectionVisibility);
+                sectionAssetManagement.updateBreadcrumb(section);
             } else {
-                $('.course-content .section.main, #moodle-blocks,#coursetools, #snap-add-new-section,' +
-                    '#tiles-section').removeClass('state-visible');
-            }
-
-            if (section == '') {
-                var qs = location.search.substring(1);
-                var sparameters = qs.split('&');
-                sparameters.forEach(function(param) {
-                    if (param.indexOf('section=') >= 0) {
-                        param.replace(param);
-                        section = 'ul.sections > #' + param.replace('=', '-');
-                    }
-                });
-            }
-
-            if (section !== '' && section !== sectionSetByServer) {
-                $(sectionSetByServer).removeClass('state-visible');
-            }
-
-            // Dashboard in Tiles should be hidden except in #coursetools section.
-            let btnEditing = '.btn-editing';
-            let courseTools = '#coursetools';
-            let tilesEditing = $(courseTools).hasClass('editing-tiles');
-            if (tilesEditing) {
-                $(courseTools).removeClass('state-visible');
-                $(courseTools).addClass('d-none');
-
-                // Change duplicate data-action in label activities for Tiles.
-                let labelDuplicateButton = $('.launch-tiles-standard.modtype_label .actions .editing_duplicate');
-                if (labelDuplicateButton) {
-                    $(labelDuplicateButton).attr("data-action", "tiles-duplicate");
-                }
-            }
-            let sectionParameter = checkToolParameter('section-');
-            let dashboardParameter = checkToolParameter('coursetools');
-            if (sectionParameter && !dashboardParameter) {
-                $('#tiles-section').addClass('state-visible');
-                $(courseTools).removeClass('state-visible');
-                $(courseTools).addClass('d-none');
-            }
-            if (!sectionParameter && dashboardParameter) {
-                let tilesDashboard = $('#snap-course-tools').hasClass('tiles-dashboard');
-                if (tilesDashboard) {
-                    $('#tiles-section').removeClass('state-visible');
-                    $(courseTools).addClass('state-visible');
-                    $(courseTools).removeClass('d-none');
-                    if ($(btnEditing).length) {
-                        let urlEditing = document.querySelector(btnEditing).href;
-                        let existToolParameter = urlEditing.includes('#coursetools');
-                        if (!existToolParameter) {
-                            str.get_strings([
-                                {key: 'editcoursecontent', component: 'theme_snap'},
-                                {key: 'editmodetiles', component: 'theme_snap'},
-                                {key: 'turneditingoff', component: 'moodle'},
-                            ]).done(function(stringsjs) {
-                                let btnEditText = document.querySelector(btnEditing).text;
-                                if (btnEditText == stringsjs[1]) {
-                                    document.querySelector(btnEditing).innerHTML = stringsjs[0];
-                                } else {
-                                    document.querySelector(btnEditing).innerHTML = stringsjs[2];
-                                }
-                            });
-                            document.querySelector(btnEditing).href = urlEditing + '#coursetools';
-                        }
-                    }
-                }
-                // Remove class d-none to show Course Dashboard after clicking in a section first.
-                let snapCourseDashboard = $('#snap-course-tools').hasClass('snap-course-dashboard');
-                if (snapCourseDashboard) {
-                    $(courseTools).removeClass('d-none');
-                }
-            }
-
-            // Course tools special section.
-            if (section == '#coursetools') {
-                $('#moodle-blocks').addClass('state-visible');
-            }
-
-            // If a module was in the hash then scroll to it.
-            if (mod !== null) {
-                $(section).addClass('state-visible');
-                scrollToModule(mod);
-            } else {
-                $(section).addClass('state-visible').focus();
-                // Faux link click behaviour - scroll to page top.
-                scrollBack();
-            }
-
-            // Default niceties to perform.
-            var visibleChapters = $(
-                '.section.main.state-visible,' +
-                '#coursetools.state-visible,' +
-                '#snap-add-new-section.state-visible'
-            );
-            if (!visibleChapters.length) {
-                if (section !== '') {
-                    $(section).addClass('state-visible').focus();
-                } else if ($('.section.main.current').length) {
-                    $('.section.main.current').addClass('state-visible').focus();
-                } else {
-                    $('#section-0').addClass('state-visible').focus();
-                }
-                scrollBack();
-            }
-            if (section == '' && self.courseConfig.format == 'tiles') {
-                $('#tiles-section').addClass('state-visible').focus();
-            }
-
-            // When usejsnavforsinglesection is enabled, tiles-section will be shown instead of single-section.
-            // We need to ensure that tiles-section is visible when course tools is not.
-            if (self.courseConfig.format == 'tiles') {
-                if (!$(courseTools).hasClass('state-visible')
-                    && !$('#tiles-section').hasClass('state-visible')) {
-                    $('#tiles-section').addClass('state-visible');
-                }
-                if ($('#page-course-view-tiles .tiles[data-for="course_sectionlist"]').length) {
-                    if (!$(courseTools).hasClass('state-visible')
-                        && !$('#page-course-view-tiles .tiles').hasClass('state-visible')) {
-                        $('#page-course-view-tiles .tiles').addClass('state-visible');
-                    }
-                }
-                if (!dashboardParameter) {
-                    $('#snap-course-dashboard').addClass('state-visible');
-                }
+                // Section already rendered, show it.
+                switchSectionVisibility(section, mod);
+                sectionAssetManagement.updateBreadcrumb(section);
             }
 
             // Store last activity/resource accessed on sessionStorage
             $('li.snap-activity:visible, li.snap-resource:visible').on('click', 'a.mod-link', function() {
                 sessionStorage.setItem('lastMod', $(this).parents('[id^=module]').attr('id'));
             });
-            sectionAssetManagement.setTOCVisibleSection();
         };
 
         /**
@@ -280,74 +182,16 @@ define(
         };
 
         /**
-         * Captures hash parameters and triggers the render method.
-         */
-        var renderFromHash = function() {
-            var hash = $(location).attr('hash');
-            var params = hash.replace('#', '').split('&');
-            var section = false;
-            var sectionId = false;
-            var mod = 0;
-
-            $.each(params, function(idx, param) {
-                if (param.indexOf('sectionid') != -1) {
-                    sectionId = param.match(/sectionid-(\d+)-title/)[1];
-                } else if (param.indexOf('section') != -1) {
-                    section = param.split('section-')[1];
-                } else if (param.indexOf('module') != -1) {
-                    mod = param.split('module-')[1];
-                }
-            });
-
-            // Check if we are using permalinks like #sectionid-{id}-title.
-            if (sectionId) {
-                // Search element with section-id.
-                var $chapter = $('.chapters .chapter-title[section-id="' + sectionId + '"]');
-                if ($chapter.length > 0) {
-                    // Get the section-number associated.
-                    section = $chapter.attr('section-number');
-                }
-            }
-
-            if (!section) {
-                var qs = location.search.substring(1);
-                var sparameters = qs.split('&');
-                sparameters.forEach(function(param) {
-                    if (param.indexOf('section=') >= 0) {
-                        param.replace(param);
-                        section = param.replace('section=', '');
-                    }
-                });
-            }
-            if (section && $('.chapters .chapter-title[href="#section-' + section + '"]').length > 0) {
-                sectionAssetManagement.renderAndFocusSection(section, mod);
-            }
-        };
-
-        /**
          * Initialise course JS.
          */
         var init = function() {
             sectionAssetManagement.init(self);
             courseModules.init(courseConfig);
+            var isNativeFormat = ['weeks', 'topics'].includes(self.courseConfig.format);
 
             // SL - 19th aug 2014 - check we are in a course and if so, show current section.
-            if (onCoursePage()) {
-                self.showSection();
-                // Sets the observers for rendering sections on demand.
-                renderFromHash();
-                $(window).on('hashchange', function() {
-                    renderFromHash();
-                });
-                // Current section might be hidden, at this point should be visible.
-                var sections = $('.course-content .sections > li[id^="section-"]');
-                var urlParams = location.hash.split("&"),
-                    sectionParam = urlParams[0];
-                if (sections.length == 1 &&
-                    sectionParam != '#coursetools' &&
-                    sectionParam != '#snap-add-new-section') {
-                    sections.addClass('state-visible');
-                }
+            if (onCoursePage() && isNativeFormat) {
+                self.sectionRouter();
                 activityCards.init();
             }
         };

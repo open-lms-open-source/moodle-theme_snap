@@ -206,8 +206,6 @@ trait format_section_trait {
                 $output = $sections;
                 // Output the "Add new section" form.
                 $output .= $this->add_new_section_form($course);
-                // Add Snap Course Dashboard.
-                $output .= shared::course_tools(true);
             }
             return $output;
         }
@@ -570,15 +568,14 @@ trait format_section_trait {
             if (!$section->visible) {
                 $sectionstyle = ' hidden';
             } else if (course_get_format($course)->is_section_current($section)) {
-                $sectionstyle = ' current set-by-server';
+                $sectionstyle = ' current';
                 if ($pagepath !== '/course/section.php') {
                     $sectionstyle .= ' state-visible';
                 }
             } else if ($course->format == 'weeks' && $sectionid == $section->id) {
-                $sectionstyle .= ' state-visible set-by-server';
+                $sectionstyle .= ' state-visible';
             }
         } else if ($course->format == "topics" && $course->marker == 0) {
-            $sectionstyle = ' set-by-server';
             if ($pagepath !== '/course/section.php') {
                 $sectionstyle .= ' state-visible';
             }
@@ -593,7 +590,7 @@ trait format_section_trait {
                 $sectionstyle .= ' conditional';
             }
             if (course_get_format($course)->is_section_current($section)) {
-                $sectionstyle .= ' current set-by-server';
+                $sectionstyle .= ' current';
                 if ($pagepath !== '/course/section.php') {
                     $sectionstyle .= ' state-visible';
                 }

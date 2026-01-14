@@ -31,5 +31,11 @@ require(['core_courseformat/local/content'], function(component) {
         };
         return instance;
     };
+    if (component.prototype && component.prototype._scrollHandler) {
+        component.prototype._scrollHandler = function() {
+            // Do nothing, to avoid scrollHandler to move our view in other course formats.
+            return;
+        };
+    }
 });
 {{/js}}

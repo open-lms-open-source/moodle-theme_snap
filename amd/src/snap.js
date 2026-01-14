@@ -340,66 +340,84 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
          * Listeners for URL changes.
          * @param {CourseLibAmd} courseLib
          */
-        var ChangeSectionListeners = function(courseLib) {
-            // Listen for URL state changes, when hashchange is fired.
+        var ChangeURLListeners = function(courseLib) {
             var lastUrl = location.href;
-            $(window).on('popstate hashchange', function(e) {
+            // Listener for URL changes (Back/Forward clicks)
+            $(window).on('hashchange', function() {
+                // Bring or show the corresponding section.
+                courseLib.sectionRouter();
                 var currentUrl = location.href;
                 var currentHash = location.hash;
-                log.info('URL or hash changed');
+                log.info('URL has changed');
                 if (currentUrl !== lastUrl) {
                     $('#page, #moodle-footer, #logo, .skiplinks').css('display', '');
-                    if (onCoursePage()) {
-                        log.info('show section', e.target);
-                        courseLib.showSection();
-
-                        // Update editing Toggle with new URL.
-                        var $form = $('.editmode-switch-form');
-                        var urlObj = new URL(currentUrl);
-                        if (currentHash) {
-                            // In order to make switch toggle reload the page,
-                            // we add timestamp (ts) so it detects URL has changed.
-                            urlObj.searchParams.set('ts', Date.now());
-                        }
-                        var urlForToggle = urlObj.toString();
-                        $form.find('.custom-control-input').attr('data-pageurl', urlForToggle);
-                        $form.find('input[name="pageurl"]').val(urlForToggle);
+                    // Update editing Toggle with new URL.
+                    var $form = $('.editmode-switch-form');
+                    var urlObj = new URL(currentUrl);
+                    if (currentHash) {
+                        // In order to make switch toggle reload the page,
+                        // we add timestamp (ts) so it detects URL has changed.
+                        urlObj.searchParams.set('ts', Date.now());
                     }
+                    var urlForToggle = urlObj.toString();
+                    $form.find('.custom-control-input').attr('data-pageurl', urlForToggle);
+                    $form.find('input[name="pageurl"]').val(urlForToggle);
                 }
                 lastUrl = currentUrl;
             });
-            // Listeners for navigation links.
-            var selectors = [
-                '.chapters a',
+        };
+
+        /**
+         * Listeners for navigation between sections.
+         */
+        var ChangeSectionListeners = function() {
+            // Navigation selectors.
+            var navSelectors = [
                 '.section_footer a',
                 '#toc-search-results a',
+                '#snap-new-section',
+                '#snap-course-tools',
                 '#courseindex-content .courseindex-section-title a.courseindex-link'
-            ];
+            ].join(', ');
 
-            $(document).on('click', selectors.join(', '), function(e) {
-                var href = this.getAttribute('href');
-                if (window.history && window.history.pushState) {
-                    history.pushState(null, null, href);
-                    var link = $(this);
-                    var section = link.attr('section-number');
-                    // For TOC, section number resides on parent div.
-                    if (!section) {
-                        // Avoid running Behat, as it behaves randomly in Gitlab.
-                        if (M.cfg.behatsiterunning) {
-                            return;
-                        }
-                        section = link.closest('.courseindex-section').attr('data-number');
+            $('#snap-course-wrapper').on('click', navSelectors, function(e) {
+                var isNativeFormat = ['weeks', 'topics'].includes(self.courseConfig.format);
+                var href = $(this).attr('href');
+
+                // If not Snap format, Only show or Hide dashboard.
+                if (!isNativeFormat) {
+                    var $courseContent = $('#region-main .course-content');
+                    var $courseTools = $('#coursetools');
+                    if (href === '#coursetools') {
+                        e.preventDefault();
+                        // Show the dashboard and Hide course content.
+                        $courseContent.addClass('hidden');
+                        $courseTools.addClass('state-visible').focus();
+                    } else {
+                        // Hide Dashboard and show content.
+                        $courseTools.removeClass('state-visible');
+                        $courseContent.removeClass('hidden');
                     }
-                    if (typeof section !== 'undefined' && section.length > 0) {
-                        self.courseConfig.sectionnum = parseInt(section);
-                    }
-                    $(window).trigger('hashchange');
-                    courseLib.showSection();
-                    // Prevent scrolling to section.
-                    e.preventDefault();
-                } else {
-                    location.hash = href;
+                    return;
                 }
+
+                var link = $(this);
+                // Search section number
+                var section = link.attr('section-number');
+                // For courseindex links, section number resides on parent div.
+                if (!section) {
+                    section = link.closest('.courseindex-section').attr('data-number');
+                }
+                // If we have a section, save it on Courseconfig.
+                if (typeof section !== 'undefined' && section.length > 0) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    self.courseConfig.sectionnum = parseInt(section);
+                }
+
+                // Just update the URL, the hashchange does the rest.
+                history.pushState(null, null, href);
+                $(window).trigger('hashchange');
             });
         };
 
@@ -967,7 +985,11 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                             var courseLib = new CourseLibAmd(courseConfig);
 
                             // URL change listener goes here because it requires courseLib.
-                            ChangeSectionListeners(courseLib);
+                            var isNativeFormat = ['weeks', 'topics'].includes(courseConfig.format);
+                            if (isNativeFormat) {
+                                ChangeURLListeners(courseLib);
+                            }
+                            ChangeSectionListeners();
                         }
                     );
                 }
