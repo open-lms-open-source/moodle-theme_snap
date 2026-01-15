@@ -61,7 +61,7 @@ const CLASSES = {
 
 const DRAWERS = {
     SELECTORS: [
-        '.drawer',
+        '.drawer:not(#theme_boost-drawers-courseindex)',
         '.block_settings.block',
         '#snap_feeds_side_menu',
         '.drawer:has(.message-app)'

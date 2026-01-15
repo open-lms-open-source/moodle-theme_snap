@@ -6,9 +6,24 @@ Feature: Testing course index drawer in theme_snap
       | fullname | shortname | format | initsections |
       | Course 1 | C1        | topics | 3            |
     And the following "activities" exist:
-      | activity | name         | course | section |
-      | assign   | Assignment 1 | C1     | 1       |
-      | assign   | Assignment 2 | C1     | 2       |
+      | activity   | name                  | course | section |
+      | assign     | Assignment 1          | C1     | 1       |
+      | assign     | Assignment 2          | C1     | 2       |
+      | subsection | SubsectionEmpty 1     | C1     | 1       |
+      | subsection | SubsectionFulfilled 1 | C1     | 3       |
+      | assign     | SubAssign 1           | C1     | 5       |
+      | assign     | SubAssign 2           | C1     | 5       |
+      | assign     | SubAssign 3           | C1     | 5       |
+      | assign     | SubAssign 4           | C1     | 5       |
+      | assign     | SubAssign 5           | C1     | 5       |
+      | assign     | SubAssign 6           | C1     | 5       |
+      | label      | TextAndMedia 1        | C1     | 5       |
+      | label      | TextAndMedia 2        | C1     | 5       |
+      | quiz       | Quiz 1                | C1     | 5       |
+      | quiz       | Quiz 2                | C1     | 5       |
+      | quiz       | Quiz 3                | C1     | 5       |
+      | quiz       | Quiz 4                | C1     | 5       |
+    And I enable "subsection" "mod" plugin
 
   @javascript
   Scenario: Course index should be open by default and save user preferences if closed
@@ -83,3 +98,32 @@ Feature: Testing course index drawer in theme_snap
     When I click on "#section-3 .section-modchooser-link.btn-add-activity" "css_element"
     And I add a "Page" to section "3" using the activity chooser
     Then ".courseindex-section[data-number='3'] .courseindex-chevron" "css_element" should be visible
+
+  @javascript
+  Scenario: The course index ought to be sticky in its manner of displays
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And I follow "Section 5"
+    # The course index should accompany the user, all the way down.
+    And I press the down key
+    And I press the down key
+    And I press the down key
+    And I press the down key
+    And I press the down key
+    And I press the down key
+    And I press the down key
+    And I press the down key
+    And I should see "Contents"
+    And I should see "SubAssign 1"
+    And I should see "SubAssign 2"
+    And I should see "SubAssign 3"
+    And I should see "SubAssign 4"
+    And I should see "SubAssign 5"
+    And I should see "SubAssign 6"
+    And I should see "TextAndMedia 1"
+    And I should see "TextAndMedia 2"
+    And I should see "Quiz 1"
+    And I should see "Quiz 2"
+    And I should see "Quiz 3"
+    And I should see "Create a new section"
+    And I should see "Course Dashboard"

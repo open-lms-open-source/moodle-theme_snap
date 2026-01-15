@@ -1635,8 +1635,8 @@ footer #moodle-footer
 
 @media (min-width: 1346px) {
   .drawer.drawer-left {
-    width: 30% !important;
-    max-width: 30% !important;
+    width: 30%;
+    max-width: 30%;
   }
 }
 
@@ -6856,15 +6856,13 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
     padding-right: 20px;
 }
 
-.drawer.drawer-left.d-print-none {
+.drawer.drawer-left.d-print-none#theme_boost-drawers-courseindex {
     background-color: #EEF0F6;
     position: absolute;
-    top: 0 !important;
-    max-height: unset !important;
-    height: unset !important;
-    margin-top: -0.1em;
+    max-height: unset;
+    height: unset;
     margin-left: -4.5%;
-    bottom: -1em;
+    bottom: 0;
     &.show {
       z-index: 1050;
       .drawercontent .courseindex {

@@ -446,7 +446,7 @@ body:has(.snap-sidebar-menu.show) #sticky-footer {
 }
 
 body.snap_drawer_open {
-    header#mr-nav, .snap-sidebar-menu {
+    .snap-sidebar-menu {
         z-index: 1040;
     }
 }

@@ -206,6 +206,24 @@ define(
             var visibleSection = $(`#courseindex .courseindex-section[data-id="${currentSectionId}"]`);
             visibleSection.addClass('snap-visible-section');
             visibleSection.find('a.courseindex-link').attr('aria-current', 'true');
+
+            // The sticky toc must comply.
+            const tocdrawer = document.getElementById('theme_boost-drawers-courseindex');
+            const header = document.querySelector('header#mr-nav');
+            const mrnavBottom = header.getBoundingClientRect().bottom;
+            const pageHeader = document.getElementById('page-header');
+            const pageHeaderBottom = pageHeader.getBoundingClientRect().bottom;
+            let moodleFooter = document.getElementById('snap-course-footer');
+            if (moodleFooter === null) {
+                moodleFooter = document.getElementById('moodle-footer');
+            }
+            const moodleFooterTop = moodleFooter.getBoundingClientRect().top;
+            const isNavPinned = document.querySelector('#mr-nav.headroom--pinned');
+            const isNavUnpinned = document.querySelector('#mr-nav.headroom--unpinned');
+            if (isNavPinned || (!isNavPinned && !isNavUnpinned)) {
+                tocdrawer.style.height = `${window.innerHeight - Math.max(0, mrnavBottom, pageHeaderBottom)
+                - Math.max(0, window.innerHeight - moodleFooterTop) - 3}px`;
+            }
         };
 
         /**

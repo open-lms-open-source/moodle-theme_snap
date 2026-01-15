@@ -389,6 +389,7 @@ label[for="toc-search-input"]{
 
 .toc-footer {
   padding: 1em 0;
+  margin-top: auto;
 
   @media (min-width: 1277px) and (max-width: 1449px) {
     padding: 1em 1em;
@@ -759,4 +760,49 @@ body.snap_drawer_open {
           color: #357a32;
         }
     }
+}
+
+#snap-course-wrapper .drawer.drawer-left#theme_boost-drawers-courseindex {
+  transition: top 0.2s ease, height 0.2s ease;
+
+  &.toc-frontier-transition {
+    transition: none;
+  }
+
+  &.sticky-no-header-no-footer {
+    position: fixed;
+    margin-left: -0.1%;
+  }
+
+  &.sticky-no-header-yes-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-left: -4.5%;
+  }
+
+  &.sticky-yes-header-no-footer {
+    position: absolute;
+    margin-left: -4.5%;
+    &.sticky-under-pinned {
+      position: fixed;
+      margin-left: -0.1%;
+    }
+  }
+
+  &.sticky-yes-header-yes-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-left: -4.5%;
+  }
+
+  &.sticky-resize {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    margin-left: -4.5%;
+    height: unset;
+  }
 }
