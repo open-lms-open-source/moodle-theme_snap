@@ -1429,8 +1429,8 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
                     // Fix a position for the new 'Send content change notification' setting.
                     if ( $('.path-mod.theme-snap #id_coursecontentnotification').length ) {
-                        const notificationCheck = document.getElementById('id_coursecontentnotification')
-                            .closest(".fitem");
+                        const notificationElement = document.getElementById('id_coursecontentnotification');
+                        const notificationCheck = notificationElement ? notificationElement.closest(".fitem") : null;
                         const submitButtons = $('.snap-form-required [data-groupname="buttonar"]');
                         if (notificationCheck !== null && submitButtons.length) {
                             notificationCheck.classList.add('snap_content_notification_check');
@@ -1440,16 +1440,27 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
                     // Checking if the snap form required fieldset is not being displayed.
                     const snapFormFsRequired = $('.snap-form-required > fieldset');
-                    if(snapFormFsRequired && snapFormFsRequired.hasClass('d-none')){
-                        // Now its safe to remove  the columns class from the form so the visible fieldset takes the full space.
-                        const visibleFieldset = $('.snap-form-advanced > fieldset').not('.d-none');
-                        $(visibleFieldset).parent().removeClass('col-md-4');
+                    if (
+                      snapFormFsRequired &&
+                      snapFormFsRequired.hasClass("d-none")
+                    ) {
+                      // Now its safe to remove  the columns class from the form so the visible fieldset takes the full space.
+                      const visibleFieldset = $(
+                        ".snap-form-advanced > fieldset"
+                      ).not(".d-none");
+                      $(visibleFieldset).parent().removeClass("col-md-4");
 
-                        // Making sure that the save buttons are displayed.
-                        const notificationCheck = document.getElementById('id_coursecontentnotification')
-                            .closest(".fitem");
-                        $('.snap-form-advanced').append(notificationCheck);
-                        $('.snap-form-advanced').append(savebuttonsformrequired);
+                      // Making sure that the save buttons are displayed.
+                      const notificationElement = document.getElementById(
+                        "id_coursecontentnotification"
+                      );
+                      const notificationCheck = notificationElement
+                        ? notificationElement.closest(".fitem")
+                        : null;
+                      if (notificationCheck !== null) {
+                        $(".snap-form-advanced").append(notificationCheck);
+                      }
+                      $(".snap-form-advanced").append(savebuttonsformrequired);
                     }
 
                     // Hide Blocks editing on button from the Intelliboard Dashboard page in Snap.
