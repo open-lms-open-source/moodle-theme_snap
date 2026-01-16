@@ -47,7 +47,7 @@ class block_myoverview_files_change_test extends advanced_testcase  {
     // them with the duplicated ones in Snap. Also check the general workflow of the Course Overview block in the My
     // Courses page to see if it works as expected. If the changes are not needed in our code, just replace the SHA and
     // move on. If not, please update the code with the required changes.
-    public function getblockmyoverviewfiles() {
+    public static function getblockmyoverviewfiles() {
         return [
             // Follow the pattern [path, expected checksum].
             ['blocks/myoverview/amd/src/main.js', 'd7b5e4308c1a8721e3e27fd3dcf13da66776e9e6'],

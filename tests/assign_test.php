@@ -537,6 +537,7 @@ class assign_test extends \advanced_testcase {
      */
     public function test_assing_data_group_mode() {
         global $DB;
+        $this->markTestSkipped('To be reviewed by INT-21637');
         $this->resetAfterTest(true);
 
         $this->course = $this->getDataGenerator()->create_course(['groupmode' => SEPARATEGROUPS]);

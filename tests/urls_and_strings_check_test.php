@@ -54,7 +54,7 @@ class urls_and_strings_check_test extends \advanced_testcase {
         $this->assertSame($expectedsubdomain, $subdomain, $message);
     }
 
-    public function getsubdomains() {
+    public static function getsubdomains() {
         return [
             // Follow the pattern [language, string key, subdomain].
             ['es', 'poweredbyrunby', 'es'],
@@ -79,7 +79,7 @@ class urls_and_strings_check_test extends \advanced_testcase {
         $this->assertFalse($containsstring, $message);
     }
 
-    public function gettranslations() {
+    public static function gettranslations() {
         return [
             // Follow the pattern [language, string key].
             ['ar', 'poweredbyrunby'],
