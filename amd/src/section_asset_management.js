@@ -220,7 +220,7 @@ define(
             const moodleFooterTop = moodleFooter.getBoundingClientRect().top;
             const isNavPinned = document.querySelector('#mr-nav.headroom--pinned');
             const isNavUnpinned = document.querySelector('#mr-nav.headroom--unpinned');
-            if (isNavPinned || (!isNavPinned && !isNavUnpinned)) {
+            if (tocdrawer && (isNavPinned || (!isNavPinned && !isNavUnpinned))) {
                 tocdrawer.style.height = `${window.innerHeight - Math.max(0, mrnavBottom, pageHeaderBottom)
                 - Math.max(0, window.innerHeight - moodleFooterTop) - 3}px`;
             }

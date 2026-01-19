@@ -1758,6 +1758,27 @@ JS;
     }
 
     /**
+     * Scroll element by selector into view and align bottom of element with the bottom of the visible area.
+     *
+     * @When I scroll to the base of selector :selector
+     *
+     */
+    public function i_scroll_into_view_base_by_selector($selector) {
+        $function = <<<JS
+          (function(){
+              var elem = document.querySelector("$selector");
+              elem.scrollIntoView(false);
+              return 1;
+          })()
+JS;
+        try {
+            $this->getSession()->wait(5000, $function);
+        } catch (Exception $e) {
+            throw new \Exception("scrollIntoView by selector failed");
+        }
+    }
+
+    /**
      * Document should open in a new tab.
      *
      * @When /^The document should open in a new tab$/

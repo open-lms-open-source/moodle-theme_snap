@@ -27,27 +27,32 @@ import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
 const CLASSES = {
     FRONTIER_TRANSITION: 'toc-frontier-transition',
     PRESCROLL: 'sticky-pre-scroll',
-    STICKY_STATES: [
-        'sticky-no-header-no-footer',
-        'sticky-no-header-yes-footer',
-        'sticky-yes-header-no-footer',
-        'sticky-yes-header-yes-footer',
-        'sticky-under-pinned',
-    ],
+    STICKY_STATES: {
+        STICKY_NO_HEADER_NO_FOOTER: 'sticky-no-header-no-footer',
+        STICKY_NO_HEADER_YES_FOOTER: 'sticky-no-header-yes-footer',
+        STICKY_YES_HEADER_NO_FOOTER: 'sticky-yes-header-no-footer',
+        STICKY_YES_HEADER_YES_FOOTER: 'sticky-yes-header-yes-footer',
+        STICKY_UNDER_PINNED: 'sticky-under-pinned',
+    },
     STICKY_RESIZE: 'sticky-resize',
 };
 
 const SELECTORS = {
-    COURSE_FOOTER: 'moodle-footer',
-    COURSE_WRAPPER: 'snap-course-wrapper',
+    COURSE_FOOTER: '#moodle-footer',
+    COURSE_WRAPPER: '#snap-course-wrapper',
     HEADER: 'header#mr-nav',
     NAV_PINNED: '#mr-nav.headroom--pinned',
     NAV_UNPINNED: '#mr-nav.headroom--unpinned',
-    PAGE_HEADER: 'page-header',
-    SNAP_COURSE_FOOTER: 'snap-course-footer',
-    TOCDRAWER: 'theme_boost-drawers-courseindex',
+    PAGE_HEADER: '#page-header',
+    SNAP_COURSE_FOOTER: '#snap-course-footer',
+    TOCDRAWER: '#theme_boost-drawers-courseindex',
     TOCDRAWER_CONTROLS: '#theme_boost-drawers-courseindex > .drawerheader',
     TOCDRAWER_CONTENT: '#theme_boost-drawers-courseindex > .drawercontent',
+};
+
+const CONSTANTS = {
+    PIXEL_TOLERANCE_AT_FROTIER: 20,
+    TOC_WIDTH_PROPORTION: 0.3,
 };
 
 /**
@@ -133,17 +138,21 @@ export const init = () => {
     }
 };
 
+/**
+ * Sets the sticky TOC handler, which should be executed to make the TOC both sticky and responsive
+ * to the position of the user within the page, when scrolling either with mouse or keyboard.
+ */
 export const stickyTOCHandler = () => {
-    const courseWrapper = document.getElementById(SELECTORS.COURSE_WRAPPER);
-    let courseWrapperWidth = courseWrapper.getBoundingClientRect().width * 0.3 + 'px';
-    const tocdrawer = document.getElementById(SELECTORS.TOCDRAWER);
+    const courseWrapper = document.querySelector(SELECTORS.COURSE_WRAPPER);
+    let courseWrapperWidth = courseWrapper.getBoundingClientRect().width * CONSTANTS.TOC_WIDTH_PROPORTION + 'px';
+    const tocdrawer = document.querySelector(SELECTORS.TOCDRAWER);
 
-    let moodleFooter = document.getElementById(SELECTORS.SNAP_COURSE_FOOTER);
+    let moodleFooter = document.querySelector(SELECTORS.SNAP_COURSE_FOOTER);
     if (moodleFooter === null) {
-        moodleFooter = document.getElementById(SELECTORS.COURSE_FOOTER);
+        moodleFooter = document.querySelector(SELECTORS.COURSE_FOOTER);
     }
 
-    const pageHeader = document.getElementById(SELECTORS.PAGE_HEADER);
+    const pageHeader = document.querySelector(SELECTORS.PAGE_HEADER);
     const header = document.querySelector(SELECTORS.HEADER);
     const tocdrawerControls = document.querySelector(SELECTORS.TOCDRAWER_CONTROLS);
     const tocdrawerContent = document.querySelector(SELECTORS.TOCDRAWER_CONTENT);
@@ -152,6 +161,10 @@ export const stickyTOCHandler = () => {
     }
     tocdrawer.style.width = courseWrapperWidth;
 
+    /**
+     * This is the main scroll listener, it should consistently handle all scrolling cases that
+     * can happen in a course.
+     */
     document.addEventListener('scroll', () => {
         setTimeout(() => {
             // Assume we are not at a frontier (if we are we will be dealt with later on).
@@ -163,25 +176,28 @@ export const stickyTOCHandler = () => {
             const mrnavBotton = header.getBoundingClientRect().bottom;
             const isNavPinned = document.querySelector(SELECTORS.NAV_PINNED);
             const isNavUnpinned = document.querySelector(SELECTORS.NAV_UNPINNED);
-            if (Math.abs(Math.floor(pageFooterTop) - window.innerHeight) <= 20 ||
-                Math.abs(Math.floor(pageHeaderBottom) - mrnavHeight) <= 20) {
+            // If we are at a frontier, avoid jagged transitions.
+            if (Math.abs(Math.floor(pageFooterTop) - window.innerHeight) <= CONSTANTS.PIXEL_TOLERANCE_AT_FROTIER ||
+                Math.abs(Math.floor(pageHeaderBottom) - mrnavHeight) <= CONSTANTS.PIXEL_TOLERANCE_AT_FROTIER) {
                 tocdrawer.classList.add(CLASSES.FRONTIER_TRANSITION);
             }
 
-            CLASSES.STICKY_STATES.forEach(state => {
-                tocdrawer.classList.remove(state);
-            });
+            // Reset to the initial state of affairs.
+            for (const state in CLASSES.STICKY_STATES) {
+                tocdrawer.classList.remove(CLASSES.STICKY_STATES[state]);
+            }
+            // Determine all possible cases of scrolling with header and footer that can happen in a course.
             if (pageHeaderBottom < 0 && pageFooterTop > window.innerHeight) {
-                tocdrawer.classList.add('sticky-no-header-no-footer');
+                tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_NO_HEADER_NO_FOOTER);
                 tocdrawer.style.top = '0';
                 if (isNavPinned || (!isNavPinned && !isNavUnpinned)) {
                     tocdrawer.style.top = 'auto';
                 }
             } else if (pageHeaderBottom < 0 && pageFooterTop <= window.innerHeight) {
-                tocdrawer.classList.add('sticky-no-header-yes-footer');
+                tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_NO_HEADER_YES_FOOTER);
                 tocdrawer.style.top = 'auto';
             } else if (pageHeaderBottom >= 0 && pageFooterTop > window.innerHeight) {
-                tocdrawer.classList.add('sticky-yes-header-no-footer');
+                tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_YES_HEADER_NO_FOOTER);
                 tocdrawer.style.top = '0';
                 if (isNavPinned || (!isNavPinned && !isNavUnpinned)) {
                     if (pageHeaderBottom <= mrnavHeight) {
@@ -190,7 +206,7 @@ export const stickyTOCHandler = () => {
                     }
                 }
             } else { // pageHeaderBottom >= 0 && pageFooterTop <= window.innerHeight
-                tocdrawer.classList.add('sticky-yes-header-yes-footer');
+                tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_YES_HEADER_YES_FOOTER);
                 tocdrawer.style.top = 'auto';
             }
 

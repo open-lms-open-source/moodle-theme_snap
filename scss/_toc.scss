@@ -776,14 +776,10 @@ body.snap_drawer_open {
 
   &.sticky-no-header-yes-footer {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    margin-left: -4.5%;
   }
 
   &.sticky-yes-header-no-footer {
     position: absolute;
-    margin-left: -4.5%;
     &.sticky-under-pinned {
       position: fixed;
       margin-left: -0.1%;
@@ -792,9 +788,6 @@ body.snap_drawer_open {
 
   &.sticky-yes-header-yes-footer {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    margin-left: -4.5%;
   }
 
   &.sticky-resize {
@@ -802,7 +795,6 @@ body.snap_drawer_open {
     bottom: 0;
     right: 0;
     top: 0;
-    margin-left: -4.5%;
     height: unset;
   }
 }
