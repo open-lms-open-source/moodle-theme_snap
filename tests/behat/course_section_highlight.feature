@@ -1,0 +1,128 @@
+# This file is part of Moodle - http://moodle.org/
+#
+# Moodle is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Moodle is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Tests for toggle course section highlighting in non edit mode in snap.
+#
+# @package    theme_snap
+# @copyright  2016 Guy Thomas
+# @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+@theme @theme_snap @theme_snap_course
+Feature: When the moodle theme is set to Snap, teachers can toggle the currently highlighted course sections.
+
+  Background:
+    Given the following "courses" exist:
+      | fullname | shortname | category | format | initsecitons | coursedisplay |
+      | Course 1 | C1        | 0        | topics |      2       | 0             |
+    And the following "users" exist:
+      | username | firstname | lastname | email |
+      | teacher1 | Teacher | 1 | teacher1@example.com |
+      | student1 | Student | 1 | student1@example.com |
+    And the following "course enrolments" exist:
+      | user | course | role |
+      | teacher1 | C1 | editingteacher |
+      | student1 | C1 | student |
+
+  @javascript
+  Scenario: In read mode, teacher toggles section as Highlighted and student sees appropriate status.
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+    Then "#courseindexsection1" "css_element" should exist
+    When I click on "#courseindexsection1 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
+    And I wait until "#extra-actions-dropdown-1" "css_element" exists
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    And I click on "#section-1 .snap-highlight" "css_element"
+    And I wait until "#section-1 .snap-highlight" "css_element" exists
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    And I should see "Unhighlight"
+    When I click on "#courseindexsection2 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
+    Then "#section-2" "css_element" should exist
+    And I wait until "#extra-actions-dropdown-2" "css_element" exists
+    And I click on "#extra-actions-dropdown-2" "css_element"
+    And I click on "#section-2 .snap-highlight" "css_element"
+    And I wait until "#section-2 .snap-highlight" "css_element" exists
+    And I should see "Highlighted" in the "#section-2" "css_element"
+    And I log out
+    And I log in as "student1"
+    And I am on the course main page for "C1"
+    Then I should see "Highlighted" in the "#section-2" "css_element"
+    And I log out
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I click on "#extra-actions-dropdown-2" "css_element"
+    When I click on "#section-2 .snap-highlight" "css_element"
+    And I click on "#courseindexsection2 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
+    Then I wait until "#section-2" "css_element" exists
+    And I should not see "Highlighted" in the "#section-2" "css_element"
+    And "#section-2" "css_element" should exist
+    Then I log out
+    And I log in as "student1"
+    And I am on the course main page for "C1"
+    And I click on "#courseindexsection2 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
+    Then I should not see "Highlighted" in the "#section-2" "css_element"
+
+  @javascript
+# This scenario is necessary to make sure the correct error message comes back when an AJAX request fails but it is
+# not related to a session time out / the user being logged out.
+  Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
+  highlight section.
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And the editing teacher role is removed from course "C1" for "teacher1"
+    Then "#courseindexsection1" "css_element" should exist
+    And  I click on "#courseindexsection1 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
+    Then "#section-1" "css_element" should exist
+    And "#extra-actions-dropdown-1" "css_element" should not exist
+    And "#section-1 .snap-highlight" "css_element" should not exist
+
+  @javascript
+  Scenario: Student cannot mark section highlighted.
+    And I log in as "student1"
+    And I am on the course main page for "C1"
+    And I click on "#courseindexsection2 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
+    Then "#section-2 .snap-highlight" "css_element" should not exist
+
+  Scenario: For Weeks Format, the "current week" should be highlighted in the course.
+    Given the following "courses" exist:
+      | fullname | shortname | format | coursedisplay | numsections | startdate     |
+      | Course 2 | C2        | weeks  | 0             | 5           | ##yesterday## |
+    Given I log in as "admin"
+    And I am on the course main page for "C2"
+    Then "#section-1" "css_element" should exist
+    Then I should see "Current week" in the "#section-1" "css_element"
+
+  @javascript
+  # When a highlighted section is deleted, the next added section becomes highlighted.
+    Scenario: Delete a highlighted section
+      Given the following "courses" exist:
+        | fullname | shortname | format | coursedisplay | numsections |
+        | Course 3 | C3        | topics | 0             | 3           |
+      And I log in as "admin"
+      And I am on the course main page for "C1"
+      When I click on "#courseindexsection1 .courseindex-link[data-action='togglecourseindexsection']" "css_element"
+      And I wait until "#extra-actions-dropdown-1" "css_element" exists
+      And I click on "#extra-actions-dropdown-1" "css_element"
+      And I click on "#section-1 .snap-highlight" "css_element"
+      And I wait until "#section-1 .snap-highlight" "css_element" exists
+      And "#extra-actions-dropdown-1" "css_element" should exist
+      And I click on "#extra-actions-dropdown-1" "css_element"
+      And I click on "#section-1 .snap-delete" "css_element"
+      Then I should not see "Highlighted"
+      And I follow "Create a new section"
+      And I set the field "newsection" to "Test new section"
+      And I press "Create section"
+      And I wait until the page is ready
+      Then I should see "Test new section"
+      And I should see " Highlighted"

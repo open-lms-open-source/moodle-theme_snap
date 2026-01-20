@@ -1,0 +1,762 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ * Snap Table of contents.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2017 Open LMS (https://www.openlms.net)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/* stylelint-disable declaration-no-important*/
+
+div[data-flexitour="step-background"] {
+    margin: 0;
+}
+
+// -------------------------
+// Display when toc is part of page body.
+// -------------------------
+
+#snap-course-wrapper {
+    margin: 0 4%;
+    position: relative;
+    min-height: calc(100vh - 25rem);
+}
+
+#snap-course-wrapper, div[data-flexitour="step-background"] {
+    #region-main {
+        padding-top: 1em;
+        outline: none;
+    }
+
+    /* TOC list. */
+    #chapters {
+        @include list-unstyled();
+        li {
+            margin-left: 0;
+            // Indicators for draft and current section.
+            &.draft::before,
+            &.current::before {
+                content: " ";
+                height: 14px;
+                width: 14px;
+                display: inline-block;
+                margin-right: .35em;
+                border-radius: 50%;
+                margin-bottom: 0.3rem;
+            }
+            &.draft.snap-visible-section::before,
+            &.current.snap-visible-section::before {
+                margin-bottom: 0.5rem;
+            }
+            &.current::before {
+                background-color: $brand-success;
+            }
+            &.draft::before {
+                background-color: $brand-warning;
+            }
+            &.draft span.text {
+                color: $brand-warning;
+                &.completionstatus {
+                    color: #666;
+                }
+            }
+            &.draft,
+            &.current {
+                .chapter-title {
+                    width: 92%;
+                    @media (min-width: 990px) {
+                        width: 85%;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .toc-footer {
+        z-index: 1;
+        a {
+            display: block;
+            padding: 0.5em 0;
+
+            img {
+                width: 1.5em;
+                height: 1.5em;
+            }
+        }
+    }
+
+    /* Remove numbering of sections. */
+    .sectionname:before {
+        content: '';
+    }
+}
+
+// -------------------------
+// Display when toc is part of page header.
+// -------------------------
+#page-header {
+
+    #chapters {
+        column-count: 2;
+        margin-bottom: 0;
+
+        &.list-large {
+            column-count: 3;
+        }
+        span {
+            &.completionstatus {
+                color: #666;
+            }
+            &.text {
+                margin-top: 0.3em;
+            }
+        }
+        /* Chapter link */
+        .chapter-title,
+        .snap-visible-section .chapter-title {
+            margin-bottom: -0.5em;
+        }
+    }
+
+    #toc-desktop-menu-heading {
+        padding: 1em 2em 0;
+        display: inline-block;
+        margin: 0;
+    }
+
+    // Specific styles for numbered chapters to improve readability.
+    ol#chapters {
+        list-style-position: outside;
+        margin-top: 2em;
+        li {
+            margin-left: 2em;
+            padding-right: 3em;
+        }
+    }
+
+    #chapters > :first-child {
+        list-style: none;
+    }
+
+    // Add new section and course tools links.
+    .toc-footer {
+        margin-right: 4%;
+        text-align: right;
+        @media (min-width: 990px) {
+            position: absolute;
+            top: 1em;
+            right: 0;
+            margin-right: 5%;
+        }
+        a {
+            margin-right: 0.5em;
+            margin-top: 1em;
+        }
+    }
+    .snap-visible-section::marker {
+        color: #565656;
+    }
+    @media (min-width: 990px) {
+        #toc-search {
+            z-index: 1;
+            #toc-search-input.state-active,
+            #toc-search-input:focus {
+                width: 600px;
+            }
+            #toc-search-results {
+                width: 585px;
+            }
+        }
+    }
+}
+
+// -------------------------
+// Course search.
+// -------------------------
+#toc-search {
+    top: 1.25em;
+    right: 0;
+    max-width: 100%;
+
+    &:before {
+        content: '';
+        background: transparent url("[[pix:theme|search]]") no-repeat 50% 50%;
+        display: inline-block;
+        height: 1.5em;
+        width: 1.5em;
+
+        // Magin numbers for positioning
+        margin-right: -2.5em;
+        margin-bottom: -0.3em;
+    }
+}
+
+#toc-search-input {
+    border-radius: 50%;
+    margin-left: 1.15em;
+    width: 3em;
+    height: 3em;
+    padding: 0 1.5em;
+    background-color: transparent;
+    border: 1px solid transparent;
+    @include alakazam();
+
+    &.state-active,
+    &:focus {
+        border-radius: 0;
+        box-shadow: none;
+        width: 320px;
+        background-color: white;
+    }
+}
+
+label[for="toc-search-input"]{
+    display: none;
+}
+
+#toc-search-input.state-active ~ label[for="toc-search-input"] {
+    position: relative;
+    display: block;
+    top: -70px;
+    left: 15px;
+    background-color: white;
+    font-size: small;
+    padding:0 5px 0 5px;
+    width: fit-content;
+}
+
+// Hidden list - always.
+#toc-searchables {
+    display: none;
+}
+
+#toc-search-results {
+    display: none;
+    position: absolute;
+    width: 320px;
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
+
+    li {
+        width: 300px;
+        padding: 0.1em 4%;
+        overflow: hidden;
+
+        img {
+            width: 24px;
+            height: 24px;
+            vertical-align: bottom;
+        }
+
+        &:first-child {
+            padding-top: 0.5em;
+        }
+
+        &:last-child {
+            padding-bottom: 1em;
+        }
+    }
+}
+
+#toc-search-input.state-active + #toc-search-results,
+#toc-search-input:focus + #toc-search-results {
+    display: block;
+}
+
+// -------------------------
+// Course search in page header.
+// -------------------------
+#page-header {
+    #toc-search {
+        top: 0.5em;
+        right: 0;
+    }
+
+    #toc-search-results {
+        right: 0.8em;
+    }
+}
+
+// -------------------------
+// Course search in left toc.
+// -------------------------
+#snap-course-wrapper {
+    #toc-search-results {
+        left: -0.7em;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    // Small screen course tools and create new section links.
+    #page-header .toc-footer a {
+        display: block;
+    }
+
+    #toc-search-results {
+        margin-left: 2em;
+    }
+}
+
+#toc-search:before {
+  content: '';
+  background: transparent url("[[pix:theme|search]]") no-repeat 50% 50%;
+  display: inline-block;
+  height: 1.5em;
+  width: 1.5em;
+  margin-right: -4em;
+  margin-bottom: -0.3em;
+}
+
+#toc-search-input.state-active,
+#toc-search-input:focus {
+  border-radius: 0;
+  box-shadow: none;
+  width: 320px;
+  background-color: white;
+  margin-left: -3em;
+}
+
+.drawerheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .drawertoggle {
+    margin-left: auto;
+  }
+}
+
+.drawerheadercontent {
+  order: -1;
+  margin-left: 0.5rem;
+}
+
+#courseindexdrawercontrols {
+  padding: 0;
+  margin: 0;
+  width: 29px;
+}
+
+.drawer.drawer-left .btn {
+    &.drawertoggle {
+      padding: 0;
+      margin: 0;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: none;
+
+        i.icon {
+          color: white;
+          font-size: .75rem;
+        }
+    }
+
+    &.btn-icon {
+        i.fa-ellipsis-v {
+          font-size: 27px;
+        }
+
+        &.rounded-circle {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+    }
+}
+
+.toc-footer {
+  padding: 1em 0;
+
+  @media (min-width: 1277px) and (max-width: 1449px) {
+    padding: 1em 1em;
+  }
+
+  @media (min-width: 1450px) {
+    padding: 1em 2em;
+  }
+}
+
+.courseindex-item {
+  position: relative;
+}
+
+.courseindex-section {
+    .courseindex-item-content .courseindex-link:not([data-for="section_title"]) {
+      font-size: 0.95rem;
+    }
+
+    .courseindex-link {
+      display: inline-block !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative;
+      z-index: 1;
+
+      .activityiconcontainer.Forumicon {
+        filter: $communication-filter;
+      }
+    }
+
+    & .courseindex-item.restrictions {
+      & .courseindex-link:has(+ .current-badge + .courseindex-locked), & .courseindex-link:has(+ .courseindex-locked) {
+        margin-right: 2em;
+      }
+    }
+
+    &.current {
+        & > .courseindex-item > .courseindex-link:has(+ .current-badge) {
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding-right: 5.5em;
+        }
+
+        .current-badge {
+          position: absolute;
+          top: 30%;
+          right: 0.8rem;
+          transform: translateY(-50%);
+          z-index: 2;
+          pointer-events: none;
+          margin: 0.55em 0;
+        }
+
+        & > .courseindex-item.restrictions .current-badge:has(+ .courseindex-locked) {
+          right: 2.8rem;
+        }
+    }
+    .courseindex-locked {
+      position: absolute;
+      right: 0.25rem;
+    }
+}
+
+#course-index i.icon,
+#course-index p.tree_item:before {
+  color: inherit;
+}
+
+#course-index .completioninfo i.icon  {
+  font-size: 11px;
+  position: relative;
+  left: 8px;
+  bottom: 2px;
+}
+
+#courseindex #courseindex-content {
+  padding-left: 0.8em;
+}
+
+.courseindex .courseindex-item-content .courseindex-item {
+  padding: 0.1em 0.5em;
+}
+
+[id*="courseindex"].drawer-left .btn.drawertoggle i.icon {
+  font-size: 14px;
+}
+// -------------------------
+// courseindex icons
+// -------------------------
+.courseindex-section {
+    .activityiconcontainer {
+        display: inline-flex;
+        vertical-align: text-bottom;
+        padding: unset;
+        margin: unset;
+        width: 200%;
+
+        .lightboxgallery.icon {
+          filter: $lightbox-filter;
+        }
+
+        .forum.icon,
+        .hsuforum.icon,
+        .chat.icon {
+            filter: $communication-filter;
+        }
+
+        .assignment.icon,
+        .assign.icon,
+        .workshop.icon,
+        .journal.icon,
+        .attendance.icon {
+          filter: $assignment-filter;
+        }
+
+        .quiz.icon,
+        .choice.icon,
+        .feedback.icon,
+        .facetoface.icon{
+          filter: $content-filter;
+        }
+
+        .wiki.icon,
+        .glossary.icon,
+        .choicegroup.icon,
+        .data.icon {
+          filter: $information-filter;
+        }
+
+        .collaborate.icon {
+          filter: $collab-filter;
+        }
+
+        .questionnaire.icon,
+        .imscp.icon,
+        .survey.icon,
+        .lesson.icon {
+          filter: $questionnaire-filter;
+        }
+
+        .lightbox.icon {
+          filter: $lightbox-filter;
+        }
+
+        .resource.icon,
+        .lti.icon {
+          filter: $resource-filter;
+        }
+
+        .book.icon {
+          filter: $book-filter;
+        }
+
+        .folder.icon {
+          filter: $folder-filter;
+        }
+
+        .url.icon,
+        .kalvidres.icon,
+        .andrescosearch.icon{
+          filter: $url-filter;
+        }
+
+        .label.icon {
+          filter: $label-filter;
+        }
+
+        .page.icon {
+          filter: $page-filter;
+        }
+
+        .customcert.icon,
+        .certificate.icon {
+          filter: $certificate-filter;
+        }
+
+        .customquiz.icon {
+          filter: $customquiz-filter;
+        }
+
+        .livepoll.icon {
+          filter: $livepoll-filter;
+        }
+
+        .checklist.icon,
+        .dialogue.icon {
+          filter: $checklist-filter;
+        }
+
+        .adaptivequiz.icon,
+        .quizgame.icon {
+          filter: $quizlms-filter;
+        }
+
+        .zoom.icon {
+          filter: $zoom-filter;
+        }
+
+        .goone.icon {
+          filter: $go1-filter;
+        }
+
+        .ebcwep.icon,
+        .threesixo.icon,
+        .coursecertificate.icon,
+        .kalvidassign.icon {
+          filter: $ebcwep-filter;
+        }
+
+        .groupselect.icon,
+        .mindmap.icon,
+        .oublog.icon {
+          filter: $groupselect-filter;
+        }
+
+        .imscp.icon,
+        .scorm.icon {
+          filter: $imscp-filter;
+        }
+
+        .scheduler.icon {
+          filter: $scheduler-filter;
+        }
+
+      .activityicon {
+          width: 18px;
+          height: 18px;
+          position: absolute;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+  #course-index {
+    .activityicon {
+      bottom: 6px;
+    }
+  }
+}
+
+// -------------------------
+// Course progress bar
+// -------------------------
+
+.drawer.drawer-left #course-toc-progress-bar {
+  color: gray;
+  background-color: #fff;
+  width: 90%;
+  font-size: 1.1rem;
+  border-radius: 1rem;
+  margin: 5% auto;
+  padding: 4% 5%;
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .progress {
+    height: .5rem;
+  }
+  .progress,
+  .progress-bar {
+    border-radius: 0.5rem;
+  }
+  @for $i from 0 through 100 {
+    .progress-bar[aria-valuenow="#{$i}"] {
+      @if $i < 20 {
+        background-color: $red;
+        color: white;
+      } @else if $i < 80 {
+        background-color: $yellow;
+        color: black;
+      } @else {
+        background-color: $green;
+        color: white;
+      }
+    }
+  }
+}
+
+body.snap_drawer_open {
+  .modal-backdrop.show {
+    display: none;
+  }
+}
+
+.snap-drawer-mobile-header {
+  display: none;
+}
+
+@media screen and (max-width: 480px) {
+  div.drawer-left#theme_boost-drawers-courseindex {
+    position: fixed !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+  }
+
+  .drawerheader{
+    top: auto !important;
+
+    #courseindexdrawercontrolsmenubutton {
+      margin-top: -1rem;
+      margin-left: -2rem !important;
+    }
+
+    button.btn.drawertoggle  {
+      position: fixed !important;
+      top: 1.3rem;
+
+      .icon {
+        font-size: 20px !important;
+      }
+    }
+  }
+
+  #toc-desktop-menu-heading {
+    width: 85%;
+  }
+
+  .snap-drawer-mobile-header {
+    display: block;
+    padding: 1rem;
+    color: white;
+    h2 {
+      color: white;
+    }
+  }
+}
+// -------------------------
+// Section progress indicator.
+// -------------------------
+.drawer.drawer-left .snap-section-progress-wrapper {
+    background-color: #CACACA;
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.75rem;
+    margin: .3rem 0 .5rem 2rem;
+
+    .snap-section-progress-content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .snap-section-progress-text {
+      font-size: 0.9rem;
+      color: #565656;
+      margin: 0;
+    }
+
+    .snap-section-progress-icon {
+      color: #357a32;
+      font-size: 0.9rem;
+      display: none;
+      flex-shrink: 0;
+    }
+
+    &.snap-section-progress-complete {
+        .snap-section-progress-text {
+          color: #357a32;
+        }
+    }
+}

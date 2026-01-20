@@ -1,0 +1,964 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Trait - format section
+ * Code that is shared between course_format_topic_renderer.php and course_format_weeks_renderer.php
+ * Used for section outputs.
+ *
+ * @package   theme_snap
+ * @copyright Copyright (c) 2015 Open LMS. (http://www.openlms.net)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+namespace theme_snap\output;
+use cm_info;
+use context_course;
+use core_courseformat\base as course_format;
+use core_courseformat\output\local\content;
+use \core_courseformat\output\local\content\delegatedsection;
+use \core\output\html_writer;
+use \core\url as moodle_url;
+use section_info;
+use stdClass;
+use theme_snap\output\core\course_renderer;
+use theme_snap\renderables\course_action_section_duplicate;
+use theme_snap\renderables\course_action_section_move;
+use theme_snap\renderables\course_action_section_visibility;
+use theme_snap\renderables\course_action_section_delete;
+use theme_snap\renderables\course_action_section_highlight;
+use theme_snap\renderables\course_action_section_permalink;
+use theme_snap\renderables\course_section_navigation;
+use theme_snap\sectionsactions;
+
+trait format_section_trait {
+
+    use general_section_trait;
+
+     static $SECTION_ACTIONS_BEFORE_MENU = 2;
+
+    /**
+     * Render the enable bulk editing button.
+     * @param course_format $format the course format
+     * @return string|null the enable bulk button HTML (or null if no bulk available).
+     */
+    public function bulk_editing_button(course_format $format): ?string {
+        // Snap modifications to course formats do not support this feature.
+        return '';
+    }
+
+    /**
+     * Overrides the render_from_template from lib/classes/output/renderer_base.php.
+     * This method is used to intercept the $data that is sent for templates rendering.
+     *
+     * @param string $templatename The template to render
+     * @param array|stdClass $data Context containing data for the template.
+     * @return string|boolean
+     */
+    public function render_from_template($templatename, $data) {
+        global $CFG, $DB, $USER;
+        $course = $this->page->course;
+        $modinfo = get_fast_modinfo($course);
+        $courseformat = course_get_format($course);
+
+        // Add data to always display controlmenu, restrictions and alternative content for Snap activity cards.
+        if ($templatename === 'core_courseformat/local/content' && isset($data->singlesection->cmlist->cms)) {
+            // Add Snap additional HTML and data for each course module.
+            foreach ($data->singlesection->cmlist->cms as &$cmsitem) {
+                $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
+            }
+            $currentsection = $modinfo->get_section_info($data->singlesection->num);
+            // Set editing true, so section badges are rendered.
+            $data->singlesection->editing = true;
+            $data->singlesection->summary->summarytext = '';
+            $data->singlesection->snapsectionsummary = $this->add_snap_custom_section_summary($courseformat, $currentsection);
+
+            unset($cmsitem);
+            parent::render_from_template('theme_snap/courseformat_init', null);
+        }
+        // Add data to always display controlmenu for Snap subsections, when editing is off.
+        if ($templatename === 'core_courseformat/local/content/delegatedsection' && $this->page->user_is_editing() === false) {
+            $sectionrecord = $DB->get_record('course_sections', ['id' => $data->id], '*', MUST_EXIST);
+            $section = $modinfo->get_section_info($sectionrecord->section);
+
+            // Simulate editing On.
+            $USER->editing = true;
+            // Instance the class controlmenu so data is added for rendering.
+            $controlmenuclass = $courseformat->get_output_classname('content\\section\\controlmenu');
+            $controlmenu = new $controlmenuclass($courseformat, $section);
+
+            // Generate controlmenu data.
+            $newcontrolmenu = $controlmenu->export_for_template($this);
+
+            // Add Data so controlmenu is rendered.
+            $data->controlmenu = $newcontrolmenu;
+
+            // Restore real editing mode.
+            $USER->editing = false;
+        }
+        if ($templatename === 'core_courseformat/local/content/cm/completion_dialog' && empty($CFG->theme_snap_internal_store_real_edit_mode)) {
+            // Simulate editing off, because the real one is off, but if the code got here it means it was on, on another simulation.
+            $data->editing = false;
+        }
+
+        if ($templatename === 'core_courseformat/local/content/frontpagesection' && isset($data->sections[0]->cmlist->cms)) {
+            // Add Snap additional HTML and data for each course module on Front page.
+            foreach ($data->sections[0]->cmlist->cms as &$cmsitem) {
+                $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
+            }
+            unset($cmsitem);
+            parent::render_from_template('theme_snap/courseformat_init', null);
+        }
+
+        // Render the template as usual.
+        return parent::render_from_template($templatename, $data);
+    }
+
+    /**
+     * Overrides the render function from lib/classes/output/renderer_base.php.
+     *
+     * Renders the provided widget and returns the HTML to display it.
+     *
+     * @param \core\output\renderable $widget instance with renderable interface
+     * @return string the widget HTML
+     */
+    public function render(\core\output\renderable $widget): string {
+        global $CFG, $DB, $PAGE, $USER;
+
+        // Render the course content based on Core templates.
+        if ($widget instanceof content) {
+            $context = \context_course::instance($PAGE->course->id);
+            $course = get_course($context->instanceid);
+            $modinfo = get_fast_modinfo($course);
+            $courseformat = course_get_format($course);
+
+            // Check if we are in a specific section by URL.
+            $pagepath = $PAGE->url->get_path();
+            $sectionid = optional_param('id', -1, PARAM_INT);
+            $sectionnumber = optional_param('section', -1, PARAM_INT);
+            $currentsection = null;
+            $onsectionpage = false;
+
+            if (str_contains($PAGE->pagetype, 'course-view-section') && $sectionid !== -1) { // For section.php render
+                $sectionrecord = $DB->get_record('course_sections', ['id' => $sectionid], '*', MUST_EXIST);
+                $currentsection = $modinfo->get_section_info($sectionrecord->section);
+                $onsectionpage = true;
+            } elseif ($sectionnumber !== -1) { // For view.php?section=0 render - (single section via URL parameter)
+                $currentsection = $modinfo->get_section_info($sectionnumber);
+                $onsectionpage = true;
+            } else if (str_contains($PAGE->pagetype, 'course-view') && $sectionnumber === -1) { // For view.php render - (Main course view)
+                $startsectionid = $this->get_snap_active_section($course);
+
+                // Set current section to Course.
+                $courseformat->set_sectionnum($startsectionid);
+                $reflection = new \ReflectionClass($widget);
+                $formatProperty = $reflection->getProperty('format');
+                $formatProperty->setAccessible(true);
+                $formatProperty->setValue($widget, $courseformat);
+
+                $currentsection = $modinfo->get_section_info($startsectionid);
+                $onsectionpage = true;
+            } else if ($pagepath === '/') { // For call via AJAX - theme_snap_output_fragment_section
+                $currentsection = $modinfo->get_section_info($courseformat->get_sectionnum());
+            }
+
+            // Bring core render.
+            $corecontent = parent::render($widget);
+            $output = $corecontent;
+
+            if ($currentsection) {
+                // For rendering a single section.
+                $sectionheader = $this->section_header(
+                    $currentsection,
+                    $course,
+                    true,
+                    $currentsection->section
+                );
+                $output = $sectionheader;
+                $output .= $corecontent;
+
+                if ($currentsection->uservisible && !$PAGE->user_is_editing()) {
+                    // Add Snap modchooser and Snap drop file.
+                    $sectionfooter = $this->course_section_add_cm_control_snap($course, $currentsection, 0);
+                    $output .= $sectionfooter;
+                }
+                // Add Snap footer navigation for course.
+                $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $currentsection->section));
+            }
+            if ($onsectionpage) {
+                $sections = html_writer::start_tag('ul', ['class' => 'sections']);
+                $sections .= $this->render_from_template('theme_snap/course_section_loading', []);
+                $sections .= $output;
+                $sections .= html_writer::end_tag('ul');
+                $output = $sections;
+                // Output the "Add new section" form.
+                $output .= $this->add_new_section_form($course);
+                // Add Snap Course Dashboard.
+                $output .= shared::course_tools(true);
+            }
+            return $output;
+        }
+        else if ($widget instanceof delegatedsection) {
+            // Let's simulate Edit mode, we know how Snap loves this.
+            $fakeeditmode = false;
+            $output = '';
+            if ($this->page->user_is_editing() === false) {
+                $USER->editing = true;
+                $fakeeditmode = true;
+                $CFG->theme_snap_internal_store_real_edit_mode = false;
+            } else {
+                $CFG->theme_snap_internal_store_real_edit_mode = true;
+            }
+
+            $templatedata = $widget->export_for_template($this);
+            if ((!$templatedata->iscoursedisplaymultipage
+                || !empty($CFG->theme_snap_internal_store_real_edit_mode))
+                && isset($templatedata->cmlist->cms)) {
+
+                $course = $this->page->course;
+                $modinfo = get_fast_modinfo($course);
+                $renderer = new course_renderer($PAGE, null);
+                foreach ($templatedata->cmlist->cms as &$cmsitem) {
+                    $cmid = $cmsitem->cmitem->id;
+                    $mod = $modinfo->cms[$cmid];
+                    $coursetoolsicon = $renderer->snap_course_section_cm_availability($mod);
+                    if (isset($cmsitem->cmitem->cmformat->controlmenu)) {
+                        $cmsitem->cmitem->cmformat->controlmenu->snapcoursetoolsicon = $coursetoolsicon;
+                    }
+                    $metahtml = $renderer->module_meta_html($mod);
+                    $metahtml = (empty($metahtml)) ? '' : '<div class="snap-completion-meta">' . $metahtml. '</div>';
+                    $cmsitem->cmitem->cmformat->afterlink .= $metahtml;
+                }
+
+                $output = $this->render_from_template(
+                    $widget->get_template_name($this),
+                    $templatedata
+                );
+            }
+
+            // Return to normalcy.
+            if ($fakeeditmode === true) {
+                $USER->editing = false;
+            }
+            if (!empty($output)) {
+                return $output;
+            }
+        }
+
+        // Render as usual for any other widget.
+        return parent::render($widget);
+    }
+
+    /**
+     * Get the updated rendered version of a section.
+     * Taken from course/format/classes/output/section_renderer.php
+     *
+     * @param course_format $format the course format
+     * @param section_info $section the section info
+     * @return string the rendered element
+     */
+    public function course_section_updated(
+        course_format $format,
+        section_info $section
+    ): string {
+        $sectionclass = $format->get_output_classname('content\\section');
+        $sectioncontent = new $sectionclass($format, $section);
+        $sectiondata = $sectioncontent->export_for_template($this);
+        // Add Snap custom summary instead of core one.
+        $sectiondata->summary->summarytext = '';
+        $sectiondata->snapsectionsummary = $this->add_snap_custom_section_summary($format, $section);
+        // Set editing true, so section badges are rendered.
+        $sectiondata->editing = true;
+
+        // Add snap content to each activity module.
+        foreach ($sectiondata->cmlist->cms as &$cmsitem) {
+            $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
+        }
+        $output = $this->render_from_template(
+            $sectioncontent->get_template_name($this),
+            $sectiondata
+        );
+        return $output;
+    }
+
+    /**
+     * Here we are modifying Core "format_summary_text"
+     * So we have Snap summary with editing button inside of it.
+     *
+     * @param course_format $format the course format
+     * @param section_info $section the section info
+     * * @return string the rendered element
+     */
+    public function add_snap_custom_section_summary(course_format $format, section_info $section) {
+        global $PAGE, $USER;
+        // Get Moodle Core summary.
+        $summaryclass = $format->get_output_classname('content\\section\\summary');
+        $summary = new $summaryclass($format, $section);
+        $summarytext = $summary->format_summary_text();
+
+        // Check capabilities.
+        $context = \context_course::instance($PAGE->course->id);
+        $canupdatecourse = has_capability('moodle/course:update', $context);
+
+        // Welcome message when no summary text.
+        if (empty($summarytext) && $canupdatecourse) {
+            $summarytext = \html_writer::tag('p', get_string('defaultsummary', 'theme_snap'));
+            if ($section->section == 0) {
+                $editorname = format_string(fullname($USER));
+                $summarytext = \html_writer::tag('p', get_string('defaultintrosummary', 'theme_snap', $editorname));
+            }
+        } else {
+            $summarytext = \html_writer::tag('div', $summarytext);
+        }
+
+        // Get edit section HTML.
+        $editbutton_html = '';
+        if ($canupdatecourse) {
+            $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $section->sectionnum));
+            $icon = '<img aria-hidden="true" role="presentation" class="svg-icon" alt="" src="';
+            $icon .= $this->output->image_url('pencil', 'theme').'" /><br/>';
+            $editbutton_html .= '<a href="'.$url.'" class="edit-summary">'.$icon.get_string('editcoursetopic', 'theme_snap'). '</a>';
+        }
+        $summarylabel = get_string('summarylabel', 'theme_snap');
+        $wrapper_attributes = [
+            'class' => 'summary',
+            'role' => 'group',
+            'aria-label' => $summarylabel
+        ];
+        $final_content = $summarytext . $editbutton_html;
+
+        return \html_writer::tag('div', $final_content, $wrapper_attributes);
+    }
+
+     /**
+     * Get the updated rendered version of a cm list item.
+     * Taken from course/format/classes/output/section_renderer.php
+     *
+      * We override this so each Course Module (cm) or activity has Snap features.
+      * When calling duplicate, hide, show, etc.
+     * @param course_format $format the course format
+     * @param section_info $section the section info
+     * @param cm_info $cm the course module info
+     * @param array $displayoptions optional extra display options
+     * @return string the rendered element
+     */
+    public function course_section_updated_cm_item(
+        course_format $format,
+        section_info $section,
+        cm_info $cm,
+        array $displayoptions = []
+    ) {
+        $cmitemclass = $format->get_output_classname('content\\section\\cmitem');
+        $cmitem = new $cmitemclass($format, $section, $cm, $displayoptions);
+        $cmitemdata = $cmitem->export_for_template($this);
+        // Modify cmitem data so it has snap modules features.
+        $newcmitemdata = $this->add_snap_custom_module_data($cmitemdata);
+        $output = $this->render_from_template(
+            $cmitem->get_template_name($this),
+            $newcmitemdata
+        );
+        return $output;
+    }
+
+    /**
+     * This method adds some custom data for Snap course modules.
+     * For example:
+     * - controlmenu visible (Hide, show, duplicate) for each activity WHEN EDITING IS OFF.
+     * - custom module content or additional HTML, needed for image, book, page activities.
+     * - Snap activities restrictions and tags.
+     *
+     * @param stdClass $cmitemdata The original module data
+     * @return stdClass The new module data to be used for rendering.
+     */
+    public function add_snap_custom_module_data(\stdClass $cmitemdata) {
+        global $PAGE, $USER;
+        $course = $this->page->course;
+        $modinfo = get_fast_modinfo($course);
+        $courseformat = course_get_format($course);
+        $renderer = new course_renderer($PAGE, null);
+        $editingstate = $this->page->user_is_editing();
+        // Simulate editing On.
+        $USER->editing = true;
+
+
+        $cmid = $cmitemdata->id;
+        $mod = $modinfo->cms[$cmid];
+        $section = $mod->get_section_info();
+
+        $displayoptions = [];
+        // Instance the class controlmenu so data is added for rendering.
+        $controlmenu = new \core_courseformat\output\local\content\cm\controlmenu($courseformat, $section, $mod, $displayoptions);
+
+        // Generate controlmenu data.
+        $newcontrolmenu = $controlmenu->export_for_template($this);
+
+        // Add Data so controlmenu is rendered.
+        $cmitemdata->cmformat->controlmenu = $newcontrolmenu;
+
+        // Get custom module content for Snap, or get modules own content.
+        $modmethod = 'mod_'.$mod->modname.'_html';
+        if ($renderer->is_image_mod($mod)) {
+            $altcontent = $renderer->mod_image_html($mod);
+        } else if (method_exists($renderer,  $modmethod )) {
+            $altcontent = call_user_func([$renderer, $modmethod], $mod);
+        } else {
+            $altcontent = $mod->get_formatted_content(
+                ['overflowdiv' => true, 'noclean' => true]
+            );
+        }
+        $altcontent = (empty($altcontent)) ? false : $altcontent;
+
+        if ($mod->url && $altcontent) {
+            // Add chevron icon to content.
+            $altcontent .= '<div class="readmoreicon">
+                        <a href="'.$mod->url.'&forceview=1" aria-label="'. get_string('gotoactivity', 'theme_snap', $mod->name) .'"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                        </div>';
+        }
+
+        // Add Module meta html.
+        $metahtml = $renderer->module_meta_html($mod);
+        $metahtml = (empty($metahtml)) ? '' : '<div class="snap-completion-meta">' . $metahtml. '</div>';
+        $cmitemdata->cmformat->afterlink .= $metahtml;
+
+        // Add Module alternative content rendered.
+        $cmitemdata->cmformat->altcontent = $altcontent;
+
+        // Add Snap restrictions to modules.
+        $coursetoolsicon = $renderer->snap_course_section_cm_availability($mod);
+        if ($cmitemdata->cmformat->controlmenu !== null) {
+            $cmitemdata->cmformat->controlmenu->snapcoursetoolsicon = $coursetoolsicon;
+        }
+
+        // Restore real editing mode.
+        $USER->editing = $editingstate;
+        return $cmitemdata;
+    }
+
+    /**
+     * Find the active section for main Course view.
+     *
+     * @param stdClass $course The course entry from DB
+     * @return mixed The section to show by default in Snap Course View
+     */
+    protected function get_snap_active_section($course) {
+        $modinfo = get_fast_modinfo($course);
+        $startsectionid = 0; // Default section 0.
+        if ($course->format == 'weeks') {
+            $numsections = course_get_format($course)->get_last_section_number();
+            for ($i = 0; $i <= $numsections; $i++) {
+                if (course_get_format($course)->is_section_current($i)) {
+                    $startsectionid = $i;
+                    break;
+                }
+            }
+        } else if ($course->format == 'topics') {
+            $startsectionid = !empty($course->marker) && $modinfo->get_section_info($course->marker) ? $course->marker : 0;
+        }
+        $startsectionid = !empty($course->sectionreturn) ? $course->sectionreturn : $startsectionid;
+
+        return $startsectionid;
+    }
+
+    /**
+     * Generate the edit controls of a section
+     *
+     * @param stdClass $course The course entry from DB
+     * @param stdClass $section The course_section entry from DB
+     * @param bool $onsectionpage true if being printed on a section page
+     * @return array of links with edit controls
+     */
+    protected function section_edit_control_items($course, $section, $onsectionpage = false) {
+
+        if ($section->section === 0) {
+            return [];
+        }
+
+        if ($onsectionpage) {
+            $baseurl = course_get_url($course, $section->section);
+        } else {
+            $baseurl = course_get_url($course);
+        }
+        $baseurl->param('sesskey', sesskey());
+
+        $controls = array();
+
+        $moveaction = new course_action_section_move($course, $section, $onsectionpage);
+        $visibilityaction = new course_action_section_visibility($course, $section, $onsectionpage);
+        $deleteaction = new course_action_section_delete($course, $section, $onsectionpage);
+        $highlightaction = new course_action_section_highlight($course, $section, $onsectionpage);
+        $duplicateaction = new course_action_section_duplicate($course, $section, $onsectionpage);
+        $permalinkaction = new course_action_section_permalink($course, $section, $onsectionpage);
+
+        $actions = array(
+            $moveaction,
+            $visibilityaction,
+            $deleteaction,
+            $highlightaction,
+            $duplicateaction,
+            $permalinkaction,
+        );
+
+        foreach($actions as $action) {
+            $controls[] = $this->render($action);
+        }
+
+        if(count($controls) > self::$SECTION_ACTIONS_BEFORE_MENU) {
+            $newcontrols = array_slice($controls, 0, self::$SECTION_ACTIONS_BEFORE_MENU);
+            $actionstomenu = array_slice($actions, self::$SECTION_ACTIONS_BEFORE_MENU);
+            foreach ($actionstomenu as $action) {
+                $action->isinmenu = true;
+            }
+            $menu = $this->section_edit_control_items_menued($actionstomenu, $section);
+            $newcontrols[] = $menu;
+            $controls = $newcontrols;
+        }
+
+        return $controls;
+    }
+
+    /**
+     * Generate the dropdown to display the extra options.
+     * @param $items
+     */
+    protected function section_edit_control_items_menued($actions, $section) {
+        $data = [
+            'actions' => $actions,
+            'sectionid' => $section->section
+        ];
+        return $this->render_from_template('theme_snap/course_action_section_menu', $data);
+    }
+
+    /**
+     *
+     * Generate the display of the header part of a section before
+     * course modules are included
+     *
+     * @param stdClass $section The course_section entry from DB
+     * @param stdClass $course The course entry from DB
+     * @param bool $onsectionpage true if being printed on a single-section page
+     * @param int $sectionreturn The section to return to after an action
+     * @return string HTML to output.
+     */
+    protected function section_header($section, $course, $onsectionpage, $sectionreturn=null) {
+        global $PAGE, $USER;
+
+        $o = '';
+        $sectionstyle = '';
+
+        // We have to get the output renderer instead of using $this->output to ensure we get the non ajax version of
+        // the renderer, even when via an AJAX request. The HTML returned has to be the same for all requests, even
+        // ajax.
+        $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
+        $pagepath = $PAGE->url->get_path();
+        $sectionid = optional_param('id', -1, PARAM_INT);
+
+        if ($section->section != 0) {
+            // Only in the non-general sections.
+            if (!$section->visible) {
+                $sectionstyle = ' hidden';
+            } else if (course_get_format($course)->is_section_current($section)) {
+                $sectionstyle = ' current set-by-server';
+                if ($pagepath !== '/course/section.php') {
+                    $sectionstyle .= ' state-visible';
+                }
+            } else if ($course->format == 'weeks' && $sectionid == $section->id) {
+                $sectionstyle .= ' state-visible set-by-server';
+            }
+        } else if ($course->format == "topics" && $course->marker == 0) {
+            $sectionstyle = ' set-by-server';
+            if ($pagepath !== '/course/section.php') {
+                $sectionstyle .= ' state-visible';
+            }
+        }
+
+        if ($this->is_section_conditional($section)) {
+            $canviewhiddensections = has_capability(
+                'moodle/course:viewhiddensections',
+                context_course::instance($course->id)
+            );
+            if (!$section->uservisible || $canviewhiddensections) {
+                $sectionstyle .= ' conditional';
+            }
+            if (course_get_format($course)->is_section_current($section)) {
+                $sectionstyle .= ' current set-by-server';
+                if ($pagepath !== '/course/section.php') {
+                    $sectionstyle .= ' state-visible';
+                }
+            }
+        }
+
+        if ($pagepath === '/course/section.php' && ($sectionid = optional_param('id', -1, PARAM_INT)) !== -1) {
+            if ($sectionid == $section->id) {
+                $sectionstyle .= ' state-visible';
+            }
+        }
+
+        // SHAME - the tabindex is intefering with moodle js.
+        // SHAME - Remove tabindex when editing menu is shown.
+        $sectionarrayvars = array(
+            'id' => 'section-'.$section->section,
+            'class' => 'section main clearfix'.$sectionstyle,
+            'aria-label' => get_section_name($course, $section),
+            'data-id' => $section->id,
+            );
+        if (!$PAGE->user_is_editing()) {
+            $sectionarrayvars['tabindex'] = '-1';
+        }
+
+        $o .= html_writer::start_tag('li', $sectionarrayvars);
+        $o .= html_writer::start_tag('div', array('class' => 'content'));
+
+        // When not on a section page, we display the section titles except the general section if null.
+        $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
+
+        // When on a section page, we only display the general section title, if title is not the default one.
+        $hasnamesecpg = ($onsectionpage && ($section->section == 0 && !is_null($section->name)));
+
+        $classes = ' accesshide';
+        if ($hasnamenotsecpg || $hasnamesecpg) {
+            $classes = '';
+        }
+
+        $context = context_course::instance($course->id);
+
+        $sectiontitle = get_section_name($course, $section);
+
+        $sectionid = "sectionid-{$section->id}-title";
+        $htmlheading = html_writer::tag(
+            'h' . 2,
+            $sectiontitle,
+            array(
+                'id' => $sectionid,
+                'class' => 'sectionname',
+                'data-id' => $section->id
+            ));
+        $o .= "<div>" . $htmlheading . "</div>";
+
+        // Section drop zone.
+        $caneditcourse = has_capability('moodle/course:update', $context);
+        if ($caneditcourse && $section->section != 0) {
+            $o .= "<a class='snap-drop section-drop' data-title='".
+                    s($sectiontitle)."' href='#'>_</a>";
+        }
+
+        // Section editing commands.
+        $sectiontoolsarray = $this->section_edit_control_items($course, $section, $sectionreturn);
+        if (!empty($sectiontoolsarray)) {
+            // Wrap into a list
+            $sectiontoolsarray[0] = '<ul>' . $sectiontoolsarray[0];
+            $sectiontoolsarray[count($sectiontoolsarray) - 1] .= '</ul>';
+        }
+
+        if (has_capability('moodle/course:update', $context) || has_capability('moodle/course:activityvisibility', $context)) {
+            if (!empty($sectiontoolsarray)) {
+                $sectiontools = implode(' ', $sectiontoolsarray);
+                $o .= html_writer::tag('div', $sectiontools, array(
+                    'class' => 'js-only snap-section-editing actions section-actions',
+                    'role' => 'region',
+                    'data-sectionid' => $section->id,
+                    'aria-label' => get_string('topicactions', 'theme_snap'),
+                ));
+            }
+        }
+
+        return $o;
+    }
+
+    /**
+     * @param course_section_navigation $navigation
+     */
+    public function render_course_section_navigation(course_section_navigation $navigation) {
+        return $this->render_from_template('theme_snap/course_section_navigation', $navigation);
+    }
+
+    /**
+     * Render a form to create a new course section, prompting for basic info.
+     *
+     * @return string
+     */
+    private function add_new_section_form($course) {
+
+        $course = course_get_format($course)->get_course();
+        $actions = new sectionsactions($course);
+        $context = context_course::instance($course->id);
+        if (!has_capability('moodle/course:update', $context)) {
+            return '';
+        }
+
+        $url = new moodle_url('/theme/snap/index.php', array(
+            'sesskey'  => sesskey(),
+            'action' => 'addsection',
+            'contextid' => $context->id,
+        ));
+
+        $required = '';
+        $defaulttitle = get_string('title', 'theme_snap');
+        $sectionnum = $actions->get_last_section_number_public(false);
+        if ($course->format === 'topics') {
+            // Make sure that section does not have leading or trailing spaces and at least one character.
+            $required = 'required pattern=".*\S+.*"';
+        } else {
+            // Take this part of code from /course/format/weeks/lib.php on functions
+            // @codingStandardsIgnoreLine
+            // get_section_name($section) and get_section_dates($section).
+            $oneweekseconds = 60 * 60 * 24 * 7;
+            // Hack alert. We add 2 hours to avoid possible DST problems. (e.g. we go into daylight
+            // savings and the date changes.
+            $startdate = $course->startdate + (60 * 60 * 2);
+            $dates = new stdClass();
+            $dates->start = $startdate + ($oneweekseconds * $sectionnum);
+            $dates->end = $dates->start + $oneweekseconds;
+            // We subtract 24 hours for display purposes.
+            $dates->end = ($dates->end - (60 * 60 * 24));
+            $dateformat = get_string('strftimedateshort');
+            $weekday = userdate($dates->start, $dateformat);
+            $endweekday = userdate($dates->end, $dateformat);
+            $datesection = $weekday.' - '.$endweekday;
+        }
+        $heading = get_string('addanewsection', 'theme_snap');
+        $output = "<section id='snap-add-new-section' class='clearfix' tabindex='-1'>
+        <h3>$heading</h3>";
+        $output .= html_writer::start_tag('form', array(
+            'method' => 'post',
+            'action' => $url->out_omit_querystring(),
+        ));
+        $output .= html_writer::input_hidden_params($url);
+        $output .= '<div class="mb-3">';
+        $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
+        if ($course->format === 'topics') {
+            $output .= '<input id="newsection" type="text" maxlength="250" name="newsection" '.$required;
+            $output .= ' placeholder="'.s(get_string('title', 'theme_snap')).'">';
+        } else {
+            $output .= '<h3>'.$defaulttitle.': '.$datesection.'</h3>';
+        }
+        $output .= '</div>';
+        $output .= '<div class="mb-3">';
+        $output .= '<label for="summary">'.get_string('contents', 'theme_snap').'</label>';
+
+        $options = array(
+            'subdirs' => 0,
+            'maxbytes' => 0,
+            'maxfiles' => EDITOR_UNLIMITED_FILES,
+            'context' => $context,
+        );
+        $draftitemid = file_get_submitted_draft_itemid('summary');
+        $currenttext = file_prepare_draft_area($draftitemid, $context->id, 'course', 'section', null, $options);
+
+        $output .= $this->print_editor('summary', 'summary-editor', $currenttext, $draftitemid, $options);
+        $output .= html_writer::empty_tag('input', array(
+            'type' => 'hidden',
+            'name' => 'draftitemid',
+            'value' => $draftitemid,
+        ));
+
+        $output .= '</div>';
+        $output .= html_writer::empty_tag('input', array(
+            'type' => 'submit',
+            'class' => 'btn btn-primary',
+            'name' => 'addtopic',
+            'value' => get_string('createsection', 'theme_snap'),
+        ));
+
+        $message = get_string('cancel');
+        $attr = array('class' => 'btn btn-secondary', 'id' => 'cancel-new-section', 'type' => 'button');
+        $output .= html_writer::tag('button', $message, $attr);
+
+        $output .= html_writer::end_tag('form');
+        $output .= '</section>';
+        return $output;
+    }
+
+    /**
+     * Returns the HTML for an editor with file management
+     *
+     * @param string $id The id to use fort he textarea element
+     * @param string $name Name to use for the textarea element
+     * @param string $currenttext Initial content to display in the textarea
+     * @param int $draftitemid the id of the draft area to use
+     * @param array $options text and file options ('subdirs'=>false, 'forcehttps'=>false)
+     * @return string
+     */
+    private function print_editor($name, $id, $currenttext, $draftitemid, $options) {
+        global $OUTPUT;
+
+        editors_head_setup();
+        $editor = editors_get_preferred_editor(FORMAT_HTML);
+        $editor->set_text($currenttext);
+
+        $args = new stdClass();
+        $args->accepted_types = array('image');
+        $args->return_types = (FILE_INTERNAL | FILE_EXTERNAL);
+        $args->context = $options['context'];
+        $args->env = 'filepicker';
+
+        $imageoptions = initialise_filepicker($args);
+        $imageoptions->context = $options['context'];
+        $imageoptions->client_id = uniqid();
+        $imageoptions->maxbytes = $options['maxfiles'];
+        $imageoptions->env = 'editor';
+        $imageoptions->itemid = $draftitemid;
+
+        $args->accepted_types = array('video', 'audio');
+        $mediaoptions = initialise_filepicker($args);
+        $mediaoptions->context = $options['context'];
+        $mediaoptions->client_id = uniqid();
+        $mediaoptions->maxbytes  = $options['maxfiles'];
+        $mediaoptions->env = 'editor';
+        $mediaoptions->itemid = $draftitemid;
+
+        $args->accepted_types = '*';
+        $linkoptions = initialise_filepicker($args);
+        $linkoptions->context = $options['context'];
+        $linkoptions->client_id = uniqid();
+        $linkoptions->maxbytes  = $options['maxfiles'];
+        $linkoptions->env = 'editor';
+        $linkoptions->itemid = $draftitemid;
+
+        $fpoptions['image'] = $imageoptions;
+        $fpoptions['media'] = $mediaoptions;
+        $fpoptions['link'] = $linkoptions;
+
+        $editor->use_editor('summary-editor', $options, $fpoptions);
+
+        $context = [
+            'id' => $id,
+            'name' => $name,
+            'value' => $currenttext,
+            'rows' => 15,
+            'cols' => 65,
+        ];
+
+        return $OUTPUT->render_from_template('core_form/editor_textarea', $context);
+    }
+
+    /**
+     * Renders HTML for the menus to add activities and resources to the current course
+     *
+     * Note, if theme overwrites this function and it does not use modchooser,
+     * see also {@link core_course_renderer::add_modchoosertoggle()}
+     *
+     * @param stdClass $course
+     * @param int $section relative section number (field course_sections.section)
+     * @param int $sectionreturn The section to link back to
+     * @param array $displayoptions additional display options, for example blocks add
+     *     option 'inblock' => true, suggesting to display controls vertically
+     * @return string
+     */
+    public function course_section_add_cm_control_snap($course, $section, $sectionreturn = null, $displayoptions = array()) {
+        // Check to see if user can add menus and there are modules to add.
+        if (!has_capability('moodle/course:manageactivities', context_course::instance($course->id))
+                || !($modnames = get_module_types_names()) || empty($modnames)) {
+            return '';
+        }
+
+        $hassubsection = false;
+
+        // Button to create subsection
+        $plugininfo = \core_plugin_manager::instance()->get_plugin_info('mod_subsection');
+        if ($plugininfo && $plugininfo->is_enabled() && $section->component !== 'mod_subsection') {
+            $coursecontext = context_course::instance($course->id);
+            // Check if user has permission to add subsection instances.
+            if (has_capability('mod/subsection:addinstance', $coursecontext)) {
+                $hassubsection = true;
+            }
+        }
+        // Prepare template data.
+        $templatedata = (object)[
+            'sectionnum' => $section->section,
+            'sectionid' => $section->id,
+            'courseid' => $course->id,
+            'addresourceoractivity' => get_string('addresourceoractivity', 'theme_snap'),
+            'dropzonelabel' => get_string('dropzonelabel', 'theme_snap'),
+            'hassubsection' => $hassubsection,
+        ];
+
+        if ($hassubsection) {
+            $templatedata->addsubsection = get_string('addsubsection', 'theme_snap');
+        }
+
+        return $this->render_from_template('theme_snap/course_section_buttons', $templatedata);
+    }
+
+    /**
+     * @param course_action_section_move $action
+     * @return mixed
+     * @throws \core\exception\moodle_exception
+     */
+    public function render_course_action_section_move(course_action_section_move $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_visibility $action
+     * @return mixed
+     * @throws \core\exception\moodle_exception
+     */
+    public function render_course_action_section_visibility(course_action_section_visibility $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_highlight $action
+     * @return mixed
+     * @throws \core\exception\moodle_exception
+     */
+    public function render_course_action_section_highlight(course_action_section_highlight $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_delete $action
+     * @return mixed
+     * @throws \core\exception\moodle_exception
+     */
+    public function render_course_action_section_delete(course_action_section_delete $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_duplicate $action
+     * @return mixed
+     * @throws \core\exception\moodle_exception
+     */
+    public function render_course_action_section_duplicate(course_action_section_duplicate $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_extra_menu $action
+     * @return mixed
+     * @throws \core\exception\moodle_exception
+     */
+    public function render_course_action_section_extra_menu(course_action_section_extra_menu $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+
+    /**
+     * @param course_action_section_permalink $action
+     * @return mixed
+     * @throws \core\exception\moodle_exception
+     */
+    public function render_course_action_section_permalink(course_action_section_permalink $action) {
+        $data = $action->export_for_template($this);
+        return $this->render_from_template('theme_snap/course_action_section', $data);
+    }
+}

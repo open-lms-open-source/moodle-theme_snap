@@ -1,0 +1,91 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @package   theme_snap
+    @copyright Copyright (c) 2025 Open LMS (https://www.openlms.net)
+    @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+ @template theme_snap/course_section_buttons
+
+ Template for rendering the three buttons in course sections:
+ - Add activity/resource button
+ - Add subsection button (if mod_subsection is enabled)
+ - Upload files dropzone
+
+ Example context (json):
+ {
+     "sectionnum": 1,
+     "sectionid": 123,
+     "courseid": 45,
+     "addresourceoractivity": "Add activity or resource",
+     "dropzonelabel": "Upload files",
+     "hassubsection": true,
+     "addsubsection": "Add subsection"
+ }
+}}
+<div class="row snap-buttons">
+    {{! Button to add activity/resource }}
+    {{#hassubsection}}
+    <div class="col-12 col-lg-4 allbuttons mb-3 snap-modchooser" id="snap-create-activity-{{sectionnum}}">
+    {{/hassubsection}}
+    {{^hassubsection}}
+    <div class="col-12 col-lg-6 mb-3 snap-modchooser" id="snap-create-activity-{{sectionnum}}">
+    {{/hassubsection}}
+    <button class="js-only section-modchooser-link btn btn-link btn-add-activity"
+            data-action="open-chooser"
+            data-sectionid="{{sectionnum}}"
+            data-sectionreturnnum="{{sectionnum}}">
+        <i class="fa-solid fa-file-circle-plus snap-icon" aria-hidden="true"></i>
+        <span class="button-text">{{addresourceoractivity}}</span>
+    </button>
+</div>
+
+    {{! Button to add subsection }}
+    {{#hassubsection}}
+        <div class="col-12 col-lg-4 allbuttons mb-3 snap-modchooser" id="snap-create-subsection-{{sectionnum}}">
+            <a href="#"
+               class="js-only section-modchooser-link btn btn-link btn-add-subsection"
+               data-action="newModule"
+               data-modname="subsection"
+               data-sectionid="{{sectionid}}"
+               data-courseid="{{courseid}}">
+                <i class="fa fa-rectangle-list snap-icon" aria-hidden="true"></i>
+                <span class="button-text">{{addsubsection}}</span>
+            </a>
+        </div>
+    {{/hassubsection}}
+
+    {{! Upload files dropzone }}
+    {{#hassubsection}}
+    <div class="col-12 col-lg-4 allbuttons snap-dropzone">
+    {{/hassubsection}}
+    {{^hassubsection}}
+    <div class="col-12 col-lg-6 snap-dropzone">
+    {{/hassubsection}}
+    <form class="js-only">
+        <label tabindex="0" for="snap-drop-file-{{sectionnum}}" class="snap-dropzone-label">
+            <div class="btn">
+                <div class="activityiconcontainer">
+                    <i class="fa-solid fa-file snap-icon" aria-hidden="true"></i>
+                </div>
+                <div class="dropzone-text">{{{dropzonelabel}}}</div>
+            </div>
+        </label>
+        <input class="js-snap-drop-file sr-only" type="file" multiple name="snap-drop-file-{{sectionnum}}" id="snap-drop-file-{{sectionnum}}">
+    </form>
+    </div>
+    </div>

@@ -1,0 +1,43 @@
+<div id="page-mast">
+    {{#course_format_warning}}
+        {{{course_format_warning}}}
+    {{/course_format_warning}}
+
+    {{{title}}}
+
+    {{#site_description}}
+        <p class="snap-site-description">{{{site_description}}}</p>
+    {{/site_description}}
+    
+    {{#summary}}
+        <div class="snap-category-description">
+            {{{summary}}}
+        </div>
+    {{/summary}}
+
+    {{#course_header}}
+        {{{course_header}}}
+    {{/course_header}}
+
+    {{#content_bank}}
+        {{{content_bank}}}
+    {{/content_bank}}
+
+    {{#cover_image_selector}}
+        {{{cover_image_selector}}}
+    {{/cover_image_selector}}
+    
+    {{#edit_category_button}}
+         <div class="ms-3">
+            <a href="{{url}}" class="btn btn-secondary">{{text}}</a>
+         </div>
+    {{/edit_category_button}}
+
+    {{#page_heading_button}}
+        {{{page_heading_button}}}
+    {{/page_heading_button}}
+
+    {{#change_fullname_button}}
+         <a href="{{url}}" class="btn btn-secondary btn-sm">{{text}}</a>
+    {{/change_fullname_button}}
+</div>

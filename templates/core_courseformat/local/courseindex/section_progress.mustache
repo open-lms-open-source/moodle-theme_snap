@@ -1,0 +1,48 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core_courseformat/local/courseindex/section_progress
+
+    Displays a section progress indicator in the course index.
+
+    Example context (json):
+    {
+        "id": 23
+    }
+}}
+{{! Section progress indicator }}
+<div class="snap-section-progress-wrapper"
+     id="snap-section-progress-{{id}}"
+     data-sectionid="{{id}}"
+     style="display: none;">
+    <div class="snap-section-progress-content">
+        <i class="fa fa-circle-check snap-section-progress-icon" style="display: none;" aria-hidden="true"></i>
+        <span class="snap-section-progress-text">
+            {{#str}}progress, theme_snap{{/str}}: <span class="snap-section-progress-count">-/-</span>
+        </span>
+    </div>
+</div>
+{{#js}}
+    require(['theme_snap/section_progress_component', 'core/config'], function(component, cfg) {
+    // Initialize the component once for all sections when the first section is rendered.
+    // The component will handle loading progress for all sections.
+    if (!window.snapSectionProgressInitialized) {
+    component.init('#course-index, #courseindex', {}, {
+    userid: cfg.userId,
+    courseid: cfg.courseId,
+    });
+    window.snapSectionProgressInitialized = true;
+    }
+    });
+{{/js}}

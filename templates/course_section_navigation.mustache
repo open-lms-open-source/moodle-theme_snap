@@ -1,0 +1,70 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+ @package   theme_snap
+ @author    Guy Thomas
+ @copyright Copyright (c) 2016 Open LMS
+ @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<nav class="section_footer" data-sectionid="{{sectionid}}">
+    <a class="previous_section {{classes}} {{^previous}}disabled{{/previous}}"
+       section-number="{{#previous}}{{section}}{{/previous}}"
+       href="{{#previous}}{{url}}{{/previous}}{{^previous}}#{{/previous}}" >
+        <div class="nav_icon">
+            <i class="icon-arrow-left" section-number="{{#previous}}{{section}}{{/previous}}"></i>
+        </div>
+        <div class="nav_text">
+        {{#issubsection}}
+            <span class="nav_guide">{{#str}}previoussubsection, theme_snap{{/str}}</span>
+        {{/issubsection}}
+        {{^issubsection}}
+            <span class="nav_guide">{{#str}}previoussection, theme_snap{{/str}}</span>
+        {{/issubsection}}
+            <span class="nav_title"
+                  aria-label="{{#previous}}{{{title}}}{{/previous}}"
+                  title="{{#previous}}{{{title}}}{{/previous}}">
+                {{#previous}}{{{title}}}{{/previous}}
+            </span>
+        </div>
+    </a>
+
+    <a class="next_section {{classes}} {{^next}}disabled{{/next}}"
+       section-number="{{#next}}{{section}}{{/next}}"
+       href="{{#next}}{{url}}{{/next}}{{^next}}#{{/next}}" >
+        <div class="nav_icon">
+            <i class="icon-arrow-right" section-number="{{#next}}{{section}}{{/next}}"></i>
+        </div>
+        <div class="nav_text">
+            {{#issubsection}}
+                <span class="nav_guide">{{#str}}nextsubsection, theme_snap{{/str}}</span>
+            {{/issubsection}}
+            {{^issubsection}}
+                <span class="nav_guide">{{#str}}nextsection, theme_snap{{/str}}</span>
+            {{/issubsection}}
+            <span class="nav_title"
+                  aria-label="{{#next}}{{{title}}}{{/next}}"
+                  title="{{#next}}{{{title}}}{{/next}}">
+                {{#next}}{{{title}}}{{/next}}
+            </span>
+        </div>
+    </a>
+</nav>
+{{#js}}
+    require(['theme_snap/section_navigation'], function(component) {
+        component.init('.section_footer[data-sectionid="{{sectionid}}"]', {{sectionid}});
+    });
+{{/js}}
