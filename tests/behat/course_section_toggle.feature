@@ -42,8 +42,10 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     Given I log in as "admin"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on "#section-1 .snap-visibility[data-action='sectionHide']" "css_element"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I wait until "#section-1 .snap-visibility[data-action='sectionShow']" "css_element" exists
     And I reload the page
     And I add a assign activity to course "C1" section "1" and I fill the form with:
@@ -52,9 +54,11 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | visible         | 1                       |
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And "Available but not shown on course page" "text" should exist in the "Assignment One" "activity"
     And I click on "#section-1 .snap-visibility[data-action='sectionShow']" "css_element"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I wait until "#section-1 .snap-visibility[data-action='sectionHide']" "css_element" exists
     Then "Available but not shown on course page" "text" should not exist in the "Assignment One" "activity"
 
@@ -68,13 +72,16 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | visible         | 0                       |
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then I should see "Hidden from students"
     And I click on "#section-1 .snap-visibility[data-action='sectionHide']" "css_element"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I wait until "#section-1 .snap-visibility[data-action='sectionShow']" "css_element" exists
     Then ".snap-asset.draft .snap-draft-tag" "css_element" should not be visible
     And I click on "#section-1 .snap-visibility[data-action='sectionShow']" "css_element"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I wait until "#section-1 .snap-visibility[data-action='sectionHide']" "css_element" exists
     Then I should see "Hidden from students"
 
@@ -85,6 +92,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And I am on the course main page for "C1"
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then "#section-1" "css_element" should exist
     And "#section-1 .snap-visibility[data-action='sectionHide']" "css_element" should not exist
 
@@ -97,6 +105,7 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And I am on the course main page for "C1"
     And the editing teacher role is removed from course "C1" for "teacher1"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then "#section-1" "css_element" should exist
     And "#section-1 .snap-visibility[data-action='sectionHide']" "css_element" should not exist
 
@@ -107,4 +116,5 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     Then I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Section 2"
+    And I wait until the page is ready
     Then "#section-2 .snap-visibility" "css_element" should not exist

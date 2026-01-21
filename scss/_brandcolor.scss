@@ -446,14 +446,15 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: $brand-primary;
     }
 
-    .courseindex-section.snap-visible-section > .courseindex-item,
-    .courseindex-section[aria-selected='true'] > .courseindex-item {
-      background-color: $brand-primary;
-      a.courseindex-chevron,
-      a.courseindex-link,
-      span {
-        color: white!important;
-      }
+    .snap-visible-section.courseindex-section > .courseindex-item,
+    &:not(.format-topics,.format-weeks) .courseindex-section[aria-selected='true'] > .courseindex-item,
+    &:not(.format-topics,.format-weeks) .courseindex-section > .courseindex-item[aria-selected='true'] {
+        background-color: $brand-primary;
+        a.courseindex-chevron,
+        a.courseindex-link,
+        span {
+            color: white!important;
+        }
     }
 
     &#page-site-index #page-header,

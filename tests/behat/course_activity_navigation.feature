@@ -78,6 +78,7 @@ Feature: Activity navigation in Snap theme
     And I am on "Course 1" course homepage
     # Stealth activity.
     And I follow "Section 2"
+    And I wait until the page is ready
     And I open "Forum 1" actions menu
     And I click on "Edit settings" "link" in the "Forum 1" activity
     And I expand all fieldsets
@@ -86,6 +87,7 @@ Feature: Activity navigation in Snap theme
     # Hidden activity.
     And I am on "Course 1" course homepage
     And I follow "Section 2"
+    And I wait until the page is ready
     And I open "Glossary 1" actions menu
     And I choose "Availability > Hide on course page" in the open action menu
     # Hidden section.
@@ -363,6 +365,7 @@ Feature: Activity navigation in Snap theme
     And I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Section 2"
+    And I wait until the page is ready
     And I open "Forum 1" actions menu
     And I choose "Availability > Hide on course page" in the open action menu
     # Click on the dropdown button.
@@ -380,8 +383,10 @@ Feature: Activity navigation in Snap theme
     And I change window size to "large"
     And I am on "Course 1" course homepage
     And I follow "Section 4"
+    And I wait until the page is ready
     And I click on "li#section-4 div.snap-section-editing a.snap-visibility[data-action='sectionHide']" "css_element"
     And I follow "Section 4"
+    And I wait until the page is ready
     And I open "Lti 1" actions menu
     And I choose "Availability > Make available but don't show on course page" in the open action menu
     Then "Available but not shown on course page" "text" should exist
@@ -394,6 +399,7 @@ Feature: Activity navigation in Snap theme
     Given I log in as "admin"
     And I am on "Course 3" course homepage
     And I follow "Section 3"
+    And I wait until the page is ready
     And I click on "#section-3 .edit-summary" "css_element"
     And I set the section name to "Weeks testing season session"
     And I press "Save changes"

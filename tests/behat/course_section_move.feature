@@ -49,10 +49,12 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I switch edit mode in Snap
     And I am on the course main page for "C1"
     And I follow "Section 1"
-    And I click on "Edit section" "link"
+    And I wait until the page is ready
+    And I click on "Edit section" "link" in the "ul.sections > li#section-1" "css_element"
     And I set the section name to "My & < > Section"
     And I press "Save changes"
     And I follow "My & < > Section"
+    And I wait until the page is ready
     And I follow "Move \"My & < > Section\""
     And I click on "Section 3" "link" in the ".modal-body" "css_element"
     When I follow "My & < > Section"
@@ -64,11 +66,13 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     Then the previous navigation for section "3" is for "Section 3"
     And the next navigation for section "3" is for "Section 4"
     And I follow "Section 4"
+    And I wait until the page is ready
     And I switch edit mode in Snap
     And the previous navigation for section "4" is for "My & < > Section"
     And I switch edit mode in Snap
     And the previous navigation for section "4" is for "My & < > Section"
     When I follow "Section 2"
+    And I wait until the page is ready
     And I switch edit mode in Snap
     And the next navigation for section "1" is for "Section 3"
     And I switch edit mode in Snap
@@ -76,6 +80,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     # The data-section attribute of the moved section module link should match the section number.
     # This is done so activities are created in the correct section.
     When I follow "My & < > Section"
+    And I wait until the page is ready
     And "button.section-modchooser-link.btn-add-activity[data-sectionid='3']" "css_element" should be visible
 
   @javascript
@@ -88,10 +93,12 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I am on the course main page for "C1"
     And I switch edit mode in Snap
     And I follow "Section 1"
-    And I click on "Edit section" "link"
+    And I wait until the page is ready
+    And I click on "Edit section" "link" in the "ul.sections > li#section-1" "css_element"
     And I set the section name to "My & < > Section"
     And I press "Save changes"
     And I follow "My & < > Section"
+    And I wait until the page is ready
     And I follow "Move \"My & < > Section\""
     And the editing teacher role is removed from course "C1" for "teacher1"
     Given I skip because "The message is being showed but the step is failing because Core throws it as an exception."
@@ -105,6 +112,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then "a[title=Move section]" "css_element" should not exist
 
   @javascript
@@ -116,9 +124,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | subsection | Subsection 1 | C1     | Subsection1 | 1      |
       | subsection | Subsection 2 | C1     | Subsection2 | 1      |
     And I am on the course main page for "C1"
-    And "//span[contains(@class, \"nav_guide\") and normalize-space(text()) = \"Next section\"]" "xpath" should be visible
-    And "//span[contains(@class, \"nav_guide\") and normalize-space(text()) = \"Previous section\"]" "xpath" should not be visible
+    And I should see "Next section"
+    And I should not see "Previous section"
     And I follow "Section 5"
-    And "//span[contains(@class, \"nav_guide\") and normalize-space(text()) = \"Next section\"]" "xpath" should not be visible
-    And "//span[contains(@class, \"nav_guide\") and normalize-space(text()) = \"Previous section\"]" "xpath" should be visible
+    And I wait until the page is ready
+    And I should not see "Next section"
+    And I should see "Previous section"
     And I follow "Section 1"

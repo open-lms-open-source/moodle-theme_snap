@@ -52,6 +52,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
       | Add custom content | 1 |
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I switch edit mode in Snap
     And I open "Test assignment1" actions menu
     And I choose "Delete" in the open action menu
@@ -74,6 +75,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     Then I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then "#section-1" "css_element" should exist
     And I open "Test assignment1" actions menu
     And I choose "Delete" in the open action menu
@@ -97,5 +99,6 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     Given I log in as "student1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And "Actions" "icon" should not exist in the "#section-1" "css_element"
   

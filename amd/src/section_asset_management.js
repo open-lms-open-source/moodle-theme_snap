@@ -158,17 +158,23 @@ define(
         var getSection = function(sectionNum, modid, sectionVisibilityCallback) {
             var params = {courseid: self.courseConfig.id, section: sectionNum};
             $('.sk-fading-circle').show();
-
             fragment.loadFragment('theme_snap', 'section', self.courseConfig.contextid, params)
                 .done(function(html, js) {
+                    if (js) {
+                        // Remove call to core_courseformat/local/content
+                        // Avoiding to re-start course reactive instances.
+                        js = js.replace(
+                            /require\(\['core_courseformat\/local\/content'\][\s\S]*?\}\);/g,
+                            '/* Removed Course Content Init */'
+                        );
+                    }
                     var $container = $('ul.sections');
                     templates.appendNodeContents($container, html, js);
 
                     // Then, show the section.
                     sectionVisibilityCallback(sectionNum, modid);
                     // Notify filters about the new section.
-                    var $newNode = $container.find('ul.sections > #section-' + sectionNum);
-                    Event.notifyFilterContentUpdated($newNode);
+                    Event.notifyFilterContentUpdated($('.course-content .' + self.courseConfig.format));
                     activityCards.init();
 
                     $('.sk-fading-circle').hide();

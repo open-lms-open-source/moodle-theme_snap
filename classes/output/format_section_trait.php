@@ -272,6 +272,8 @@ trait format_section_trait {
         course_format $format,
         section_info $section
     ): string {
+        // Set sectionnum so it renders individual section.
+        $format->set_sectionnum($section->section);
         $sectionclass = $format->get_output_classname('content\\section');
         $sectioncontent = new $sectionclass($format, $section);
         $sectiondata = $sectioncontent->export_for_template($this);
@@ -282,8 +284,10 @@ trait format_section_trait {
         $sectiondata->editing = true;
 
         // Add snap content to each activity module.
-        foreach ($sectiondata->cmlist->cms as &$cmsitem) {
-            $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
+        if ($sectiondata->cmlist->cms) {
+            foreach ($sectiondata->cmlist->cms as &$cmsitem) {
+                $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
+            }
         }
         $output = $this->render_from_template(
             $sectioncontent->get_template_name($this),

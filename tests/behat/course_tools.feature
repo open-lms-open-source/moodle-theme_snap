@@ -37,14 +37,14 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | teacher1 | C1     | editingteacher | manual |
 
   @javascript
-  Scenario: Course tools link does not show for unsupported formats.
+  Scenario: Course tools link is shown for all formats.
     Given the course format for "C1" is set to "social"
     When I log in as "student1"
     And I am on the course main page for "C1"
-    Then "a[href=\"#coursetools\"]" "css_element" should not exist
+    Then "a[href=\"#coursetools\"]" "css_element" should exist
 
   @javascript
-  Scenario Outline: Course tools link functions for supported formats.
+  Scenario Outline: Course tools link functions for all compatible formats.
     Given the course format for "C1" is set to "<format>"
     And completion tracking is "<completionenabled>" for course "C1"
     And I set the following system permissions of "Student" role:
@@ -190,6 +190,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And I follow "New section"
+    And I wait until the page is ready
     And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
 
@@ -204,6 +205,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I wait until the page is ready
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And I follow "New section"
+    And I wait until the page is ready
     And I switch edit mode in Snap
     And I wait until the page is ready
     And I should not see "Course Dashboard" in the "#coursetools" "css_element"

@@ -411,7 +411,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                 // If we have a section, save it on Courseconfig.
                 if (typeof section !== 'undefined' && section.length > 0) {
                     e.preventDefault();
-                    e.stopImmediatePropagation();
                     self.courseConfig.sectionnum = parseInt(section);
                 }
 

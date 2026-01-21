@@ -143,7 +143,9 @@ define(
             }
 
             // Redirect to the correct section when doing /course/section.php.
-            if (section === '' && location.pathname === '/course/section.php' && self.courseConfig.sectionnum !== undefined) {
+            if ((section === '' || section === undefined)
+                && location.pathname.endsWith('/course/section.php')
+                && self.courseConfig.sectionnum !== undefined) {
                 section = self.courseConfig.sectionnum;
             }
 

@@ -44,6 +44,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Section 2"
+    And I wait until the page is ready
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
     When I click on "#section-2 .snap-visibility[data-action='sectionHide']" "css_element"
@@ -52,6 +53,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Section 2"
+    And I wait until the page is ready
     Then "#section-2" "css_element" should exist
     And I log out via a separate window
     And I highlight section 2
@@ -60,11 +62,13 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     And I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Section 2"
+    And I wait until the page is ready
     And I switch edit mode in Snap
     And I follow "Move \"Section 2\""
     Then I should see "Move Section 2 after" in the "Move section" "dialogue"
     And I click on "Close" "button" in the "Move section" "dialogue"
     And I follow "Section 4"
+    And I wait until the page is ready
     And I log out via a separate window
     And I follow "Move \"Section 4\""
     And I click on "Section 5" "link" in the "Move section" "dialogue"
@@ -87,6 +91,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     Given I log in as "teacher"
     And I am on the course main page for "C1"
     When I follow "Section 1"
+    And I wait until the page is ready
     And I open "Test assignment" actions menu
     And I log out via a separate window
     And I choose "Hide" in the open action menu
@@ -96,6 +101,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     # Given I log in as "teacher"
     And I am on the "Course 1" course page logged in as teacher
     When I follow "Section 1"
+    And I wait until the page is ready
     And I open "Test assignment" actions menu
     And I log out via a separate window
     And I wait until the page is ready
@@ -104,6 +110,7 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     # Test logout msg when attempting to move asset
     And I am on the "Course 1" course page logged in as teacher
     And I follow "Section 1"
+    And I wait until the page is ready
     Then "#section-1" "css_element" should exist
     And I switch edit mode in Snap
     And I open "Test assignment" actions menu

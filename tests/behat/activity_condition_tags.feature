@@ -54,6 +54,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I open "Test assignment1" actions menu
     And I click on "Edit settings" "link" in the "Test assignment1" activity
     And I wait until the page is ready
@@ -65,6 +66,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I wait until the page is ready
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Examples:
@@ -81,6 +83,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I open "Test assignment1" actions menu
     And I click on "Edit settings" "link" in the "Test assignment1" activity
     And I wait until the page is ready
@@ -96,6 +99,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I wait until the page is ready
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"
@@ -113,6 +117,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I open "Test assignment1" actions menu
     And I click on "Edit settings" "link" in the "Test assignment1" activity
     And I wait until the page is ready
@@ -128,6 +133,7 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
     And I wait until the page is ready
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     Then I should see "You have a grade in Test assignment2"
     Then I should see "You belong to Group1"
