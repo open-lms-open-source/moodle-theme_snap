@@ -22,6 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_snap\local;
+
 defined('MOODLE_INTERNAL') || die();
 
 require(__DIR__.'/header.php');
@@ -34,7 +36,7 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
     $mastimage = 'mast-image';
 }
 // Check if in current path we must to hide TOC.
-$pathurl = $PAGE->url->get_path();
+$pathurl = local::current_url_path();
 $pathurl = $OUTPUT->get_path_hiddentoc($pathurl);
 ?>
 <!-- Moodle js hooks -->

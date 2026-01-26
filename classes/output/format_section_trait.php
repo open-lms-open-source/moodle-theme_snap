@@ -25,6 +25,7 @@
  */
 
 namespace theme_snap\output;
+use theme_snap\local;
 use cm_info;
 use context_course;
 use core_courseformat\base as course_format;
@@ -146,7 +147,7 @@ trait format_section_trait {
             $courseformat = course_get_format($course);
 
             // Check if we are in a specific section by URL.
-            $pagepath = $PAGE->url->get_path();
+            $pagepath = local::current_url_path();
             $sectionid = optional_param('id', -1, PARAM_INT);
             $sectionnumber = optional_param('section', -1, PARAM_INT);
             $currentsection = null;
@@ -564,7 +565,7 @@ trait format_section_trait {
         // the renderer, even when via an AJAX request. The HTML returned has to be the same for all requests, even
         // ajax.
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
-        $pagepath = $PAGE->url->get_path();
+        $pagepath = local::current_url_path();
         $sectionid = optional_param('id', -1, PARAM_INT);
 
         if ($section->section != 0) {

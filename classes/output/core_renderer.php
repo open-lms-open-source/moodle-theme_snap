@@ -411,7 +411,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $oncoursepage = strpos($this->page->pagetype, 'course-view') === 0;
         $coursecontext = \context_course::instance($COURSE->id);
 
-        if ($PAGE->url->get_path() !== '/my/courses.php') {
+        if (local::current_url_path() !== '/my/courses.php') {
             if ($COURSE->format !== 'tiles') {
                 $output .= '<div id="moodle-blocks" class="clearfix">';
                 $output .= $OUTPUT->blocks('side-pre');
@@ -1333,7 +1333,7 @@ HTML;
             }
             // Put class category-x on body when loading editcategory page on course.
             // Categories and parent categories are added in ascendant order.
-            if (strpos($this->page->url->get_path(), "course/editcategory.php") !== false
+            if (strpos(local::current_url_path(), "course/editcategory.php") !== false
                 && $this->page->url->get_param('id') !== null) {
                 $parentcategories = self::get_parentcategories($this->page->url->get_param('id'));
                 foreach ($parentcategories as $category) {
@@ -1343,7 +1343,7 @@ HTML;
 
             // Put class category-x on body when loading add new course page.
             // Categories and parent categories are added in ascendant order.
-            if (strpos($this->page->url->get_path(), "course/edit.php") !== false
+            if (strpos(local::current_url_path(), "course/edit.php") !== false
                 && $this->page->url->get_param('category') !== null) {
                 $parentcategories = self::get_parentcategories($this->page->url->get_param('category'));
                 foreach ($parentcategories as $category) {

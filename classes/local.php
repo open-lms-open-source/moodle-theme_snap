@@ -2070,7 +2070,7 @@ class local {
 
     /**
      * Get the local url path for current page.
-     * NOTE: This is not a duplciate of $PAGE->get_path();
+     * NOTE: This is not a duplicate of $PAGE->get_path();
      * $PAGE->get_path() includes the moodle subpath if accessed via sub path of url, which is not what we want.
      * e.g. - $PAGE->get_path on http://testing.local/apps/moodle/user/profile.php would return
      * apps/moodle/user/profile.php but we just want /user/profile.php
