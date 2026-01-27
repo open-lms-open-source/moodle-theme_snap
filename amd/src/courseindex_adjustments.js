@@ -99,8 +99,6 @@ export const stickyTOCHandler = () => {
         moodleFooter = document.querySelector(SELECTORS.COURSE_FOOTER);
     }
 
-    const pageHeader = document.querySelector(SELECTORS.PAGE_HEADER);
-    const header = document.querySelector(SELECTORS.HEADER);
     const tocdrawerControls = document.querySelector(SELECTORS.TOCDRAWER_CONTROLS);
     const tocdrawerContent = document.querySelector(SELECTORS.TOCDRAWER_CONTENT);
     if (tocdrawerControls && tocdrawerContent) {
@@ -114,52 +112,7 @@ export const stickyTOCHandler = () => {
      */
     document.addEventListener('scroll', () => {
         setTimeout(() => {
-            // Assume we are not at a frontier (if we are we will be dealt with later on).
-            tocdrawer.classList.remove(CLASSES.FRONTIER_TRANSITION);
-
-            const pageHeaderBottom = pageHeader.getBoundingClientRect().bottom;
-            const pageFooterTop = moodleFooter.getBoundingClientRect().top;
-            const mrnavHeight = header.getBoundingClientRect().height;
-            const mrnavBotton = header.getBoundingClientRect().bottom;
-            const isNavPinned = document.querySelector(SELECTORS.NAV_PINNED);
-            const isNavUnpinned = document.querySelector(SELECTORS.NAV_UNPINNED);
-            // If we are at a frontier, avoid jagged transitions.
-            if (Math.abs(Math.floor(pageFooterTop) - window.innerHeight) <= CONSTANTS.PIXEL_TOLERANCE_AT_FROTIER ||
-                Math.abs(Math.floor(pageHeaderBottom) - mrnavHeight) <= CONSTANTS.PIXEL_TOLERANCE_AT_FROTIER) {
-                tocdrawer.classList.add(CLASSES.FRONTIER_TRANSITION);
-            }
-
-            // Reset to the initial state of affairs.
-            for (const state in CLASSES.STICKY_STATES) {
-                tocdrawer.classList.remove(CLASSES.STICKY_STATES[state]);
-            }
-            // Determine all possible cases of scrolling with header and footer that can happen in a course.
-            if (pageHeaderBottom < 0 && pageFooterTop > window.innerHeight) {
-                tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_NO_HEADER_NO_FOOTER);
-                tocdrawer.style.top = '0';
-                if (isNavPinned || (!isNavPinned && !isNavUnpinned)) {
-                    tocdrawer.style.top = 'auto';
-                }
-            } else if (pageHeaderBottom < 0 && pageFooterTop <= window.innerHeight) {
-                tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_NO_HEADER_YES_FOOTER);
-                tocdrawer.style.top = 'auto';
-            } else if (pageHeaderBottom >= 0 && pageFooterTop > window.innerHeight) {
-                tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_YES_HEADER_NO_FOOTER);
-                tocdrawer.style.top = '0';
-                if (isNavPinned || (!isNavPinned && !isNavUnpinned)) {
-                    if (pageHeaderBottom <= mrnavHeight) {
-                        tocdrawer.classList.add('sticky-under-pinned');
-                        tocdrawer.style.top = `${mrnavHeight}px`;
-                    }
-                }
-            } else { // pageHeaderBottom >= 0 && pageFooterTop <= window.innerHeight
-                tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_YES_HEADER_YES_FOOTER);
-                tocdrawer.style.top = 'auto';
-            }
-
-            // The defining equation for the height of a sticky TOC that responds to header and footer positions.
-            tocdrawer.style.height = `${window.innerHeight - Math.max(0, pageHeaderBottom, mrnavBotton)
-            - Math.max(0, window.innerHeight - pageFooterTop)}px`;
+            stickyTOCRecalculator();
         }, 30);
     });
 
@@ -169,4 +122,66 @@ export const stickyTOCHandler = () => {
             tocdrawer.classList.add(CLASSES.STICKY_RESIZE);
         }
     });
+};
+
+/**
+ * The sticky TOC Recalculator, used to recalculate all dynamic properties from the sticky TOC,
+ * which can be changed by anything that changes the course layout at any given moment, so here we
+ * provide a point of access to recalculate the sticky TOC properties as needed.
+ */
+export const stickyTOCRecalculator = () => {
+    const tocdrawer = document.querySelector(SELECTORS.TOCDRAWER);
+    let moodleFooter = document.querySelector(SELECTORS.SNAP_COURSE_FOOTER);
+    if (moodleFooter === null) {
+        moodleFooter = document.querySelector(SELECTORS.COURSE_FOOTER);
+    }
+    const pageHeader = document.querySelector(SELECTORS.PAGE_HEADER);
+    const header = document.querySelector(SELECTORS.HEADER);
+    const pageHeaderBottom = pageHeader.getBoundingClientRect().bottom;
+    const pageFooterTop = moodleFooter.getBoundingClientRect().top;
+    const mrnavBottom = header.getBoundingClientRect().bottom;
+
+    // Assume we are not at a frontier (if we are we will be dealt with later on).
+    tocdrawer.classList.remove(CLASSES.FRONTIER_TRANSITION);
+
+    const mrnavHeight = header.getBoundingClientRect().height;
+    const isNavPinned = document.querySelector(SELECTORS.NAV_PINNED);
+    const isNavUnpinned = document.querySelector(SELECTORS.NAV_UNPINNED);
+    // If we are at a frontier, avoid jagged transitions.
+    if (Math.abs(Math.floor(pageFooterTop) - window.innerHeight) <= CONSTANTS.PIXEL_TOLERANCE_AT_FROTIER ||
+        Math.abs(Math.floor(pageHeaderBottom) - mrnavHeight) <= CONSTANTS.PIXEL_TOLERANCE_AT_FROTIER) {
+        tocdrawer.classList.add(CLASSES.FRONTIER_TRANSITION);
+    }
+
+    // Reset to the initial state of affairs.
+    for (const state in CLASSES.STICKY_STATES) {
+        tocdrawer.classList.remove(CLASSES.STICKY_STATES[state]);
+    }
+    // Determine all possible cases of scrolling with header and footer that can happen in a course.
+    if (pageHeaderBottom < 0 && pageFooterTop > window.innerHeight) {
+        tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_NO_HEADER_NO_FOOTER);
+        tocdrawer.style.top = '0';
+        if (isNavPinned || (!isNavPinned && !isNavUnpinned)) {
+            tocdrawer.style.top = 'auto';
+        }
+    } else if (pageHeaderBottom < 0 && pageFooterTop <= window.innerHeight) {
+        tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_NO_HEADER_YES_FOOTER);
+        tocdrawer.style.top = 'auto';
+    } else if (pageHeaderBottom >= 0 && pageFooterTop > window.innerHeight) {
+        tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_YES_HEADER_NO_FOOTER);
+        tocdrawer.style.top = '0';
+        if (isNavPinned || (!isNavPinned && !isNavUnpinned)) {
+            if (pageHeaderBottom <= mrnavHeight) {
+                tocdrawer.classList.add('sticky-under-pinned');
+                tocdrawer.style.top = `${mrnavHeight}px`;
+            }
+        }
+    } else { // pageHeaderBottom >= 0 && pageFooterTop <= window.innerHeight
+        tocdrawer.classList.add(CLASSES.STICKY_STATES.STICKY_YES_HEADER_YES_FOOTER);
+        tocdrawer.style.top = 'auto';
+    }
+
+    // The defining equation for the height of a sticky TOC that responds to header and footer positions.
+    tocdrawer.style.height = `${window.innerHeight - Math.max(0, pageHeaderBottom, mrnavBottom)
+        - Math.max(0, window.innerHeight - pageFooterTop)}px`;
 };
