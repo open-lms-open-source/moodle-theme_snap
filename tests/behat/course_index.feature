@@ -120,3 +120,23 @@ Feature: Testing course index drawer in theme_snap
     And I should see "Quiz 3"
     And I should see "Create a new section"
     And I should see "Course Dashboard"
+
+  @javascript
+  Scenario: The course index remains sticky when turning edit mode on and off.
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And I switch editing mode on
+    And I should see "Contents"
+    And I should see "SubAssign 1"
+    And I should see "SubAssign 2"
+    And I should see "SubAssign 3"
+    And I should see "SubAssign 4"
+    And I should see "SubAssign 5"
+    And I should see "SubAssign 6"
+    And I should see "TextAndMedia 1"
+    And I should see "TextAndMedia 2"
+    And I should see "Quiz 1"
+    And I should see "Quiz 2"
+    And I should see "Quiz 3"
+    And I should see "Create a new section"
+    And I should see "Course Dashboard"
