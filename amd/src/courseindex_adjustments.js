@@ -111,9 +111,7 @@ export const stickyTOCHandler = () => {
      * can happen in a course.
      */
     document.addEventListener('scroll', () => {
-        setTimeout(() => {
-            stickyTOCRecalculator();
-        }, 30);
+        stickyTOCRecalculator();
     });
 
     window.addEventListener('resize', () => {
