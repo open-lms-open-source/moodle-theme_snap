@@ -24,9 +24,9 @@
 /**
  * JS code to assign attributes and expected behavior for elements in the Dom regarding accessibility.
  */
-define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/bootstrap/tools/sanitizer', 'theme_boost/popover',
+define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/bootstrap/util/sanitizer', 'theme_boost/popover',
     'core/moremenu', 'core/log'],
-    function($, str, Event, FormEvents, { DefaultWhitelist }, Popover, coreMoreMenu, log) {
+    function($, str, Event, FormEvents, { DefaultAllowlist }, Popover, coreMoreMenu, log) {
         return {
             snapAxInit: function(localJouleGrader, allyReport, blockReports, localCatalogue) {
 
@@ -623,7 +623,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     selector: '[data-toggle="popover"]',
                     trigger: 'manual',
                     container: 'body',
-                    whitelist: Object.assign(DefaultWhitelist, {
+                    whitelist: Object.assign(DefaultAllowlist, {
                         table: [],
                         thead: [],
                         tbody: [],

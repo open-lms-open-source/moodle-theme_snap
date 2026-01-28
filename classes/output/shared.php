@@ -258,14 +258,6 @@ EOF;
             'deletingsection'
         ], 'theme_snap');
 
-        // Include section-specific strings for formats which support sections.
-        if (course_format_uses_sections($course->format)) {
-            $PAGE->requires->strings_for_js(array(
-                'showfromothers',
-                'hidefromothers',
-            ), 'format_' . $course->format);
-        }
-
         // For confirming resource deletion we need the name of the module in question.
         foreach ($usedmodules as $module => $modname) {
             $PAGE->requires->string_for_js('pluginname', $module);

@@ -392,10 +392,10 @@
         @include clearfix;
         margin-left: 1px;
         .yui-pg-first {
-            @include border-left-radius($border-radius);
+            @include border-start-radius($border-radius);
         }
         .yui-pg-last {
-            @include border-right-radius($border-radius);
+            @include border-end-radius($border-radius);
         }
         .yui-pg-previous,
         .yui-pg-first,

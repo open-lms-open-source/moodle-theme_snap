@@ -1384,14 +1384,14 @@ footer #moodle-footer
 // Styles for Snap user menu.
 #snap-header {
 
-    .pull-right.js-only.row, .float-end.js-only.row {
+    .pull-right.js-only.d-flex, .float-end.js-only.d-flex {
         margin-top: 1em;
 
         @media (max-width: 768px) {
             margin-top: 0.6em;
         }
 
-        @include media-breakpoint-down(xs) {
+        @include media-breakpoint-down(sm) {
             gap: 0.3em;
         }
     }
@@ -1419,7 +1419,7 @@ footer #moodle-footer
         display: none;
     }
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         .snap-my-courses-link span {
             display: none;
         }
@@ -3024,7 +3024,7 @@ ul.events-new + ul.events-underway {
 }
 
 .singlequestion .questioneditbutton img {
-    @include sr-only;
+    @include fa-sr-only;
 }
 
 .questioncontainer {

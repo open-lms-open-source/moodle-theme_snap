@@ -20,7 +20,7 @@
     }
 
     #maincontent + h2 {
-        @include sr-only();
+        @include fa-sr-only();
     }
 
     #region-main {

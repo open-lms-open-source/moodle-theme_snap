@@ -56,7 +56,7 @@ if (!empty($PAGE->theme->settings->logo)) {
 echo \core\output\html_writer::link($defaulthomeurl, $sitefullname, $attrs);
 ?>
 
-<div class="float-end js-only row">
+<div class="float-end js-only d-flex gap-2">
     <?php
     if (class_exists('local_geniusws\navigation')) {
         $bblink = new genius_dashboard_link();
