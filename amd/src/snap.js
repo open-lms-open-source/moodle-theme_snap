@@ -1624,17 +1624,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         }
                     });
 
-                    // Import snap settings into the course index.
-                    const courseIndex = document.querySelector('.courseindex');
-                    if (courseIndex) {
-                        require(
-                            ['theme_snap/courseindex_adjustments'],
-                            function(CourseIndexAdjustments) {
-                                CourseIndexAdjustments.init();
-                            }
-                        );
-                    }
-
                 });
                 accessibility.snapAxInit();
                 messages.init();
