@@ -20,7 +20,7 @@
  * @copyright Copyright (c) 2025 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-import BaseComponent from 'core_courseformat/local/content';
+import {BaseComponent} from 'core/reactive';
 import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
 
 export default class SectionNavigation extends BaseComponent {

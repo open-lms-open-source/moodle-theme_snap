@@ -19,7 +19,7 @@
  * Override Core behavior from course/format/amd/src/local/courseindex/courseindex.js
  *
  * @module     theme_snap/courseformat/courseindex/courseindex
- * @copyright Copyright (c) 2025 Open LMS
+ * @copyright Copyright (c) 2026 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

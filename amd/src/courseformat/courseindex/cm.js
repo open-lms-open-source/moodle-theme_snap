@@ -19,7 +19,7 @@
  *
  * @module     theme_snap/courseformat/courseindex/cm
  * @class      theme_snap/courseformat/courseindex/cm
- * @copyright  Copyright (c) 2025 Open LMS
+ * @copyright  Copyright (c) 2026 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
