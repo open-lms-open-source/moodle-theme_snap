@@ -138,3 +138,13 @@ Feature: When the moodle theme is set to Snap, conditional restrictions work as 
       | Option     |
       | 0          |
       | 1          |
+      
+  @javascript
+  Scenario: User can save changes normally on Edit section settings
+    Given I log in as "teacher1"
+    And I restrict course section 2 by date to "tomorrow" in course "C1"
+    And I go to section 2 of course "C1"
+    And I should see available from date of "tomorrow" in section 2
+    And I click on "Edit restrictions" "link"
+    And "Cancel" "button" should be visible
+    And "Save changes" "button" should be visible
