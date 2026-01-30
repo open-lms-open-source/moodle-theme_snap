@@ -166,6 +166,15 @@ class activity_retrieval_strategy extends \core_calendar\local\event\strategies\
                 // Set calendar filters.
                 list($usercourses, $usergroups, $user) = calendar_set_filters($usercourses, true, $userrecord);
 
+                // Extra validation to exclude hidden courses when the capability allows it.
+                if (!empty($usercourses)) {
+                    list($incourses, $inparams) = $DB->get_in_or_equal($usercourses, SQL_PARAMS_NAMED);
+                    $usercourses = $DB->get_fieldset_sql(
+                        "SELECT id FROM {course} WHERE visible = 1 AND id $incourses",
+                        $inparams
+                    );
+                }
+
                 $allusercourses = array_merge($allusercourses, $usercourses);
 
                 // Flag to indicate whether the query needs to exclude group overrides.
