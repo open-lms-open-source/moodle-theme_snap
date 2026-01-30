@@ -25,6 +25,8 @@
 
 import BaseSectionComponent from 'core_courseformat/local/content';
 import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
+import Section from 'theme_snap/courseformat/content/section';
+import CmItem from 'core_courseformat/local/content/section/cmitem';
 
 export default class Component extends BaseSectionComponent {
 
@@ -38,6 +40,14 @@ export default class Component extends BaseSectionComponent {
      * @return {Component}
      */
     static init(target, selectors, sectionReturn, pageSectionId) {
+        const element = document.getElementById(target);
+        // If already initialized, return.
+        if (element?.dataset.initialized) {
+            return null;
+        }
+
+        // Mark the element as initialized to avoid re-start of reactive component.
+        element.dataset.initialized = true;
         return new Component({
             element: document.getElementById(target),
             reactive: getCurrentCourseEditor(),
@@ -67,5 +77,25 @@ export default class Component extends BaseSectionComponent {
      */
     _scrollHandler() {
         return;
+    }
+
+    _indexContents() {
+        // Let's use our Snap Section to use our CSS selectors.
+        this._scanIndex(
+            this.selectors.SECTION,
+            this.sections,
+            (item) => {
+                return new Section(item);
+            }
+        );
+
+        // Using Core original class for CmItem.
+        this._scanIndex(
+            this.selectors.CM,
+            this.cms,
+            (item) => {
+                return new CmItem(item);
+            }
+        );
     }
 }
