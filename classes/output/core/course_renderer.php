@@ -69,7 +69,7 @@ class course_renderer extends \core_course_renderer {
         $modinfo = get_fast_modinfo($SITE);
         $section = $modinfo->get_section_info(1);
 
-        if (($section && (!empty($modinfo->sections[1]) or !empty($section->summary)))) {
+        if (($section && (!empty($modinfo->sections[1]) or !empty($section->summary))) or $editingmode) {
 
             $format = course_get_format($SITE);
 
