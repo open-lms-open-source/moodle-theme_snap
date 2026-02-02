@@ -6918,11 +6918,13 @@ li.section.main {
         border-top-width: 0.3em;
         transition: all 0.4s ease-in-out;
         border-radius: 0.5rem;
+        width: 100%;
     }
 }
 
 .theme-snap .sitetopic .section-item {
     border: none;
+    width: 100%;
 }
 
 .theme-snap.editing .section.main:not(.course-section) {
