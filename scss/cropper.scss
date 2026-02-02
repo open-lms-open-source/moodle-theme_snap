@@ -307,3 +307,9 @@
 .cropper-disabled .cropper-point {
   cursor: not-allowed;
 }
+
+body.dir-rtl {
+  .cropper-container {
+    direction: ltr;
+  }
+}
