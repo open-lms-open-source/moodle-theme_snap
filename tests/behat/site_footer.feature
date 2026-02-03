@@ -79,6 +79,7 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
     And "#goto-top-link" "css_element" should not be visible
     And I should see "Welcome to your new course"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I should not see "Welcome to your new course"
     And I scroll to the bottom
     And "#goto-top-link" "css_element" should be visible

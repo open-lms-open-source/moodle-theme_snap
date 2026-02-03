@@ -42,6 +42,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_mp3_file.mp3" to section 1
@@ -55,6 +56,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And I set the field "View the activity" to "1"
     And I click on "#id_submitbutton2" "css_element"
     And I follow "Section 1"
+    And I wait until the page is ready
     And the "View" item should exist in the "Completion" dropdown of the "test mp3 file" "activity"
     And I follow "test mp3 file"
     And I wait until "#snap-light-box" "css_element" is visible
@@ -69,6 +71,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
     And I upload file "test_mp3_file.mp3" to section 1
@@ -81,6 +84,7 @@ Feature: When the moodle theme is set to Snap, clicking on a resource with a med
     And I set the field "id_display" to "Open"
     And I click on "#id_submitbutton2" "css_element"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on ".snap-resource[data-type='mp3'] .snap-asset-link a" "css_element"
     And I wait until "#snap-light-box" "css_element" is visible
     Then "#snap-light-box" "css_element" should exist

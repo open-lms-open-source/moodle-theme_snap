@@ -64,6 +64,7 @@ Feature: Open page module inline
       | activity | course | idnumber     | name            | section |
       | assign   | C1     | assigntest   | Assignment Test | 2       |
     And I log in as "admin"
+    And I change window size to "large"
     And the following config values are set as admin:
       | resourcedisplay     | <Option 2> | theme_snap |
     And I am on the course main page for "C1"
@@ -71,10 +72,12 @@ Feature: Open page module inline
     And I restrict course asset "Page restricted" by completion of "Page completion"
     # Restrict section one of the course to only be accessible after the first page module is marked complete.
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section name to "Section 1"
     And I apply asset completion restriction "Page completion" to section
     And I follow "Section 2"
+    And I wait until the page is ready
     And I click on "#section-2 .edit-summary" "css_element"
     And I set the section name to "Section 2"
     And I apply asset completion restriction "Page completion 2" to section
@@ -87,12 +90,14 @@ Feature: Open page module inline
     And I should see "Conditional" in TOC item 2
     And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
     And I follow "Section 2"
-    And I should see "Section 2 is not available"
+    And I wait until the page is ready
+    And I should see "Not available unless: The activity Page completion 2 is marked complete"
     And I follow "Section 1"
+    And I wait until the page is ready
     # Make sure Section 1 show section availability info.
-    And I should see "Section 1 is not available"
+    And I should see "Not available unless: The activity Page completion is marked complete"
     And I follow "General"
-    And I click on "button.pagemod-readmore" "css_element"
+    And I click on "#section-0 button.pagemod-readmore" "css_element"
     And I wait until "#section-0 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     # The above step basically waits for the page module content to load up.
     Then I should see "Page completion content"
@@ -102,11 +107,12 @@ Feature: Open page module inline
     And ".snap-conditional-tag[data-content*='Page completion']" "css_element" should not exist
     And I wait until "Done" "button" exists
     And I follow "Section 1"
+    And I wait until the page is ready
     # Make sure Section 1 does not show section availability info.
     Then I should not see "Not available unless: The activity Page completion is marked complete"
     And I should see "Page completion 2"
     And I click on "li[aria-label='Section 1']" "css_element"
-    And I click on "button.pagemod-readmore" "css_element"
+    And I click on "#section-1 button.pagemod-readmore" "css_element"
     And I wait until "#section-1 .pagemod-content[data-content-loaded=\"1\"]" "css_element" is visible
     And I click on "Mark as done" "button"
     And I should not see "Conditional" in TOC item 3

@@ -59,6 +59,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then "#section-1" "css_element" should exist
     And I open "Test assignment1" actions menu
     And I click on "Edit settings" "link" in the "Test assignment1" activity
@@ -111,6 +112,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I open "Test assignment1" actions menu
     And I click on "Edit settings" "link" in the "Test assignment1" activity
     And I wait until the page is ready

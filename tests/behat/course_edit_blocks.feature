@@ -44,6 +44,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then "#section-1" "css_element" should exist
     And ".block_news_items a.toggle-display" "css_element" should not exist
     And I should see "Test assignment1" in the "#section-1" "css_element"
@@ -54,6 +55,7 @@ Feature: When the moodle theme is set to Snap, teachers only see block edit cont
     # Edit mode should persist even if there are iframes in a section summary.
     # First add a section with an iframe which points to the host root.
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section summary to "<iframe src=\"/\"></iframe>"
     And I press "Save changes"

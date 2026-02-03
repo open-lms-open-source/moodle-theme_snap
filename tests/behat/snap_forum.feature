@@ -56,6 +56,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     Given I log in as "<user>"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on ".aalink" "css_element" in the "Test forum name" activity
     And "#region-main .action-menu-trigger" "css_element" should <exist>
     Examples:
@@ -68,6 +69,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on ".aalink" "css_element" in the "Test forum name" activity
     And I add a new discussion to "Test forum name" forum with:
       | Subject | Discussion 1 |
@@ -76,6 +78,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on ".aalink" "css_element" in the "Test forum name" activity
     And I click on "Grade users" "button"
     And I should see "The grade to award the student"
@@ -93,6 +96,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on ".aalink" "css_element" in the "Test forum name" activity
     And I add a new discussion to "Test forum name" forum with:
       | Subject | Discussion 1 |
@@ -104,6 +108,7 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     Then I should not see "2 unread post"
     And I open the user menu
     And I follow "Preferences"
@@ -114,14 +119,17 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I am on "Course 1" course homepage
     And I click on "Open course index" "button"
     And I follow "Section 1"
+    And I wait until the page is ready
     Then I should see "2 unread post"
     And I click on ".aalink" "css_element" in the "Test forum name" activity
     And I click on "Discussion 1" "link"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     Then I should see "1 unread post"
     And I click on ".aalink" "css_element" in the "Test forum name" activity
     And I click on "Discussion 2" "link"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     Then I should not see "1 unread post"

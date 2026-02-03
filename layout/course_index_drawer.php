@@ -57,16 +57,25 @@ if (!empty($COURSE->id)) {
     $hiddencmids = array_keys($records);
 }
 
-// Add snap activities for course index search.
-$coursetocmodules = get_modules($hiddencmids);
-$tocmodules = (object) [
-    'modules' => $coursetocmodules,
-];
-$searchmodule = $OUTPUT->render_from_template('theme_snap/course_toc_module_search', $tocmodules);
-
+$searchmodule = '';
+$tocfooter = '';
+$tocformat = ($COURSE->format == 'topics' || $COURSE->format == 'weeks');
+// Add TOC search for Weeks & topics formats only.
+if ($tocformat) {
+    // Add snap activities for course index search.
+    $coursetocmodules = get_modules($hiddencmids);
+    $tocmodules = (object)[
+        'modules' => $coursetocmodules,
+    ];
+    $searchmodule = $OUTPUT->render_from_template('theme_snap/course_toc_module_search', $tocmodules);
+    $canaddnewsection = has_capability('moodle/course:update', context_course::instance($PAGE->course->id));
+} else {
+    // Other course formats has its own way for adding sections.
+    $canaddnewsection = false;
+}
 // Set Snap course index footer.
 $footer = (object) [
-    'canaddnewsection' => has_capability('moodle/course:update', context_course::instance($PAGE->course->id)),
+    'canaddnewsection' => $canaddnewsection,
     'imgurladdnewsection' => $OUTPUT->image_url('pencil', 'theme'),
     'imgurltools' => $OUTPUT->image_url('course_dashboard', 'theme'),
 ];

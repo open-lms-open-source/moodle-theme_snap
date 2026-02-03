@@ -43,6 +43,7 @@ Feature: When the moodle theme is set to Snap, section names should not be empty
     And I log in as "teacher1"
     And I am on the course main page for "C1"
     And I follow "Section 1"
+    And I wait until the page is ready
     And I click on "#section-1 .edit-summary" "css_element"
     #"Only spaces" name not allowed
     And I set the section name to "  "

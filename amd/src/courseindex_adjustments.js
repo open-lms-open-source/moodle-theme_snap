@@ -21,8 +21,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import snapsection from 'theme_snap/section_asset_management';
 import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
+import {setTOCVisibleSection} from 'theme_snap/section_asset_management';
 
 const CLASSES = {
     FRONTIER_TRANSITION: 'toc-frontier-transition',
@@ -104,8 +104,8 @@ export const init = () => {
         filterHiddenActivitiesFromDOM();
         const observer = new MutationObserver(() => {
             let state = reactiveCourseEditor.state;
-
-            snapsection.setNavigationObservers();
+            // Change TOC active section styles.
+            setTOCVisibleSection();
             // Filter hidden activities after DOM mutations.
             filterHiddenActivitiesFromDOM();
             const sections = document.querySelectorAll('#courseindex-content .courseindex-section');

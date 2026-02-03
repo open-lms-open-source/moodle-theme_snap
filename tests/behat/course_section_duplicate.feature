@@ -41,17 +41,20 @@ Feature: When the moodle theme is set to Snap, teachers can duplicate sections i
     Scenario: Duplicate a section
         Given I am on the course main page for "C1"
         And I follow "Section 1"
+        And I wait until the page is ready
         And I click on "#extra-actions-dropdown-1" "css_element"
         And I click on "#section-1 .snap-duplicate" "css_element"
         Then I should see "Section 1 (copy)"
         And I follow "Section 1 (copy)"
+        And I wait until the page is ready
         Then I should see "Activity sample 2"
 
     @javascript
     Scenario: Duplicate a named section
         Given I am on the course main page for "C1"
         And I follow "Section 1"
-        And I click on "Edit section" "link"
+        And I wait until the page is ready
+        And I click on "Edit section" "link" in the "ul.sections > li#section-1" "css_element"
         And I set the field "Section name" to "New name"
         And I press "Save changes"
         And I follow "New name"

@@ -95,8 +95,9 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     Then I log in as "admin"
     And I go to "Site administration > Development" in snap administration
     And I follow "Purge caches"
-    And I press "Purge all caches"
-    Then I should see "All caches were purged"
+    When I set the field "All file and miscellaneous caches" to "1"
+    And I click on "Purge selected caches" "button" in the "#fitem_id_purgeselectedcaches" "css_element"
+    Then I should see "The selected caches were purged"
     And I reload the page
     # Test cover image can only be set on main course page
     And I am on the course main page for "C1"

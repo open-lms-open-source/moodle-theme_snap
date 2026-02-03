@@ -25,11 +25,17 @@ require(['core_courseformat/local/content'], function(component) {
     component.init = function() {
         const instance = originalInit.apply(this, arguments);
         window.componentInstance = instance;
-        instance.selectors.SECTION = "li[data-for='section']";
+        instance.selectors.SECTION = ".single-section > ul > li[data-for='section']";
         instance._scrollHandler = function() {
             return;
         };
         return instance;
     };
+    if (component.prototype && component.prototype._scrollHandler) {
+        component.prototype._scrollHandler = function() {
+            // Do nothing, to avoid scrollHandler to move our view in other course formats.
+            return;
+        };
+    }
 });
 {{/js}}

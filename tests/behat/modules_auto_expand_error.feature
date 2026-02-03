@@ -38,6 +38,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     And I open "Assignment One" actions menu
     And I choose "Edit settings" in the open action menu
     And I expand all fieldsets
@@ -51,6 +52,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     And I open "Assignment One" actions menu
     And I choose "Edit settings" in the open action menu
     And I expand all fieldsets
@@ -64,6 +66,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     And I open "Assignment One" actions menu
     And I choose "Edit settings" in the open action menu
     And I expand all fieldsets
@@ -78,6 +81,7 @@ Feature: When setting an erroneous field in settings, snap auto-expands area.
     Given I log in as "admin"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
+    And I wait until the page is ready
     And I open "Assignment One" actions menu
     And I choose "Edit settings" in the open action menu
     And I expand all fieldsets

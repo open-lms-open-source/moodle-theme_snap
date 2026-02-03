@@ -42,6 +42,7 @@ Feature: When the moodle theme is set to Snap, teachers can see permalink modal.
     Scenario: Create a permalink
         Given I am on the course main page for "C1"
         And I follow "Section 1"
+        And I wait until the page is ready
         And I click on "#extra-actions-dropdown-1" "css_element"
         And I click on "#section-1 .snap-permalink" "css_element"
         And I should see "Permalink"

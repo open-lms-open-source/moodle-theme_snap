@@ -22,12 +22,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_snap\local;
+
 defined('MOODLE_INTERNAL') || die();
 
 require(__DIR__.'/header.php');
 
 $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
-$tocformat = ($COURSE->format == 'topics' || $COURSE->format == 'weeks');
 
 $mastimage = '';
 // Check we are in a course (not the site level course), and the course is using a cover image.
@@ -35,7 +36,7 @@ if ($COURSE->id != SITEID && !empty($coverimagecss)) {
     $mastimage = 'mast-image';
 }
 // Check if in current path we must to hide TOC.
-$pathurl = $PAGE->url->get_path();
+$pathurl = local::current_url_path();
 $pathurl = $OUTPUT->get_path_hiddentoc($pathurl);
 ?>
 <!-- Moodle js hooks -->
@@ -68,12 +69,10 @@ echo $OUTPUT->custom_menu_spacer();
     ?>
 </div>
 <?php
-if ($tocformat) {
-    echo '<div id="snap-course-wrapper">';
-    require __DIR__ . '/course_index_drawer.php';
-    echo '<div class="row">';
-    echo '<div class="col-lg-12">';
-}
+echo '<div id="snap-course-wrapper">';
+require __DIR__ . '/course_index_drawer.php';
+echo '<div class="row">';
+echo '<div class="col-lg-12">';
 ?>
 <section id="region-main">
 
@@ -83,6 +82,8 @@ $output = $PAGE->get_renderer('core', 'course');
 echo $output->snap_footer_alert();
 echo $OUTPUT->course_modchooser();
 echo $OUTPUT->main_content();
+echo \theme_snap\output\shared::course_tools(true);
+echo $OUTPUT->render_from_template('theme_snap/courseformat_init', null);
 echo $OUTPUT->course_content_footer();
 ?>
 </section>
@@ -90,15 +91,13 @@ echo $OUTPUT->course_content_footer();
 require __DIR__.'/blocks_drawer.php';
 echo $OUTPUT->snap_feeds_side_menu();
 
-if ($tocformat) {
-    // Call listeners for Section actions from Core.
-    if (!$this->page->user_is_editing()) {
-        $PAGE->requires->js_call_amd('core_course/actions', 'initCoursePage', array($COURSE->format));
-    }
-    echo '</div> <!-- close section -->';
-    echo '</div> <!-- close row -->';
-    echo '</div> <!-- close course wrapper -->';
+// Call listeners for Section actions from Core.
+if (!$this->page->user_is_editing()) {
+    $PAGE->requires->js_call_amd('core_course/actions', 'initCoursePage', array($COURSE->format));
 }
+echo '</div> <!-- close section -->';
+echo '</div> <!-- close row -->';
+echo '</div> <!-- close course wrapper -->';
 
 if ($coursemainpage) {
     $coursefooter = $output->course_footer();
