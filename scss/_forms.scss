@@ -70,6 +70,12 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.fitem
     }
 }
 
+#page-local-pld-view .form-item {
+    padding: 0;
+    display: initial;
+    margin: initial;
+}
+
 .mform #id_general .fitem.snap_content_notification_check,
 .mform #id_generalhdr .fitem.snap_content_notification_check {
     display: block;
