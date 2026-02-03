@@ -588,13 +588,6 @@ blockquote {
     @extend .blockquote;
 }
 
-// Although this is kinda general, we need to leave like it is,
-// because Snap is using these width and heights for some designs.
-img:not([height]) {
-    max-width: 100%;
-    height: auto;
-}
-
 // Stop images shrinking to nothing on Chrome
 table img:not(.activityicon) {
     min-width: 12px;
