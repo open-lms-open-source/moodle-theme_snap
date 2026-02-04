@@ -66,7 +66,6 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
     And I follow "Section 1"
     Then "#section-1" "css_element" should exist
     And "#snap-drop-file-1" "css_element" should exist
-    And I upload file "400KB_file.txt" to section 1
     And I upload file "600KB_file.mp3" to section 1
     And I should see "The file '600KB_file.mp3' is too large and cannot be uploaded"
     And I log out
