@@ -95,8 +95,10 @@ Feature: Manual completion updates page wihout reload.
     And I go to section 2 of course "C1"
     And I should see "Test assignment4"
     # Test marking incomplete
+    And I scroll to the top
     And I follow "Section 1"
     When I mark the activity "Test assignment3" as incomplete
+    And I scroll to the top
     Then I should see "Conditional" in TOC item 2
     And I go to section 2 of course "C1"
     Then I should see "Section 2 is not available"

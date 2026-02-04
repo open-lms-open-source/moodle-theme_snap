@@ -1717,6 +1717,27 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
+     * Scroll page to the top.
+     *
+     * @When I scroll to the top
+     *
+     */
+    public function i_scroll_to_top() {
+        $function = <<<JS
+          (function(){
+              window.scrollTo(0,0);
+              return 1;
+          })()
+JS;
+        try {
+            $this->getSession()->wait(5000, $function);
+        }
+        catch(Exception $e) {
+            throw new \Exception("scrollToTop failed");
+        }
+    }
+
+    /**
      * Scroll page to the bottom.
      *
      * @When I scroll to the bottom
