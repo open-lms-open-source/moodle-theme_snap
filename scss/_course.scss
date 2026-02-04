@@ -495,7 +495,7 @@ li.section:focus {
 
 body.snap-resource-card.format-weeks,
 body.snap-resource-card.format-topics {
-    .course-content ul.section {
+    .course-content ul.section:not(.img-text) {
         min-height: 8em;
     }
 }
