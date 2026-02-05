@@ -297,3 +297,18 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I press "Create section"
     And I wait until the page is ready
     Then I should see "Change cover image"
+
+  @javascript
+  Scenario: Cover image control location on course and home pages
+    Given the following "courses" exist:
+      | fullname | shortname | category | format |
+      | Course 1 | C1        | 0        | topics |
+    When I log in as "admin"
+    And I am on site homepage
+    And I switch edit mode in Snap
+    Then I should see "Change cover image"
+    And "#page-mast #snap-coverimagecontrol" "css_element" should not exist
+    And "#snap-coverimagecontrol" "css_element" should exist
+    And I am on the course main page for "C1"
+    Then I should see "Change cover image"
+    And "#page-mast #snap-coverimagecontrol" "css_element" should exist
