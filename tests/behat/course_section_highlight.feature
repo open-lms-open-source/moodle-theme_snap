@@ -126,3 +126,25 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the currently
       And I wait until the page is ready
       Then I should see "Test new section"
       And I should see " Highlighted"
+
+  @javascript
+  Scenario: Admin sees hidden highlighted section when entering course, student sees general section
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    Then I should see "General" in the ".section.state-visible" "css_element"
+    And I go to section 1 of course "C1"
+    And I highlight section 1
+    And I wait until "#section-1 .snap-highlight" "css_element" exists
+    And I should see "Highlighted" in the "#section-1" "css_element"
+    And I click on "#extra-actions-dropdown-1" "css_element"
+    And I click on "#section-1 .snap-visibility[data-action='sectionHide']" "css_element"
+    And I wait until "#section-1 .snap-visibility[data-action='sectionShow']" "css_element" exists
+    And I am on the course main page for "C1"
+    Then I should see "Highlighted" in the "#section-1" "css_element"
+    And "#section-1" "css_element" should exist
+    And "#section-1.state-visible" "css_element" should exist
+    And I log out
+    And I log in as "student1"
+    And I am on the course main page for "C1"
+    Then I should see "General" in the ".section.state-visible" "css_element"
+    And "#section-1.state-visible" "css_element" should not exist

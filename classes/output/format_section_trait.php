@@ -459,16 +459,27 @@ trait format_section_trait {
     protected function get_snap_active_section($course) {
         $modinfo = get_fast_modinfo($course);
         $startsectionid = 0; // Default section 0.
+        $coursecontext = context_course::instance($course->id);
+        $canviewhiddensections = has_capability('moodle/course:viewhiddensections', $coursecontext);
+
         if ($course->format == 'weeks') {
             $numsections = course_get_format($course)->get_last_section_number();
             for ($i = 0; $i <= $numsections; $i++) {
                 if (course_get_format($course)->is_section_current($i)) {
-                    $startsectionid = $i;
-                    break;
+                    $sectioninfo = $modinfo->get_section_info($i);
+                    if ($sectioninfo && ($sectioninfo->uservisible || ($canviewhiddensections && !$sectioninfo->visible))) {
+                        $startsectionid = $i;
+                        break;
+                    }
                 }
             }
         } else if ($course->format == 'topics') {
-            $startsectionid = !empty($course->marker) && $modinfo->get_section_info($course->marker) ? $course->marker : 0;
+            if (!empty($course->marker)) {
+                $sectioninfo = $modinfo->get_section_info($course->marker);
+                if ($sectioninfo && ($sectioninfo->uservisible || ($canviewhiddensections && !$sectioninfo->visible))) {
+                    $startsectionid = $course->marker;
+                }
+            }
         }
         $startsectionid = !empty($course->sectionreturn) ? $course->sectionreturn : $startsectionid;
 
@@ -567,38 +578,50 @@ trait format_section_trait {
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
         $pagepath = local::current_url_path();
         $sectionid = optional_param('id', -1, PARAM_INT);
+        $canviewhiddensections = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id));
+        $iscurrent = course_get_format($course)->is_section_current($section);
+        $isviewpage = ($pagepath !== '/course/section.php');
 
         if ($section->section != 0) {
             // Only in the non-general sections.
-            if (!$section->visible) {
-                $sectionstyle = ' hidden';
-            } else if (course_get_format($course)->is_section_current($section)) {
-                $sectionstyle = ' current';
-                if ($pagepath !== '/course/section.php') {
-                    $sectionstyle .= ' state-visible';
+            if ($iscurrent) {
+                if ($section->visible || $canviewhiddensections) {
+                    if ($course->format == 'weeks') {
+                        $sectionstyle = ' current';
+                    }
+                    if ($isviewpage) {
+                        $sectionstyle .= ' state-visible';
+                    }
+                } else {
+                    $sectionstyle = ' hidden';
                 }
+            } else if (!$section->visible) {
+                $sectionstyle = ' hidden';
             } else if ($course->format == 'weeks' && $sectionid == $section->id) {
                 $sectionstyle .= ' state-visible';
             }
         } else if ($course->format == "topics" && $course->marker == 0) {
-            if ($pagepath !== '/course/section.php') {
+            if ($isviewpage) {
                 $sectionstyle .= ' state-visible';
             }
         }
 
         if ($this->is_section_conditional($section)) {
-            $canviewhiddensections = has_capability(
-                'moodle/course:viewhiddensections',
-                context_course::instance($course->id)
-            );
             if (!$section->uservisible || $canviewhiddensections) {
                 $sectionstyle .= ' conditional';
             }
             if (course_get_format($course)->is_section_current($section)) {
                 $sectionstyle .= ' current';
-                if ($pagepath !== '/course/section.php') {
+                if ($isviewpage) {
                     $sectionstyle .= ' state-visible';
                 }
+            }
+        }
+
+        // If section is current/highlighted and user can view hidden sections, ensure state-visible is present.
+        if ($iscurrent && $canviewhiddensections && $isviewpage) {
+            if (strpos($sectionstyle, 'state-visible') === false) {
+                $sectionstyle .= ' state-visible';
             }
         }
 
