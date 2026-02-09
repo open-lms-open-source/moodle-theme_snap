@@ -5493,6 +5493,15 @@ header#mr-nav {
     }
 }
 
+@media (min-width: 992px) and (max-width: 1200px) {
+    #page-header.mast-image h1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
 @media (width: 992px) {
     #page-header {
         padding-top: 40px !important;
