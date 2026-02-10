@@ -23,9 +23,11 @@
         {{{content_bank}}}
     {{/content_bank}}
 
+    {{#cover_image_in_mast}}
     {{#cover_image_selector}}
         {{{cover_image_selector}}}
     {{/cover_image_selector}}
+    {{/cover_image_in_mast}}
     
     {{#edit_category_button}}
          <div class="ms-3">
@@ -41,3 +43,9 @@
          <a href="{{url}}" class="btn btn-secondary btn-sm">{{text}}</a>
     {{/change_fullname_button}}
 </div>
+
+{{^cover_image_in_mast}}
+{{#cover_image_selector}}
+    {{{cover_image_selector}}}
+{{/cover_image_selector}}
+{{/cover_image_in_mast}}

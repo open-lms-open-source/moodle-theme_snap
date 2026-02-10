@@ -1008,6 +1008,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $heading = $this->page->heading;
         $pagetype = $this->page->pagetype;
         $context = $this->page->context;
+        $data->cover_image_in_mast = true;
 
         if ($this->page->pagelayout == 'mypublic' && $COURSE->id == SITEID) {
             $data->title = parent::context_header();
@@ -1079,6 +1080,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                 ];
                 if ($pagetype == 'site-index') {
                     $data->cover_image_selector = $this->cover_image_selector();
+                    $data->cover_image_in_mast = false;
                 }
             }
         }
