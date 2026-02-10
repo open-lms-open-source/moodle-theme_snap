@@ -114,8 +114,13 @@ class event_handlers {
      * @param course_module_created $event
      */
     public static function course_module_created(course_module_created $event) {
+        global $SESSION;
+
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
+
+        // Allow UI awareness after a new course module is created.
+        $SESSION->theme_snap_course_module_created_id = $event->get_data()['contextinstanceid'];
     }
 
     /**

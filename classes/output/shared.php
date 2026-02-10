@@ -278,7 +278,7 @@ EOF;
      * @return void
      */
     public static function page_requires_js() {
-        global $CFG, $PAGE, $COURSE, $USER, $OUTPUT;
+        global $CFG, $PAGE, $COURSE, $USER, $OUTPUT, $SESSION;
 
         $PAGE->requires->jquery();
         $PAGE->requires->js_amd_inline("require(['theme_boost/loader']);");
@@ -382,7 +382,12 @@ EOF;
             'unavailablemods' => $unavailablemods,
             'enablecompletion' => isloggedin() && $COURSE->enablecompletion,
             'format' => $COURSE->format,
+            'coursemodulecreatedid' => $SESSION->theme_snap_course_module_created_id ?? '',
         ];
+
+        if (!empty($SESSION->theme_snap_course_module_created_id)) {
+            unset($SESSION->theme_snap_course_module_created_id);
+        }
 
         if (!empty($sectionnum)) {
             $coursevars->sectionnum = $sectionnum;

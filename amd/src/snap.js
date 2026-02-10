@@ -1624,6 +1624,10 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         }
                     });
 
+                    if (courseConfig.coursemodulecreatedid) {
+                        M.cfg.theme_snap_coursemodulecreatedid = courseConfig.coursemodulecreatedid;
+                    }
+
                 });
                 accessibility.snapAxInit();
                 messages.init();
