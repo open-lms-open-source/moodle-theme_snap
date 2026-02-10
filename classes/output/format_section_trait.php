@@ -88,7 +88,6 @@ trait format_section_trait {
             $data->singlesection->snapsectionsummary = $this->add_snap_custom_section_summary($courseformat, $currentsection);
 
             unset($cmsitem);
-            parent::render_from_template('theme_snap/courseformat_init', null);
         }
         // Add data to always display controlmenu for Snap subsections, when editing is off.
         if ($templatename === 'core_courseformat/local/content/delegatedsection' && $this->page->user_is_editing() === false) {
@@ -121,7 +120,6 @@ trait format_section_trait {
                 $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
             }
             unset($cmsitem);
-            parent::render_from_template('theme_snap/courseformat_init', null);
         }
 
         // Render the template as usual.

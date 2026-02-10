@@ -58,6 +58,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I follow "Move \"My & < > Section\""
     And I click on "Section 3" "link" in the ".modal-body" "css_element"
     When I follow "My & < > Section"
+    And I wait until the page is ready
     Then I should see "My & < > Section" in the "#section-3 .sectionname" "css_element"
     # Check that navigation is also updated.
     Then the previous navigation for section "3" is for "Section 3"

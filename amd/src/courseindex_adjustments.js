@@ -21,9 +21,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
-import {setTOCVisibleSection} from 'theme_snap/section_asset_management';
-
 const CLASSES = {
     FRONTIER_TRANSITION: 'toc-frontier-transition',
     PRESCROLL: 'sticky-pre-scroll',
@@ -67,7 +64,7 @@ const getHiddenTocActivities = () => {
 /**
  * Remove hidden activities from the course index DOM.
  */
-const filterHiddenActivitiesFromDOM = () => {
+export const filterHiddenActivitiesFromDOM = () => {
     const hiddencmids = getHiddenTocActivities();
     if (!hiddencmids || hiddencmids.length === 0) {
         return;
@@ -86,56 +83,6 @@ const filterHiddenActivitiesFromDOM = () => {
             activityElement.remove();
         }
     });
-};
-
-/**
- * Initializes the course index adjustments.
- *
- * - Adds missing title attributes to links.
- * - Observes changes in the course index and applies the same adjustments to new nodes.
- */
-export const init = () => {
-
-    const reactiveCourseEditor = getCurrentCourseEditor();
-
-    const target = document.querySelector('#courseindex');
-    if (target) {
-        // Filter hidden activities immediately and after DOM changes.
-        filterHiddenActivitiesFromDOM();
-        const observer = new MutationObserver(() => {
-            let state = reactiveCourseEditor.state;
-            // Change TOC active section styles.
-            setTOCVisibleSection();
-            // Filter hidden activities after DOM mutations.
-            filterHiddenActivitiesFromDOM();
-            const sections = document.querySelectorAll('#courseindex-content .courseindex-section');
-            const currentSectionId = [...state.section.values()].find(el => el.current)?.id;
-            sections.forEach(section => {
-                if (currentSectionId === section.dataset.id) {
-                    section.classList.add('current');
-                    if (document.querySelector('body:not(.path-course-view-section)')) {
-                        section.querySelector('.courseindex-item').classList.add('pageitem');
-                    }
-                } else {
-                    section.classList.remove('current');
-                    if (document.querySelector('body:not(.path-course-view-section)')) {
-                        section.querySelector('.courseindex-item').classList.remove('pageitem');
-                    }
-                }
-            });
-
-            const sectionsInView = document.querySelectorAll('body:not(.path-course-view-section)' +
-                ' #courseindex-content .courseindex-section');
-            sectionsInView.forEach((section) => {
-                if (section.classList.contains('current')) {
-                    section.querySelector('.courseindex-item').classList.add('pageitem');
-                } else {
-                    section.querySelector('.courseindex-item').classList.remove('pageitem');
-                }
-            });
-        });
-        observer.observe(target, {childList: true, subtree: true});
-    }
 };
 
 /**

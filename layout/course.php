@@ -83,7 +83,6 @@ echo $output->snap_footer_alert();
 echo $OUTPUT->course_modchooser();
 echo $OUTPUT->main_content();
 echo \theme_snap\output\shared::course_tools(true);
-echo $OUTPUT->render_from_template('theme_snap/courseformat_init', null);
 echo $OUTPUT->course_content_footer();
 ?>
 </section>

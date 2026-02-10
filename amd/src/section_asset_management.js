@@ -71,7 +71,7 @@ define(
                     if (actionName === 'permalink' || actionName === 'update') {
                         return; // Do nothing.
                     }
-                    // Initialize the reactive component to make available the action.
+                    // Initialize the reactive component to make available the action and avoid duplicate of actions.
                     actionLink.dataset.initialized = "true";
 
                     const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
@@ -160,14 +160,6 @@ define(
             $('.sk-fading-circle').show();
             fragment.loadFragment('theme_snap', 'section', self.courseConfig.contextid, params)
                 .done(function(html, js) {
-                    if (js) {
-                        // Remove call to core_courseformat/local/content
-                        // Avoiding to re-start course reactive instances.
-                        js = js.replace(
-                            /require\(\['core_courseformat\/local\/content'\][\s\S]*?\}\);/g,
-                            '/* Removed Course Content Init */'
-                        );
-                    }
                     var $container = $('ul.sections');
                     templates.appendNodeContents($container, html, js);
 

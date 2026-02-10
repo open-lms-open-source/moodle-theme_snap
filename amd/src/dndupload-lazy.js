@@ -23,8 +23,8 @@
 /**
  * @module theme_snap/dndupload-lazy
  */
-define(['jquery', 'core/yui', 'theme_snap/util', 'core/str'],
-    function($, YUI, util, str) {
+define(['jquery', 'core/yui', 'theme_snap/util'],
+    function($, YUI, util) {
         var self = this;
 
         self.dndupload = null;
@@ -46,22 +46,6 @@ define(['jquery', 'core/yui', 'theme_snap/util', 'core/str'],
                     });
 
                 }, true);
-            var observerDnd = new MutationObserver(() => {
-                const fileModalHd = document.querySelector('.moodle-dialogue-base .moodle-dialogue-hd');
-                if (fileModalHd) {
-                    str.get_strings([{key: 'addresourceoractivity', component: 'moodle'},
-                        {key: 'actionchoice', component: 'moodle'}]).then((strings) => {
-                            let modalBod = document.querySelector('.moodle-dialogue-base .moodle-dialogue-bd > p').innerHTML;
-                            if (strings[1].substring(0, strings[1].indexOf("'{$a}'")) ===
-                                modalBod.substring(0, modalBod.indexOf("'"))) {
-                                const header = document.createElement('h5');
-                                header.innerText = strings[0];
-                                fileModalHd.prepend(header);
-                            }
-                    });
-                }
-            });
-            observerDnd.observe(document.body, {childList: true});
         };
 
         /**
@@ -96,7 +80,7 @@ define(['jquery', 'core/yui', 'theme_snap/util', 'core/str'],
 
             $('.js-snap-drop-file').change(function() {
                 var sectionnumber = $(this).attr('id').replace('snap-drop-file-', '');
-                var section = Y.one('#section-' + sectionnumber);
+                var section = Y.one('ul.sections > #section-' + sectionnumber);
 
                 var file;
                 for (var i = 0; i < this.files.length; i++) {
