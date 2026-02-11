@@ -19,8 +19,10 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax_notification', './cropper'],
-    function($, log, ajax, notification, ajaxNotify, Cropper) {
+define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax_notification', './cropper',
+    'theme_snap/courseindex_adjustments'],
+    function($, log, ajax, notification, ajaxNotify, Cropper,
+             CourseindexAdjustments) {
 
         var savedImageURL = $('#page-header').css("background-image");
         var temporalImageURL = 'none';
@@ -325,6 +327,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                                 $('#page-header').data('servercoverfile', 'none');
                                 $('#page-header').css('background-image', 'none');
                                 confirmationDialogue.hide();
+                                if (document.getElementById('theme_boost-drawers-courseindex')) {
+                                    CourseindexAdjustments.stickyTOCRecalculator();
+                                }
                             },
                             fail: function(response) {
                                 ajaxNotify.ifErrorShowBestMsg(response);
@@ -347,6 +352,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
             $('.snap_cover_image_dialogue .closebutton, .moodle-dialogue-lightbox').click(function() {
                 cropper = null;
                 state1();
+                if (document.getElementById('theme_boost-drawers-courseindex')) {
+                    CourseindexAdjustments.stickyTOCRecalculator();
+                }
             });
             dialogue.after("visibleChange", function() {
                 if ($('#snap-changecoverimageconfirmation .ok').hasClass('ajaxing')) {
@@ -426,6 +434,9 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
 
                     state2();
                     saveImage(params, courseShortName, categoryId, cropper);
+                    if (document.getElementById('theme_boost-drawers-courseindex')) {
+                        CourseindexAdjustments.stickyTOCRecalculator();
+                    }
                 });
 
             };
