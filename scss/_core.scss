@@ -7004,3 +7004,11 @@ li.section.main {
     top: 100% !important; /* stylelint-disable-line declaration-no-important */
     right: inherit !important; /* stylelint-disable-line declaration-no-important */
 }
+
+code {
+    background-color: #f0f0f0;
+    color: unset;
+    border-radius: 0.5rem;
+    font-style: italic;
+    padding: 0.3rem;
+}
