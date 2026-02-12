@@ -38,6 +38,7 @@ export default class Component extends BaseSectionComponent {
             const createdModule = document.getElementById('module-' + M.cfg.theme_snap_coursemodulecreatedid);
             createdModule.scrollIntoView(false);
             window.scrollBy({top: window.innerHeight / 3});
+            createdModule.querySelector('.activity-item').classList.add('highlight-new-activity');
         }
     }
 
@@ -55,6 +56,7 @@ export default class Component extends BaseSectionComponent {
             const createdModule = document.getElementById('module-' + M.cfg.theme_snap_coursemodulecreatedid);
             createdModule.scrollIntoView(false);
             window.scrollBy({top: window.innerHeight / 3});
+            createdModule.querySelector('.activity-item').classList.add('highlight-new-activity');
         }
     }
 }

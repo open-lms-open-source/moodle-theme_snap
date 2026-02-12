@@ -798,3 +798,17 @@ body.snap_drawer_open {
     height: unset;
   }
 }
+
+// Define the animation for new activities.
+@keyframes blink-new-activity {
+  0% { background-color: transparent; }
+  25% { background-color: #EEF0F6; }
+  50% { background-color: transparent; }
+  75% { background-color: #EEF0F6; }
+  100% { background-color: transparent; }
+}
+
+// Highlight the newly created activity with a blink animatronic.
+.highlight-new-activity {
+  animation: blink-new-activity 2s ease-in-out forwards;
+}
