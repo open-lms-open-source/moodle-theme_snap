@@ -588,6 +588,13 @@ blockquote {
     @extend .blockquote;
 }
 
+// This style avoid images to get outside it's parent element.
+// Specially in login page (INT-21717)
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 // Stop images shrinking to nothing on Chrome
 table img:not(.activityicon) {
     min-width: 12px;
