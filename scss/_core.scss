@@ -1611,6 +1611,8 @@ footer #moodle-footer
       @include media-breakpoint-up(lg) {
         margin-right: 365px !important;
       }
+
+      visibility: visible !important;
     }
     @include media-breakpoint-up(lg) {
         // When Course Index is open.
