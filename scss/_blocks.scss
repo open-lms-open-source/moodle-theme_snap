@@ -225,10 +225,9 @@ body.path-site .block.block_settings {
             #snap-feeds-menu-forumposts {
                 .userinitials {
                     float: left;
-                    width: 40px;
-                    height: 40px;
-                    font-size: unset;
-                    margin: 0.3em 1em 0 0.3em;
+                    width: 36px;
+                    height: 36px;
+                    margin: 0.3em 1.5em 0 0.5em;
                 }
             }
             #snap-feeds-menu-messages .snap-media-body p {
@@ -377,6 +376,12 @@ body.path-site .block.block_settings {
                 }
             }
         }
+    }
+    .snap-feeds .userinitials.snap-feeds-forumpost-userinitials {
+        float: left;
+        width: 36px;
+        height: 36px;
+        margin: 0.3em 1.5em 0 0.5em;
     }
 }
 

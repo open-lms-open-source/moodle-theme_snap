@@ -62,6 +62,8 @@ class ws_feed extends external_api {
         return new external_multiple_structure(
             new external_single_structure([
                 'iconUrl'      => new external_value(PARAM_URL, 'URL of icon'),
+                'hasUserPic'   => new external_value(PARAM_BOOL, 'True if user has a custom picture'),
+                'userInitials' => new external_value(PARAM_RAW, 'User initials'),
                 'iconDesc'     => new external_value(PARAM_RAW, 'Description of icon'),
                 'iconClass'    => new external_value(PARAM_RAW, 'CSS class of icon'),
                 'title'        => new external_value(PARAM_RAW, 'Feed item title'),

@@ -2023,11 +2023,21 @@ class local {
             }
 
             $iconurl = '';
-            if (!empty($activity->user)) {
-                $userpicture = new \core\output\user_picture($activity->user);
+            $hasuserpic = false;
+            $userinitials = '';
+            $user = $activity->user;
+
+            if (!empty($user)) {
+                $userpicture = new \core\output\user_picture($user);
                 $userpicture->link = false;
                 $userpicture->alttext = false;
                 $userpicture->size = 32;
+
+                if (!empty($user->picture)) {
+                    $hasuserpic = true;
+                } else {
+                    $userinitials = \core_user::get_initials($user);
+                }
 
                 if ($renderhtml) {
                     $iconurl = $OUTPUT->render($userpicture);
@@ -2054,6 +2064,8 @@ class local {
 
             $res[] = [
                 'iconUrl'      => $iconurl,
+                'hasUserPic'   => $hasuserpic,
+                'userInitials' => $userinitials,
                 'iconDesc'     => '',
                 'iconClass'    => 'userpicture',
                 'title'        => $fullname,

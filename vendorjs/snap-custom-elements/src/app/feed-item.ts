@@ -1,5 +1,7 @@
 export class FeedItem {
   iconUrl: string;
+  hasUserPic: boolean;
+  userInitials; string;
   iconDesc: string;
   iconClass: string;
   title: string;
@@ -10,4 +12,5 @@ export class FeedItem {
   fromCache: number;
   itemId: number;
   modName: string;
+  urlParameter: string;
 }
