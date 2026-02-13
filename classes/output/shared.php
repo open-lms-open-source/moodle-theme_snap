@@ -382,11 +382,11 @@ EOF;
             'unavailablemods' => $unavailablemods,
             'enablecompletion' => isloggedin() && $COURSE->enablecompletion,
             'format' => $COURSE->format,
-            'coursemodulecreatedid' => $SESSION->theme_snap_course_module_created_id ?? '',
+            'newmodid' => $SESSION->theme_snap_course_module_created_or_modified_id ?? '',
         ];
 
-        if (!empty($SESSION->theme_snap_course_module_created_id)) {
-            unset($SESSION->theme_snap_course_module_created_id);
+        if (!empty($SESSION->theme_snap_course_module_created_or_modified_id)) {
+            unset($SESSION->theme_snap_course_module_created_or_modified_id);
         }
 
         if (!empty($sectionnum)) {

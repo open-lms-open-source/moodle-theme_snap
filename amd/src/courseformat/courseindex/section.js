@@ -33,13 +33,7 @@ export default class Component extends BaseSectionComponent {
      */
     stateReady(state) {
         super.stateReady(state);
-        // Scroll to a newly created module, if we get confirmation there is one.
-        if (M.cfg.theme_snap_coursemodulecreatedid) {
-            const createdModule = document.getElementById('module-' + M.cfg.theme_snap_coursemodulecreatedid);
-            createdModule.scrollIntoView(false);
-            window.scrollBy({top: window.innerHeight / 3});
-            createdModule.querySelector('.activity-item').classList.add('highlight-new-activity');
-        }
+        this.handleActivityUpdates();
     }
 
     /**
@@ -51,12 +45,20 @@ export default class Component extends BaseSectionComponent {
      */
     _refreshPageItem({element, state}) {
         super._refreshPageItem({element, state});
+        this.handleActivityUpdates();
+    }
+
+    /**
+     * The handler for Snap's courseindex section activity updates.
+     */
+    handleActivityUpdates() {
         // Scroll to a newly created module, if we get confirmation there is one.
-        if (M.cfg.theme_snap_coursemodulecreatedid) {
-            const createdModule = document.getElementById('module-' + M.cfg.theme_snap_coursemodulecreatedid);
-            createdModule.scrollIntoView(false);
+        const newMod = sessionStorage.getItem('newMod');
+        if (newMod) {
+            const affectedModule = document.getElementById('module-' + newMod);
+            affectedModule.scrollIntoView(false);
             window.scrollBy({top: window.innerHeight / 3});
-            createdModule.querySelector('.activity-item').classList.add('highlight-new-activity');
+            affectedModule.querySelector('.activity-item').classList.add('highlight-new-activity');
         }
     }
 }
