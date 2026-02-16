@@ -1624,6 +1624,12 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         }
                     });
 
+                    if (courseConfig.newmodid) {
+                        sessionStorage.setItem('newMod', courseConfig.newmodid);
+                    } else {
+                        sessionStorage.removeItem('newMod');
+                    }
+
                 });
                 accessibility.snapAxInit();
                 messages.init();

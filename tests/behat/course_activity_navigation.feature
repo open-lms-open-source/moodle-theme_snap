@@ -407,3 +407,17 @@ Feature: Activity navigation in Snap theme
     And I click on "Edit settings" "link" in the "Assignment 3" activity
     And I press "Save and return to course"
     Then I should see "Assignment 3"
+
+  @javascript
+  Scenario: When a new activity is created, the course view scrolls down as needed in order to display it.
+    Given I log in as "admin"
+    And I am on "C1" course homepage
+    And I follow "Section 1"
+    And I wait until the page is ready
+    And I click on "#section-1 .section-modchooser-link.btn-add-activity" "css_element"
+    And I click on "[title='Add a new Assignment']" "css_element"
+    And I set the following fields to these values:
+      | Assignment name | New Assignment1 |
+      | Description     | assign descr    |
+    And I click on "input[type='submit'][value='Save and return to course']" "css_element"
+    Then I should see "New Assignment1"

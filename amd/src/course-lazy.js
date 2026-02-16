@@ -175,11 +175,14 @@ define(
          */
         var scrollBack = function() {
             var storedmod = sessionStorage.getItem('lastMod');
-            if (storedmod === null) {
-                window.scrollTo(0, 0);
-            } else {
-                util.scrollToElement($('#' + storedmod + ''));
-                sessionStorage.removeItem('lastMod');
+            // When a new module is created, we don't want these scrolls.
+            if (!courseConfig.coursemodulecreatedid) {
+                if (storedmod === null) {
+                    window.scrollTo(0, 0);
+                } else {
+                    util.scrollToElement($('#' + storedmod + ''));
+                    sessionStorage.removeItem('lastMod');
+                }
             }
         };
 
