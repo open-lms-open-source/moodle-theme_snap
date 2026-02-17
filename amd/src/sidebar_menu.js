@@ -124,6 +124,12 @@ const toggleSidebar = () => {
     sidebar.classList.toggle(CLASSES.SHOW);
     icon.classList.toggle(CLASSES.ROTATE);
     updateElementPositions();
+    // Keep any declaring trigger's aria-expanded attribute in sync.
+    const trigger = document.querySelector(SELECTORS.TRIGGER);
+    const isOpen = sidebar.classList.contains(CLASSES.SHOW);
+    if (trigger) {
+        setAriaExpanded(trigger, isOpen);
+    }
     
     // If we're closing the sidebar, close any open drawers
     if (isClosing) {
@@ -254,10 +260,12 @@ const handleDrawerButtonClick = (e) => {
             button.classList.add(CLASSES.ACTIVE);
             setDrawerPreference(activeSelector, true);
             toggleBodyDrawerClass();
+            setAriaExpanded(button, true);
         } else {
             button.classList.remove(CLASSES.ACTIVE);
             setDrawerPreference(activeSelector, false);
             toggleBodyDrawerClass();
+            setAriaExpanded(button, false);
         }
     }, 50); // Small delay to allow the drawer state to update
 };
@@ -297,6 +305,7 @@ const closeOtherDrawers = (currentSelector, currentButton) => {
             }
             setDrawerPreference(activeSelector, false);
             button.classList.remove(CLASSES.ACTIVE);
+            setAriaExpanded(button, false);
         }
     });
 };
@@ -329,6 +338,7 @@ const closeAllDrawers = () => {
                 button.click();
             }
             button.classList.remove(CLASSES.ACTIVE);
+            setAriaExpanded(button, false);
         }
     });
 };
@@ -344,8 +354,10 @@ const handleMessagesPopoverClick = (e) => {
         const isCollapsed = e.currentTarget.classList.contains(CLASSES.COLLAPSED);
         if (isCollapsed) {
             e.currentTarget.classList.remove(CLASSES.COLLAPSED);
+            setAriaExpanded(e.currentTarget, true);
         } else {
             e.currentTarget.classList.add(CLASSES.COLLAPSED);
+            setAriaExpanded(e.currentTarget, false);
         }
     }
 };
@@ -570,6 +582,28 @@ const queryActiveDrawers = (selector) => {
 };
 
 /**
+ * If the element (or its clickable child) declares an ariaexpanded control attribute,
+ * set the proper `aria-expanded` value.
+ * Supports both `ariaexpandedcontrol` and `aria-expanded-control` attribute names.
+ * @param {Element} element The element or container to inspect
+ * @param {boolean} expanded Whether the control should be marked expanded
+ */
+const setAriaExpanded = (element, expanded) => {
+    if (!element) {
+        return;
+    }
+
+    const target = element.querySelector('a, button') || element;
+
+    // Only update `aria-expanded` if the element (or its clickable child)
+    // already has that attribute. This avoids introducing the attribute
+    // where it wasn't present.
+    if (target.hasAttribute('aria-expanded') || element.hasAttribute('aria-expanded')) {
+        target.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    }
+};
+
+/**
  * Reposition the "Go to Top" button based on open drawers
  */
 const repositionGotoTopLink = () => {
@@ -619,6 +653,11 @@ const toggleSidebarOnHorizontalScroll = (scrollX) => {
             // Hide sidebar
             sidebar.style.right = '-100%';
             sidebar.classList.remove('show');
+            // Ensure trigger (if it declares aria control) is updated.
+            const trigger = document.querySelector(SELECTORS.TRIGGER);
+            if (trigger) {
+                setAriaExpanded(trigger, false);
+            }
             // Hide active drawers
             DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
                 const activeDrawers = queryActiveDrawers(selector); // Use the helper function
@@ -631,6 +670,11 @@ const toggleSidebarOnHorizontalScroll = (scrollX) => {
         // When returning to scroll position 0
         sidebar.style.right = '';
         sidebar.classList.add('show');
+        // Restore trigger aria if present.
+        const trigger = document.querySelector(SELECTORS.TRIGGER);
+        if (trigger) {
+            setAriaExpanded(trigger, true);
+        }
         // Restore active drawers visibility
         DRAWERS.ACTIVE_SELECTORS.forEach(selector => {
             const activeDrawers = queryActiveDrawers(selector); // Use the helper function
