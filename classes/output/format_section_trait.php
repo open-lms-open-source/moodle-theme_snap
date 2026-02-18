@@ -122,6 +122,11 @@ trait format_section_trait {
             unset($cmsitem);
         }
 
+        if ($currentsection->uservisible && !$data->editing ) {
+            // Add Snap modchooser and Snap drop file.
+            $sectionfooter = $this->course_section_add_cm_control_snap($course, $currentsection, 0);
+            $data->cmcontrols = $sectionfooter;
+        }
         // Render the template as usual.
         return parent::render_from_template($templatename, $data);
     }
@@ -189,11 +194,6 @@ trait format_section_trait {
                 $output = $sectionheader;
                 $output .= $corecontent;
 
-                if ($currentsection->uservisible && !$PAGE->user_is_editing()) {
-                    // Add Snap modchooser and Snap drop file.
-                    $sectionfooter = $this->course_section_add_cm_control_snap($course, $currentsection, 0);
-                    $output .= $sectionfooter;
-                }
                 // Add Snap footer navigation for course.
                 $output .= $this->render(new course_section_navigation($course, $modinfo->get_section_info_all(), $currentsection->section));
             }

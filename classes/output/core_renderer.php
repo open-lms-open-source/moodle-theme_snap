@@ -1682,11 +1682,8 @@ HTML;
             return '';
         }
 
-        // Build an object of config settings that we can then hook into in the Activity Chooser.
-        $chooserconfig = (object) [
-            'tabmode' => get_config('core', 'activitychoosertabmode'),
-        ];
-        $this->page->requires->js_call_amd('core_course/activitychooser', 'init', [$courseid, $chooserconfig]);
+        $chooserconfig = (object) [];
+        $this->page->requires->js_call_amd('core_courseformat/activitychooser', 'init', [$courseid, $chooserconfig]);
 
         return '';
     }
