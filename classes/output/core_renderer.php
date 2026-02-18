@@ -1002,7 +1002,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function snap_page_header() {
-        global $COURSE, $CFG, $SITE, $DB;
+        global $COURSE, $PAGE;
 
         $data = new stdClass();
         $heading = $this->page->heading;
@@ -1068,6 +1068,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
             if ($courseviewpage || $coursesectionviewpage) {
                 $data->cover_image_selector = $this->cover_image_selector();
             }
+        }
+        if (!($COURSE->format == 'topics' || $COURSE->format == 'weeks')) {
+            // Inject the Bulk editing Button on Snap.
+            $format = course_get_format($COURSE);
+            $renderer = $format->get_renderer($PAGE);
+
+            // Add bulk editing control.
+            $bulkbutton = $renderer->bulk_editing_button($format);
+            $data->bulk_editing_button = $bulkbutton;
         }
 
         if ($this->page->pagelayout == 'frontpage') {

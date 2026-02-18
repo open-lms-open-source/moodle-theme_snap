@@ -600,6 +600,45 @@ table img:not(.activityicon) {
     min-width: 12px;
 }
 
+// Styling for bulk actions in Snap.
+.theme-snap .sticky-footer-content.bulkactions {
+    position: static;
+    margin: 0 0.5em;
+    ul.actions {
+        list-style: none;
+    }
+    .form-check {
+        display: block;
+    }
+}
+.theme-snap.path-course-view.editing {
+    #page-wrapper {
+        height: 0;
+    }
+    &.format-weeks, &.format-topics {
+        #section-0 .bulkEnable {
+            float: unset;
+        }
+    }
+}
+.theme-snap .bulkEnable {
+    vertical-align: text-bottom;
+    float: right;
+}
+
+// Adjust position and size of bulk checkbox.
+.theme-snap.bulkenabled .activity-item .bulkselect {
+    margin-left: -3rem;
+    input {
+        width: 18px;
+        height: 18px;
+    }
+}
+// Give sticky footer a bigger size.
+.show-drawer-left .stickyfooter .sticky-footer-content-wrapper {
+    margin-left: 30%;
+}
+
 table.results td.graph > img {
     min-width: 0;
 }

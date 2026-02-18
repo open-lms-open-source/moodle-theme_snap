@@ -950,13 +950,27 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         outline: none;
     }
 
-    #snap-coverimagecontrol > label.btn-outline-primary.btn-sm {
+    #snap-coverimagecontrol > label.btn-outline-primary.btn-sm,
+    .bulkEnable {
         background-color: white !important;
+        color: $brand-primary!important;
         &:hover,
         &:focus {
             box-shadow: none;
             background-color: $brand-primary !important;
             color: #fff !important;
+            i, span  {
+                color: #fff !important;
+            }
+        }
+    }
+
+    .sticky-footer-content.bulkactions,
+    .bulkEnable.btn {
+        color: $brand-primary;
+        border-color: $brand-primary;
+        span, i, label {
+            color: $brand-primary;
         }
     }
 

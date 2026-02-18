@@ -21,8 +21,8 @@
     Displays the bulk actions button in the page header.
 
     Copied from course/format/templates/local/content/bulkedittoggler.mustache
-    Since we are not supporting bulk editing in Snap.
     Avoid executing "component.init" from core_courseformat/local/content/bulkedittoggler
+    For non existing toggleButton.
 
     Example context (json):
     {
@@ -37,3 +37,12 @@
 >
     {{#str}} bulkedit, core_courseformat {{/str}} {{#pix}} i/edit, core {{/pix}}
 </button>
+{{#js}}
+require(['core_courseformat/local/content/bulkedittoggler'], function(component) {
+    // Validate the component exists in DOM.
+    var toggleButton = document.querySelector('#bulk-enable-{{uniqid}}');
+    if (toggleButton) {
+        component.init('#bulk-enable-{{uniqid}}');
+    }
+});
+{{/js}}

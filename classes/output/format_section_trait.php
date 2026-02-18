@@ -52,16 +52,6 @@ trait format_section_trait {
      static $SECTION_ACTIONS_BEFORE_MENU = 2;
 
     /**
-     * Render the enable bulk editing button.
-     * @param course_format $format the course format
-     * @return string|null the enable bulk button HTML (or null if no bulk available).
-     */
-    public function bulk_editing_button(course_format $format): ?string {
-        // Snap modifications to course formats do not support this feature.
-        return '';
-    }
-
-    /**
      * Overrides the render_from_template from lib/classes/output/renderer_base.php.
      * This method is used to intercept the $data that is sent for templates rendering.
      *
@@ -86,6 +76,18 @@ trait format_section_trait {
             $data->singlesection->editing = true;
             $data->singlesection->summary->summarytext = '';
             $data->singlesection->snapsectionsummary = $this->add_snap_custom_section_summary($courseformat, $currentsection);
+
+            // Bulk actions in Snap.
+            if (isset($data->bulkedittools) && isset($data->bulkedittools->actions)) {
+                $clean_actions = array_filter($data->bulkedittools->actions, function($action) {
+                    // In Snap we don't have bulk actions for sections, since Snap shows single section always.
+                    // So, We keep actions buttons only for activities.
+                    return isset($action['bulk']) && $action['bulk'] !== 'section';
+                });
+
+                // Set the new actions for bulk editing.
+                $data->bulkedittools->actions = array_values($clean_actions);
+            }
 
             unset($cmsitem);
         }
@@ -696,6 +698,20 @@ trait format_section_trait {
                 ));
             }
         }
+
+        // Inject the Bulk editing Button on Snap.
+        $course = get_course($section->course);
+        // Fix course format if it is no longer installed.
+        $format = course_get_format($course);
+        $course->format = $format->get_format();
+        $format->set_sectionid($section->id);
+
+        // Add bulk editing control.
+        $bulkbutton = $this->bulk_editing_button($format);
+        if (!empty($bulkbutton)) {
+            $PAGE->add_header_action($bulkbutton);
+        }
+        $o .= $bulkbutton;
 
         return $o;
     }
