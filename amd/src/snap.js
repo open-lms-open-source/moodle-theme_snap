@@ -570,10 +570,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         stringsjs[0] + '</h2></div>');
                     $('#theme_boost-drawers-courseindex').prepend(headerDiv);
                 });
-
-                require(['theme_snap/courseindex_adjustments'], (CourseIndexAdjustments) => {
-                    CourseIndexAdjustments.stickyTOCHandler();
-                });
             }
             $('#theme_boost-drawers-courseindex').on('keyup', '#toc-search-input', function() {
                 tocSearchCourse(dataList);
