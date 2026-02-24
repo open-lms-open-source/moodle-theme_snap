@@ -559,9 +559,13 @@ EOF;
                 $item->link = $CFG->wwwroot.'/'.$item->link;
             }
             // Generate linkhtml.
-            $attributes = $item->attributes ?? null;
-            $o .= '<li>';
-            $o .= \core\output\html_writer::link($item->link, $item->title, $attributes);
+            $attributes = $item->attributes ?? [];
+            if (!isset($attributes['class'])) {
+                $attributes['class'] = '';
+            }
+            $attributes['class'] .= ' tool-name';
+            $o .= '<li class="tool-card">';
+            $o .= html_writer::link($item->link, $item->title, $attributes);
             $o .= '</li>';
         }
         return $o;
@@ -888,7 +892,7 @@ EOF;
             $links[] = $downloaditem;
         }
         $o .= self::print_student_dashboard();
-        $o .= '<ul id="coursetools-list">' .self::render_appendices($links). '</ul>';
+        $o .= '<ul id="coursetools-list" class="modern-dashboard">' .self::render_appendices($links). '</ul>';
 
         return $o;
     }
