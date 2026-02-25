@@ -1246,6 +1246,7 @@ body.format-singleactivity {
 
         .badge {
           max-width: 100%;
+          width: 100%;
           white-space: normal;
           word-wrap: break-word;
           overflow-wrap: break-word;
@@ -1708,6 +1709,11 @@ body.snap-resource-card {
         &.snap-image .snap-header-card-icons {
             width: 40% !important;
         }
+
+        .activity-afterlink {
+            padding-top: 0;
+            margin-top: 0;
+        }
     }
 }
 
@@ -1956,7 +1962,7 @@ body.snap-resource-card {
           width: 100%;
         }
 
-        .activityname a {
+        .activityname a, .activityname {
           display: flex;
           align-items: baseline;
           cursor: pointer;
@@ -1994,11 +2000,12 @@ body.snap-resource-card {
 
         & > .readmoreicon {
           display: block;
+          margin-top: -1rem;
         }
       }
 
       .activity-altcontent > .no-overflow {
-        padding: 1em;
+        padding: 0.5em;
         margin-top: 0.5em;
         background-color: $color-bk-resource;
         border-radius: 0.5em;
