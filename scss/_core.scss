@@ -5217,6 +5217,8 @@ section#region-main {
                 .course-card {
                     border-radius: 0.5rem;
                     transition: transform 0.5s ease;
+                    height: auto !important;
+                    width: auto !important;
                     &:hover {
                         transform: scale(1.05);
                         z-index: 10;
@@ -7051,6 +7053,7 @@ li.section.main {
     transform: none !important; /* stylelint-disable-line declaration-no-important */
     top: 100% !important; /* stylelint-disable-line declaration-no-important */
     right: inherit !important; /* stylelint-disable-line declaration-no-important */
+    min-width: 10.5rem;
 }
 
 code {
