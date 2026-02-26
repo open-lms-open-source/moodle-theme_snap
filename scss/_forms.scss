@@ -55,7 +55,8 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.fitem
 .form-item,
 .path-backup .mform .grouped_settings .fitem,
 .mform .fcontainer > .fitem,
-.mform .snap-form-advanced > .fitem {
+.mform .snap-form-advanced > .fitem,
+.mform .snap-form-advanced #form-advanced-div > .fitem.show {
     padding: 0.5rem;
     display: block;
     margin: 0 !important;
