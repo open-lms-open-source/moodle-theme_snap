@@ -7063,3 +7063,62 @@ code {
     font-style: italic;
     padding: 0.3rem;
 }
+
+@include media-breakpoint-down(768px) {
+    .modern-dashboard {
+        padding: 0;
+        list-style: none;
+        margin-top: 1rem;
+    }
+
+    .row #coursetools-list li {
+
+        &.tool-card {
+            width: 15rem;
+            height: 9rem;
+            float: left;
+            padding: 1rem;
+            font-size: 1em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            min-height: 120px;
+            white-space: nowrap;
+            overflow-y: clip;
+            text-overflow: ellipsis;
+            list-style-type: none;
+        }
+
+        &.tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+        & .tool-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow-y: clip;
+            text-overflow: ellipsis;
+        }
+        & .snap-participant-icons {
+            display: flex !important;
+            gap: 0.25rem;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+
+            & .userinitials {
+                min-width: 35px;
+                height: 35px;
+                font-size: 0.7rem;
+                background-color: #eee;
+                color: #555;
+            }
+        }
+    }
+}    
