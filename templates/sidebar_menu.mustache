@@ -73,7 +73,7 @@
             {{^customcontent}}
                 {{#isbutton}}
                     <button type="button" class="snap-sidebar-menu-item {{#classes}}{{classes}}{{/classes}}" {{#title}}title="{{title}}"{{/title}} 
-                        {{#dataattributes}}data-{{name}}="{{value}}" {{/dataattributes}}>
+                        {{#dataattributes}}data-{{name}}="{{value}}" {{/dataattributes}} aria-expanded="false">
                         {{#icon}}<i class="fa {{icon}}" aria-hidden="true"></i>{{/icon}}
                         {{^icon}}{{#iconimg}}<img src="{{iconimg}}" alt="{{#title}}{{title}}{{/title}}{{^title}}Icon{{/title}}" />{{/iconimg}}{{/icon}}
                     </button>
