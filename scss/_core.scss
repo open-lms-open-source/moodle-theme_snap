@@ -1645,7 +1645,7 @@ footer #moodle-footer
     }
 }
 
-#page {
+body > #page {
     margin: 0;
     padding: 0;
     position: relative;
@@ -1654,17 +1654,35 @@ footer #moodle-footer
     // When right drawers are open
     &.offcanvas,
     &.show-drawer-right {
-      @include media-breakpoint-up(lg) {
-        margin-right: 365px !important;
-      }
-
-      visibility: visible !important;
-    }
-    @include media-breakpoint-up(lg) {
-        // When Course Index is open.
-        &.show-drawer-left #snap-course-wrapper {
-          padding-left: 19.5em;
+        @include media-breakpoint-up(lg) {
+            margin-right: 365px !important;
         }
+    }
+    // In tiles format, we need to make sure overlay takes available space
+    div#format_tiles_overlay {
+        min-height: 100% !important;
+    }
+
+    // When Course Index is open.
+    &.show-drawer-left {
+        @include media-breakpoint-up(lg) {
+            #snap-course-wrapper > .row {
+                padding-left: 19.5em;
+            }
+        }
+        // Make sure Course content has minimum height, when TOC is open.
+        #snap-course-wrapper {
+            min-height: 100vh;
+        }
+
+        // Hide toggledrawer when TOC is open.
+        .drawer-toggler {
+            display: none;
+        }
+    }
+    // Hide empty Core HTML rendered.
+    #topofscroll #page-content {
+        display: none;
     }
 }
 
@@ -6900,26 +6918,6 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
 }
 .drawer-toggles .drawer-right-toggle .btn:hover {
     padding-right: 20px;
-}
-
-.drawer.drawer-left.d-print-none#theme_boost-drawers-courseindex {
-    background-color: #EEF0F6;
-    position: absolute;
-    max-height: unset;
-    height: unset;
-    margin-left: -4.5%;
-    bottom: 0;
-    &.show {
-      z-index: 1050;
-      .drawercontent .courseindex {
-        position: relative;
-        overflow: auto;
-      }
-      .drawercontent {
-          height: calc(100% - 10px);
-          padding-top: 3em;
-      }
-    }
 }
 .format-topics,
 .format-weeks {

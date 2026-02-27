@@ -198,16 +198,6 @@
                 classList.remove(classes.pinned);
                 this.onUnpin && this.onUnpin.call(this);
             }
-
-            // The sticky TOC must be recalculated. Needed for cases of unpin without scroll (e.g. on page load).
-            if (document.getElementById('theme_boost-drawers-courseindex')) {
-                // Allow the browser to carry out the header unpin.
-                setTimeout(() => {
-                    require(['theme_snap/courseindex_adjustments'], (CourseindexAdjustments) => {
-                        CourseindexAdjustments.stickyTOCRecalculator();
-                    });
-                }, 150);
-            }
         },
 
         /**
@@ -221,16 +211,6 @@
                 classList.remove(classes.unpinned);
                 classList.add(classes.pinned);
                 this.onPin && this.onPin.call(this);
-            }
-
-            // The sticky TOC must be recalculated. Needed for cases of pin without scroll (e.g. on page load).
-            if (document.getElementById('theme_boost-drawers-courseindex')) {
-                // Allow the browser to carry out the header pin.
-                setTimeout(() => {
-                    require(['theme_snap/courseindex_adjustments'], (CourseindexAdjustments) => {
-                        CourseindexAdjustments.stickyTOCRecalculator();
-                    });
-                }, 150);
             }
         },
 

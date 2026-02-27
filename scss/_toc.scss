@@ -31,7 +31,9 @@ div[data-flexitour="step-background"] {
 // -------------------------
 
 #snap-course-wrapper {
+  .row {
     margin: 0 4%;
+  }
     position: relative;
     min-height: calc(100vh - 25rem);
 }
@@ -480,6 +482,54 @@ label[for="toc-search-input"]{
 [id*="courseindex"].drawer-left .btn.drawertoggle i.icon {
   font-size: 14px;
 }
+
+// -------------------------
+// Sticky TOC styles.
+// -------------------------
+.theme-snap #theme_boost-drawers-courseindex {
+  position: sticky;
+  max-height: 100vh;
+  min-height: 100vh;
+  min-width: 100%;
+  overflow-y: auto;
+}
+.path-course-view #page-wrapper {
+  position: absolute;
+  width: 27%;
+  @media (min-width: 480px) {
+    min-width: 20em;
+  }
+}
+.path-course-view .drawercontent {
+  height: 100vh;
+  padding-top: 5em;
+  nav.courseindex {
+    overflow: scroll;
+  }
+}
+.path-course-view.format-weeks .drawercontent,
+.path-course-view.format-topics .drawercontent {
+  padding-top: unset;
+}
+// Allow sticky TOC on small resolutions
+// Since core uses pageWrapper.style.overflow = 'hidden'
+// See theme/boost/amd/src/drawers.js
+@media (min-width: 480px) {
+  .path-course-view #page {
+    overflow-y: visible !important;
+    overflow-x: clip !important;
+  }
+}
+@media (max-width: 480px) {
+  div.drawer-left#theme_boost-drawers-courseindex {
+    position: fixed;
+    z-index: 1052;
+  }
+  .path-course-view .drawercontent {
+    height: calc(100% - 60px);;
+  }
+}
+
 // -------------------------
 // courseindex icons
 // -------------------------
@@ -686,14 +736,6 @@ body.snap_drawer_open {
 }
 
 @media screen and (max-width: 480px) {
-  div.drawer-left#theme_boost-drawers-courseindex {
-    position: fixed !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-  }
-
   .drawerheader{
     top: auto !important;
 
@@ -729,7 +771,7 @@ body.snap_drawer_open {
 // Section progress indicator.
 // -------------------------
 .drawer.drawer-left .snap-section-progress-wrapper {
-    background-color: #CACACA;
+    background-color: #e9ecef;
     border-radius: 0.5rem;
     padding: 0.2rem 0.75rem;
     margin: .3rem 0 .5rem 2rem;
@@ -761,44 +803,6 @@ body.snap_drawer_open {
         }
     }
 }
-
-#snap-course-wrapper .drawer.drawer-left#theme_boost-drawers-courseindex {
-  transition: top 0.2s ease, height 0.2s ease;
-
-  &.toc-frontier-transition {
-    transition: none;
-  }
-
-  &.sticky-no-header-no-footer {
-    position: fixed;
-    margin-left: -0.1%;
-  }
-
-  &.sticky-no-header-yes-footer {
-    position: absolute;
-  }
-
-  &.sticky-yes-header-no-footer {
-    position: absolute;
-    &.sticky-under-pinned {
-      position: fixed;
-      margin-left: -0.1%;
-    }
-  }
-
-  &.sticky-yes-header-yes-footer {
-    position: absolute;
-  }
-
-  &.sticky-resize {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    top: 0;
-    height: unset;
-  }
-}
-
 // Define the animation for new activities.
 @keyframes blink-new-activity {
   0% { background-color: transparent; }
