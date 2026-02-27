@@ -449,15 +449,10 @@ body.path-site .block.block_settings {
             margin-top: .1rem;
         }
     }
-    .custom-control-input {
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        opacity: 0;
-    }
-    .custom-control-input:checked~.custom-control-label::before {
-        background-color: $brand-primary;
-        border-color: $brand-primary;
+    .form-check-input {
+        max-width: unset;
+        border-bottom-left-radius: 2em !important;
+        border-top-left-radius: 2em !important;
     }
     @include media-breakpoint-down(sm) {
         .input-group label {
