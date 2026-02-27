@@ -5131,9 +5131,6 @@ section#region-main {
 
 // Readjust restriction block position when adding a new activity.
 .snap-form-advanced.col-md-4 {
-    .availability-field.fcontainer {
-        overflow: scroll;
-    }
     .availability-field img {
         min-width: 16px;
         min-height: 16px;
@@ -5641,9 +5638,6 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 
 // Need to override the max-width of the submit buttons on the form when creating an activity to modify its position for mobile mode.
 @media (max-width: 767px) {
-    div[role=main] .mform .snap-form-advanced input {
-        max-width: fit-content !important;
-    }
     div[role=main] .mform div.snap-form-advanced > div:nth-of-type(3) > div.form-inline.felement {
         display: block;
     }
@@ -7035,10 +7029,18 @@ li.section.main {
 // Fix help button width for snap_hide_in_toc checkbox to match other form elements.
 #id_snap_toc_settingscontainer {
     .checkbox {
-        max-width: 100% !important;
-        button.iconhelp {
-            min-width: 40px;
+        width: 100%;
+    }
+    .form-check {
+        position: relative;
+        .iconhelp {
+            position: absolute;
+            top: 0;
+            right: 0;
         }
+    }
+    label[for="id_snap_hide_in_toc"] {
+        padding-right: 2em;
     }
 }
 
@@ -7121,4 +7123,4 @@ code {
             }
         }
     }
-}    
+}

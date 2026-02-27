@@ -65,10 +65,19 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.fitem
         max-width: unset;
         padding-left: unset;
         padding-right: unset;
+        width: auto;
     }
     &:hover {
         background-color: #efefef;
     }
+}
+
+.mform .col-form-label {
+    width: auto;
+}
+
+.mform .fcontainer > .fitem {
+    padding-left: 1em;
 }
 
 #page-local-pld-view .form-item,
