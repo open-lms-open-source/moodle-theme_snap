@@ -81,10 +81,19 @@ define(
                 '#coursetools.state-visible,' +
                 '#snap-add-new-section.state-visible'
             );
+
+            let sectiontarget = '';
+            if (section === '#coursetools' || section === '#snap-add-new-section') {
+                sectiontarget = section;
+            } else if (section !== '') {
+                // We use SectionID to identify the section to show.
+                sectiontarget = 'ul.sections > li.section[data-id="' + section + '"]';
+            }
+
             // If no visible section, then make one visible.
             if (!visibleSections.length) {
-                if (section !== '') {
-                    $('ul.sections > #section-' + section).removeClass('hidden').addClass('state-visible').focus();
+                if (sectiontarget !== '') {
+                    $(sectiontarget).removeClass('hidden').addClass('state-visible').focus();
                 } else if ($('.section.main.current').length) {
                     $('ul.sections > .section.main.current').addClass('state-visible').focus();
                 } else {
@@ -94,15 +103,8 @@ define(
                 scrollBack();
                 return;
             }
-            // Depending on the section, change the selector.
-            let sectiontarget = '';
-            if (section === '#coursetools' || section === '#snap-add-new-section') {
-                sectiontarget = section;
-            } else {
-                sectiontarget = 'ul.sections > #section-' + section;
-            }
 
-            if (section !== '') {
+            if (sectiontarget !== '') {
                 // If already a visible section, show the new section instead.
                 visibleSections.removeClass('state-visible').addClass('hidden');
                 $(sectiontarget).removeClass('hidden').addClass('state-visible');
@@ -131,36 +133,37 @@ define(
             // We know the params at 0 is a section id.
             // Params will be in the format: #section-[number]&module-[cmid], e.g: #section-1&module-7255.
             var urlParams = location.hash.split("&"),
-                section = urlParams[0] || '',
+                hashSection = urlParams[0] || '', // Example: #section-1
                 mod = urlParams[1] || null;
 
+            let sectionID = '';
             // Let Core handle some Modules behavior.
-            if (section.startsWith('#h5pbook') || section.startsWith('#module-')) {
+            if (hashSection.startsWith('#h5pbook') || hashSection.startsWith('#module-')) {
                 return;
-            } else if (section.startsWith('#section-')) {
+            } else if (hashSection.startsWith('#section-')) {
                 // Get section number.
-                section = section.match(/\d+/)[0];
+                sectionID = hashSection.match(/\d+/)[0];
             }
 
             // Redirect to the correct section when doing /course/section.php.
-            if ((section === '' || section === undefined)
+            if ((sectionID === '' || sectionID === undefined)
                 && location.pathname.endsWith('/course/section.php')
-                && self.courseConfig.sectionnum !== undefined) {
-                section = self.courseConfig.sectionnum;
+                && self.courseConfig.sectionid !== undefined) {
+                sectionID = self.courseConfig.sectionid;
             }
 
-            var $sectionNode = $('ul.sections > #section-' + section);
-            if (section === '#coursetools' || section === '#snap-add-new-section') {
+            var $sectionNode = $('ul.sections > li.section[data-id="' + sectionID + '"]');
+            if (hashSection === '#coursetools' || hashSection === '#snap-add-new-section') {
                 // Make visible the Dashboard or New section Form.
-                switchSectionVisibility(section, null);
-            } else if (section !== '' && !($sectionNode.length > 0)) {
+                switchSectionVisibility(hashSection, null);
+            } else if (sectionID !== '' && !($sectionNode.length > 0)) {
                 // Section does not exist in DOM, render it.
-                sectionAssetManagement.getSection(section, mod, switchSectionVisibility);
-                sectionAssetManagement.updateBreadcrumb(section);
+                sectionAssetManagement.getSection(sectionID, mod, switchSectionVisibility);
+                sectionAssetManagement.updateBreadcrumb(sectionID);
             } else {
                 // Section already rendered, show it.
-                switchSectionVisibility(section, mod);
-                sectionAssetManagement.updateBreadcrumb(section);
+                switchSectionVisibility(sectionID, mod);
+                sectionAssetManagement.updateBreadcrumb(sectionID);
             }
 
             // Store last activity/resource accessed on sessionStorage

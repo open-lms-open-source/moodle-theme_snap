@@ -20,12 +20,12 @@
  @copyright Copyright (c) 2016 Open LMS
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
-<nav class="section_footer" data-sectionid="{{sectionid}}">
+<nav class="section_footer" data-sectionid="{{currentsectionid}}">
     <a class="previous_section {{classes}} {{^previous}}disabled{{/previous}}"
-       section-number="{{#previous}}{{section}}{{/previous}}"
+       section-id="{{#previous}}{{sectionid}}{{/previous}}"
        href="{{#previous}}{{url}}{{/previous}}{{^previous}}#{{/previous}}" >
         <div class="nav_icon">
-            <i class="icon-arrow-left" section-number="{{#previous}}{{section}}{{/previous}}"></i>
+            <i class="icon-arrow-left" section-id="{{#previous}}{{sectionid}}{{/previous}}"></i>
         </div>
         <div class="nav_text">
         {{#issubsection}}
@@ -43,10 +43,10 @@
     </a>
 
     <a class="next_section {{classes}} {{^next}}disabled{{/next}}"
-       section-number="{{#next}}{{section}}{{/next}}"
+       section-id="{{#next}}{{sectionid}}{{/next}}"
        href="{{#next}}{{url}}{{/next}}{{^next}}#{{/next}}" >
         <div class="nav_icon">
-            <i class="icon-arrow-right" section-number="{{#next}}{{section}}{{/next}}"></i>
+            <i class="icon-arrow-right" section-id="{{#next}}{{sectionid}}{{/next}}"></i>
         </div>
         <div class="nav_text">
             {{#issubsection}}
@@ -65,6 +65,6 @@
 </nav>
 {{#js}}
     require(['theme_snap/section_navigation'], function(component) {
-        component.init('.section_footer[data-sectionid="{{sectionid}}"]', {{sectionid}});
+        component.init('.section_footer[data-sectionid="{{currentsectionid}}"]', {{currentsectionid}});
     });
 {{/js}}

@@ -668,7 +668,8 @@ trait format_section_trait {
             array(
                 'id' => $sectionid,
                 'class' => 'sectionname',
-                'data-id' => $section->id
+                'data-id' => $section->id,
+                'data-section-name-for' => $section->id
             ));
         $o .= "<div>" . $htmlheading . "</div>";
 

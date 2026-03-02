@@ -403,15 +403,15 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
                 var link = $(this);
                 // Search section number
-                var section = link.attr('section-number');
+                var sectionID = link.attr('section-id');
                 // For courseindex links, section number resides on parent div.
-                if (!section) {
-                    section = link.closest('.courseindex-section').attr('data-number');
+                if (!sectionID) {
+                    sectionID = link.closest('.courseindex-section').attr('data-id');
                 }
                 // If we have a section, save it on Courseconfig.
-                if (typeof section !== 'undefined' && section.length > 0) {
+                if (typeof sectionID !== 'undefined' && sectionID.length > 0) {
                     e.preventDefault();
-                    self.courseConfig.sectionnum = parseInt(section);
+                    self.courseConfig.sectionid = parseInt(sectionID);
                 }
 
                 // Just update the URL, the hashchange does the rest.

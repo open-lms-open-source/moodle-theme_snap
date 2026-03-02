@@ -388,20 +388,21 @@ function theme_snap_get_extra_scss($theme) {
  */
 function theme_snap_output_fragment_section($args) {
     global $PAGE, $CFG;
-    if (empty($args['courseid']) || $args['section'] == '') {
+    if (empty($args['courseid']) || $args['sectionid'] == '') {
         return '';
     }
     $course = get_course($args['courseid']);
     $PAGE->set_context(\context_course::instance($course->id));
     $format = course_get_format($args['courseid']);
     $formatname = $format->get_format();
-    $format->set_sectionnum($args['section']);
     if ($formatname !== 'weeks' && $formatname !== 'topics' && $formatname !== 'tiles') {
         return $formatname;
     }
     $formatrenderer = $format->get_renderer($PAGE);
     $modinfo = get_fast_modinfo($course);
-    $section = $modinfo->get_section_info($args['section']);
+    $section = $modinfo->get_section_info_by_id($args['sectionid']);
+    $current_section_num = $section->sectionnum;
+    $format->set_sectionnum($current_section_num);
 
     // We need to double check if the page has an instance of SharingCart.
     // Current $PAGE object can't be modified.
