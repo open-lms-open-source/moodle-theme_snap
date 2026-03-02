@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Layout - nav.
@@ -21,7 +21,7 @@
  *
  * @package   theme_snap
  * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -31,78 +31,79 @@ use theme_snap\renderables\genius_dashboard_link;
 
 ?>
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
-<div id="snap-header">
-<?php
-// If the homepage is set to Dashboard, then the home icon link must redirect to dashboard.
-$homepage = get_home_page();
-if ($homepage === 1) {
-    $defaulthomeurl = $CFG->wwwroot.'/my';
-} else if ($homepage === 3) {
-    $defaulthomeurl = $CFG->wwwroot.'/my/courses.php';
-} else {
-    $defaulthomeurl = $CFG->wwwroot;
-}
-$sitefullname = format_string($SITE->fullname);
-$attrs = array(
-    'id' => 'snap-home',
-    'title' => $sitefullname,
-);
+    <div id="snap-header">
+        <?php
+        // If the homepage is set to Dashboard, then the home icon link must redirect to dashboard.
+        $homepage = get_home_page();
+        if ($homepage === 1) {
+            $defaulthomeurl = $CFG->wwwroot.'/my';
+        } else if ($homepage === 3) {
+            $defaulthomeurl = $CFG->wwwroot.'/my/courses.php';
+        } else {
+            $defaulthomeurl = $CFG->wwwroot;
+        }
+        $sitefullname = format_string($SITE->fullname);
+        $attrs = array(
+            'id' => 'snap-home',
+            'title' => $sitefullname,
+        );
 
-if (!empty($PAGE->theme->settings->logo)) {
-    $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname). ' ' .get_string('homepage', 'theme_snap').'</span>';
-    $attrs['class'] = 'logo';
-}
+        if (!empty($PAGE->theme->settings->logo)) {
+            $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname). ' ' .get_string('homepage', 'theme_snap').'</span>';
+            $attrs['class'] = 'logo';
+        }
 
-echo \core\output\html_writer::link($defaulthomeurl, $sitefullname, $attrs);
-?>
+        echo \core\output\html_writer::link($defaulthomeurl, $sitefullname, $attrs);
+        ?>
 
-<div class="float-end js-only d-flex gap-2">
+        <div class="float-end js-only d-flex gap-2">
+            <nav id="snap-navbar-header" aria-label="<?php echo get_string('navbarheader', 'theme_snap') ?>">
+                <?php
+                if (class_exists('local_geniusws\navigation')) {
+                    $bblink = new genius_dashboard_link();
+                    echo '<div id="genius_link_wrapper">';
+                    echo $OUTPUT->render($bblink);
+                    echo '</div>';
+                }
+                echo $OUTPUT->my_courses_nav_link();
+                echo $OUTPUT->user_menu_nav_dropdown();
+                echo $OUTPUT->render_notification_popups();
+                echo '<span class="hidden-md-down">';
+                echo $OUTPUT->search_box();
+                echo '</span>';
+                if ($this->page->user_allowed_editing()) {
+                    echo '<div class="snap_line_separator"></div>';
+                }
+                echo $OUTPUT->edit_switch();
+                ?>
+            </nav>
+        </div>
+    </div>
     <?php
-    if (class_exists('local_geniusws\navigation')) {
-        $bblink = new genius_dashboard_link();
-        echo '<div id="genius_link_wrapper">';
-        echo $OUTPUT->render($bblink);
-        echo '</div>';
-    }
-    echo $OUTPUT->my_courses_nav_link();
-    echo $OUTPUT->user_menu_nav_dropdown();
-    echo $OUTPUT->render_notification_popups();
+    $custommenu = $OUTPUT->custom_menu();
 
-    echo '<span class="hidden-md-down">';
-    echo $OUTPUT->search_box();
-    echo '</span>';
-    if ($this->page->user_allowed_editing()) {
-        echo '<div class="snap_line_separator"></div>';
+    /* Moodle custom menu. */
+    /* Hide it for the login index, login sign up and login forgot password pages. */
+    if (!empty($custommenu)) {
+        if (!($PAGE->pagetype === 'login-index') &&
+            !($PAGE->pagetype === 'login-signup') &&
+            !($PAGE->pagetype === 'login-forgot_password')) {
+            echo '<div id="snap-custom-menu-header" class="invisible">';
+            echo $custommenu;
+            echo '</div>';
+        }
     }
-    echo $OUTPUT->edit_switch();
     ?>
-</div>
-</div>
-<?php
-$custommenu = $OUTPUT->custom_menu();
-
-/* Moodle custom menu. */
-/* Hide it for the login index, login sign up and login forgot password pages. */
-if (!empty($custommenu)) {
-    if (!($PAGE->pagetype === 'login-index') &&
-        !($PAGE->pagetype === 'login-signup') &&
-        !($PAGE->pagetype === 'login-forgot_password')) {
-        echo '<div id="snap-custom-menu-header" class="invisible">';
-        echo $custommenu;
-        echo '</div>';
-    }
-}
-?>
 </header>
 
 <?php
-// Only proceed with sidebar menu for logged-in users
+// Only proceed with sidebar menu for logged-in users.
 if (isloggedin() && !isguestuser()) {
     global $SESSION;
     if (isset($SESSION->justloggedin)) {
         require_once($CFG->dirroot . '/user/lib.php');
         unset($SESSION->justloggedin);
-        // Just logged in, resetting the failed login count
+        // Just logged in, resetting the failed login count.
         user_count_login_failures($USER);
     }
     if (!empty($CFG->messaging)) {
@@ -122,8 +123,8 @@ if (isloggedin() && !isguestuser()) {
                  !(strpos($blockshtml, 'data-block="settings"') !== false && 
                    substr_count($blockshtml, 'data-block="') === 1)) || 
                  !empty($addblockbutton);
-    // Define page types where blocks should be shown
-    // Using patterns with exact matches and prefix matches
+    // Define page types where blocks should be shown.
+    // Using patterns with exact matches and prefix matches.
     $whitelistpagesforblocks = [
         'exact' => ['site-index', 'my-index'],
         'prefix' => ['course-view', 'mod']
@@ -131,7 +132,7 @@ if (isloggedin() && !isguestuser()) {
     
     $sidebarmenuitems = [];
 
-    // Only add settings link if it has output
+    // Only add settings link if it has output.
     if (!empty($settingslink->output)) {
         $sidebarmenuitems[] = [
             'customcontent' => $OUTPUT->render($settingslink),
@@ -141,15 +142,15 @@ if (isloggedin() && !isguestuser()) {
         ];
     }
     
-    // Check if current page type matches any whitelist pattern
+    // Check if current page type matches any whitelist pattern.
     $pagematcheswhitelist = false;
     
-    // Check exact matches
+    // Check exact matches.
     if (in_array($PAGE->pagetype, $whitelistpagesforblocks['exact'])) {
         $pagematcheswhitelist = true;
     }
     
-    // Check prefix matches if not already matched
+    // Check prefix matches if not already matched.
     if (!$pagematcheswhitelist) {
         foreach ($whitelistpagesforblocks['prefix'] as $prefix) {
             if (strpos($PAGE->pagetype, $prefix) === 0) {
@@ -159,7 +160,7 @@ if (isloggedin() && !isguestuser()) {
         }
     }
     
-    // Only add blocks drawer button if there are blocks and page type matches whitelist
+    // Only add blocks drawer button if there are blocks and page type matches whitelist.
     if ($hasblocks && $pagematcheswhitelist) {
         $sidebarmenuitems[] = [
             'title' => get_string('toggleblockdrawer', 'theme_snap'),
@@ -176,7 +177,7 @@ if (isloggedin() && !isguestuser()) {
         ];
     }
 
-    // Only add feeds side menu trigger if it exists
+    // Only add feeds side menu trigger if it exists.
     $feedsTrigger = $OUTPUT->snap_feeds_side_menu_trigger();
     if (!empty($feedsTrigger)) {
         $sidebarmenuitems[] = [
@@ -187,7 +188,7 @@ if (isloggedin() && !isguestuser()) {
         ];
     }
 
-    // Only add messages item if messaging is enabled
+    // Only add messages item if messaging is enabled.
     if (!empty($messages_item)) {
         $sidebarmenuitems[] = [
             'customcontent' => $messages_item,
@@ -197,9 +198,9 @@ if (isloggedin() && !isguestuser()) {
         ];
     }
 
-    // Only render the sidebar menu if there are items to display
+    // Only render the sidebar menu if there are items to display.
     if (!empty($sidebarmenuitems)) {
-        $opensidebar = true; // Opened by default
+        $opensidebar = true; // Opened by default.
         $iscoursepage = strpos($PAGE->pagetype, 'course-view') === 0;
 
         echo $OUTPUT->render_from_template('theme_snap/sidebar_menu', [
@@ -209,4 +210,3 @@ if (isloggedin() && !isguestuser()) {
         ]);
     }
 }
-

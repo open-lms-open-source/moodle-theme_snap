@@ -287,6 +287,7 @@ $string['navbarbg'] = 'Background color';
 $string['navbarlink'] = 'Text color';
 $string['navbarbuttoncolor'] = 'Background color';
 $string['navbarbuttonlink'] = 'Text color';
+$string['navbarheader'] = 'Snap navigation header';
 $string['nextsection'] = 'Next section';
 $string['nextsubsection'] = 'Next subsection';
 $string['nodeadlines'] = 'You have no upcoming deadlines.';

@@ -1259,6 +1259,13 @@ footer #moodle-footer
 
 #mr-nav {
     #snap-header {
+        nav#snap-navbar-header {
+            display: flex;
+            box-sizing: border-box;
+            .divider.border-start {
+                display: none;
+            }
+        }
         padding: .5em 4%;
         padding-bottom: 0;
         background-color: $nav-bg;
