@@ -303,8 +303,14 @@ function theme_snap_get_main_scss_content($theme) {
     // Post CSS - this is loaded AFTER the main scss but before the extra scss from the setting.
     $post = file_get_contents($CFG->dirroot . '/theme/snap/scss/post.scss');
 
+    $bs4debugdeprecations = '';
+
+    if($CFG->bs4debugdeprecations) {
+        $bs4debugdeprecations = '@import "../../boost/scss/moodle/deprecated.scss";';
+    }
+
     // Combine them together.
-    return $pre . "\n" . $scss . "\n" . $post;
+    return $pre . "\n" . $scss . "\n" . $post . "\n" . $bs4debugdeprecations;
 }
 
 /**

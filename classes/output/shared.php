@@ -501,6 +501,11 @@ EOF;
                 $USER->editing = $originaleditstate;
             }
         }
+
+        if($CFG->bs4debugdeprecations) {
+            $PAGE->requires->js_call_amd('theme_boost/bs4-compat', 'init');
+        }
+        
     }
 
     /**
