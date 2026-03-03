@@ -69,7 +69,7 @@ export default class Component extends BaseSectionComponent {
         const isWeeks = document.body.classList.contains('format-weeks');
         if (isTopics || isWeeks) {
             // Change Selector according to Snap HTML structure in weeks and topics formats.
-            this.selectors.SECTION = "ul.sections > li.section";
+            this.selectors.SECTION = ".single-section > ul > li[data-for='section']";
         }
     }
     /**

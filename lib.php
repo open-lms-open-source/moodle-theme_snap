@@ -418,7 +418,7 @@ function theme_snap_output_fragment_section($args) {
         $sectionsjs = new stdClass();
         $sectionsjs->id = $section->id;
         $sectionsjs->name = $section->name;
-        $sectionsjs->num = $args['section'];
+        $sectionsjs->num = $args['sectionid'];
         $PAGE->requires->js_call_amd(
             'block_sharing_cart/script',
             'init',
