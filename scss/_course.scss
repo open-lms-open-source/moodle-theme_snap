@@ -1246,7 +1246,6 @@ body.format-singleactivity {
 
         .badge {
           max-width: 100%;
-          width: 100%;
           white-space: normal;
           word-wrap: break-word;
           overflow-wrap: break-word;
@@ -1263,6 +1262,8 @@ body.format-singleactivity {
 
             .quickediticon{
                 width: 3rem;
+                display: flex;
+                justify-content: end;
             }
         }
 
@@ -1964,19 +1965,28 @@ body.snap-resource-card {
 
         .activityname a, .activityname {
           display: flex;
+          flex-direction: column;
           align-items: baseline;
           cursor: pointer;
           min-width: 0;
-          flex-shrink: 1;
 
           span.instancename {
             max-height: 2.5em;
+            max-width: 100%;
             display: block;
             font-size: 0.8em;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
             margin-right: unset;
+          }
+
+          .aalink {
+            width: 100%;
+
+            &.quickeditlink {
+              flex-basis: 100%;
+            }
           }
         }
       }
