@@ -688,30 +688,32 @@ trait format_section_trait {
         }
 
         if (has_capability('moodle/course:update', $context) || has_capability('moodle/course:activityvisibility', $context)) {
+            $sectiontools = '';
             if (!empty($sectiontoolsarray)) {
                 $sectiontools = implode(' ', $sectiontoolsarray);
-                $o .= html_writer::tag('div', $sectiontools, array(
+                $sectiontools = html_writer::tag('div', $sectiontools, array(
                     'class' => 'js-only snap-section-editing actions section-actions',
                     'role' => 'region',
                     'data-sectionid' => $section->id,
                     'aria-label' => get_string('topicactions', 'theme_snap'),
                 ));
             }
-        }
+            // Inject the Bulk editing Button on Snap.
+            $course = get_course($section->course);
+            // Fix course format if it is no longer installed.
+            $format = course_get_format($course);
+            $course->format = $format->get_format();
+            $format->set_sectionid($section->id);
 
-        // Inject the Bulk editing Button on Snap.
-        $course = get_course($section->course);
-        // Fix course format if it is no longer installed.
-        $format = course_get_format($course);
-        $course->format = $format->get_format();
-        $format->set_sectionid($section->id);
-
-        // Add bulk editing control.
-        $bulkbutton = $this->bulk_editing_button($format);
-        if (!empty($bulkbutton)) {
-            $PAGE->add_header_action($bulkbutton);
+            // Add bulk editing control.
+            $bulkbutton = $this->bulk_editing_button($format);
+            if (!empty($bulkbutton)) {
+                $PAGE->add_header_action($bulkbutton);
+            }
+            $o .= html_writer::tag('div',$sectiontools . $bulkbutton , array(
+                'class' => 'd-flex justify-content-between align-items-center'
+            ));
         }
-        $o .= $bulkbutton;
 
         return $o;
     }
