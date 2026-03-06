@@ -35,7 +35,6 @@ div[data-flexitour="step-background"] {
     margin: 0 4%;
   }
     position: relative;
-    min-height: calc(100vh - 25rem);
 }
 
 #snap-course-wrapper, div[data-flexitour="step-background"] {
@@ -528,6 +527,23 @@ label[for="toc-search-input"]{
   }
   .path-course-view .drawercontent {
     height: calc(100% - 60px);;
+  }
+}
+
+// When TOC drawer is open
+// Make sure section footer navigation is at bottom.
+// for weeks and topics format only
+.format-topics #page.show-drawer-left,
+.format-weeks #page.show-drawer-left {
+  .course-content {
+    .section > .content {
+      min-height: calc(100vh - 2em);
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .section_footer {
+    margin-top: auto;
   }
 }
 
