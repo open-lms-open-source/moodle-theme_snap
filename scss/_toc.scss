@@ -492,6 +492,7 @@ label[for="toc-search-input"]{
   min-height: 100vh;
   min-width: 100%;
   overflow-y: auto;
+  z-index: 1021;
 }
 .path-course-view #page-wrapper {
   position: absolute;
@@ -521,7 +522,7 @@ label[for="toc-search-input"]{
   }
 }
 @media (max-width: 480px) {
-  div.drawer-left#theme_boost-drawers-courseindex {
+  .theme-snap div.drawer-left#theme_boost-drawers-courseindex {
     position: fixed;
     z-index: 1052;
   }
