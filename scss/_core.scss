@@ -1248,6 +1248,7 @@ footer #moodle-footer
 // -------------------------
 // Mr.nav - he's there, fixed to the top of your page
 // -------------------------
+$mr-nav-zindex: 1052;
 
 .tox-fullscreen {
     #mr-nav {
@@ -1298,7 +1299,7 @@ footer #moodle-footer
         }
     }
 
-    z-index: 1052;
+    z-index: $mr-nav-zindex;
     background-color: $body-bg;
     top: 0;
 
@@ -1309,16 +1310,6 @@ footer #moodle-footer
         animation-timing-function: ease-in-out;
         animation-duration: 0.4s;
         animation-fill-mode: forwards;
-    }
-
-    &.headroom--pinned {
-
-        // firefox no like this animation :(
-        /*
-        animation-name: snap-drop;
-        animation-timing-function: cubic-bezier(.694, .0482, .335, 1);
-        animation-duration: 0.33s;
-        */
     }
 
     .popover-region-notifications > div > .icon {
@@ -6196,11 +6187,16 @@ body[id^="page-grade-"] #region-main .container-fluid.tertiary-navigation {
     }
 }
 
+// User tour styles.
 #page-admin-tool-usertours-configure {
     #id_description,
     #id_title {
         width: inherit;
     }
+}
+
+span[data-flexitour="container"]:has(> div[data-role="flexitour-step"]) {
+    z-index: $mr-nav-zindex + 1;
 }
 
 // Fix header position in grader view.
