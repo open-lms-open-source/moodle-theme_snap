@@ -497,3 +497,4 @@ $string['tableofcontents'] = 'Table of contents';
 $string['snap_toc_settings'] = 'Table of Contents settings';
 $string['hideintoc'] = 'Do not show this activity in the Table of Contents';
 $string['hideintoc_help'] = 'If enabled, the current activity will not be displayed in the Table of Contents menu. The activity will remain accessible via the link on the main course page. Use this to hide decorative resources or non-mandatory elements.';
+$string['makingaselectionpagechange'] = 'Making a selection from this dropdown will cause content on this page to change.';
