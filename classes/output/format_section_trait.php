@@ -386,7 +386,7 @@ trait format_section_trait {
      * @param stdClass $cmitemdata The original module data
      * @return stdClass The new module data to be used for rendering.
      */
-    public function add_snap_custom_module_data(\stdClass $cmitemdata) {
+    public function add_snap_custom_module_data(stdClass $cmitemdata) {
         global $PAGE, $USER;
         $course = $this->page->course;
         $modinfo = get_fast_modinfo($course);
@@ -407,6 +407,10 @@ trait format_section_trait {
 
         // Generate controlmenu data.
         $newcontrolmenu = $controlmenu->export_for_template($this);
+
+        if ($newcontrolmenu && !has_capability('moodle/course:manageactivities', context_course::instance($course->id))) {
+            $newcontrolmenu->hasmenu = false;
+        }
 
         // Add Data so controlmenu is rendered.
         $cmitemdata->cmformat->controlmenu = $newcontrolmenu;
