@@ -118,7 +118,7 @@ define([], function() {
 
         // Handle click toggle
         courseContent.addEventListener('click', function(e) {
-            const toggle = e.target.closest('[data-toggle="dropdown-subpanel"]');
+            const toggle = e.target.closest('[data-bs-toggle="dropdown-subpanel"]');
             if (!toggle) {
                 return;
             }

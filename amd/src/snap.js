@@ -783,7 +783,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     supportsTouch = true;
                 }
                 if (!supportsTouch) {
-                    var tooltipNode = $('[data-toggle="tooltip"]');
+                    var tooltipNode = $('[data-bs-toggle="tooltip"]');
                     if ($.isFunction(tooltipNode.tooltip)) {
                         tooltipNode.tooltip();
                     }

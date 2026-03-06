@@ -124,7 +124,7 @@ trait format_section_trait {
             unset($cmsitem);
         }
 
-        if ($currentsection->uservisible && !$data->editing ) {
+        if (isset($currentsection) && $currentsection->uservisible && !($data->editing ?? false)) {
             // Add Snap modchooser and Snap drop file.
             $sectionfooter = $this->course_section_add_cm_control_snap($course, $currentsection, 0);
             $data->cmcontrols = $sectionfooter;

@@ -620,7 +620,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                 const btnSelector = '.iconhelp.btn';
 
                 $('body').popover({
-                    selector: '[data-toggle="popover"]',
+                    selector: '[data-bs-toggle="popover"]',
                     trigger: 'manual',
                     container: 'body',
                     whitelist: Object.assign(DefaultAllowlist, {

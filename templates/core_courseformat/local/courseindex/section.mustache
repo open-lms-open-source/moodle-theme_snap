@@ -1,13 +1,16 @@
 {{!
     This file is part of Moodle - http://moodle.org/
+
     Moodle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
+
     Moodle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
+
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
@@ -40,22 +43,22 @@
     }
 }}
 <div
-        class="courseindex-section {{#current}}current{{/current}} {{#component}}delegated-section{{/component}}"
-        id="course-index-section-{{id}}"
-        data-for="section"
-        data-id="{{id}}"
-        data-number="{{number}}"
-        role="treeitem"
-        aria-owns="courseindexcollapse{{number}}"
+    class="courseindex-section {{#current}}current{{/current}} {{#component}}delegated-section{{/component}}"
+    id="course-index-section-{{id}}"
+    data-for="section"
+    data-id="{{id}}"
+    data-number="{{number}}"
+    role="treeitem"
+    aria-owns="courseindexcollapse{{number}}"
 >
     <div class="courseindex-item d-flex
             {{^visible}}dimmed{{/visible}}
-        {{#hasrestrictions}}restrictions{{/hasrestrictions}}
+            {{#hasrestrictions}}restrictions{{/hasrestrictions}}
             courseindex-section-title"
          id="courseindexsection{{number}}"
          data-for="section_item"
     >
-        <a data-toggle="collapse"
+        <a data-bs-toggle="collapse"
            href="#courseindexcollapse{{number}}"
            class="courseindex-chevron icons-collapse-expand {{#indexcollapsed}}collapsed{{/indexcollapsed}}"
            aria-expanded="{{^indexcollapsed}}true{{/indexcollapsed}}{{#indexcollapsed}}false{{/indexcollapsed}}"

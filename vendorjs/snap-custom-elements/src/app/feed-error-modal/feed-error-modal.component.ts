@@ -5,7 +5,7 @@ import {ErrorReporterService} from "../error-reporter.service";
 @Component({
   selector: 'feed-error-modal',
   template: `
-    <button id="snapOpenErrorModalButton" [hidden]="true" data-toggle="modal" data-target="#snapErrorModal"></button>
+    <button id="snapOpenErrorModalButton" [hidden]="true" data-bs-toggle="modal" data-target="#snapErrorModal"></button>
     <!-- Modal -->
     <div class="modal fade" id="snapErrorModal" tabindex="-1" role="dialog" aria-labelledby="snapErrorModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">

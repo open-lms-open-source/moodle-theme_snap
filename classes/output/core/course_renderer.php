@@ -115,7 +115,7 @@ class course_renderer extends \core_course_renderer {
                     'tabindex' => '0',
                     'class' => 'snap-conditional-tag',
                     'role' => 'button',
-                    'data-toggle' => 'popover',
+                    'data-bs-toggle' => 'popover',
                     'data-trigger' => 'focus',
                     'data-placement' => 'right',
                     'id' => $conditionaliconid,
