@@ -7070,6 +7070,9 @@ code {
         padding: 0;
         list-style: none;
         margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .row #coursetools-list li {
@@ -7106,6 +7109,7 @@ code {
             white-space: nowrap;
             overflow-y: clip;
             text-overflow: ellipsis;
+            overflow: hidden;
         }
         & .snap-participant-icons {
             display: flex !important;
