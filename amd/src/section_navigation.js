@@ -40,7 +40,7 @@ export default class SectionNavigation extends BaseComponent {
             PREVIOUS: `.section_footer .previous_section`,
             NEXT: `.section_footer .next_section`,
             TITLE: `.nav_title`,
-            ICON: `i[section-number]`,
+            ICON: `i[section-id]`,
 
         };
 
@@ -49,7 +49,7 @@ export default class SectionNavigation extends BaseComponent {
         };
 
         this.attributes = {
-            SECTION_NUMBER: `section-number`
+            SECTION_ID: `section-id`
         };
     }
 
@@ -202,11 +202,11 @@ export default class SectionNavigation extends BaseComponent {
 
             if (data) {
                 btnElement.classList.remove(this.classes.DISABLED);
-                btnElement.setAttribute(this.attributes.SECTION_NUMBER, data.number);
+                btnElement.setAttribute(this.attributes.SECTION_ID, data.id);
                 btnElement.setAttribute('href', data.sectionurl || '#');
 
                 if (iconEl) {
-                    iconEl.setAttribute(this.attributes.SECTION_NUMBER, data.number);
+                    iconEl.setAttribute(this.attributes.SECTION_ID, data.id);
                 }
                 if (titleEl) {
                     titleEl.textContent = data.title || '';
@@ -216,7 +216,7 @@ export default class SectionNavigation extends BaseComponent {
             } else {
                 btnElement.classList.add(this.classes.DISABLED);
                 btnElement.removeAttribute('href');
-                btnElement.setAttribute(this.attributes.SECTION_NUMBER, '');
+                btnElement.setAttribute(this.attributes.SECTION_ID, '');
                 if (titleEl) {
                     titleEl.textContent = '';
                     titleEl.removeAttribute('aria-label');
@@ -230,9 +230,9 @@ export default class SectionNavigation extends BaseComponent {
 
         const sectionEl = document.querySelector(this.selectors.SECTION);
         if (sectionEl) {
-            // The code that displays the sections already loaded does so based on the section number.
-            // When sections are moved, this number changes, so this ID must be updated.
-            sectionEl.setAttribute('id', `section-${this.section.number}`);
+            // The code that displays the sections already loaded does so based on the section ID.
+            // When sections are moved, this ID changes, so it must be updated.
+            sectionEl.setAttribute('id', `section-${this.section.id}`);
         }
     }
 

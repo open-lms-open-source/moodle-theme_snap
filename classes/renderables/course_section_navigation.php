@@ -46,9 +46,9 @@ class course_section_navigation implements \core\output\renderable {
     public $next;
 
     /**
-     * @var int sectionid
+     * @var int currentsectionid
      */
-    public $sectionid;
+    public $currentsectionid;
 
     /**
      * @var boolean issubsection
@@ -68,12 +68,12 @@ class course_section_navigation implements \core\output\renderable {
             || !$course->hiddensections;
 
         $navigablesections = $this->get_navigable_sections($sections, $sectionno);
-        $sectionid = $sections[$sectionno]->id;
+        $currentsectionid = $sections[$sectionno]->id;
 
-        $this->sectionid = $sectionid;
+        $this->currentsectionid = $currentsectionid;
         $this->issubsection = $sections[$sectionno]->is_delegated();
-        $this->previous = $this->find_navigation_link($course, $navigablesections, $sectionid, -1, $canviewhidden);
-        $this->next     = $this->find_navigation_link($course, $navigablesections, $sectionid, 1, $canviewhidden);
+        $this->previous = $this->find_navigation_link($course, $navigablesections, $currentsectionid, -1, $canviewhidden);
+        $this->next     = $this->find_navigation_link($course, $navigablesections, $currentsectionid, 1, $canviewhidden);
     }
 
     /**
@@ -110,8 +110,8 @@ class course_section_navigation implements \core\output\renderable {
                 if (!is_array($customdata)) {
                     continue;
                 }
-                if (isset($customdata['sectionid'])) {
-                    $navigablesections[$customdata['sectionid']] = null;
+                if (isset($customdata['currentsectionid'])) {
+                    $navigablesections[$customdata['currentsectionid']] = null;
                 }
             }
             foreach ($orderedsections as $section) {
@@ -131,14 +131,14 @@ class course_section_navigation implements \core\output\renderable {
      *
      * @param stdClass $course The course object.
      * @param section_info[] $orderedsections Ordered array of sections.
-     * @param int $sectionid The current section id.
+     * @param int $currentsectionid The current section id.
      * @param int $direction Direction to search: -1 for previous, 1 for next.
      * @param bool $canviewhidden Whether the user can view hidden sections.
      * @return course_section_navigation_link|false The navigation link object, or false if none.
      */
-    private function find_navigation_link($course, array $orderedsections, int $sectionid, int $direction, bool $canviewhidden) {
+    private function find_navigation_link($course, array $orderedsections, int $currentsectionid, int $direction, bool $canviewhidden) {
         $keys = array_keys($orderedsections);
-        $currentindex = array_search($sectionid, $keys, true);
+        $currentindex = array_search($currentsectionid, $keys, true);
         if ($currentindex === false) {
             return false;
         }
@@ -153,7 +153,7 @@ class course_section_navigation implements \core\output\renderable {
                 $sectiontitle = get_section_name($course, $section);
 
                 $url = course_get_url($course, $section->sectionnum, ['navigation' => true]);
-                return new course_section_navigation_link($section->sectionnum, $extraclasses, $sectiontitle, $url);
+                return new course_section_navigation_link($section->id, $extraclasses, $sectiontitle, $url);
             }
 
             $index += $direction;

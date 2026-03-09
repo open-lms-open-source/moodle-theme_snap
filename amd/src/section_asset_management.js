@@ -133,12 +133,12 @@ define(
 
         /**
          * Gets a specific section for the current course.
-         * @param {string} sectionNum The section ID to be shown.
+         * @param {string} sectionID The section ID to be shown.
          * @param {string} modid The module ID to set focus.
          * @param {function} sectionVisibilityCallback Function to make visible the section on Course.
          */
-        var getSection = function(sectionNum, modid, sectionVisibilityCallback) {
-            var params = {courseid: self.courseConfig.id, section: sectionNum};
+        var getSection = function(sectionID, modid, sectionVisibilityCallback) {
+            var params = {courseid: self.courseConfig.id, sectionid: sectionID};
             $('.sk-fading-circle').show();
             fragment.loadFragment('theme_snap', 'section', self.courseConfig.contextid, params)
                 .done(function(html, js) {
@@ -146,7 +146,7 @@ define(
                     templates.appendNodeContents($container, html, js);
 
                     // Then, show the section.
-                    sectionVisibilityCallback(sectionNum, modid);
+                    sectionVisibilityCallback(sectionID, modid);
                     // Notify filters about the new section.
                     Event.notifyFilterContentUpdated($('.course-content .' + self.courseConfig.format));
                     activityCards.init();
@@ -163,7 +163,7 @@ define(
          * Update site breadcrumb when navigating through sections.
          * @param {string} sectionId the ID of the current section to show.
          */
-        var updateBreadcrumb = function(sectionId) {
+        var updateBreadcrumb = function(sectionId = '') {
             // Use reactive Instances for getting course State.
             const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
             const state = reactiveCourseEditor.state;
@@ -173,7 +173,7 @@ define(
             }
 
             // Get Visible section from State.
-            const targetSection = Array.from(state.section.values()).find(sec => sec.section == sectionId);
+            const targetSection = Array.from(state.section.values()).find(sec => sec.id == sectionId);
             if (!targetSection) {
                 return;
             }
@@ -292,12 +292,12 @@ define(
 
         /**
          * Exposed function so Section HTML can be obtained.
-         * @param {string} sectionNum
+         * @param {string} sectionID
          * @param {string} modid
          * @param {function} sectionVisibilityCallback
          */
-        getSection: function(sectionNum, modid, sectionVisibilityCallback) {
-            getSection(sectionNum, modid, sectionVisibilityCallback);
+        getSection: function(sectionID, modid, sectionVisibilityCallback) {
+            getSection(sectionID, modid, sectionVisibilityCallback);
         },
 
         /**

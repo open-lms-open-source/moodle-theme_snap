@@ -25,8 +25,10 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
 
   Background:
     Given the following "courses" exist:
-      | fullname | shortname | category | format | initsections |
-      | Course 1 |     C1    |     0    | topics |      1       |
+      | fullname | shortname | category | format | initsections | startdate  |
+      | Course 1 |     C1    |     0    | topics |      5       |            |
+      | Course 2 |     C2    |     0    | weeks  |              | 1640995200 |
+    # the startdate above makes sure first week is "1 January - 7 January" on weeks format
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -35,10 +37,13 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
       | user | course | role |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
+      | teacher1 | C2 | editingteacher |
+      | student1 | C2 | student |
     And the following "activities" exist:
       | activity   | course  | idnumber    | name             | intro                         | section |
       | assign     | C1      | assign1     | Test assignment1 | Test assignment description 1 | 1       |
-      | assign     | C1      | assign2     | Test assignment2 | Test assignment description 2 | 1       |
+      | assign     | C1      | assign2     | Test assignment2 | Test assignment description 2 | 2       |
+      | assign     | C1      | assign2     | Test assignment3 | Test assignment description 2 | 3       |
 
   @javascript
   Scenario: In read mode, teacher moves section 1 before section 4 (section 3).
@@ -132,3 +137,46 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I should not see "Next section"
     And I should see "Previous section"
     And I follow "Section 1"
+
+  @javascript
+  Scenario: Weeks section names are updated when moving a section.
+    Given I log in as "teacher1"
+    And I switch edit mode in Snap
+    And I am on the course main page for "C2"
+    And I follow "1 January - 7 January"
+    And I wait until the page is ready
+    # Move week 1 to week 3 position
+    When I follow "Move \"1 January - 7 January\""
+    And I click on "15 January - 21 January" "link" in the ".modal-body" "css_element"
+    And I wait until the page is ready
+    # Check the section name was updated
+    Then I should see "15 January - 21 January" in the ".section.state-visible" "css_element"
+
+  @javascript
+  Scenario: Topics section names and content keep consistency after moving.
+    Given I log in as "teacher1"
+    And I switch edit mode in Snap
+    And I am on the course main page for "C1"
+    # Render Section 1, and then move to another section.
+    And I follow "Section 1"
+    And I wait until the page is ready
+    And I follow "Section 3"
+    And I wait until the page is ready
+    # Move Section 3 to section 1 position.
+    When I follow "Move \"Section 3\""
+    And I click on "General" "link" in the ".modal-body" "css_element"
+    And I wait until the page is ready
+    # Check Section 2 is displayed properly.
+    And I follow "Section 2"
+    And I wait until the page is ready
+    Then I should see "Section 2" in the ".section.state-visible" "css_element"
+    And I should not see "Test assignment1" in the ".section.state-visible" "css_element"
+    And I should see "Test assignment2" in the ".section.state-visible" "css_element"
+    And I should not see "Test assignment3" in the ".section.state-visible" "css_element"
+    # Check section 1 (already rendered) is displayed properly.
+    And I follow "Section 1"
+    And I wait until the page is ready
+    Then I should see "Section 1" in the ".section.state-visible" "css_element"
+    Then I should see "Test assignment1" in the ".section.state-visible" "css_element"
+    And I should not see "Test assignment2" in the ".section.state-visible" "css_element"
+    And I should not see "Test assignment3" in the ".section.state-visible" "css_element"

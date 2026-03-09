@@ -33,9 +33,9 @@ namespace theme_snap\renderables;
  */
 class course_section_navigation_link implements \core\output\renderable {
     /**
-     * @var int section number
+     * @var int section ID
      */
-    public $section;
+    public $sectionid;
 
     /**
      * @var string additional classes for link
@@ -54,13 +54,13 @@ class course_section_navigation_link implements \core\output\renderable {
 
     /**
      * course_section_navigation_link constructor.
-     * @param int $section section number
+     * @param int $sectionid section number
      * @param string $classes additional classes for link
      * @param string $title section title
      * @param string $url section url
      */
-    public function __construct($section, $classes, $title, $url) {
-        $this->section = $section;
+    public function __construct($sectionid, $classes, $title, $url) {
+        $this->sectionid = $sectionid;
         $this->classes = $classes;
         $this->title = $title;
         $this->url = $url;
