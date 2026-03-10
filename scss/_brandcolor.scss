@@ -977,6 +977,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: $brand-primary;
         }
     }
+    // Adjust color of bulk checkbox.
+    &.bulkenabled .activity-item .bulkselect,
+    &.bulkenabled .bulkactions {
+        input {
+            accent-color: $brand-primary;
+        }
+    }
 
     .fp-toolbar div button.btn.btn-secondary.btn-sm,
     .fp-viewbar > button.btn.btn-secondary.btn-sm {

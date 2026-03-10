@@ -95,7 +95,7 @@
 {{/ core/sticky_footer }}
 
 {{#js}}
-require(['core_courseformat/local/content/bulkedittools'], function(component) {
+require(['theme_snap/courseformat/content/bulkedittools'], function(component) {
     var toolsContainer = document.querySelector('#bulkedittools-{{uniqid}}');
     if (toolsContainer) {
         component.init('#bulkedittools-{{uniqid}}');

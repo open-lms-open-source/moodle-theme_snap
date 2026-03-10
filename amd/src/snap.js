@@ -400,6 +400,12 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                     }
                     return;
                 }
+                // Every time the section changes, we close the bulkMenu if visible.
+                const bulkMenu = document.querySelector('.bulkenabled .section.state-visible .sticky-footer-content.bulkactions');
+                if (bulkMenu) {
+                    const closeButton = bulkMenu.querySelector('.bulkcancel button');
+                    closeButton?.click();
+                }
 
                 var link = $(this);
                 // Search section number
