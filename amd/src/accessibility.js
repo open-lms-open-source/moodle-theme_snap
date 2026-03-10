@@ -55,10 +55,10 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     {key: 'experimental', component: 'block_reports'}
                 ]).done(function(stringsjs) {
                     if ($("#page-mod-forum-discuss")) {
-                        $("div[data-content='forum-discussion'] select.custom-select.singleselect")
+                        $("div[data-content='forum-discussion'] select.form-select.singleselect")
                         .attr("aria-label", stringsjs[0]);
                         $("div[data-content='forum-discussion'] div.movediscussionoption " +
-                            "select.custom-select.urlselect").attr("aria-label", stringsjs[1]);
+                            "select.form-select.urlselect").attr("aria-label", stringsjs[1]);
                     }
                     $("i.fa-calendar").parent().attr("aria-label", stringsjs[2]);
                     $("input[name='TimeEventSelector[calendar]']").attr('aria-label', stringsjs[2]);
@@ -127,7 +127,8 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     str.get_string('makingaselectionpagechange', 'theme_snap').done(function(label) {
                         module.injectScreenReader(label, '#jump-to-activity');
                     });
-                    $("#moodle-blocks aside#block-region-side-pre a.sr-only.sr-only-focusable").attr("tabindex", "-1");
+                    $("#moodle-blocks aside#block-region-side-pre a.visually-hidden.visually-hidden-focusable")
+                    .attr("tabindex", "-1");
 
                     // Focus first invalid input after a submit is done.
                     $('.mform').submit(function() {
@@ -696,7 +697,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     return;
                 }
                 var span = document.createElement('span');
-                span.className = 'sr-only';
+                span.className = 'visually-hidden';
                 span.textContent = label;
                 target.parentNode.insertBefore(span, target);
             }

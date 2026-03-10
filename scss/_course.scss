@@ -2656,7 +2656,7 @@ body.snap-resource-card {
         filter: unset;
         padding: unset;
     }
-    span.badge.badge-info {
+    span.badge.text-bg-info {
         border-radius: 10px;
     }
     .section.main .summary {
@@ -3490,7 +3490,7 @@ span.editinstructions {
         }
     }
 
-    #region-main form[id^="mform1"] > div.form-group.fitem {
+    #region-main form[id^="mform1"] > div.mb-3.fitem {
         margin-left: 0;
     }
 
@@ -3502,23 +3502,23 @@ span.editinstructions {
 
     .mform .containsadvancedelements {
 
-        .fcontainer > .form-group {
+        .fcontainer > .mb-3 {
             width: 100%;
             > div:first-child {
                 max-width: 30%;
                 min-width: 27%;
                 margin-right: 1em;
-                > .form-inline.felement {
+                > .felement {
                     display: inline-block;
                 }
             }
         }
 
-        .fcontainer > .form-group:nth-child(5) {
+        .fcontainer > .mb-3:nth-child(5) {
             > div:first-child {
                 display: inline-block;
             }
-            div.form-inline {
+            div.felement {
                 display: inline-block;
             }
         }
@@ -3527,11 +3527,11 @@ span.editinstructions {
             display: inline-block;
             > div:first-child {
                 display: inline-block;
-                .float-md-right.text-nowrap {
+                .float-end.text-nowrap {
                     float: right;
                 }
             }
-            > .form-inline.felement {
+            > .felement {
                 display: inline-block;
                 max-width: 60%;
             }

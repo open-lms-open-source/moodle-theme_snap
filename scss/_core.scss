@@ -233,17 +233,15 @@ table.boxwidthwide {
                     border-start-end-radius: 0;
                 }
             }
-            .input-group-append {
+            .toggle-sensitive-btn {
                 height: 2em;
                 margin-top: 0.8em;
+                border-end-end-radius: 5px;
+                border-start-end-radius: 5px;
+                padding-top: 0;
+                padding-bottom: 0;
                 @media (max-width: 767px) {
                     height: 2.1em;
-                }
-                .toggle-sensitive-btn {
-                    border-end-end-radius: 5px;
-                    border-start-end-radius: 5px;
-                    padding-top: 0;
-                    padding-bottom: 0;
                 }
             }
         }
@@ -322,11 +320,11 @@ table.boxwidthwide {
                 float: left;
                 width: 50%;
             }
-            > div.form-group.fitem > div.form-inline.felement {
+            > div.mb-3.fitem > div.felement {
                 display: block;
             }
-            .form-inline .form-control,
-            .form-inline .custom-select {
+            .felement .form-control,
+            .felement .form-select {
                 width: 100%;
                 max-width: inherit;
             }
@@ -422,7 +420,7 @@ table.boxwidthwide {
                 flex: 0 0 25%;
                 max-width: 25%;
             }
-            & > div.form-inline.felement {
+            & > div.felement {
                 display: flex;
                 flex-flow: row wrap;
                 align-items: flex-start;
@@ -2778,7 +2776,7 @@ ul.events-new + ul.events-underway {
 #page-mod-quiz-review {
     .formulation {
         select {
-            .custom-select {
+            .form-select {
                 padding-right: 5em;
             }
             &:disabled {
@@ -2811,7 +2809,7 @@ ul.events-new + ul.events-underway {
         .review_option_item. {
             height: 1.3em;
         }
-        .form-group {
+        .mb-3 {
             width: auto;
             float: unset;
         }
@@ -2875,7 +2873,7 @@ ul.events-new + ul.events-underway {
     width: 100%;
 }
 
-#page-question-import .mform .form-inline br + label {
+#page-question-import .mform .d-flex br + label {
     width: 95%;
 }
 
@@ -4638,7 +4636,7 @@ table th img.iconhelp {
             margin-top: 1em;
         }
         padding: 0;
-        .close {
+        .btn-close {
             margin-right: 1em;
             margin-top: 1rem;
             background-color: $brand-primary;
@@ -4790,7 +4788,7 @@ table th img.iconhelp {
     &.show {
         width: 320px;
     }
-    .path-grade-report-grader .collapsecolumndropdown .flex-row.ml-auto {
+    .path-grade-report-grader .collapsecolumndropdown .flex-row.ms-auto {
         display: flex;
         .btn {
             font-size: 0.9rem;
@@ -5149,7 +5147,7 @@ section#region-main {
         min-width: 16px;
         min-height: 16px;
     }
-    .availability-inner .availability-group.form-group {
+    .availability-inner .availability-group.mb-3 {
         display: inline-grid;
     }
     .availability-inner .availability-item.d-sm-flex.align-items-center {
@@ -5160,11 +5158,11 @@ section#region-main {
         .d-inline-block.col-form-label.availability-delete.p-x-1 {
             display: contents !important;
         }
-        .form-inline.availability_completion.availability-plugincontrols,
+        .availability_completion.availability-plugincontrols,
         .availability_date.availability-plugincontrols,
-        .d-inline-block.form-inline.availability_grade.availability-plugincontrols,
-        .form-inline.availability_group.availability-plugincontrols,
-        .form-inline.availability_profile.availability-plugincontrols,
+        .d-inline-block.availability_grade.availability-plugincontrols,
+        .availability_group.availability-plugincontrols,
+        .availability_profile.availability-plugincontrols,
         .availability_releasecode.availability-plugincontrols {
             margin-right: 0.5em;
         }
@@ -5175,7 +5173,7 @@ section#region-main {
     .availability-group {
         display: inline-block;
     }
-    .form-inline label {
+    .d-flex label {
         display: inline-flex;
         margin-bottom: .5rem;
     }
@@ -5419,7 +5417,7 @@ section#region-main {
     overflow: visible;
 }
 
-#page-local-pld-view #actionEmailEditor form .form-group {
+#page-local-pld-view #actionEmailEditor form .mb-3 {
     margin: auto;
 }
 
@@ -5434,8 +5432,8 @@ section#region-main {
     margin-left: 0.313em;
 }
 
-#page-local-pld-view .mform .form-inline .form-control,
-.mform .form-inline .custom-select #id_config_text {
+#page-local-pld-view .mform .d-flex .form-control,
+.mform .d-flex .form-select #id_config_text {
     width: 56em !important;
 }
 
@@ -5651,7 +5649,7 @@ li.snap-activity.modtype_folder div[id^="folder_tree"] {
 
 // Need to override the max-width of the submit buttons on the form when creating an activity to modify its position for mobile mode.
 @media (max-width: 767px) {
-    div[role=main] .mform div.snap-form-advanced > div:nth-of-type(3) > div.form-inline.felement {
+    div[role=main] .mform div.snap-form-advanced > div:nth-of-type(3) > div.felement {
         display: block;
     }
 }
@@ -5952,7 +5950,7 @@ div[id^=snap-create-activity-] .section-modchooser-link {
     position: relative;
 }
 // Fix for tags' color in hsuforums
-#page-mod-hsuforum-discuss .tag_list .badge-info {
+#page-mod-hsuforum-discuss .tag_list .text-bg-info {
     color: white;
 }
 
@@ -6006,26 +6004,26 @@ div[id^=snap-create-activity-] .section-modchooser-link {
 // Taking care of any possible properties that can affect the color.
 .theme-snap#page-message-notificationpreferences,
 .theme-snap#page-message-index {
-    .custom-control-input:focus ~ .custom-control-label::before {
+    .form-check-input:focus ~ .form-check-label::before {
         border-color: $brand-primary !important;
         box-shadow: 0 0 0 0.2rem rgba($brand-primary, 0.25) !important;
     }
 
-    .custom-control-input:checked ~ .custom-control-label::before {
+    .form-check-input:checked ~ .form-check-label::before {
         border-color: $brand-primary !important;
         background-color: $brand-primary !important;
     }
 
-    .custom-control-input:active ~ .custom-control-label::before {
+    .form-check-input:active ~ .form-check-label::before {
         background-color: $brand-primary !important;
         border-color: $brand-primary !important;
     }
 
-    .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+    .form-check-input:focus:not(:checked) ~ .form-check-label::before {
         border-color: $brand-primary !important;
     }
 
-    .custom-control-input-green:not(:disabled):active ~ .custom-control-label::before {
+    .form-check-input-green:not(:disabled):active ~ .form-check-label::before {
         background-color: $brand-primary !important;
         border-color: $brand-primary !important;
     }
@@ -6242,7 +6240,7 @@ span[data-flexitour="container"]:has(> div[data-role="flexitour-step"]) {
                 border-top-left-radius: 0.5rem !important;
                 border-bottom-left-radius: 0.5rem !important;
             }
-            .input-group-append .input-group-text {
+            .input-group-text {
                 border-top-right-radius: 0.5rem !important;
                 border-bottom-right-radius: 0.5rem !important;
             }
@@ -6256,7 +6254,7 @@ span[data-flexitour="container"]:has(> div[data-role="flexitour-step"]) {
             }
             .card.reportbuilder-toggle-card,
             .reportbuilder-report-container .border,
-            .reportbuilder-sidebar-settings .custom-select {
+            .reportbuilder-sidebar-settings .form-select {
                 border-radius: 0.5rem;
             }
             .reportbuilder-report .reportbuilder-wrapper {
@@ -6305,7 +6303,7 @@ span[data-flexitour="container"]:has(> div[data-role="flexitour-step"]) {
 }
 
 // Fix for screen reader focusable element that skip to main content position.
-.sr-only-focusable[href="#maincontent"]:focus {
+.visually-hidden-focusable[href="#maincontent"]:focus {
     z-index: 1031;
     position: fixed;
     background: #fff;

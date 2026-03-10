@@ -921,7 +921,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             }
             // Return the heading wrapped in an sr-only element so it is only visible to screen-readers.
             if (!empty($this->page->layout_options['nocontextheader'])) {
-                return \core\output\html_writer::div($heading, 'sr-only');
+                return \core\output\html_writer::div($heading, 'visually-hidden');
             }
 
             $contextheader = new \core\output\context_header($heading, $headinglevel, $imagedata, $userbuttons, $prefix);
@@ -1220,7 +1220,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             if (!$imageurl) {
                 $preview = html_to_text($message, 0, false);
                 $preview = "<div class='news-article-preview'><p>".shorten_text($preview, 200)."</p>
-                <p class='text-right'>".$readmorebtn."</p></div>";
+                <p class='text-end'>".$readmorebtn."</p></div>";
             } else {
                 $newsimage = "<img class='news-article-image toggle' tabindex='0' role='button'".
                 'alt="'. get_string('readmore', 'theme_snap').'" src="'. $imageurl.'">';

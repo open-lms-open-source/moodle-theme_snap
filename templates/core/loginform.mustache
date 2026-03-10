@@ -130,15 +130,15 @@
                 <input type="password" name="password" id="password" autocomplete="current-password" value="" required
                        class="form-control"
                        placeholder="{{#cleanstr}}password{{/cleanstr}}*">
-                <label for="password" class="sr-only">{{#str}} password {{/str}}*</label>
+                <label for="password" class="visually-hidden">{{#str}} password {{/str}}*</label>
             </div>
-            <a class="small btn btn-link btn-block" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
+            <a class="small btn btn-link d-block w-100" href="{{forgotpasswordurl}}">{{#str}}forgotten{{/str}}</a>
             {{#recaptcha}}
                 <div class="login-form-recaptcha mb-3">
                     {{{recaptcha}}}
                 </div>
             {{/recaptcha}}
-            <button type="submit" class="btn btn-primary btn-block" id="loginbtn">{{#str}}login{{/str}}</button>
+            <button type="submit" class="btn btn-primary d-block w-100" id="loginbtn">{{#str}}login{{/str}}</button>
         </form>
         {{!Alternative login options}}
         {{#hasidentityproviders}}
@@ -148,7 +148,7 @@
                 <div class="potentialidplist">
                     {{#identityproviders}}
                     <div class="potentialidp">
-                        <a class="btn btn-secondary btn-block" role="button" href="{{url}}" title={{#quote}}{{name}}{{/quote}}>
+                        <a class="btn btn-secondary d-block w-100" role="button" href="{{url}}" title={{#quote}}{{name}}{{/quote}}>
                             {{#iconurl}}
                                 <img class="auth-icon" src="{{iconurl}}" onerror="this.style.display='none'"/>
                             {{/iconurl}}
@@ -172,7 +172,7 @@
                     <input type="hidden" name="logintoken" value="{{logintoken}}">
                     <input type="hidden" name="username" value="guest" />
                     <input type="hidden" name="password" value="guest" />
-                    <button class="btn btn-secondary btn-block" id="guestloginbtn" type="submit">{{#str}}loginguest{{/str}}</button>
+                    <button class="btn btn-secondary d-block w-100" id="guestloginbtn" type="submit">{{#str}}loginguest{{/str}}</button>
                 </form>
             </div>
         {{/canloginasguest}}
@@ -182,7 +182,7 @@
             <div class="snap-login snap-login-option snap-login-box" id="snap-signup">
                 <hr>
                 <h2>{{#str}}firsttime{{/str}}</h2>
-                <p><a class="btn btn-primary btn-block" id="signupbtn" role="button" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a></p>
+                <p><a class="btn btn-primary d-block w-100" id="signupbtn" role="button" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a></p>
             </div>
         {{/cansignup}}
     </div>
@@ -191,7 +191,7 @@
 {{#hasinstructions}}
     <div class="js-only snap-login snap-login-option snap-login-box" id="snap-login-help">
         <div class="snap-login-instructions">
-            <a class="btn btn-primary btn-block iconhelp" href="#" data-bs-toggle="modal" data-target="#login-help-modal">
+            <a class="btn btn-primary d-block w-100 iconhelp" href="#" data-bs-toggle="modal" data-bs-target="#login-help-modal">
                 {{#str}}helpwithlogin, theme_snap{{/str}} {{#pix}}help, theme_snap, {{#str}}helpwithlogin, theme_snap{{/str}} {{/pix}}
             </a>
             <!-- Modal -->
@@ -199,9 +199,7 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{#str}}closebuttontitle{{/str}}">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{#str}}closebuttontitle{{/str}}"></button>
                     <h5 class="modal-title" id="login-help-modal-title">{{#str}}helpwithlogin, theme_snap{{/str}}</h5>
                   </div>
                   <div class="modal-body summary">

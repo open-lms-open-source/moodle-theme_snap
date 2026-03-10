@@ -73,7 +73,7 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And I click on "Select this file" "button"
     And I click on "Save changes" "button"
     And I am on front page
-    And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-slide-to='0']" "css_element" should contain "slide-0"
-    And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-slide-to='1']" "css_element" should contain "slide-1"
+    And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-bs-slide-to='0']" "css_element" should contain "slide-0"
+    And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-bs-slide-to='1']" "css_element" should contain "slide-1"
     Then "#carousel-play-resume-buttons #play-button" "css_element" should exist
     Then "#carousel-play-resume-buttons #pause-button" "css_element" should exist

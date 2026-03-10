@@ -41,19 +41,19 @@
     }
 }}
 
-<section id="snap-site-carousel" class="carousel slide" data-ride="carousel" aria-label="{{covercarousellabel}}">
-    <span class="sr-only">{{carouselsronlytext}}</span>
+<section id="snap-site-carousel" class="carousel slide" data-bs-ride="carousel" aria-label="{{covercarousellabel}}">
+    <span class="visually-hidden">{{carouselsronlytext}}</span>
 
     <div class="carousel-inner" id="snap-carousel-container">
         <!-- Previous and next buttons. -->
         <div class="carousel-controls">
-            <a class="carousel-control-prev" href="#snap-site-carousel" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="#snap-site-carousel" role="button" data-bs-slide="prev">
                 <i class="carousel-control-prev-icon fa-solid fa-circle-arrow-left" aria-hidden="true"></i>
-                <span class="sr-only">Previous slide</span>
+                <span class="visually-hidden">Previous slide</span>
             </a>
-            <a class="carousel-control-next" href="#snap-site-carousel" role="button" data-slide="next">
+            <a class="carousel-control-next" href="#snap-site-carousel" role="button" data-bs-slide="next">
                 <i class="carousel-control-next-icon fa-solid fa-circle-arrow-right" aria-hidden="true"></i>
-                <span class="sr-only">Next slide</span>
+                <span class="visually-hidden">Next slide</span>
             </a>
         </div>
         <!-- Carousel slides. -->
@@ -81,7 +81,7 @@
 
     <div class="carousel-indicators js-only">
         {{#slides}}
-            <button data-target="#snap-site-carousel" data-slide-to="{{index}}" class="{{active}}" aria-label="slide-{{index}}"></button>
+            <button data-bs-target="#snap-site-carousel" data-bs-slide-to="{{index}}" class="{{active}}" aria-label="slide-{{index}}"></button>
         {{/slides}}
     </div>
 </section>

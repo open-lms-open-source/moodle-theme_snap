@@ -783,7 +783,7 @@ trait format_section_trait {
         ));
         $output .= html_writer::input_hidden_params($url);
         $output .= '<div class="mb-3">';
-        $output .= "<label for='newsection' class='sr-only'>".get_string('title', 'theme_snap')."</label>";
+        $output .= "<label for='newsection' class='visually-hidden'>".get_string('title', 'theme_snap')."</label>";
         if ($course->format === 'topics') {
             $output .= '<input id="newsection" type="text" maxlength="250" name="newsection" '.$required;
             $output .= ' placeholder="'.s(get_string('title', 'theme_snap')).'">';

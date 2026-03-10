@@ -127,7 +127,7 @@
     .switch input:checked + label::after {
         background-color: $brand-primary;
     }
-    .custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+    .form-check .form-check-input:checked ~ .form-check-label::before {
         background-color: $brand-primary;
         border-color: rgba($brand-primary, 0.3);
     }
@@ -193,7 +193,7 @@
     [data-region="confirm-dialogue-container"]
     [data-region="confirm-dialogue"]
     [data-region="delete-messages-for-all-users-toggle-container"]
-    label.custom-control-label.text-muted::before {
+    label.form-check-label.text-muted::before {
         background-color: transparent;
     }
 

@@ -37,7 +37,7 @@ $custommenu = $OUTPUT->custom_menu();
 if (!empty($custommenu) && $this->page->user_is_editing() && $PAGE->pagetype == 'site-index') {
     $url = new \core\url('/admin/settings.php', ['section' => 'themesettings'], 'id_s__custommenuitems');
     $link = \core\output\html_writer::link($url, get_string('editcustommenu', 'theme_snap'), ['class' => 'btn btn-primary btn-sm']);
-    $custommenu .= '<p class="text-right">'.$link.'</p>';
+    $custommenu .= '<p class="text-end">'.$link.'</p>';
 }
 
 
@@ -101,7 +101,7 @@ if (!empty($custommenu)) {
             ?>
         </small>
     </div>
-    <div class="langmenu col-sm-6 text-right">
+    <div class="langmenu col-sm-6 text-end">
         <?php echo $OUTPUT->lang_menu(); ?>
     </div>
 </div>

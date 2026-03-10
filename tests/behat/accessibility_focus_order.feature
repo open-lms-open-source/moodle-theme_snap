@@ -46,7 +46,7 @@ Feature: Check that the correct tab order and focus exists for the page.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I follow "Course Dashboard"
-    And the "tabindex" attribute of "//aside[@id='block-region-side-pre']//a[@class='sr-only sr-only-focusable']" "xpath_element" should contain "-1"
+    And the "tabindex" attribute of "//aside[@id='block-region-side-pre']//a[@class='visually-hidden visually-hidden-focusable']" "xpath_element" should contain "-1"
     # To be reviewed on INT-20292.
     #And the page should meet "cat.name-role-value, wcag412" accessibility standards
 

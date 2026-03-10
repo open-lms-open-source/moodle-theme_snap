@@ -323,7 +323,7 @@ hr {
     border-top: 1px solid #dadada;
 }
 
-.sr-only {
+.visually-hidden {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -334,8 +334,8 @@ hr {
     border: 0;
 }
 
-.sr-only-focusable:active,
-.sr-only-focusable:focus {
+.visually-hidden-focusable:active,
+.visually-hidden-focusable:focus {
     position: static;
     width: auto;
     height: auto;

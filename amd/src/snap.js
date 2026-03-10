@@ -360,7 +360,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         urlObj.searchParams.set('ts', Date.now());
                     }
                     var urlForToggle = urlObj.toString();
-                    $form.find('.custom-control-input').attr('data-pageurl', urlForToggle);
+                    $form.find('.form-check-input').attr('data-pageurl', urlForToggle);
                     $form.find('input[name="pageurl"]').val(urlForToggle);
                 }
                 lastUrl = currentUrl;

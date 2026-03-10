@@ -81,7 +81,7 @@ define(['jquery'],
                 const passwordToggleObserver = function(mutationsList, observer) {
                     for (const mutation of mutationsList) {
                         if (mutation.type === 'childList') {
-                            const passwordToggle = document.querySelector('.snap-login .input-group-append');
+                            const passwordToggle = document.querySelector('.snap-login .input-group button[data-action="toggle"]');
                             const passwordFloatingLabel = document.querySelector('.snap-login label[for="password"]');
                             const passwordInputField = document.querySelector('.snap-login .toggle-sensitive-wrapper');
                             if (passwordToggle && passwordFloatingLabel && passwordInputField) {

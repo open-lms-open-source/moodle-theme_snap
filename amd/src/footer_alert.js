@@ -68,7 +68,7 @@ define(['jquery', 'core/templates'],
              * @param {string} srText
              */
             this.setSrNotice = function(srText) {
-                containerEl.find('p.sr-only').html(srText);
+                containerEl.find('p.visually-hidden').html(srText);
             };
 
             /**

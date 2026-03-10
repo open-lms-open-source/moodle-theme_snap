@@ -143,9 +143,9 @@ Feature: Check functionality in activity cards.
       | url      | Test URL 1      | C1     | url1      |
     And I am on "Course 1" course homepage
     And "body.snap-resource-card" "css_element" should exist
-    And I click on "li.activity-wrapper.modtype_url [data-toggle='dropdown']" "css_element"
+    And I click on "li.activity-wrapper.modtype_url [data-bs-toggle='dropdown']" "css_element"
     And "li.activity-wrapper.modtype_url .dropdown-menu.show" "css_element" should exist
-    And I click on "li.activity-wrapper.modtype_url [data-toggle='dropdown-subpanel']" "css_element"
+    And I click on "li.activity-wrapper.modtype_url [data-bs-toggle='dropdown-subpanel']" "css_element"
     And "li.activity-wrapper.modtype_url .dropdown-subpanel-content.show" "css_element" should be visible
     And "li.activity-wrapper.modtype_url .dropdown-subpanel-content[data-open='true']" "css_element" should exist
     And I should see "Show on course page"

@@ -21,14 +21,14 @@
 }}
 <form action='{{action}}'  method='post'>
     <input type="hidden" name="logintoken" value="{{logintoken}}">
-    <div class="form-group">
+    <div class="mb-3">
         <label class="form-control-label" for='username' >{{#str}}username{{/str}}</label>
         <input class="form-control" autocapitalize='off' type='text' name='username' id='username' required>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label class="form-control-label" for='password'>{{#str}}password{{/str}}</label>
         <input class="form-control" type='password' name='password' id='password' required>
     </div>
     <br>
-    <input type='submit' class="btn btn-primary btn-block" value='{{#str}}login{{/str}}'>
+    <input type='submit' class="btn btn-primary d-block w-100" value='{{#str}}login{{/str}}'>
 </form>

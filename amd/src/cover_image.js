@@ -43,9 +43,7 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                 $(alertPosition).before(
                     '<div id="' + id + '" class="snap-alert-cover-image alert alert-warning" role="alert">' +
                     msg +
-                    '<button type="button" class="close" data-dismiss="alert" aria-label="' + closestr + '">' +
-                    '<span aria-hidden="true">&times;</span>' +
-                    '</button>' +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="' + closestr + '"></button>' +
                     '</div>'
                 );
             }

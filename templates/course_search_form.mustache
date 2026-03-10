@@ -37,15 +37,13 @@
 }}
 <form action="{{searchurl}}" id="{{id}}" method="get">
     <fieldset class="coursesearchbox invisiblefieldset">
-        <label for="{{inputid}}" class="sr-only">{{#str}}searchcourses{{/str}}</label>
+        <label for="{{inputid}}" class="visually-hidden">{{#str}}searchcourses{{/str}}</label>
         <div class="input-group">
             <input id="{{inputid}}" name="search" type="text" size="0" value="{{value}}" class="form-control" placeholder="{{#str}}searchcourses{{/str}}">
-            <span class="input-group-append">
-                <button class="btn btn-secondary" type="submit">
-                    <i class="icon fa fa-search fa-fw m-0" aria-hidden="true"></i>
-                    <span class="sr-only">{{#str}}searchcourses{{/str}}</span>
-                </button>
-            </span>
+            <button class="btn btn-secondary" type="submit">
+                <i class="icon fa fa-search fa-fw m-0" aria-hidden="true"></i>
+                <span class="visually-hidden">{{#str}}searchcourses{{/str}}</span>
+            </button>
         </div>
     </fieldset>
 </form>

@@ -121,7 +121,7 @@ class course_renderer extends \core_course_renderer {
                     'id' => $conditionaliconid,
                     'data-html' => 'true',
                     'clickable' => 'true',
-                    'data-content' => $availabilityinfo,
+                    'data-bs-content' => $availabilityinfo,
                     'aria-label' => $ariaconditionaltag,
                 ]);
             }

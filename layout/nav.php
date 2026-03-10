@@ -49,7 +49,7 @@ use theme_snap\renderables\genius_dashboard_link;
         );
 
         if (!empty($PAGE->theme->settings->logo)) {
-            $sitefullname = '<span class="sr-only">'.format_string($SITE->fullname). ' ' .get_string('homepage', 'theme_snap').'</span>';
+            $sitefullname = '<span class="visually-hidden">'.format_string($SITE->fullname). ' ' .get_string('homepage', 'theme_snap').'</span>';
             $attrs['class'] = 'logo';
         }
 

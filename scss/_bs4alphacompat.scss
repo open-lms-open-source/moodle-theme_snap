@@ -73,7 +73,7 @@ $state-danger-border: shift-color($danger, -70%) !default;
     .form-control-label,
     .form-check-label,
     .form-check-inline,
-    .custom-control {
+    .form-check {
         color: $color;
     }
     // Set the border and box shadow on specific inputs to match
@@ -165,7 +165,7 @@ $tag-font-weight: bold !default;
     @include tag-variant($tag-danger-bg);
 }
 
-.custom-select {
+.form-select {
     width: auto;
 }
 

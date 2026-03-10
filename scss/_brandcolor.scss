@@ -53,7 +53,7 @@ $lighter-grey-btn: #e6e6e6;
 $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this with rgb or the variable won't work.
 
 .theme-snap {
-    .badge-primary {
+    .text-bg-primary {
         background-color: $brand-primary !important;
         color: #fff;
     }
@@ -95,7 +95,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
-    a:not(.btn):not(.dropdown-item):not(.badge-info):not(._blanktarget):not(.snap-due-date, .snap-open-date, .snap-opened-date, .path-course-view .unread):not(.yui3-button):not(.mast-breadcrumb):not(.active):not(.disabled):not(.dimmed),
+    a:not(.btn):not(.dropdown-item):not(.text-bg-info):not(._blanktarget):not(.snap-due-date, .snap-open-date, .snap-opened-date, .path-course-view .unread):not(.yui3-button):not(.mast-breadcrumb):not(.active):not(.disabled):not(.dimmed),
     .btn-link,
     .fake-link {
         color: $brand-primary;
@@ -772,7 +772,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     }
 
     // This background color helps to know when the delete-messages-for-all-users input checkbox is checked.
-    .message-app .view-conversation .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    .message-app .view-conversation .form-check .form-check-input:checked ~ .form-check-label::after {
         background-color: $brand-primary;
     }
 
@@ -936,7 +936,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     #snap-coverimagecontrol > .btn-secondary,
     div[tabindex],
     .btn.btn-link,
-    .custom-select,
+    .form-select,
     .form-control,
     .categoryname,
     .summary > p,
@@ -1318,7 +1318,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             border-bottom: 5px $brand-primary solid ;
         }
 
-        select.custom-select {
+        select.form-select {
             border: none;
             border-radius: 5px;
         }
@@ -1364,14 +1364,14 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
 
         .dropdown-toggle:focus,
-        select.custom-select:focus, select.custom-select, .nav-link:focus,
+        select.form-select:focus, select.form-select, .nav-link:focus,
         .btn.btn-secondary, .btn-group  {
             outline: transparent;
             box-shadow: -1px 3px 7px 2px rgb(223 223 223);
         }
 
         .dropdown-toggle:focus,
-        select.custom-select:focus, select.custom-select, .nav-link:focus,
+        select.form-select:focus, select.form-select, .nav-link:focus,
         .btn.btn-secondary.dropdown-toggle.dropdown-toggle-split {
             box-shadow: none;
         }
@@ -1609,7 +1609,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     }
 
     // local_olms_ai
-    #region-main .custom-control-input:checked~.custom-control-label::before {
+    #region-main .form-check-input:checked~.form-check-label::before {
         background-color: $brand-primary;
         border-color: $brand-primary;
     }

@@ -24,7 +24,7 @@
     }
 
     .filemanager-toolbar {
-        @extend .sr-only;
+        @extend .visually-hidden;
     }
 
     // Save button on large screen.

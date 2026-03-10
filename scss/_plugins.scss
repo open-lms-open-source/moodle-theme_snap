@@ -348,7 +348,7 @@
         margin-top: 1em;
     }
 
-    .badge-success {
+    .text-bg-success {
         @include tag-variant($tag-success-bg);
     }
 }
@@ -420,7 +420,7 @@
                 padding: $card-spacer-y $card-spacer-x;
             }
         }
-        div.form-inline.felement {
+        div.felement {
             display: inline-block;
         }
     }
@@ -1443,7 +1443,7 @@ body.format-tiles.editing .section .snap-asset .actions {
 
 // Course catalogue styles.
 #page-local-catalogue-index {
-    .mform > .form-group {
+    .mform > .mb-3 {
         margin-left: 0;
     }
 
@@ -1460,7 +1460,7 @@ body.format-tiles.editing .section .snap-asset .actions {
         }
 
         // Align filters form to te left
-        .form-group {
+        .mb-3 {
             margin-left: 0 !important;
         }
     }

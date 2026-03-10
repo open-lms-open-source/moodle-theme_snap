@@ -435,7 +435,7 @@ a[aria-controls="snap-collapse-help"] {
         min-height: 250px !important;
     }
 
-    .form-inline[data-fieldtype="editor"] {
+    .felement[data-fieldtype="editor"] {
         overflow: visible;
     }
 }
@@ -458,14 +458,14 @@ a[aria-controls="snap-collapse-help"] {
     fieldset[id^="id_category_"],
     #id_modstandardelshdr,
     #id_overallfeedbackhdr {
-        .form-inline[data-fieldtype="editor"] {
+        .felement[data-fieldtype="editor"] {
             overflow: visible;
 
             div {
                 max-width: 100%;
             }
         }
-        .form-inline[data-fieldtype="date_selector"] {
+        .felement[data-fieldtype="date_selector"] {
             .fdate_selector {
                 flex-wrap: wrap;
             }

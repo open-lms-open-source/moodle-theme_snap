@@ -129,7 +129,7 @@ export default class SharingCartForSnap {
             body: ((sections) => {
                 var s = M.str.block_sharing_cart['snap_dialog_restore'];
                 // Create Select element.
-                s += '<select id="select-dialog" class="custom-select">';
+                s += '<select id="select-dialog" class="form-select">';
                 for(var i = 0; i < sections.length; i++) {
                     s += '<option value="' + sections[i].url + '">' + sections[i].name + '</option>';
                 }
