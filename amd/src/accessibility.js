@@ -120,9 +120,13 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     $('div[role="main"] div.sitetopic ul.section.img-text').attr('role', 'presentation');
                 });
 
+                var module = this;
                 $(document).ready(function() {
                     // Add necessary attributes to needed DOM elements to new accessibility features.
                     $("#page-mod-data-edit input[id*='url']").attr("type", "url").attr("autocomplete", "url");
+                    str.get_string('makingaselectionpagechange', 'theme_snap').done(function(label) {
+                        module.injectScreenReader(label, '#jump-to-activity');
+                    });
                     $("#moodle-blocks aside#block-region-side-pre a.sr-only.sr-only-focusable").attr("tabindex", "-1");
 
                     // Focus first invalid input after a submit is done.
@@ -684,8 +688,18 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                 $(btnSelector).on('hidden.bs.popover', function () {
                     $(this).attr('aria-expanded', false);
                 });
-            }
+            },
 
+            injectScreenReader: function(label, targetSelector) {
+                var target = document.querySelector(targetSelector);
+                if (!target) {
+                    return;
+                }
+                var span = document.createElement('span');
+                span.className = 'sr-only';
+                span.textContent = label;
+                target.parentNode.insertBefore(span, target);
+            }
         };
     }
 );
