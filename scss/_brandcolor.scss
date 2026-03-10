@@ -1222,6 +1222,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                     a {
                         height: 50px;
                         color: $custom-menu-text-color;
+                        padding: 0.5rem 1.53em 0.5rem 1rem;
 
                         &:focus,
                         &:hover {
