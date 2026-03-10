@@ -114,13 +114,15 @@ class event_handlers {
      * @param course_module_created $event
      */
     public static function course_module_created(course_module_created $event) {
-        global $SESSION;
+        global $CFG, $SESSION;
 
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
         // Allow UI awareness after a new course module is created.
-        $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
+        if ($CFG->theme === 'snap') {
+            $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
+        }
     }
 
     /**
@@ -128,13 +130,15 @@ class event_handlers {
      * @param course_module_updated $event
      */
     public static function course_module_updated(course_module_updated $event) {
-        global $SESSION;
+        global $CFG, $SESSION;
 
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
         // Allow UI awareness after a course module is updated.
-        $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
+        if ($CFG->theme === 'snap') {
+            $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
+        }
     }
 
     /**
