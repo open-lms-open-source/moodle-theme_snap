@@ -2957,7 +2957,8 @@ body.snap-resource-card {
     &.bg-primary.text-white {
       color: $brand-success !important;
       &::before {
-        @extend .fa-solid;
+        font-family: $fa-style-family;
+        font-weight: 900;
         content: fa-content($fa-var-highlighter);
       }
     }
@@ -4113,13 +4114,15 @@ body[id^='page-mod-data'] {
             }
             @include media-breakpoint-down(md) {
                 &::after {
-                    @extend .fa-solid;
+                    font-family: $fa-style-family;
+                    font-weight: 900;
                     content: fa-content($fa-var-chevron-down);
                 }
             }
             @include media-breakpoint-up(md) {
                 &::before {
-                    @extend .fa-solid;
+                    font-family: $fa-style-family;
+                    font-weight: 900;
                     content: fa-content($fa-var-chevron-left);
                     position: absolute;
                     top: 50%;

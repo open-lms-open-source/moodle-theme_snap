@@ -1495,7 +1495,8 @@ $mr-nav-zindex: 1052;
         }
 
         .dropdown-item.carousel-navigation-link::after {
-            @extend .fa-solid;
+            font-family: $fa-style-family;
+            font-weight: 900;
             content: fa-content($fa-var-caret-right);
             font-size: 1rem;
             right: 0.75rem;

@@ -46,9 +46,3 @@ $drawer-width: 320px;
 @import "moodle/print";
 @import "moodle/modal";
 @import "moodle/atto";
-
-// Patch needed because for some reason when Snap compiles FontAwesome, the content property for .fa is not generated.
-.fas::before,
-.fa::before {
-    content: unquote("var(#{$fa-icon-property})"); // Should be `var(#{$fa-icon-property});` but this works around the issue.
-}
