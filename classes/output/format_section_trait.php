@@ -401,6 +401,8 @@ trait format_section_trait {
         $mod = $modinfo->cms[$cmid];
         $section = $mod->get_section_info();
 
+        $cmitemdata->extraclasses = trim(($cmitemdata->extraclasses ?? '') . ' activity-wrapper snap-activity');
+
         $displayoptions = [];
         // Instance the class controlmenu so data is added for rendering.
         $controlmenu = new \core_courseformat\output\local\content\cm\controlmenu($courseformat, $section, $mod, $displayoptions);
