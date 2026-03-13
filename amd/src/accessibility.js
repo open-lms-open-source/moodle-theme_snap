@@ -29,11 +29,10 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
     function($, str, Event, FormEvents, { DefaultAllowlist }, Popover, coreMoreMenu, log) {
         return {
             snapAxInit: function(localJouleGrader, allyReport, blockReports, localCatalogue) {
-
                 /**
                  * Module to get the strings from Snap to add the aria-label attribute to new accessibility features.
                  */
-                str.get_strings([
+                let stringRequests = [
                     {key: 'accessforumstringdis', component: 'theme_snap'},
                     {key: 'accessforumstringmov', component: 'theme_snap'},
                     {key: 'calendar', component: 'calendar'},
@@ -52,8 +51,16 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     {key: 'badges', component: 'core_badges'},
                     {key: 'coursereport', component: 'report_allylti'},
                     {key: 'pluginname', component: 'local_catalogue'},
-                    {key: 'experimental', component: 'block_reports'}
-                ]).done(function(stringsjs) {
+                    {key: 'experimental', component: 'block_reports'},
+                    {key: 'themesettingstitle', component: 'theme_snap'},
+                ];
+                str.get_strings(stringRequests).done(function(stringsjs) {
+                    const stringsMap = {};
+                    stringRequests.forEach((item, index) => {
+                        stringsMap[item.key] = stringsjs[index];
+                    });
+                    module.applyPageHeadingAccessibility(stringsMap);
+
                     if ($("#page-mod-forum-discuss")) {
                         $("div[data-content='forum-discussion'] select.form-select.singleselect")
                         .attr("aria-label", stringsjs[0]);
@@ -700,6 +707,25 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                 span.className = 'visually-hidden';
                 span.textContent = label;
                 target.parentNode.insertBefore(span, target);
+            },
+
+            applyPageHeadingAccessibility: function (stringsMap) {
+                const bodyId = document.body.id || "";
+                const pageTypeConfigs = {
+                    "page-admin-setting-themesettingsnap": {
+                        ariaLabel: stringsMap['themesettingstitle'],
+                        ariaLevel: "1"
+                    },
+                };
+                const configForPage = pageTypeConfigs[bodyId];
+                 if (configForPage) {
+                     const heading = document.querySelector("#page-header h1") || document.querySelector("h1");
+                     if (heading) {
+                        heading.setAttribute("aria-label", configForPage.ariaLabel);
+                        heading.setAttribute("role", "heading");
+                        heading.setAttribute("aria-level", configForPage.ariaLevel);
+                     }
+                 }
             }
         };
     }
