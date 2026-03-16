@@ -1720,6 +1720,12 @@ body.snap-resource-card {
             width: 100%;
         }
     }
+
+    li.modtype_folder {
+        .activity-badges .badge {
+            width: 100%;
+        }
+    }
 }
 
 // We need to establish to 100% the width for the icons for these activities, because the asset type will not appear in the card.
