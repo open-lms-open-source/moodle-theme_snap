@@ -1658,6 +1658,12 @@ body > #page {
         min-height: 100% !important;
     }
 
+    &:not(.show-drawer-left) {
+        .drawer.drawer-left:not(.show) {
+            display: none;
+        }
+    }
+
     // When Course Index is open.
     &.show-drawer-left {
         @include media-breakpoint-up(lg) {
