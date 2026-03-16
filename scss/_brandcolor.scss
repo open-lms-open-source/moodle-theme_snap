@@ -934,7 +934,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     // Extra focus options
     // -------------------------
     #snap-coverimagecontrol > .btn-secondary,
-    div[tabindex],
     .btn.btn-link,
     .form-select,
     .form-control,
@@ -948,6 +947,10 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                         outline: 3px auto fix-background($nav-color, $brand-primary, 60);
             }
         }
+    }
+
+    div[tabindex]:focus.modal-dialog.modal-dialog-scrollable .modal-content {
+        outline: 3px auto $brand-primary;
     }
 
     .modal-dialog.modal-dialog-centered.modal-dialog-scrollable {
