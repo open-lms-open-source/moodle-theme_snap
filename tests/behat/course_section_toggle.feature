@@ -36,6 +36,10 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
       | admin | C1 | editingteacher |
       | teacher1 | C1 | editingteacher |
       | student1 | C1 | student |
+    And the following "activities" exist:
+      | activity   | name               | course | section |
+      | subsection | SubsectionExample  | C1     | 1      |
+    And I enable "subsection" "mod" plugin
 
   @javascript
   Scenario: In read mode, teacher hides section and show an activity.
@@ -118,3 +122,17 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     And I follow "Section 2"
     And I wait until the page is ready
     Then "#section-2 .snap-visibility" "css_element" should not exist
+
+  @javascript
+  Scenario: When parent Section is Hidden, Subsections can not modify visibility.
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I follow "Section 1"
+    And I wait until the page is ready
+    Then "#section-1" "css_element" should exist
+    And I click on "#section-1 .snap-visibility[data-action='sectionHide']" "css_element"
+    Then I should see "Hidden from students"
+    And I open "SubsectionExample" actions menu
+    And I click on "View" "link" in the "SubsectionExample" activity
+    And I wait until the page is ready
+    And ".section.main.state-visible .snap-visibility" "css_element" should not be visible

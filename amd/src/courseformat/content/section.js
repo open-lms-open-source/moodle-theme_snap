@@ -38,4 +38,50 @@ export default class Section extends BaseSection {
             this.selectors.ACTIONMENU = '.snap-section-editing.section-actions';
         }
     }
+    /**
+     * Component watchers.
+     *
+     * @returns {Array} of watchers
+     */
+    getWatchers() {
+        let watchers = [
+            {watch: `section[${this.id}]:updated`, handler: this._refreshSection},
+        ];
+        // Set watcher for parent Section changes, if we are in a delegated section (Subsection)
+        const parentSectionId = this.reactive.state.section.get(this.id)?.parentsectionid;
+        if (parentSectionId !== null) {
+            watchers.push({watch: `section[${parentSectionId}]:updated`, handler: this._refreshSection});
+        }
+        return watchers;
+    }
+
+    /**
+     * Update a content section using the state information.
+     *
+     * @param {object} param
+     * @param {Object} param.element details the update details.
+     */
+    _refreshSection({element}) {
+        const parentSectionId = this.reactive.state.section.get(this.id)?.parentsectionid;
+
+        // The element ID (The one that triggers the event) is the same as Parent Section ID.
+        // It means the parent changed, and we need to update the subsection.
+        if (parentSectionId === element.id) {
+            const isParentVisible = element.visible;
+            const subsection = this.element.closest('ul.sections > .section.main');
+            const visibilityControl = subsection.querySelector('.snap-visibility');
+
+            if (visibilityControl) {
+                if (!isParentVisible) {
+                    // Parent Hidden, Do not show visibility button on subsection.
+                    visibilityControl.classList.add('d-none');
+                } else {
+                    // Parent is visible, restore subsection visibility button.
+                    visibilityControl.classList.remove('d-none');
+                }
+            }
+            return;
+        }
+        super._refreshSection({element});
+    }
 }

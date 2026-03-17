@@ -45,6 +45,16 @@ class course_action_section_visibility extends course_action_section_base {
 
         $url = clone($baseurl);
         if (has_capability('moodle/course:sectionvisibility', $coursecontext)) {
+            // If we are in a Delegated Section, validate Parent Visibility.
+            if ($section->is_delegated()) {
+                // Get parent section information.
+                $cm = $section->delegateinstance->get_cm();
+                $parentsection = $cm->get_section_info();
+                if (!$parentsection->visible) {
+                    $this->class .= ' d-none';
+                }
+            }
+
             $this->title = get_string('hidefromothers', 'format_'.$course->format) . '/' . get_string('showfromothers', 'format_'.$course->format);
 
             if ($section->visible) { // Show the hide/show eye.
