@@ -160,6 +160,8 @@ define(
                 // Section does not exist in DOM, render it.
                 sectionAssetManagement.getSection(sectionID, mod, switchSectionVisibility);
                 sectionAssetManagement.updateBreadcrumb(sectionID);
+            } else if (sectionID === '' && location.pathname.endsWith('/course/view.php') && location.href.endsWith('#')) {
+                location.href = location.href.slice(0, -1);
             } else {
                 // Section already rendered, show it.
                 switchSectionVisibility(sectionID, mod);
