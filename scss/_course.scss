@@ -2546,6 +2546,25 @@ body.snap-resource-card {
     }
 }
 
+#page-course-view-tiles:not(.editing),
+#page-course-view-section-tiles:not(.editing) {
+    #format-tiles-multi-section-page {
+        max-width: 100% !important;
+        .row {
+            width: 100%;
+            #section-0 {
+                padding-top: 0.5em;
+            }
+        }
+        .course-section .format-tiles-cm-list .activity-item {
+            margin: 1em 0;
+        }
+    }
+
+    #snap-course-wrapper .row {
+        margin: 0 0 0 2% !important;
+    }
+}
 
 // Tiles course format styles.
 .format-tiles {
