@@ -58,7 +58,6 @@
 
 // Wrapper around the 3 colums of data.
 #course-category-listings {
-    @extend .row;
     padding-top: 1em;
 
     .categoryname {
