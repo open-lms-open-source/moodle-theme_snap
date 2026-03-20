@@ -7131,3 +7131,9 @@ code {
         }
     }
 }
+
+// Adjust resizer applied by core on the grading page
+.path-mod-assign [data-region="resizer"] {
+    padding: inherit;
+    top: 8em;
+}
