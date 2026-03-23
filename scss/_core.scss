@@ -5994,6 +5994,20 @@ div[id^=snap-create-activity-] .section-modchooser-link {
             color: $brand-primary !important;
         }
     }
+    #region-main-box .input-group {
+        input {
+            border-bottom-left-radius: 0 !important;
+            border-top-left-radius: 0 !important;
+            border-bottom-right-radius: 8px !important;
+            border-top-right-radius: 8px !important;
+        }
+        .input-group-text {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
 }
 
 // Fix icons position for user profile fields page in Snap.
