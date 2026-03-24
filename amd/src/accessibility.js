@@ -428,6 +428,48 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     }
                     setDrawersTabOrder();
 
+                    /**
+                     * Persist the active admin settings tab across page reloads.
+                     */
+                    function persistAdminSettingsTabs() {
+                        const tabContainer = document.getElementById('snap-admin-tabs');
+                        if (!tabContainer) {
+                            return;
+                        }
+                        const section = new URLSearchParams(window.location.search).get('section') || 'default';
+                        const storageKey = 'snap_admin_activetab_' + section;
+                        const savedTab = sessionStorage.getItem(storageKey);
+
+                        if (savedTab) {
+                            const tabLink = tabContainer.querySelector('.nav-link[href="#' + savedTab + '"]');
+                            if (tabLink) {
+                                const currentActive = tabContainer.querySelector('.nav-link.active');
+                                if (currentActive) {
+                                    currentActive.classList.remove('active');
+                                }
+                                const currentPane = document.querySelector('.tab-content .tab-pane.active');
+                                if (currentPane) {
+                                    currentPane.classList.remove('active');
+                                }
+                                tabLink.classList.add('active');
+                                const pane = document.getElementById(savedTab);
+                                if (pane) {
+                                    pane.classList.add('active');
+                                }
+                                tabLink.focus();
+                            }
+                        }
+
+                        tabContainer.addEventListener('click', function(e) {
+                            const link = e.target.closest('.nav-link');
+                            if (link) {
+                                const tabName = link.getAttribute('href').replace('#', '');
+                                sessionStorage.setItem(storageKey, tabName);
+                            }
+                        });
+                    }
+                    persistAdminSettingsTabs();
+
                     // Local accessibility plugin button from Snap header
                     const accessibilityIcon = document.getElementById('local-accessibility-buttoncontainer');
                     const headerButtonsContainer = document.querySelector('#snap-header > div.float-end');
