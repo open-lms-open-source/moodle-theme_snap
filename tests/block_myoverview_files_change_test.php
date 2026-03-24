@@ -27,9 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 class block_myoverview_files_change_test extends advanced_testcase  {
 
-    /**
-     * @dataProvider getblockmyoverviewfiles
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getblockmyoverviewfiles')]
     public function test_block_myoverview_files_change_correct($path, $expectedchecksum) {
         $this->markTestSkipped('To be reviewed in INT-20323');
         $this->resetAfterTest();

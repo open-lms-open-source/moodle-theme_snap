@@ -305,7 +305,7 @@ function theme_snap_get_main_scss_content($theme) {
 
     $bs4debugdeprecations = '';
 
-    if($CFG->bs4debugdeprecations) {
+    if (!empty($CFG->bs4debugdeprecations)) {
         $bs4debugdeprecations = '@import "../../boost/scss/moodle/deprecated.scss";';
     }
 

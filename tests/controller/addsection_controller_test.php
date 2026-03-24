@@ -28,9 +28,8 @@ use advanced_testcase;
 
 /**
  * Test for addsection_controller.
- *
- * @coversDefaultClass \theme_snap\controller\addsection_controller
  */
+#[\PHPUnit\Framework\Attributes\CoversClass('\theme_snap\controller\addsection_controller')]
 class addsection_controller_test extends advanced_testcase {
 
     protected function setUp(): void {
@@ -41,7 +40,7 @@ class addsection_controller_test extends advanced_testcase {
      * Scenario: Course with subsections (component=mod_subsection).
      * Validate that adding a section creates only ONE new, normal section.
      *
-     * @covers ::addsection_action
+     * #[\PHPUnit\Framework\Attributes\CoversMethod(\theme_snap\controller\addsection_controller::class, 'addsection_action')]
      */
     public function test_addsection_action_with_subsections() {
         global $PAGE, $DB;

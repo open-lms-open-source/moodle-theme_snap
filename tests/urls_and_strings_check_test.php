@@ -34,12 +34,11 @@ class urls_and_strings_check_test extends \advanced_testcase {
     }
 
     /**
-     * @dataProvider getsubdomains
-     *
      * @param string $language
      * @param string $snapstring
      * @param string $expectedsubdomain
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getsubdomains')]
     public function test_strings_specific_subdomain_correct($language, $snapstring, $expectedsubdomain) {
         global $PAGE, $SESSION;
         if (!get_string_manager()->translation_exists($language)) {
@@ -65,11 +64,10 @@ class urls_and_strings_check_test extends \advanced_testcase {
     }
 
     /**
-     * @dataProvider gettranslations
-     *
      * @param string $language
      * @param string $snapstring
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('gettranslations')]
     public function test_strings_check_lang_pack_correct($language, $snapstring) {
 
         $stringcontent = get_string_manager()->get_string($snapstring, 'theme_snap', null, $language);

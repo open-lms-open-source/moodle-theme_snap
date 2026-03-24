@@ -502,7 +502,7 @@ EOF;
             }
         }
 
-        if($CFG->bs4debugdeprecations) {
+        if (!empty($CFG->bs4debugdeprecations)) {
             $PAGE->requires->js_call_amd('theme_boost/bs4-compat', 'init');
         }
         
