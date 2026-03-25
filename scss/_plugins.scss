@@ -1849,3 +1849,14 @@ body#page-admin-plugins {
         }
     }
 }
+
+// -------------------------
+//  Wiris Editor
+// -------------------------
+.wrs_editor img.wrs_image,
+.wrs_modal_dialogContainer img.wrs_image {
+    max-width: none;
+    max-height: none;
+    width: auto;
+    height: auto;
+}
