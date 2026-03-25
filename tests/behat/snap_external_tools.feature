@@ -50,6 +50,6 @@ Feature: Configure new external tool type to test it on a course.
     And I follow "Teaching Tool 1"
     And I set the field "Activity name" to "External tool test"
     And I press "Save and return to course"
-    And I am on the "External tool test" "lti activity" page
+    And I visit the "External tool test" "lti" activity page without waiting
     And The document should open in a new tab
     And I should see "This represents a tool provider"

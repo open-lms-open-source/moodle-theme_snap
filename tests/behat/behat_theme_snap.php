@@ -1800,6 +1800,25 @@ JS;
     }
 
     /**
+     * Navigate to an activity view page without waiting for pending JS.
+     *
+     * Activities like LTI configured to open in a new window execute window.open() on page load,
+     * which can leave pending JS (e.g. modal promises) that never resolve, causing Behat to
+     * time out on wait_for_pending_js(). This step uses session visit directly to bypass that wait.
+     *
+     * @When /^I visit the "(?P<activityname>[^"]*)" "(?P<modname>[^"]*)" activity page without waiting$/
+     * @param string $activityname The name of the activity.
+     * @param string $modname The module name (e.g. "lti").
+     */
+    public function i_visit_activity_page_without_waiting($activityname, $modname) {
+        global $DB;
+        $activity = $DB->get_record($modname, ['name' => $activityname], '*', MUST_EXIST);
+        $cm = get_coursemodule_from_instance($modname, $activity->id, $activity->course, false, MUST_EXIST);
+        $url = new \moodle_url("/mod/$modname/view.php", ['id' => $cm->id]);
+        $this->getSession()->visit($this->locate_path($url->out_as_local_url(false)));
+    }
+
+    /**
      * Document should open in a new tab.
      *
      * @When /^The document should open in a new tab$/

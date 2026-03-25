@@ -262,7 +262,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                             let last = null;
                             if (drawer) {
                                 let drawerFocusables = Array.from(drawer.querySelectorAll(focusables)).filter(el => {
-                                    return el.checkVisibility();
+                                    return el.offsetParent !== null;
                                 });
                                 first = drawerFocusables[0];
                                 last = drawerFocusables[drawerFocusables.length - 1];
@@ -322,7 +322,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                                 let snapHeader = document.getElementById('snap-header');
                                 if (snapHeader) {
                                     let headerFocusables = Array.from(snapHeader.querySelectorAll(focusables)).filter(el => {
-                                        return el.checkVisibility();
+                                        return el.offsetParent !== null;
                                     });
                                     beforeDrawers = headerFocusables.length > 0 ?
                                         headerFocusables[headerFocusables.length - 1] : null;
