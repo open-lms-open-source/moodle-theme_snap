@@ -582,6 +582,14 @@ body.path-site .block.block_settings {
     margin-right: inherit;
 }
 
+.block_myoverview div[role="search"] .row > * {
+    flex-shrink: unset;
+    width: auto;
+    max-width: auto;
+    padding-right: 0;
+    padding-left: 0;
+}
+
 /* ADMIN BLOCK */
 #page-content .block_settings {
     width: 320px;
