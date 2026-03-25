@@ -1652,6 +1652,8 @@ body > #page {
         @include media-breakpoint-up(lg) {
             margin-right: 365px !important;
         }
+
+        visibility: visible !important;
     }
     // In tiles format, we need to make sure overlay takes available space
     div#format_tiles_overlay {

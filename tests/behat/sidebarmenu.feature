@@ -84,3 +84,19 @@ Feature: Testing sidebarmenu in theme_snap
     And I click on "[id^='message-drawer-toggle-']" "css_element"
     Then "div.message-app" "css_element" should exist
     Then "div.modal_backdrop" "css_element" should not exist
+
+  @javascript
+  Scenario: The page element should be visible when sidebar drawers are opened
+    Given I am logged in as "admin"
+    And I am on site homepage
+    And ".snap-sidebar-menu.show" "css_element" should exist
+    And "#page" "css_element" should be visible
+    And I click on "#admin-menu-trigger" "css_element"
+    And ".block_settings.state-visible" "css_element" should exist
+    And "#page" "css_element" should be visible
+    And I click on the block drawer toggle
+    And ".drawer.show" "css_element" should exist
+    And "#page" "css_element" should be visible
+    And I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And "#snap_feeds_side_menu.state-visible" "css_element" should exist
+    Then "#page" "css_element" should be visible
