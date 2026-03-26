@@ -262,7 +262,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                             let last = null;
                             if (drawer) {
                                 let drawerFocusables = Array.from(drawer.querySelectorAll(focusables)).filter(el => {
-                                    return el.checkVisibility();
+                                    return el.offsetParent !== null;
                                 });
                                 first = drawerFocusables[0];
                                 last = drawerFocusables[drawerFocusables.length - 1];
@@ -322,7 +322,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                                 let snapHeader = document.getElementById('snap-header');
                                 if (snapHeader) {
                                     let headerFocusables = Array.from(snapHeader.querySelectorAll(focusables)).filter(el => {
-                                        return el.checkVisibility();
+                                        return el.offsetParent !== null;
                                     });
                                     beforeDrawers = headerFocusables.length > 0 ?
                                         headerFocusables[headerFocusables.length - 1] : null;
@@ -427,6 +427,48 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                         document.addEventListener('keydown', drawerTabListener);
                     }
                     setDrawersTabOrder();
+
+                    /**
+                     * Persist the active admin settings tab across page reloads.
+                     */
+                    function persistAdminSettingsTabs() {
+                        const tabContainer = document.getElementById('snap-admin-tabs');
+                        if (!tabContainer) {
+                            return;
+                        }
+                        const section = new URLSearchParams(window.location.search).get('section') || 'default';
+                        const storageKey = 'snap_admin_activetab_' + section;
+                        const savedTab = sessionStorage.getItem(storageKey);
+
+                        if (savedTab) {
+                            const tabLink = tabContainer.querySelector('.nav-link[href="#' + savedTab + '"]');
+                            if (tabLink) {
+                                const currentActive = tabContainer.querySelector('.nav-link.active');
+                                if (currentActive) {
+                                    currentActive.classList.remove('active');
+                                }
+                                const currentPane = document.querySelector('.tab-content .tab-pane.active');
+                                if (currentPane) {
+                                    currentPane.classList.remove('active');
+                                }
+                                tabLink.classList.add('active');
+                                const pane = document.getElementById(savedTab);
+                                if (pane) {
+                                    pane.classList.add('active');
+                                }
+                                tabLink.focus();
+                            }
+                        }
+
+                        tabContainer.addEventListener('click', function(e) {
+                            const link = e.target.closest('.nav-link');
+                            if (link) {
+                                const tabName = link.getAttribute('href').replace('#', '');
+                                sessionStorage.setItem(storageKey, tabName);
+                            }
+                        });
+                    }
+                    persistAdminSettingsTabs();
 
                     // Local accessibility plugin button from Snap header
                     const accessibilityIcon = document.getElementById('local-accessibility-buttoncontainer');
