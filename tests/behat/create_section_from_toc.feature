@@ -23,7 +23,6 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
   This requires the course to use the weeks and topics format.
 
   Background:
-    Given I skip because "It's failing due to New Snap Course sections - INT-21427"
     Given the following "courses" exist:
       | fullname               | shortname     | category | groupmode | format         | startdate  | initsecions |
       | Topics course          | course_topics | 0        | 1         | topics         |            |      1      |
@@ -98,6 +97,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
 
   @javascript
   Scenario: For editing teachers, ensure new section creation is available for week format and creates the section with a default title.
+    Given I skip because "It's failing due to New Snap Course sections - INT-21427"
     Given I log in as "admin"
     And I log out
     Then I log in as "teacher1"
@@ -112,6 +112,7 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
 
   @javascript
   Scenario: For editing teachers, ensure new section creation works when using content.
+    Given I skip because "It's failing due to New Snap Course sections - INT-21427"
     Given I log in as "admin"
     And I log out
     Then I log in as "teacher1"
@@ -128,16 +129,16 @@ Feature: In the Snap theme, within a course, editing teachers can create a new s
     And I follow "Create a new section"
     # Visibility of the cancel button.
     And I should see "Cancel"
-    And I follow "Cancel"
+    And I click on "#cancel-new-section" "css_element"
     # Cancel button should return the user to the main section of the course.
     And I should see "General"
-    And I click on ".courseindex .courseindex-section:nth-of-type(5)" "css_element"
+    And I click on ".courseindex .courseindex-section:nth-of-type(5) a.courseindex-link[data-for='section_title']" "css_element"
     # Make Section 4 the current section.
     And I click on "#extra-actions-dropdown-4" "css_element"
     And I click on "#section-4 .snap-highlight" "css_element"
     # Go to a different Section than the highlighted one and open the create a new section form.
     And I click on "#courseindex .courseindex-section:nth-of-type(2)" "css_element"
     And I follow "Create a new section"
-    And I follow "Cancel"
+    And I click on "#cancel-new-section" "css_element"
     # The redirect of the cancel button should be to the highlighted section.
     And "#courseindex .courseindex-section:nth-of-type(5)" "css_element" should exist
