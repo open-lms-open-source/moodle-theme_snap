@@ -110,8 +110,8 @@ class course_section_navigation implements \core\output\renderable {
                 if (!is_array($customdata)) {
                     continue;
                 }
-                if (isset($customdata['currentsectionid'])) {
-                    $navigablesections[$customdata['currentsectionid']] = null;
+                if (isset($customdata['sectionid'])) {
+                    $navigablesections[$customdata['sectionid']] = null;
                 }
             }
             foreach ($orderedsections as $section) {
