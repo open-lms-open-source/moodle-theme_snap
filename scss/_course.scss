@@ -1274,6 +1274,10 @@ body.format-singleactivity {
                 color: white !important;
             }
         }
+
+        a {
+            word-break: break-all;
+        }
     }
 
     @container course-container (max-width: 380px) {
