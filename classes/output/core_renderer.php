@@ -389,8 +389,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function friendly_datetime($time) {
-        $timetext = \calendar_day_representation($time);
-        $timetext .= ', ' . \calendar_time_representation($time);
+        global $OUTPUT;
+        $humandate = \core_calendar\output\humandate::create_from_timestamp($time);
+        $timetext = $OUTPUT->render($humandate);
         $datetime = date(DateTime::W3C, $time);
         return \core\output\html_writer::tag('time', $timetext, [
             'datetime' => $datetime, ]

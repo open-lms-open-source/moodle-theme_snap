@@ -23,6 +23,7 @@
 Feature: When the moodle theme is set to Snap, the login options should be shown
 
   Background:
+    Given I skip because "auth_cas was deprecated from Moodle Core"
     Given the following config values are set as admin:
       |  config   |    value        | plugin   |
       | hostname  | host.domain.com | auth_cas |
