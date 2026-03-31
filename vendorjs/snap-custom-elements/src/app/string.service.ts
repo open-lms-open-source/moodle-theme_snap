@@ -10,7 +10,6 @@ import {map, tap} from "rxjs/operators";
 })
 
 export class StringService {
-  private cachedStrings: string[] = [];
 
   constructor(
     private moodleService: MoodleService
@@ -29,7 +28,7 @@ export class StringService {
         stringId = splitted[0];
         component = splitted[1];
       }
-      if (this.cachedStrings[stringId]) {
+      if (this.getCachedString(stringId)) {
         cachedIds.push(stringId);
         continue;
       }
@@ -59,16 +58,41 @@ export class StringService {
     let res: string[] = [];
 
     // Look for cached strings.
-    for(let i = 0; i < cachedIds.length; i++) {
-      res[cachedIds[i]] = this.cachedStrings[cachedIds[i]];
+    for (let i = 0; i < cachedIds.length; i++) {
+      res[cachedIds[i]] = this.getCachedString(cachedIds[i]);
     }
 
     // Get strings from request and cache them too.
     for(let i = 0; i < stringData.length; i++) {
       res[stringData[i].stringid] = stringData[i].string;
-      this.cachedStrings[stringData[i].stringid] = stringData[i].string;
+      this.setCachedString(stringData[i].stringid, stringData[i].string);
     }
 
     return res;
+  }
+
+  getCachedString(stringId: string): string {
+    const cacheRaw = sessionStorage.getItem('snapStringCache');
+    if (!cacheRaw) return undefined;
+    try {
+      const cache = JSON.parse(cacheRaw);
+      return cache[stringId];
+    } catch (e) {
+      return undefined;
+    }
+  }
+
+  setCachedString(stringId: string, value: string): void {
+    let cache: {[key: string]: string} = {};
+    const cacheRaw = sessionStorage.getItem('snapStringCache');
+    if (cacheRaw) {
+      try {
+        cache = JSON.parse(cacheRaw);
+      } catch (e) {
+        cache = {};
+      }
+    }
+    cache[stringId] = value;
+    sessionStorage.setItem('snapStringCache', JSON.stringify(cache));
   }
 }
