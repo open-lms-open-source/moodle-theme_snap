@@ -145,6 +145,13 @@ define(
                 sectionID = hashSection.match(/\d+/)[0];
             }
 
+            if ($('.section.main.state-visible.set-by-server').length) {
+                $('.section.main.state-visible.set-by-server').removeClass('set-by-server');
+            } else {
+                $('.course-content .section.main, #moodle-blocks,#coursetools, #snap-add-new-section,' +
+                    '#tiles-section').removeClass('state-visible');
+            }
+
             // Redirect to the correct section when doing /course/section.php.
             if ((sectionID === '' || sectionID === undefined)
                 && location.pathname.endsWith('/course/section.php')
@@ -160,8 +167,6 @@ define(
                 // Section does not exist in DOM, render it.
                 sectionAssetManagement.getSection(sectionID, mod, switchSectionVisibility);
                 sectionAssetManagement.updateBreadcrumb(sectionID);
-            } else if (sectionID === '' && location.pathname.endsWith('/course/view.php') && location.href.endsWith('#')) {
-                location.href = location.href.slice(0, -1);
             } else {
                 // Section already rendered, show it.
                 switchSectionVisibility(sectionID, mod);
