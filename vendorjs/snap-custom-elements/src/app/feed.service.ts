@@ -4,7 +4,7 @@ import {finalize, Observable, of, shareReplay} from 'rxjs';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {MoodleRes} from "./moodle.res";
 import {CachedMoodleRes} from "./cached-moodle-res";
 import {MoodleResKey} from "./moodle-res-key";
@@ -61,9 +61,6 @@ export class FeedService {
 
     moodleResKey.args = feedServiceArgs;
     const cachedRes = this.findDataInLocalCache(moodleResKey);
-    if (cachedRes !== null) {
-      return of(cachedRes);
-    }
 
     let body = [{
       index: 0,
@@ -76,6 +73,43 @@ export class FeedService {
         courseid: courseId ?? undefined
       }
     }];
+
+    // When a locally-cached result is available we still make a lightweight server request
+    // for feeds that carry a cacheVersion token (e.g. deadlines).  If the token returned
+    // by the server differs from the one stored in localStorage it means the backend MUC
+    // cache was invalidated (e.g. a teacher edited activity dates) and we must serve the
+    // fresh server response instead of the stale browser-cached one.
+    if (cachedRes !== null) {
+      const storedVersion = this.getStoredCacheVersion(moodleResKey);
+      if (storedVersion === undefined) {
+        // Feed does not carry versioning info — serve from localStorage as before.
+        return of(cachedRes);
+      }
+
+      // Feed supports versioning: fetch from server and compare versions.
+      const request = this.http.post<MoodleRes[]>(`${wwwRoot}${this.moodleAjaxUrl}?sesskey=${sessKey}`, body, this.httpOptions)
+        .pipe(
+          shareReplay(1),
+          map(res => this.extractData(res)),
+          map(res => {
+            const freshVersion = this.extractCacheVersion(res);
+            if (freshVersion !== undefined && freshVersion !== storedVersion) {
+              // Server-side cache was updated — persist fresh data and return it.
+              return this.storeDataInLocalCache(moodleResKey, res);
+            }
+            // Versions match: update the stored timestamp to extend the TTL, return cached.
+            this.refreshCacheTimestamp(moodleResKey);
+            return cachedRes;
+          }),
+          catchError(() => of(cachedRes)),
+          finalize(() => {
+            this.feedRequestMap.delete(feedId);
+          })
+        );
+      this.feedRequestMap.set(feedId, request);
+      return request;
+    }
+
     const request = this.http.post<MoodleRes[]>(`${wwwRoot}${this.moodleAjaxUrl}?sesskey=${sessKey}`, body, this.httpOptions)
       .pipe(
         shareReplay(1),
@@ -146,6 +180,46 @@ export class FeedService {
     return cachedFeedRes.result;
   }
 
+  /**
+   * Extract the cacheVersion token from the first item of a feed response, if present.
+   * The server embeds this token (the MUC cache timestamp) in feed items that support
+   * server-side cache versioning (e.g. deadlines).
+   */
+  private extractCacheVersion(res: MoodleRes[]): string | undefined {
+    if (!res || !res[0] || !res[0].data || res[0].data.length === 0) {
+      return undefined;
+    }
+    return res[0].data[0]?.cacheVersion;
+  }
+
+  /**
+   * Return the cacheVersion stored in localStorage for this key, or undefined if the
+   * entry does not exist or does not carry a version (feed does not support versioning).
+   */
+  private getStoredCacheVersion(moodleResKey: MoodleResKey): string | undefined {
+    const serializedItem = localStorage.getItem(this.createLocalCacheKey(moodleResKey));
+    if (serializedItem === null) {
+      return undefined;
+    }
+    const cachedFeedRes: CachedMoodleRes = JSON.parse(serializedItem);
+    return cachedFeedRes.cacheVersion;
+  }
+
+  /**
+   * Reset the timeCreated timestamp of an existing localStorage entry so that the TTL
+   * countdown restarts after a successful version-match check.
+   */
+  private refreshCacheTimestamp(moodleResKey: MoodleResKey): void {
+    const itemKey = this.createLocalCacheKey(moodleResKey);
+    const serializedItem = localStorage.getItem(itemKey);
+    if (serializedItem === null) {
+      return;
+    }
+    const cachedFeedRes: CachedMoodleRes = JSON.parse(serializedItem);
+    cachedFeedRes.timeCreated = Date.now() / 1000;
+    localStorage.setItem(itemKey, JSON.stringify(cachedFeedRes));
+  }
+
   public storeDataInLocalCache(moodleResKey: MoodleResKey, res: MoodleRes[]) : MoodleRes[] {
     if (localStorage === undefined || this.maxLifeTime === 0 || res[0].error) {
       return res;
@@ -156,6 +230,7 @@ export class FeedService {
       timeCreated : Date.now() / 1000, // JS way to get the current date timestamp in seconds.
       key : moodleResKey,
       result : res,
+      cacheVersion: this.extractCacheVersion(res),
     };
     localStorage.setItem(itemKey, JSON.stringify(cachedFeedRes));
 

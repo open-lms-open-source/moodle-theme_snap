@@ -2340,6 +2340,9 @@ SQL;
 
         $events = $eventsobj->events;
         $fromcache = $eventsobj->fromcache ? 1 : 0;
+        // The timestamp represents when the server-side MUC cache was last populated.
+        // Passing it to the frontend lets the browser cache detect when server-side data has changed.
+        $cacheversion = isset($eventsobj->timestamp) ? (string) $eventsobj->timestamp : null;
 
         /** @var core_renderer $output */
         $output = $PAGE->get_renderer('theme_snap', 'core', RENDERER_TARGET_GENERAL);
@@ -2413,7 +2416,7 @@ SQL;
 
                 $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
 
-                $res[] = [
+                $item = [
                     'iconUrl'      => $modimage,
                     'iconDesc'     => $modname,
                     'iconClass'    => '',
@@ -2426,6 +2429,10 @@ SQL;
                     'urlParameter' => $snapfeedsurlparam,
                     'modName'      => $cm->modname
                 ];
+                if (!$renderhtml && $cacheversion !== null) {
+                    $item['cacheVersion'] = $cacheversion;
+                }
+                $res[] = $item;
             }
             $id++;
         }

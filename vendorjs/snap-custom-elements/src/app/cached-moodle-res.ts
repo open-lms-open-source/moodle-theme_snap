@@ -5,4 +5,5 @@ export interface CachedMoodleRes {
   timeCreated: number;
   key: MoodleResKey;
   result: MoodleRes[];
+  cacheVersion?: string;
 }

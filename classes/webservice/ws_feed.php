@@ -71,8 +71,11 @@ class ws_feed extends external_api {
                 'extraClasses' => new external_value(PARAM_RAW, 'Feed item extra CSS classes'),
                 'fromCache'    => new external_value(PARAM_INT, 'Data from cache flag'),
                 'itemId'       => new external_value(PARAM_INT, 'Id item we are sending', VALUE_DEFAULT),
-                'urlParameter' => new external_value(PARAM_BOOL,'Flag to add URL parameter', VALUE_OPTIONAL),
-                'modName'      => new external_value(PARAM_RAW,'Module name', VALUE_OPTIONAL),
+                'urlParameter'  => new external_value(PARAM_BOOL,'Flag to add URL parameter', VALUE_OPTIONAL),
+                'modName'       => new external_value(PARAM_RAW,'Module name', VALUE_OPTIONAL),
+                'cacheVersion'  => new external_value(PARAM_RAW,
+                    'Server-side cache version token; used by the frontend to detect stale localStorage entries',
+                    VALUE_OPTIONAL),
             ])
         );
     }
