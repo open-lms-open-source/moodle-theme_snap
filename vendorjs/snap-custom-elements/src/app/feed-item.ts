@@ -10,4 +10,5 @@ export class FeedItem {
   fromCache: number;
   itemId: number;
   modName: string;
+  cacheVersion?: string;
 }
