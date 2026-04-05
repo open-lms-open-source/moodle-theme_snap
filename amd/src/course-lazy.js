@@ -145,11 +145,9 @@ define(
                 sectionID = hashSection.match(/\d+/)[0];
             }
 
-            if ($('.section.main.state-visible.set-by-server').length) {
-                $('.section.main.state-visible.set-by-server').removeClass('set-by-server');
-            } else {
-                $('.course-content .section.main, #moodle-blocks,#coursetools, #snap-add-new-section,' +
-                    '#tiles-section').removeClass('state-visible');
+            // If #snap-add-new-section was visible, remove that in favor of the course section.
+            if (document.getElementById('snap-add-new-section')) {
+                document.getElementById('snap-add-new-section').classList.remove('state-visible');
             }
 
             // Redirect to the correct section when doing /course/section.php.
