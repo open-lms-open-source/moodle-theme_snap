@@ -611,6 +611,12 @@ body.snap-resource-card.format-topics {
         background-color: transparent;
         padding: unset;
     }
+    .modchoosernav {
+        margin-right: 2rem !important;
+    }
+    .modchoosercontent .optionname {
+        font-size: initial;
+    }
     div[data-internal="forum"] .modicon_forum,
     div[data-internal="chat"] .modicon_chat,
     div[data-internal="hsuforum"] .modicon_hsuforum {
@@ -746,6 +752,99 @@ body.snap-resource-card.format-topics {
             .activityicon {
                 filter: none;
             }
+        }
+    }
+}
+
+.modchooser .carousel-inner {
+    .carousel-item:first-of-type {
+        padding-right: 1rem !important;
+        padding-left: 1rem !important;
+    }
+    .optionsummary .activityicon {
+        margin-bottom: 10px;
+    }
+    .optionsummary .modicon_book .activityicon {
+        filter: $book-filter;
+    }
+    .optionsummary .modicon_collaborate .activityicon {
+        filter: $collab-filter;
+    }
+    .optionsummary .modicon_customquiz .activityicon {
+        filter: $customquiz-filter;
+    }
+    .optionsummary .modicon_folder .activityicon {
+        filter: $folder-filter;
+    }
+    .optionsummary .modicon_goone .activityicon {
+        filter: $go1-filter;
+    }
+    .optionsummary .modicon_label .activityicon {
+        filter: $label-filter;
+    }
+    .optionsummary .modicon_livepoll .activityicon {
+        filter: $livepoll-filter;
+    }
+    .optionsummary .modicon_page .activityicon {
+        filter: $page-filter;
+    }
+    .optionsummary .modicon_zoom .activityicon {
+        filter: $zoom-filter;
+    }
+    .optionsummary .modicon_pld,
+    .optionsummary .modicon_hotpot {
+        .activityicon {
+            filter: none;
+        }
+    }
+    .optionsummary .modicon_quizgame,
+    .optionsummary .modicon_adaptivequiz {
+        .activityicon {
+            filter: $quizlms-filter;
+        }
+    }
+    .optionsummary .modicon_dialogue,
+    .optionsummary .modicon_checklist {
+        .activityicon {
+            filter: $checklist-filter;
+        }
+    }
+    .optionsummary .modicon_forum,
+    .optionsummary .modicon_hsuforum {
+        .activityicon {
+            filter: $communication-filter;
+        }
+    }
+    .optionsummary .modicon_customcert,
+    .optionsummary .modicon_certificate,
+    .optionsummary .modicon_coursecertificate {
+        .activityicon {
+            filter: $certificate-filter;
+        }
+    }
+    .optionsummary .modicon_assign,
+    .optionsummary .modicon_journal,
+    .optionsummary .modicon_workshop,
+    .optionsummary .modicon_attendance {
+        .activityicon {
+            filter: $assignment-filter;
+        }
+    }
+    .optionsummary .modicon_data,
+    .optionsummary .modicon_wiki,
+    .optionsummary .modicon_glossary,
+    .optionsummary .modicon_choicegroup {
+        .activityicon {
+            filter: $information-filter;
+        }
+    }
+    .optionsummary .modicon_quiz,
+    .optionsummary .modicon_choice,
+    .optionsummary .modicon_lesson,
+    .optionsummary .modicon_feedback,
+    .optionsummary .modicon_facetoface {
+        .activityicon {
+            filter: $content-filter;
         }
     }
 }
