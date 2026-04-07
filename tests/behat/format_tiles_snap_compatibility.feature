@@ -93,6 +93,8 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I wait until the page is ready
     And I should not see "Add a block"
     And I reload the page
+    And I scroll to the top
+    And I wait "3" seconds
     And I switch edit mode in Snap
     And I wait until the page is ready
     And I click on the block drawer toggle
