@@ -150,17 +150,13 @@ define(
                 document.getElementById('snap-add-new-section').classList.remove('state-visible');
             }
 
-            if ((sectionID === '' || sectionID === undefined)) {
-                if (location.pathname.endsWith('/course/section.php')
-                    && self.courseConfig.sectionid !== undefined) {
+            if ((sectionID === '' || sectionID === undefined)
+            && (location.pathname.endsWith('/course/section.php') || location.pathname.endsWith('/course/view.php'))) {
+                if (self.courseConfig.sectionid !== undefined) {
                     sectionID = self.courseConfig.sectionid;
-                } else if (location.pathname.endsWith('/course/view.php')
-                    && self.courseConfig.sectionid === undefined) {
-                    let highlightedSection = document.querySelector('.courseindex-section.current');
+                } else {
                     let selectedSection = document.querySelector('[id^="section-"]');
-                    if (highlightedSection) {
-                        sectionID = highlightedSection.getAttribute('data-id');
-                    } else if (selectedSection) {
+                    if (selectedSection) {
                         sectionID = selectedSection.getAttribute('data-id');
                     }
                 }
