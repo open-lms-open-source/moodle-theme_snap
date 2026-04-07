@@ -150,11 +150,20 @@ define(
                 document.getElementById('snap-add-new-section').classList.remove('state-visible');
             }
 
-            // Redirect to the correct section when doing /course/section.php.
-            if ((sectionID === '' || sectionID === undefined)
-                && location.pathname.endsWith('/course/section.php')
-                && self.courseConfig.sectionid !== undefined) {
-                sectionID = self.courseConfig.sectionid;
+            if ((sectionID === '' || sectionID === undefined)) {
+                if (location.pathname.endsWith('/course/section.php')
+                    && self.courseConfig.sectionid !== undefined) {
+                    sectionID = self.courseConfig.sectionid;
+                } else if (location.pathname.endsWith('/course/view.php')
+                    && self.courseConfig.sectionid === undefined) {
+                    let highlightedSection = document.querySelector('.courseindex-section.current');
+                    let selectedSection = document.querySelector('[id^="section-"]');
+                    if (highlightedSection) {
+                        sectionID = highlightedSection.getAttribute('data-id');
+                    } else if (selectedSection) {
+                        sectionID = selectedSection.getAttribute('data-id');
+                    }
+                }
             }
 
             var $sectionNode = $('ul.sections > li.section[data-id="' + sectionID + '"]');
