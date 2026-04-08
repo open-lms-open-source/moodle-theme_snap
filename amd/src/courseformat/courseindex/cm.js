@@ -28,6 +28,38 @@ import BaseCmComponent from 'core_courseformat/local/courseindex/cm';
 export default class Component extends BaseCmComponent {
 
     /**
+     *
+     * Overrides the base class stateReady to ensure that activities without a URL (e.g. labels)
+     * always have an absolute section URL as their href. The base class only sets the full URL
+     * when the element is absent from the DOM, leaving a relative hash (e.g. #module-68)
+     * when the element happens to be rendered. That relative URL resolves against the current
+     * page URL and changes when the user navigates between sections, causing wrong redirections.
+     *
+     * @param {Object} state the initial state
+     */
+    stateReady(state) {
+        super.stateReady(state);
+
+        const cm = state.cm.get(this.id);
+        // Only fix activities that have no own URL (e.g. labels).
+        if (!cm || cm.url) {
+            return;
+        }
+
+        const element = this.getElement(this.selectors.CM_NAME);
+        if (!element) {
+            return;
+        }
+
+        // Always set the full absolute section URL so the link is stable regardless of
+        // which section page the user is currently viewing.
+        const sectionUrl = this._getActivitySectionURL(cm);
+        if (sectionUrl && sectionUrl !== '#') {
+            element.setAttribute('href', sectionUrl);
+        }
+    }
+
+    /**
      * Update a course index cm using the state information.
      *
      * @param {object} param
