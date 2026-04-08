@@ -145,11 +145,21 @@ define(
                 sectionID = hashSection.match(/\d+/)[0];
             }
 
-            // Redirect to the correct section when doing /course/section.php.
+            // If #snap-add-new-section was visible, remove that in favor of the course section.
+            if (document.getElementById('snap-add-new-section')) {
+                document.getElementById('snap-add-new-section').classList.remove('state-visible');
+            }
+
             if ((sectionID === '' || sectionID === undefined)
-                && location.pathname.endsWith('/course/section.php')
-                && self.courseConfig.sectionid !== undefined) {
-                sectionID = self.courseConfig.sectionid;
+            && (location.pathname.endsWith('/course/section.php') || location.pathname.endsWith('/course/view.php'))) {
+                if (self.courseConfig.sectionid !== undefined) {
+                    sectionID = self.courseConfig.sectionid;
+                } else {
+                    let selectedSection = document.querySelector('[id^="section-"]');
+                    if (selectedSection) {
+                        sectionID = selectedSection.getAttribute('data-id');
+                    }
+                }
             }
 
             var $sectionNode = $('ul.sections > li.section[data-id="' + sectionID + '"]');
@@ -160,8 +170,6 @@ define(
                 // Section does not exist in DOM, render it.
                 sectionAssetManagement.getSection(sectionID, mod, switchSectionVisibility);
                 sectionAssetManagement.updateBreadcrumb(sectionID);
-            } else if (sectionID === '' && location.pathname.endsWith('/course/view.php') && location.href.endsWith('#')) {
-                location.href = location.href.slice(0, -1);
             } else {
                 // Section already rendered, show it.
                 switchSectionVisibility(sectionID, mod);

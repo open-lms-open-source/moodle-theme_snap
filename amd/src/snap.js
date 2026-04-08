@@ -343,6 +343,12 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
         var ChangeURLListeners = function(courseLib) {
             var lastUrl = location.href;
             // Listener for URL changes (Back/Forward clicks)
+            $(window).on('popstate', function(e) {
+                if (onCoursePage()) {
+                    log.info('show section', e.target);
+                    courseLib.showSection();
+                }
+            });
             $(window).on('hashchange', function() {
                 // Bring or show the corresponding section.
                 courseLib.sectionRouter();
