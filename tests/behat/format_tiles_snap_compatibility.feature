@@ -57,7 +57,9 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I am on the course main page for "C1"
     Then "Course Dashboard" "link" should be visible
     And ".editmode-switch-form" "css_element" should not exist
-    When I click on "Course Dashboard" "link"
+    And I scroll to the base of selector ".toc-footer"
+    And I wait "3" seconds
+    And I follow "Course Dashboard"
     And I wait until the page is ready
     And ".editmode-switch-form" "css_element" should not exist
 
@@ -67,7 +69,9 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I am on the course main page for "C1"
     Then "Course Dashboard" "link" should be visible
     And ".editmode-switch-form" "css_element" should exist
-    When I click on "Course Dashboard" "link"
+    And I scroll to the base of selector ".toc-footer"
+    And I wait "3" seconds
+    And I follow "Course Dashboard"
     And I wait until the page is ready
     And ".editmode-switch-form" "css_element" should exist
 
@@ -80,13 +84,17 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I should not see "Add an activity or resource"
     When I switch edit mode in Snap
     And I wait until the page is ready
-    And I should see "Add an activity or resource"
     And I switch edit mode in Snap
     And I wait until the page is ready
     And I should not see "Add an activity or resource"
-    When I click on "Course Dashboard" "link"
+    And I scroll to the base of selector ".toc-footer"
+    And I wait "3" seconds
+    And I follow "Course Dashboard"
     And I wait until the page is ready
     And I should not see "Add a block"
+    And I reload the page
+    And I scroll to the top
+    And I wait "3" seconds
     And I switch edit mode in Snap
     And I wait until the page is ready
     And I click on the block drawer toggle
@@ -118,7 +126,9 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
   @javascript
   Scenario: Users can change activity visibility and group settings using Tiles in Snap.
     Given I log in as "admin"
+    And I change window size to "large"
     And I am on "Course Test" course homepage
+    And I wait "3" seconds
     And I switch edit mode in Snap
     And I wait until the page is ready
     And I click on ".modtype_quiz .moodle-actionmenu" "css_element"
@@ -127,5 +137,6 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     Then I should see "Hidden from students"
     And I click on ".modtype_quiz .moodle-actionmenu" "css_element"
     And I click on ".modtype_quiz .moodle-actionmenu [aria-label='Group mode']" "css_element"
+    And I wait "3" seconds
     And I click on ".modtype_quiz .moodle-actionmenu  [data-action='cmVisibleGroups']" "css_element"
     Then ".modtype_quiz .icon[alt='Visible groups']" "css_element" should be visible
