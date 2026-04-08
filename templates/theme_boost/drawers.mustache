@@ -142,27 +142,6 @@
                         <div> {{{ regionmainsettingsmenu }}} </div>
                     </div>
                     {{/hasregionmainsettingsmenu}}
-                    <div id="region-main">
-
-                        {{#hasregionmainsettingsmenu}}
-                            <div class="region_main_settings_menu_proxy"></div>
-                        {{/hasregionmainsettingsmenu}}
-                        {{{ output.course_content_header }}}
-                        {{#headercontent}}
-                            {{> core/activity_header }}
-                        {{/headercontent}}
-                        {{#overflow}}
-                            <div class="container-fluid tertiary-navigation">
-                                <div class="navitem">
-                                    {{> core/url_select}}
-                                </div>
-                            </div>
-                        {{/overflow}}
-                        {{{ output.main_content }}}
-                        {{{ output.activity_navigation }}}
-                        {{{ output.course_content_footer }}}
-
-                    </div>
                 </div>
             </div>
         </div>
