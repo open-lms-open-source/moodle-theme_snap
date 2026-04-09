@@ -2570,6 +2570,17 @@ body.snap-resource-card {
     }
 }
 
+@media (min-width: 1500px) {
+    body.format-tiles.path-course-view:not(.editing) {
+        #format-tiles-multi-section-page ul#multi_section_tiles {
+            max-width: 1180px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+
 // Tiles course format styles.
 .format-tiles {
     .section {
