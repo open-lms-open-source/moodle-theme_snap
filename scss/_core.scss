@@ -5126,7 +5126,7 @@ section#region-main {
     }
 }
 
-.modal-lg {
+.modal-lg:not(.modchooser) {
     max-width: 900px;
 }
 
