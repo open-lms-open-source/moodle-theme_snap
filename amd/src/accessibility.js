@@ -617,21 +617,31 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                         return items;
                     };
 
-                    // Moodle core tree JS uses roving tabindex: on every focus change it
-                    // sets the focused item to tabindex="0" and everything else to "-1".
-                    // We counter this by re-applying our fix after each focus move, using
-                    // setTimeout(fn, 0) so we run AFTER Moodle's synchronous focus handlers.
-                    let fixTimer = null;
-                    const scheduleTabindexFix = () => {
-                        clearTimeout(fixTimer);
-                        fixTimer = setTimeout(applyTreeTabindex, 0);
-                    };
+                    applyTreeTabindex();
 
-                    setTimeout(applyTreeTabindex, 500);
-                    $tree.on("focusin", scheduleTabindexFix);
+                    // Moodle core tree JS uses roving tabindex and re-applies tabindex="-1"
+                    // after init and on interaction. Also watch for aria-hidden changes
+                    // (expand/collapse) to update tabindex on newly revealed items.
+                    const observer = new MutationObserver((mutations) => {
+                        const needsFix = mutations.some(m => {
+                            if (m.attributeName === 'aria-hidden') {
+                                return true;
+                            }
+                            return m.attributeName === 'tabindex'
+                                && m.target.getAttribute('tabindex') === '-1'
+                                && (m.target.tagName === 'A' || m.target.tagName === 'SPAN')
+                                && !m.target.closest('ul[aria-hidden="true"]');
+                        });
+                        if (needsFix) {
+                            applyTreeTabindex();
+                        }
+                    });
 
-                    // Re-apply after expand/collapse (branch click) once Moodle finishes updating.
-                    $tree.on("click", ".tree_item.branch", scheduleTabindexFix);
+                    observer.observe($tree[0], {
+                        attributes: true,
+                        attributeFilter: ['tabindex', 'aria-hidden'],
+                        subtree: true
+                    });
 
                     $tree.on("keydown", (e) => {
                         const $target = $(e.target);
@@ -660,7 +670,6 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                                 const $li = $target.closest('li[role="treeitem"]');
                                 if ($li.hasClass('contains_branch') && $li.attr('aria-expanded') === 'false') {
                                     $target.closest('.tree_item.branch').trigger('click');
-                                    scheduleTabindexFix();
                                 } else if ($li.attr('aria-expanded') === 'true') {
                                     const $firstChild = $li.find('> ul > li:first .tree_item:first');
                                     const $childFocus = $firstChild.find('> a[tabindex="0"], > span[tabindex="0"]');
@@ -675,7 +684,6 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                                 const $li = $target.closest('li[role="treeitem"]');
                                 if ($li.hasClass('contains_branch') && $li.attr('aria-expanded') === 'true') {
                                     $target.closest('.tree_item.branch').trigger('click');
-                                    scheduleTabindexFix();
                                 } else {
                                     const $parentLi = $li.parent('ul').closest('li[role="treeitem"]');
                                     if ($parentLi.length) {
@@ -693,7 +701,6 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                                 if ($target.is('span')) {
                                     e.preventDefault();
                                     $target.closest('.tree_item.branch').trigger('click');
-                                    scheduleTabindexFix();
                                 }
                                 break;
                         }
