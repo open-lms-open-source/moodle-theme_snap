@@ -134,8 +134,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     str.get_string('makingaselectionpagechange', 'theme_snap').done(function(label) {
                         module.injectScreenReader(label, '#jump-to-activity');
                     });
-                    $("#moodle-blocks aside#block-region-side-pre a.visually-hidden.visually-hidden-focusable")
-                    .attr("tabindex", "-1");
+                    $("#moodle-blocks aside#block-region-side-pre a.sr-only.sr-only-focusable").attr("tabindex", "-1");
                     // Remove tabindex="-1" set by block_settings renderer on interactive elements.
                     $(".block_settings .block_tree").find("li, a, button, p, span").removeAttr("tabindex");
                     // Ensure all links in block_settings tree are keyboard navigable.
