@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {StringService} from "../string.service";
 import {ErrorReporterService} from "../error-reporter.service";
 
 @Component({
@@ -11,8 +10,8 @@ import {ErrorReporterService} from "../error-reporter.service";
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="snapErrorModalLabel">{{strings['error']}}</h5>
-            <button type="button" class="close" data-dismiss="modal" [attr.aria-label]="strings['close']">
+            <h5 class="modal-title" id="snapErrorModalLabel">{{ 'error' | moodleString | async }}</h5>
+            <button type="button" class="close" data-dismiss="modal" [attr.aria-label]="'close' | moodleString | async">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -25,7 +24,7 @@ import {ErrorReporterService} from "../error-reporter.service";
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">{{strings['close']}}</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'close' | moodleString | async }}</button>
           </div>
         </div>
       </div>
@@ -43,29 +42,16 @@ import {ErrorReporterService} from "../error-reporter.service";
 })
 export class FeedErrorModalComponent implements OnInit {
 
-  strings: string[];
   error: any;
 
   constructor(
     private errorReporterService: ErrorReporterService,
-    private stringService: StringService
   ) {
     this.error = {message: null, backtrace: null};
   }
 
   ngOnInit() {
     this.errorReporterService.registerModal(this);
-    this.getStrings();
-  }
-
-  getStrings() {
-    this.strings = [];
-    this.stringService.getStrings([
-      'error',
-      'close',
-    ]).subscribe(strings => {
-      this.strings = strings;
-    });
   }
 
   displayError(error: any) {

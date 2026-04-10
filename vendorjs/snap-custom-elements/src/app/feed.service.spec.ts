@@ -6,8 +6,6 @@ import {MoodleRes} from "./moodle.res";
 import {MoodleResKey} from "./moodle-res-key";
 import {FeedServiceArgs} from "./feed-service-args";
 import {CachedMoodleRes} from "./cached-moodle-res";
-import {StringService} from "./string.service";
-import {MockStringService} from "./string.service.spec";
 import {ErrorReporterService} from "./error-reporter.service";
 import {MockErrorReporterService} from "./error-reporter.service.spec";
 

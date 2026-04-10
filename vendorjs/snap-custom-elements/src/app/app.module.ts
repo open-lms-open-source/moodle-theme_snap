@@ -7,17 +7,19 @@ import {FeedComponent} from './feed/feed.component';
 import {createCustomElement} from "@angular/elements";
 import {HttpClientModule} from "@angular/common/http";
 import {FeedErrorModalComponent} from "./feed-error-modal/feed-error-modal.component";
+import {MoodleStringPipe} from "openlms-angular-lib";
 
 @NgModule({
   declarations: [
     AppComponent,
     FeedComponent,
-    FeedErrorModalComponent
+    FeedErrorModalComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MoodleStringPipe,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
