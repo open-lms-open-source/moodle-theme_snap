@@ -31,10 +31,13 @@ Feature: When the moodle theme is set to Snap, teachers can duplicate sections i
             | numsections      | 4        |
             | initsections     | 1        |
         And the following "activities" exist:
-            | activity | name              | intro                       | course | idnumber | section |
-            | assign   | Activity sample 1 | Test assignment description | C1     | sample1  | 1       |
-            | book     | Activity sample 2 | Test book description       | C1     | sample2  | 1       |
-            | choice   | Activity sample 3 | Test choice description     | C1     | sample3  | 2       |
+            | activity   | name              | intro                       | course | idnumber | section |
+            | assign     | Activity sample 1 | Test assignment description | C1     | sample1  | 1       |
+            | book       | Activity sample 2 | Test book description       | C1     | sample2  | 1       |
+            | choice     | Activity sample 3 | Test choice description     | C1     | sample3  | 2       |
+            | subsection | Subsection1       | Test subsection             | C1     | sample4  | 1       |
+            | assign     | Subsect Assign1   | Test assign in subsect      | C1     | sample5  | 5       |
+        And I enable "subsection" "mod" plugin
         And I log in as "admin"
 
     @javascript
@@ -62,3 +65,12 @@ Feature: When the moodle theme is set to Snap, teachers can duplicate sections i
         And I click on "#section-1 .snap-duplicate" "css_element"
         And I follow "New name (copy)"
         Then I should see "Activity sample 2"
+
+    @javascript
+    Scenario: Duplication also works with subsections
+      Given I am on the course main page for "C1"
+      And I follow "Section 1"
+      And I switch edit mode in Snap
+      And I click on "li.activity.modtype_assign [data-activityname='Subsect Assign1'] a[data-toggle=dropdown]" "css_element"
+      And I choose "Duplicate" in the open action menu
+      Then I should see "Subsect Assign1 (copy)"
