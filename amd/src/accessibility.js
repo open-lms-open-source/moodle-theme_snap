@@ -136,7 +136,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     });
                     $("#moodle-blocks aside#block-region-side-pre a.visually-hidden.visually-hidden-focusable")
                     .attr("tabindex", "-1");
-                    initSettingsTreeNavigation();
+
                     // Focus first invalid input after a submit is done.
                     $('.mform').submit(function() {
                         $('input.form-control.is-invalid:first').focus();
@@ -568,137 +568,6 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                         }
                     }
                 });
-
-                /**
-                 * Fix keyboard navigation for the block_settings admin tree.
-                 * Overrides Moodle's roving tabindex so all items are reachable via Tab/Shift+Tab,
-                 * and adds arrow-key navigation following WAI-ARIA tree pattern.
-                 */
-                function initSettingsTreeNavigation() {
-                    const $tree = $(".block_settings .block_tree");
-                    if (!$tree.length) {
-                        return;
-                    }
-
-                    /**
-                     * Forces tabindex="0" on visible interactive tree elements so they are
-                     * reachable via Tab/Shift+Tab. Items inside collapsed groups get
-                     * tabindex="-1" so they are skipped by Tab until their branch is expanded.
-                     */
-                    const applyTreeTabindex = () => {
-                        // Remove tabindex from non-interactive elements.
-                        $tree.find('li[tabindex], p[tabindex], ul[tabindex], hr[tabindex], i[tabindex], img[tabindex]')
-                            .removeAttr("tabindex");
-                        // Ensure all links have role="button".
-                        $tree.find('a:not([role="button"])').attr("role", "button");
-                        // Make items inside collapsed groups unreachable via Tab.
-                        $tree.find('ul[aria-hidden="true"]').find('a[tabindex="0"], span[tabindex="0"]')
-                            .attr("tabindex", "-1");
-                        // Make visible items (not inside collapsed groups) tabbable.
-                        $tree.find('a:not([tabindex="0"])').not('ul[aria-hidden="true"] a')
-                            .attr("tabindex", "0");
-                        $tree.find('.tree_item.branch > span:not([tabindex="0"])')
-                            .not('ul[aria-hidden="true"] span')
-                            .attr("tabindex", "0");
-                    };
-
-                    /**
-                     * Returns all visible focusable elements (links and branch spans) in DOM order.
-                     * @return {HTMLElement[]}
-                     */
-                    const getVisibleFocusables = () => {
-                        const items = [];
-                        $tree.find('.tree_item:visible').each(function() {
-                            const $focusable = $(this).find('> a[tabindex="0"], > span[tabindex="0"]');
-                            if ($focusable.length) {
-                                items.push($focusable[0]);
-                            }
-                        });
-                        return items;
-                    };
-
-                    // Moodle core tree JS uses roving tabindex: on every focus change it
-                    // sets the focused item to tabindex="0" and everything else to "-1".
-                    // We counter this by re-applying our fix after each focus move, using
-                    // setTimeout(fn, 0) so we run AFTER Moodle's synchronous focus handlers.
-                    let fixTimer = null;
-                    const scheduleTabindexFix = () => {
-                        clearTimeout(fixTimer);
-                        fixTimer = setTimeout(applyTreeTabindex, 0);
-                    };
-
-                    setTimeout(applyTreeTabindex, 500);
-                    $tree.on("focusin", scheduleTabindexFix);
-
-                    // Re-apply after expand/collapse (branch click) once Moodle finishes updating.
-                    $tree.on("click", ".tree_item.branch", scheduleTabindexFix);
-
-                    $tree.on("keydown", (e) => {
-                        const $target = $(e.target);
-                        if (!$target.closest('.tree_item').length) {
-                            return;
-                        }
-
-                        const focusables = getVisibleFocusables();
-                        const currentIndex = focusables.indexOf(e.target);
-
-                        switch (e.keyCode) {
-                            case 38: // Up
-                                e.preventDefault();
-                                if (currentIndex > 0) {
-                                    focusables[currentIndex - 1].focus();
-                                }
-                                break;
-                            case 40: // Down
-                                e.preventDefault();
-                                if (currentIndex < focusables.length - 1) {
-                                    focusables[currentIndex + 1].focus();
-                                }
-                                break;
-                            case 39: { // Right - expand or move to first child
-                                e.preventDefault();
-                                const $li = $target.closest('li[role="treeitem"]');
-                                if ($li.hasClass('contains_branch') && $li.attr('aria-expanded') === 'false') {
-                                    $target.closest('.tree_item.branch').trigger('click');
-                                    scheduleTabindexFix();
-                                } else if ($li.attr('aria-expanded') === 'true') {
-                                    const $firstChild = $li.find('> ul > li:first .tree_item:first');
-                                    const $childFocus = $firstChild.find('> a[tabindex="0"], > span[tabindex="0"]');
-                                    if ($childFocus.length) {
-                                        $childFocus[0].focus();
-                                    }
-                                }
-                                break;
-                            }
-                            case 37: { // Left - collapse or move to parent
-                                e.preventDefault();
-                                const $li = $target.closest('li[role="treeitem"]');
-                                if ($li.hasClass('contains_branch') && $li.attr('aria-expanded') === 'true') {
-                                    $target.closest('.tree_item.branch').trigger('click');
-                                    scheduleTabindexFix();
-                                } else {
-                                    const $parentLi = $li.parent('ul').closest('li[role="treeitem"]');
-                                    if ($parentLi.length) {
-                                        const $parentFocus = $parentLi.find('> .tree_item')
-                                            .find('> a[tabindex="0"], > span[tabindex="0"]');
-                                        if ($parentFocus.length) {
-                                            $parentFocus[0].focus();
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            case 13: // Enter
-                            case 32: // Space
-                                if ($target.is('span')) {
-                                    e.preventDefault();
-                                    $target.closest('.tree_item.branch').trigger('click');
-                                    scheduleTabindexFix();
-                                }
-                                break;
-                        }
-                    });
-                }
 
                 /**
                  * Add needed accessibility for tabs inside Snap.
