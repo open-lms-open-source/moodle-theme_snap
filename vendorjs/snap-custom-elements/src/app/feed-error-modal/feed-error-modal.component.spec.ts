@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FeedErrorModalComponent } from './feed-error-modal.component';
-import {StringService} from "../string.service";
+import {MoodleStringPipe, StringService} from "openlms-angular-lib";
 import {MockStringService} from "../string.service.spec";
 import {ErrorReporterService} from "../error-reporter.service";
 import {MockErrorReporterService} from "../error-reporter.service.spec";
@@ -13,6 +13,7 @@ describe('FeedErrorModalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FeedErrorModalComponent ],
+      imports: [MoodleStringPipe],
       providers: [
         {
           provide: StringService,

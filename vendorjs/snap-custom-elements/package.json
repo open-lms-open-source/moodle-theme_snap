@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~17.0.3",
     "@angular/router": "~17.0.3",
     "document-register-element": "^1.7.2",
+    "openlms-angular-lib": "git+ssh://git@gitlab.com:open-lms/product/edu/openlms-angular-lib.git",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
     "zone.js": "~0.14.2"
