@@ -711,6 +711,14 @@ class local {
             $userpicture->link = false;
             $userpicture->alttext = false;
             $userpicture->size = 100;
+            $hasuserpic = false;
+            $userinitials = '';
+
+            if (!empty($fromuser->picture)) {
+                $hasuserpic = true;
+            } else {
+                $userinitials = \core_user::get_initials($fromuser);
+            }
 
             if ($renderhtml) {
                 $frompicture = $output->render($userpicture);
@@ -736,6 +744,8 @@ class local {
 
             $res[] = [
                 'iconUrl'      => $frompicture,
+                'hasUserPic'   => $hasuserpic,
+                'userInitials' => $userinitials,
                 'iconDesc'     => '',
                 'iconClass'    => 'userpicture',
                 'title'        => $fromname,
@@ -744,8 +754,8 @@ class local {
                 'description'  => $meta,
                 'extraClasses' => $unreadclass,
                 'fromCache'    => 0,
-                'itemId'    => $message->uniqueid,
-                'urlParameter'    => $snapfeedsurlparam,
+                'itemId'       => $message->uniqueid,
+                'urlParameter' => $snapfeedsurlparam,
             ];
         }
         return $res;
@@ -851,6 +861,8 @@ class local {
             if (!$grade->is_hidden() || $canviewhiddengrade) {
                 $res[] = [
                     'iconUrl'      => $modimage,
+                    'hasUserPic'   => true,
+                    'userInitials' => '',
                     'iconDesc'     => $modname,
                     'iconClass'    => '',
                     'title'        => $gradetitle,
@@ -953,6 +965,8 @@ class local {
 
             $res[] = [
                 'iconUrl'      => $modimage,
+                'hasUserPic'   => true,
+                'userInitials' => '',
                 'iconDesc'     => $modname,
                 'iconClass'    => '',
                 'title'        => $ungradedtitle,
@@ -2427,6 +2441,8 @@ SQL;
 
                 $res[] = [
                     'iconUrl'      => $modimage,
+                    'hasUserPic'   => true,
+                    'userInitials' => '',
                     'iconDesc'     => $modname,
                     'iconClass'    => '',
                     'title'        => $eventtitle,
