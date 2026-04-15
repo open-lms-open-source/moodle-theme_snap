@@ -1672,6 +1672,13 @@ body > #page {
                 padding-left: 19.5em;
             }
         }
+
+        @media (min-width: 1346px) {
+            #snap-course-wrapper > .row {
+                padding-left: 20%;
+            }
+        }
+
         // Make sure Course content has minimum height, when TOC is open.
         #snap-course-wrapper {
             min-height: 100vh;

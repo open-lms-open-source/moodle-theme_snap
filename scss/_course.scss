@@ -2824,11 +2824,75 @@ body.snap-resource-card {
     .single-section {
         margin-top: 2em !important;
     }
-    .navigationtitle {
-        width: 100%;
-        position: absolute;
-        margin-top: -2em;
+
+    .section-navigation {
+        .prevsection,
+        .nextsection {
+            min-width: 0;
+        }
+        .prevsection a,
+        .nextsection a {
+            display: block;
+            hyphens: auto;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            .larrow,
+            .rarrow {
+                padding: 0.3rem;
+            }
+        }
+        .prevsection a {
+            text-align: start;
+        }
+        .nextsection a {
+            text-align: end;
+        }
+
+        &.navigationtitle.d-flex {
+            display: grid !important;
+            gap: 0.75rem;
+            align-items: start;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            justify-content: unset !important;
+            margin: 0 0 0.75rem;
+            position: relative;
+            width: 100%;
+        }
+
+        &.mdl-bottom.d-flex {
+            display: grid !important;
+            align-items: center;
+            column-gap: 0.75rem;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            justify-content: unset !important;
+            row-gap: 0.5rem;
+
+            > .prevsection,
+            > .nextsection {
+                padding-inline: 0.5rem;
+            }
+            > div:nth-child(2) {
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                padding-inline: 0.5rem;
+                text-align: center;
+            }
+            .jumpmenu form.d-flex {
+                justify-content: center;
+                max-width: 100%;
+                min-width: 0;
+            }
+            select.jumpmenu {
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
+            }
+        }
     }
+
     // Fix Filters.
     #filterbuttons {
         clear: both;
