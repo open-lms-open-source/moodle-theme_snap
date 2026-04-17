@@ -547,6 +547,13 @@
     .bookprev {
         text-align: left;
     }
+    .book_toc_numbered {
+        font-size: medium;
+    }
+    .book-print-link {
+        font-size: medium;
+        margin-left: 1em;
+    }
 }
 #page-mod-book-mod.path-mod-book #id_general .fcontainer .checkbox {
     display: none;
@@ -561,14 +568,6 @@
             float: left;
         }
     }
-}
-
-#page-mod-book-view.editing .book_toc .d-flex {
-    display: block !important;
-}
-
-#page-mod-book-view.editing .book_toc .text-truncate {
-    white-space: normal;
 }
 
 // Print options for book resource.

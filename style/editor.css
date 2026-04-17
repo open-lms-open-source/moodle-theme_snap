@@ -6484,11 +6484,6 @@ header#page-header
     padding: 0;
 }
 
-/* BOOK MOD FIX */
-.path-mod-book .book_toc_numbered {
-    font-size: 1em;
-}
-
 /* hide show description option */
 #page-mod-book-mod #fitem_id_showdescription,
 #page-mod-page-mod #fitem_id_showdescription {
