@@ -38,10 +38,11 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
       | 30 | Cat 30 |   CAT30  |   CAT30  |   Test      |
       | 40 | Miscellaneous |   misc  |   misc  |   Test      |
     And the following "courses" exist:
-      | fullname | shortname | category | format |
-      | Course 1 | C1        |     0    | topics |
-      | Course 2 | C2        |   CAT20  | topics |
-      | Course 3 | C3        |   misc   | topics |
+      | fullname | shortname | category | format | enablecompletion |
+      | Course 1 | C1        |     0    | topics |         0        |
+      | Course 2 | C2        |   CAT20  | topics |         0        |
+      | Course 3 | C3        |   misc   | topics |         0        |
+      | Course 4 | C4        |   CAT5   | topics |         1        |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | admin    | C2     | editingteacher |
@@ -51,6 +52,9 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
       | category_color | {"5":"#00FF00","30":"#FF0000"} | theme_snap |
     And the following config values are set as admin:
       | allowcategorythemes     | true | theme_snap |
+    And the following "activities" exist:
+      | activity | course | idnumber | name          | completion |
+      | page     |  C4    | page1    | Test Activity | 1          |
 
   @javascript
   Scenario: Load all classes in each category hierarchy.
@@ -117,3 +121,18 @@ Feature: When the moodle theme is set to Snap, sets a color per category.
     And I follow "Cat 30"
     And I check element "a.btn.btn-secondary" with color "#82009E"
     And the page should meet "cat.color" accessibility standards
+
+  @javascript @accessibility @hackaton_INT-21761
+  Scenario: Check category colors affects elements inside a Course.
+    Given the following config values are set as admin:
+      | category_color | {"5":"#006100","10":"#800000"} | theme_snap |
+    Given I log in as "admin"
+    And I purge snap caches
+    And I wait until the page is ready
+    And I log out
+    And I wait until the page is ready
+    And I log in as "admin"
+    And I wait until the page is ready
+    And I am on the course main page for "C4"
+    And I hover ".activity-item .activity-completion button" "css_element"
+    Then I focus and check element ".activity-item .activity-completion button" with background color "#006100"
