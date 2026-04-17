@@ -609,6 +609,9 @@ table img:not(.activityicon) {
         display: block;
     }
 }
+.sticky-footer-content #fitem_id_submitbutton [data-fieldtype="submit"] {
+    width: 100%;
+}
 .theme-snap .sticky-footer-content .col-auto [name="perpage"] {
     display: inline-block;
     margin-right: 1em;
