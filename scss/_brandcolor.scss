@@ -99,6 +99,22 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+
+    .form-check-input:checked:not(:disabled) {
+        background-color: $brand-primary;
+        border-color: $brand-primary;
+    }
+
+    .form-check-input[type="checkbox"]:indeterminate:not(:disabled) {
+        background-color: $brand-primary;
+        border-color: $brand-primary;
+    }
+
+    input[type="checkbox"].itemselect:checked:not(:disabled),
+    input[type="checkbox"].weightoverride:checked:not(:disabled) {
+        accent-color: $brand-primary !important;
+    }
+
     div.moodle-dialogue.filepicker a.nav-link.active {
         color: #fff;
         background-color: $brand-primary;
@@ -836,23 +852,28 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             border-color: $nav-login-bg;
         }
 
-        .btn-open .icon.fa-search {
-            color: $nav-color;
-            
-            &:hover {
-                --fa-animation-duration: 0.5s;
-                --fa-animation-iteration-count: 1;
+        .simplesearchform {
+            a[data-action="opensearch"] .icon,
+            a[data-action="opensearch"] i.icon {
+                color: $brand-primary;
+            }
 
-                -webkit-text-stroke-width: 1px;
+            a.btn-open .icon.fa-search {
+                color: $brand-primary;
+                &:hover {
+                    --fa-animation-duration: 0.5s;
+                    --fa-animation-iteration-count: 1;
+                    -webkit-text-stroke-width: 1px;
+                }
             }
         }
 
-        .btn-submit .icon.fa-search {
-            color: $nav-text-color;
+            .btn-submit .icon {
+                color: $nav-text-color;
 
-            &:hover {
-                -webkit-text-stroke-width: 1px;
-            }
+                &:hover {
+                    -webkit-text-stroke-width: 1px;
+                }
         }
 
         #searchform-navbar .form-control:focus {
@@ -1463,8 +1484,20 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                 }
             }
         }
-    }
 
+        .iconhelp > svg {
+            &:hover,
+            &:focus,
+            &:active,
+            &.active {
+                color: $brand-primary;
+            }
+        }
+
+        a.help-icon-btn.notifications:focus .iconhelp svg {
+            color: $brand-primary;
+        }
+    }
 
     // VPAT PLD dropdowns styles.
     .openlms-custom-elements,
@@ -1750,6 +1783,42 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         border-radius: 0.2rem;
         i.icon {
             color: white;
+        }
+    }
+
+    .message-app {
+        .badge.bg-primary,
+        .badge.text-bg-primary {
+            background-color: $brand-primary !important;
+            color: #fff !important;
+        }
+
+        .list-group .list-group-item {
+            &:hover,
+            &:focus {
+                color: #fff;
+                background-color: $brand-primary;
+                border-color: $brand-primary;
+            }
+
+            &:active {
+                color: #fff;
+                background-color: darken($brand-primary, 8%);
+                border-color: darken($brand-primary, 8%);
+            }
+        }
+    }
+
+    .btn-add-content {
+        color: $brand-primary;
+        border-color: $brand-primary;
+
+        &:hover,
+        &:focus {
+            background-color: shift-color($brand-primary, -90%);
+            border-color: $brand-primary;
+            border-style: solid;
+            color: $brand-primary;
         }
     }
 }
