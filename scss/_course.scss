@@ -195,6 +195,11 @@ body[class^="format-"].theme-snap {
     }
 }
 
+// Fix Dashboard Participants to be cut.
+#coursetools-list #ct-participants-number {
+    width: 100%;
+}
+
 // -------------------------
 // Add numbers to sections
 // -------------------------
