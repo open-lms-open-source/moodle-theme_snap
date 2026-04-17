@@ -283,6 +283,34 @@ li.section:focus {
     }
 }
 
+// -------------------------
+// Course section edit buttons..
+// -------------------------
+.section .snap-section-editing {
+    a[role=button] {
+        background-color: transparent;
+        transition: background-color 0.3s ease;
+
+        &::before {
+            filter: brightness(0) invert(0.518);
+            transition: filter 0.3s ease;
+        }
+
+        &:hover,
+        &:focus {
+            background-color: #eee;
+            &::before {
+                filter: brightness(0) invert(0.518);
+            }
+        }
+    }
+    #drop-down-menu-extra-actions a:hover,
+    #drop-down-menu-extra-actions a:focus {
+        background-color: $brand-primary;
+        color: white !important;
+    }
+}
+
 .snap-section-editing {
     max-width: 100%;
     min-width: 0;
@@ -344,6 +372,8 @@ li.section:focus {
     .snap-visibility[data-action="sectionShow"] {
         &:after, &:before {
             background-image: url([[pix:core|i/show]]);
+            background-size: 85%;
+            filter: brightness(0) invert(0.518);
         }
     }
 
