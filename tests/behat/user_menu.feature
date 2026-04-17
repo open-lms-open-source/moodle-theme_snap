@@ -27,6 +27,9 @@ Feature: When the moodle theme is set to Snap and can open the user menu from th
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
+    And the following "courses" exist:
+      | fullname | shortname | format | initsections |
+      | Course 1 | C1        | topics |      1       |
     And I am on site homepage
 
   @javascript
@@ -83,3 +86,14 @@ Feature: When the moodle theme is set to Snap and can open the user menu from th
     And I click on ".usermenu .dropdown-toggle" "css_element"
     And I should see "My Courses" in the ".snap-my-courses-link" "css_element"
     And I should not see "My Courses" in the "#user-action-menu" "css_element"
+
+  @javascript @hackaton_INT-21877
+  Scenario: Course catalogue search and clear buttons are visible
+    Given I log in as "admin"
+    And I click on ".usermenu .dropdown-toggle" "css_element"
+    And I follow "Course catalogue"
+    And I set the field "Course name" to "Course 1"
+    And I click on "Search" "button"
+    And I wait until the page is ready
+    Then "Search" "button" should be visible
+    Then "Clear" "button" should be visible

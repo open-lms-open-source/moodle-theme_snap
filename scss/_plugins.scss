@@ -1449,6 +1449,14 @@ body.format-tiles.editing .section .snap-asset .actions {
     .mform > .mb-3 {
         margin-left: 0;
     }
+    #fitem_id_submitbutton,
+    #fgroup_id_buttonar {
+        position: absolute;
+        width: 100%;
+        .col-md-3.col-form-label {
+            padding: unset;
+        }
+    }
 
     .filters {
         // Make buttons inline
