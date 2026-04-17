@@ -64,7 +64,8 @@ const DRAWERS = {
         '.drawer:not(#theme_boost-drawers-courseindex)',
         '.block_settings.block',
         '#snap_feeds_side_menu',
-        '.drawer:has(.message-app)'
+        '.drawer:has(.message-app)',
+        '#ai-drawer'
     ],
     ACTIVE_SELECTORS: [
         '.drawer-left.drawer.show',
