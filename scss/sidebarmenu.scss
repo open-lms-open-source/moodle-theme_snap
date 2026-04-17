@@ -309,6 +309,7 @@ $mobile-sidebar-peek-width: 10px;
 
 [data-region=right-hand-drawer].drawer {
     margin-right: $sidebar-width;
+    z-index: $sidebar-z-index;
     @media screen and (max-width: 992px) {
         margin-right: $mobile-sidebar-width;
     }
