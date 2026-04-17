@@ -2225,13 +2225,36 @@ body.snap-resource-card {
 }
 
 // -----------------------------------------------------------
-// Change Controlmenu icon for activities in Snap.
+// Change icons for activities in Snap.
 // -----------------------------------------------------------
 
 .course-section .moodle-actionmenu .icon.fa-ellipsis-vertical {
     transition: transform 0.5s ease;
     &::before {
         content: "\f078";
+    }
+}
+
+// Change Icons for Admin cog / Settings navigation.
+#settingsnav {
+    i.nav-missing-icon::before {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+    }
+    a[href*="question/banks.php"] i.nav-missing-icon::before {
+        content: fa-content($fa-var-file-circle-question);
+    }
+    a[href*="mod/glossary/view.php"] i.nav-missing-icon::before {
+        content: fa-content($fa-var-file-circle-check);
+    }
+    a[href*="mod/feedback/edit.php"] i.nav-missing-icon::before {
+        content: fa-content($fa-var-circle-question);
+    }
+    a[href*="mod/feedback/manage_templates.php"] i.nav-missing-icon::before {
+        content: fa-content($fa-var-layer-group);
+    }
+    a[href*="mod/feedback/analysis.php"] i.nav-missing-icon::before {
+        content: fa-content($fa-var-chart-bar);
     }
 }
 
