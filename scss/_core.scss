@@ -1714,6 +1714,18 @@ body.contains-snap-custom_menu-spacer {
     }
 }
 
+#moodle-footer #snap-custom-menu-footer ul.snap-navbar-content li.nav-item .dropdown-menu[role="menu"] {
+  background-color: #fff0;
+  position: static;
+  margin-left: 1rem;
+  border: none;
+  float: left;
+
+  & .dropdown-divider[role="presentation"] {
+    border: .5px solid #e9ecef;
+  }
+}
+
 // We target only google Chrome
 #page-site-index.editing.chrome #moodle-blocks,
 #page-my-index.editing.chrome #moodle-blocks,
