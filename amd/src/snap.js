@@ -1136,7 +1136,8 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         var urlParams = getURLParams(location.href);
                         if (urlParams) {
                             $('[data-block="_fake"]').append('<p>' +
-                                '<hr><a target="_blank" href="/mod/book/tool/print/index.php?id=' + urlParams.id + '">' +
+                                '<hr><a class="book-print-link" ' +
+                                'target="_blank" href="/mod/book/tool/print/index.php?id=' + urlParams.id + '">' +
                                 M.util.get_string('printbook', 'booktool_print') +
                                 '</a></p>');
                         }
