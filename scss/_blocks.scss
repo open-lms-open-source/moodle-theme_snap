@@ -781,3 +781,11 @@ body.notloggedin .drawer.drawer-right {
 .block_grade_me .grademe-mod-name {
     max-width: 8rem;
 }
+
+// Icons for the Badges category section.
+.block_settings {
+  p.tree_item.hasicon a[href*="badges/index.php"] i.icon:before,
+  p.tree_item.hasicon a[href*="badges/edit.php"][href*="action=new"] i.icon:before {
+    content: "" !important;
+  }
+}
