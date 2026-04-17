@@ -80,6 +80,12 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.fitem
     padding-left: 1em;
 }
 
+#page-course-management {
+    .form-check .form-check-input {
+        margin-left: 0;
+    }
+}
+
 #page-local-pld-view .form-item,
 #page-mod-pld-view .form-item {
     padding: 0;

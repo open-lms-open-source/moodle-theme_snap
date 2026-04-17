@@ -1711,6 +1711,19 @@ body#page-course-view-tiles.theme-snap {
     }
 }
 
+/*
+    Defining brand color for forms.
+*/
+#page-course-management {
+    .form-check .form-check-input:checked {
+        background-color: $brand-primary;
+        border-color: rgba($gray-500, 1);
+    }
+    .form-check .form-check-input {
+        border-color: rgba($gray-500, 1);
+    }
+}
+
 .modchoosercontent .optionscontainer .option.selected {
     &:focus-visible{
         outline: none !important;
