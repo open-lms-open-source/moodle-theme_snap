@@ -370,6 +370,16 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5);
     }
 
+    .btn-icon.icons-collapse-expand{
+        color: $brand-primary;
+        background-color: rgba($brand-primary, .5);
+        ;
+        &:hover {
+            outline: 2px solid $brand-primary !important;
+        }
+    }
+    
+
     .btn.btn-default,
     .btn.btn-secondary,
     .btn.btn-outline-primary,
