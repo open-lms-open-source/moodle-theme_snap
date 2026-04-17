@@ -1080,6 +1080,11 @@ a.yui3-button,
     border: 1px solid #e5e5e5;
 }
 
+[id^="message-drawer-toggle-"] .count-container {
+    top: -6px;
+    right: -4px !important; // !important because there is a right property in deprecated.scss.
+}
+
 // -------------------------
 // Icons inserted as pseudo elements.
 // -------------------------
