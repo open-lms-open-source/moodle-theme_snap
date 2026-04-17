@@ -4194,17 +4194,7 @@ div[data-rel=fatalerror] {
                 color: #6c757d;
                 height: 24px;
                 width: 24px;
-
-                &:hover,
-                &:focus,
-                &:active,
-                &.active {
-                    color: $brand-primary;
-                }
             }
-        }
-        a.help-icon-btn.notifications:focus .iconhelp svg {
-            color: $brand-primary;
         }
         a.btn-link.help-icon-btn.notifications {
             padding: 0.375rem 0.375rem;
