@@ -217,3 +217,15 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I switch edit mode in Snap
     And I wait until the page is ready
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+
+  @javascript @hackaton_INT-21898
+  Scenario: Course participants are visible in course Dashboard.
+    Given the course format for "C1" is set to "topics"
+    When I log in as "admin"
+    And I am on the course main page for "C1"
+    And I wait until the page is ready
+    And I scroll to the base of selector ".toc-footer"
+    And I wait "3" seconds
+    And I follow "Course Dashboard"
+    Then I should see "Course Dashboard" in the "#coursetools" "css_element"
+    And I should see "2 Participants" in the "#ct-participants-number" "css_element"
