@@ -4535,6 +4535,7 @@ table th img.iconhelp {
             }
 
             .more-info {
+                width: auto;
                 padding: 0;
                 display: block;
                 font-size: larger;
@@ -4586,12 +4587,14 @@ table th img.iconhelp {
     }
     &:not(:hover) {
         .card-header {
+            display: block;
             .snap-home-course-title {
                 flex: unset;
             }
         }
     }
     .card-header {
+        justify-content: space-between;
         min-height: 25%;
         background-color: #fff;
         bottom: 0;
@@ -4601,6 +4604,7 @@ table th img.iconhelp {
         border-bottom-left-radius: .5rem;
         border-bottom-right-radius: .5rem;
         .snap-home-course-title {
+            width: auto;
             padding: 0;
             -webkit-line-clamp: 1;
             max-height: 1.4em;
@@ -4683,12 +4687,12 @@ table th img.iconhelp {
             margin-top: 1em;
         }
         padding: 0;
-        .btn-close {
+        .close-course-modal {
+            float: inline-end;
             margin-right: 1em;
             margin-top: 1rem;
             background-color: $brand-primary;
             color: white;
-            padding: .2em .4em .2em .4em;
             opacity: 1;
             border-radius: 1em;
         }
