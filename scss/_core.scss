@@ -4309,6 +4309,10 @@ table th img.iconhelp {
     max-width: 100%;
 }
 
+[data-region=right-hand-drawer].drawer {
+    z-index: 1045;
+}
+
 /* Feature spots. */
 #snap-feature-spots {
     padding: 2em 4%;
