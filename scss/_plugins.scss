@@ -111,6 +111,16 @@
     @media (max-width: 600px) {
         .popover-region-container {
             position: fixed;
+            top: 3.5rem !important;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            width: auto;
+        }
+    }
+    @media (max-width: 389px) {
+        .popover-region-container {
+            position: fixed;
             top: 6.5rem !important;
             right: 0;
             left: 0;
