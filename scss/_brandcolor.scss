@@ -372,8 +372,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
     .btn-icon.icons-collapse-expand{
         color: $brand-primary;
-        background-color: rgba($brand-primary, .5);
-        ;
+        background-color: rgba($brand-primary, .2);
+
         &:hover {
             outline: 2px solid $brand-primary !important;
         }
