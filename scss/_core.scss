@@ -609,6 +609,10 @@ table img:not(.activityicon) {
         display: block;
     }
 }
+.theme-snap .sticky-footer-content .col-auto [name="perpage"] {
+    display: inline-block;
+    margin-right: 1em;
+}
 .theme-snap.path-course-view.editing {
     &.format-weeks, &.format-topics {
         #section-0 .bulkEnable {
