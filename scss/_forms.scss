@@ -237,6 +237,9 @@ textarea {
     border-color: $gray-lighter;
 }
 
+input[type="checkbox"] {
+    max-width: none;
+}
 
 // -------------------------
 // Radio buttons.
