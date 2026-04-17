@@ -4404,3 +4404,8 @@ body:not(.editing) .quickediticon.visibleifjs,
 body:not(.editing) .divider.bulk-hidden {
   display: none !important;
 }
+
+// h5pactivity in particular should not show the opener button of the TOC when in edit mode of #page-h5p-edit.
+#page-h5p-edit .drawer-toggler.drawer-left-toggle.open-nav {
+  display: none;
+}
