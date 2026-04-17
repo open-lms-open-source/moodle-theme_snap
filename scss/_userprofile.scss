@@ -94,6 +94,11 @@
                 .node_category {
                     @include make-col(3);
                     border: none;
+                    flex: 0 0 auto !important;
+                    width: 25% !important;
+                    max-width: 25% !important;
+                    display: flex !important;
+                    flex-direction: column !important;
                 }
                 .node_category:nth-of-type(5) {
                     clear: left;
