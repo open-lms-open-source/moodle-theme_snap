@@ -3717,6 +3717,9 @@ table#user-grades tr.avg td.cell {
         background-color: mix($brand-warning, white, 5%);
         border-color: $brand-warning;
     };
+    .btn-close {
+        float: right;
+    }
 }
 
 #notice {
