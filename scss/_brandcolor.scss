@@ -1710,3 +1710,11 @@ body#page-course-view-tiles.theme-snap {
         }
     }
 }
+
+.modchoosercontent .optionscontainer .option.selected {
+    &:focus-visible{
+        outline: none !important;
+    }
+    border: 2px solid $brand-primary !important; // !important to override native styles.
+    background-color: rgba($brand-primary, 0.1) !important;  // !important to override native styles.
+}
