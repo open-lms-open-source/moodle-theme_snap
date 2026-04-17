@@ -446,7 +446,7 @@ li.snap-activity {
 }
 
 .dropdown-menu:not(.asset-edit-menu) > li > a {
-    display: block;
+    padding-left: 1.5rem;
     &:hover,
     &:focus {
         background-color: $brand-primary;
