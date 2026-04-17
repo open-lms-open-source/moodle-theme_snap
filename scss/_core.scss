@@ -7195,3 +7195,31 @@ code {
     padding: inherit;
     top: 8em;
 }
+
+// course/reset.php sticky footer, button
+#page-course-reset #sticky-footer {
+    .sticky-footer-content-wrapper {
+        justify-content: flex-end !important;
+    }
+
+    .sticky-footer-content {
+        overflow: visible;
+        max-width: none;
+
+        #fitem_id_submitbutton.row {
+            margin-bottom: 0;
+            justify-content: flex-end;
+
+            > .col-md-3 {
+                display: none;
+            }
+
+            > .col-md-9.felement {
+                flex: 0 0 auto;
+                width: auto;
+                max-width: none;
+                margin-left: auto;
+            }
+        }
+    }
+}

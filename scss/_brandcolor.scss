@@ -963,6 +963,24 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+    //course reset button
+    &#page-course-reset {
+        #id_submitbutton.btn-danger,
+        .modal-footer .btn-danger[data-action="delete"] {
+            background-color: $brand-primary;
+            border-color: $brand-primary;
+            color: #fff;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: darken($brand-primary, 8%);
+                border-color: darken($brand-primary, 8%);
+                color: #fff;
+            }
+        }
+    }
+
     div[tabindex]:focus.modal-dialog.modal-dialog-scrollable .modal-content {
         outline: 3px auto $brand-primary;
     }
