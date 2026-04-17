@@ -451,3 +451,8 @@ body.snap_drawer_open {
         z-index: 1051;
     }
 }
+
+// Styles particular to the blocks drawer.
+#theme_snap-drawers-blocks.show {
+  z-index: $sidebar-z-index;
+}
