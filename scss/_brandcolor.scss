@@ -1618,6 +1618,36 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         color: $brand-primary;
     }
 
+    &#page-admin-cohort-customfield {
+        .categoryinstance h3 {
+            color: $brand-primary;
+
+            a,
+            button {
+                color: $brand-primary;
+            }
+
+            a:hover,
+            a:focus,
+            button:hover,
+            button:focus {
+                color: darken($brand-primary, 8%);
+            }
+        }
+    }
+
+    .form-check.form-switch .form-check-input {
+        &:checked {
+            background-color: $brand-primary;
+            border-color: $brand-primary;
+        }
+
+        &:focus {
+            border-color: $brand-primary;
+            box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
+        }
+    }
+
     // local_olms_ai
     #region-main .form-check-input:checked~.form-check-label::before {
         background-color: $brand-primary;
