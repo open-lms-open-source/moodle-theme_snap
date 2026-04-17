@@ -1562,6 +1562,12 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+    .userpicture {
+        // !important because there are some components apply filters to divs
+        // userpicture should never have filters in any case.
+        filter: none !important;
+    }
+
     .snap-asset-content {
         .fa-chevron-down {
             color: $brand-primary;
