@@ -53,9 +53,14 @@ $lighter-grey-btn: #e6e6e6;
 $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this with rgb or the variable won't work.
 
 .theme-snap {
-    .text-bg-primary {
+    .text-bg-primary,
+    .badge.bg-primary {
         background-color: $brand-primary !important;
         color: #fff;
+    }
+
+    .badge.bg-primary {
+        border-radius: 0.5rem;
     }
 
     #snap-modchooser-modal,
