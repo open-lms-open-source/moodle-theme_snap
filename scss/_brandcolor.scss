@@ -490,6 +490,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+    .breadcrumb-nav {
+        border: 0.07em solid $brand-primary;
+        margin-bottom: 1em;
+        ol.breadcrumb {
+            margin-bottom: 0;
+        }
+    }
 
     #snap-pm-mobilemenu {
         a {
