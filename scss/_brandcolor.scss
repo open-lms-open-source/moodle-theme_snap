@@ -1481,6 +1481,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+    .activity-item .activity-completion button,
+    &.path-mod .activity-information .completion-info button {
+        &:hover, &:focus {
+            background-color: $brand-primary;
+        }
+    }
+
     .snap-asset-actions {
         .snap-asset-move {
             &:focus-within {

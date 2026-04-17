@@ -78,6 +78,47 @@ class behat_theme_snap_category_colors extends behat_base {
     }
 
     /**
+     * Checks background color of an element, forcing focus to catch hover/focus styles.
+     *
+     * @Given /^I focus and check element "(?P<element_string>(?:[^"]|\\")*)" with background color "(?P<color_string>(?:[^"]|\\")*)"$/
+     * @param string $element CSS selector to be checked
+     * @param string $color hex color
+     * @throws Exception
+     */
+    public function i_focus_and_check_element_with_background_color($element, $color) {
+        $session = $this->getSession();
+
+        // force Focus
+        $javascript = <<<JS
+        (function() {
+            var el = document.querySelector("{$element}");
+            if (!el) return "Element not found";
+            
+            // Set focus on element
+            el.focus(); 
+            
+            // Return the background color.
+            return window.getComputedStyle(el, null).getPropertyValue("background-color");
+        })()
+    JS;
+
+        $elementcolor = $session->getDriver()->evaluateScript($javascript);
+
+        if ($elementcolor === "Element not found") {
+            throw new Exception("Element " . $element . " was not found in the DOM.");
+        }
+
+        // Compare Hex colors with RGB colors
+        $fromcolor = self::hex2rgb($color);
+        $tocolor = self::rgb2array($elementcolor);
+
+        if ($fromcolor !== $tocolor) {
+            throw new Exception("Background color " . $color . " was not found in element "
+                . $element . ", instead " . $elementcolor . " was found.");
+        }
+    }
+
+    /**
      * Checks if css element have a property with input value.
      *
      * @codingStandardsIgnoreStart
