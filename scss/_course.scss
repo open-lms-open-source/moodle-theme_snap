@@ -3419,6 +3419,10 @@ form.togglecompletion {
             display: inline-flex;
             align-items: baseline;
         }
+        &.dropdown-subpanel-content[data-bs-popper] {
+          left: auto;
+          right: 100%;
+        }
     }
 }
 
