@@ -7213,3 +7213,9 @@ code {
         }
     }
 }
+
+// Question update button group
+#fgroup_id_updatebuttonar .felement[data-fieldtype="group"] {
+  padding-left: 0;
+  padding-top: calc(var(--bs-gutter-x) * .5);
+}
