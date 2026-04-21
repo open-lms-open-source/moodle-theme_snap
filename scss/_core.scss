@@ -7218,3 +7218,8 @@ code {
   padding-left: 0;
   padding-top: calc(var(--bs-gutter-x) * .5);
 }
+
+// duplicate name in user profile
+#page-user-editadvanced #region-main-box h2 {
+  display: none;
+}
