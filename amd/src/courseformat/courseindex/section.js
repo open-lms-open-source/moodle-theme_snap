@@ -55,9 +55,12 @@ export default class Component extends BaseSectionComponent {
         // Scroll to a newly created module, if we get confirmation there is one.
         const newMod = sessionStorage.getItem('newMod');
         if (newMod) {
-            const affectedModule = document.getElementById('module-' + newMod);
-            affectedModule.scrollIntoView(false);
-            window.scrollBy({top: window.innerHeight / 3});
+            const affectedModule = document.querySelector('#module-' + newMod);
+            affectedModule.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'center'
+            });
             affectedModule.querySelector('.activity-item').classList.add('highlight-new-activity');
         }
     }
