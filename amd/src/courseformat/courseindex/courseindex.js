@@ -36,11 +36,10 @@ export default class Component extends BaseSectionComponent {
      */
     stateReady(state) {
         super.stateReady(state);
-        // Change TOC active section styles.
         setTOCVisibleSection();
-        // Filter hidden activities.
         filterHiddenActivitiesFromDOM();
     }
+
     /**
      * Refresh a section cm list.
      *
@@ -49,7 +48,6 @@ export default class Component extends BaseSectionComponent {
      */
     _refreshSectionCmlist({element}) {
         super._refreshSectionCmlist({element});
-        // Filter hidden activities when section is refresh.
         filterHiddenActivitiesFromDOM();
     }
 }

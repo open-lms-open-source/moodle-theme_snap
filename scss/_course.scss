@@ -629,257 +629,6 @@ body.snap-resource-card.format-topics {
 }
 
 // ---------------------------------------
-// Mod chooser for Snap - Icon colors.
-// ---------------------------------------
-
-.theme-snap .modchoosercontainer {
-    img.activityicon { // All activity chooser icons with the same size.
-        height: 45px;
-        width: 45px;
-    }
-    .activityiconcontainer {
-        background-color: transparent;
-        padding: unset;
-    }
-    .modchoosernav {
-        margin-right: 2rem !important;
-    }
-    .modchoosercontent .optionname {
-        font-size: initial;
-    }
-    div[data-internal="forum"] .modicon_forum,
-    div[data-internal="chat"] .modicon_chat,
-    div[data-internal="hsuforum"] .modicon_hsuforum {
-        .activityicon {
-            filter: $communication-filter;
-        }
-    }
-
-    div[data-internal="assign"] .modicon_assign,
-    div[data-internal="workshop"] .modicon_workshop,
-    div[data-internal="journal"] .modicon_journal,
-    div[data-internal="attendance"] .modicon_attendance {
-        .activityicon {
-            filter: $assignment-filter;
-        }
-    }
-
-    div[data-internal="choice"] .modicon_choice,
-    div[data-internal="feedback"] .modicon_feedback,
-    div[data-internal="quiz"] .modicon_quiz,
-    div[data-internal="survey"] .modicon_survey,
-    div[data-internal="lesson"] .modicon_lesson,
-    div[data-internal="facetoface"] .modicon_facetoface {
-        .activityicon {
-            filter: $content-filter;
-        }
-    }
-
-    div[data-internal="data"] .modicon_data,
-    div[data-internal="glossary"] .modicon_glossary,
-    div[data-internal="wiki"] .modicon_wiki,
-    div[data-internal="choicegroup"] .modicon_choicegroup {
-        .activityicon {
-            filter: $information-filter;
-        }
-    }
-
-    div[data-internal="collaborate"] .modicon_collaborate {
-        background: transparent; // This has to be specific so we gain priority.
-        img.activityicon {
-            filter: $collab-filter;
-        }
-    }
-
-    div[data-internal="hvp"] .modicon_hvp .activityicon {
-        filter: $hvp-filter;
-    }
-
-    div[data-internal="lightboxgallery"] .modicon_lightboxgallery .activityicon {
-        filter: $lightbox-filter;
-    }
-
-    div[data-internal="resource"] .modicon_resource img.activityicon {
-        filter: $resource-filter;
-    }
-
-    div[data-internal="book"] .modicon_book img.activityicon {
-        filter: $book-filter;
-    }
-
-    div[data-internal="folder"] .modicon_folder img.activityicon {
-        filter: $folder-filter;
-    }
-
-    div[data-internal="questionnaire"] .modicon_questionnaire img.activityicon {
-        filter: $questionnaire-filter;
-    }
-
-    div[data-internal="url"] .modicon_url img.activityicon {
-        filter: $url-filter;
-    }
-
-    div[data-internal="label"] .modicon_label img.activityicon {
-        filter: $label-filter;
-    }
-
-    div[data-internal="page"] .modicon_page img.activityicon {
-        filter: $page-filter;
-    }
-
-    div[data-internal^="lti_type"] img.icon {
-        &[src*="lti"][src*="icon"], &[src*="lti"][src*="monologo"] {
-            filter: $resource-filter;
-        }
-    }
-
-    div[data-internal="certificate"] .modicon_certificate img.activityicon,
-    div[data-internal="customcert"] .modicon_customcert img.activityicon,
-    div[data-internal="coursecertificate"] .modicon_coursecertificate img.activityicon {
-        filter: $certificate-filter;
-    }
-
-    div[data-internal="customquiz"] .modicon_customquiz .activityicon {
-        filter: $customquiz-filter;
-    }
-
-    div[data-internal="livepoll"] .modicon_livepoll img.activityicon {
-        filter: $livepoll-filter;
-    }
-
-    div[data-internal="checklist"] .modicon_checklist,
-    div[data-internal="dialogue"] .modicon_dialogue {
-        img.activityicon {
-            filter: $checklist-filter;
-        }
-    }
-
-    div[data-internal="quizgame"] .modicon_quizgame,
-    div[data-internal="adaptivequiz"] .modicon_adaptivequiz {
-        .activityicon {
-            filter: $quizlms-filter;
-        }
-    }
-
-    div[data-internal="zoom"] .modicon_zoom img.activityicon {
-        filter: $zoom-filter;
-    }
-
-    div[data-internal="goone"] .modicon_goone {
-        background: transparent; // We need this one to eliminate background color.
-        img.activityicon {
-            filter: $go1-filter;
-        }
-    }
-    div[data-internal="pld"] .modicon_pld {
-        img.activityicon {
-          filter: unset;
-        }
-    }
-
-    .activityiconcontainer {
-        &.modicon_hotpot {
-            .activityicon {
-                filter: none;
-            }
-        }
-    }
-}
-
-.modchooser .carousel-inner {
-    .carousel-item:first-of-type {
-        padding-right: 1rem !important;
-        padding-left: 1rem !important;
-    }
-    .optionsummary .activityicon {
-        margin-bottom: 10px;
-    }
-    .optionsummary .modicon_book .activityicon {
-        filter: $book-filter;
-    }
-    .optionsummary .modicon_collaborate .activityicon {
-        filter: $collab-filter;
-    }
-    .optionsummary .modicon_customquiz .activityicon {
-        filter: $customquiz-filter;
-    }
-    .optionsummary .modicon_folder .activityicon {
-        filter: $folder-filter;
-    }
-    .optionsummary .modicon_goone .activityicon {
-        filter: $go1-filter;
-    }
-    .optionsummary .modicon_label .activityicon {
-        filter: $label-filter;
-    }
-    .optionsummary .modicon_livepoll .activityicon {
-        filter: $livepoll-filter;
-    }
-    .optionsummary .modicon_page .activityicon {
-        filter: $page-filter;
-    }
-    .optionsummary .modicon_zoom .activityicon {
-        filter: $zoom-filter;
-    }
-    .optionsummary .modicon_pld,
-    .optionsummary .modicon_hotpot {
-        .activityicon {
-            filter: none;
-        }
-    }
-    .optionsummary .modicon_quizgame,
-    .optionsummary .modicon_adaptivequiz {
-        .activityicon {
-            filter: $quizlms-filter;
-        }
-    }
-    .optionsummary .modicon_dialogue,
-    .optionsummary .modicon_checklist {
-        .activityicon {
-            filter: $checklist-filter;
-        }
-    }
-    .optionsummary .modicon_forum,
-    .optionsummary .modicon_hsuforum {
-        .activityicon {
-            filter: $communication-filter;
-        }
-    }
-    .optionsummary .modicon_customcert,
-    .optionsummary .modicon_certificate,
-    .optionsummary .modicon_coursecertificate {
-        .activityicon {
-            filter: $certificate-filter;
-        }
-    }
-    .optionsummary .modicon_assign,
-    .optionsummary .modicon_journal,
-    .optionsummary .modicon_workshop,
-    .optionsummary .modicon_attendance {
-        .activityicon {
-            filter: $assignment-filter;
-        }
-    }
-    .optionsummary .modicon_data,
-    .optionsummary .modicon_wiki,
-    .optionsummary .modicon_glossary,
-    .optionsummary .modicon_choicegroup {
-        .activityicon {
-            filter: $information-filter;
-        }
-    }
-    .optionsummary .modicon_quiz,
-    .optionsummary .modicon_choice,
-    .optionsummary .modicon_lesson,
-    .optionsummary .modicon_feedback,
-    .optionsummary .modicon_facetoface {
-        .activityicon {
-            filter: $content-filter;
-        }
-    }
-}
-
-// ---------------------------------------
 // Mod view rules
 // ---------------------------------------
 
@@ -893,194 +642,6 @@ body.snap-resource-card.format-topics {
 }
 .theme-snap.path-mod .activity-information .completion-info button {
     border-radius: 0.5rem;
-}
-
-#page-mod-forum-view,
-#page-mod-forum-mod,
-#page-mod-chat-view,
-#page-mod-chat-mod,
-#page-mod-hsuforum-view,
-#page-mod-hsuforum-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $communication-filter;
-    }
-}
-
-#page-mod-assign-view,
-#page-mod-assign-mod,
-#page-mod-workshop-view,
-#page-mod-workshop-mod,
-#page-mod-journal-view,
-#page-mod-journal-mod,
-#page-mod-attendance-view,
-#page-mod-attendance-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $assignment-filter;
-    }
-}
-
-#page-mod-choice-view,
-#page-mod-choice-mod,
-#page-mod-feedback-view,
-#page-mod-feedback-mod,
-#page-mod-quiz-view,
-#page-mod-quiz-mod,
-#page-mod-survey-view,
-#page-mod-survey-mod,
-#page-mod-lesson-view,
-#page-mod-lesson-mod,
-#page-mod-facetoface-view,
-#page-mod-facetoface-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $content-filter;
-    }
-}
-
-#page-mod-data-view,
-#page-mod-data-mod,
-#page-mod-glossary-view,
-#page-mod-glossary-mod,
-#page-mod-wiki-view,
-#page-mod-wiki-mod,
-#page-mod-choicegroup-view,
-#page-mod-choicegroup-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $information-filter;
-    }
-}
-
-#page-mod-collaborate-view,
-#page-mod-collaborate-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $collab-filter;
-    }
-}
-
-#page-mod-hvp-view,
-#page-mod-hvp-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $hvp-filter;
-    }
-}
-
-#page-mod-lightboxgallery-view,
-#page-mod-lightboxgallery-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $lightbox-filter;
-    }
-}
-
-#page-mod-resource-view,
-#page-mod-resource-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $resource-filter;
-    }
-}
-
-#page-mod-book-view,
-#page-mod-book-edit {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $book-filter;
-    }
-}
-
-#page-mod-folder-view,
-#page-mod-folder-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $folder-filter;
-    }
-}
-
-#page-mod-questionnaire-view,
-#page-mod-questionnaire-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $questionnaire-filter;
-    }
-}
-
-#page-mod-url-view,
-#page-mod-url-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $url-filter;
-    }
-}
-
-#page-mod-label-view,
-#page-mod-label-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $label-filter;
-    }
-}
-
-#page-mod-page-view,
-#page-mod-page-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $page-filter;
-    }
-}
-
-#page-mod-certificate-view,
-#page-mod-certificate-mod,
-#page-mod-customcert-view,
-#page-mod-customcert-mod,
-#page-mod-coursecertificate-view,
-#page-mod-coursecertificate-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $certificate-filter;
-    }
-}
-
-#page-mod-customquiz-view,
-#page-mod-customquiz-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $customquiz-filter;
-    }
-}
-
-#page-mod-livepoll-view,
-#page-mod-livepoll-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $livepoll-filter;
-    }
-}
-
-#page-mod-checklist-view,
-#page-mod-checklist-mod,
-#page-mod-dialogue-view,
-#page-mod-dialogue-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $checklist-filter;
-    }
-}
-
-#page-mod-quizgame-view,
-#page-mod-quizgame-mod,
-#page-mod-adaptivequiz-view,
-#page-mod-adaptivequiz-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $quizlms-filter;
-    }
-}
-
-#page-mod-zoom-view,
-#page-mod-zoom-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $zoom-filter;
-    }
-}
-
-#page-mod-goone-view,
-#page-mod-goone-mod {
-    .page-header-image .activityiconcontainer .activityicon {
-        filter: $go1-filter;
-    }
-}
-
-#page-mod-pld-view,
-#page-mod-pld-mod {
-  .page-header-image .activityiconcontainer .activityicon {
-    filter: unset;
-  }
 }
 
 #page-mod-quiz-view.pagelayout-secure #page.container{
@@ -1408,6 +969,61 @@ body.format-singleactivity {
 
         a {
             word-break: break-all;
+        }
+
+        &:has(:where(.activityiconcontainer.communication)) {
+            border-top-color: $activity-icon-communication-bg;
+        }
+        &:has(:where(.activityiconcontainer.assessment)) {
+            border-top-color: $activity-icon-assessment-bg;
+        }
+        &:has(:where(.activityiconcontainer.collaboration)) {
+            border-top-color: $activity-icon-collaboration-bg;
+        }
+        &:has(:where(.activityiconcontainer.content)) {
+            border-top-color: $activity-icon-content-bg;
+        }
+        &:has(:where(.activityiconcontainer.interactivecontent)) {
+            border-top-color: $activity-icon-interactivecontent-bg;
+        }
+        &:has(:where(.activityiconcontainer.administration)) {
+            border-top-color: $activity-icon-administration-bg;
+        }
+        &:has(.modtype_lightboxgallery) {
+            border-top-color: $color-lightbox;
+            .activity-icon img {
+                @include recolor-icon($color-lightbox, 1);
+            }
+        }
+        &:has(.modtype_book) {
+            border-top-color: $color-book;
+            .activity-icon img {
+                @include recolor-icon($color-book, 1);
+            }
+        }
+        &:has(.modtype_url) {
+            border-top-color: $color-url;
+            .activity-icon img {
+                @include recolor-icon($color-url, 1);
+            }
+        }
+        &:has(.modtype_label) {
+            border-top-width: 1px;
+            .activity-icon img {
+                @include recolor-icon($color-label, 1);
+            }
+        }
+        &:has(.modtype_page) {
+            border-top-color: $color-page;
+            .activity-icon img {
+                @include recolor-icon($color-page, 1);
+            }
+        }
+        &:has(.modtype_folder) {
+            border-top-color: $color-folder;
+            .activity-icon img {
+                @include recolor-icon($color-folder, 1);
+            }
         }
     }
 
@@ -2287,19 +1903,8 @@ body.snap-resource-card {
             display: inline-block;
         }
 
-        &.modtype_forum,
-        &.modtype_chat {
-            .activity-item {
-                border-top-color: $color-communication;
-            }
-            .activityiconcontainer img {
-                filter: $communication-filter;
-            }
-        }
-
         &.modtype_hsuforum {
             .activity-item {
-                border-top-color: $color-communication;
                 .activity-afterlink.afterlink {
                     flex-direction: column;
                     margin: 0;
@@ -2337,97 +1942,18 @@ body.snap-resource-card {
             }
         }
 
-        &.modtype_assign,
-        &.modtype_workshop,
-        &.modtype_journal,
-        &.modtype_attendance {
-            .activity-item {
-                border-top-color: $color-assignment;
-            }
-            .activityiconcontainer img {
-                filter: $assignment-filter;
-            }
-        }
-
-        &.modtype_hvp {
-            .activity-item {
-                border-top-color: $hvp-interactive-content;
-            }
-            .activityiconcontainer {
-                filter: $hvp-filter;
-            }
-        }
-
-        &.modtype_choice,
-        &.modtype_feedback,
-        &.modtype_quiz,
-        &.modtype_facetoface {
-            .activity-item {
-                border-top-color: $color-content;
-            }
-            .activityiconcontainer img {
-                filter: $content-filter;
-            }
-        }
-
-        &.modtype_survey,
-        &.modtype_questionnaire,
-        &.modtype_lesson,
-        &.modtype_imscp,
-        &.modtype_scorm {
-            .activity-item {
-                border-top-color: $color-questionnaire;
-            }
-            .activityiconcontainer img {
-                filter: $questionnaire-filter;
-            }
-        }
 
         &.modtype_lightboxgallery {
             .activity-item {
                 border-top-color: $color-lightbox;
             }
-            .activityiconcontainer img {
-                filter: $lightbox-filter;
-            }
-        }
-
-        &.modtype_lti, {
-            .activity-item {
-                border-top-color: $color-resource;
-            }
-            .activityiconcontainer {
-                img.activityicon {
-                    &[src*="lti"][src*="icon"], &[src*="lti"][src*="monologo"] {
-                        filter: $resource-filter;
-                    }
-                }
-            }
-        }
-        &.modtype_h5pactivity {
-            .activity-item {
-                border-top-color: $color-resource;
-            }
-        }
-
-        &.modtype_data,
-        &.modtype_glossary,
-        &.modtype_wiki,
-        &.modtype_choicegroup {
-            .activity-item {
-                border-top-color: $color-information;
-            }
-            .activityiconcontainer {
-                filter: $information-filter;
+            .activityiconcontainer .activityicon {
+                @include recolor-icon($color-lightbox, 1);
             }
         }
 
         &.modtype_collaborate {
-            .activity-item {
-                border-top-color: $color-collab;
-            }
             .activityiconcontainer img {
-                filter: $collab-filter;
                 height: 30px;
             }
         }
@@ -2436,36 +1962,15 @@ body.snap-resource-card {
             .activity-item {
                 border-top-color: $color-folder;
             }
-            .activityiconcontainer {
-                filter: $folder-filter;
+            .activityiconcontainer .activityicon {
+                @include recolor-icon($color-folder, 1);
             }
         }
 
-        &.modtype_livepoll {
-            .activity-item {
-                border-top-color: $color-livepoll;
-            }
-            .activityiconcontainer {
-                filter: $livepoll-filter;
-            }
-        }
-
-        &.modtype_checklist,
-        &.modtype_dialogue {
-            .activity-item {
-                border-top-color: $color-checklist;
-            }
-            .activityiconcontainer {
-                filter: $checklist-filter;
-            }
-        }
 
         &.modtype_resource {
             .activity-item {
                 border-top-color: $color-resource;
-            }
-            .activityiconcontainer {
-                filter: $color-resource; // For Course Tiles format.
             }
         }
 
@@ -2473,21 +1978,26 @@ body.snap-resource-card {
             .activity-item {
                 border-top-color: $color-url;
             }
-            .activityiconcontainer {
-                filter: $url-filter;
+            .activityiconcontainer .activityicon {
+                @include recolor-icon($color-url, 1);
             }
         }
 
-        &.modtype_label .activity-item {
-            border: 1px solid $gray-lighter;
+        &.modtype_label {
+            .activity-item {
+                border: 1px solid $gray-lighter;
+            }
+            .activityiconcontainer .activityicon {
+                @include recolor-icon($color-label, 1);
+            }
         }
 
         &.modtype_book {
             .activity-item {
                 border-top-color: $color-book;
             }
-            .activityiconcontainer {
-                filter: $book-filter;
+            .activityiconcontainer .activityicon {
+                @include recolor-icon($color-book, 1);
             }
             .summary-text.row {
                 justify-content: space-around;
@@ -2506,6 +2016,9 @@ body.snap-resource-card {
         &.modtype_page {
             .activity-item {
                 border-top-color: $color-page;
+            }
+            .activityiconcontainer .activityicon {
+                @include recolor-icon($color-page, 1);
             }
             .asset-wrapper .snap-asset-content {
                 .contentafterlink {
@@ -2542,9 +2055,6 @@ body.snap-resource-card {
                     }
                 }
             }
-            .activityiconcontainer {
-                filter: $page-filter;
-            }
         }
 
         &.modtype_resource {
@@ -2562,60 +2072,32 @@ body.snap-resource-card {
             }
         }
 
-        &.modtype_zoom {
-            .activity-item {
-                border-top-color: $color-zoom;
-            }
-            .activityiconcontainer {
-                filter: $zoom-filter;
-            }
-        }
 
-        &.modtype_quizgame,
-        &.modtype_adaptivequiz {
-            .activity-item {
-                border-top-color: $color-quizlms;
-            }
-            .activityiconcontainer {
-                filter: $quizlms-filter;
-            }
-        }
+    }
+}
 
-        &.modtype_goone {
-            .activity-item {
-                border-top-color: $color-go1;
-            }
-            .activityiconcontainer {
-                filter: $go1-filter;
-            }
+// -------------------------
+// Activity icon colors in mod view page header.
+// -------------------------
+.theme-snap.path-mod {
+    .page-context-header .activityiconcontainer {
+        &.modicon_lightboxgallery img.activityicon {
+            @include recolor-icon($color-lightbox, 1);
         }
-
-        &.modtype_customquiz {
-            .activity-item {
-                border-top-color: $color-customquiz;
-            }
-            .activityiconcontainer {
-                filter: $customquiz-filter;
-            }
+        &.modicon_book img.activityicon {
+            @include recolor-icon($color-book, 1);
         }
-
-        &.modtype_certificate,
-        &.modtype_coursecertificate,
-        &.modtype_customcert {
-            .activity-item {
-                border-top-color: $color-certificate;
-            }
-            .activityiconcontainer {
-                filter: $certificate-filter;
-            }
+        &.modicon_url img.activityicon {
+            @include recolor-icon($color-url, 1);
         }
-        &.modtype_scheduler {
-            .activity-item {
-                border-top-color: $scheduler-filter;
-            }
-            .activityiconcontainer {
-                filter: $scheduler-filter;
-            }
+        &.modicon_label img.activityicon {
+            @include recolor-icon($color-label, 1);
+        }
+        &.modicon_page img.activityicon {
+            @include recolor-icon($color-page, 1);
+        }
+        &.modicon_folder img.activityicon {
+            @include recolor-icon($color-folder, 1);
         }
     }
 }
@@ -2667,10 +2149,6 @@ body.snap-resource-card {
             border-top-color: $color-url;
         }
 
-        &.modtype_imscp,
-        &.modtype_scorm {
-            border-top-color: $color-questionnaire;
-        }
 
         &.modtype_lightboxgallery,
         &.snap-mime-bmp {

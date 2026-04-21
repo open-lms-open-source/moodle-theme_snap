@@ -24,11 +24,16 @@
  */
 
 import BaseCmComponent from 'core_courseformat/local/courseindex/cm';
+import Config from 'core/config';
 
 export default class Component extends BaseCmComponent {
 
+    create() {
+        super.create();
+        this._resolveIconPurpose();
+    }
+
     /**
-     *
      * Overrides the base class stateReady to ensure that activities without a URL (e.g. labels)
      * always have an absolute section URL as their href. The base class only sets the full URL
      * when the element is absent from the DOM, leaving a relative hash (e.g. #module-68)
@@ -69,5 +74,36 @@ export default class Component extends BaseCmComponent {
         super._refreshCm({element});
         // Update title attribute on Snap.
         this.getElement(this.selectors.CM_NAME).title = element.name;
+        this._resolveIconPurpose();
+    }
+
+    /**
+     * Applies activity-{purpose} class to the cm's .activityiconcontainer so CSS can
+     * colorize the monologo icon via filter per category.
+     */
+    _resolveIconPurpose() {
+        const purposes = Config.snapModPurposes ?? {};
+        const branded = new Set(Config.snapBrandedMods ?? []);
+
+        const container = this.element.querySelector('.activityiconcontainer');
+        if (!container) {
+            return;
+        }
+
+        const iconClass = [...container.classList].find(
+            cls => cls.endsWith('icon') && cls !== 'icon' && cls !== 'activityiconcontainer'
+        );
+
+        if (iconClass) {
+            const modname = iconClass.slice(0, -4);
+            if (!branded.has(modname)) {
+                const purpose = purposes[modname];
+                if (purpose && purpose !== 'other') {
+                    container.classList.add(`activity-${purpose}`);
+                }
+            }
+        }
+
+        container.classList.add('snap-icon-resolved');
     }
 }

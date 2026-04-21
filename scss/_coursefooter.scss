@@ -115,32 +115,6 @@
                 display: block;
             }
         }
-        // Activity colours.
-        &.forum,
-        &.chat,
-        &.hsuforum {
-            border-color: $color-communication;
-        }
-        &.assign,
-        &.workshop {
-            border-color: $color-assignment;
-        }
-        &.choice,
-        &.feedback,
-        &.quiz {
-            border-color: $color-content;
-        }
-        &.survey,
-        &.questionnaire,
-        &.lesson {
-            border-color: $color-questionnaire;
-        }
-        &.choicegroup,
-        &.data,
-        &.glossary,
-        &.wiki {
-            border-color: $color-information;
-        }
     }
 
     // Single line recent updates info (normally a link).
