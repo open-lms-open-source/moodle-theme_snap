@@ -4516,6 +4516,7 @@ table th img.iconhelp {
                 background: transparent;
                 transition: transform 1s ease;
                 transform: translateX(-2%);
+                max-width: 80%;
             }
             @keyframes snap-info-blink {
                 0% { transform: scale(1); }
