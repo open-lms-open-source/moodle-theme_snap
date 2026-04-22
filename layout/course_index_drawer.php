@@ -146,7 +146,9 @@ function get_modules(array $hiddencmids) {
         if ($cm->modname !== 'resource') {
             $module->srinfo = get_string('pluginname', $cm->modname);
         }
-        $module->url = '#section-'.$cm->sectionnum.'&module-'.$cm->id;
+        $sectioninfo = $modinfo->get_section_info($cm->sectionnum);
+        $targetsectionid = $sectioninfo ? $sectioninfo->id : $cm->sectionnum;
+        $module->url = '#section-'.$targetsectionid.'&module-'.$cm->id;
 
         $module->formattedname = $cm->get_formatted_name();
         $modules[] = $module;

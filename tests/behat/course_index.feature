@@ -140,3 +140,15 @@ Feature: Testing course index drawer in theme_snap
     And I should see "Quiz 3"
     And I should see "Create a new section"
     And I should see "Course Dashboard"
+
+  @javascript
+  Scenario: Searching from the course index opens the target section and focuses the activity
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And I set the field with xpath "//input[@id='toc-search-input']" to "Assignment 2"
+    And I should see "Assignment 2" in the "#toc-search-results" "css_element"
+    When I click on "#toc-search-results a" "css_element"
+    Then "#section-2.state-visible" "css_element" should be visible
+    And "#section-1.state-visible" "css_element" should not be visible
+    And "#section-3.state-visible" "css_element" should not be visible
+    And "[data-activityname='Assignment 2'] #searchpin" "css_element" should be visible
