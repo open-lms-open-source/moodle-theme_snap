@@ -1828,6 +1828,36 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             color: $brand-primary;
         }
     }
+
+    // Mod book prev/next
+    &#page-mod-book-view #mod_book-chaptersnavigation {
+        .btn-previous .icon,
+        .btn-next .icon {
+            color: $brand-primary;
+        }
+
+        .btn-previous:hover .icon,
+        .btn-previous:focus .icon,
+        .btn-next:hover .icon,
+        .btn-next:focus .icon {
+            color: darken($brand-primary, 8%);
+        }
+    }
+
+    // Mod book chapter tags
+    &#page-mod-book-view .book-tags {
+        a.badge {
+            background-color: $brand-primary !important;
+            border-color: $brand-primary !important;
+            border-radius: 0.5rem;
+
+            &:hover,
+            &:focus {
+                background-color: darken($brand-primary, 8%) !important;
+                border-color: darken($brand-primary, 8%) !important;
+            }
+        }
+    }
 }
 
 /*
