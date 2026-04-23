@@ -180,12 +180,6 @@ $THEME->layouts = array(
         'regions' => array('side-pre'),
         'defaultregion' => 'side-pre',
     ),
-    // The pagelayout used for safebrowser and securewindow.
-    'secure' => array(
-        'file' => 'secure.php',
-        'regions' => array('side-pre'),
-        'defaultregion' => 'side-pre',
-    ),
 );
 
 $THEME->javascripts = array();
