@@ -1068,16 +1068,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $coursesectionviewpage = local::current_url_path() === '/course/section.php';
             if ($courseviewpage || $coursesectionviewpage) {
                 $data->cover_image_selector = $this->cover_image_selector();
-            }
-        }
-        if (!($COURSE->format == 'topics' || $COURSE->format == 'weeks')) {
-            // Inject the Bulk editing Button on Snap.
-            $format = course_get_format($COURSE);
-            $renderer = $format->get_renderer($PAGE);
+                // Set bulk actions on other course formats.
+                if (!($COURSE->format == 'topics' || $COURSE->format == 'weeks')) {
+                    // Inject the Bulk editing Button on Snap.
+                    $format = course_get_format($COURSE);
+                    $renderer = $format->get_renderer($PAGE);
 
-            // Add bulk editing control.
-            $bulkbutton = $renderer->bulk_editing_button($format);
-            $data->bulk_editing_button = $bulkbutton;
+                    // Add bulk editing control.
+                    $bulkbutton = $renderer->bulk_editing_button($format);
+                    $data->bulk_editing_button = $bulkbutton;
+                }
+            }
         }
 
         if ($this->page->pagelayout == 'frontpage') {
