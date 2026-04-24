@@ -52,11 +52,18 @@ class behat_theme_snap_behat_forms extends behat_forms {
             $expandallxpath = "//div[@class='collapsible-actions']" .
                 "//a[contains(concat(' ', @class, ' '), ' collapsed ')]" .
                 "//span[contains(concat(' ', @class, ' '), ' expandall ')]";
+            // Else, look for the first expand fieldset link (old theme structure).
+            $expandsectionold = "//legend[@class='ftoggler']" .
+                    "//a[contains(concat(' ', @class, ' '), ' icons-collapse-expand ') and @aria-expanded = 'false']";
+            // Else, look for the first expand fieldset link (current theme structure).
+            $expandsectioncurrent = "//fieldset//div[contains(concat(' ', @class, ' '), ' ftoggler ')]" .
+                    "//a[contains(concat(' ', @class, ' '), ' icons-collapse-expand ') and @aria-expanded = 'false']";
 
-            $collapseexpandlink = $this->find('xpath', $expandallxpath,
-                false, false, behat_base::get_reduced_timeout());
+            $collapseexpandlink = $this->find('xpath', $expandallxpath . '|' . $expandsectionold . '|' . $expandsectioncurrent,
+                    false, false, behat_base::get_reduced_timeout());
             $collapseexpandlink->click();
             $this->wait_for_pending_js();
+
         } catch (ElementNotFoundException $e) {
             // Try explanding only one section.
             try {

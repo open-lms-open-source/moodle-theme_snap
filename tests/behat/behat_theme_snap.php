@@ -1798,6 +1798,27 @@ JS;
             throw new \Exception("scrollIntoView by selector failed");
         }
     }
+    
+    /**
+     * Scroll element by selector into view and align the top of element with the top of the visible area.
+     *
+     * @When I scroll to the top of selector :selector
+     *
+     */
+    public function i_scroll_into_view_top_by_selector($selector) {
+        $function = <<<JS
+          (function(){
+              var elem = document.querySelector("$selector");
+              elem.scrollIntoView(true);
+              return 1;
+          })()
+JS;
+        try {
+            $this->getSession()->wait(5000, $function);
+        } catch (Exception $e) {
+            throw new \Exception("scrollIntoView by selector failed");
+        }
+    }
 
     /**
      * Navigate to an activity view page without waiting for pending JS.

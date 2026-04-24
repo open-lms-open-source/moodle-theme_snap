@@ -379,4 +379,19 @@ class behat_theme_snap_behat_general extends behat_general {
 
         role_assign($roleid, $user->id, $context->id);
     }
+
+    /**
+     * Waits a given amount of milliseconds. For cases where waiting seconds feels like too much.
+     *
+     * @Then /^I wait "(?P<milliseconds>\d+)" milliseconds$/
+     * @param int $milliseconds
+     * @return void
+     */
+    public function theme_snap_i_wait_milliseconds($milliseconds) {
+        if ($this->running_javascript()) {
+            $this->getSession()->wait($milliseconds);
+        } else {
+            sleep($milliseconds);
+        }
+    }
 }

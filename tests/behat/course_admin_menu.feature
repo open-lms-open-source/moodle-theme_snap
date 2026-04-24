@@ -61,6 +61,9 @@ Feature: When the moodle theme is set to Snap, students do not see the course ad
     And I am on the course main page for "C1"
     And I set the following fields to these values:
       | Forum name | Single Forum Course |
+    And I scroll to the top of selector "input#id_submitbutton"
+    # The scroll takes its sweet time.
+    And I wait "50" milliseconds
     And I press "Save and display"
     And I log out
     And I log in as "<user>"

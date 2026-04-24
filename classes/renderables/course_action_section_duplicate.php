@@ -52,7 +52,24 @@ class course_action_section_duplicate extends course_action_section_base {
         $baseurl->param('duplicatesection', 1);
         $coursecontext = context_course::instance($course->id);
         if (has_capability('moodle/course:update', $coursecontext)) {
-            $duplicatesectionurl = clone($baseurl);
+            $format = course_get_format($course);
+            $outputclass = $format->get_output_classname('content');
+            $sectionoutput = new $outputclass($format);
+            $modinfo = $sectionoutput->format->get_modinfo();
+            //$modinfo = $section->modinfo;
+            $sectionid = $sectionoutput->format->get_sectionid();
+            //$sectionid = $section->id;
+            $sectioninfo = $modinfo->get_section_info_by_id($sectionid);
+            /** @var \core_courseformat\output\local\content\section\controlmenu */
+            $controlmenu = new $sectionoutput->sectioncontrolmenuclass($sectionoutput->format, $sectioninfo);
+            //$controlmenu->get_action_menu($output);
+            
+            $duplicatesectionurl = $controlmenu->format->get_update_url(
+                action: 'section_duplicate',
+                ids: [$controlmenu->section->id],
+                returnurl: $controlmenu->baseurl,
+            );
+            //$duplicatesectionurl = clone($baseurl);
             $duplicatesectionurl->param('section', $section->section);
             $duplicatesectionurl->param('duplicatesection', $section->section);
             $this->title = get_string('duplicate');
