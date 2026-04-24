@@ -59,15 +59,49 @@ define(
             // Sometimes we have a hash, sometimes we don't
             // strip hash then add just in case
             $('#toc-search-results').html('');
-            var targmod = $("#" + modid.replace('#', ''));
+            var cleanId = modid.replace('#', '');
+            var targmod = $('#' + cleanId);
 
-            var searchpin = $("#searchpin");
+            if (!targmod.length) {
+                return;
+            }
+
+            var searchpin = $('#searchpin');
             if (!searchpin.length) {
                 searchpin = $('<i id="searchpin"></i>');
             }
 
-            $(targmod).find('.instancename').prepend(searchpin);
-            $(targmod).attr('tabindex', '-1').focus();
+            targmod.find('.instancename').first().prepend(searchpin);
+
+            // Scroll to the compact activity card, then focus without triggering another scroll.
+            var scrollTarget = targmod.find('.activity-item[data-region="activity-card"]').first();
+            if (!scrollTarget.length) {
+                scrollTarget = targmod.find('.activity-item').first();
+            }
+            if (!scrollTarget.length) {
+                scrollTarget = targmod;
+            }
+
+            var scrollAndFocus = function() {
+                // Force layout after section visibility toggles so offset().top is correct.
+                if (targmod[0]) {
+                    targmod[0].getBoundingClientRect();
+                }
+                util.scrollToElement(scrollTarget);
+                scrollTarget.attr('tabindex', '-1');
+                var el = scrollTarget[0];
+                if (el && typeof el.focus === 'function') {
+                    try {
+                        el.focus({preventScroll: true});
+                    } catch (e) {
+                        el.focus();
+                    }
+                }
+            };
+
+            window.requestAnimationFrame(function() {
+                window.requestAnimationFrame(scrollAndFocus);
+            });
         };
 
         /**
