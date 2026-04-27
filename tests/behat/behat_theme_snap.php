@@ -1821,6 +1821,43 @@ JS;
     }
 
     /**
+     * Instantly scroll to the vertical and horizontal center of element by selector.
+     * For cases where the regular scroll is too slow and traffic jams the following steps.
+     *
+     * @When I instantly scroll to the center of element :element :selectortype
+     */
+    public function i_instantly_scroll_to_the_center_of_element($element, $selectortype) {
+        $scrollfunction = <<<JS
+            elem.scrollIntoView({
+              behavior: "instant",
+              block: "center",
+              inline: "center",
+            });
+JS;
+
+        if ($selectortype === 'css_element') {
+            $function = <<<JS
+              (function(){
+                  var elem = document.querySelector("$element");
+                  $scrollfunction
+              })()
+JS;
+        } else if ($selectortype === 'xpath_element') {
+            $function = <<<JS
+              (function(){
+                  var elem = document.evaluate("$element", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue;
+                  $scrollfunction
+              })()
+JS;
+        }
+        try {
+            $this->getSession()->wait(5000, $function);
+        } catch (Exception $e) {
+            throw new \Exception("Instant scroll by selector failed due to: " . $e->getMessage());
+        }
+    }
+
+    /**
      * Navigate to an activity view page without waiting for pending JS.
      *
      * Activities like LTI configured to open in a new window execute window.open() on page load,

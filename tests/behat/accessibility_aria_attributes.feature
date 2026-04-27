@@ -81,8 +81,7 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_two']" to "2"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_three']" to "3"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fc_four']" to "4"
-    And I scroll to the top of selector "#id_s_theme_snap_fc_browse_all"
-    And I wait "50" milliseconds
+    And I instantly scroll to the center of element "//*[@id='id_s_theme_snap_fc_browse_all']" "xpath_element"
     And I set the field with xpath "//*[@id='id_s_theme_snap_fc_browse_all']" to "1"
     And I press "Save changes"
     And I am on site homepage
@@ -103,8 +102,7 @@ Feature: Elements for Snap should have the proper aria attributes.
   Scenario: Elements in course dashboard must comply with the accessibility standards.
     Given I log in as "admin"
     And I am on the course main page for "C1"
-    And I scroll to the top of selector "#coursetools"
-    And I wait "50" milliseconds
+    And I instantly scroll to the center of element "#coursetools" "css_element"
     And I follow "Course Dashboard"
     # To be reviewed on INT-20292.
     #And the page should meet "cat.aria, wcag412" accessibility standards
@@ -120,14 +118,12 @@ Feature: Elements for Snap should have the proper aria attributes.
     And I open "Test assignment1" actions menu
     And I click on "Edit settings" "link" in the "Test assignment1" activity
     And I wait until the page is ready
-    And I scroll to the top of selector "#id_availabilityconditionsheader"
-    And I wait "300" milliseconds
+    And I instantly scroll to the center of element "//fieldset[@id='id_availabilityconditionsheader']" "xpath_element"
     And I click on "//fieldset[@id=\"id_availabilityconditionsheader\"]" "xpath_element"
     And I click on "//button[text()=\"Add restriction...\"]" "xpath_element"
     And I click on "//button[@id=\"availability_addrestriction_grade\"]" "xpath_element"
     And I set the field with xpath "//span[@class=\"pe-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
-    And I scroll to the top of selector "input#id_submitbutton2"
-    And I wait "300" milliseconds
+    And I instantly scroll to the center of element "//input[@id='id_submitbutton2']" "xpath_element"
     Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
     And I wait until the page is ready
     # To be reviewed on INT-20292.
