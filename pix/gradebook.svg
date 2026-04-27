@@ -1,1 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100"><g style="stroke-miterlimit:10;stroke-width:3"><g style="fill:#999;stroke:#999"><circle cx="60" cy="65.5" r="2.7"/><circle cx="60" cy="49.9" r="2.7"/><circle cx="60" cy="34.5" r="2.7"/></g><circle cx="75" cy="34.5" r="2.7" style="fill:#8bc34a;stroke:#8bc34a"/><circle cx="75" cy="49.9" r="2.7" style="fill:#ffa000;stroke:#ffa000"/><circle cx="75" cy="65.5" r="2.7" style="fill:#e91e63;stroke:#e91e63"/><g style="stroke:#999"><g style="fill:#fff;stroke-linecap:round;stroke-linejoin:round"><path d="m22.3 35h25.1"/><path d="m22.3 50.2h25.1"/><path d="m22.3 65.5h25.1"/></g><path d="m80.3 98.5h-60.6c-10.1 0-18.3-8.2-18.3-18.3v-60.5c.1-10 8.3-18.2 18.3-18.2h60.5c10.1 0 18.3 8.2 18.3 18.3v60.5c0 10-8.2 18.2-18.2 18.2z" style="fill:none"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <style>
+        .outer-box { fill: #FFFFFF; stroke: #999999; stroke-width: 3; stroke-miterlimit: 10; }
+        .lines { fill: none; stroke: #999999; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10; }
+        .dot { stroke-width: 3; stroke-miterlimit: 10; }
+        .dot-grey { fill: #999999; stroke: #999999; }
+        .dot-green { fill: #8BC34A; stroke: #8BC34A; }
+        .dot-amber { fill: #FFA000; stroke: #FFA000; }
+        .dot-magenta { fill: #E91E63; stroke: #E91E63; }
+    </style>
+    <path d="m80.3 98.5h-60.6c-10.1 0-18.3-8.2-18.3-18.3v-60.5c.1-10 8.3-18.2 18.3-18.2h60.5c10.1 0 18.3 8.2 18.3 18.3v60.5c0 10-8.2 18.2-18.2 18.2z" class="outer-box"/>
+    <path d="m22.3 35h25.1M22.3 50.2h25.1M22.3 65.5h25.1" class="lines"/>
+    <g>
+        <circle cx="60" cy="34.5" r="2.7" class="dot dot-grey"/>
+        <circle cx="60" cy="49.9" r="2.7" class="dot dot-grey"/>
+        <circle cx="60" cy="65.5" r="2.7" class="dot dot-grey"/>
+        <circle cx="75" cy="34.5" r="2.7" class="dot dot-green"/>
+        <circle cx="75" cy="49.9" r="2.7" class="dot dot-amber"/>
+        <circle cx="75" cy="65.5" r="2.7" class="dot dot-magenta"/>
+    </g>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <style>
+        .bg-box { fill: #FFFFFF; stroke: #999999; stroke-width: 2; stroke-miterlimit: 10; }
+        .list-line { fill: none; stroke: #999999; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .dot { fill: #999999; }
+    </style>
+    <rect x="10" y="20" width="80" height="60" rx="12" class="bg-box" />
+    <circle cx="26" cy="40" r="4" class="dot" />
+    <circle cx="26" cy="60" r="4" class="dot" />
+    <line x1="42" y1="40" x2="74" y2="40" class="list-line" />
+    <line x1="42" y1="60" x2="74" y2="60" class="list-line" />
+</svg>
