@@ -42,6 +42,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
     And I change window size to "large"
     Given I log in as "teacher1"
     And I am on the course main page for "course_topics"
+    And I instantly scroll to the center of element "#snap-course-tools" "css_element"
     Then I follow "Course Dashboard"
     And I click on the block drawer toggle
     And I should see "Calendar"
@@ -54,6 +55,7 @@ Feature: When a user clicks on next or previous month link in the calendar block
     And I change window size to "large"
     Given I log in as "teacher1"
     Then I am on the course main page for "course_topics"
+    And I instantly scroll to the center of element "#snap-course-tools" "css_element"
     Then I follow "Course Dashboard"
     And I click on the block drawer toggle
     And I should see "Calendar"

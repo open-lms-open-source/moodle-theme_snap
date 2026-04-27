@@ -131,18 +131,27 @@ class behat_theme_snap_behat_forms extends behat_forms {
     public function press_button($button) {
         $selector = $this->get_selected_node('button', $button);
         // We gots to see where we are pressing buttons, before embarking on the adventurous task of pressing the button.
-        $this->execute('behat_theme_snap::i_instantly_scroll_to_the_center_of_element', ['#' . $selector->getAttribute('id'), 'css_element']);
+        if ($selector->getAttribute('id')) {
+            $this->execute('behat_theme_snap::i_instantly_scroll_to_the_center_of_element', ['#' . $selector->getAttribute('id'), 'css_element']);
+        }
         parent::press_button($button);
     }
-    
+
     /**
-     * Fills a form with field/value data.
+     * Generic field setter as inherited from Core.
      *
-     * @throws ElementNotFoundException Thrown by behat_base::find
-     * @param TableNode $data
+     * Internal API method, a generic *I set "VALUE" to "FIELD" field*
+     * could be created based on it.
+     *
+     * @param string $fieldlocator The pointer to the field, it will depend on the field type.
+     * @param string $value
+     * @return void
      */
-    public function i_set_the_following_fields_to_these_values(TableNode $data) {
-        $this->expand_all_fields();
-        parent::i_set_the_following_fields_to_these_values($data);
+    public function set_field_value($fieldlocator, $value) {
+        $fieldnode = $this->find_field($fieldlocator);
+        if ($fieldnode->getAttribute('id')) {
+            $this->execute('behat_theme_snap::i_instantly_scroll_to_the_center_of_element', ['#' . $fieldnode->getAttribute('id'), 'css_element']);
+        }
+        parent::set_field_value($fieldlocator, $value);
     }
 }

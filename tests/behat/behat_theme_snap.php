@@ -1788,7 +1788,12 @@ JS;
         $function = <<<JS
           (function(){
               var elem = document.querySelector("$selector");
-              elem.scrollIntoView(false);
+              elem.scrollIntoView({
+                behavior: "instant",
+                block: "end",
+                inline: "center",
+                container: "all",
+              });
               return 1;
           })()
 JS;
@@ -1798,7 +1803,7 @@ JS;
             throw new \Exception("scrollIntoView by selector failed");
         }
     }
-    
+
     /**
      * Scroll element by selector into view and align the top of element with the top of the visible area.
      *
@@ -1824,7 +1829,7 @@ JS;
      * Instantly scroll to the vertical and horizontal center of element by selector.
      * For cases where the regular scroll is too slow and traffic jams the following steps.
      *
-     * @When I instantly scroll to the center of element :element :selectortype
+     * @When /^I instantly scroll to the center of element "(?P<element_string>(?:[^"]|\\")*)" "(?P<selectortype_string>[^"]*)"$/
      */
     public function i_instantly_scroll_to_the_center_of_element($element, $selectortype) {
         $scrollfunction = <<<JS
@@ -1833,6 +1838,7 @@ JS;
               block: "center",
               inline: "center",
             });
+            return 1;
 JS;
 
         if ($selectortype === 'css_element') {
