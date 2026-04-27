@@ -402,6 +402,10 @@ trait format_section_trait {
         $section = $mod->get_section_info();
 
         $cmitemdata->extraclasses = trim(($cmitemdata->extraclasses ?? '') . ' activity-wrapper snap-activity');
+        $purpose = plugin_supports('mod', $mod->modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+        if ($purpose !== MOD_PURPOSE_OTHER) {
+            $cmitemdata->extraclasses .= ' activity-' . $purpose;
+        }
 
         $displayoptions = [];
         // Instance the class controlmenu so data is added for rendering.

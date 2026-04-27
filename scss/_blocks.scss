@@ -461,6 +461,27 @@ body.path-site .block.block_settings {
     }
 }
 
+.feeditem {
+    &.activity-communication > img {
+        @include recolor-icon($activity-icon-communication-bg, 1);
+    }
+    &.activity-assessment > img {
+        @include recolor-icon($activity-icon-assessment-bg, 1);
+    }
+    &.activity-collaboration > img {
+        @include recolor-icon($activity-icon-collaboration-bg, 1);
+    }
+    &.activity-content > img {
+        @include recolor-icon($activity-icon-content-bg, 1);
+    }
+    &.activity-interactivecontent > img {
+        @include recolor-icon($activity-icon-interactivecontent-bg, 1);
+    }
+    &.activity-administration > img {
+        @include recolor-icon($activity-icon-administration-bg, 1);
+    }
+}
+
 .snap_line_separator {
     border-left: 2px solid $icons-color;
     height: 25px;

@@ -418,9 +418,6 @@ label[for="toc-search-input"]{
       position: relative;
       z-index: 1;
 
-      .activityiconcontainer.Forumicon {
-        filter: $communication-filter;
-      }
     }
 
     & .courseindex-item.restrictions {
@@ -560,137 +557,56 @@ label[for="toc-search-input"]{
         margin: unset;
         width: 200%;
 
-        .lightboxgallery.icon {
-          filter: $lightbox-filter;
+        &:not(.snap-icon-resolved) {
+            visibility: hidden;
         }
 
-        .forum.icon,
-        .hsuforum.icon,
-        .chat.icon {
-            filter: $communication-filter;
+        .activityicon {
+            width: 18px;
+            height: 18px;
+            position: absolute;
         }
 
-        .assignment.icon,
-        .assign.icon,
-        .workshop.icon,
-        .journal.icon,
-        .attendance.icon {
-          filter: $assignment-filter;
+        &.activity-communication img.activityicon {
+            @include recolor-icon($activity-icon-communication-bg, 1);
+        }
+        &.activity-assessment img.activityicon {
+            @include recolor-icon($activity-icon-assessment-bg, 1);
+        }
+        &.activity-collaboration img.activityicon {
+            @include recolor-icon($activity-icon-collaboration-bg, 1);
+        }
+        &.activity-interactivecontent img.activityicon {
+            @include recolor-icon($activity-icon-interactivecontent-bg, 1);
+        }
+        &.activity-administration img.activityicon {
+            @include recolor-icon($activity-icon-administration-bg, 1);
         }
 
-        .quiz.icon,
-        .choice.icon,
-        .feedback.icon,
-        .facetoface.icon{
-          filter: $content-filter;
+        &.lightboxgalleryicon img.activityicon {
+            @include recolor-icon($color-lightbox, 1);
         }
-
-        .wiki.icon,
-        .glossary.icon,
-        .choicegroup.icon,
-        .data.icon {
-          filter: $information-filter;
+        &.bookicon img.activityicon {
+            @include recolor-icon($color-book, 1);
         }
-
-        .collaborate.icon {
-          filter: $collab-filter;
+        &.urlicon, &.kalvidresicon {
+            img.activityicon {
+                @include recolor-icon($color-url, 1);
+            }
         }
-
-        .questionnaire.icon,
-        .imscp.icon,
-        .survey.icon,
-        .lesson.icon {
-          filter: $questionnaire-filter;
+        &.labelicon img.activityicon {
+            @include recolor-icon($color-label, 1);
         }
-
-        .lightbox.icon {
-          filter: $lightbox-filter;
+        &.pageicon img.activityicon {
+            @include recolor-icon($color-page, 1);
         }
-
-        .resource.icon,
-        .lti.icon {
-          filter: $resource-filter;
+        &.foldericon img.activityicon {
+            @include recolor-icon($color-folder, 1);
         }
-
-        .book.icon {
-          filter: $book-filter;
-        }
-
-        .folder.icon {
-          filter: $folder-filter;
-        }
-
-        .url.icon,
-        .kalvidres.icon,
-        .andrescosearch.icon{
-          filter: $url-filter;
-        }
-
-        .label.icon {
-          filter: $label-filter;
-        }
-
-        .page.icon {
-          filter: $page-filter;
-        }
-
-        .customcert.icon,
-        .certificate.icon {
-          filter: $certificate-filter;
-        }
-
-        .customquiz.icon {
-          filter: $customquiz-filter;
-        }
-
-        .livepoll.icon {
-          filter: $livepoll-filter;
-        }
-
-        .checklist.icon,
-        .dialogue.icon {
-          filter: $checklist-filter;
-        }
-
-        .adaptivequiz.icon,
-        .quizgame.icon {
-          filter: $quizlms-filter;
-        }
-
-        .zoom.icon {
-          filter: $zoom-filter;
-        }
-
-        .goone.icon {
-          filter: $go1-filter;
-        }
-
-        .ebcwep.icon,
-        .threesixo.icon,
-        .coursecertificate.icon,
-        .kalvidassign.icon {
-          filter: $ebcwep-filter;
-        }
-
-        .groupselect.icon,
-        .mindmap.icon,
-        .oublog.icon {
-          filter: $groupselect-filter;
-        }
-
-        .imscp.icon,
-        .scorm.icon {
-          filter: $imscp-filter;
-        }
-
-        .scheduler.icon {
-          filter: $scheduler-filter;
-        }
-
-      .activityicon {
-          width: 18px;
-          height: 18px;
-          position: absolute;
+        &.resourceicon, &.ltiicon {
+            img.activityicon {
+                filter: $resource-filter;
+            }
         }
     }
 }

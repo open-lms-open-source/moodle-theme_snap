@@ -858,6 +858,9 @@ class local {
 
             $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
 
+            $purpose = plugin_supports('mod', $cm->modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+            $purposeclass = ($purpose !== MOD_PURPOSE_OTHER) ? 'activity-' . $purpose : '';
+
             if (!$grade->is_hidden() || $canviewhiddengrade) {
                 $res[] = [
                     'iconUrl'      => $modimage,
@@ -869,7 +872,7 @@ class local {
                     'subTitle'     => $gradesubtitle,
                     'actionUrl'    => $url,
                     'description'  => $meta,
-                    'extraClasses' => '',
+                    'extraClasses' => $purposeclass,
                     'fromCache'    => 0,
                     'urlParameter'    => $snapfeedsurlparam,
                 ];
@@ -963,6 +966,9 @@ class local {
 
             $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
 
+            $purpose = plugin_supports('mod', $cm->modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+            $purposeclass = ($purpose !== MOD_PURPOSE_OTHER) ? 'activity-' . $purpose : '';
+
             $res[] = [
                 'iconUrl'      => $modimage,
                 'hasUserPic'   => true,
@@ -973,7 +979,7 @@ class local {
                 'subTitle'     => $ungradedsubtitle,
                 'actionUrl'    => $url,
                 'description'  => $meta,
-                'extraClasses' => '',
+                'extraClasses' => $purposeclass,
                 'fromCache'    => 0,
                 'urlParameter' => $snapfeedsurlparam,
                 'modName'      => $cm->modname,
@@ -2439,6 +2445,8 @@ SQL;
 
                 $snapfeedsurlparam = isset($CFG->theme_snap_feeds_url_parameter) ? $CFG->theme_snap_feeds_url_parameter : true;
 
+                $purpose = plugin_supports('mod', $cm->modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+                $purposeclass = ($purpose !== MOD_PURPOSE_OTHER) ? 'activity-' . $purpose : '';
                 $res[] = [
                     'iconUrl'      => $modimage,
                     'hasUserPic'   => true,
@@ -2449,7 +2457,7 @@ SQL;
                     'subTitle'     => $eventsubtitle,
                     'actionUrl'    => $url,
                     'description'  => $meta,
-                    'extraClasses' => '',
+                    'extraClasses' => $purposeclass,
                     'fromCache'    => $fromcache,
                     'urlParameter' => $snapfeedsurlparam,
                     'modName'      => $cm->modname
