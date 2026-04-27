@@ -463,7 +463,6 @@ label[for="toc-search-input"]{
 #course-index .completioninfo i.icon  {
   font-size: 11px;
   position: relative;
-  left: 8px;
   bottom: 2px;
 }
 
@@ -555,7 +554,9 @@ label[for="toc-search-input"]{
         vertical-align: text-bottom;
         padding: unset;
         margin: unset;
-        width: 200%;
+        width: 30px;
+        height: auto;
+        align-items: center;
 
         &:not(.snap-icon-resolved) {
             visibility: hidden;
