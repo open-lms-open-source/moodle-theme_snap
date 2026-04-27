@@ -50,14 +50,10 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     And I follow "Section 1"
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section name to "Section one"
-    And I scroll to the top of selector "input#id_submitbutton"
-    And I wait "50" milliseconds
     And I press "Save changes"
     And I follow "Section 2"
     And I click on "#section-2 .edit-summary" "css_element"
     And I set the section name to "Section two"
-    And I scroll to the top of selector "input#id_submitbutton"
-    And I wait "50" milliseconds
     And I press "Save changes"
 
     And I follow "Section one"
@@ -96,14 +92,10 @@ Feature: When the moodle theme is set to Snap, teachers can delete sections with
     And I follow "Section 1"
     And I click on "#section-1 .edit-summary" "css_element"
     And I set the section name to "Section one"
-    And I scroll to the top of selector "input#id_submitbutton"
-    And I wait "50" milliseconds
     And I press "Save changes"
     And I follow "Section 2"
     And I click on "#section-2 .edit-summary" "css_element"
     And I set the section name to "Section two"
-    And I scroll to the top of selector "input#id_submitbutton"
-    And I wait "50" milliseconds
     And I press "Save changes"
     And I follow "Section one"
     And I wait until the page is ready

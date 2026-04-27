@@ -106,6 +106,7 @@ Feature: Check functionality in activity cards.
       | Name | Test lesson |
       | Description | Test lesson description |
     And I am on the "Test lesson" "lesson activity" page
+    And I instantly scroll to the center of element "//*[@id='region-main']/div[4]/div[2]/p[4]/a" "xpath_element"
     And I follow "Add a question page"
     And I set the field "Select a question type" to "Short answer"
     And I press "Add a question page"

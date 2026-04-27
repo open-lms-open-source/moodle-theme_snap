@@ -1853,7 +1853,7 @@ JS;
         try {
             $this->getSession()->wait(5000, $function);
         } catch (Exception $e) {
-            throw new \Exception("Instant scroll by selector failed due to: " . $e->getMessage());
+            throw new \Exception("Instant scroll to element failed due to: " . $e->getMessage());
         }
     }
 
