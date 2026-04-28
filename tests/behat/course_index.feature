@@ -152,3 +152,14 @@ Feature: Testing course index drawer in theme_snap
     And "#section-1.state-visible" "css_element" should not be visible
     And "#section-3.state-visible" "css_element" should not be visible
     And "[data-activityname='Assignment 2'] #searchpin" "css_element" should be visible
+
+  @javascript
+  Scenario: Searching from the course index opens the subsection for an inner activity
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And I set the field with xpath "//input[@id='toc-search-input']" to "SubAssign 3"
+    And I should see "SubAssign 3" in the "#toc-search-results" "css_element"
+    When I click on "#toc-search-results a" "css_element"
+    Then "#section-5.state-visible" "css_element" should be visible
+    And "#section-2.state-visible" "css_element" should not be visible
+    And "[data-activityname='SubAssign 3'] #searchpin" "css_element" should be visible
