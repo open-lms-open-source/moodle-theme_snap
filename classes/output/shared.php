@@ -608,7 +608,7 @@ EOF;
                     if ($enrolurl) {
                         $selfenrol = true;
                         $iconurl = $OUTPUT->image_url('i/unenrolme', 'theme_snap');
-                        $enrolicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                        $enrolicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
                         $enrolstr = $enrolicon . get_string('unenrolme', 'theme_snap');
                         break;
                     }
@@ -618,7 +618,7 @@ EOF;
                         $selfenrol = true;
                         $enrolurl = new moodle_url('/enrol/index.php', ['id' => $COURSE->id]);
                         $iconurl = $OUTPUT->image_url('i/enrolme', 'theme_snap');
-                        $enrolicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                        $enrolicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
                         $enrolstr = $enrolicon . get_string('enrolme', 'theme_snap');
                         break;
                     }
@@ -633,25 +633,32 @@ EOF;
             if (!empty($coverimageurl)) {
                 $iconurl = $coverimageurl;
             }
-            $settingsicon = '<img src="'.$iconurl.'" class="snap-cover-icon svg-icon" alt="" role="presentation">';
+            $settingsicon = '<img src="' . $iconurl . '" class="snap-cover-icon svg-icon" alt="" role="presentation">';
 
             $links[] = array(
-                'link' => 'course/edit.php?id='.$COURSE->id,
-                'title' => $settingsicon.get_string('editcoursesettings', 'theme_snap'),
+                'link' => 'course/edit.php?id=' . $COURSE->id,
+                'title' => $settingsicon . get_string('editcoursesettings', 'theme_snap'),
             );
         }
 
-        $iconurl = $OUTPUT->image_url('joule_grader', 'theme');
-        $gradebookicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+        // Course Activities.
+        $iconurl = $OUTPUT->image_url('course_activities', 'theme');
+        $courseactivitesicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
+        $links[] = array(
+            'link' => 'course/overview.php?id=' . $COURSE->id,
+            'title' => $courseactivitesicon . get_string('activities'),
+        );
 
         // Joule grader if installed.
         if (array_key_exists('joulegrader', $localplugins)) {
             if (has_capability('local/joulegrader:grade', $coursecontext)
                 || has_capability('local/joulegrader:view', $coursecontext)
             ) {
+                $iconurl = $OUTPUT->image_url('joule_grader', 'theme');
+                $joulegradericon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
                 $links[] = array(
-                    'link' => 'local/joulegrader/view.php?courseid='.$COURSE->id,
-                    'title' => $gradebookicon.'Open Grader',
+                    'link' => 'local/joulegrader/view.php?courseid=' . $COURSE->id,
+                    'title' => $joulegradericon . get_string('pluginname', 'local_joulegrader'),
                 );
             }
         }
@@ -659,11 +666,10 @@ EOF;
         // Gradebook.
         if (self::gradebook_accessible($coursecontext)) {
             $iconurl = $OUTPUT->image_url('gradebook', 'theme');
-            $gradebookicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
-            // Gradebook.
+            $gradebookicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
             $links[] = array(
-                'link' => 'grade/index.php?id='.$COURSE->id,
-                'title' => $gradebookicon.get_string('gradebook', 'grades')
+                'link' => 'grade/index.php?id=' . $COURSE->id,
+                'title' => $gradebookicon . get_string('gradebook', 'grades'),
             );
         }
 
@@ -688,26 +694,26 @@ EOF;
             } else {
                 // Default icon when 0 participants.
                 $iconurl = $OUTPUT->image_url('u/f1');
-                $participanticons = '<img src="'.$iconurl.'" alt="" role="presentation">';
+                $participanticons = '<img src="' . $iconurl . '" alt="" role="presentation">';
             }
 
-            $participanticons = '<div class="snap-participant-icons">'.$participanticons.'</div>';
+            $participanticons = '<div class="snap-participant-icons">' . $participanticons . '</div>';
             $links[] = array(
-                'link' => 'user/index.php?id='.$COURSE->id.'&mode=1',
-                'title' => $participanticons.$usercount.' '.get_string('participants')
+                'link' => 'user/index.php?id=' . $COURSE->id . '&mode=1',
+                'title' => $participanticons . $usercount . ' ' . get_string('participants'),
             );
         }
 
         // Joule reports if installed.
         if (array_key_exists('reports', core_component::get_plugin_list('block'))) {
             $iconurl = $OUTPUT->image_url('joule_reports', 'theme');
-            $reportsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $reportsicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
             if (has_capability('block/reports:viewown', $coursecontext, null, false)
                 || has_capability('block/reports:view', $coursecontext)
             ) {
                 $links[] = array(
-                    'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboard&courseid='.$COURSE->id,
-                    'title' => $reportsicon.'Open Reports'
+                    'link' => $CFG->wwwroot . '/blocks/reports/view.php?action=dashboard&courseid=' . $COURSE->id,
+                    'title' => $reportsicon . 'Open Reports',
                 );
             }
         }
@@ -716,14 +722,13 @@ EOF;
         if (array_key_exists('reports', core_component::get_plugin_list('block'))
                 && !empty($CFG->block_reports_enable_dashboardce)) {
             $iconurl = $OUTPUT->image_url('open_reports_ce', 'theme');
-            $reportsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $reportsicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
             if (has_capability('block/reports:viewown', $coursecontext, null, false)
                 || has_capability('block/reports:view', $coursecontext)
             ) {
                 $links[] = array(
-                    'link' => $CFG->wwwroot.'/blocks/reports/view.php?action=dashboardce&courseid='.$COURSE->id,
-                    'title' => $reportsicon.'Open Reports ('.get_string('experimental',
-                            'block_reports').')'
+                    'link' => $CFG->wwwroot . '/blocks/reports/view.php?action=dashboardce&courseid='.$COURSE->id,
+                    'title' => $reportsicon . 'Open Reports (' . get_string('experimental', 'block_reports') . ')',
                 );
             }
         }
@@ -731,12 +736,12 @@ EOF;
         // Personalised Learning Designer.
         if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
             $iconurl = $OUTPUT->image_url('pldnew', 'theme');
-            $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $pldicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
             $pldname = get_string('pldinitials', 'local_pld');
             $links[] = array(
-                'link' => 'local/pld/view.php?newpld=1&courseid='.$COURSE->id,
-                'title' => $pldicon.$pldname,
-                'attributes' => ['id' => 'ct-pld']
+                'link' => 'local/pld/view.php?newpld=1&courseid=' . $COURSE->id,
+                'title' => $pldicon . $pldname,
+                'attributes' => ['id' => 'ct-pld'],
             );
         }
 
@@ -744,12 +749,12 @@ EOF;
         if ((!isset($CFG->local_pld_legacy) || $CFG->local_pld_legacy)) {
             if (array_key_exists('pld', $localplugins) && has_capability('local/pld:editcourserules', $coursecontext)) {
                 $iconurl = $OUTPUT->image_url('pld', 'theme');
-                $pldicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                $pldicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
                 $pldname = get_string('pldlegacy', 'local_pld');
                 $links[] = array(
-                    'link' => 'local/pld/view.php?courseid='.$COURSE->id,
-                    'title' => $pldicon.$pldname,
-                    'attributes' => ['id' => 'ct-pld-legacy']
+                    'link' => 'local/pld/view.php?courseid=' . $COURSE->id,
+                    'title' => $pldicon . $pldname,
+                    'attributes' => ['id' => 'ct-pld-legacy'],
                 );
             }
         }
@@ -757,30 +762,29 @@ EOF;
         // Competencies if enabled.
         if (get_config('core_competency', 'enabled') && has_capability('moodle/competency:competencyview', $coursecontext)) {
             $iconurl = $OUTPUT->image_url('competencies', 'theme');
-            $competenciesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $competenciesicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
             $links[] = array(
-                'link'  => 'admin/tool/lp/coursecompetencies.php?courseid='.$COURSE->id,
-                'title' => $competenciesicon.get_string('competencies', 'core_competency')
+                'link'  => 'admin/tool/lp/coursecompetencies.php?courseid=' . $COURSE->id,
+                'title' => $competenciesicon . get_string('competencies', 'core_competency'),
             );
         }
 
         // Outcomes if enabled.
         if (!empty($CFG->core_outcome_enable)) {
             $iconurl = $OUTPUT->image_url('outcomes', 'theme');
-            $outcomesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $outcomesicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
 
             if (has_capability('moodle/grade:edit', $coursecontext)) {
                 $links[] = array(
-                    'link'  => 'outcome/course.php?contextid='.$coursecontext->id,
-                    'title' => $outcomesicon.get_string('outcomes', 'outcome'),
+                    'link'  => 'outcome/course.php?contextid=' . $coursecontext->id,
+                    'title' => $outcomesicon . get_string('outcomes', 'outcome'),
                 );
             } else if (!is_guest($coursecontext)) {
                 $outcomesets = new \core_outcome\model\outcome_set_repository();
                 if ($outcomesets->course_has_any_outcome_sets($COURSE->id)) {
                     $links[] = array(
-                        'link'  => 'outcome/course.php?contextid='.$coursecontext->id.
-                            '&action=report_course_user_performance_table',
-                        'title' => $outcomesicon.get_string('outcomes', 'outcome'),
+                        'link'  => 'outcome/course.php?contextid=' . $coursecontext->id . '&action=report_course_user_performance_table',
+                        'title' => $outcomesicon . get_string('outcomes', 'outcome'),
                     );
                 }
             }
@@ -802,10 +806,10 @@ EOF;
             $canviewbadges = has_any_capability($badgecaps, $coursecontext);
             if (!is_guest($coursecontext) && $canviewbadges) {
                 $iconurl = $OUTPUT->image_url('badges', 'theme');
-                $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+                $badgesicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
                 $links[] = array(
                     'link' => 'badges/index.php?type=' . BADGE_TYPE_COURSE . '&id=' . $COURSE->id,
-                    'title' => $badgesicon.get_string('badges', 'badges')
+                    'title' => $badgesicon . get_string('badges', 'badges'),
                 );
             }
         }
@@ -818,7 +822,7 @@ EOF;
             mr_on("mediasite", "_MR_MODULES")) {
             require_once($CFG->dirroot . "/mod/mediasite/mediasitesite.php");
             $iconurl = $OUTPUT->image_url('icon', 'mediasite');
-            $badgesicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $mediasiteicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
             $courseconfig = $DB->get_record('mediasite_course_config', array('course' => $COURSE->id));
             if (!empty($courseconfig->mediasite_courses_enabled) && $courseconfig->mediasite_site) {
                 $site = new \Sonicfoundry\MediasiteSite($courseconfig->mediasite_site);
@@ -828,7 +832,7 @@ EOF;
                 );
                 $links[] = array(
                     'link' => $url->out_as_local_url(false),
-                    'title' => $badgesicon . $site->get_integration_catalog_title()
+                    'title' => $mediasiteicon . $site->get_integration_catalog_title(),
                 );
             } else {
                 require_once($CFG->dirroot.'/mod/mediasite/navigation.php');
@@ -836,7 +840,7 @@ EOF;
                     $url = new moodle_url('/mod/mediasite/courses7.php', array('id' => $COURSE->id, 'siteid' => $site->id));
                     $links[] = array(
                         'link' => $url->out_as_local_url(false),
-                        'title' => $badgesicon . $site->integration_catalog_title
+                        'title' => $mediasiteicon . $site->integration_catalog_title,
                     );
                 }
             }
@@ -857,11 +861,11 @@ EOF;
             );
 
             $iconurl = $OUTPUT->image_url('i/ally_logo', 'theme_snap');
-            $allyicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+            $allyicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
             $links[] = [
                 'link' => $url->out_as_local_url(false),
                 'title' => $allyicon . get_string('coursereport', 'report_allylti'),
-                'attributes' => ['target' => '_blank']
+                'attributes' => ['target' => '_blank'],
             ];
         }
 
@@ -876,7 +880,7 @@ EOF;
         // Output course tools section.
         $coursetools = get_string('coursetools', 'theme_snap');
         $iconurl = $OUTPUT->image_url('course_dashboard', 'theme');
-        $coursetoolsicon = '<img src="'.$iconurl.'" class="svg-icon" alt="" role="presentation">';
+        $coursetoolsicon = '<img src="' . $iconurl . '" class="svg-icon" alt="" role="presentation">';
         $coursehomealttext = get_string('tilesformatcoursehomealttext', 'theme_snap');
 
         if ($COURSE->format === 'tiles') {
@@ -886,7 +890,7 @@ EOF;
             $o .= '<h2>' . $coursetoolsicon . $coursetools . '</h2>';
             $o .= '<div><a href="' . $courseurl . '">
                        <i class="icon fa fa-home fa-fw fa-2x"
-                        title="'.$coursehomealttext.'" aria-label="'.$coursehomealttext.'"></i>
+                        title="' . $coursehomealttext . '" aria-label="' . $coursehomealttext . '"></i>
                    </a></div>';
             $o .= '</div>';
         } else {
@@ -897,7 +901,7 @@ EOF;
             $links[] = $downloaditem;
         }
         $o .= self::print_student_dashboard();
-        $o .= '<ul id="coursetools-list" class="modern-dashboard">' .self::render_appendices($links). '</ul>';
+        $o .= '<ul id="coursetools-list" class="modern-dashboard">' . self::render_appendices($links) . '</ul>';
 
         return $o;
     }
@@ -971,7 +975,7 @@ EOF;
 
         $userboard  = '<div id="snap-student-dashboard" class="row clearfix">';
         $userboard .= '<div class="col-xs-6">';
-        $userboard .= '<h4 class="h6">' .s(fullname($USER)). '</h4>';
+        $userboard .= '<h4 class="h6">' . s(fullname($USER)) . '</h4>';
         $userboard .= $userpic;
         $userboard .= '</div>';
 
@@ -979,9 +983,9 @@ EOF;
         if ($COURSE->enablecompletion) {
             $progress = local::course_completion_progress($COURSE);
             $userboard .= '<div class="col-xs-3 text-center snap-student-dashboard-progress">';
-            $userboard .= '<h4 class="h6">' .get_string('progress', 'theme_snap'). '</h6>';
+            $userboard .= '<h4 class="h6">' . get_string('progress', 'theme_snap') . '</h6>';
             $userboard .= '<div class="js-progressbar-circle snap-progress-circle" value="'
-                .round($progress->progress ?? 0). '"></div>';
+                . round($progress->progress ?? 0) . '"></div>';
             $userboard .= '</div>';
         }
 
@@ -1038,7 +1042,7 @@ EOF;
             $link = [
                 'link' => $linkattr->url,
                 'title' => $iconurl . $linkattr->displaystring,
-                'attributes' => $linkattr->elementattributes
+                'attributes' => $linkattr->elementattributes,
             ];
         }
         return $link;
