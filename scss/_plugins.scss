@@ -610,6 +610,18 @@
     #moodle-blocks .block_book_toc {
         padding: 1rem;
     }
+
+    // Adjust navigation button display when Snap header is enabled
+    #mod_book-chaptersnavigation {
+        @media (min-width: 993px) {
+            top: 104px;
+        }
+    }
+    &:has(header #snap-custom-menu-header) #mod_book-chaptersnavigation {
+        @media (min-width: 993px) {
+            top: 154px;
+        }
+    }
 }
 
 // Print style guide for book.
