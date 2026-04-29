@@ -6893,6 +6893,7 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
     //padding-bottom: 1em;
 }
 .courseindex .courseindex-section .courseindex-sectioncontent .courseindex-item {
+    align-items: center;
     padding-left: 0.5rem;
     padding-right: 0;
     &:has(> .delegated-section) {
