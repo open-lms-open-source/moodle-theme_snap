@@ -622,6 +622,12 @@
             top: 154px;
         }
     }
+
+    @include media-breakpoint-up(md) {
+        .tag_list.book-tags {
+            margin: 0 1em;
+        }
+    }
 }
 
 // Print style guide for book.
