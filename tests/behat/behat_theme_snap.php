@@ -1800,7 +1800,7 @@ JS;
         try {
             $this->getSession()->wait(5000, $function);
         } catch (Exception $e) {
-            throw new \Exception("scrollIntoView by selector failed");
+            throw new \Exception("scrollIntoView base by selector failed by: " . $e->getMessage());
         }
     }
 
@@ -1814,14 +1814,18 @@ JS;
         $function = <<<JS
           (function(){
               var elem = document.querySelector("$selector");
-              elem.scrollIntoView(true);
+              elem.scrollIntoView({
+                behavior: "instant",
+                block: "start",
+                inline: "center",
+              });
               return 1;
           })()
 JS;
         try {
             $this->getSession()->wait(5000, $function);
         } catch (Exception $e) {
-            throw new \Exception("scrollIntoView by selector failed");
+            throw new \Exception("scrollIntoView top by selector failed by: " . $e->getMessage());
         }
     }
 

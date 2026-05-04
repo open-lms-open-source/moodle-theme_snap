@@ -80,7 +80,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I set the following fields to these values:
       | Forum name | Single Forum Course |
     And I scroll to the top of selector "input#id_submitbutton"
-    And I wait "100" milliseconds
     And I press "Save and display"
     And I log out
     And completion tracking is "<completionenabled>" for course "C1"
