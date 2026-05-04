@@ -1889,10 +1889,6 @@ body.snap-resource-card {
             padding-bottom: 2em;
         }
 
-        img.activityicon {
-            filter: none;
-        }
-
         .activityiconcontainer,
         .instancename {
             display: inline-block;
@@ -2077,28 +2073,28 @@ body.snap-resource-card {
 }
 
 // -------------------------
-// Activity icon colors in mod view page header.
+// Branded activity icon colours applied via modicon_* class.
+// Covers any context where Moodle renders the icon container with modicon_{modname}:
+// mod view page headers, activity chooser, context headers, etc.
 // -------------------------
-.theme-snap.path-mod {
-    .page-context-header .activityiconcontainer {
-        &.modicon_lightboxgallery img.activityicon {
-            @include recolor-icon($color-lightbox, 1);
-        }
-        &.modicon_book img.activityicon {
-            @include recolor-icon($color-book, 1);
-        }
-        &.modicon_url img.activityicon {
-            @include recolor-icon($color-url, 1);
-        }
-        &.modicon_label img.activityicon {
-            @include recolor-icon($color-label, 1);
-        }
-        &.modicon_page img.activityicon {
-            @include recolor-icon($color-page, 1);
-        }
-        &.modicon_folder img.activityicon {
-            @include recolor-icon($color-folder, 1);
-        }
+.theme-snap .activityiconcontainer {
+    &.modicon_lightboxgallery img.activityicon:not(.nofilter) {
+        @include recolor-icon($color-lightbox, 1);
+    }
+    &.modicon_book img.activityicon:not(.nofilter) {
+        @include recolor-icon($color-book, 1);
+    }
+    &.modicon_url img.activityicon:not(.nofilter) {
+        @include recolor-icon($color-url, 1);
+    }
+    &.modicon_label img.activityicon:not(.nofilter) {
+        @include recolor-icon($color-label, 1);
+    }
+    &.modicon_page img.activityicon:not(.nofilter) {
+        @include recolor-icon($color-page, 1);
+    }
+    &.modicon_folder img.activityicon:not(.nofilter) {
+        @include recolor-icon($color-folder, 1);
     }
 }
 
@@ -2300,7 +2296,6 @@ body.snap-resource-card {
                         margin-right: 0 !important;
                         height: fit-content;
                         width: 34px;
-                        filter: none;
                     }
                     img[src*="snap/core"] {
                         filter: brightness(0) invert(1);
