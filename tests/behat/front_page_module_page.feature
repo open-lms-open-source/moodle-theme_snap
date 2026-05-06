@@ -100,3 +100,20 @@ Feature: Open page (front page) module inline
     And I click on ".readmore-container button" "css_element"
     And I should not see an error dialog
     And I should see "page content1"
+
+  @javascript
+  Scenario: Frontpage activity actions work with AJAX with editing mode OFF.
+    Given the following "activities" exist:
+      | activity | course               | idnumber | name       | intro        | content       | completion | completionview | section |
+      | page     | Acceptance test site | page1    | Test page1 | Test page 1  | page content1 | 0          | 0              | 1       |
+    And I log in as "admin"
+    And I am on site homepage
+    And I should see "Test page1"
+    And I should not see "page content1"
+    And I wait until the page is ready
+    And I open "Test page1" actions menu
+    And I choose "Permalink" in the open action menu
+    And I should see "Permalink"
+    Then I should see "Copy to clipboard"
+    And I click on "Copy to clipboard" "link"
+    Then I should see "Text copied to clipboard"

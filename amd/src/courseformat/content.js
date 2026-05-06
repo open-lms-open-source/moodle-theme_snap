@@ -137,7 +137,7 @@ export default class Component extends BaseSectionComponent {
                 return pendingReload.resolve();
             }
             const promise = Fragment.loadFragment(
-                'theme_snap', // HERE WE ARE CALLING SNAP FRAGMENT
+                'theme_snap',
                 'cmitem',
                 Config.courseContextId,
                 {
