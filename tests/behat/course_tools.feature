@@ -74,12 +74,14 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
 
   @javascript
   Scenario Outline: Course tools show automatically for single activity format.
-    Given the course format for "C1" is set to "singleactivity" with the following settings:
-      | name      | activitytype |
-      | value     | forum        |
-    And the following "activities" exist:
-      | activity | course | idnumber | name            | intro           | section |
-      | forum    | C1     | forum1   | Test forum      | Test forum      | 1       |
+    Given the course format for "C1" is set to "singleactivity"
+    And I log in as "admin"
+    And I am on the course main page for "C1"
+    And I set the following fields to these values:
+      | Forum name | Single Forum Course |
+    And I scroll to the top of selector "input#id_submitbutton"
+    And I press "Save and display"
+    And I log out
     And completion tracking is "<completionenabled>" for course "C1"
     And I set the following system permissions of "Student" role:
       | capability                | permission            |

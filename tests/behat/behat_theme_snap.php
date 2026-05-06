@@ -1788,14 +1788,82 @@ JS;
         $function = <<<JS
           (function(){
               var elem = document.querySelector("$selector");
-              elem.scrollIntoView(false);
+              elem.scrollIntoView({
+                behavior: "instant",
+                block: "end",
+                inline: "center",
+                container: "all",
+              });
               return 1;
           })()
 JS;
         try {
             $this->getSession()->wait(5000, $function);
         } catch (Exception $e) {
-            throw new \Exception("scrollIntoView by selector failed");
+            throw new \Exception("scrollIntoView base by selector failed by: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Scroll element by selector into view and align the top of element with the top of the visible area.
+     *
+     * @When I scroll to the top of selector :selector
+     *
+     */
+    public function i_scroll_into_view_top_by_selector($selector) {
+        $function = <<<JS
+          (function(){
+              var elem = document.querySelector("$selector");
+              elem.scrollIntoView({
+                behavior: "instant",
+                block: "start",
+                inline: "center",
+              });
+              return 1;
+          })()
+JS;
+        try {
+            $this->getSession()->wait(5000, $function);
+        } catch (Exception $e) {
+            throw new \Exception("scrollIntoView top by selector failed by: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Instantly scroll to the vertical and horizontal center of element by selector.
+     * For cases where the regular scroll is too slow and traffic jams the following steps.
+     *
+     * @When /^I instantly scroll to the center of element "(?P<element_string>(?:[^"]|\\")*)" "(?P<selectortype_string>[^"]*)"$/
+     */
+    public function i_instantly_scroll_to_the_center_of_element($element, $selectortype) {
+        $scrollfunction = <<<JS
+            elem.scrollIntoView({
+              behavior: "instant",
+              block: "center",
+              inline: "center",
+            });
+            return 1;
+JS;
+
+        if ($selectortype === 'css_element') {
+            $function = <<<JS
+              (function(){
+                  var elem = document.querySelector("$element");
+                  $scrollfunction
+              })()
+JS;
+        } else if ($selectortype === 'xpath_element') {
+            $function = <<<JS
+              (function(){
+                  var elem = document.evaluate("$element", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue;
+                  $scrollfunction
+              })()
+JS;
+        }
+        try {
+            $this->getSession()->wait(5000, $function);
+        } catch (Exception $e) {
+            throw new \Exception("Instant scroll to element failed due to: " . $e->getMessage());
         }
     }
 

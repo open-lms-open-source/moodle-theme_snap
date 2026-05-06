@@ -43,9 +43,6 @@ Feature: When the moodle theme is set to Snap and can open the user menu from th
 
   @javascript
   Scenario: User logs in and sees my courses link and user menu
-    Given the following "courses" exist:
-      | fullname | shortname |
-      | Course 1 | C1        |
     And the following "course enrolments" exist:
       | user      | course | role           |
       | teacher1  | C1     | editingteacher |

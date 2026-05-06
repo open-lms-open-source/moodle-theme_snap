@@ -106,6 +106,7 @@ Feature: Check functionality in activity cards.
       | Name | Test lesson |
       | Description | Test lesson description |
     And I am on the "Test lesson" "lesson activity" page
+    And I scroll to the top of selector "div.firstpageoptions"
     And I follow "Add a question page"
     And I set the field "Select a question type" to "Short answer"
     And I press "Add a question page"
@@ -145,9 +146,11 @@ Feature: Check functionality in activity cards.
     And "body.snap-resource-card" "css_element" should exist
     And I click on "li.activity-wrapper.modtype_url [data-bs-toggle='dropdown']" "css_element"
     And "li.activity-wrapper.modtype_url .dropdown-menu.show" "css_element" should exist
-    And I click on "li.activity-wrapper.modtype_url [data-bs-toggle='dropdown-subpanel']" "css_element"
-    And "li.activity-wrapper.modtype_url .dropdown-subpanel-content.show" "css_element" should be visible
-    And "li.activity-wrapper.modtype_url .dropdown-subpanel-content[data-open='true']" "css_element" should exist
+    And I click on "li.activity-wrapper.modtype_url [data-bs-toggle='dropdown']" "css_element"
+    And I press enter
+    And "li.activity-wrapper.modtype_url .dropdown-menu.show" "css_element" should be visible
+    And "li.activity-wrapper.modtype_url .dropdown-menu.show[data-popper-placement='top-start']" "css_element" should exist
+    And I click on "li.activity-wrapper.modtype_url .dropdown-menu.show a[aria-label='Availability']" "css_element"
     And I should see "Show on course page"
     And I should see "Hide on course page"
     And I should see "Make available but don't show on course page"

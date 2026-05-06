@@ -55,4 +55,4 @@ Feature: When the Moodle theme is set to Snap, core notifications messages shoul
       | Subject | Test discussion 1 |
       | Message | Test discussion 1 description |
     And I should see "Your post was successfully added."
-    And the "aria-label" attribute of "div.alert-success button.close" "css_element" should contain "Close"
+    And the "aria-label" attribute of "div.alert-success button.btn-close" "css_element" should contain "Close"

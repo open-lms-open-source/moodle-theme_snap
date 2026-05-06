@@ -25,13 +25,16 @@ Feature: When the moodle theme is set to Snap, grading activities are shown only
   Background:
     Given I log in as "admin"
     And I navigate to "Users > Permissions > Define roles" in current page administration
+    And I instantly scroll to the center of element ".singlebutton button[type='submit']" "css_element"
     And I click on "Add a new role" "button"
     And I set the field with xpath "//select[@id = 'id_resettype']" to "Teacher"
+    And I instantly scroll to the center of element "input[type='submit'][value='Continue']" "css_element"
     And I click on "Continue" "button"
     And I set the following fields to these values:
       | Short name | nograder |
       | Custom full name | No grader |
       | mod/assign:grade | 0 |
+    And I instantly scroll to the center of element "input[type='submit'][value='Create this role']" "css_element"
     And I click on "Create this role" "button"
     Then the following "users" exist:
       | username | firstname | lastname | email |
