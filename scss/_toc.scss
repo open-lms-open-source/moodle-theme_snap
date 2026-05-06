@@ -557,6 +557,7 @@ label[for="toc-search-input"]{
         width: 30px;
         height: auto;
         align-items: center;
+        min-width: 30px;
 
         &:not(.snap-icon-resolved) {
             visibility: hidden;
