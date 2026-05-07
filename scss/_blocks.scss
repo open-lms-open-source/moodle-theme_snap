@@ -461,7 +461,7 @@ body.path-site .block.block_settings {
     }
 }
 
-.feeditem {
+.snap-media-object {
     &.activity-communication > img {
         @include recolor-icon($activity-icon-communication-bg, 1);
     }

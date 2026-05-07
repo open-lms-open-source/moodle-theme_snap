@@ -1551,7 +1551,6 @@ body#page-admin-plugins {
 #page-course-view-tiles.format-tiles-single-sec  {
     .activityiconcontainer img {
         &[src*="hsuforum"][src*="icon"], &[src*="hsuforum"][src*="monologo"] {
-            filter: none;
             height: 55px;
         }
 
@@ -1561,18 +1560,7 @@ body#page-admin-plugins {
         }
     }
 }
-#page-course-view-section-tiles.editing,
-#page-course-view-section-tiles.single-section-page,
-#page-course-view-tiles.editing,
-#page-course-view-tiles #section-zero-container,
-#page-course-view-tiles.format-tiles-single-sec.editing {
-    .activityiconcontainer img:not(.modchooser img) {
-        &[src*="hsuforum"][src*="icon"], &[src*="hsuforum"][src*="monologo"],
-        &[src*="livepoll"][src*="icon"], &[src*="livepoll"][src*="monologo"] {
-            filter: none;
-        }
-    }
-}
+
 // Turnitin course end date modal
 #page-admin-mod-turnitintooltwo-settings_extras {
     .edit_end_date_form {

@@ -606,7 +606,7 @@ label[for="toc-search-input"]{
         }
         &.resourceicon, &.ltiicon {
             img.activityicon {
-                filter: $resource-filter;
+                @include recolor-icon($activity-icon-content-bg, 1);
             }
         }
     }
