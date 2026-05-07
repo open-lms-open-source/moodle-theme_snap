@@ -151,6 +151,70 @@ class behat_theme_snap_category_colors extends behat_base {
     }
 
     /**
+     * Checks if a CSS element's filter property contains a feColorMatrix recolor matching the given hex colour.
+     *
+     * The recolor-icon Sass mixin compiles to a filter: url(data:image/svg+xml;utf8,...) whose SVG embeds a
+     * feColorMatrix with normalised (0-1) R/G/B values derived from the hex colour. This step extracts those
+     * values via JavaScript, then compares them numerically so the assertion is immune to float-precision
+     * differences between Sass and PHP string representations.
+     *
+     * @codingStandardsIgnoreStart
+     * @Given /^I check element "(?P<element_string>(?:[^"]|\\")*)" has filter for color "(?P<color_string>[^"]*)"$/
+     * @codingStandardsIgnoreEnd
+     * @param string $element CSS selector of the element whose filter is checked.
+     * @param string $hexcolor Expected colour in hex format (#RRGGBB).
+     * @throws Exception
+     */
+    public function i_check_element_has_filter_for_color($element, $hexcolor) {
+        $session = $this->getSession();
+
+        // Extract the 20 feColorMatrix values from the element's computed filter.
+        // Values are space-separated; positions 4, 9, 14 (0-based) are the R, G, B constants.
+        // The regex skips over any quote/escape chars that browsers insert when normalising the SVG data URI.
+        $js = <<<JS
+(function() {
+    var elem = document.querySelector("$element");
+    if (!elem) { return "ERR:no-element"; }
+    var filterVal = window.getComputedStyle(elem).getPropertyValue("filter");
+    if (!filterVal || filterVal === "none") { return "ERR:no-filter:" + filterVal; }
+    // Match "values=" followed by any non-digit chars (quotes, backslash-escapes, etc.),
+    // then capture the space-separated float values.
+    var match = filterVal.match(/values[^0-9]*([0-9][0-9 .]*[0-9 ])/);
+    if (!match) { return "ERR:no-match:" + filterVal.substring(0, 200); }
+    var parts = match[1].trim().split(/\s+/);
+    if (parts.length < 15) { return "ERR:short-values:" + match[1]; }
+    return parts[4] + "," + parts[9] + "," + parts[14];
+})()
+JS;
+        $result = $session->getDriver()->evaluateScript($js);
+
+        if ($result === null || substr($result, 0, 4) === 'ERR:') {
+            throw new \Exception("No feColorMatrix filter found on element \"$element\": $result");
+        }
+
+        list($actualR, $actualG, $actualB) = array_map('floatval', explode(',', $result));
+
+        // Convert hex to normalised (0-1) R/G/B, matching the Sass mixin formula.
+        $hex = ltrim($hexcolor, '#');
+        $expectedR = hexdec(substr($hex, 0, 2)) / 255;
+        $expectedG = hexdec(substr($hex, 2, 2)) / 255;
+        $expectedB = hexdec(substr($hex, 4, 2)) / 255;
+
+        $tolerance = 0.005;
+        if (
+            abs($actualR - $expectedR) > $tolerance ||
+            abs($actualG - $expectedG) > $tolerance ||
+            abs($actualB - $expectedB) > $tolerance
+        ) {
+            throw new \Exception(
+                "Filter colour mismatch on element \"$element\". " .
+                "Expected RGB ({$expectedR}, {$expectedG}, {$expectedB}) for $hexcolor, " .
+                "but got ({$actualR}, {$actualG}, {$actualB}) from filter."
+            );
+        }
+    }
+
+    /**
      * Function to get a RGB array from a hex color (1, 3, or 6 digits).
      * @param string $color color in hex format
      * @return array|bool

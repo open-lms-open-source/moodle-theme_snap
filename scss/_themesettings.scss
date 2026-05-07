@@ -288,6 +288,29 @@
 }
 
 // -------------------------
+// Tab - Basics (icon activities color).
+// -------------------------
+#themesnapbranding.active {
+    #admin-adminactivitiescolor,
+    #admin-assessactivitiescolor,
+    #admin-collabactivitiescolor,
+    #admin-commactivitiescolor,
+    #admin-interactivitiescolor,
+    #admin-resouactivitiescolor {
+        display: inline-block;
+        width: 50%;
+        min-width: 280px;
+        vertical-align: top;
+        box-sizing: border-box;
+
+        .form-label label,
+        .form-label .form-shortname {
+            display: block;
+        }
+    }
+}
+
+// -------------------------
 // Tab - Featured categories and courses.
 // -------------------------
 #themesnapfeaturedcategoriesandcourses.active {

@@ -249,6 +249,25 @@ $string['loginrequiredmessage'] = '* indicates a required field';
 $string['highlightedsection'] = 'Highlighted';
 $string['home'] = 'home';
 $string['image'] = 'image';
+$string['iconactivitiescolor'] = 'Icon activities color';
+$string['iconactivitiescolordesc'] = '<p>Customize the color groupings of activity icons to match your branding or preferences. This setting allows to change the default color assignments for icon categories. Below is a list of each purpose group and the activities it includes.</p>
+<table class="table table-striped table-hover table-sm">
+<thead class="table-light"><tr><th scope="col">Purpose</th><th scope="col">Common Activities</th></tr></thead>
+<tbody>
+<tr><td><strong>Administration</strong></td><td>Attendance, Certificate, Custom Certificate, Scheduler, External Tool (LTI)</td></tr>
+<tr><td><strong>Assessment</strong></td><td>Assignment, Quiz, Workshop, SCORM, HotPot, Lesson (graded), Questionnaire, Survey</td></tr>
+<tr><td><strong>Collaboration</strong></td><td>Forum, Glossary, Wiki, Database</td></tr>
+<tr><td><strong>Communication</strong></td><td>Chat, Choice, Feedback, Survey, Scheduler</td></tr>
+<tr><td><strong>Interactive Content</strong></td><td>H5P, SCORM (interactive), Lesson (interactive), HotPot, External Tool with embedded content</td></tr>
+<tr><td><strong>Content / Resources</strong></td><td>Book, Folder, Label, Page, URL, File, Lightbox Gallery</td></tr>
+</tbody>
+</table>';
+$string['adminactivitiescolor'] = 'Administration activities';
+$string['assessactivitiescolor'] = 'Assessment activities';
+$string['collabactivitiescolor'] = 'Collaboration activities';
+$string['commactivitiescolor'] = 'Communication activities';
+$string['interactivitiescolor'] = 'Interactive content activities';
+$string['resouactivitiescolor'] = 'Resource activities';
 $string['images'] = 'Images';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'The url of your instagram account.';

@@ -104,12 +104,12 @@ $btn-border-radius-sm:       .2rem;
 $btn-close-width:            0.6rem;
 
 // Activity icons
-$activity-icon-administration-bg:    #da58ef;
-$activity-icon-assessment-bg:        #008CBA;
-$activity-icon-collaboration-bg:     #009B87;
-$activity-icon-communication-bg:     #689F38;
-$activity-icon-content-bg:           #3279B2;
-$activity-icon-interactivecontent-bg: #8d3d1b;
+$activity-icon-administration-bg:    #da58ef !default;
+$activity-icon-assessment-bg:        #008CBA !default;
+$activity-icon-collaboration-bg:     #009B87 !default;
+$activity-icon-communication-bg:     #689F38 !default;
+$activity-icon-content-bg:           #3279B2 !default;
+$activity-icon-interactivecontent-bg: #8d3d1b !default;
 
 // Resource icons
 $color-lightbox:                     #008C5E; // Lightbox gallery

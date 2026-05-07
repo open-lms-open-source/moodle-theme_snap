@@ -71,6 +71,67 @@ $setting = new admin_setting_configstoredfile($name, $title, $description, 'favi
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
+// Icon activities color heading.
+$name = 'theme_snap/iconactivitiescolorheading';
+$title = new \core\lang_string('iconactivitiescolor', 'theme_snap');
+$description = new \core\lang_string('iconactivitiescolordesc', 'theme_snap');
+$setting = new admin_setting_heading($name, $title, $description);
+$snapsettings->add($setting);
+
+// Administration activities color.
+$name = 'theme_snap/adminactivitiescolor';
+$title = new \core\lang_string('adminactivitiescolor', 'theme_snap');
+$description = 'Default: #da58ef';
+$default = '#da58ef';
+$setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
+// Assessment activities color.
+$name = 'theme_snap/assessactivitiescolor';
+$title = new \core\lang_string('assessactivitiescolor', 'theme_snap');
+$description = 'Default: #008CBA';
+$default = '#008CBA';
+$setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
+// Collaboration activities color.
+$name = 'theme_snap/collabactivitiescolor';
+$title = new \core\lang_string('collabactivitiescolor', 'theme_snap');
+$description = 'Default: #009B87';
+$default = '#009B87';
+$setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
+// Communication activities color.
+$name = 'theme_snap/commactivitiescolor';
+$title = new \core\lang_string('commactivitiescolor', 'theme_snap');
+$description = 'Default: #689F38';
+$default = '#689F38';
+$setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
+// Interactive content activities color.
+$name = 'theme_snap/interactivitiescolor';
+$title = new \core\lang_string('interactivitiescolor', 'theme_snap');
+$description = 'Default: #8d3d1b';
+$default = '#8d3d1b';
+$setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
+// Resource activities color.
+$name = 'theme_snap/resouactivitiescolor';
+$title = new \core\lang_string('resouactivitiescolor', 'theme_snap');
+$description = 'Default: #3279B2';
+$default = '#3279B2';
+$setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
 // Advanced branding heading.
 $name = 'theme_snap/advancedbrandingheading';
 $title = new \core\lang_string('advancedbrandingheading', 'theme_snap');

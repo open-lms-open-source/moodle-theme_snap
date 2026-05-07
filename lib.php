@@ -370,6 +370,24 @@ function theme_snap_get_pre_scss($theme) {
     $settings['snap-footer-txt-color'] = !empty($theme->settings->footertxt) ?
         $theme->settings->footertxt : '#ffffff';
 
+    $settings['activity-icon-administration-bg'] = !empty($theme->settings->adminactivitiescolor) ?
+        $theme->settings->adminactivitiescolor : '#da58ef';
+
+    $settings['activity-icon-assessment-bg'] = !empty($theme->settings->assessactivitiescolor) ?
+        $theme->settings->assessactivitiescolor : '#008CBA';
+
+    $settings['activity-icon-collaboration-bg'] = !empty($theme->settings->collabactivitiescolor) ?
+        $theme->settings->collabactivitiescolor : '#009B87';
+
+    $settings['activity-icon-communication-bg'] = !empty($theme->settings->commactivitiescolor) ?
+        $theme->settings->commactivitiescolor : '#689F38';
+
+    $settings['activity-icon-interactivecontent-bg'] = !empty($theme->settings->interactivitiescolor) ?
+        $theme->settings->interactivitiescolor : '#8d3d1b';
+
+    $settings['activity-icon-content-bg'] = !empty($theme->settings->resouactivitiescolor) ?
+        $theme->settings->resouactivitiescolor : '#3279B2';
+
     foreach ($settings as $key => $value) {
         $scss .= '$' . $key . ': ' . $value . ";\n";
     }
