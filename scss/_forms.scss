@@ -58,26 +58,41 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.fitem
 .mform .snap-form-advanced > .fitem,
 .mform .snap-form-advanced #form-advanced-div > .fitem.show {
     padding: 0.5rem;
-    display: block;
     margin: 0 !important;
     .col-form-label,
     .felement {
         max-width: unset;
-        padding-left: unset;
         padding-right: unset;
-        width: auto;
     }
     &:hover {
         background-color: #efefef;
     }
 }
 
-.mform .col-form-label {
-    width: auto;
-}
-
-.mform .fcontainer > .fitem {
-    padding-left: 1em;
+// Course edit page overrides
+#page-course-edit,
+body[id^="page-mod-"][id$="-mod"] {
+    .mform {
+        .col-form-label {
+            width: auto;
+        }
+        .fcontainer > .fitem,
+        .snap-form-advanced > .fitem {
+            padding-left: 0;
+            display: block;
+            .col-form-label,
+            .felement {
+                width: auto;
+            }
+        }
+        fieldset {
+            .fcontainer.collapseable {
+                .col-form-label {
+                    padding-left: 1em;
+                }
+            }
+        }
+    }
 }
 
 #page-course-management {
