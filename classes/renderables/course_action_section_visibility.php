@@ -23,6 +23,7 @@
 
 namespace theme_snap\renderables;
 use context_course;
+use moodle_url;
 use section_info;
 
 class course_action_section_visibility extends course_action_section_base {
@@ -34,12 +35,11 @@ class course_action_section_visibility extends course_action_section_base {
 
     public function __construct($course, section_info $section, $onsectionpage = false) {
 
-        if ($onsectionpage) {
-            $baseurl = course_get_url($course, $section->section);
-        } else {
-            $baseurl = course_get_url($course);
-        }
-        $baseurl->param('sesskey', sesskey());
+        $baseurl = new moodle_url('/course/format/update.php', [
+            'sesskey' => sesskey(),
+            'id' => $section->id,
+            'courseid' => $course->id,
+        ]);
 
         $coursecontext = context_course::instance($course->id);
 
@@ -58,14 +58,14 @@ class course_action_section_visibility extends course_action_section_base {
             $this->title = get_string('hidefromothers', 'format_'.$course->format) . '/' . get_string('showfromothers', 'format_'.$course->format);
 
             if ($section->visible) { // Show the hide/show eye.
-                $url->param('hide', $section->section);
+                $url->param('action', 'section_hide');
                 $this->url = $url;
                 $this->class .= ' snap-hide dropdown-item editing_showhide menu-action';
                 $this->arialabel = "aria-label='".get_string('hidefromothers', 'format_'.$course->format)."'";
                 $this->dataaction = 'sectionHide';
                 $this->dataid = $section->id;
             } else {
-                $url->param('show',  $section->section);
+                $url->param('action',  'section_show');
                 $this->url = $url;
                 $this->class .= ' snap-show dropdown-item editing_showhide menu-action';
                 $this->arialabel = "aria-label='".get_string('showfromothers', 'format_'.$course->format)."'";

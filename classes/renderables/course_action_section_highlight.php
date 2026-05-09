@@ -23,6 +23,7 @@
 
 namespace theme_snap\renderables;
 use context_course;
+use moodle_url;
 use section_info;
 
 class course_action_section_highlight extends course_action_section_base {
@@ -49,12 +50,11 @@ class course_action_section_highlight extends course_action_section_base {
             return '';
         }
 
-        if ($onsectionpage) {
-            $baseurl = course_get_url($course, $section->section);
-        } else {
-            $baseurl = course_get_url($course);
-        }
-        $baseurl->param('sesskey', sesskey());
+        $baseurl = new moodle_url('/course/format/update.php', [
+            'sesskey' => sesskey(),
+            'id' => $section->id,
+            'courseid' => $course->id,
+        ]);
 
         $coursecontext = context_course::instance($course->id);
 
@@ -72,13 +72,13 @@ class course_action_section_highlight extends course_action_section_base {
                 // highlighted.
                 if ($marker == $section->section || $section->section === 0) {
                     // Show the lightbulb.
-                    $url->param('marker', 0);
+                    $url->param('action', 'section_unhighlight');
                     $this->url = $url;
                     $this->ariapressed = 'aria-pressed="true"';
                     $this->arialabel = "aria-label='".get_string('highlightoff')."'";
                     $this->dataaction = 'sectionUnhighlight';
                 } else {
-                    $url->param('marker', $section->section);
+                    $url->param('action', 'section_highlight');
                     $this->url = $url;
                 }
             }
