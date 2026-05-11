@@ -60,7 +60,7 @@ trait format_section_trait {
      * @return string|boolean
      */
     public function render_from_template($templatename, $data) {
-        global $CFG, $DB, $USER;
+        global $CFG, $DB, $USER, $PAGE;
         $course = $this->page->course;
         $modinfo = get_fast_modinfo($course);
         $courseformat = course_get_format($course);
@@ -116,12 +116,34 @@ trait format_section_trait {
             $data->editing = false;
         }
 
-        if ($templatename === 'core_courseformat/local/content/frontpagesection' && isset($data->sections[0]->cmlist->cms)) {
-            // Add Snap additional HTML and data for each course module on Front page.
-            foreach ($data->sections[0]->cmlist->cms as &$cmsitem) {
-                $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
+        if ($templatename === 'core_courseformat/local/content/frontpagesection') {
+            if (isset($data->sections[0]->cmlist->cms)) {
+                // Add Snap additional HTML and data for each course module on Front page.
+                foreach ($data->sections[0]->cmlist->cms as &$cmsitem) {
+                    $cmsitem->cmitem = $this->add_snap_custom_module_data($cmsitem->cmitem);
+                }
+                unset($cmsitem);
             }
-            unset($cmsitem);
+
+            // Force loading of course editor on FrontPage
+            // Similar to include_course_editor() in public/course/lib.php
+            // Since AJAX is not available on homepage with editing OFF for performance.
+            $coursecontext = context_course::instance($PAGE->course->id);
+            $course = get_course($coursecontext->instanceid);
+
+            if (has_capability('moodle/course:manageactivities', $coursecontext)) {
+                $statekey = course_format::session_cache($course);
+
+                $setup = (object)[
+                    'editing' => true, // Simulate editing ON
+                    'supportscomponents' => $courseformat->supports_components(),
+                    'statekey' => $statekey,
+                    'overriddenStrings' => $courseformat->get_editor_custom_strings(),
+                ];
+
+                // Load reactive course editor.
+                $this->page->requires->js_call_amd('core_courseformat/courseeditor', 'setViewFormat', [$course->id, $setup]);
+            }
         }
 
         if (isset($currentsection) && $currentsection->uservisible && !($data->editing ?? false)) {

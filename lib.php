@@ -405,6 +405,42 @@ function theme_snap_get_extra_scss($theme) {
 }
 
 /**
+ * Snap override of core_courseformat_output_fragment_cmitem
+ * In order to make course module render as Snap does.
+ * this gets called ONLY ON FRONTPAGE (format_site)
+ *
+ * Course-module fragment renderer method.
+ *
+ * The fragment arguments are id and sr (section return).
+ *
+ * @param array $args The fragment arguments.
+ * @return string The rendered cm item.
+ *
+ * @throws require_login_exception
+ */
+function theme_snap_output_fragment_cmitem($args): string {
+    global $PAGE;
+
+    [$course, $cm] = get_course_and_cm_from_cmid($args['id']);
+    if (!can_access_course($course, null, '', true) || !$cm->uservisible) {
+        throw new require_login_exception('Activity is not available');
+    }
+
+    $format = course_get_format($course);
+    if (isset($args['pagesectionid'])) {
+        $format->set_sectionid($args['pagesectionid']);
+    } else if (isset($args['sr'])) {
+        $format->set_sectionnum($args['sr']);
+    }
+
+    // Force to use snap renderer instead for core.
+     $renderer = new \theme_snap\output\site_renderer($PAGE, null);
+
+    $section = $cm->get_section_info();
+    return $renderer->course_section_updated_cm_item($format, $section, $cm);
+}
+
+/**
  * Fragment API function to render course sections.
  * @param $args
  * @return string

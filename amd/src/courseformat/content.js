@@ -27,6 +27,11 @@ import BaseSectionComponent from 'core_courseformat/local/content';
 import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
 import Section from 'theme_snap/courseformat/content/section';
 import CmItem from 'core_courseformat/local/content/section/cmitem';
+import Fragment from 'core/fragment';
+import Pending from 'core/pending';
+import Config from 'core/config';
+import Templates from 'core/templates';
+import {debounce} from 'core/utils';
 
 export default class Component extends BaseSectionComponent {
 
@@ -40,7 +45,15 @@ export default class Component extends BaseSectionComponent {
      * @return {Component}
      */
     static init(target, selectors, sectionReturn, pageSectionId) {
-        const element = document.getElementById(target);
+        let element = document.querySelector(target);
+        if (!element) {
+            element = document.getElementById(target);
+        }
+
+        if (!element) {
+            return null;
+        }
+
         // If already initialized, return.
         if (element?.dataset.initialized) {
             return null;
@@ -49,7 +62,7 @@ export default class Component extends BaseSectionComponent {
         // Mark the element as initialized to avoid re-start of reactive component.
         element.dataset.initialized = true;
         return new Component({
-            element: document.getElementById(target),
+            element: element,
             reactive: getCurrentCourseEditor(),
             selectors,
             sectionReturn,
@@ -97,5 +110,66 @@ export default class Component extends BaseSectionComponent {
                 return new CmItem(item);
             }
         );
+    }
+    /**
+     * Override _getDebouncedReloadCm, so it calls theme_snap_courseformat_output_fragment_cmitem instead of core one.
+     * Only for FrontPage.
+     *
+     * Generate or get a reload CM debounced function.
+     * @param {Number} cmId
+     * @returns {Function} the debounced reload function
+     */
+    _getDebouncedReloadCm(cmId) {
+        const onHomePage = document.getElementById('page-site-index');
+        if (!onHomePage) {
+            return super._getDebouncedReloadCm(cmId);
+        }
+        const pendingKey = `courseformat/content:reloadCm_${cmId}`;
+        let debouncedReload = this.debouncedReloads.get(pendingKey);
+        if (debouncedReload) {
+            return debouncedReload;
+        }
+        const reload = () => {
+            const pendingReload = new Pending(pendingKey);
+            this.debouncedReloads.delete(pendingKey);
+            const cmitem = this.getElement(this.selectors.CM, cmId);
+            if (!cmitem) {
+                return pendingReload.resolve();
+            }
+            const promise = Fragment.loadFragment(
+                'theme_snap',
+                'cmitem',
+                Config.courseContextId,
+                {
+                    id: cmId,
+                    courseid: Config.courseId,
+                    sr: this.reactive?.sectionReturn ?? null,
+                    pagesectionid: this.reactive?.pageSectionId ?? null,
+                }
+            );
+            promise.then((html, js) => {
+                // Other state change can reload the CM or the section before this one.
+                if (!document.contains(cmitem)) {
+                    pendingReload.resolve();
+                    return false;
+                }
+                Templates.replaceNode(cmitem, html, js);
+                this._indexContents();
+                pendingReload.resolve();
+                return true;
+            }).catch(() => {
+                pendingReload.resolve();
+            });
+            return pendingReload;
+        };
+        debouncedReload = debounce(
+            reload,
+            200,
+            {
+                cancel: true, pending: true
+            }
+        );
+        this.debouncedReloads.set(pendingKey, debouncedReload);
+        return debouncedReload;
     }
 }
