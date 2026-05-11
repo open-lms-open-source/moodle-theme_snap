@@ -906,7 +906,8 @@ class local {
                 $gradeditem['iconUrl'],
                 $gradeditem['title']. '<small><br>' .$gradeditem['subTitle']. '</small>',
                 $gradeditem['description'],
-                ''
+                '',
+                $gradeditem['extraClasses']
             );
         }
         return $o;
@@ -1006,7 +1007,8 @@ class local {
                 $gradingitem['iconUrl'],
                 $gradingitem['title']. '<small><br>' .$gradingitem['subTitle']. '</small>',
                 $gradingitem['description'],
-                ''
+                '',
+                $gradingitem['extraClasses']
             );
         }
         return $o;
@@ -2361,6 +2363,7 @@ SQL;
                     $event['title'] . "<small {$datafromcache}><br>{$event['subTitle']}</small>",
                     $event['description'],
                     '',
+                    $event['extraClasses'],
                     $datafromcache
                 );
         }

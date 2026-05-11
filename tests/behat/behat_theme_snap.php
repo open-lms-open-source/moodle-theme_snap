@@ -1859,11 +1859,40 @@ JS;
                   $scrollfunction
               })()
 JS;
+        } else {
+            $node = $this->find($selectortype, $element);
+            $xpathjs = json_encode($node->getXpath());
+            $function = <<<JS
+              (function(){
+                  var elem = document.evaluate($xpathjs, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue;
+                  $scrollfunction
+              })()
+JS;
         }
         try {
             $this->getSession()->wait(5000, $function);
         } catch (Exception $e) {
             throw new \Exception("Instant scroll to element failed due to: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Click on an element using JavaScript to bypass WebDriver click interception from overlapping elements.
+     *
+     * @When /^I js click on "(?P<element_string>(?:[^"]|\\")*)" "(?P<selectortype_string>[^"]*)"$/
+     */
+    public function i_js_click_on($element, $selectortype) {
+        if ($selectortype === 'css_element') {
+            $js = "document.querySelector('$element').click();";
+        } else {
+            $node = $this->find($selectortype, $element);
+            $xpathjs = json_encode($node->getXpath());
+            $js = "document.evaluate($xpathjs, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue.click();";
+        }
+        try {
+            $this->getSession()->executeScript($js);
+        } catch (Exception $e) {
+            throw new \Exception("JS click on element failed due to: " . $e->getMessage());
         }
     }
 

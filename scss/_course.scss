@@ -1027,6 +1027,10 @@ body.format-singleactivity {
         }
     }
 
+    li.activity.modtype_subsection > .activity-item {
+        border-top-color: #dee2e6;
+    }
+
     @container course-container (max-width: 380px) {
         li.activity .activity-item .activity-grid {
           grid-template-columns: min-content 1fr min-content min-content min-content;
@@ -1963,13 +1967,6 @@ body.snap-resource-card {
             }
         }
 
-
-        &.modtype_resource {
-            .activity-item {
-                border-top-color: $color-resource;
-            }
-        }
-
         &.modtype_url {
             .activity-item {
                 border-top-color: $color-url;
@@ -2067,8 +2064,6 @@ body.snap-resource-card {
                 padding: 1em 1em;
             }
         }
-
-
     }
 }
 
@@ -2131,9 +2126,9 @@ body.snap-resource-card {
         &.snap-mime-powerpoint,
         &.snap-mime-impress,
         &.snap-mime-archive {
-            border-top-color: $color-resource;
+            border-top-color: $activity-icon-content-bg;
             .activityiconcontainer {
-                filter: $resource-filter;
+                @include recolor-icon($activity-icon-content-bg, 1);
             }
         }
 
@@ -2297,9 +2292,6 @@ body.snap-resource-card {
                         height: fit-content;
                         width: 34px;
                     }
-                    img[src*="snap/core"] {
-                        filter: brightness(0) invert(1);
-                    }
                 }
             }
             .activity.subtile.tileiconcontainer.activityiconcontainer {
@@ -2320,8 +2312,26 @@ body.snap-resource-card {
         min-height: 42px;
     }
     .tileiconcontainer.activityiconcontainer .tile-icon img.icon {
-        filter: unset;
         padding: unset;
+
+        &[src*="snap/lightboxgallery/"] {
+            @include recolor-icon($color-lightbox, 1);
+        }
+        &[src*="snap/book/"] {
+            @include recolor-icon($color-book, 1);
+        }
+        &[src*="snap/url/"] {
+            @include recolor-icon($color-url, 1);
+        }
+        &[src*="snap/label/"] {
+            @include recolor-icon($color-label, 1);
+        }
+        &[src*="snap/page/"] {
+            @include recolor-icon($color-page, 1);
+        }
+        &[src*="snap/folder/"] {
+            @include recolor-icon($color-folder, 1);
+        }
     }
     span.badge.text-bg-info {
         border-radius: 10px;
@@ -2491,6 +2501,66 @@ body.snap-resource-card {
           outline: none;
         }
     }
+
+    &.theme-snap {
+        .activityiconcontainer {
+            &.communication:not(.isbranded) .activityicon:not(.nofilter),
+            &.communication:not(.isbranded) .icon:not(.nofilter) {
+                @include recolor-icon($activity-icon-communication-bg, 1);
+            }
+
+            &.assessment:not(.isbranded) .activityicon:not(.nofilter),
+            &.assessment:not(.isbranded) .icon:not(.nofilter) {
+                @include recolor-icon($activity-icon-assessment-bg, 1);
+            }
+
+            &.collaboration:not(.isbranded) .activityicon:not(.nofilter),
+            &.collaboration:not(.isbranded) .icon:not(.nofilter) {
+                @include recolor-icon($activity-icon-collaboration-bg, 1);
+            }
+
+            &.content:not(.isbranded) {
+                .activityicon:not(.nofilter),
+                .icon:not(.nofilter) {
+                    @include recolor-icon($activity-icon-content-bg, 1);
+                }
+
+                img.activityicon[src*="/lightboxgallery/"]:not(.nofilter) {
+                    @include recolor-icon($color-lightbox, 1);
+                }
+
+                img.activityicon[src*="/book/"]:not(.nofilter) {
+                    @include recolor-icon($color-book, 1);
+                }
+
+                img.activityicon[src*="/folder/"]:not(.nofilter) {
+                    @include recolor-icon($color-folder, 1);
+                }
+
+                img.activityicon[src*="/url/"]:not(.nofilter) {
+                    @include recolor-icon($color-url, 1);
+                }
+
+                img.activityicon[src*="/label/"]:not(.nofilter) {
+                    @include recolor-icon($color-label, 1);
+                }
+
+                img.activityicon[src*="/page/"]:not(.nofilter) {
+                    @include recolor-icon($color-page, 1);
+                }
+            }
+
+            &.interactivecontent:not(.isbranded) .activityicon:not(.nofilter),
+            &.interactivecontent:not(.isbranded) .icon:not(.nofilter) {
+                @include recolor-icon($activity-icon-interactivecontent-bg, 1);
+            }
+
+            &.administration:not(.isbranded) .activityicon:not(.nofilter),
+            &.administration:not(.isbranded) .icon:not(.nofilter) {
+                @include recolor-icon($activity-icon-administration-bg, 1);
+            }
+        }
+    }
 }
 
 // --------------------------------------------------------------------
@@ -2501,7 +2571,7 @@ body.snap-resource-card {
         .activityiconcontainer {
             img {
                 &[src*="lti"][src*="icon"], &[src*="lti"][src*="monologo"] {
-                filter: $resource-filter;
+                    @include recolor-icon($activity-icon-content-bg, 1);
                 }
             }
         }

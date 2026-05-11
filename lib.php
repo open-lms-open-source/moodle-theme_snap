@@ -114,7 +114,6 @@ function theme_snap_set_category_colors($css, $theme) {
                 'nav-login-color' => '#FFFFFF',
                 'custom-menu-text-color' => $dbcustommenutextcoloractive ? $dbcustommenutextcolor : '#FFFFFF',
                 'gray-light' => '#6a737b',
-                'resource-filter' => 'invert(40%) sepia(7%) saturate(6564%) hue-rotate(168deg) brightness(99%) contrast(75%)',
             ]);
 
             try {
@@ -369,6 +368,24 @@ function theme_snap_get_pre_scss($theme) {
 
     $settings['snap-footer-txt-color'] = !empty($theme->settings->footertxt) ?
         $theme->settings->footertxt : '#ffffff';
+
+    $settings['activity-icon-administration-bg'] = !empty($theme->settings->adminactivitiescolor) ?
+        $theme->settings->adminactivitiescolor : '#da58ef';
+
+    $settings['activity-icon-assessment-bg'] = !empty($theme->settings->assessactivitiescolor) ?
+        $theme->settings->assessactivitiescolor : '#008CBA';
+
+    $settings['activity-icon-collaboration-bg'] = !empty($theme->settings->collabactivitiescolor) ?
+        $theme->settings->collabactivitiescolor : '#009B87';
+
+    $settings['activity-icon-communication-bg'] = !empty($theme->settings->commactivitiescolor) ?
+        $theme->settings->commactivitiescolor : '#689F38';
+
+    $settings['activity-icon-interactivecontent-bg'] = !empty($theme->settings->interactivitiescolor) ?
+        $theme->settings->interactivitiescolor : '#8d3d1b';
+
+    $settings['activity-icon-content-bg'] = !empty($theme->settings->resouactivitiescolor) ?
+        $theme->settings->resouactivitiescolor : '#3279B2';
 
     foreach ($settings as $key => $value) {
         $scss .= '$' . $key . ': ' . $value . ";\n";
