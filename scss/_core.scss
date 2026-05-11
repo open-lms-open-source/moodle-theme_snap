@@ -1523,7 +1523,7 @@ $mr-nav-zindex: 1052;
     }
 }
 
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     .js-snap-my-courses-trigger.snap-my-courses-menu {
         margin-bottom: 0.5em;
     }
@@ -4261,7 +4261,8 @@ table th img.iconhelp {
 // -------------------------
 // Reduce font sizes on small screen
 // -------------------------
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
+    :root,
     html,
     #region-main {
         font-size: 14.4px;
