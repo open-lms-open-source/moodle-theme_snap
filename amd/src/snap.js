@@ -1003,9 +1003,8 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
                 // We need this loaded super fast, before Core. If we wait for page load, sometimes Core registers theirs first.
                 $(document).on(CustomEvents.events.activate, e => {
-                    const messagePopoverIsVisible =
-                        !document.querySelector('div[id^=\'drawer-\'] > div.message-app')
-                            .parentElement.classList.contains('hidden');
+                    const messagePopover = document.querySelector('div[id^=\'drawer-\'] > div.message-app');
+                    const messagePopoverIsVisible = messagePopover && !messagePopover.parentElement.classList.contains('hidden');
                     if (messagePopoverIsVisible) {
                         e.stopImmediatePropagation();
                     }

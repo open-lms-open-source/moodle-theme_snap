@@ -29,6 +29,12 @@ defined('MOODLE_INTERNAL') || die();
 use theme_snap\renderables\settings_link;
 use theme_snap\renderables\genius_dashboard_link;
 
+global $SESSION;
+$snapmfapending = isloggedin() && !isguestuser()
+    && empty($SESSION->tool_mfa_authenticated)
+    && class_exists(\tool_mfa\manager::class)
+    && \tool_mfa\manager::is_ready();
+
 ?>
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
     <div id="snap-header">
@@ -65,9 +71,11 @@ use theme_snap\renderables\genius_dashboard_link;
                     echo $OUTPUT->render($bblink);
                     echo '</div>';
                 }
-                echo $OUTPUT->my_courses_nav_link();
-                echo $OUTPUT->user_menu_nav_dropdown();
-                echo $OUTPUT->render_notification_popups();
+                if (!$snapmfapending) {
+                    echo $OUTPUT->my_courses_nav_link();
+                    echo $OUTPUT->user_menu_nav_dropdown();
+                    echo $OUTPUT->render_notification_popups();
+                }
                 echo '<span class="hidden-md-down">';
                 echo $OUTPUT->search_box();
                 echo '</span>';
@@ -97,9 +105,10 @@ use theme_snap\renderables\genius_dashboard_link;
 </header>
 
 <?php
-// Only proceed with sidebar menu for logged-in users.
-if (isloggedin() && !isguestuser()) {
-    global $SESSION;
+// Only proceed with sidebar menu for logged-in users. Skip while MFA is
+// pending so the message popover (and its core_message_get_unread_conversations_count
+// AJAX poll) is not rendered.
+if (isloggedin() && !isguestuser() && !$snapmfapending) {
     if (isset($SESSION->justloggedin)) {
         require_once($CFG->dirroot . '/user/lib.php');
         unset($SESSION->justloggedin);
