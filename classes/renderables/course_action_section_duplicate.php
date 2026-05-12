@@ -16,6 +16,7 @@
 
 namespace theme_snap\renderables;
 use context_course;
+use moodle_url;
 use section_info;
 
 /**
@@ -42,19 +43,15 @@ class course_action_section_duplicate extends course_action_section_base {
         if ($section->component == 'mod_subsection') {
             return '';
         }
-        if ($onsectionpage) {
-            $baseurl = course_get_url($course, $section->section);
-        } else {
-            $baseurl = course_get_url($course);
-        }
-        $baseurl->param('sesskey', sesskey());
-        $baseurl->param('sectionid', $section->id);
-        $baseurl->param('duplicatesection', 1);
+        $baseurl = new moodle_url('/course/format/update.php', [
+            'sesskey' => sesskey(),
+            'id' => $section->id,
+            'courseid' => $course->id,
+        ]);
         $coursecontext = context_course::instance($course->id);
         if (has_capability('moodle/course:update', $coursecontext)) {
             $duplicatesectionurl = clone($baseurl);
-            $duplicatesectionurl->param('section', $section->section);
-            $duplicatesectionurl->param('duplicatesection', $section->section);
+            $duplicatesectionurl->param('action', 'section_duplicate');
             $this->title = get_string('duplicate');
             $this->arialabel = "aria-label='".get_string('duplicate')."'";
             $this->url = $duplicatesectionurl;

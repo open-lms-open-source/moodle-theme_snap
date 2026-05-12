@@ -47,10 +47,11 @@ class course_action_section_delete extends course_action_section_base {
                 $cm = $section->delegateinstance->get_cm();
                 $this->dataaction = 'cmDelete';
                 $this->dataid = $cm->id;
-                $url = new moodle_url('/course/mod.php');
+                $url = new moodle_url('/course/format/update.php');
                 $url->param('sesskey', sesskey());
-                $url->param('delete', $cm->id);
-                $url->param('sr', $cm->sectionnum);
+                $url->param('id', $cm->id);
+                $url->param('courseid', $course->id);
+                $url->param('action', 'cm_delete');
                 $this->url = $url;
             } else {
                 $this->dataaction = 'deleteSection';
