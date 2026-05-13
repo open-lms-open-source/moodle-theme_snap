@@ -192,6 +192,10 @@ body[id^="page-mod-"][id$="-mod"] {
         display: inline-block;
     }
 
+    .form-setting .defaultsnext {
+        display: inline;
+    }
+
     .form-defaultinfo,
     .form-description pre {
         font-size: $font-size-sm;

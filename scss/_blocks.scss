@@ -454,7 +454,7 @@ body.path-site .block.block_settings {
         border-bottom-left-radius: 2em !important;
         border-top-left-radius: 2em !important;
     }
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         .input-group label {
             display: none;
         }
