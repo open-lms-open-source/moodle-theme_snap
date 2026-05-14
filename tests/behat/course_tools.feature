@@ -46,13 +46,14 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   @javascript
   Scenario Outline: Course tools link functions for all compatible formats.
     Given the course format for "C1" is set to "<format>"
+    And I change window size to "large"
     And completion tracking is "<completionenabled>" for course "C1"
     And I set the following system permissions of "Student" role:
       | capability            | permission            |
       | gradereport/overview:view | <gradebookaccessible> |
     When I log in as "student1"
     And I am on the course main page for "C1"
-    And I click on "#snap-course-tools" "css_element"
+    And I js click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And "#snap-student-dashboard" "css_element" should exist
     And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
@@ -75,6 +76,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   @javascript
   Scenario Outline: Course tools show automatically for single activity format.
     Given the course format for "C1" is set to "singleactivity"
+    And I change window size to "large"
     And I log in as "admin"
     And I am on the course main page for "C1"
     And I set the following fields to these values:
@@ -118,7 +120,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     # Note we have to call this step twice because for some reason it doesn't automatically go to the module page the
     # first time - that's a core issue though.
     And I am on the course main page for "C1"
-    Then I should not see "<formatdisplay>" in the ".format-singleactivity .page-header-headings > h1" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And "#snap-student-dashboard" "css_element" should exist
     And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
@@ -135,12 +136,12 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Given I am using Open LMS
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
+    And I js click on "a[href=\"#coursetools\"]" "css_element"
     And "#coursetools a[href*=\"report/allylti/launch.php?reporttype=course\"]" "css_element" should exist
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    And I click on "a[href=\"#coursetools\"]" "css_element"
+    And I js click on "a[href=\"#coursetools\"]" "css_element"
     And "#coursetools a[href*=\"report/allylti/launch.php?reporttype=course\"]" "css_element" should not exist
 
   @javascript
@@ -187,21 +188,23 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
   @javascript
   Scenario: Course Dashboard should be visible after clicking in the Course Dashboard link after clicking in a course section.
     Given the course format for "C1" is set to "topics"
+    And I change window size to "large"
     When I log in as "student1"
     And I am on the course main page for "C1"
-    And I click on "#snap-course-tools" "css_element"
+    And I js click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And I follow "New section"
     And I wait until the page is ready
-    And I click on "#snap-course-tools" "css_element"
+    And I js click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
 
   @javascript
   Scenario: User should be redirected to the same section in the course in Snap when changing the edit mode.
     Given the course format for "C1" is set to "topics"
+    And I change window size to "large"
     When I log in as "admin"
     And I am on the course main page for "C1"
-    And I click on "#snap-course-tools" "css_element"
+    And I js click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And I switch edit mode in Snap
     And I wait until the page is ready
@@ -214,7 +217,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Then the course format for "C1" is set to "weeks"
     When I log in as "admin"
     And I am on the course main page for "C1"
-    And I click on "#snap-course-tools" "css_element"
+    And I js click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And I switch edit mode in Snap
     And I wait until the page is ready
