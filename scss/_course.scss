@@ -2525,27 +2525,33 @@ body.snap-resource-card {
                     @include recolor-icon($activity-icon-content-bg, 1);
                 }
 
-                img.activityicon[src*="/lightboxgallery/"]:not(.nofilter) {
+                img.activityicon[src*="/lightboxgallery/"]:not(.nofilter),
+                img.icon[src*="/lightboxgallery/"]:not(.nofilter) {
                     @include recolor-icon($color-lightbox, 1);
                 }
 
-                img.activityicon[src*="/book/"]:not(.nofilter) {
+                img.activityicon[src*="/book/"]:not(.nofilter),
+                img.icon[src*="/book/"]:not(.nofilter) {
                     @include recolor-icon($color-book, 1);
                 }
 
-                img.activityicon[src*="/folder/"]:not(.nofilter) {
+                img.activityicon[src*="/folder/"]:not(.nofilter),
+                img.icon[src*="/folder/"]:not(.nofilter) {
                     @include recolor-icon($color-folder, 1);
                 }
 
-                img.activityicon[src*="/url/"]:not(.nofilter) {
+                img.activityicon[src*="/url/"]:not(.nofilter),
+                img.icon[src*="/url/"]:not(.nofilter) {
                     @include recolor-icon($color-url, 1);
                 }
 
-                img.activityicon[src*="/label/"]:not(.nofilter) {
+                img.activityicon[src*="/label/"]:not(.nofilter),
+                img.icon[src*="/label/"]:not(.nofilter) {
                     @include recolor-icon($color-label, 1);
                 }
 
-                img.activityicon[src*="/page/"]:not(.nofilter) {
+                img.activityicon[src*="/page/"]:not(.nofilter),
+                img.icon[src*="/page/"]:not(.nofilter) {
                     @include recolor-icon($color-page, 1);
                 }
             }

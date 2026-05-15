@@ -605,7 +605,7 @@ label[for="toc-search-input"]{
         &.foldericon img.activityicon {
             @include recolor-icon($color-folder, 1);
         }
-        &.resourceicon, &.ltiicon {
+        &.resourceicon {
             img.activityicon {
                 @include recolor-icon($activity-icon-content-bg, 1);
             }
