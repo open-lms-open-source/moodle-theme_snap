@@ -53,7 +53,6 @@ Feature: Aria label validation for core forum options.
     And I am on "Course 1" course homepage
     And I wait until the page is ready
     And I am on the "Test forum 1" "forum activity" page
-    And I instantly scroll to the center of element "//th//a[contains(text(),'Discussion 1')]" "xpath_element"
     And I click on "//th//a[contains(text(),'Discussion 1')]" "xpath_element"
     And "div[data-content='forum-discussion'] div.singleselect" "css_element" should exist
     And "div[data-content='forum-discussion'] div.movediscussionoption" "css_element" should exist

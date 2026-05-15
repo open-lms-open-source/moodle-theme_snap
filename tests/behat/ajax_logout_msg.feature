@@ -64,7 +64,6 @@ Feature: When the moodle theme is set to Snap, ajax failures due to log outs / e
     When I follow "Section 2"
     And I wait until the page is ready
     And I switch edit mode in Snap
-    And I instantly scroll to the center of element "a.snap-move" "css_element"
     And I click on "a[title='Move \"Section 2\"']" "css_element"
     Then I should see "Move Section 2 after" in the "Move section" "dialogue"
     And I click on "Close" "button" in the "Move section" "dialogue"

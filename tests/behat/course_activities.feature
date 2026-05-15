@@ -43,15 +43,12 @@ Feature: Access Course Activities overview
   Scenario: Admin can access the Course Activities page from the dashboard and the cog icon
     Given I am logged in as "admin"
     And I am on "Course 1" course homepage
-    And I scroll to the base of selector ".toc-footer"
-    And I wait "3" seconds
     And I follow "Course Dashboard"
     Then "//li[contains(@class, 'tool-card')]/a[contains(text(), 'Activities')]" "xpath_element" should exist
     And I click on "//li[contains(@class, 'tool-card')]/a[contains(text(), 'Activities')]" "xpath_element"
     Then I should see "An overview of all activities in the course, with dates and other information."
     And I am on "Course 1" course homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I scroll to the base of selector "#settingsnav"
     Then "Activities" "link" should exist
     And I click on "Activities" "link"
     Then I should see "An overview of all activities in the course, with dates and other information."
@@ -60,15 +57,12 @@ Feature: Access Course Activities overview
   Scenario: Teacher can access the Course Activities page from the dashboard and the cog icon
     Given I am logged in as "teacher1"
     And I am on "Course 1" course homepage
-    And I scroll to the base of selector ".toc-footer"
-    And I wait "3" seconds
     And I follow "Course Dashboard"
     Then "//li[contains(@class, 'tool-card')]/a[contains(text(), 'Activities')]" "xpath_element" should exist
     And I click on "//li[contains(@class, 'tool-card')]/a[contains(text(), 'Activities')]" "xpath_element"
     Then I should see "An overview of all activities in the course, with dates and other information."
     And I am on "Course 1" course homepage
     And I click on "#admin-menu-trigger" "css_element"
-    And I scroll to the base of selector "#settingsnav"
     Then "Activities" "link" should exist
     And I click on "Activities" "link"
     Then I should see "An overview of all activities in the course, with dates and other information."
@@ -77,8 +71,6 @@ Feature: Access Course Activities overview
   Scenario: Student can access the Course Activities page from the dashboard
     Given I am logged in as "student1"
     And I am on "Course 1" course homepage
-    And I scroll to the base of selector ".toc-footer"
-    And I wait "3" seconds
     And I follow "Course Dashboard"
     Then "//li[contains(@class, 'tool-card')]/a[contains(text(), 'Activities')]" "xpath_element" should exist
     And I click on "//li[contains(@class, 'tool-card')]/a[contains(text(), 'Activities')]" "xpath_element"

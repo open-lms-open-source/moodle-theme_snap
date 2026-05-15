@@ -460,6 +460,10 @@ function theme_snap_output_fragment_section($args) {
     $formatrenderer = $format->get_renderer($PAGE);
     $modinfo = get_fast_modinfo($course);
     $section = $modinfo->get_section_info_by_id($args['sectionid']);
+    // Add validation for Empty section id. To avoid PHP errors
+    if (!$section) {
+        return '';
+    }
     $current_section_num = $section->sectionnum;
     $format->set_sectionnum($current_section_num);
 

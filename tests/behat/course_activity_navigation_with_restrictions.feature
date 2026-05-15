@@ -46,11 +46,9 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
     # Set completion for Forum 1.
-    And I instantly scroll to the center of element "li.modtype_forum" "css_element"
     And I open "Forum 1" actions menu
     And I choose "Edit settings" in the open action menu
     And I expand all fieldsets
-    And I instantly scroll to the center of element "#id_activitycompletionheader" "css_element"
     And I click on "#id_activitycompletionheader" "css_element"
     And I set the field "None" to "1"
     And I should not see "Expect completed on"
@@ -64,12 +62,10 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I set the field "View the activity" to "1"
     And I press "Save and return to course"
     # Require Forum 1 to be completed first before Book 1 can be accessed.
-    And I instantly scroll to the center of element "li.modtype_book" "css_element"
     And I open "Book 1" actions menu
     And I choose "Edit settings" in the open action menu
     # And I click on "Edit settings" "link" in the "Book 1" activity.
     And I expand all fieldsets
-    And I instantly scroll to the center of element "#id_availabilityconditionsheader" "css_element"
     And I click on "#id_availabilityconditionsheader" "css_element"
     And I click on "Add restriction..." "button"
     And I click on "//button[text()=\"Activity completion\"]" "xpath_element"
@@ -90,7 +86,6 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I should see "Forum 1" in the "#prev-activity-link" "css_element"
     And the "Jump to..." select box should not contain "Book 1"
     # Navigate to Forum 1.
-    And I instantly scroll to the center of element "//div/a[contains(text(),'Forum 1')]" "xpath_element"
     And I click on "//div/a[contains(text(),'Forum 1')]" "xpath_element"
     # Since Forum 1 has now been viewed and deemed completed, Book 1 can now be accessed.
     And I should see "Book 1" in the "#next-activity-link" "css_element"

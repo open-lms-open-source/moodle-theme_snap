@@ -105,7 +105,6 @@ Feature: Testing course index drawer in theme_snap
     And I am on the course main page for "C1"
     And I follow "Section 5"
     # The course index should accompany the user, all the way down.
-    And I scroll to the base of selector "[data-activityname='SubAssign 5']"
     And I should see "Contents"
     And I should see "SubAssign 1"
     And I should see "SubAssign 2"
