@@ -624,6 +624,11 @@ body.snap-resource-card.format-topics {
             width: 40px;
             height: 40px;
             padding: 0.5rem;
+            background-color: transparent;
+
+            img.activityicon {
+                @include recolor-icon($activity-icon-content-bg, 1);
+            }
         }
     }
 }

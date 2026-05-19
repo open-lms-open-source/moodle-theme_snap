@@ -189,13 +189,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
       }
     }
 
-    .snap-dropzone .activityiconcontainer {
-        background-color: transparent;
-        img.activityicon {
-            @include recolor-icon($activity-icon-content-bg, 1);
-        }
-    }
-
     // Focus outline for keyboard tab users
     a,
     .dropdown-toggle {
