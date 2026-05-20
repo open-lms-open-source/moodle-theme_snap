@@ -57,13 +57,13 @@ Feature: Correct functionality of feature spots in the front page with every pos
     Given I log in as "admin"
     And I am on site homepage
     And ".snap-feature-block a.snap-feature-link" "css_element" should exist
-    And the "href" attribute of "//div[@class='snap-feature-block']//a[contains(text(), 'Title for spot 1')]" "xpath_element" should contain "https://www.moodle.com"
-    And the "href" attribute of "//div[@class='snap-feature-block']//a[contains(text(), 'Title for spot 3')]" "xpath_element" should contain "course/view.php?id=1"
+    And the "href" attribute of "//div[@class='snap-feature-block position-relative']//a[contains(text(), 'Title for spot 1')]" "xpath_element" should contain "https://www.moodle.com"
+    And the "href" attribute of "//div[@class='snap-feature-block position-relative']//a[contains(text(), 'Title for spot 3')]" "xpath_element" should contain "course/view.php?id=1"
   @javascript
   Scenario: Snap Feature spots title links opens in a new window when the checkbox is checked.
     Given I log in as "admin"
     And I am on site homepage
-    And the "target" attribute of "//div[@class='snap-feature-block']//a[contains(text(), 'Title for spot 1')]" "xpath_element" should contain "_blank"
+    And the "target" attribute of "//div[@class='snap-feature-block position-relative']//a[contains(text(), 'Title for spot 1')]" "xpath_element" should contain "_blank"
   @javascript
   Scenario: Snap Feature spots settings page validate that the links exists as links, internal and external.
     Given I log in as "admin"
@@ -74,14 +74,17 @@ Feature: Correct functionality of feature spots in the front page with every pos
     And I follow "Edit theme settings 'Snap'"
     And I follow "Feature spots"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fs_one_title_link']" to "testnolink"
+    And I scroll to the base of selector ".settingsform"
     And I press "Save changes"
     And I should see "Some settings were not changed due to an error."
     And I follow "Feature spots"
     And I should see "This value is not valid"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fs_one_title_link']" to "/course/view.php?id=1"
+    And I scroll to the base of selector ".settingsform"
     And I press "Save changes"
     And I should see "Changes saved"
     And I follow "Feature spots"
     And I set the field with xpath "//div[@class='form-text defaultsnext']//input[@id='id_s_theme_snap_fs_one_title_link']" to "http://www.google.com"
+    And I scroll to the base of selector ".settingsform"
     And I press "Save changes"
     And I should see "Changes saved"

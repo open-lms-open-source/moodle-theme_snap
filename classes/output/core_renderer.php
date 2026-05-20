@@ -1579,7 +1579,7 @@ HTML;
 
         if ($link) {
             $card = '<div class="snap-feature">
-                        <div class="snap-feature-block">' .$image.$linktitle.$fscontenttext. '</div>
+                        <div class="snap-feature-block position-relative">' .$image.$linktitle.$fscontenttext. '</div>
                     </div>';
         } else {
             $card = '<div class="snap-feature">
