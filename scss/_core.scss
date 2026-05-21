@@ -983,7 +983,7 @@ a.yui3-button,
     }
 }
 
-#page-site-index .section-modchooser-link {
+#page-site-index .sitetopic .section-modchooser-link {
     .activity-add-text {
         color: $brand-primary;
     }
@@ -996,6 +996,42 @@ a.yui3-button,
     height: 32px;
     background: transparent url("[[pix:theme|move_here]]") no-repeat center center;
     background-size: contain;
+}
+// For blocks drawer "Additional activities" on frontpage
+#page-site-index .block_site_main_menu {
+    .divider .divider-content {
+        .btn.add-content:not(.always-visible *) {
+            background-color: initial;
+        }
+    }
+}
+// For blocks drawer "Additional activities" on Snap site
+.theme-snap .block_site_main_menu {
+    .section li.activity {
+        padding-bottom: 0.3rem;
+        .divider {
+            margin: 0.5rem 0;
+        }
+        .instancename {
+            display: unset;
+        }
+        .activity-item {
+            padding: 0.5rem;
+            .inplaceeditable.inplaceeditable-text {
+                display: block;
+                .quickediticon {
+                    width: auto;
+                    display: inline-block;
+                }
+            }
+            .activity-icon.activityiconcontainer {
+                width: 25px;
+            }
+            .activity-name-area {
+                font-size: initial;
+            }
+        }
+    }
 }
 
 #page-site-index .sitetopic .divider {
