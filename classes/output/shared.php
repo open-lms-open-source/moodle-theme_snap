@@ -190,7 +190,6 @@ EOF;
                 'showstatus' => $showstatus)
         );
 
-        $PAGE->requires->js('/course/dndupload.js');
         $PAGE->requires->js_call_amd('theme_snap/dndupload-lazy', 'init', $vars);
     }
 
