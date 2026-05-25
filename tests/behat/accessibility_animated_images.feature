@@ -44,7 +44,6 @@ Feature: Animated images should be accessible.
     And I upload file "testgif_small.gif" to section 1
     And I reload the page
     And I click on ".drawer-left .drawertoggle" "css_element"
-    And I scroll to the top of selector ".snap-animated-image"
     And I hover over the element ".snap-animated-image"
     Then I click on ".anim-pause-button" "css_element"
     And "img[src$='.gif']" "css_element" should not be visible

@@ -73,7 +73,6 @@ Feature: Activity navigation in Snap theme
     And I log in as "admin"
     And I am on "Course 1" course homepage
     # Stealth activity.
-    And I scroll to the top of selector "a.courseindex-link[title='Section 2']"
     And I follow "Section 2"
     And I wait until the page is ready
     And I open "Forum 1" actions menu

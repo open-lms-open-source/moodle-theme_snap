@@ -39,7 +39,6 @@ Feature: When the moodle theme is set to Snap, a color contrast checker can be v
     And I click on "#theme-settings-snap" "css_element"
     And I set the following fields to these values:
       |  Site color |      #FFAAAA                   |
-    And I instantly scroll to the center of element "form#adminsettings div.settingsform button[type='submit']" "css_element"
     And I click on "Save changes" "button"
     And I wait until the page is ready
     And I should see "This color combination doesn't comply"

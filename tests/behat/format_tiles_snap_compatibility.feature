@@ -57,8 +57,6 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I am on the course main page for "C1"
     Then "Course Dashboard" "link" should be visible
     And ".editmode-switch-form" "css_element" should not exist
-    And I scroll to the base of selector ".toc-footer"
-    And I wait "3" seconds
     And I follow "Course Dashboard"
     And I wait until the page is ready
     And ".editmode-switch-form" "css_element" should not exist
@@ -69,8 +67,6 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I am on the course main page for "C1"
     Then "Course Dashboard" "link" should be visible
     And ".editmode-switch-form" "css_element" should exist
-    And I scroll to the base of selector ".toc-footer"
-    And I wait "3" seconds
     And I follow "Course Dashboard"
     And I wait until the page is ready
     And ".editmode-switch-form" "css_element" should exist
@@ -87,8 +83,6 @@ Feature: When the moodle theme is set to Snap with course format tiles, a course
     And I switch edit mode in Snap
     And I wait until the page is ready
     And I should not see "Add an activity or resource"
-    And I scroll to the base of selector ".toc-footer"
-    And I wait "3" seconds
     And I follow "Course Dashboard"
     And I wait until the page is ready
     And I should not see "Add a block"

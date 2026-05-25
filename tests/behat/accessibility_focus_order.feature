@@ -45,7 +45,6 @@ Feature: Check that the correct tab order and focus exists for the page.
   Scenario: Tabindex -1 exists for unnecessary focus order in the course dashboard.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I instantly scroll to the center of element "#coursetools" "css_element"
     And I follow "Course Dashboard"
     And the "tabindex" attribute of "//aside[@id='block-region-side-pre']//a[@class='visually-hidden-focusable']" "xpath_element" should contain "-1"
     # To be reviewed on INT-20292.
@@ -56,12 +55,10 @@ Feature: Check that the correct tab order and focus exists for the page.
     Then I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I add a assign activity to course "C1" section "0"
-    And I instantly scroll to the center of element "input#id_submitbutton" "css_element"
     And I click on "Save and display" "button"
     # To indicate that the form has failed.
     Then "#id_error_name" "css_element" should be visible
     # Fire a second form save to check that the input with the error is indeed focused.
-    And I instantly scroll to the center of element "input#id_submitbutton" "css_element"
     And I click on "Save and display" "button"
     Then the focused element is "input.form-control.is-invalid" "css_element"
     # To be reviewed on INT-20292.
@@ -75,7 +72,6 @@ Feature: Check that the correct tab order and focus exists for the page.
     And I am on the "assignment1" "assign activity" page
     And I navigate to "Settings" in current page administration
     And I expand all fieldsets
-    And I instantly scroll to the center of element ".collapseall" "css_element"
     And I follow "Collapse all"
     And I scroll to the bottom
     Then "#fgroup_id_buttonar" "css_element" should appear after the "div.collapsible-actions" "css_element"

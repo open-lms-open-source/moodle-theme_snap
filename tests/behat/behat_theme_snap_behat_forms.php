@@ -63,11 +63,6 @@ class behat_theme_snap_behat_forms extends behat_forms {
             $collapseexpandlink = $this->find('xpath', $expandallxpath . '|' . $expandsectionold . '|' . $expandsectioncurrent,
                     false, false, behat_base::get_reduced_timeout());
 
-            // Harmless in all cases, and needed mostly when Snap makes tests with humongous amounts of HTML contents.
-            if ($collapseexpandlink->getAttribute('id')) {
-                $this->execute('behat_theme_snap::i_instantly_scroll_to_the_center_of_element', ['#' . $collapseexpandlink->getAttribute('id'), 'css_element']);
-            }
-
             $collapseexpandlink->click();
             $this->wait_for_pending_js();
 
@@ -113,11 +108,6 @@ class behat_theme_snap_behat_forms extends behat_forms {
                 // that's why we always click on the first XPath match, will be always the next one.
                 $iterations = count($showmores);
                 for ($i = 0; $i < $iterations; $i++) {
-                    if ($collapseexpandlink->getAttribute('id')) {
-                        $this->execute('behat_theme_snap::i_instantly_scroll_to_the_center_of_element', ['#' . $collapseexpandlink->getAttribute('id'), 'css_element']);
-                    }
-                    $collapseexpandlink->click();
-                    $this->execute('behat_theme_snap::i_instantly_scroll_to_the_center_of_element', [$showmores[0]->getXpath(), 'xpath_element']);
                     $showmores[0]->click();
                 }
             }
@@ -126,32 +116,5 @@ class behat_theme_snap_behat_forms extends behat_forms {
             // We continue with the test.
         }
         // @codingStandardsIgnoreEnd
-    }
-
-    public function press_button($button) {
-        $selector = $this->get_selected_node('button', $button);
-        // We gots to see where we are pressing buttons, before embarking on the adventurous task of pressing the button.
-        if ($selector->getAttribute('id')) {
-            $this->execute('behat_theme_snap::i_instantly_scroll_to_the_center_of_element', ['#' . $selector->getAttribute('id'), 'css_element']);
-        }
-        parent::press_button($button);
-    }
-
-    /**
-     * Generic field setter as inherited from Core.
-     *
-     * Internal API method, a generic *I set "VALUE" to "FIELD" field*
-     * could be created based on it.
-     *
-     * @param string $fieldlocator The pointer to the field, it will depend on the field type.
-     * @param string $value
-     * @return void
-     */
-    public function set_field_value($fieldlocator, $value) {
-        $fieldnode = $this->find_field($fieldlocator);
-        if ($fieldnode->getAttribute('id')) {
-            $this->execute('behat_theme_snap::i_instantly_scroll_to_the_center_of_element', ['#' . $fieldnode->getAttribute('id'), 'css_element']);
-        }
-        parent::set_field_value($fieldlocator, $value);
     }
 }

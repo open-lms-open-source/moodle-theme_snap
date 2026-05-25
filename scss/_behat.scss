@@ -1,5 +1,14 @@
 /* stylelint-disable declaration-no-important*/
+
+// Disable smooth scrolling on the :root (html) element using the :has() pseudo-class
+// this behavior comes from $enable-smooth-scroll in public/theme/boost/scss/bootstrap/_reboot.scss
+html:has(body.behat-site) {
+    scroll-behavior: auto !important;
+}
+
 .behat-site {
+    // Backup CSS to avoid smooth scrolling on behat sites.
+    scroll-behavior: auto !important;
 
     // We need to be able to see the navigation block in Snap or we can't fo things like follow the participants link and
     // log in as another user.
@@ -17,6 +26,8 @@
     * {
         transition: none !important;
         animation-name: none !important;
+        // Turn off smooth scroll so elements are clickable.
+        scroll-behavior: auto !important;
     }
 
     // Prevent the pop-up from covering other content, and causing Behat test failures in certain browsers.
@@ -24,5 +35,4 @@
         position: relative;
         transition-property: none !important;
     }
-
 }

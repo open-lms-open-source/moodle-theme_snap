@@ -53,7 +53,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
       | gradereport/overview:view | <gradebookaccessible> |
     When I log in as "student1"
     And I am on the course main page for "C1"
-    And I js click on "#snap-course-tools" "css_element"
+    And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And "#snap-student-dashboard" "css_element" should exist
     And ".snap-student-dashboard-progress" "css_element" <seecompletion> exist
@@ -81,7 +81,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I am on the course main page for "C1"
     And I set the following fields to these values:
       | Forum name | Single Forum Course |
-    And I scroll to the top of selector "input#id_submitbutton"
     And I press "Save and display"
     And I log out
     And completion tracking is "<completionenabled>" for course "C1"
@@ -136,12 +135,12 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Given I am using Open LMS
     And I log in as "teacher1"
     And I am on the course main page for "C1"
-    And I js click on "a[href=\"#coursetools\"]" "css_element"
+    And I click on "a[href=\"#coursetools\"]" "css_element"
     And "#coursetools a[href*=\"report/allylti/launch.php?reporttype=course\"]" "css_element" should exist
     And I log out
     And I log in as "student1"
     And I am on the course main page for "C1"
-    And I js click on "a[href=\"#coursetools\"]" "css_element"
+    And I click on "a[href=\"#coursetools\"]" "css_element"
     And "#coursetools a[href*=\"report/allylti/launch.php?reporttype=course\"]" "css_element" should not exist
 
   @javascript
@@ -191,11 +190,11 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I change window size to "large"
     When I log in as "student1"
     And I am on the course main page for "C1"
-    And I js click on "#snap-course-tools" "css_element"
+    And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And I follow "New section"
     And I wait until the page is ready
-    And I js click on "#snap-course-tools" "css_element"
+    And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
 
   @javascript
@@ -204,7 +203,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     And I change window size to "large"
     When I log in as "admin"
     And I am on the course main page for "C1"
-    And I js click on "#snap-course-tools" "css_element"
+    And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And I switch edit mode in Snap
     And I wait until the page is ready
@@ -217,7 +216,7 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     Then the course format for "C1" is set to "weeks"
     When I log in as "admin"
     And I am on the course main page for "C1"
-    And I js click on "#snap-course-tools" "css_element"
+    And I click on "#snap-course-tools" "css_element"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And I switch edit mode in Snap
     And I wait until the page is ready
@@ -229,8 +228,6 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     When I log in as "admin"
     And I am on the course main page for "C1"
     And I wait until the page is ready
-    And I scroll to the base of selector ".toc-footer"
-    And I wait "3" seconds
     And I follow "Course Dashboard"
     Then I should see "Course Dashboard" in the "#coursetools" "css_element"
     And I should see "2 Participants" in the "#ct-participants-number" "css_element"

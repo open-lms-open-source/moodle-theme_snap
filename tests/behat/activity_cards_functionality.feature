@@ -45,12 +45,12 @@ Feature: Check functionality in activity cards.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I add a folder activity to course "C1" section "1" and I fill the form with:
-      | Name         | Test Page        |
+      | Name         | Test Folder        |
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
     And I follow "Section 1"
-    And I open "Test Page" actions menu
-    And I click on "Edit settings" "link" in the "Test Page" activity
+    And I open "Test Folder" actions menu
+    And I click on "Edit settings" "link" in the "Test Folder" activity
     And I wait until the page is ready
     And I set the following fields to these values:
       | Display description on course page | 1 |
@@ -74,12 +74,12 @@ Feature: Check functionality in activity cards.
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     And I add a folder activity to course "C1" section "1" and I fill the form with:
-      | Name         | Test Page        |
+      | Name         | Test Folder        |
       | Description | <p>Test Content</p><img src="https://download.moodle.org/unittest/test.jpg" alt="test image" width="200" height="150" class="img-responsive atto_image_button_text-bottom"> |
     And I am on "Course 1" course homepage
     And I follow "Section 1"
-    And I open "Test Page" actions menu
-    And I click on "Edit settings" "link" in the "Test Page" activity
+    And I open "Test Folder" actions menu
+    And I click on "Edit settings" "link" in the "Test Folder" activity
     And I wait until the page is ready
     And I set the following fields to these values:
       | Display description on course page | 1 |
@@ -106,7 +106,6 @@ Feature: Check functionality in activity cards.
       | Name | Test lesson |
       | Description | Test lesson description |
     And I am on the "Test lesson" "lesson activity" page
-    And I scroll to the top of selector "div.firstpageoptions"
     And I follow "Add a question page"
     And I set the field "Select a question type" to "Short answer"
     And I press "Add a question page"

@@ -323,6 +323,14 @@ function theme_snap_get_pre_scss($theme) {
 
     $scss = '';
 
+    // Add a new variable to indicate that we are running behat.
+    if (defined('BEHAT_SITE_RUNNING')) {
+        $scss .= "\$behatsite: true;\n";
+        // Force bootstrap to disable animations on Snap behat site.
+        $scss .= "\$enable-transitions: false;\n";
+        $scss .= "\$enable-smooth-scroll: false;\n";
+    }
+
     $settings['brand-primary'] = !empty($theme->settings->themecolor) ? $theme->settings->themecolor : '#3bcedb';
     $userfontsans  = $theme->settings->headingfont;
     if (empty($userfontsans) || in_array($userfontsans, ['Roboto', '"Roboto"'])) {
@@ -460,6 +468,10 @@ function theme_snap_output_fragment_section($args) {
     $formatrenderer = $format->get_renderer($PAGE);
     $modinfo = get_fast_modinfo($course);
     $section = $modinfo->get_section_info_by_id($args['sectionid']);
+    // Add validation for Empty section id. To avoid PHP errors
+    if (!$section) {
+        return '';
+    }
     $current_section_num = $section->sectionnum;
     $format->set_sectionnum($current_section_num);
 

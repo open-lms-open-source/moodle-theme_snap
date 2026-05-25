@@ -63,7 +63,7 @@ Feature: When the moodle theme is set to Snap, admins can change the activity ic
     And I should see "Icon activities color"
     And I set the following fields to these values:
       | s_theme_snap_assessactivitiescolor | #FF0000 |
-    And I js click on "Save changes" "button"
+    And I click on "Save changes" "button"
     And I wait until the page is ready
     And I should see "Changes saved"
     And I log out
