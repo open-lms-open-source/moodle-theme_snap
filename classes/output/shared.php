@@ -135,7 +135,7 @@ class shared extends \core\output\renderer_base {
      * @return void
      */
     protected static function dndupload_add_to_course($course, $modnames) {
-        global $CFG, $PAGE;
+        global $CFG, $PAGE, $USER;
 
         $showstatus = optional_param('notifyeditingon', false, PARAM_BOOL);
 
@@ -190,6 +190,10 @@ EOF;
                 'showstatus' => $showstatus)
         );
 
+        // In edit mode Core introduces the dndupload.
+        if (empty($USER->olms_real_edit_mode)) {
+            $PAGE->requires->js('/course/dndupload.js');
+        }
         $PAGE->requires->js_call_amd('theme_snap/dndupload-lazy', 'init', $vars);
     }
 
@@ -208,7 +212,7 @@ EOF;
      * @return bool
      */
     protected static function include_course_ajax($course, $usedmodules = array(), $enabledmodules = null, $config = null) {
-        global $CFG, $PAGE, $COURSE;
+        global $CFG, $PAGE, $COURSE, $USER;
 
         // Only include course AJAX for supported formats.
         if (!course_ajax_enabled($course)) {
@@ -496,6 +500,8 @@ EOF;
                 // Temporarily change edit mode to on for course ajax to be included.
                 $originaleditstate = !empty($USER->editing) ? $USER->editing : false;
                 $USER->editing = true;
+                // Save the real edit mode for when it's needed.
+                $USER->olms_real_edit_mode = $originaleditstate;
                 self::include_course_ajax($COURSE, $modnamesused);
                 $USER->editing = $originaleditstate;
             }
