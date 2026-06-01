@@ -967,6 +967,9 @@ a.yui3-button,
     .user-grade th.oddd3 {
         background-color: #fff;
     }
+    #local_grademessenger {
+        margin-bottom: 1em;
+    }
 }
 
 .path-grade-report-grader .tertiary-navigation .initials-selector {
@@ -1864,6 +1867,7 @@ body#page-site-index #moodle-page #page-header {
         position: relative;
         top: 17%;
         left: 4%;
+        border-radius: .5rem;
     }
 }
 
@@ -4980,6 +4984,20 @@ button.snap-icon-toggle {
     opacity: 0;
     flex-shrink: 0;
     @include alakazam;
+}
+
+#page-header #page-mast a[href*="themesettingsnap"] {
+    border-radius: 0.2rem;
+    background-color: white;
+    &:hover,
+    &:focus {
+        box-shadow: none;
+        background-color: $brand-primary !important;
+        color: #fff !important;
+        i, span  {
+            color: #fff !important;
+        }
+    }
 }
 
 #snap-changecoverimageconfirmation {

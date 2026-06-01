@@ -94,9 +94,9 @@ $user-content-max-width:         60em;
 
 $btn-secondary-color:           $brand-primary;
 
-$border-radius:          0;
-$border-radius-lg:       0;
-$border-radius-sm:       0;
+$border-radius:          .5rem !default;
+$border-radius-lg:       .6rem !default;
+$border-radius-sm:       .25rem !default;
 
 $btn-border-radius:          .25rem;
 $btn-border-radius-lg:       .3rem;
