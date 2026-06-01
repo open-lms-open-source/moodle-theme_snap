@@ -70,7 +70,6 @@ img.spacer,
 .coursebox.remotecoursebox .remotecourseinfo,
 .course-content ul.topics li.section .content,
 .course-content ul.weeks li.section .content,
-#page-course-index-category .generalbox.info,
 .loginbox.onecolumn,
 .loginbox,
 #page-report-outline-user .section,
@@ -1870,7 +1869,6 @@ body#page-site-index #moodle-page #page-header {
 
 body.path-course, body#page-course-index-category {
     #moodle-page #page-header.mast-image {
-        min-height: 0;
         aspect-ratio: 6;
     }
     .page-context-header {
@@ -4967,7 +4965,7 @@ button.snap-icon-toggle {
 }
 
 // Cover image control.
-#page-header.snap-category-header.mast-image,
+#page-header.snap-category-header,
 .pagelayout-course #page-header {
     #page-mast {
         display: flex;
@@ -4982,11 +4980,6 @@ button.snap-icon-toggle {
     opacity: 0;
     flex-shrink: 0;
     @include alakazam;
-
-    .btn {
-        border-color: transparent;
-        margin-left: 1em;
-    }
 }
 
 #snap-changecoverimageconfirmation {
@@ -5603,7 +5596,6 @@ header#mr-nav {
 }
 
 #page-header.mast-image {
-    min-height: 0;
     aspect-ratio: 6;
 }
 @media (min-width: 993px) {
@@ -6478,6 +6470,17 @@ span[data-flexitour="container"]:has(> div[data-role="flexitour-step"]) {
 
     #region-main {
         padding-inline: 4%;
+    }
+    @media screen and (max-width: 576px) {
+        #region-main > .d-inline-flex {
+            display: none !important; // To overwrite core display at small resolutions.
+        }
+    }
+    #page-mast {
+        justify-content: space-between;
+    }
+    .search-icon i {
+        color: white;
     }
 
     #moodle-blocks {

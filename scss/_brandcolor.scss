@@ -1029,11 +1029,17 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .modal-dialog.modal-dialog-centered.modal-dialog-scrollable {
         outline: none;
     }
+    .snap-category-header #page-mast {
+        align-items: center;
+    }
 
     #snap-coverimagecontrol > label.btn-outline-primary.btn-sm,
+    .snap-category-header #page-mast a,
     .bulkEnable {
         background-color: white !important;
         color: $brand-primary!important;
+        border-radius: 0.25rem;
+        font-size: initial;
         &:hover,
         &:focus {
             box-shadow: none;
