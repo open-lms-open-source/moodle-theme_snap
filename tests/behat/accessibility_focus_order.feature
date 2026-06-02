@@ -71,7 +71,7 @@ Feature: Check that the correct tab order and focus exists for the page.
     And I am on "Course 1" course homepage
     And I am on the "assignment1" "assign activity" page
     And I navigate to "Settings" in current page administration
-    And I expand all fieldsets
+    And I click on "Expand all" "link"
     And I follow "Collapse all"
     And I scroll to the bottom
     Then "#fgroup_id_buttonar" "css_element" should appear after the "div.collapsible-actions" "css_element"

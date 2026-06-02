@@ -24,10 +24,7 @@
 
 // NOTE: no MOODLE_INTERNAL test here, this file may be required by behat before including /config.php.
 
-use Behat\Mink\Exception\ExpectationException as ExpectationException,
-    Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException,
-    Behat\Mink\Element\NodeElement as NodeElement,
-    Behat\Gherkin\Node\TableNode;
+use Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException;
 
 require_once(__DIR__ . '/../../../../lib/tests/behat/behat_forms.php');
 
@@ -39,54 +36,54 @@ require_once(__DIR__ . '/../../../../lib/tests/behat/behat_forms.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_theme_snap_behat_forms extends behat_forms {
+
+    /**
+     * Expands all moodle form fieldsets if they exist.
+     *
+     * Snap rebuilds activity/course/section settings forms into a two-column layout and, as part of
+     * that, moves the ".collapsible-actions" block (the "Expand all" control) to the end of the
+     * ".snap-form-advanced" column (see theme/snap/amd/src/snap.js, the onModSettings block).
+     *
+     * Core's expand_all_fields() runs a single find() over a union XPath
+     * (expand-all link | per-section toggles) and clicks the first match in DOCUMENT ORDER. Because
+     * Snap relocates the expand-all control to the bottom of the form, the first match in document
+     * order becomes a per-section toggle, so core clicks that and only ONE fieldset expands. The rest
+     * stay collapsed (display:none) and later "I set the field ..." steps fail with
+     * "element not interactable".
+     *
+     * This override finds ONLY the collapse-menu anchor (not a union) and clicks it, so document
+     * order is irrelevant and the anchor's bulk-expand handler (lib/form/amd/src/collapsesections.js)
+     * expands every section at once. The "Show more" advanced-field handling is kept identical to
+     * core (MDL-84801).
+     *
+     * @throws ElementNotFoundException Thrown by behat_base::find_all
+     * @return void
+     */
     protected function expand_all_fields() {
         // Expand only if JS mode, else not needed.
         if (!$this->running_javascript()) {
             return;
         }
 
-        // We already know that we waited for the DOM and the JS to be loaded, even the editor
-        // so, we will use the reduced timeout as it is a common task and we should save time.
+        // Click the collapse-menu anchor directly. Targeting only this element (rather than core's
+        // union with the per-section toggles) means the relocation done by Snap does not matter.
         try {
             $this->wait_for_pending_js();
-            // Expand all fieldsets link - which will only be there if there is more than one collapsible section.
-            $expandallxpath = "//div[@class='collapsible-actions']" .
-                "//a[contains(concat(' ', @class, ' '), ' collapsed ')]" .
-                "//span[contains(concat(' ', @class, ' '), ' expandall ')]";
-            // Else, look for the first expand fieldset link (old theme structure).
-            $expandsectionold = "//legend[@class='ftoggler']" .
-                    "//a[contains(concat(' ', @class, ' '), ' icons-collapse-expand ') and @aria-expanded = 'false']";
-            // Else, look for the first expand fieldset link (current theme structure).
-            $expandsectioncurrent = "//fieldset//div[contains(concat(' ', @class, ' '), ' ftoggler ')]" .
-                    "//a[contains(concat(' ', @class, ' '), ' icons-collapse-expand ') and @aria-expanded = 'false']";
-
-            $collapseexpandlink = $this->find('xpath', $expandallxpath . '|' . $expandsectionold . '|' . $expandsectioncurrent,
-                    false, false, behat_base::get_reduced_timeout());
-
+            $expandallxpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' collapsible-actions ')]" .
+                "//a[contains(concat(' ', normalize-space(@class), ' '), ' collapsemenu ')]" .
+                "[contains(concat(' ', normalize-space(@class), ' '), ' collapsed ')]";
+            $collapseexpandlink = $this->find('xpath', $expandallxpath, false, false, behat_base::get_reduced_timeout());
             $collapseexpandlink->click();
             $this->wait_for_pending_js();
-
         } catch (ElementNotFoundException $e) {
-            // Try explanding only one section.
-            try {
-                $expandonlysection = "//legend[@class='ftoggler']" .
-                    "//a[contains(concat(' ', @class, ' '), ' icons-collapse-expand ') and @aria-expanded = 'false']";
-
-                $collapseexpandlink = $this->find('xpath', $expandonlysection,
-                    false, false, behat_base::get_reduced_timeout());
-                $collapseexpandlink->click();
-                // @codingStandardsIgnoreStart
-            } catch (Exception $e) {
-                // The behat_base::find() method throws an exception if there are no elements,
-                // we should not fail a test because of this. We continue if there are not expandable fields.
-
-            }
-            // @codingStandardsIgnoreEnd
+            // No expand-all control (single section, or already fully expanded) - nothing to do here.
+            // The behat_base::find() method throws an exception if there are no elements,
+            // we should not fail a test because of this.
         }
 
         // Different try & catch as we can have expanded fieldsets with advanced fields on them.
         try {
-
+            $this->wait_for_pending_js();
             // Expand all fields xpath.
             $showmorexpath = "//a[normalize-space(.)='" . get_string('showmore', 'form') . "']" .
                 "[contains(concat(' ', normalize-space(@class), ' '), ' moreless-toggler')]";
@@ -96,25 +93,25 @@ class behat_theme_snap_behat_forms extends behat_forms {
                 return;
             }
 
-            if ($this->getSession()->getDriver() instanceof \DMore\ChromeDriver\ChromeDriver) {
-                // Chrome Driver produces unique xpaths for each element.
-                foreach ($showmores as $showmore) {
-                    $showmore->click();
+            $js = <<<EOF
+            require(['core/pending'], function(Pending) {
+                const query = document.evaluate("{$showmorexpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                if (query.snapshotLength > 0) {
+                    const pendingPromise = new Pending('showmore:expand');
+                    for (let i = 0, length = query.snapshotLength; i < length; ++i) {
+                        query.snapshotItem(i).click();
+                        if (i === length - 1) {
+                            pendingPromise.resolve();
+                        }
+                    }
                 }
-            } else {
-                // Funny thing about this, with findAll() we specify a pattern and each element matching the pattern
-                // is added to the array with of xpaths with a [0], [1]... sufix, but when we click on an element it
-                // does not matches the specified xpath anymore (now is a "Show less..." link) so [1] becomes [0],
-                // that's why we always click on the first XPath match, will be always the next one.
-                $iterations = count($showmores);
-                for ($i = 0; $i < $iterations; $i++) {
-                    $showmores[0]->click();
-                }
-            }
-            // @codingStandardsIgnoreStart
+            });
+            EOF;
+
+            $this->execute_script($js);
+            $this->wait_for_pending_js();
         } catch (ElementNotFoundException $e) {
             // We continue with the test.
         }
-        // @codingStandardsIgnoreEnd
     }
 }

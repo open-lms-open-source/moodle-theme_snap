@@ -43,7 +43,7 @@ Feature: Hide activities from Table of Contents in theme_snap
     And I am on activity "page" "Hidden Page" page
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Settings" in current page administration
-    And I expand all fieldsets
+    And I click on "Table of Contents settings" "link"
     And I set the field "Do not show this activity in the Table of Contents" to "1"
     And I press "Save and return to course"
     And I wait until the page is ready
@@ -59,7 +59,7 @@ Feature: Hide activities from Table of Contents in theme_snap
     And I am on activity "page" "Hidden Page" page
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Settings" in current page administration
-    And I expand all fieldsets
+    And I click on "Table of Contents settings" "link"
     And I set the field "Do not show this activity in the Table of Contents" to "1"
     And I press "Save and return to course"
     And I wait until the page is ready
@@ -69,7 +69,7 @@ Feature: Hide activities from Table of Contents in theme_snap
     And I am on activity "page" "Hidden Page" page
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Settings" in current page administration
-    And I expand all fieldsets
+    And I click on "Table of Contents settings" "link"
     And I set the field "Do not show this activity in the Table of Contents" to ""
     And I press "Save and return to course"
     And I wait until the page is ready
@@ -83,6 +83,7 @@ Feature: Hide activities from Table of Contents in theme_snap
     And I am on activity "page" "Hidden Page" page
     And I click on "#admin-menu-trigger" "css_element"
     And I navigate to "Settings" in current page administration
+    And I wait "5" seconds
     And I expand all fieldsets
     And I set the field "Do not show this activity in the Table of Contents" to "1"
     And I press "Save and return to course"

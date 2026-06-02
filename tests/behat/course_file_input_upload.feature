@@ -92,7 +92,7 @@ Feature: When the moodle theme is set to Snap, teachers can upload files as reso
       | displayoptions | <display>  | resource |
     And I am on "Course 1" course homepage
     And I add a resource activity to course "Course 1" section "1"
-    And I expand all fieldsets
+    And I click on "Expand all" "link"
     And I set the field "Students must manually mark the activity as done" to "1"
     And I click on "id_completionexpected_enabled" "checkbox"
     And I set the following fields to these values:

@@ -42,8 +42,7 @@ Feature: View activity activity header and completion information in activities
   @javascript
   Scenario: View automatic completion items as a student
     Given I am on the "Music history" "assign activity editing" page logged in as teacher1
-    And I expand all fieldsets
-    And I click on "#id_activitycompletionheader div.ftoggler" "css_element"
+    And I click on "Expand all" "link"
     And I set the field "Add requirements" to "1"
     And I set the following fields to these values:
       | completionview        | 1                                                 |

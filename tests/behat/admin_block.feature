@@ -61,8 +61,8 @@ Feature: When the moodle theme is set to Snap, the admin block will only be show
     When I am on the course main page for "C1"
     Then "#admin-menu-trigger" "css_element" <existscourse> exist
     # Check profile page.
-    When I open the user menu
-    And I follow "Profile"
+    And I click on "Close course index" "button"
+    And I follow "Profile" in the user menu
     Then "#admin-menu-trigger" "css_element" <existsprofile> exist
     Examples:
       | user     | existssite | existsdashboard | existscourse | existsprofile |
