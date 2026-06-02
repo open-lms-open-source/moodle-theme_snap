@@ -1222,6 +1222,13 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                             LTIObserver.observe(multipleLTIActivities, LTIObserverConfig);
                         }
 
+                        // For the qbank creation form, move the action buttons (#fgroup_id_buttonar)
+                        // out of the collapsible Common module settings container so they remain
+                        // visible when the section collapses and appear at the bottom of the form.
+                        if ($('body#page-mod-qbank-mod').length) {
+                            $('#fgroup_id_buttonar').detach().insertAfter('.snap-form-advanced');
+                        }
+
                         var description = $('form[id^="mform1"] fieldset:first .fitem_feditor:not(.required)');
 
                         if (onModSettings && description) {
