@@ -942,28 +942,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function page_heading($tag = 'h1') {
         global $COURSE;
 
-        $heading = $this->page->heading;
-        $pagetype = $this->page->pagetype;
-
-        if ($this->page->pagelayout == 'mypublic' && $COURSE->id == SITEID) {
-            // For the user profile page message button we need to call 2.9 content_header.
-            $heading = parent::context_header();
-        } else if (($COURSE->id != SITEID
-            && (stripos($heading, format_string($COURSE->fullname)) === 0)
-            || $pagetype === 'course-view-section-topics')) {
-            // If we are on a course page which is not the site level course page.
-            $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
-            $heading = format_string($COURSE->fullname);
-            $heading = \core\output\html_writer::link($courseurl, $heading);
-            if (!$this->snap_page_is_activity_view() && !$this->snap_page_is_activity_mod() && !$this->snap_page_is_user_view()) {
-                $heading = $this->context_header(['heading' => $heading]);
-            } else {
-                $heading = \core\output\html_writer::tag($tag, $heading);
-            }
-        } else {
-            // Default heading.
-            $heading = \core\output\html_writer::tag($tag, $heading);
-        }
+        $heading = $this->get_page_title($tag);
 
         // If we are on the main page of a course, add the cover image selector.
         if ($COURSE->id != SITEID) {
@@ -986,16 +965,41 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $heading .= $link;
         }
 
-        // Set core heading to Gradebook.
-        if (strpos($pagetype, 'grade-report-') === 0 || strpos($pagetype, 'grade-edit-') === 0) {
-            // If we are in a Gradebook page set default header.
-            $heading = parent::context_header();
-            $heading = $this->snap_make_coursename_link($heading);
-        }
-
         return $heading;
     }
 
+    /**
+     * Builds the page title HTML for the page header.
+     * Handles gradebook, user-profile, course-link, and default heading cases.
+     *
+     * @param string $tag The heading HTML tag.
+     * @return string
+     */
+    private function get_page_title(string $tag = 'h1'): string {
+        global $COURSE;
+
+        $heading = $this->page->heading;
+        $pagetype = $this->page->pagetype;
+
+        if (strpos($pagetype, 'grade-report-') === 0 || strpos($pagetype, 'grade-edit-') === 0) {
+            return $this->snap_make_coursename_link(parent::context_header());
+        }
+
+        if ($this->page->pagelayout == 'mypublic' && $COURSE->id == SITEID) {
+            return parent::context_header();
+        }
+
+        $is_course_heading = $COURSE->id != SITEID
+            && stripos($heading, format_string($COURSE->fullname)) === 0;
+        if ($is_course_heading || $pagetype === 'course-view-section-topics') {
+            $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
+            return \core\output\html_writer::tag($tag,
+                \core\output\html_writer::link($courseurl, format_string($COURSE->fullname))
+            );
+        }
+
+        return \core\output\html_writer::tag($tag, $heading);
+    }
 
     /**
      * Renders the page header.
@@ -1010,19 +1014,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $pagetype = $this->page->pagetype;
         $context = $this->page->context;
         $data->cover_image_in_mast = true;
-
-        if ($this->page->pagelayout == 'mypublic' && $COURSE->id == SITEID) {
-            $data->title = parent::context_header();
-        } else if (($COURSE->id != SITEID
-            && (stripos($heading, format_string($COURSE->fullname)) === 0)
-            || $pagetype === 'course-view-section-topics')) {
-            $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
-            $heading = format_string($COURSE->fullname);
-            $headinglink = \core\output\html_writer::link($courseurl, $heading);
-            $data->title = \core\output\html_writer::tag('h1', $headinglink);
-        } else {
-            $data->title = \core\output\html_writer::tag('h1', $heading);
-        }
+        $data->title = $this->get_page_title('h1');
 
         if ($context->contextlevel == CONTEXT_COURSECAT) {
             $categories = $this->page->categories;
@@ -1094,11 +1086,6 @@ class core_renderer extends \theme_boost\output\core_renderer {
                     $data->cover_image_in_mast = false;
                 }
             }
-        }
-
-        if (strpos($pagetype, 'grade-report-') === 0 || strpos($pagetype, 'grade-edit-') === 0) {
-             $gb_heading = parent::context_header();
-             $data->title = $this->snap_make_coursename_link($gb_heading);
         }
 
         $data->course_header = $this->course_header();
@@ -2481,17 +2468,6 @@ HTML;
     }
 
     /**
-     * Checks if the current page is an activity mod.
-     *
-     * @return bool
-     */
-    protected function snap_page_is_activity_mod() {
-        return $this->page->context->contextlevel === CONTEXT_MODULE
-               && strpos($this->page->pagetype, 'mod-') === 0
-               && substr($this->page->pagetype, -4) === '-mod';
-    }
-
-    /**
      * Checks if the current page is an edit section page.
      *
      * @return bool
@@ -2500,12 +2476,4 @@ HTML;
         return $this->page->pagetype === 'course-editsection';
     }
 
-    /**
-     * Checks if the current page is a user view.
-     *
-     * @return bool
-     */
-    protected function snap_page_is_user_view() {
-        return $this->page->pagetype === 'user-view';
-    }
 }

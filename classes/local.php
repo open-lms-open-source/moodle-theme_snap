@@ -1484,7 +1484,7 @@ class local {
         $css = '';
         $coverurl = self::course_cat_coverimage_url($catid);
         if ($coverurl) {
-            $css = "#page-header {background-image: url($coverurl);}";
+            $css = "#page-header {background-image: url('" . addcslashes((string)$coverurl, "'\\") . "');}";
         }
         return $css;
     }
@@ -1499,7 +1499,7 @@ class local {
         $css = '';
         $coverurl = self::course_coverimage_url($courseid);
         if ($coverurl) {
-            $css = "#page-header {background-image: url($coverurl);}";
+            $css = "#page-header {background-image: url('" . addcslashes((string)$coverurl, "'\\") . "');}";
         }
         return $css;
     }
@@ -1514,7 +1514,8 @@ class local {
         if (!$coverurl) {
             return '';
         }
-        return ".theme-snap#page-site-index #page-header {background-image: url($coverurl);}";
+        return ".theme-snap#page-site-index #page-header {background-image: url('" . addcslashes((string)$coverurl, "'\\") . "');}";
+
     }
 
     /**
