@@ -475,41 +475,6 @@ function theme_snap_output_fragment_section($args) {
     $current_section_num = $section->sectionnum;
     $format->set_sectionnum($current_section_num);
 
-    // We need to double check if the page has an instance of SharingCart.
-    // Current $PAGE object can't be modified.
-    $page = new moodle_page();
-    $page->set_course($course);
-    $page->set_pagelayout('course');
-    $page->set_pagetype('course-view-' . $formatname);
-    $page->initialise_theme_and_output();
-    $page->blocks->load_blocks();
-    $page->blocks->create_all_block_instances();
-    if ($page->blocks->is_block_present('sharing_cart') && !empty($section) &&
-        file_exists($CFG->dirroot . '/blocks/sharing_cart/amd/src/script.js')) {
-        $sectionsjs = new stdClass();
-        $sectionsjs->id = $section->id;
-        $sectionsjs->name = $section->name;
-        $sectionsjs->num = $args['sectionid'];
-        $PAGE->requires->js_call_amd(
-            'block_sharing_cart/script',
-            'init',
-            [['add_method' => get_config('block_sharing_cart', 'add_to_sharing_cart')], [$sectionsjs], true]
-        );
-        $PAGE->requires->strings_for_js(
-            array('yes', 'no', 'ok', 'cancel', 'error', 'edit', 'move', 'delete', 'movehere'),
-            'moodle'
-        );
-
-        $PAGE->requires->strings_for_js(
-            array('copyhere', 'notarget', 'backup', 'restore', 'movedir', 'clipboard',
-                'confirm_backup', 'confirm_backup_section', 'confirm_userdata',
-                'confirm_delete', 'clicktomove', 'folder_string',
-                'activity_string', 'delete_folder', 'modal_checkbox',
-                'modal_confirm_backup', 'modal_confirm_delete', 'backup_heavy_load_warning_message',
-                'snap_dialog_restore'),
-            'block_sharing_cart'
-        );
-    }
     $maxbytes = get_max_upload_file_size($CFG->maxbytes, $course->maxbytes);
     if (has_capability('moodle/course:ignorefilesizelimits', $PAGE->context)) {
         $maxbytes = 0;

@@ -164,17 +164,15 @@ Feature: When the moodle theme is set to Snap, teachers edit assets without ente
     And I am on "Course 1" course homepage
     And I follow "Section 1"
     And I switch edit mode in Snap
-    And I open "Test assignment" actions menu
-    And I choose "Copy to Sharing Cart" in the open action menu
-    # Perform an action should close the menu.
-    And ".dropdown-menu.menu.show" "css_element" should not exist
-    Then I should see "Are you sure you want to copy this"
+    # The sharing cart block injects a basket icon next to each activity actions menu (same as Boost).
+    And I click on ".add_to_sharing_cart" "css_element" in the "Test assignment" "activity"
+    Then I should see "Copy item: \"Test assignment\""
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Section 1"
     And ".snap-activity[data-type='Assignment'] button.snap-edit-asset-more" "css_element" should not exist
-    Then I should not see "Copy to Sharing Cart"
+    And ".add_to_sharing_cart" "css_element" should not exist
 
   @javascript
   Scenario: In the frontpage, an admin duplicates an activity.
