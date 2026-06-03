@@ -64,9 +64,6 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.fitem
         max-width: unset;
         padding-right: unset;
     }
-    &:hover {
-        background-color: #efefef;
-    }
 }
 
 // Course edit page overrides
@@ -114,9 +111,6 @@ body[id^="page-mod-"][id$="-mod"] {
     margin-top: 1rem;
     padding: 0.5rem;
 
-    &:hover {
-        background-color: #efefef;
-    }
 }
 
 .mform .fitem {
