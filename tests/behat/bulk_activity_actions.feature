@@ -66,6 +66,8 @@ Feature: When the moodle theme is set to Snap, Bulk course activity actions work
     And I follow "Section 1"
     And I wait until the page is ready
     And I click on "Bulk actions" "button" in the "#section-1" "css_element"
+    # Close the course index drawer so it does not overlap the activity checkbox.
+    And I click on ".drawertoggle" "css_element"
     Given I click on "Select activity Activity sample 1" "checkbox"
     And I click on "Select activity Activity sample 2" "checkbox"
     And I should see "2 selected" in the "#section-1 #sticky-footer" "css_element"
@@ -86,6 +88,8 @@ Feature: When the moodle theme is set to Snap, Bulk course activity actions work
     And I follow "Section 1"
     And I wait until the page is ready
     And I click on "Bulk actions" "button" in the "#section-1" "css_element"
+    # Close the course index drawer so it does not overlap the activity checkbox (Selenium 4 strict click).
+    And I click on ".drawertoggle" "css_element"
     Then I click on "Select activity Activity sample 1" "checkbox"
     And I click on "Select all" "checkbox" in the "#section-1 #sticky-footer" "css_element"
     And I should see "2 selected" in the "#section-1 #sticky-footer" "css_element"

@@ -593,7 +593,7 @@ class behat_theme_snap extends behat_base {
         $helper = behat_context_helper::get('behat_general');
         $xpathassetmore = "//li[contains(@class, 'activity')][.//span[contains(@class, 'instancename') and contains(text(), '$asset1')]]//a[contains(@class, 'dropdown-toggle') and contains(@id, 'action-menu-toggle')]";
         $helper->i_click_on($xpathassetmore, 'xpath_element');
-        $xpathedit = "//li[contains(@class, 'activity')][.//span[contains(@class, 'instancename') and contains(text(), '$asset1')]]//a[contains(@data-action, 'update') and contains(@class, 'editing_update')]";
+        $xpathedit = "//li[contains(@class, 'activity')][.//span[contains(@class, 'instancename') and contains(text(), '$asset1')]]//a[contains(@class, 'editing_update')]";
         $helper->i_click_on($xpathedit, 'xpath_element');
         $this->apply_completion_restriction($asset2, 'Save and return to course');
     }

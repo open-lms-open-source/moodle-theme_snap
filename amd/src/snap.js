@@ -1173,7 +1173,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         $('form[id^="mform1"] > fieldset').not(vital).wrapAll('<div class="snap-form-advanced col-md-4" />');
 
                         // Add expand all to advanced column.
-                        $(".snap-form-advanced").append($(".collapsible-actions"));
+                        $(".snap-form-advanced").prepend($(".collapsible-actions"));
 
                         // Adding additional events to handle collapse/expanse same as lib/form/amd/src/collapsesections.js
                         const formContainers = $('.snap-form-advanced > fieldset > .fcontainer');

@@ -35,4 +35,11 @@ html:has(body.behat-site) {
         position: relative;
         transition-property: none !important;
     }
+
+    // Raise the tag so it wins the hit-test.
+    .cm_action_menu.actions a[id^="snap-restriction-"],
+    .snap-conditional-tag {
+        position: relative;
+        z-index: 2;
+    }
 }

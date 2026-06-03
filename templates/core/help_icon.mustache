@@ -18,10 +18,9 @@
     }
 }}
 <button class="iconhelp btn btn-link p-a-0" role="button" type="button"
-    data-container="main" data-bs-toggle="popover"
-    data-placement="{{#ltr}}right{{/ltr}}{{^ltr}}left{{/ltr}}" data-bs-content="{{text}} {{completedoclink}}"
-    data-constraints='[{"to": "scrollParent", "attachment": "together"}]'
-    data-html="true"
+    data-bs-container="body" data-bs-toggle="popover"
+    data-bs-placement="{{#ltr}}right{{/ltr}}{{^ltr}}left{{/ltr}}" data-bs-content="{{text}} {{completedoclink}}"
+    data-bs-html="true"
     aria-expanded="false"
     >
   {{#pix}}help, theme_snap, {{alt}}{{/pix}}

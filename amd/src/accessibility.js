@@ -25,8 +25,8 @@
  * JS code to assign attributes and expected behavior for elements in the Dom regarding accessibility.
  */
 define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/bootstrap/util/sanitizer', 'theme_boost/popover',
-    'core/moremenu', 'core/log'],
-    function($, str, Event, FormEvents, { DefaultAllowlist }, Popover, coreMoreMenu, log) {
+        'core/moremenu', 'core/log'],
+    function($, str, Event, FormEvents, {DefaultAllowlist}, {Popover}, coreMoreMenu, log) {
         return {
             snapAxInit: function(localJouleGrader, allyReport, blockReports, localCatalogue) {
                 /**
@@ -673,70 +673,90 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
             setManualPopovers: function() {
                 const btnSelector = '.iconhelp.btn';
 
-                $('body').popover({
-                    selector: '[data-bs-toggle="popover"]',
-                    trigger: 'manual',
-                    container: 'body',
-                    whitelist: Object.assign(DefaultAllowlist, {
-                        table: [],
-                        thead: [],
-                        tbody: [],
-                        tr: [],
-                        th: [],
-                        td: [],
-                    }),
-                });
-
-                // Prevent Bootstrap from automatically reacting to button focus
-                $(btnSelector).on('focusin', function(e) {
-                    e.stopImmediatePropagation();
-                });
-
-                $(btnSelector).on('click', function(e) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-
-                    const $el = $(this);
-                    const isOpen = $el.attr('aria-expanded') === 'true';
-
-                    if (isOpen) {
-                        $el.popover('hide');
-                    } else {
-                        $el.popover('show');
+                // Replace the focus-triggered instances created by theme_boost/loader::enablePopovers()
+                // with manual ones, so show/hide is fully controlled by the handlers below.
+                // This function runs once per rendered help icon ({{#js}} in the template), so the
+                // per-element dataset flag keeps the init and the handlers from being duplicated.
+                document.querySelectorAll(btnSelector).forEach(function(btn) {
+                    if (btn.dataset.snapManualPopover === '1') {
+                        return;
                     }
-                });
+                    btn.dataset.snapManualPopover = '1';
 
-                $(btnSelector).on('keydown', function(e) {
-                    const $el = $(this);
+                    const existing = Popover.getInstance(btn);
+                    if (existing) {
+                        existing.dispose();
+                    }
+                    // eslint-disable-next-line no-new
+                    new Popover(btn, {
+                        trigger: 'manual',
+                        container: 'body',
+                        html: true,
+                        allowList: Object.assign(DefaultAllowlist, {
+                            table: [],
+                            thead: [],
+                            tbody: [],
+                            tr: [],
+                            th: [],
+                            td: [],
+                        }),
+                    });
 
-                    if (e.key === 'Enter' || e.key === ' ') {
+                    const toggle = function() {
+                        const popover = Popover.getInstance(btn);
+                        if (!popover) {
+                            return;
+                        }
+                        if (btn.getAttribute('aria-expanded') === 'true') {
+                            popover.hide();
+                        } else {
+                            popover.show();
+                        }
+                    };
+
+                    // Prevent Bootstrap from automatically reacting to button focus, in case a
+                    // focus-triggered instance gets (re)created on this element after this init.
+                    $(btn).on('focusin', function(e) {
+                        e.stopImmediatePropagation();
+                    });
+
+                    $(btn).on('click', function(e) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
+                        toggle();
+                    });
 
-                        const isOpen = $el.attr('aria-expanded') === 'true';
-
-                        if (isOpen) {
-                            $el.popover('hide');
-                        } else {
-                            $el.popover('show');
+                    $(btn).on('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            toggle();
                         }
-                    }
 
-                    if (e.key === 'Escape') {
-                        $el.popover('hide');
-                    }
-                });
+                        if (e.key === 'Escape') {
+                            const popover = Popover.getInstance(btn);
+                            if (popover) {
+                                popover.hide();
+                            }
+                        }
+                    });
 
-                $(btnSelector).on('shown.bs.popover', function () {
-                    const popover = $(this).data('bs.popover').tip;
-                    $(this).attr('aria-controls', popover.id);
-                    $(this).attr('aria-expanded', true);
-                    $(popover).insertAfter($(this));
-                    $(popover).popover('update');
-                });
+                    $(btn).on('shown.bs.popover', function() {
+                        const popover = Popover.getInstance(btn);
+                        const tip = popover ? popover.tip : null;
+                        if (!tip) {
+                            return;
+                        }
+                        btn.setAttribute('aria-controls', tip.id);
+                        btn.setAttribute('aria-expanded', 'true');
+                        // Keep the tip right after its trigger for a sane focus / screen-reader order.
+                        $(tip).insertAfter(btn);
+                        popover.update();
+                    });
 
-                $(btnSelector).on('hidden.bs.popover', function () {
-                    $(this).attr('aria-expanded', false);
+                    $(btn).on('hidden.bs.popover', function() {
+                        btn.setAttribute('aria-expanded', 'false');
+                    });
                 });
             },
 
