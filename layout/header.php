@@ -35,12 +35,6 @@ echo $OUTPUT->doctype();
 
 <html <?php echo $OUTPUT->htmlattributes(); ?>>
 <head>
-    <?php
-    if (stripos($PAGE->bodyclasses, 'path-blocks-reports') !== false) {
-        // Fix IE charting bug (flash stuff does not work correctly in IE).
-        echo ("\n".'<meta http-equiv="X-UA-Compatible" content="IE=8,9,10">'."\n");
-    }
-    ?>
 <title><?php echo $OUTPUT->page_title(); ?></title>
 <link rel="shortcut icon" href="<?php echo $OUTPUT->favicon() ?>"/>
 <?php echo $OUTPUT->standard_head_html() ?>

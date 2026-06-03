@@ -30,11 +30,7 @@ require(__DIR__.'/header.php');
 
 $coursemainpage = strpos($PAGE->pagetype, 'course-view-') === 0;
 
-$mastimage = '';
-// Check we are in a course (not the site level course), and the course is using a cover image.
-if ($COURSE->id != SITEID && !empty($coverimagecss)) {
-    $mastimage = 'mast-image';
-}
+$mastimage = ($COURSE->id != SITEID && local::has_cover_image()) ? 'mast-image' : '';
 // Check if in current path we must to hide TOC.
 $pathurl = local::current_url_path();
 $pathurl = $OUTPUT->get_path_hiddentoc($pathurl);

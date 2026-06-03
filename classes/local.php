@@ -1519,6 +1519,28 @@ class local {
     }
 
     /**
+     * Returns true if the current page has a cover image.
+     * Mirrors the context detection in layout/header.php so that layouts
+     * can apply the mast-image class without reading header.php's internal variables.
+     *
+     * @return bool
+     */
+    public static function has_cover_image(): bool {
+        global $PAGE, $COURSE;
+
+        if ($PAGE->context->contextlevel === CONTEXT_COURSECAT) {
+            return $PAGE->pagelayout === 'coursecategory'
+                && (bool) self::course_cat_coverimage_url($PAGE->context->instanceid);
+        }
+
+        if ($PAGE->pagelayout === 'frontpage') {
+            return (bool) self::site_coverimage_url();
+        }
+
+        return (bool) self::course_coverimage_url($COURSE->id);
+    }
+
+    /**
      * Get the best cover image file name for a given context.
      * @param \context $context
      * @return string

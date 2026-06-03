@@ -31,11 +31,7 @@ use theme_snap\output\shared;
 // @codingStandardsIgnoreStart
 // Note, coding standards ignore is required so that we can have more readable indentation under php tags.
 
-$mastimage = '';
-// Check we are in a course (not the site level course), and the course is using a cover image.
-if ($COURSE->id != SITEID && !empty($coverimagecss)) {
-    $mastimage = 'mast-image';
-}
+$mastimage = ($COURSE->id != SITEID && local::has_cover_image()) ? 'mast-image' : '';
 if ($PAGE->pagetype == 'admin-search') {
     $PAGE->set_secondary_navigation(false);
 }
