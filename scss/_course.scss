@@ -1030,6 +1030,13 @@ body.format-singleactivity {
                 @include recolor-icon($color-folder, 1);
             }
         }
+        .quickeditlink.aalink:focus {
+            box-shadow: none;
+            border-radius: .2rem;
+        }
+        .quickediticon {
+            padding: 1.2px;
+        }
     }
 
     li.activity.modtype_subsection > .activity-item {
@@ -1277,6 +1284,9 @@ body.snap-resource-card li.snap-resource:not(.label) {
 }
 .section .activity-item .activity-actions .actions {
     align-items: center;
+    right: 0;
+    top: 0;
+    display: flex;
     .action-menu {
         display: flex;
     }
