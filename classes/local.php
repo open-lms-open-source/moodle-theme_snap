@@ -44,6 +44,78 @@ require_once($CFG->dirroot.'/lib/enrollib.php');
  */
 class local {
 
+    /** @var array<string, string>|null Cached map of colourable module purposes for this request. */
+    protected static $modpurposescache = null;
+
+    /**
+     * Map of activity module purposes for colourising monologo icons via CSS.
+     *
+     * Only includes colourable modules: not branded, with a real monologo pix, and a non-OTHER
+     * purpose. Exposed to JS so the course index and Activities block can add the
+     * activity-{purpose} class to their icons.
+     *
+     * @return array<string, string> purpose keyed by modname, for colourable modules only
+     */
+    public static function get_mod_purposes(): array {
+        if (self::$modpurposescache !== null) {
+            return self::$modpurposescache;
+        }
+        $modpurposes = [];
+        foreach (array_keys(\core_component::get_plugin_list('mod')) as $modname) {
+            // Branded modules render their own coloured icon - never recolour them.
+            if (component_callback('mod_' . $modname, 'is_branded', [], false)) {
+                continue;
+            }
+            // Legacy modules without a monologo only have a coloured `icon`; recolouring breaks it.
+            if (!self::mod_has_real_monologo($modname)) {
+                continue;
+            }
+            $purpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
+            if ($purpose === MOD_PURPOSE_OTHER) {
+                continue;
+            }
+            $modpurposes[$modname] = $purpose;
+        }
+        self::$modpurposescache = $modpurposes;
+        return $modpurposes;
+    }
+
+    /**
+     * Whether a module ships a genuine monochrome `monologo` icon (svg or png) that CSS can recolour.
+     *
+     * Unlike \core_component::has_monologo_icon(), this does NOT fall back to the legacy coloured
+     * `icon`, which would wrongly return true for modules like mod_hotpot (icon.svg only) and flatten
+     * them when recoloured. Looks for the monologo file in the theme, site and plugin pix directories.
+     *
+     * @param string $modname the module name
+     * @return bool true if a real monologo icon exists
+     */
+    protected static function mod_has_real_monologo(string $modname): bool {
+        global $CFG, $PAGE;
+        static $themedir = null;
+        if ($themedir === null) {
+            $themedir = \core\output\theme_config::load($PAGE->theme->name)->dir;
+        }
+
+        $bases = [];
+        // Theme pix_plugins override (Snap ships monologos for some third-party modules).
+        $bases[] = "$themedir/pix_plugins/mod/$modname/monologo";
+        // Site-level override.
+        $bases[] = "$CFG->dataroot/pix_plugins/mod/$modname/monologo";
+        // The module's own pix directory.
+        $plugindir = \core_component::get_plugin_directory('mod', $modname);
+        if ($plugindir !== null) {
+            $bases[] = "$plugindir/pix/monologo";
+        }
+
+        foreach ($bases as $base) {
+            if (file_exists("$base.svg") || file_exists("$base.png")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Is there a valid grade or feedback inside this grader report table item?
      *

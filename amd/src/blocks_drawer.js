@@ -28,6 +28,8 @@ const SELECTORS = {
     DRAWER_OPEN_BUTTON: '.drawer-toggler.drawer-right-toggle > button',
     BLOCK_SETTINGS: '.block_settings',
     DRAWER: '.drawer',
+    ACTIVITY_BLOCK_LINK: '.block_activity_modules a[href*="/mod/"]',
+    ACTIVITY_BLOCK_RESOURCES: '.block_activity_modules a[href*="/course/resources.php"]',
 };
 
 /**
@@ -71,7 +73,40 @@ const repositionSettingsBlock = () => {
     }
 };
 
-export const init = () => {
+/**
+ * Colourise the Activities block (block_activity_modules) icons by plugin purpose.
+ *
+ * The block markup has no purpose/modname class, so we read the modname from each link href and
+ * add an activity-{purpose} class (recolour itself is done in SCSS, see _blocks.scss). The map
+ * only contains colourable modules, so branded/legacy icons are skipped already.
+ *
+ * @param {Object} purposes map of modname -> purpose, supplied by the template
+ */
+const resolveActivityBlockIcons = (purposes) => {
+    document.querySelectorAll(SELECTORS.ACTIVITY_BLOCK_LINK).forEach((link) => {
+        // Parse the modname from .../mod/{modname}/index.php.
+        const match = link.getAttribute('href')?.match(/\/mod\/([^/]+)\//);
+        if (!match) {
+            return;
+        }
+        const purpose = purposes[match[1]];
+        if (purpose) {
+            link.classList.add(`activity-${purpose}`);
+        }
+    });
+
+    // The aggregated "Resources" item points at /course/resources.php (no modname in the href);
+    // it represents the resource archetype, which maps to the content purpose.
+    document.querySelectorAll(SELECTORS.ACTIVITY_BLOCK_RESOURCES).forEach((link) => {
+        link.classList.add('activity-content');
+    });
+};
+
+/**
+ * @param {Object} [modPurposes] map of modname -> purpose for the Activities block icon colouring
+ */
+export const init = (modPurposes = {}) => {
     setupEventListeners();
     repositionSettingsBlock();
+    resolveActivityBlockIcons(modPurposes);
 };

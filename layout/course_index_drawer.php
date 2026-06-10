@@ -98,23 +98,6 @@ $PAGE->requires->js_amd_inline("
     });
 ");
 
-$modpurposes = [];
-$modbrandedlist = [];
-foreach (array_keys(core_component::get_plugin_list('mod')) as $modname) {
-    $purpose = plugin_supports('mod', $modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
-    $modpurposes[$modname] = $purpose;
-    if (component_callback('mod_' . $modname, 'is_branded', [], false)) {
-        $modbrandedlist[] = $modname;
-    }
-}
-
-$PAGE->requires->js_amd_inline("
-    require(['core/config'], function(cfg) {
-        cfg.snapModPurposes = " . json_encode($modpurposes) . ";
-        cfg.snapBrandedMods = " . json_encode($modbrandedlist) . ";
-    });
-");
-
 $templatecontext = [
     'iscourseindex' => true,
     'courseindex' => $courseindex,

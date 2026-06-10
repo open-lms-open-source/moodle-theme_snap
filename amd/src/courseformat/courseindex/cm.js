@@ -78,12 +78,12 @@ export default class Component extends BaseCmComponent {
     }
 
     /**
-     * Applies activity-{purpose} class to the cm's .activityiconcontainer so CSS can
-     * colorize the monologo icon via filter per category.
+     * Applies activity-{purpose} class to the cm's .activityiconcontainer so CSS can colorize
+     * the monologo icon. cfg.snapModPurposes (see theme_snap\local::get_mod_purposes) only lists
+     * colourable modules, so legacy coloured icons (e.g. mod_hotpot) are left untouched.
      */
     _resolveIconPurpose() {
         const purposes = Config.snapModPurposes ?? {};
-        const branded = new Set(Config.snapBrandedMods ?? []);
 
         const container = this.element.querySelector('.activityiconcontainer');
         if (!container) {
@@ -95,12 +95,9 @@ export default class Component extends BaseCmComponent {
         );
 
         if (iconClass) {
-            const modname = iconClass.slice(0, -4);
-            if (!branded.has(modname)) {
-                const purpose = purposes[modname];
-                if (purpose && purpose !== 'other') {
-                    container.classList.add(`activity-${purpose}`);
-                }
+            const purpose = purposes[iconClass.slice(0, -4)];
+            if (purpose) {
+                container.classList.add(`activity-${purpose}`);
             }
         }
 

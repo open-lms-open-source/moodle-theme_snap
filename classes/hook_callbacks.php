@@ -35,7 +35,21 @@ class hook_callbacks {
     public static function before_footer_html_generation(\core\hook\output\before_footer_html_generation $hook): void {
         global $CFG, $PAGE;
 
-        if ($PAGE->theme->name !== 'snap' || empty(get_config('theme_snap', 'advancedfeedsenable'))) {
+        if ($PAGE->theme->name !== 'snap') {
+            return;
+        }
+
+        // Expose the colourable activity module purposes to the course index reactive component
+        // (theme_snap/courseformat/courseindex/cm), which reads cfg.snapModPurposes after boot.
+        // The Activities block gets the same data passed straight into its JS init via the
+        // blocks_drawer template, so it does not depend on this injection's timing.
+        $PAGE->requires->js_amd_inline("
+            require(['core/config'], function(cfg) {
+                cfg.snapModPurposes = " . json_encode(\theme_snap\local::get_mod_purposes()) . ";
+            });
+        ");
+
+        if (empty(get_config('theme_snap', 'advancedfeedsenable'))) {
             return;
         }
 

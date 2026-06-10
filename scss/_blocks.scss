@@ -460,8 +460,11 @@ body.path-site .block.block_settings {
         }
     }
 }
-
-.snap-media-object {
+// Activities block (block_activity_modules): colourise the monologo icons by plugin purpose.
+// The activity-{purpose} class is added in JS (theme_snap/blocks_drawer) since the core block
+// markup carries no purpose/modname class.
+.snap-media-object,
+.block_activity_modules a {
     &.activity-communication > img {
         @include recolor-icon($activity-icon-communication-bg, 1);
     }
