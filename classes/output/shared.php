@@ -375,16 +375,23 @@ EOF;
 
         list ($unavailablesections, $unavailablemods) = local::conditionally_unavailable_elements($COURSE);
 
-        // For mapping section number to its id (i.e. when you have #section-n, get the actual id of the sect).
+        // Determine the section number and/or id given what we have.
         $sectionidsbynumber = [];
         $pagesectionid = null;
         if ($courseviewpage) {
             $coursemodinfo = get_fast_modinfo($COURSE);
             $coursesectionviewpage = local::current_url_path() === '/course/section.php';
             $urlsectionid = optional_param('id', -1, PARAM_INT);
+
+            // Map the section number to its id (i.e. when you have #section-n, get the actual id of the sect).
             foreach ($coursemodinfo->get_section_info_all() as $number => $section) {
                 $sectionidsbynumber[$number] = $section->id;
-                if ($coursesectionviewpage && $urlsectionid == $section->id) {
+            }
+
+            // Get the section num if provided through the $urlsectionid param.
+            if ($coursesectionviewpage && $urlsectionid > 0) {
+                $section = $coursemodinfo->get_section_info_by_id($urlsectionid);
+                if ($section) {
                     $pagesectionid = $section->id;
                     if (empty($sectionnum)) {
                         $sectionnum = $section->sectionnum;
