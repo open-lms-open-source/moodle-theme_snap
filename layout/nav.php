@@ -31,6 +31,7 @@ use theme_snap\renderables\genius_dashboard_link;
 
 global $SESSION;
 $snapmfapending = isloggedin() && !isguestuser()
+    && !\core\session\manager::is_loggedinas()
     && empty($SESSION->tool_mfa_authenticated)
     && class_exists(\tool_mfa\manager::class)
     && \tool_mfa\manager::is_ready();
