@@ -73,6 +73,9 @@ body#page-mod-page-mod fieldset#id_general div.fcontainer:nth-child(2) div.fitem
 #page-course-edit,
 body[id^="page-mod-"][id$="-mod"] {
     .mform {
+        .containsadvancedelements .advanced.show {
+            display: block;
+        }
         .col-form-label {
             width: auto;
         }
@@ -83,6 +86,10 @@ body[id^="page-mod-"][id$="-mod"] {
             .col-form-label,
             .felement {
                 width: auto;
+
+                &.fmapoutcome {
+                    padding-left: 0.5em;
+                }
             }
         }
         fieldset {
@@ -92,6 +99,14 @@ body[id^="page-mod-"][id$="-mod"] {
                 }
             }
         }
+    }
+
+    .snap-form-advanced .availability-field.fcontainer {
+        overflow: scroll;
+    }
+
+    .form-check.left-indented {
+        padding-left: 1em;
     }
 }
 
@@ -532,8 +547,8 @@ form.mform {
             margin-bottom: 0 !important;
         }
     }
-    #fgroup_id_buttonar {
-        display: block;
+    #fgroup_id_buttonar .align-items-start.felement{
+        padding-left: unset;
     }
     .row {
         margin-right: unset;
@@ -557,6 +572,20 @@ form.mform {
                 }
             }
         }
+    }
+}
+
+// Question bank creation form: JS moves #fgroup_id_buttonar after 
+#page-mod-qbank-mod {
+    #fgroup_id_buttonar {
+        position: static !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: auto !important;
+        background-color: transparent;
+        border-top: none;
+        padding: 0;
+        z-index: auto;
     }
 }
 
