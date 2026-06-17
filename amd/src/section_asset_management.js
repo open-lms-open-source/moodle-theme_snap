@@ -51,6 +51,7 @@ define(
     ) {
 
         var self = this;
+        const loadingSections = new Set();
 
         const setCmActionsObservers = function() {
             const selector = '.action-menu a[data-action],' +
@@ -138,6 +139,11 @@ define(
          * @param {function} sectionVisibilityCallback Function to make visible the section on Course.
          */
         var getSection = function(sectionID, modid, sectionVisibilityCallback) {
+            if (loadingSections.has(sectionID)) {
+                return;
+            }
+
+            loadingSections.add(sectionID);
             var params = {courseid: self.courseConfig.id, sectionid: sectionID};
             $('.sk-fading-circle').show();
             fragment.loadFragment('theme_snap', 'section', self.courseConfig.contextid, params)
@@ -152,9 +158,11 @@ define(
                     activityCards.init();
 
                     $('.sk-fading-circle').hide();
+                    loadingSections.delete(sectionID);
                 })
                 .fail(function(ex) {
                     $('.sk-fading-circle').hide();
+                    loadingSections.delete(sectionID);
                     notification.exception(ex);
                 });
         };

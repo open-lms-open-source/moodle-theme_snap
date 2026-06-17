@@ -40,6 +40,8 @@ define(
     return function(courseConfig) {
 
         var self = this;
+        var sectionHashObserver = null;
+        var pendingSectionHash = '';
 
         self.courseConfig = courseConfig;
 
@@ -49,6 +51,73 @@ define(
          */
         var onCoursePage = function() {
             return $('body').attr('id').indexOf('page-course-view-') === 0;
+        };
+
+        /**
+         * Resolve section DB id from #section-N hash.
+         * @param {string} hashSection
+         * @returns {string}
+         */
+        var resolveSectionIdFromHash = function(hashSection) {
+            if (!hashSection.startsWith('#section-')) {
+                return '';
+            }
+
+            let sectionNum = hashSection.match(/\d+/)[0];
+            let sectionID = '';
+
+            let sectionNodeByNumber = document.getElementById('section-' + sectionNum);
+            if (sectionNodeByNumber) {
+                sectionID = sectionNodeByNumber.getAttribute('data-id') || '';
+            }
+
+            if (sectionID === '') {
+                let sectionIndexNode = document.querySelector(
+                    '#courseindex-content .courseindex-section[data-number="' + sectionNum + '"]'
+                );
+                if (sectionIndexNode) {
+                    sectionID = sectionIndexNode.getAttribute('data-id') || '';
+                }
+            }
+
+            return sectionID;
+        };
+
+        /**
+         * Wait until section mapping is available, then route once.
+         * @param {string} hashSection
+         */
+        var routeWhenSectionAvailable = function(hashSection) {
+            if (pendingSectionHash === hashSection && sectionHashObserver) {
+                return;
+            }
+
+            pendingSectionHash = hashSection;
+            if (sectionHashObserver) {
+                sectionHashObserver.disconnect();
+                sectionHashObserver = null;
+            }
+
+            var observerTarget = document.getElementById('courseindex-content') || document.body;
+            sectionHashObserver = new MutationObserver(function() {
+                if (resolveSectionIdFromHash(hashSection) !== '') {
+                    sectionHashObserver.disconnect();
+                    sectionHashObserver = null;
+                    pendingSectionHash = '';
+                    self.sectionRouter();
+                }
+            });
+
+            sectionHashObserver.observe(observerTarget, {childList: true, subtree: true});
+
+            setTimeout(function() {
+                if (sectionHashObserver) {
+                    sectionHashObserver.disconnect();
+                    sectionHashObserver = null;
+                    pendingSectionHash = '';
+                    self.sectionRouter();
+                }
+            }, 1500);
         };
 
         /**
@@ -67,7 +136,9 @@ define(
             }
 
             $(targmod).find('.instancename').prepend(searchpin);
-            $(targmod).attr('tabindex', '-1').focus();
+            setTimeout(function() {
+                util.scrollToElement(targmod);
+            }, 180);
         };
 
         /**
@@ -100,7 +171,12 @@ define(
                     $('ul.sections > #section-0').addClass('state-visible').focus();
                 }
                 sectionAssetManagement.setTOCVisibleSection();
-                scrollBack();
+
+                if (modid !== null) {
+                    scrollToModule(modid);
+                } else {
+                    scrollBack();
+                }
                 return;
             }
 
@@ -142,7 +218,7 @@ define(
                 return;
             } else if (hashSection.startsWith('#section-')) {
                 // Get section number.
-                sectionID = hashSection.match(/\d+/)[0];
+                sectionID = resolveSectionIdFromHash(hashSection);
             }
 
             // If #snap-add-new-section was visible, remove that in favor of the course section.
@@ -150,7 +226,13 @@ define(
                 document.getElementById('snap-add-new-section').classList.remove('state-visible');
             }
 
+            if ((sectionID === '' || sectionID === undefined) && hashSection.startsWith('#section-')) {
+                routeWhenSectionAvailable(hashSection);
+                return;
+            }
+
             if ((sectionID === '' || sectionID === undefined)
+            && !hashSection.startsWith('#section-')
             && (location.pathname.endsWith('/course/section.php') || location.pathname.endsWith('/course/view.php'))) {
                 if (self.courseConfig.sectionid !== undefined) {
                     sectionID = self.courseConfig.sectionid;

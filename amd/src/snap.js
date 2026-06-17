@@ -346,7 +346,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
             $(window).on('popstate', function(e) {
                 if (onCoursePage()) {
                     log.info('show section', e.target);
-                    courseLib.showSection();
+                    courseLib.sectionRouter();
                 }
             });
             $(window).on('hashchange', function() {
