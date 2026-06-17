@@ -146,6 +146,7 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And I follow "1 January - 7 January"
     And I wait until the page is ready
     # Move week 1 to week 3 position
+    And I click on "Close course index" "button"
     When I follow "Move \"1 January - 7 January\""
     And I click on "15 January - 21 January" "link" in the ".modal-body" "css_element"
     And I wait until the page is ready

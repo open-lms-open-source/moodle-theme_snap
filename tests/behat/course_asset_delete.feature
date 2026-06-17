@@ -63,7 +63,7 @@ Feature: When the moodle theme is set to Snap, teachers can delete course resour
     And I choose "Delete" in the open action menu
     Then I should see asset delete dialog
     When I click on "Delete" "button" in the "Delete activity?" "dialogue"
-    Then I should not see "Test assignment1" in the "page-content" "region"
+    Then I should not see "Test assignment1"
     # This is to test that the deletion persists.
     And I reload the page
     Then I should not see "Test assignment1"

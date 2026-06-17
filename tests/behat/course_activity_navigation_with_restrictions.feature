@@ -80,13 +80,13 @@ Feature: Activity navigation involving activities with access restrictions in Sn
     And I am on the "Assignment 1" "assign activity" page
     Then I should see "Forum 1" in the "#next-activity-link" "css_element"
     # Activity that has access restriction should not show up in the dropdown.
-    And the "Jump to..." select box should not contain "Book 1"
-    And I select "Quiz 1" from the "Jump to..." singleselect
+    And the "Jump to activity" select box should not contain "Book 1"
+    And I select "Quiz 1" from the "Jump to activity" singleselect
     # Forum 1 should be shown in the previous link since Book 1 is not yet available.
     And I should see "Forum 1" in the "#prev-activity-link" "css_element"
-    And the "Jump to..." select box should not contain "Book 1"
+    And the "Jump to activity" select box should not contain "Book 1"
     # Navigate to Forum 1.
     And I click on "//div/a[contains(text(),'Forum 1')]" "xpath_element"
     # Since Forum 1 has now been viewed and deemed completed, Book 1 can now be accessed.
     And I should see "Book 1" in the "#next-activity-link" "css_element"
-    And the "Jump to..." select box should contain "Book 1"
+    And the "Jump to activity" select box should contain "Book 1"

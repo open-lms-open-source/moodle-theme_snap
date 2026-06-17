@@ -48,9 +48,7 @@ Feature: Access Course Activities overview
     And I click on "//li[contains(@class, 'tool-card')]/a[contains(text(), 'Activities')]" "xpath_element"
     Then I should see "An overview of all activities in the course, with dates and other information."
     And I am on "Course 1" course homepage
-    And I click on "#admin-menu-trigger" "css_element"
-    Then "Activities" "link" should exist
-    And I click on "Activities" "link"
+    And I go to "Course administration > Activities" in snap administration
     Then I should see "An overview of all activities in the course, with dates and other information."
 
   @javascript

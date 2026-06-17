@@ -1723,12 +1723,6 @@ body > #page {
             }
         }
 
-        @media (min-width: 1346px) {
-            #snap-course-wrapper > .row {
-                padding-left: 20%;
-            }
-        }
-
         // Make sure Course content has minimum height, when TOC is open.
         #snap-course-wrapper {
             min-height: 100vh;
@@ -1874,6 +1868,7 @@ body#page-site-index #moodle-page #page-header {
 body.path-course, body#page-course-index-category {
     #moodle-page #page-header.mast-image {
         aspect-ratio: 6;
+        width: 100%;
     }
     .page-context-header {
         margin-top: -.75rem;

@@ -146,7 +146,7 @@ Feature: Correct functionality of enrolled courses and available courses in the 
     And I should see "0 students"
     And ".snap-home-course-card .coursecategory" "css_element" should be visible
     And I should see "Lorem ipsum dolor sit amet"
-    And I click on ".close" "css_element"
+    And I click on ".close-course-modal" "css_element"
     And ".snap-home-course-card" "css_element" should not be visible
     And I should not see "Lorem ipsum dolor sit amet"
     And the following "course enrolments" exist:

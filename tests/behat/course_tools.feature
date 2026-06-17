@@ -154,9 +154,10 @@ Feature: When the moodle theme is set to Snap, a course tools section is availab
     # Self enrol using student2.
     And I log in as "student2"
     And I am on the course main page for "C1"
+    And I press "Enrol me"
     And I set the following fields to these values:
       | Enrolment key | moodle_rules |
-    And I press "Enrol me"
+    And I click on "Enrol me" "button" in the "Test student enrolment" "dialogue"
     And I click on "a[href=\"#coursetools\"]" "css_element"
     Then I should see "Unenrol me"
     And I log out

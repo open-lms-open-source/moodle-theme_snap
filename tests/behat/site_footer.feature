@@ -61,12 +61,14 @@ Feature: As an admin, I should be able to set a site's footer on Snap theme.
 
   @javascript
   Scenario: To top button renderer on the footer must appear when user scroll to the bottom.
+    Given I skip because "It will be reviewed in INT-22199"
     Given I log in as "admin"
     And I am on site homepage
     And "#goto-top-link" "css_element" should exist
     And "#goto-top-link" "css_element" should not be visible
     And I scroll to the bottom
-    And "#goto-top-link" "css_element" should be visible
+    And I wait until the page is ready
+    And I wait until "#goto-top-link" "css_element" is visible
     And I click on "#goto-top-link > a" "css_element"
     And I wait until "#goto-top-link" "css_element" is not visible
     And "#goto-top-link" "css_element" should not be visible

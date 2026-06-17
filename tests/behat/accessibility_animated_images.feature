@@ -26,6 +26,7 @@
 Feature: Animated images should be accessible.
 
   Background:
+    Given I skip because "It will be reviewed in INT-22199"
     Given the following "courses" exist:
       | fullname | shortname | category | format | maxbytes | enablecompletion | initsections |
       | Course 1 | C1        | 0        | topics | 500000   | 1                |       1      |

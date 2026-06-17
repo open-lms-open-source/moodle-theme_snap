@@ -110,8 +110,8 @@ Feature: When the moodle theme is set to Snap, core forums displays correctly.
     And I follow "Section 1"
     And I wait until the page is ready
     Then I should not see "2 unread post"
-    And I open the user menu
-    And I follow "Preferences"
+    And I click on "Close course index" "button"
+    And I follow "Preferences" in the user menu
     And I click on "Forum preference" "link"
     And I set the following fields to these values:
       | Forum tracking| 1 |

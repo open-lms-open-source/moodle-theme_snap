@@ -29,10 +29,7 @@ Feature: When the admin user navigates to the theme selector page in the Site ad
   @javascript
   Scenario: The Snap theme description is correctly displayed in the theme selector.
     Given I log in as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I expand "Appearance" node
-    And I follow "Themes"
+    And I go to "Site administration > Appearance > Themes" in snap administration
     And I click on "#theme-preview-snap" "css_element"
     And I should see "Snap's user-friendly and responsive design"
 

@@ -106,7 +106,24 @@ EOF;
             $this->execute('behat_general::i_click_on', ['#admin-menu-trigger', 'css_element']);
         }
 
-        $nodetoclick->click();
+        // Use a DOM-dispatched click instead of a native one.
+        $this->js_trigger_click($nodetoclick);
+    }
+
+    /**
+     * Navigate through the Snap administration cog menu using a path string.
+     *
+     * Delegates to core's select_node_in_navigation/find_node_in_navigation, which expand
+     * intermediate nodes with a DOM-dispatched click (js_trigger_click) and wait for
+     * data-loaded. A native Selenium click is intercepted while the Snap drawer slides in.
+     *
+     * @When I go to :path in snap administration
+     * @param string $path Path in the format "Parent > Child > Grandchild"
+     */
+    public function i_go_to_in_snap_administration($path) {
+        $parentnodes = array_map('trim', explode('>', $path));
+        $lastnode = array_pop($parentnodes);
+        $this->select_node_in_navigation($lastnode, $parentnodes);
     }
 
     /**

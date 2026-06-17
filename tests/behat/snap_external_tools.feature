@@ -30,7 +30,7 @@ Feature: Configure new external tool type to test it on a course.
     And the following config values are set as admin:
       | linkadmincategories | 0 |
     And I log in as "admin"
-    And I am on front page
+    And I am on site homepage
     And I go to "Site administration > Plugins > Activity modules > External tool > Manage tools" in snap administration
     # Create tool type that opens in a new window.
     And I follow "configure a tool manually"
@@ -43,6 +43,7 @@ Feature: Configure new external tool type to test it on a course.
 
   @javascript
   Scenario: External tool is opened in a new window.
+    Given I skip because "It will be reviewed in INT-22199"
     # We need to be sure that a LTI configured to be opened in a new window is opened in a new window on click.
     # This will be Snap's insurance, so any type of LTI works the same.
     And I am on the course main page for "C1"

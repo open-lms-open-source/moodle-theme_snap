@@ -89,22 +89,14 @@ Feature: Users can access to the My Courses page in Snap.
   Scenario: User will see a warning message when the Course overview block is disabled.
     Given the following config values are set as admin:
       | defaulthomepage | 3 |
-    And I change window size to "large"
     And I log in as "admin"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I follow "Plugins"
-    And I follow "Category: Blocks"
-    And I follow "Manage blocks"
+    And I wait until the page is ready
+    And I go to "Site administration > Plugins > Blocks > Manage blocks" in snap administration
     And I click on "Disable Course overview" "checkbox" in the "Course overview" "table_row"
     And I follow "My Courses"
     Then ".block_myoverview" "css_element" should not exist
     And I should see "The Course overview block is disabled"
-    And I click on "#admin-menu-trigger" "css_element"
-    And I expand "Site administration" node
-    And I follow "Plugins"
-    And I follow "Category: Blocks"
-    And I follow "Manage blocks"
+    And I go to "Site administration > Plugins > Blocks > Manage blocks" in snap administration
     And I click on "Enable Course overview" "checkbox" in the "Course overview" "table_row"
     And I follow "My Courses"
     Then ".block_myoverview" "css_element" should exist
@@ -164,8 +156,8 @@ Feature: Users can access to the My Courses page in Snap.
     Then I log in as "teacher1"
     And I am on "Course 2" course homepage
     And I am on "Course 2" course homepage with editing mode "on"
-    And I click on ".activity.modtype_assign .action-menu.section-cm-edit-actions" "css_element"
-    Then I click on "a[data-action='update']" "css_element"
+    And I open "Assignment 1" actions menu
+    And I choose "Edit settings" in the open action menu
     And I expand all fieldsets
     And I set the field "Students must manually mark the activity as done" to "1"
     And I press "Save and return to course"
@@ -198,6 +190,7 @@ Feature: Users can access to the My Courses page in Snap.
   @javascript
   Scenario Outline: User can star course using card star icon.
     Given I log in as "student1"
+    And I change window size to "large"
     And I click on "#displaydropdown" "css_element"
     And I follow "<Option>"
     And I should see "Course 1"

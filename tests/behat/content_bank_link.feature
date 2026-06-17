@@ -39,7 +39,7 @@ Feature: When the Moodle theme is set to Snap, the content bank link should show
   @javascript
   Scenario: Users can see the content bank link.
     And I log in as "admin"
-    And I am on front page
+    And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I should see "Content bank"
     And I follow "My Courses"
@@ -49,7 +49,7 @@ Feature: When the Moodle theme is set to Snap, the content bank link should show
     And I should see "Content bank"
     And I log out
     And I log in as "teacher1"
-    And I am on front page
+    And I am on site homepage
     And I click on "#admin-menu-trigger" "css_element"
     And I should not see "Content bank"
     And I am on the course main page for "C1"

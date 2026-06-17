@@ -110,7 +110,6 @@ Feature: Activity navigation in Snap theme
     And I should see "Book 1" in the "#next-activity-link" "css_element"
     And I click on "//div/a[contains(text(),'Book 1')]" "xpath_element"
     And I should see "Assignment" in the "#prev-activity-link" "css_element"
-    And I should see "Book 1" in the "#prev-activity-link" "css_element"
     And I should see "Choice 1" in the "#next-activity-link" "css_element"
     And I click on "//div/a[contains(text(),'Choice 1')]" "xpath_element"
     And I should see "Database 1" in the "#next-activity-link" "css_element"
@@ -150,7 +149,6 @@ Feature: Activity navigation in Snap theme
     And I should see "Scorm 1 (hidden)" in the "#next-activity-link" "css_element"
     And I click on "//div/a[contains(text(),'Scorm 1 (hidden)')]" "xpath_element"
     And I should see "Resource 1 (hidden)" in the "#prev-activity-link" "css_element"
-    And I should see "Scorm 1 (hidden)" in the "#prev-activity-link" "css_element"
     And I should see "Url 1" in the "#next-activity-link" "css_element"
     And I click on "//div/a[contains(text(),'Url 1')]" "xpath_element"
     And I should see "Wiki 1" in the "#next-activity-link" "css_element"
@@ -176,7 +174,6 @@ Feature: Activity navigation in Snap theme
     And I should see "Book 1" in the "#next-activity-link" "css_element"
     And I click on "//div/a[contains(text(),'Book 1')]" "xpath_element"
     And I should see "Assignment" in the "#prev-activity-link" "css_element"
-    And I should see "Book 1" in the "#prev-activity-link" "css_element"
     And I should see "Choice 1" in the "#next-activity-link" "css_element"
     And I click on "//div/a[contains(text(),'Choice 1')]" "xpath_element"
     And I should see "Database 1" in the "#next-activity-link" "css_element"
@@ -223,47 +220,47 @@ Feature: Activity navigation in Snap theme
     Given I log in as "teacher1"
     When I am on "Course 1" course homepage
     And I am on the "Assignment 1" "assign activity" page
-    Then "Jump to..." "field" should exist
+    Then "Jump to activity" "field" should exist
     # The current activity will not be listed.
-    And the "Jump to..." select box should not contain "Assignment 1"
+    And the "Jump to activity" select box should not contain "Assignment 1"
     # Stealth activities will not be listed.
-    And the "Jump to..." select box should not contain "Forum 1"
+    And the "Jump to activity" select box should not contain "Forum 1"
     # Resources without view URL (e.g. labels) will not be listed.
-    And the "Jump to..." select box should not contain "Label 1"
+    And the "Jump to activity" select box should not contain "Label 1"
     # Check drop down menu contents.
-    And the "Jump to..." select box should contain "Book 1"
-    And the "Jump to..." select box should contain "Choice 1"
-    And the "Jump to..." select box should contain "Database 1"
-    And the "Jump to..." select box should contain "Feedback 1"
-    And the "Jump to..." select box should contain "Folder 1"
-    And the "Jump to..." select box should contain "Imscp 1"
-    And the "Jump to..." select box should contain "Lesson 1"
-    And the "Jump to..." select box should contain "Lti 1"
-    And the "Jump to..." select box should contain "Page 1"
-    And the "Jump to..." select box should contain "Quiz 1"
-    And the "Jump to..." select box should contain "Url 1"
-    And the "Jump to..." select box should contain "Wiki 1"
-    And the "Jump to..." select box should contain "Workshop 1"
+    And the "Jump to activity" select box should contain "Book 1"
+    And the "Jump to activity" select box should contain "Choice 1"
+    And the "Jump to activity" select box should contain "Database 1"
+    And the "Jump to activity" select box should contain "Feedback 1"
+    And the "Jump to activity" select box should contain "Folder 1"
+    And the "Jump to activity" select box should contain "Imscp 1"
+    And the "Jump to activity" select box should contain "Lesson 1"
+    And the "Jump to activity" select box should contain "Lti 1"
+    And the "Jump to activity" select box should contain "Page 1"
+    And the "Jump to activity" select box should contain "Quiz 1"
+    And the "Jump to activity" select box should contain "Url 1"
+    And the "Jump to activity" select box should contain "Wiki 1"
+    And the "Jump to activity" select box should contain "Workshop 1"
     # Hidden activities will be rendered with a '(hidden)' text.
-    And the "Jump to..." select box should contain "Glossary 1 (hidden)"
+    And the "Jump to activity" select box should contain "Glossary 1 (hidden)"
     # Activities in hidden sections will be rendered with a '(hidden)' text.
-    And the "Jump to..." select box should contain "Resource 1 (hidden)"
-    And the "Jump to..." select box should contain "Scorm 1 (hidden)"
+    And the "Jump to activity" select box should contain "Resource 1 (hidden)"
+    And the "Jump to activity" select box should contain "Scorm 1 (hidden)"
     # Jump to an activity somewhere in the middle.
-    When I select "Page 1" from the "Jump to..." singleselect
+    When I select "Page 1" from the "Jump to activity" singleselect
     Then I should see "Page 1"
     And I should see "Lti 1" in the "#prev-activity-link" "css_element"
     And I should see "Quiz 1" in the "#next-activity-link" "css_element"
     # Jump to the first activity.
-    And I select "Assignment 1" from the "Jump to..." singleselect
+    And I select "Assignment 1" from the "Jump to activity" singleselect
     And I should see "Book 1" in the "#next-activity-link" "css_element"
     But "#prev-activity-link" "css_element" should not exist
     # Jump to the last activity.
-    And I select "Workshop 1" from the "Jump to..." singleselect
+    And I select "Workshop 1" from the "Jump to activity" singleselect
     And I should see "Wiki 1" in the "#prev-activity-link" "css_element"
     But "#next-activity-link" "css_element" should not exist
     # Jump to a hidden activity.
-    And I select "Glossary 1" from the "Jump to..." singleselect
+    And I select "Glossary 1" from the "Jump to activity" singleselect
     And I should see "Folder 1" in the "#prev-activity-link" "css_element"
     And I should see "Imscp 1" in the "#next-activity-link" "css_element"
   @javascript
@@ -271,43 +268,43 @@ Feature: Activity navigation in Snap theme
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I am on the "Assignment 1" "assign activity" page
-    And "Jump to..." "field" should exist
+    And "Jump to activity" "field" should exist
     # The current activity will not be listed.
-    And the "Jump to..." select box should not contain "Assignment 1"
+    And the "Jump to activity" select box should not contain "Assignment 1"
     # Stealth activities will not be listed for students.
-    And the "Jump to..." select box should not contain "Forum 1"
+    And the "Jump to activity" select box should not contain "Forum 1"
     # Resources without view URL (e.g. labels) will not be listed.
-    And the "Jump to..." select box should not contain "Label 1"
+    And the "Jump to activity" select box should not contain "Label 1"
     # Hidden activities will not be listed for students.
-    And the "Jump to..." select box should not contain "Glossary 1"
+    And the "Jump to activity" select box should not contain "Glossary 1"
     # Activities in hidden sections will not be listed for students.
-    And the "Jump to..." select box should not contain "Resource 1"
-    And the "Jump to..." select box should not contain "Scorm 1"
+    And the "Jump to activity" select box should not contain "Resource 1"
+    And the "Jump to activity" select box should not contain "Scorm 1"
     # Only activities visible to students will be listed.
-    And the "Jump to..." select box should contain "Book 1"
-    And the "Jump to..." select box should contain "Choice 1"
-    And the "Jump to..." select box should contain "Database 1"
-    And the "Jump to..." select box should contain "Feedback 1"
-    And the "Jump to..." select box should contain "Folder 1"
-    And the "Jump to..." select box should contain "Imscp 1"
-    And the "Jump to..." select box should contain "Lesson 1"
-    And the "Jump to..." select box should contain "Lti 1"
-    And the "Jump to..." select box should contain "Page 1"
-    And the "Jump to..." select box should contain "Quiz 1"
-    And the "Jump to..." select box should contain "Url 1"
-    And the "Jump to..." select box should contain "Wiki 1"
-    And the "Jump to..." select box should contain "Workshop 1"
+    And the "Jump to activity" select box should contain "Book 1"
+    And the "Jump to activity" select box should contain "Choice 1"
+    And the "Jump to activity" select box should contain "Database 1"
+    And the "Jump to activity" select box should contain "Feedback 1"
+    And the "Jump to activity" select box should contain "Folder 1"
+    And the "Jump to activity" select box should contain "Imscp 1"
+    And the "Jump to activity" select box should contain "Lesson 1"
+    And the "Jump to activity" select box should contain "Lti 1"
+    And the "Jump to activity" select box should contain "Page 1"
+    And the "Jump to activity" select box should contain "Quiz 1"
+    And the "Jump to activity" select box should contain "Url 1"
+    And the "Jump to activity" select box should contain "Wiki 1"
+    And the "Jump to activity" select box should contain "Workshop 1"
     # Jump to an activity somewhere in the middle.
-    When I select "Page 1" from the "Jump to..." singleselect
+    When I select "Page 1" from the "Jump to activity" singleselect
     Then I should see "Page 1"
     And I should see "Lti 1" in the "#prev-activity-link" "css_element"
     And I should see "Quiz 1" in the "#next-activity-link" "css_element"
     # Jump to the first activity.
-    And I select "Assignment 1" from the "Jump to..." singleselect
+    And I select "Assignment 1" from the "Jump to activity" singleselect
     And I should see "Book 1" in the "#next-activity-link" "css_element"
     But "#prev-activity-link" "css_element" should not exist
     # Jump to the last activity.
-    And I select "Workshop 1" from the "Jump to..." singleselect
+    And I select "Workshop 1" from the "Jump to activity" singleselect
     And I should see "Wiki 1" in the "#prev-activity-link" "css_element"
     But "#next-activity-link" "css_element" should not exist
   @javascript
@@ -317,7 +314,7 @@ Feature: Activity navigation in Snap theme
     And I am on the "Assignment 2" "assign activity" page
     Then "#prev-activity-link" "css_element" should not exist
     And "#next-activity-link" "css_element" should not exist
-    And "Jump to..." "field" should not exist
+    And "Jump to activity" "field" should not exist
   @javascript
   Scenario: Shouldn't be able jump to another activity on quiz attempt.
     Given the following "question categories" exist:
@@ -337,17 +334,17 @@ Feature: Activity navigation in Snap theme
     And I am on the "Quiz 1" "quiz activity" page
     And "#prev-activity-link" "css_element" should be visible
     And "#next-activity-link" "css_element" should be visible
-    And "Jump to..." "field" should be visible
+    And "Jump to activity" "field" should be visible
     And I click on "Attempt quiz" "text"
     And "#prev-activity-link" "css_element" should not be visible
     And "#next-activity-link" "css_element" should not be visible
-    And "Jump to..." "field" should not be visible
+    And "Jump to activity" "field" should not be visible
 
   @javascript
   Scenario: Set the activity as stealth from the activity quick menu.
     And I log in as "admin"
     And I am on "Course 1" course homepage
-    And I press the "down" key
+    And I press the down key
     And I follow "Section 2"
     And I wait until the page is ready
     And I open "Forum 1" actions menu
@@ -399,7 +396,8 @@ Feature: Activity navigation in Snap theme
     And I follow "Section 1"
     And I wait until the page is ready
     And I click on "#section-1 .section-modchooser-link.btn-add-activity" "css_element"
-    And I click on "[title='Add a new Assignment']" "css_element"
+    When I click on "Add a new Assignment" "link" in the "Add an activity or resource" "dialogue"
+    And I click on "Add selected activity" "button" in the "Add an activity or resource" "dialogue"
     And I set the following fields to these values:
       | Assignment name | New Assignment1 |
       | Description     | assign descr    |

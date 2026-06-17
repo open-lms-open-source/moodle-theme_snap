@@ -26,6 +26,7 @@
 use Behat\Mink\Exception\ExpectationException as ExpectationException,
     Behat\Mink\Exception\ElementNotFoundException as ElementNotFoundException,
     Behat\Mink\Element\NodeElement as NodeElement;
+use Facebook\WebDriver\Exception\NoSuchElementException;
 
 require_once(__DIR__ . '/../../../../lib/tests/behat/behat_general.php');
 
@@ -113,18 +114,29 @@ class behat_theme_snap_behat_general extends behat_general {
             function($context, $args) {
 
                 foreach ($args['nodes'] as $node) {
-                    if ($node->isVisible()) {
-                        if ($args['element']) {
-                            throw new ExpectationException(
-                                '"' . $args['text'] . '" text was found in the "' . $args['element'] . '" element',
-                                $context->getSession()
-                            );
-                        } else {
-                            throw new ExpectationException(
-                                '"' . $args['text'] . '" text was found in the page',
-                                $context->getSession()
-                            );
+                    // The node reference may have been removed from the DOM after we found it
+                    // (e.g. an AJAX activity deletion finishing mid-check). Mink re-resolves the
+                    // indexed xpath on isVisible(), so treat a missing node as "not visible".
+                    try {
+                        if ($node->isVisible()) {
+                            if ($args['element']) {
+                                throw new ExpectationException(
+                                    '"' . $args['text'] . '" text was found in the "' . $args['element'] . '" element',
+                                    $context->getSession()
+                                );
+                            } else {
+                                throw new ExpectationException(
+                                    '"' . $args['text'] . '" text was found in the page',
+                                    $context->getSession()
+                                );
+                            }
                         }
+                    } catch (NoSuchElementException $e) {
+                        // Node is no longer on the page, so the text is not visible.
+                        return true;
+                    } catch (ElementNotFoundException $e) {
+                        // Node is no longer on the page, so the text is not visible.
+                        return true;
                     }
                 }
 

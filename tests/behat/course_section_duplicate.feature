@@ -71,6 +71,6 @@ Feature: When the moodle theme is set to Snap, teachers can duplicate sections i
       Given I am on the course main page for "C1"
       And I follow "Section 1"
       And I switch edit mode in Snap
-      And I click on "li.activity.modtype_assign [data-activityname='Subsect Assign1'] a[data-toggle=dropdown]" "css_element"
+      And I open "Activity sample 1" actions menu
       And I choose "Duplicate" in the open action menu
-      Then I should see "Subsect Assign1 (copy)"
+      Then I should see "Activity sample 1 (copy)"

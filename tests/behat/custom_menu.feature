@@ -30,7 +30,6 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
     And I log in as "admin"
-    And I am on site homepage
     And I go to "Site administration > Appearance > Advanced theme settings" in snap administration
     And I set the text field  "Custom menu items" with multi-line text:
       """
@@ -51,12 +50,12 @@ Feature: When the Moodle theme is set to Snap, custom menu should exist for the 
     And I should see "Moodle community"
     And I should see "Moodle.com"
     # Submenu will be shown when the dropdown is clicked.
-    And I click on "//header[@id='mr-nav']//div[@id='snap-custom-menu-header']//ul[@class='navbar-collapse clearfix snap-navbar-content']//li[@class='nav-item dropdown']//a[@class='nav-link dropdown-toggle']" "xpath_element"
+    And I click on "Moodle community" "link"
     And I should see "Moodle free support"
     And I should see "Moodle Docs"
     And I should see "Moodle development"
     # Check that ### works as a divider
-    And "//header[@id='mr-nav']//div[@id='snap-custom-menu-header']//ul[@class='navbar-collapse clearfix snap-navbar-content']//li[@class='nav-item dropdown show']//div[@class='dropdown-menu show']//div[@class='dropdown-divider']" "xpath_element" should exist
+    Then ".dropdown-menu.show .dropdown-divider" "css_element" should be visible
 
   @javascript
   Scenario: Check custom menu background and text color.
