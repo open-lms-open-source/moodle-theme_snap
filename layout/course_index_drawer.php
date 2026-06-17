@@ -27,7 +27,7 @@ use theme_snap\renderables\course_toc_module;
 
 defined('MOODLE_INTERNAL') || die();
 
-global $OUTPUT, $PAGE, $COURSE, $USER, $DB;
+global $OUTPUT, $PAGE, $COURSE, $USER;
 
 if (isloggedin()) {
     $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
@@ -43,19 +43,7 @@ if ($courseindexopen) {
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 
 // Load hidden TOC activities for this Course.
-$hiddencmids = [];
-
-if (!empty($COURSE->id)) {
-    $sql = "
-        SELECT h.cmid
-          FROM {theme_snap_toc_hidden} h
-          JOIN {course_modules} cm ON cm.id = h.cmid
-         WHERE cm.course = :courseid
-    ";
-
-    $records = $DB->get_records_sql($sql, ['courseid' => $COURSE->id]);
-    $hiddencmids = array_keys($records);
-}
+$hiddencmids = \theme_snap\toc_hidden::get_cmids_for_course((int) ($COURSE->id ?? 0));
 
 $searchmodule = '';
 $tocfooter = '';

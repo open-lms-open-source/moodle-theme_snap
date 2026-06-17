@@ -114,4 +114,13 @@ $functions = [
         'loginrequired'   => true,
         'readonlysession' => true, // We don't modify the session.
     ],
+    'theme_snap_get_hidden_toc_activities'                  => [
+        'classname'       => 'theme_snap\\webservice\\ws_get_hidden_toc_activities',
+        'methodname'      => 'service',
+        'description'     => 'Get the list of course-module IDs currently hidden from the Snap TOC',
+        'type'            => 'read',
+        'ajax'            => true,
+        'loginrequired'   => true,
+        'readonlysession' => true, // We don't modify the session.
+    ],
 ];

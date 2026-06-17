@@ -25,7 +25,7 @@
 
 import BaseSectionComponent from 'core_courseformat/local/courseindex/courseindex';
 import {setTOCVisibleSection} from 'theme_snap/section_asset_management';
-import {filterHiddenActivitiesFromDOM} from "theme_snap/courseindex_adjustments";
+import {getHiddenTocActivities} from "theme_snap/repository";
 
 export default class Component extends BaseSectionComponent {
 
@@ -37,7 +37,7 @@ export default class Component extends BaseSectionComponent {
     stateReady(state) {
         super.stateReady(state);
         setTOCVisibleSection();
-        filterHiddenActivitiesFromDOM();
+        this._filterHiddenActivitiesFromDOM();
         // In tiles format, handle anchor-link scrolling from the course index.
         this._initTilesAnchorScroll();
     }
@@ -45,12 +45,49 @@ export default class Component extends BaseSectionComponent {
     /**
      * Refresh a section cm list.
      *
+     * Re-applies the TOC hidden filter immediately with the cached list, then
+     * fetches the current list from the server to catch any newly duplicated
+     * activities whose cmid was not in Config.hiddenTocActivities at page load.
+     *
      * @param {object} param
      * @param {Object} param.element
      */
     _refreshSectionCmlist({element}) {
         super._refreshSectionCmlist({element});
-        filterHiddenActivitiesFromDOM();
+        this._filterHiddenActivitiesFromDOM();
+
+        const config = require('core/config');
+        getHiddenTocActivities(config.courseId)
+            .then(data => {
+                config.hiddenTocActivities = data.cmids;
+                this._filterHiddenActivitiesFromDOM();
+            })
+            .catch(() => {
+                // Non-critical: stale list stays in place; page reload will fix it.
+            });
+    }
+
+    /**
+     * Remove activities listed in Config.hiddenTocActivities from the course index DOM.
+     */
+    _filterHiddenActivitiesFromDOM() {
+        const config = require('core/config');
+        const hiddencmids = config.hiddenTocActivities || [];
+        if (!hiddencmids.length) {
+            return;
+        }
+
+        const courseindex = document.querySelector('#courseindex');
+        if (!courseindex) {
+            return;
+        }
+
+        hiddencmids.forEach(cmid => {
+            const el = courseindex.querySelector(`[data-id="${cmid}"][data-for="cm"]`);
+            if (el) {
+                el.remove();
+            }
+        });
     }
 
     /**
@@ -103,7 +140,7 @@ export default class Component extends BaseSectionComponent {
                 overlay.style.display = 'none';
             }
 
-            anchorEl.scrollIntoView({behavior: 'smooth', block: 'center',});
+            anchorEl.scrollIntoView({behavior: 'smooth', block: 'center'});
         }, true);
     }
 }
