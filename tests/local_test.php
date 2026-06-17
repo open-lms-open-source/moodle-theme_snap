@@ -958,6 +958,29 @@ class local_test extends snap_base_test {
         $this->assertEquals(100, $comp->progress);
     }
 
+    public function test_course_completion_progress_excludes_hidden_activities() {
+        global $DB, $CFG;
+
+        $this->resetAfterTest();
+
+        $CFG->enablecompletion = true;
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course((object) ['enablecompletion' => 1]);
+        $student = $generator->create_user();
+        $studentrole = $DB->get_record('role', ['shortname' => 'student']);
+        $generator->enrol_user($student->id, $course->id, $studentrole->id);
+        $this->setUser($student);
+
+        $params = ['course' => $course->id, 'completion' => COMPLETION_TRACKING_AUTOMATIC];
+        $this->add_assignment($params);
+        $hidden = $this->add_assignment($params);
+        set_coursemodule_visible($hidden->id, 0);
+
+        $comp = local::course_completion_progress($course);
+        $this->assertEquals(1, $comp->total);
+        $this->assertEquals(0, $comp->complete);
+    }
+
     public function test_add_get_calendar_change_stamp() {
         $this->resetAfterTest();
 
