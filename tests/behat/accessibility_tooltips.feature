@@ -62,3 +62,8 @@ Feature: Accessible tooltips in the course creation/edit form
     When I press the space key
     Then I should see "The name displayed in My courses"
 
+  Scenario: Tooltip is hidden when clicking outside of it
+    When I click on "img[alt='Help with Course full name']" "css_element"
+    Then I should see "The name displayed in My courses"
+    And I click on "#id_shortname" "css_element"
+    Then I should not see "The name displayed in My courses"

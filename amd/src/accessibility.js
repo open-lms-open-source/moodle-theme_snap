@@ -671,7 +671,7 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
              * Override the options from theme_boost/loader::enablePopovers to enhance accesibility (VPAT).
              */
             setManualPopovers: function() {
-                const btnSelector = '.iconhelp.btn';
+                const btnSelector = '.iconhelp.btn, a[id^="snap-restriction-"]';
 
                 // Replace the focus-triggered instances created by theme_boost/loader::enablePopovers()
                 // with manual ones, so show/hide is fully controlled by the handlers below.
@@ -750,12 +750,29 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                         btn.setAttribute('aria-controls', tip.id);
                         btn.setAttribute('aria-expanded', 'true');
                         // Keep the tip right after its trigger for a sane focus / screen-reader order.
-                        $(tip).insertAfter(btn);
-                        popover.update();
+                        // Only affect .iconhelp popovers.
+                        if (btn.matches('.iconhelp.btn')) {
+                            $(tip).insertAfter(btn);
+                            popover.update();
+                        }
                     });
 
                     $(btn).on('hidden.bs.popover', function() {
                         btn.setAttribute('aria-expanded', 'false');
+                    });
+                });
+
+                // Allow clicks outside popovers to close them.
+                document.addEventListener('click', function(e) {
+                    const target = e.target;
+                    if (target.closest(btnSelector) || target.closest('.popover')) {
+                        return;
+                    }
+                    document.querySelectorAll('[data-snap-manual-popover="1"]').forEach(function(openBtn) {
+                        const popover = Popover.getInstance(openBtn);
+                        if (popover && popover.tip && popover.tip.classList.contains('show')) {
+                            popover.hide();
+                        }
                     });
                 });
             },

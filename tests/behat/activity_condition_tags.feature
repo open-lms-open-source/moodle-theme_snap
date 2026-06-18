@@ -75,6 +75,27 @@ Feature: When the moodle theme is set to Snap, activity restriction tags are sho
       | 1          |
 
   @javascript
+  Scenario: The restriction icon tooltip works as a regular tooltip
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I follow "Section 1"
+    And I open "Test assignment1" actions menu
+    And I click on "Edit settings" "link" in the "Test assignment1" activity
+    And I click on "//fieldset[@id=\"id_availabilityconditionsheader\"]" "xpath_element"
+    And I click on "//button[text()=\"Add restriction...\"]" "xpath_element"
+    And I click on "//button[@id=\"availability_addrestriction_grade\"]" "xpath_element"
+    And I set the field with xpath "//span[@class=\"pe-3\"][text()=\"Grade\"]//following-sibling::span//select" to "Test assignment2"
+    Then I click on "//input[@id=\"id_submitbutton2\"]" "xpath_element"
+    And I am on the course main page for "C1"
+    And I follow "Section 1"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
+    Then I should see "You have a grade in Test assignment2"
+    And I press enter
+    Then I should not see "You have a grade in Test assignment2"
+    And I click on "//a[@class='snap-conditional-tag']" "xpath_element"
+    Then I should see "You have a grade in Test assignment2"
+
+  @javascript
   Scenario Outline: User sees all restrictions when matching all restrictions.
     Given I log in as "admin"
     And the following config values are set as admin:
