@@ -45,23 +45,6 @@ use core\event\group_member_removed;
 class event_handlers {
 
     /**
-     * Whether Snap (or a Snap-based child theme) is the active theme for the current request.
-     *
-     * Checks the active page theme, not $CFG->theme (the site default).
-     *
-     * @return bool
-     */
-    protected static function snap_is_active(): bool {
-        global $PAGE;
-
-        if (!isset($PAGE) || !($PAGE instanceof \moodle_page)) {
-            return false;
-        }
-        $theme = $PAGE->theme;
-        return $theme && ($theme->name === 'snap' || in_array('snap', $theme->parents));
-    }
-
-    /**
      * The course update event.
      *
      * process cover image.
@@ -136,16 +119,15 @@ class event_handlers {
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
-        // Allow UI awareness after a new course module is created.
-        if (self::snap_is_active()) {
-            $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
+        // Record the module for Snap's UI awareness. Only Snap's renderer reads (and clears) this, so no
+        // theme check here - checking $PAGE->theme would force premature theme init during module creation.
+        $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
 
-            // Propagate toc_hidden if this looks like a duplication.
-            toc_hidden::maybe_copy_on_duplicate(
-                (int) $event->objectid,
-                (string) ($event->other['name'] ?? '')
-            );
-        }
+        // Propagate toc_hidden if this looks like a duplication.
+        toc_hidden::maybe_copy_on_duplicate(
+            (int) $event->objectid,
+            (string) ($event->other['name'] ?? '')
+        );
     }
 
     /**
@@ -158,10 +140,9 @@ class event_handlers {
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
-        // Allow UI awareness after a course module is updated.
-        if (self::snap_is_active()) {
-            $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
-        }
+        // Record the module for Snap's UI awareness. Only Snap's renderer reads (and clears) this, so no
+        // theme check here - checking $PAGE->theme would force premature theme init during module update.
+        $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
     }
 
     /**
