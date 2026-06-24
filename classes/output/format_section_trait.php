@@ -188,7 +188,14 @@ trait format_section_trait {
                 $currentsection = $modinfo->get_section_info($sectionnumber);
                 $onsectionpage = true;
             } else if (str_contains($PAGE->pagetype, 'course-view') && $sectionnumber === -1) { // For view.php render - (Main course view)
-                $startsectionid = $this->get_snap_active_section($course);
+                // Honour Core's expandsection param (a section NUMBER) so we render that section instead of
+                // the default active one.
+                $expandsection = optional_param('expandsection', -1, PARAM_INT);
+                if ($expandsection !== -1 && $modinfo->get_section_info($expandsection)) {
+                    $startsectionid = $expandsection;
+                } else {
+                    $startsectionid = $this->get_snap_active_section($course);
+                }
 
                 // Set current section to Course.
                 $courseformat->set_sectionnum($startsectionid);

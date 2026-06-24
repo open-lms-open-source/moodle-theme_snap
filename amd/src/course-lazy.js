@@ -134,7 +134,11 @@ define(
                     $('ul.sections > #section-0').addClass('state-visible').focus();
                 }
                 sectionAssetManagement.setTOCVisibleSection();
-                scrollBack();
+                if (!sessionStorage.getItem('newMod')) {
+                    // Skip when a new/modified module is pending; highlightNewMod() scrolls instead.
+                    scrollBack();
+                }
+                highlightNewMod();
                 return;
             }
 
@@ -147,12 +151,13 @@ define(
             // If a module was in the hash then scroll to it.
             if (modid !== null) {
                 scrollToModule(modid);
-            } else {
-                // Faux link click behaviour - scroll to page top.
+            } else if (!sessionStorage.getItem('newMod')) {
+                // Scroll to page top (skipped when highlightNewMod() will handle the scroll).
                 scrollBack();
             }
 
             sectionAssetManagement.setTOCVisibleSection();
+            highlightNewMod();
         };
 
         /**
@@ -233,6 +238,33 @@ define(
                     sessionStorage.removeItem('lastMod');
                 }
             }
+        };
+
+        /**
+         * Blink the activity that was just created or modified, once its section is visible.
+         */
+        var highlightNewMod = function() {
+            var newMod = sessionStorage.getItem('newMod');
+            if (!newMod) {
+                return;
+            }
+            var moduleEl = document.getElementById('module-' + newMod);
+            var activityItem = moduleEl ? moduleEl.querySelector('.activity-item') : null;
+            if (!activityItem) {
+                // Section not shown yet - keep the flag for when it is.
+                return;
+            }
+            sessionStorage.removeItem('newMod'); // Blink once.
+
+            // Re-add the class (forcing a reflow) so the blink replays if it lingered.
+            activityItem.classList.remove('highlight-new-activity');
+            void activityItem.offsetWidth;
+            activityItem.classList.add('highlight-new-activity');
+
+            // Defer the scroll so late-rendering content (editors, images) settles first.
+            window.setTimeout(function() {
+                moduleEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }, 300);
         };
 
         /**

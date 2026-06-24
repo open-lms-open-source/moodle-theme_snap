@@ -45,6 +45,23 @@ use core\event\group_member_removed;
 class event_handlers {
 
     /**
+     * Whether Snap (or a Snap-based child theme) is the active theme for the current request.
+     *
+     * Checks the active page theme, not $CFG->theme (the site default).
+     *
+     * @return bool
+     */
+    protected static function snap_is_active(): bool {
+        global $PAGE;
+
+        if (!isset($PAGE) || !($PAGE instanceof \moodle_page)) {
+            return false;
+        }
+        $theme = $PAGE->theme;
+        return $theme && ($theme->name === 'snap' || in_array('snap', $theme->parents));
+    }
+
+    /**
      * The course update event.
      *
      * process cover image.
@@ -114,13 +131,13 @@ class event_handlers {
      * @param course_module_created $event
      */
     public static function course_module_created(course_module_created $event) {
-        global $CFG, $SESSION;
+        global $SESSION;
 
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
         // Allow UI awareness after a new course module is created.
-        if ($CFG->theme === 'snap') {
+        if (self::snap_is_active()) {
             $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
 
             // Propagate toc_hidden if this looks like a duplication.
@@ -136,13 +153,13 @@ class event_handlers {
      * @param course_module_updated $event
      */
     public static function course_module_updated(course_module_updated $event) {
-        global $CFG, $SESSION;
+        global $SESSION;
 
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
         // Allow UI awareness after a course module is updated.
-        if ($CFG->theme === 'snap') {
+        if (self::snap_is_active()) {
             $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
         }
     }
