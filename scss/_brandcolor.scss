@@ -1018,6 +1018,7 @@ $edit-mode-toggle-circle:
     // Override Boost's blue focus styles for needed elements.
     .nav-link,
     .aabtn,
+    .btn-link,
     [role="button"],
     .list-group-item-action,
     .visually-hidden-focusable,
@@ -1031,7 +1032,18 @@ $edit-mode-toggle-circle:
     .snap-sidebar-menu-trigger,
     .favoriteicon,
     .snap-dropzone form,
-    .snap-dropzone .snap-dropzone-label {
+    .snap-dropzone .snap-dropzone-label,
+    .page-link,
+    .message-app,
+    section.block_settings,
+    #course-listing-title,
+    #rules[role="tabpanel"],
+    #history[role="tabpanel"],
+    .pld-edit-step,
+    [data-flexitour="container"],
+    [title="Rows per page"] {
+        outline-color: $brand-primary;
+
         &:focus,
         &:focus-visible {
             outline: 3px solid $brand-primary;
@@ -1041,6 +1053,10 @@ $edit-mode-toggle-circle:
 
     // For the particular treeitem expanded focus.
     [role="treeitem"][aria-expanded="true"] {
+        > *:first-child {
+            outline-color: $brand-primary;
+        }
+
         &:focus,
         &:focus-visible {
             > *:first-child {
@@ -1059,6 +1075,26 @@ $edit-mode-toggle-circle:
         &:focus,
         &:focus-visible {
             border-color: $brand-primary;
+            box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
+        }
+    }
+
+    app-edit-event-panel,
+    app-edit-action-panel {
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: $brand-primary;
+            box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
+        }
+    }
+
+    #menuAlertEmailFrom,
+    #txtActionEmailCustomEmail {
+        &:focus,
+        &:focus-visible {
+            border-color: $brand-primary;
+            outline: 3px solid $brand-primary;
             box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
         }
     }
