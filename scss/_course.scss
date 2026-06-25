@@ -3457,8 +3457,17 @@ body.path-course {
     #page-header #page-mast h1 {
         font-weight: 400;
         font-size: 2.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
         @include media-breakpoint-down(md) {
             font-size: 1.5em;
+        }
+        @media (max-width: 992px) {
+            @include mobile-title-unclamp;
         }
     }
     #page-header.mast-image #page-mast h1 {

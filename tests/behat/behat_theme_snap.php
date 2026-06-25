@@ -157,13 +157,53 @@ class behat_theme_snap extends behat_base {
     }
 
     /**
-     * @param string $fixturefilename this is a filename relative to the snap fixtures folder.
+     * Programmatically sets a cover image for the current page's context (course or category)
+     * by writing the fixture file directly into the Moodle file storage and reloading the page.
+     * This avoids relying on the Snap UI file picker (which requires a Moodle dialog that is
+     * incompatible with Behat's attachFile mechanism).
+     *
+     * @param string $fixturefilename filename relative to the snap fixtures folder.
      *
      * @Given /^I upload cover image "(?P<fixturefilename_string>(?:[^"]|\\")*)"$/
      */
     public function i_upload_cover_image($fixturefilename) {
-        $this->upload_file($fixturefilename, '#snap-coverfiles');
-        $this->getSession()->executeScript('jQuery( "#snap-coverfiles" ).trigger( "change" );');
+        global $CFG, $COURSE, $PAGE;
+
+        $fixturefilename = clean_param($fixturefilename, PARAM_FILE);
+        $filepath = $CFG->dirroot . '/theme/snap/tests/fixtures/' . $fixturefilename;
+
+        if (!file_exists($filepath)) {
+            throw new Exception("Fixture file not found: $filepath");
+        }
+
+        // Determine context from the current URL.
+        $url = $this->getSession()->getCurrentUrl();
+        if (preg_match('/\/course\/index\.php.*[?&]categoryid=(\d+)/i', $url, $m)) {
+            $context = \context_coursecat::instance((int)$m[1]);
+        } else if (preg_match('/[?&]id=(\d+)/', $url, $m)) {
+            // course/view.php, course/section.php, mod/*/view.php — the id param is the course id.
+            $context = \context_course::instance((int)$m[1]);
+        } else {
+            throw new Exception("Cannot determine cover image context from URL: $url");
+        }
+
+        $fs = get_file_storage();
+        $fs->delete_area_files($context->id, 'theme_snap', 'croppedimage');
+        $fs->delete_area_files($context->id, 'theme_snap', 'coverimage');
+
+        $filerecord = [
+            'contextid' => $context->id,
+            'component' => 'theme_snap',
+            'filearea'  => 'coverimage',
+            'itemid'    => 0,
+            'filepath'  => '/',
+            'filename'  => $fixturefilename,
+        ];
+        $fs->create_file_from_pathname($filerecord, $filepath);
+
+        // Reload so the server re-generates the cover-image CSS and mast-image class.
+        $this->getSession()->reload();
+        $this->wait_for_pending_js();
     }
 
     /**
@@ -1656,6 +1696,119 @@ class behat_theme_snap extends behat_base {
         $cm = get_coursemodule_from_instance($activity, $activityid, 0, false, MUST_EXIST);
         $url = new \core\url('/mod/' . $activity . '/view.php', ['id' => $cm->id]);
         $this->getSession()->visit($this->locate_path($url->out_as_local_url(false)));
+    }
+
+    /**
+     * Checks that a CSS element's text is horizontally clipped (scrollWidth > clientWidth).
+     *
+     * @Then /^the element "(?P<element_string>(?:[^"]|\\")*)" should have horizontally clipped content$/
+     * @param string $element CSS selector of the element to check
+     * @throws Exception
+     */
+    public function element_should_have_horizontally_clipped_content($element) {
+        $script = 'return (function() {
+            var el = document.querySelector("' . addslashes($element) . '");
+            if (!el) return null;
+            return el.scrollWidth > el.clientWidth;
+        })()';
+        $result = $this->getSession()->getDriver()->evaluateScript($script);
+        if ($result === null) {
+            throw new Exception("Element \"$element\" not found.");
+        }
+        if (!$result) {
+            throw new Exception("Element \"$element\" does not have horizontally clipped content (scrollWidth is not greater than clientWidth).");
+        }
+    }
+
+    /**
+     * Returns a JS IIFE that measures the unclamped height of a CSS-selected element
+     * by temporarily cloning it with all clamp/overflow restrictions removed.
+     * Returns {full, visible} or null if the element is not found.
+     *
+     * @param string $selector CSS selector
+     * @return string JavaScript expression
+     */
+    private function get_unclamped_height_script(string $selector): string {
+        $safe = addslashes($selector);
+        return 'return (function() {
+            var el = document.querySelector("' . $safe . '");
+            if (!el) return null;
+            var clone = el.cloneNode(true);
+            clone.style.webkitLineClamp = "unset";
+            clone.style.lineClamp = "unset";
+            clone.style.display = "block";
+            clone.style.overflow = "visible";
+            clone.style.maxHeight = "none";
+            clone.style.position = "absolute";
+            clone.style.visibility = "hidden";
+            clone.style.width = el.offsetWidth + "px";
+            el.parentNode.appendChild(clone);
+            var full = clone.offsetHeight;
+            el.parentNode.removeChild(clone);
+            return { full: full, visible: el.clientHeight };
+        })()';
+    }
+
+    /**
+     * Checks that a CSS element's text is clipped by comparing its rendered height against
+     * a temporary unclamped clone. Reliable for both overflow:hidden and -webkit-line-clamp,
+     * where Chrome may report scrollHeight === clientHeight for clamped content.
+     *
+     * @Then /^the element "(?P<element_string>(?:[^"]|\\")*)" should have clipped content$/
+     * @param string $element CSS selector of the element to check
+     * @throws Exception
+     */
+    public function element_should_have_clipped_content($element) {
+        $result = $this->getSession()->getDriver()->evaluateScript(
+            $this->get_unclamped_height_script($element)
+        );
+        if ($result === null) {
+            throw new Exception("Element \"$element\" not found.");
+        }
+        if (!($result['full'] > $result['visible'])) {
+            throw new Exception("Element \"$element\" does not have clipped content (unclamped height is not greater than visible height).");
+        }
+    }
+
+    /**
+     * Checks that a CSS element's text is NOT clipped (unclamped height <= visible height).
+     *
+     * @Then /^the element "(?P<element_string>(?:[^"]|\\")*)" should not have clipped content$/
+     * @param string $element CSS selector of the element to check
+     * @throws Exception
+     */
+    public function element_should_not_have_clipped_content($element) {
+        $result = $this->getSession()->getDriver()->evaluateScript(
+            $this->get_unclamped_height_script($element)
+        );
+        if ($result === null) {
+            throw new Exception("Element \"$element\" not found.");
+        }
+        if ($result['full'] > $result['visible']) {
+            throw new Exception("Element \"$element\" has clipped content but should not (unclamped height > visible height).");
+        }
+    }
+
+    /**
+     * Checks that a CSS element is horizontally scrollable (scrollWidth > clientWidth).
+     *
+     * @Then /^the element "(?P<element_string>(?:[^"]|\\")*)" should be horizontally scrollable$/
+     * @param string $element CSS selector of the element to check
+     * @throws Exception
+     */
+    public function element_should_be_horizontally_scrollable($element) {
+        $script = 'return (function() {
+            var el = document.querySelector("' . addslashes($element) . '");
+            if (!el) return null;
+            return el.scrollWidth > el.clientWidth;
+        })()';
+        $result = $this->getSession()->getDriver()->evaluateScript($script);
+        if ($result === null) {
+            throw new Exception("Element \"$element\" not found.");
+        }
+        if (!$result) {
+            throw new Exception("Element \"$element\" is not horizontally scrollable (scrollWidth is not greater than clientWidth).");
+        }
     }
 
     /**

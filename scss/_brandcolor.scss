@@ -1687,10 +1687,23 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
 
-        #page-header.mast-image h1 a {
+        // Override the global $brand-primary reset from _core.scss (.mast-image
+        // @media 992px block) so the h1 element's own color — which determines
+        // the -webkit-line-clamp ellipsis color — also uses the category color.
+        #page-header.mast-image #page-mast h1,
+        #page-header.mast-image h1 a,
+        #page-header.mast-image h1 a:hover {
             color: $brand-primary;
             text-shadow: none;
         }
+    }
+
+    // Set h1 color for pages without a cover image so the -webkit-line-clamp
+    // ellipsis inherits the category brand color instead of the global one.
+    // _core.scss also sets this with the global $brand-primary, but that rule
+    // is not compiled per-category; this one is, so it wins for category pages.
+    #page-header:not(.mast-image) #page-mast h1 {
+        color: $brand-primary;
     }
 
     #tertiary-navigation {

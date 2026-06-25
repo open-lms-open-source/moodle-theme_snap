@@ -989,12 +989,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return parent::context_header();
         }
 
-        $is_course_heading = $COURSE->id != SITEID
+        $iscourseheading = $COURSE->id != SITEID
             && stripos($heading, format_string($COURSE->fullname)) === 0;
-        if ($is_course_heading || $pagetype === 'course-view-section-topics') {
+        if ($iscourseheading || $pagetype === 'course-view-section-topics') {
             $courseurl = new moodle_url('/course/view.php', ['id' => $COURSE->id]);
+            $coursefullname = format_string($COURSE->fullname);
+            // escape=>false: html_writer::tag() re-escapes attribute values, so leaving HTML
+            // entities decoded here prevents double-encoding (e.g. "&" showing as "&amp;" in tooltip).
+            $coursetitleattr = format_string($COURSE->fullname, true, ['escape' => false]);
             return \core\output\html_writer::tag($tag,
-                \core\output\html_writer::link($courseurl, format_string($COURSE->fullname))
+                \core\output\html_writer::link($courseurl, $coursefullname),
+                ['title' => $coursetitleattr]
             );
         }
 
@@ -1021,11 +1026,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
             if (empty($categories)) {
                 $catname = get_string('courses', 'theme_snap');
                 $catname = format_text($catname);
-                $data->title = \core\output\html_writer::tag('h1', html_to_text(s($catname)));
+                $catplainname = html_to_text(s($catname));
+                $data->title = \core\output\html_writer::tag('h1', $catplainname, ['title' => $catplainname]);
             } else {
                 $cat = reset($categories);
                 $catname = format_text($cat->name);
-                $data->title = \core\output\html_writer::tag('h1', html_to_text(s($catname)));
+                $catplainname = html_to_text(s($catname));
+                // escape=>false: html_writer::tag() re-escapes attribute values, so leaving HTML
+                // entities decoded here prevents double-encoding (e.g. "&" showing as "&amp;" in tooltip).
+                $data->title = \core\output\html_writer::tag('h1', $catplainname, ['title' => format_string($cat->name, true, ['escape' => false])]);
 
                 if ($cat->description) {
                     $content = \context_coursecat::instance($cat->id);
