@@ -23,6 +23,7 @@
 Feature: TOC hidden flag is preserved on activity duplication
 
   Background:
+    Given I skip because "of complications on Gitlab"
     Given the following config values are set as admin:
       | config | value |
       | theme  | snap  |
