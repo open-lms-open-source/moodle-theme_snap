@@ -122,6 +122,12 @@ class event_handlers {
         // Allow UI awareness after a new course module is created.
         if ($CFG->theme === 'snap') {
             $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
+
+            // Propagate toc_hidden if this looks like a duplication.
+            toc_hidden::maybe_copy_on_duplicate(
+                (int) $event->objectid,
+                (string) ($event->other['name'] ?? '')
+            );
         }
     }
 

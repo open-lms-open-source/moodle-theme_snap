@@ -63,3 +63,20 @@ export const updateCourseTocProgressBar = (userid, courseid) => {
 
     return Ajax.call([request])[0];
 };
+
+/**
+ * Get the list of course-module IDs currently hidden from the Snap TOC.
+ *
+ * @param {number} courseid Course ID
+ * @return {Promise} Resolved with {cmids: number[]}
+ */
+export const getHiddenTocActivities = (courseid) => {
+    const request = {
+        methodname: 'theme_snap_get_hidden_toc_activities',
+        args: {
+            courseid: courseid,
+        },
+    };
+
+    return Ajax.call([request])[0];
+};
