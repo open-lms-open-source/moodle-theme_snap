@@ -91,14 +91,10 @@ export default class Component extends BaseSectionComponent {
     }
 
     /**
-     * For tiles-format courses, intercept course index label / anchor-link clicks
-     * that target an already-visible section and scroll smoothly to the element.
-     *
-     * This listener runs in the capture phase so it fires before
-     * format_tiles/course_mod_modal's bubbling listener.  When the section is
-     * already visible we handle the scroll here and stop propagation so tiles
-     * does not attempt any further navigation.  When the section still needs to
-     * be expanded we do nothing and let tiles handle it via AJAX.
+     * Intercept course index label clicks in tiles courses and scroll smoothly
+     * to the target element when it is already visible, avoiding a page reload.
+     * When the target is hidden (tile closed) we return early and let format_tiles
+     * open the tile via AJAX.
      */
     _initTilesAnchorScroll() {
         if (!document.body.classList.contains('format-tiles')) {
@@ -106,41 +102,80 @@ export default class Component extends BaseSectionComponent {
         }
         const courseIndex = document.getElementById('courseindex');
         courseIndex.addEventListener('click', (e) => {
-            const link = e.target.closest('a.courseindex-link[data-for="cm_name"]');
-            if (!link) {
-                return;
-            }
-
-            const linkUrl = link.getAttribute('href');
-            if (!linkUrl || !linkUrl.includes('#')) {
-                return;
-            }
-
-            const anchorId = linkUrl.startsWith('#') ? linkUrl.substring(1) : linkUrl.split('#')[1];
-            if (!anchorId) {
-                return;
-            }
-
-            const anchorEl = document.getElementById(anchorId);
+            const anchorEl = this._resolveTilesAnchorEl(e);
             if (!anchorEl) {
                 return;
             }
-
-            // Section is already visible: scroll to the anchor and prevent tiles
-            // from doing any further navigation.
             e.preventDefault();
             e.stopPropagation();
 
-            // Our stopPropagation() prevents the click from reaching tiles'
-            // course.js document-level listener that normally hides the overlay.
-            // Dismiss it here so the user is not left with a stale overlay.
-            const overlay = document.getElementById('format_tiles_overlay');
-
-            if (overlay) {
-                overlay.style.display = 'none';
+            const tileSection = anchorEl.closest('li.section.state-visible');
+            if (tileSection) {
+                this._scrollAfterTileAnimation(anchorEl, tileSection);
+            } else {
+                this._closeOpenTile();
+                anchorEl.scrollIntoView({behavior: 'smooth', block: 'center'});
             }
-
-            anchorEl.scrollIntoView({behavior: 'smooth', block: 'center'});
         }, true);
+    }
+
+    /**
+     * Returns the anchor element for a cm_name click, or null if Snap should
+     * not handle it (no anchor, element absent or hidden inside a closed tile).
+     * @param {MouseEvent} e
+     * @returns {HTMLElement|null}
+     */
+    _resolveTilesAnchorEl(e) {
+        const link = e.target.closest('a.courseindex-link[data-for="cm_name"]');
+        if (!link) {
+            return null;
+        }
+        const href = link.getAttribute('href');
+        if (!href?.includes('#')) {
+            return null;
+        }
+        const anchorId = href.startsWith('#') ? href.substring(1) : href.split('#')[1];
+        const anchorEl = anchorId ? document.getElementById(anchorId) : null;
+        // The getClientRects() is empty when the element is hidden (closed tile).
+        return anchorEl?.getClientRects().length ? anchorEl : null;
+    }
+
+    /**
+     * Scroll to anchorEl inside an open tile, waiting for a running slideDown
+     * animation to finish first.
+     * Detection: format_tiles sets an inline height during slideDown and clears
+     * it on completion; a MutationObserver fires the scroll at that moment.
+     * @param {HTMLElement} anchorEl
+     * @param {HTMLElement} tileSection
+     */
+    _scrollAfterTileAnimation(anchorEl, tileSection) {
+        const doScroll = () => anchorEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+        if (tileSection.style.height !== '') {
+            const observer = new MutationObserver(() => {
+                if (tileSection.style.height === '') {
+                    observer.disconnect();
+                    doScroll();
+                }
+            });
+            observer.observe(tileSection, {attributes: true, attributeFilter: ['style']});
+        } else {
+            doScroll();
+        }
+    }
+
+    /**
+     * Close the open tile via its close button so format_tiles cleans up its
+     * internal state. Falls back to hiding the overlay if no button is found.
+     */
+    _closeOpenTile() {
+        const closeBtn = document.querySelector('li.section.state-visible .closesectionbtn');
+        if (closeBtn) {
+            closeBtn.click();
+            return;
+        }
+        const overlay = document.getElementById('format_tiles_overlay');
+        if (overlay) {
+            overlay.style.display = 'none';
+        }
     }
 }
