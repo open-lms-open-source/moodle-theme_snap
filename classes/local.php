@@ -356,10 +356,14 @@ class local {
         $trackcount = 0;
         $compcount = 0;
         if ($completioninfo->is_enabled()) {
-            $modules = $completioninfo->get_activities();
-            $trackcount = count($modules);
-            foreach ($modules as $module) {
-                $completioninfo->get_data($module, true);
+            $visibleactivities = $completioninfo->get_user_activities_with_completion($USER->id);
+            $trackcount = count($visibleactivities);
+            $allactivities = $completioninfo->get_activities();
+            foreach (array_keys($visibleactivities) as $cmid) {
+                if (!isset($allactivities[$cmid])) {
+                    continue;
+                }
+                $module = $allactivities[$cmid];
                 if ($completioninfo->is_enabled($module) != COMPLETION_TRACKING_NONE) {
                     $completiondata = $completioninfo->get_data($module, true);
                     if ($completiondata->completionstate == COMPLETION_COMPLETE ||
@@ -2579,9 +2583,9 @@ SQL;
         require_once($CFG->libdir . '/completionlib.php');
 
         $completion = new \completion_info($course);
-        $modules = $completion->get_activities();
+        $modules = $completion->get_user_activities_with_completion($user->id);
         $count = count($modules);
-        $totalcompleted = $completion->count_modules_completed($user->id);
+        $totalcompleted = $completion->count_modules_completed($user->id, array_keys($modules));
         $courseprogress = $totalcompleted.'/'.$count;
         $progresspercentage = \core_completion\progress::get_course_progress_percentage($course);
         $hasprogress = false;
