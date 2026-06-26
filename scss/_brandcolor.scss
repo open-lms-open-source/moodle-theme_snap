@@ -1378,7 +1378,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
                 &.active {
                     color: $brand-primary;
                 }
-                &:focus {
+                &:focus:not(.active) {
                     outline: 3px solid $brand-primary;
                 }
             }
