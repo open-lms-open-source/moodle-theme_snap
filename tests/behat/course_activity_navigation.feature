@@ -390,6 +390,15 @@ Feature: Activity navigation in Snap theme
     Then I should see "Assignment 3"
 
   @javascript
+  Scenario: Returning to an activity after editing its settings, should return to the proper activity.
+    Given I log in as "admin"
+    And I am on the "Choice 1" "choice activity editing" page
+    And I press "Save and return to course"
+    And I wait until the page is ready
+    Then ".section.main.state-visible" "css_element" should exist
+    And I should see "Choice 1" in the ".section.main.state-visible" "css_element"
+
+  @javascript
   Scenario: When a new activity is created, the course view scrolls down as needed in order to display it.
     Given I log in as "admin"
     And I am on "C1" course homepage

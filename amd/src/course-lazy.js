@@ -175,8 +175,10 @@ define(
             if (hashSection.startsWith('#h5pbook') || hashSection.startsWith('#module-')) {
                 return;
             } else if (hashSection.startsWith('#section-')) {
-                // Get section number.
-                sectionID = hashSection.match(/\d+/)[0];
+                // Get the sectionID either by id from the section num, or from the hashSection.
+                const sectionNum = parseInt(hashSection.match(/\d+/)[0]);
+                const sectionIdByNum = self.courseConfig.sectionidsbynumber?.[sectionNum];
+                sectionID = sectionIdByNum !== undefined ? String(sectionIdByNum) : String(sectionNum);
             }
 
             // If #snap-add-new-section was visible, remove that in favor of the course section.
