@@ -279,7 +279,9 @@ $mobile-sidebar-peek-width: 10px;
 
 #page-content .block_settings.state-visible,
 .block_settings:target {
+    z-index: 1017;
     right: $sidebar-width;
+
     @media screen and (max-width: 992px) {
         right: $mobile-sidebar-width;
     }
@@ -298,7 +300,9 @@ $mobile-sidebar-peek-width: 10px;
 }
 
 #snap_feeds_side_menu.state-visible {
+    z-index: 1017;
     right: $sidebar-width;
+
     @media screen and (max-width: 992px) {
         right: $mobile-sidebar-width;
     }
