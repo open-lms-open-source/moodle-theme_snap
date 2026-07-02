@@ -36,6 +36,9 @@ $templatecontext = [
     'hasblocks' => $hasblocks,
     'sidepreblocks' => $blockshtml,
     'addblockbutton' => $addblockbutton,
-    'showdraweropenbutton' => false
+    'showdraweropenbutton' => false,
+    // Colourable module purposes for the Activities block icons, passed straight to the JS init
+    // to avoid relying on CFG injection timing. See theme_snap\local::get_mod_purposes.
+    'modpurposes' => json_encode(\theme_snap\local::get_mod_purposes()),
 ];
 echo $OUTPUT->render_from_template('theme_snap/blocks_drawer', $templatecontext);

@@ -69,7 +69,7 @@
 M.util.js_pending('theme_boost/loader');
 require(['theme_boost/loader', 'theme_boost/drawer', 'theme_snap/blocks_drawer'], function(Loader, Drawer, BlocksDrawer) {
     Drawer.init();
-    BlocksDrawer.init();
+    BlocksDrawer.init({{{modpurposes}}});
     M.util.js_complete('theme_boost/loader');
 });
 {{/js}}
