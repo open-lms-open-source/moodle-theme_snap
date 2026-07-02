@@ -1592,3 +1592,12 @@ body#page-admin-plugins {
     width: auto;
     height: auto;
 }
+
+// -------------------------
+//  Page programs catalogue
+// -------------------------
+body#page-enrol-programs-catalogue-index {
+    .programbox a:not(.aalink):not(.btn) {
+        color: inherit;
+    }
+}
