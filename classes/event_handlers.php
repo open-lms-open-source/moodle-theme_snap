@@ -114,21 +114,20 @@ class event_handlers {
      * @param course_module_created $event
      */
     public static function course_module_created(course_module_created $event) {
-        global $CFG, $SESSION;
+        global $SESSION;
 
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
-        // Allow UI awareness after a new course module is created.
-        if ($CFG->theme === 'snap') {
-            $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
+        // Record the module for Snap's UI awareness. Only Snap's renderer reads (and clears) this, so no
+        // theme check here - checking $PAGE->theme would force premature theme init during module creation.
+        $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
 
-            // Propagate toc_hidden if this looks like a duplication.
-            toc_hidden::maybe_copy_on_duplicate(
-                (int) $event->objectid,
-                (string) ($event->other['name'] ?? '')
-            );
-        }
+        // Propagate toc_hidden if this looks like a duplication.
+        toc_hidden::maybe_copy_on_duplicate(
+            (int) $event->objectid,
+            (string) ($event->other['name'] ?? '')
+        );
     }
 
     /**
@@ -136,15 +135,14 @@ class event_handlers {
      * @param course_module_updated $event
      */
     public static function course_module_updated(course_module_updated $event) {
-        global $CFG, $SESSION;
+        global $SESSION;
 
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
-        // Allow UI awareness after a course module is updated.
-        if ($CFG->theme === 'snap') {
-            $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
-        }
+        // Record the module for Snap's UI awareness. Only Snap's renderer reads (and clears) this, so no
+        // theme check here - checking $PAGE->theme would force premature theme init during module update.
+        $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
     }
 
     /**

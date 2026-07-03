@@ -52,16 +52,23 @@ export default class Component extends BaseSectionComponent {
      * The handler for Snap's courseindex section activity updates.
      */
     handleActivityUpdates() {
-        // Scroll to a newly created module, if we get confirmation there is one.
+        // Scroll to and highlight a newly created or modified module, if we get confirmation there is one.
         const newMod = sessionStorage.getItem('newMod');
-        if (newMod) {
-            const affectedModule = document.querySelector('#module-' + newMod);
-            affectedModule.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-                inline: 'center'
-            });
-            affectedModule.querySelector('.activity-item').classList.add('highlight-new-activity');
+        if (!newMod) {
+            return;
         }
+        const affectedModule = document.querySelector('#module-' + newMod);
+        const activityItem = affectedModule?.querySelector('.activity-item');
+        if (!activityItem) {
+            // Section not rendered yet; course-lazy handles it once shown.
+            return;
+        }
+        affectedModule.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center'
+        });
+        activityItem.classList.add('highlight-new-activity');
+        sessionStorage.removeItem('newMod'); // Blink once.
     }
 }
