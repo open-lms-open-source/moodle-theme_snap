@@ -453,6 +453,12 @@ table.boxwidthwide {
     background-position: center top;
     background-size: cover;
 }
+@mixin mobile-title-unclamp {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+}
 // Hide elements which require js to be loaded.
 .js-only {
     @include alakazam;
@@ -1908,14 +1914,46 @@ body.path-course #moodle-page #page-header {
 
       li.breadcrumb-item {
           display: inline-block;
-          a {
-              @include media-breakpoint-down(sm) {
-                  white-space: unset;
-              }
-
-          }
       }
   }
+}
+
+// Truncate long breadcrumb items on all pages (course, activity, category, etc.).
+// width: 100% overrides the base fit-content so the nav never overflows its parent.
+.breadcrumb-nav {
+    width: 100%;
+    max-width: calc(100% - 2rem);
+    overflow: hidden;
+
+    .breadcrumb {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    li.breadcrumb-item {
+        a, span {
+            display: inline-block;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: bottom;
+        }
+    }
+
+    // Below 992px the breadcrumb can overflow its container: switch to
+    // horizontal scroll so all items remain reachable. flex-wrap:nowrap
+    // prevents items from wrapping onto a new line, keeping them on one
+    // row so the overflow is horizontal. Individual items keep their
+    // max-width ellipsis — only the container scrolls.
+    @media (max-width: 992px) {
+        overflow-x: auto;
+
+        .breadcrumb {
+            overflow: visible;
+            flex-wrap: nowrap;
+        }
+    }
 }
 // Hide the "Site pages" breadcrumb item from My courses view.
 #page-my-index.page-mycourses .breadcrumb .breadcrumb-item:nth-child(2) {
@@ -1939,6 +1977,37 @@ body.path-course #moodle-page #page-header {
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
     }
+
+    // Cover image is hidden on mobile: reset text color so the ellipsis
+    // is readable against the plain background.
+    @media (max-width: 992px) {
+        #page-mast {
+            h1,
+            h1 a,
+            h1 a:hover {
+                color: $brand-primary;
+                text-shadow: none;
+            }
+        }
+    }
+}
+
+// Without a cover image: set explicit color (browser renders -webkit-line-clamp
+// ellipsis in inherited black otherwise) and cap the title to 4 lines.
+// body.path-course and body#page-course-index-category have their own rules
+// with line-clamp, but activity pages (path-mod) and other page types don't —
+// this general rule covers all remaining cases without a cover image.
+#page-header:not(.mast-image) #page-mast h1 {
+    color: $brand-primary;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @media (max-width: 992px) {
+        @include mobile-title-unclamp;
+    }
 }
 
 [id*="page-grade"].theme-snap.path-grade #page-header.mast-image #page-mast .page-context-header .page-header-headings > {
@@ -1948,10 +2017,6 @@ body.path-course #moodle-page #page-header {
         color: white;
         text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
     }
-}
-
-.path-course-view .mast-image {
-    min-height: 250px;
 }
 
 // a lovely pin showing the searched for item
@@ -4970,6 +5035,17 @@ button.snap-icon-toggle {
         display: flex;
     }
 }
+body#page-course-index-category #page-header:not(.mast-image) #page-mast h1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @media (max-width: 992px) {
+        @include mobile-title-unclamp;
+    }
+}
 #page-site-index #page-mast {
     display: inline-block;
 }
@@ -5611,6 +5687,22 @@ header#mr-nav {
 #page-header.mast-image {
     aspect-ratio: 6;
 }
+
+#page-header.mast-image #page-mast h1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @media (max-width: 992px) {
+        display: block;
+        -webkit-line-clamp: unset;
+        line-clamp: unset;
+        overflow: visible;
+    }
+}
+
 @media (min-width: 993px) {
     .theme-snap #snap-header {
         height: 100px;
@@ -5635,15 +5727,6 @@ header#mr-nav {
 
     #page-header.mast-image h1 {
         font-size: 1.5vw;
-    }
-}
-
-@media (min-width: 992px) and (max-width: 1200px) {
-    #page-header.mast-image h1 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
     }
 }
 

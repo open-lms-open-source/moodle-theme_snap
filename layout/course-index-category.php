@@ -24,6 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+use theme_snap\local;
+
 require(__DIR__.'/header.php');
 
 $iscoursecat = $PAGE->context->contextlevel == CONTEXT_COURSECAT;
@@ -31,11 +33,7 @@ $iscoursecat = $PAGE->context->contextlevel == CONTEXT_COURSECAT;
 // @codingStandardsIgnoreStart
 // Note, coding standards ignore is required so that we can have more readable indentation under php tags.
 
-$mastimage = '';
-// Check we are in a course (not the site level course), and the course is using a cover image.
-if (!empty($coverimagecss)) {
-    $mastimage = 'mast-image';
-}
+$mastimage = local::has_cover_image() ? 'mast-image' : '';
 ?>
 
 <!-- moodle js hooks -->

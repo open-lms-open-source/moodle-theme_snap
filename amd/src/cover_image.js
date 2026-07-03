@@ -162,11 +162,27 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
         var moodledialogue = function(courseShortName, categoryId, fpoptions, siteMaxBytes) {
             var maxbytesstr = humanFileSize(siteMaxBytes);
             let title = M.util.get_string('imageproperties', 'theme_snap');
-            let coverImageDesc = M.util.get_string('coverimagedesc', 'theme_snap', maxbytesstr);
-            let coverCategoryImageDesc = M.util.get_string('covercategoryimagedesc', 'theme_snap', maxbytesstr);
+            let coverImageDesc = M.util.get_string('coverimagedesc', 'theme_snap');
+            let coverCategoryImageDesc = M.util.get_string('covercategoryimagedesc', 'theme_snap');
             let coverImageCropperDesc = M.util.get_string('coverimagecropperdesc', 'theme_snap');
             let coverImageSettingsWarning = M.util.get_string('coverimagesettingswarning', 'theme_snap');
             let browseRepositories = M.util.get_string('browserepositories', 'theme_snap');
+            let accessibilityTitle = M.util.get_string('coverimageaccessibilitytitle', 'theme_snap');
+            let contrastLabel = M.util.get_string('coverimagecontrastlabel', 'theme_snap');
+            let contrastTip = M.util.get_string('coverimagecontrasttip', 'theme_snap');
+            let titleLengthLabel = M.util.get_string('coverimagetitlelengthlabel', 'theme_snap');
+            let titleLengthTip = M.util.get_string('coverimagetitlelengthtip', 'theme_snap');
+            let requirementsTitle = M.util.get_string('coverimagerequirementstitle', 'theme_snap');
+            let formatsReq = M.util.get_string('coverimageformatsreq', 'theme_snap');
+            let sizeReq = M.util.get_string('coverimagesizereq', 'theme_snap', maxbytesstr);
+            let isCourse = $('#page-course-view-topics, #page-course-view-weeks,' +
+                '#page-course-view-tiles, #page-course-view-section-topics, #page-course-view-section-weeks,' +
+                '#page-course-view-section-tiles').length > 0;
+            let isCategory = $('#page-course-index-category').length > 0;
+            let aspectRatioReq = M.util.get_string(
+                (isCourse || isCategory) ? 'coverimageaspectratiocourse' : 'coverimageaspectratiosite',
+                'theme_snap'
+            );
             let selectImageString = M.util.get_string('selectimage', 'theme_snap');
             let deleteImageString = M.util.get_string('deleteimage', 'theme_snap');
             let previewDisplay = "'display:none'";
@@ -181,36 +197,62 @@ define(['jquery', 'core/log', 'core/ajax', 'core/notification', 'theme_snap/ajax
                  previewDisplay = "'display:block'";
             }
 
-            let description = coverImageDesc;
-            if (cropperRatio == 6) {
-                description = coverCategoryImageDesc;
-            }
+            let description = isCategory ? coverCategoryImageDesc : coverImageDesc;
 
             let content =
                 '<div class="mb-1 snap_cover_image_dialogue">' +
-                    '<p class="snap_cover_image_description">' + description + '</p>' +
+                    '<p class="snap_cover_image_description mb-3">' + description + '</p>' +
+
+                    '<div class="alert alert-info snap_cover_image_accessibility_alert mb-3"' +
+                        ' role="alert" style="border-radius:0.5rem;">' +
+                        '<strong>' + accessibilityTitle + '</strong>' +
+                        '<ul class="mb-0 mt-1 pl-3">' +
+                            '<li><strong>' + contrastLabel + '</strong> ' + contrastTip + '</li>' +
+                            '<li><strong>' + titleLengthLabel + '</strong> ' + titleLengthTip + '</li>' +
+                        '</ul>' +
+                    '</div>' +
+
+                    '<div class="card bg-light p-3 mb-3 snap_cover_image_specs"' +
+                        ' style="border-radius:0.5rem;">' +
+                        '<h6 class="font-weight-bold mb-2">' + requirementsTitle + '</h6>' +
+                        '<ul class="mb-0 pl-3 small text-muted">' +
+                            '<li>' + formatsReq + '</li>' +
+                            '<li>' + sizeReq + '</li>' +
+                            '<li>' + aspectRatioReq + '</li>' +
+                        '</ul>' +
+                    '</div>' +
+
+                    '<p class="text-dark small mb-3 snap_cover_image_cropper_warning">' +
+                        '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ' +
+                        coverImageSettingsWarning +
+                    '</p>' +
+
+                    '<div class="input-group input-append w-100 mb-3 justify-content-center snap_cover_image_options">' +
+                        '<button class="btn btn-secondary mr-2 snap_cover_image_browser"' +
+                            ' id="id_snap_cover_image_browser">' +
+                            browseRepositories +
+                        '</button>' +
+                        '<button class="btn btn-outline-danger snap_cover_image_delete_image_button d-none"' +
+                            ' id="id_snap_cover_image_delete_image">' +
+                            deleteImageString +
+                        '</button>' +
+                    '</div>' +
+
                     '<p class="snap_cover_image_cropper_description d-none">' + coverImageCropperDesc + '</p>' +
-                    '<p class="snap_cover_image_cropper_description d-none">' + coverImageSettingsWarning + '</p>' +
-                    '<div class="input-group input-append w-100 snap_cover_image_options">' +
-                        '<button class="btn btn-secondary snap_cover_image_browser" id="id_snap_cover_image_browser">' +
-                        browseRepositories + '</button>' +
-                        '<button class="btn btn-secondary snap_cover_image_delete_image_button d-none" ' +
-                        'id="id_snap_cover_image_delete_image">' +
-                        deleteImageString + '</button>' +
+
+                    '<div class="mdl-align">' +
+                        '<div class="snap_cover_image_preview_box">' +
+                            '<img id="id_snap_cover_image_preview" class="snap_cover_image_preview" alt=""' +
+                                ' style=' + previewDisplay +
+                                ' src=' + currentImageURL + '>' +
+                        '</div>' +
                     '</div>' +
-                // Add the image preview.
-                '<div class="mdl-align">' +
-                    '<div class="snap_cover_image_preview_box">' +
-                        '<img id="id_snap_cover_image_preview" class="snap_cover_image_preview" alt="" ' +
-                            'style=' + previewDisplay +
-                            'src=' + currentImageURL + '>' +
-                    '</div>' +
-                '</div>' +
-                // Add the save button.
-                '<div class="snap_cover_image_save">' +
-                        '<button class="btn btn-primary snap_cover_image_save_button d-none" ' +
-                        'id="id_snap_cover_image_save_button">' +
-                         selectImageString + '</button>' +
+
+                    '<div class="snap_cover_image_save text-center mt-3">' +
+                        '<button class="btn btn-primary btn-lg snap_cover_image_save_button d-none"' +
+                            ' id="id_snap_cover_image_save_button">' +
+                            selectImageString +
+                        '</button>' +
                     '</div>' +
                 '</div>';
 

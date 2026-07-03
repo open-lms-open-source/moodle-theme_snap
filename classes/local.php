@@ -1556,7 +1556,7 @@ class local {
         $css = '';
         $coverurl = self::course_cat_coverimage_url($catid);
         if ($coverurl) {
-            $css = "#page-header {background-image: url($coverurl);}";
+            $css = "#page-header {background-image: url('" . addcslashes((string)$coverurl, "'\\") . "');}";
         }
         return $css;
     }
@@ -1571,7 +1571,7 @@ class local {
         $css = '';
         $coverurl = self::course_coverimage_url($courseid);
         if ($coverurl) {
-            $css = "#page-header {background-image: url($coverurl);}";
+            $css = "#page-header {background-image: url('" . addcslashes((string)$coverurl, "'\\") . "');}";
         }
         return $css;
     }
@@ -1586,7 +1586,30 @@ class local {
         if (!$coverurl) {
             return '';
         }
-        return ".theme-snap#page-site-index #page-header {background-image: url($coverurl);}";
+        return ".theme-snap#page-site-index #page-header {background-image: url('" . addcslashes((string)$coverurl, "'\\") . "');}";
+
+    }
+
+    /**
+     * Returns true if the current page has a cover image.
+     * Mirrors the context detection in layout/header.php so that layouts
+     * can apply the mast-image class without reading header.php's internal variables.
+     *
+     * @return bool
+     */
+    public static function has_cover_image(): bool {
+        global $PAGE, $COURSE;
+
+        if ($PAGE->context->contextlevel === CONTEXT_COURSECAT) {
+            return $PAGE->pagelayout === 'coursecategory'
+                && (bool) self::course_cat_coverimage_url($PAGE->context->instanceid);
+        }
+
+        if ($PAGE->pagelayout === 'frontpage') {
+            return (bool) self::site_coverimage_url();
+        }
+
+        return (bool) self::course_coverimage_url($COURSE->id);
     }
 
     /**
