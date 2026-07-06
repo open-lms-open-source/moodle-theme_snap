@@ -2529,14 +2529,6 @@ body.snap-resource-card {
                 @include recolor-icon($activity-icon-assessment-bg, 1);
             }
 
-            // mod_hotpot ships only a coloured icon.svg (no real monologo). has_monologo_icon()
-            // falls back to that icon, so the <img> never gets the .nofilter class and slips past
-            // the :not(.nofilter) guard - most visibly on /course/overview.php - where the recolour
-            // filter flattens it. Force hotpot to keep its own colours.
-            .activityicon[src*="snap/hotpot"] {
-                filter: none !important;
-            }
-
             &.collaboration:not(.isbranded) .activityicon:not(.nofilter),
             &.collaboration:not(.isbranded) .icon:not(.nofilter) {
                 @include recolor-icon($activity-icon-collaboration-bg, 1);
