@@ -1919,9 +1919,7 @@ body.path-course #moodle-page #page-header {
 }
 
 // Truncate long breadcrumb items on all pages (course, activity, category, etc.).
-// width: 100% overrides the base fit-content so the nav never overflows its parent.
 .breadcrumb-nav {
-    width: 100%;
     max-width: calc(100% - 2rem);
     overflow: hidden;
 
