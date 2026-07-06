@@ -25,8 +25,8 @@
  * JS code to assign attributes and expected behavior for elements in the Dom regarding accessibility.
  */
 define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/bootstrap/util/sanitizer', 'theme_boost/popover',
-        'core/moremenu', 'core/log'],
-    function($, str, Event, FormEvents, {DefaultAllowlist}, {Popover}, coreMoreMenu, log) {
+        'core/moremenu', 'core/log', 'core_filters/events'],
+    function($, str, Event, FormEvents, {DefaultAllowlist}, {Popover}, coreMoreMenu, log, FilterEvents) {
         return {
             snapAxInit: function(localJouleGrader, allyReport, blockReports, localCatalogue) {
                 /**
@@ -128,6 +128,12 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                 });
 
                 var module = this;
+
+                // Popovers should also be set on content updates.
+                document.addEventListener(FilterEvents.eventTypes.filterContentUpdated, function() {
+                    module.setManualPopovers();
+                });
+
                 $(document).ready(function() {
                     // Add necessary attributes to needed DOM elements to new accessibility features.
                     $("#page-mod-data-edit input[id*='url']").attr("type", "url").attr("autocomplete", "url");
@@ -765,7 +771,8 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                 // Allow clicks outside popovers to close them.
                 document.addEventListener('click', function(e) {
                     const target = e.target;
-                    if (target.closest(btnSelector) || target.closest('.popover')) {
+                    if (target.closest(btnSelector)
+                        || (target.closest('.popover') && !target.closest('.popover a'))) {
                         return;
                     }
                     document.querySelectorAll('[data-snap-manual-popover="1"]').forEach(function(openBtn) {
