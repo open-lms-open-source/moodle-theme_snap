@@ -405,7 +405,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .btn.btn-outline-secondary,
     .button-group > button,
     input.form-submit,
-    .atto_form button,
     .gradingform_checklist.editor .addgroup input,
     .gradingform_checklist.editor .additem input,
     .gradingform_rubric.editor .addlevel input,
@@ -993,8 +992,7 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     #snap-coverimagecontrol > .btn-secondary,
     .btn.btn-link,
     .categoryname,
-    .summary > p,
-    .atto_group > button {
+    .summary > p {
         &:focus {
             outline: 3px auto $brand-primary;
         }
@@ -1382,21 +1380,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
             40% {
                 opacity: 1;
-            }
-        }
-    }
-
-    .atto_morefontcolors_button > .dropdown-menu > li > a {
-        outline: none;
-        background: none;
-
-        &:hover,
-        &:focus {
-            div {
-                &:hover,
-                &:focus {
-                    outline: 3px solid $brand-primary;
-                }
             }
         }
     }

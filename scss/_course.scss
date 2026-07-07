@@ -1681,7 +1681,6 @@ body.snap-resource-card {
     // Hide multimedia content on resource cards description.
     @include snap-resource-card-selectors {
       div.contentafterlink div.no-overflow img,
-      div.contentafterlink div.no-overflow img.img-responsive.atto_image_button_text-bottom,
       div.contentafterlink div.no-overflow iframe,
       div.mediaplugin.mediaplugin_videojs {
         display: none;

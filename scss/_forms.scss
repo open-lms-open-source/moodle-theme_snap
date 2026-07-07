@@ -267,10 +267,6 @@ textarea {
     width: 100%;
 }
 
-.editor_atto_content_wrap {
-    border-color: $gray-lighter;
-}
-
 input[type="checkbox"] {
     max-width: none;
 }
@@ -304,89 +300,8 @@ input[type="checkbox"] {
 }
 
 #snap-add-new-section {
-
-    .editor_atto_content {
-        min-height: 250px !important; // overcome js
-    }
-    .editor_atto_wrap {
-        margin-bottom: 1em;
-    }
     #cancel-new-section {
         margin-left: 1em;
-    }
-}
-
-// -------------------------
-// Fun with Atto
-// -------------------------
-
-// TODO - move all atto styles to here
-
-div.editor_atto_toolbar {
-    background-color: transparent;
-    border-color: #eee;
-    padding-bottom: 0;
-}
-
-.editor_atto_content {
-    padding: 1em 2%;
-    max-height: 100vh !important;
-    min-height: 100px !important;
-    resize: none;
-
-    p {
-        @extend .text-break;
-    }
-}
-
-// Help Atto editor select img's properly
-.editor_atto_content .img-responsive {
-    display: inline;
-}
-
-.editor_atto_toolbar button:active,
-.editor_atto_toolbar button.highlight,
-.editor_atto_toolbar button:hover {
-    background-image: none;
-    background-color: #eee;
-}
-
-div.editor_atto_toolbar button + button {
-    border-color: #fff;
-}
-
-div.editor_atto_toolbar div.atto_group {
-    border: 0;
-    border-radius: 0;
-    margin: 0.3em 0.3em 0.3em 0;
-}
-
-.atto_equation_library button {
-    background-color: #fff;
-    color: $body-color;
-
-    &:hover {
-        background-color: darken(#fff, 5%);
-        color: $body-color;
-    }
-}
-
-.atto_charmap_selector button {
-    width: 40px;
-    padding: 3px;
-    margin: 0;
-}
-
-.atto_equation_groups.yui3-tabview-panel {
-    border: none;
-    background: #fff;
-}
-
-.editor_atto_notification {
-    bottom: 1em;
-    .atto_info,
-    .atto_warning {
-        border-radius: 0;
     }
 }
 
@@ -465,11 +380,6 @@ a[aria-controls="snap-collapse-help"] {
     // FF select elements don't respect % max width.
     select {
         max-width: 30em;
-    }
-
-    .editor_atto_content {
-        // Need !important to override the style tag set by JS.
-        min-height: 250px !important;
     }
 
     .felement[data-fieldtype="editor"] {

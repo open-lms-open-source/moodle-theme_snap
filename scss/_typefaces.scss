@@ -79,7 +79,6 @@ input#id_submitbutton2,
 .path-admin .buttons input[type="submit"],
 td.submit input,
 #notice .singlebutton + .singlebutton input,
-button.atto_equation_submit,
 .yui-skin-sam .yui-button,
 .yui3-button,
 .yui-button button,
@@ -107,9 +106,8 @@ input[type="reset"],
     transition: all 0.4s ease-in-out;
 }
 
-// None standard buttons - e.g. atto
+// None standard buttons
 .editing.path-course-view section#region-main > .singlebutton input[type="submit"],
-.editor_atto_toolbar button,
 #page-mast .singlebutton input[type="submit"] {
     box-shadow: none;
 }
