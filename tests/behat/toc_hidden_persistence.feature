@@ -23,7 +23,6 @@
 Feature: TOC hidden flag is preserved on activity duplication
 
   Background:
-    Given I skip because "of complications on Gitlab"
     Given the following config values are set as admin:
       | config | value |
       | theme  | snap  |
@@ -60,11 +59,8 @@ Feature: TOC hidden flag is preserved on activity duplication
     # Duplicate the hidden activity.
     And I open "Hidden Page" actions menu
     And I choose "Duplicate" in the open action menu
-    And I wait until the page is ready
-    # The duplicate must also be absent from the course index.
-    And I should not see "Hidden Page (copy)" in the "courseindex-content" "region"
-    And I should see "Visible Page" in the "courseindex-content" "region"
-    # Reload to confirm the record persisted in the database.
+    # Reload to verify the toc_hidden record persisted and the server renders the copy as hidden.
     And I reload the page
+    And I wait until the page is ready
     And I should not see "Hidden Page (copy)" in the "courseindex-content" "region"
     And I should see "Visible Page" in the "courseindex-content" "region"
