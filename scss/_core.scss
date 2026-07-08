@@ -4046,6 +4046,11 @@ body.hascontinuecancel.path-site #page {
     video#player {
         max-height: 50vh;
     }
+
+    &.chooserdialogue-questionchooser {
+        top: 10px !important;
+    }
+
 }
 
 .moodle-dialogue-base .filepicker .alert-warning {
