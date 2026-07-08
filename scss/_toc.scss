@@ -388,6 +388,49 @@ label[for="toc-search-input"]{
     }
 }
 
+.drawer.drawer-left {
+  #toc-desktop-menu-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 2em 0.5rem 0.5rem;
+    width: 100%;
+
+    h2 {
+      margin: 0;
+      flex: 1 1 auto;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:has(#toc-search-input.state-active),
+    &:has(#toc-search-input:focus) {
+      h2 {
+        visibility: hidden;
+      }
+
+      #toc-search::before {
+        visibility: hidden;
+      }
+    }
+
+    #toc-search {
+      flex: 0 0 auto;
+      position: relative;
+      top: auto;
+      right: auto;
+      max-width: 100%;
+
+      #toc-search-input.state-active,
+      #toc-search-input:focus {
+        margin-left: 0;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
 .toc-footer {
   padding: 1em 0;
   margin-top: auto;
@@ -504,10 +547,10 @@ label[for="toc-search-input"]{
   nav.courseindex {
     overflow: scroll;
   }
-}
-.path-course-view.format-weeks .drawercontent,
-.path-course-view.format-topics .drawercontent {
-  padding-top: unset;
+
+  &:has(#toc-desktop-menu-heading) {
+    padding-top: unset;
+  }
 }
 // Allow sticky TOC on small resolutions
 // Since core uses pageWrapper.style.overflow = 'hidden'
