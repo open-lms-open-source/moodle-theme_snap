@@ -45,28 +45,6 @@ use core\event\group_member_removed;
 class event_handlers {
 
     /**
-     * Whether the new/modified module id should be recorded in the session.
-     *
-     * Snap (or a Snap child theme) must be the site theme - checked via $CFG->theme instead of
-     * $PAGE->theme, which would force premature theme init inside an event observer. The session
-     * must also still be open: long-running scripts (e.g. admin/tool/generator) close it early,
-     * and writing to $SESSION afterwards triggers "mutated the session after it was closed".
-     *
-     * @return bool
-     */
-    protected static function can_record_module_in_session(): bool {
-        global $CFG;
-
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            return false;
-        }
-        if ($CFG->theme === 'snap') {
-            return true;
-        }
-        return in_array('snap', \theme_config::load($CFG->theme)->parents);
-    }
-
-    /**
      * The course update event.
      *
      * process cover image.
@@ -141,8 +119,10 @@ class event_handlers {
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
-        // Record the module for Snap's UI awareness (read and cleared by Snap's renderer).
-        if (self::can_record_module_in_session()) {
+        // Record the module for Snap's UI awareness (read and cleared by Snap's renderer). Skip when the
+        // session is closed - back-end scripts (e.g. admin/tool/generator) close it early, and mutating a
+        // closed session triggers a debugging warning.
+        if (session_status() === PHP_SESSION_ACTIVE) {
             $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
         }
 
@@ -163,8 +143,10 @@ class event_handlers {
         // Force an update of affected cache stamps.
         local::course_completion_cachestamp($event->courseid, true);
 
-        // Record the module for Snap's UI awareness (read and cleared by Snap's renderer).
-        if (self::can_record_module_in_session()) {
+        // Record the module for Snap's UI awareness (read and cleared by Snap's renderer). Skip when the
+        // session is closed - back-end scripts (e.g. admin/tool/generator) close it early, and mutating a
+        // closed session triggers a debugging warning.
+        if (session_status() === PHP_SESSION_ACTIVE) {
             $SESSION->theme_snap_course_module_created_or_modified_id = $event->get_data()['contextinstanceid'];
         }
     }
