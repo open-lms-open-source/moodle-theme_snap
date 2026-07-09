@@ -149,7 +149,48 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     Then "#section-1" "css_element" should exist
     And I click on "#section-1 .snap-visibility[data-action='sectionHide']" "css_element"
     Then I should see "Hidden from students"
+    And "#section-1 .snap-visibility" "css_element" should be visible
     And I open "SubsectionExample" actions menu
     And I click on "View" "link" in the "SubsectionExample" activity
     And I wait until the page is ready
     And ".section.main.state-visible .snap-visibility" "css_element" should not be visible
+    # Showing the parent again should restore the subsection's own visibility toggle.
+    And I am on the course main page for "C1"
+    And I follow "Section 1"
+    And I wait until the page is ready
+    And I click on "#section-1 .snap-visibility[data-action='sectionShow']" "css_element"
+    And I wait until "#section-1 .snap-visibility[data-action='sectionHide']" "css_element" exists
+    And I open "SubsectionExample" actions menu
+    And I click on "View" "link" in the "SubsectionExample" activity
+    And I wait until the page is ready
+    Then ".section.main.state-visible .snap-visibility" "css_element" should be visible
+
+  @javascript
+  Scenario: A subsection repeatedly visited via the course index without a page reload always
+  reflects its parent section's current visibility.
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I follow "Section 1"
+    And I wait until the page is ready
+    # Visit the subsection once via the course index (no page reload), so a copy gets cached.
+    And I click on "SubsectionExample" "link" in the "nav#courseindex" "css_element"
+    And I wait until the page is ready
+    And ".section.main.state-visible .snap-visibility" "css_element" should be visible
+    # Go back to Section 1 (still without a page reload) and hide it.
+    And I click on "Section 1" "link" in the "nav#courseindex" "css_element"
+    And I wait until the page is ready
+    And I click on "#section-1 .snap-visibility[data-action='sectionHide']" "css_element"
+    Then I should see "Hidden from students"
+    # Visit the subsection again via the course index: it must reflect the parent now being
+    # hidden, not the copy cached from the first visit.
+    And I click on "SubsectionExample" "link" in the "nav#courseindex" "css_element"
+    And I wait until the page is ready
+    And ".section.main.state-visible .snap-visibility" "css_element" should not be visible
+    # Show the parent again and re-visit: the subsection's toggle should be visible once more.
+    And I click on "Section 1" "link" in the "nav#courseindex" "css_element"
+    And I wait until the page is ready
+    And I click on "#section-1 .snap-visibility[data-action='sectionShow']" "css_element"
+    And I wait until "#section-1 .snap-visibility[data-action='sectionHide']" "css_element" exists
+    And I click on "SubsectionExample" "link" in the "nav#courseindex" "css_element"
+    And I wait until the page is ready
+    Then ".section.main.state-visible .snap-visibility" "css_element" should be visible

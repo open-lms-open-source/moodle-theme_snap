@@ -41,46 +41,41 @@ export default class Section extends BaseSection {
     /**
      * Component watchers.
      *
+     * We keep Core's own watcher untouched (own section id updates keep using Core's
+     * _refreshSection), and add a dedicated watcher/handler only for the case where this
+     * section is a delegated section (subsection) that needs to react to its parent's
+     * visibility changes.
+     *
      * @returns {Array} of watchers
      */
     getWatchers() {
-        let watchers = [
-            {watch: `section[${this.id}]:updated`, handler: this._refreshSection},
-        ];
-        // Set watcher for parent Section changes, if we are in a delegated section (Subsection)
+        const watchers = super.getWatchers();
+        // Set watcher for parent Section changes, if we are in a delegated section (Subsection).
         const parentSectionId = this.reactive.state.section.get(this.id)?.parentsectionid;
-        if (parentSectionId !== null) {
-            watchers.push({watch: `section[${parentSectionId}]:updated`, handler: this._refreshSection});
+        if (parentSectionId) {
+            watchers.push({watch: `section[${parentSectionId}]:updated`, handler: this._refreshParentSection});
         }
         return watchers;
     }
 
     /**
-     * Update a content section using the state information.
+     * React to the parent section (of a delegated section/subsection) changing.
+     *
+     * When the parent section is hidden, the subsection is implicitly hidden too, so its own
+     * visibility toggle should be disabled (hidden). When the parent becomes visible again, the
+     * subsection's own visibility toggle should be restored.
+     *
+     * Note: this.element is always this component's own bound element (the subsection's own
+     * section container)
      *
      * @param {object} param
-     * @param {Object} param.element details the update details.
+     * @param {Object} param.element the updated parent section state.
      */
-    _refreshSection({element}) {
-        const parentSectionId = this.reactive.state.section.get(this.id)?.parentsectionid;
-
-        // The element ID (The one that triggers the event) is the same as Parent Section ID.
-        // It means the parent changed, and we need to update the subsection.
-        if (parentSectionId === element.id) {
-            const isParentVisible = element.visible;
-            const visibilityControl = this._getActionMenu('.snap-visibility');
-
-            if (visibilityControl) {
-                if (!isParentVisible) {
-                    // Parent Hidden, Do not show visibility button on subsection.
-                    visibilityControl.classList.add('d-none');
-                } else {
-                    // Parent is visible, restore subsection visibility button.
-                    visibilityControl.classList.remove('d-none');
-                }
-            }
+    _refreshParentSection({element}) {
+        const visibilityControl = this.element.querySelector('.snap-visibility');
+        if (!visibilityControl) {
             return;
         }
-        super._refreshSection({element});
+        visibilityControl.classList.toggle(this.classes.HIDE, !element.visible);
     }
 }
