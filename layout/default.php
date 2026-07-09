@@ -49,7 +49,7 @@ if ($PAGE->pagetype == 'admin-search') {
 echo $OUTPUT->custom_menu_spacer();
 ?>
 <div id="page-header" class="clearfix <?php echo $mastimage; ?>">
-    <?php if ($PAGE->pagetype !== 'site-index') { ?>
+    <?php if ($PAGE->pagetype !== 'site-index' && $PAGE->navbar->has_items()) { ?>
         <nav class="breadcrumb-nav" aria-label="breadcrumbs"><?php echo $OUTPUT->navbar(); ?></nav>
     <?php }
         if ($carousel) {
@@ -117,15 +117,14 @@ if ($hasadminbutton) {
     }
 }
 
-echo "<div class='snap-page-heading-button' >";
-if ($PAGE->pagelayout !== 'admin') {
-    echo $OUTPUT->page_heading_button();
-}
-// Validation added to check if settings option should be displayed;
-$buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !local::show_setting_menu() ;
+// Validation added to check if settings option should be displayed.
+$buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !local::show_setting_menu();
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
-echo $regionmainsettingsmenu;
-echo "</div>";
+if ($regionmainsettingsmenu) {
+    echo "<div class='snap-page-heading-button'>";
+    echo $regionmainsettingsmenu;
+    echo "</div>";
+}
 if ($PAGE->pagelayout === 'mycourses') {
     // Add course management options in my courses page.
     echo $OUTPUT->snap_my_courses_management_options();
