@@ -139,9 +139,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     #snap-header #nav-local-accessibility-popover-container {
         &.focused-icon {
             outline: $brand-primary solid 3px;
-            @if $nav-bg != rgba(255, 255, 255, .95) {
-                        outline: fix-background($nav-color, $brand-primary, 60) solid 3px;
-            }
             height: 100%;
             border-radius: .5rem;
         }
@@ -194,9 +191,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     .dropdown-toggle {
         &:focus-visible {
             outline: 3px solid $brand-primary;
-            @if $nav-bg != rgba(255, 255, 255, .95) {
-                        outline: 3px auto fix-background($nav-color, $brand-primary, 60);
-            }
+            background-color: transparent;
+            box-shadow: none;
         }
 
         &:active,
@@ -565,6 +561,12 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 
     [id*="courseindex"].drawer-left .btn.drawertoggle {
       background-color: $brand-primary;
+
+      &:focus,
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
+      }
     }
 
     .snap-drawer-mobile-header {
@@ -990,18 +992,120 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     // -------------------------
     #snap-coverimagecontrol > .btn-secondary,
     .btn.btn-link,
-    .form-select,
-    .form-control,
     .categoryname,
     .summary > p,
-    .atto_group > button,
-    .snap-dropzone > .snap-dropzone-label {
+    .atto_group > button {
         &:focus {
             outline: 3px auto $brand-primary;
-            @if $nav-bg != rgba(255, 255, 255, .95) {
-                        outline: 3px auto fix-background($nav-color, $brand-primary, 60);
+        }
+    }
+
+    .form-control,
+    .form-select {
+        &:focus {
+            outline: 3px auto $brand-primary;
+            border-color: $brand-primary;
+            box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
+        }
+    }
+
+    // Override Boost's blue focus styles for needed elements.
+    .nav-link,
+    .aabtn,
+    .btn-link,
+    [role="button"],
+    .list-group-item-action,
+    .visually-hidden-focusable,
+    .moodle-dialogue-base .closebutton,
+    button.btn-close,
+    .form-autocomplete-selection,
+    .moodle-core-dragdrop-draghandle,
+    .btn,
+    [role="treeitem"]:not([aria-expanded="true"]),
+    .btn-icon,
+    .snap-sidebar-menu-trigger,
+    .favoriteicon,
+    .snap-dropzone form,
+    .snap-dropzone .snap-dropzone-label,
+    .page-link,
+    .message-app,
+    section.block_settings,
+    #course-listing-title,
+    #rules[role="tabpanel"],
+    #history[role="tabpanel"],
+    .pld-edit-step,
+    [data-flexitour="container"],
+    [title="Rows per page"] {
+        outline-color: $brand-primary;
+
+        &:focus,
+        &:focus-visible {
+            outline: 3px solid $brand-primary;
+            box-shadow: none;
+        }
+    }
+
+    // For the particular treeitem expanded focus.
+    [role="treeitem"][aria-expanded="true"] {
+        > *:first-child {
+            outline-color: $brand-primary;
+        }
+
+        &:focus,
+        &:focus-visible {
+            > *:first-child {
+                outline: 3px solid $brand-primary;
+                box-shadow: none;
             }
         }
+    }
+
+    // Focus shown with box-shadow.
+    input[type="checkbox"],
+    input[type="radio"],
+    input[type="file"],
+    input[type="image"],
+    .form-check-input {
+        &:focus,
+        &:focus-visible {
+            border-color: $brand-primary;
+            box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
+        }
+    }
+
+    app-edit-event-panel,
+    app-edit-action-panel {
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: $brand-primary;
+            box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
+        }
+    }
+
+    #menuAlertEmailFrom,
+    #txtActionEmailCustomEmail {
+        &:focus,
+        &:focus-visible {
+            border-color: $brand-primary;
+            outline: 3px solid $brand-primary;
+            box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
+        }
+    }
+
+    // Override Boost's blue highlight for autocomplete dropdown selected items.
+    .form-autocomplete-suggestions li[aria-selected="true"] {
+        outline: 0;
+        box-shadow: 0 0 0 3px $brand-primary;
+    }
+
+    // For the labelling elements (activity tags, course participant editing, course creation category tag).
+    .form-autocomplete-selection [data-active-selection="true"] {
+        box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
+    }
+
+    .tox .tox-edit-area::before {
+        border-color: $brand-primary;
     }
 
     //course reset button
@@ -1041,7 +1145,9 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         border-radius: 0.25rem;
         font-size: initial;
         &:hover,
-        &:focus {
+        &:focus,
+        &:focus-visible {
+            outline: 3px solid $brand-primary;
             box-shadow: none;
             background-color: $brand-primary !important;
             color: #fff !important;
@@ -1763,6 +1869,28 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             border-color: $brand-primary;
             box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.25);
         }
+
+        // Styles for the edit mode circle when turned off. This allows following the category color.
+        &:focus:not(:checked) {
+            background-image: none;
+            position: relative;
+
+            &::before {
+                content: "\f111"; // fa-circle
+                font-family: "Font Awesome 6 Free";
+                font-weight: 900; // solid
+                color: $brand-primary;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0.15em;
+                display: flex;
+                align-items: center;
+                font-size: 0.65em;
+                line-height: normal;
+                pointer-events: none;
+            }
+        }
     }
 
     // local_olms_ai
@@ -1796,6 +1924,11 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         &:focus,
         &:focus-within {
             opacity: 1;
+        }
+        &:focus,
+        &:focus-visible {
+            outline: 3px solid $brand-primary;
+            box-shadow: inset 0 0 0 2px white;
         }
         opacity: 0.6;
         background-color: $brand-primary;
