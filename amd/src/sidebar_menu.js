@@ -46,6 +46,7 @@ const SELECTORS = {
     CLOSE_MESSAGE_DRAWER_BUTTON: '[id^="message-drawer-"] a[data-action="closedrawer"]',
     MESSAGE_APP_CLASS: 'div[id^=\'drawer-\'] > div.message-app',
     MESSAGE_DRAWER_TOGGLE: 'a[id^="message-drawer-toggle"]',
+    AI_DRAWER: '.ai-drawer',
 };
 
 const CLASSES = {
@@ -272,11 +273,22 @@ const handleDrawerButtonClick = (e) => {
 };
 
 /**
+ * Close the AI drawer if it's currently open.
+ */
+const closeAiDrawer = () => {
+    const aiDrawer = document.querySelector(SELECTORS.AI_DRAWER);
+    if (aiDrawer && aiDrawer.classList.contains(CLASSES.SHOW)) {
+        aiDrawer.classList.remove(CLASSES.SHOW);
+    }
+};
+
+/**
  * Close all active drawers except the one matching the given selector
  * @param {string} currentSelector - The selector for the drawer to keep open
  * @param {Element} currentButton - The button that was clicked
  */
 const closeOtherDrawers = (currentSelector, currentButton) => {
+    closeAiDrawer();
     const drawerButtons = document.querySelectorAll(SELECTORS.DRAWER_BUTTON);
     repositionGotoTopLink();
     drawerButtons.forEach(button => {
@@ -317,6 +329,7 @@ const closeOtherDrawers = (currentSelector, currentButton) => {
 const closeAllDrawers = () => {
     const drawerButtons = document.querySelectorAll(SELECTORS.DRAWER_BUTTON);
     repositionGotoTopLink();
+    closeAiDrawer();
     drawerButtons.forEach(button => {
         const activeSelector = button.dataset.activeselector;
         if (!activeSelector) {
@@ -451,6 +464,7 @@ const setDrawerPreference = (activeSelector, value) => {
  */
 const handleCloseDrawerClick = () => {
     repositionGotoTopLink();
+    closeAiDrawer();
     // Remove active classes from all drawer buttons
     document.querySelectorAll(SELECTORS.DRAWER_BUTTON).forEach(button => {
         button.classList.remove(CLASSES.ACTIVE);
