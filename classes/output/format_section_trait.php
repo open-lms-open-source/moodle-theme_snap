@@ -313,6 +313,14 @@ trait format_section_trait {
         // Set editing true, so section badges are rendered.
         $sectiondata->editing = true;
 
+        if ($section->uservisible) {
+            $course = $format->get_course();
+            $snapfooter = $this->course_section_add_cm_control_snap($course, $section, 0);
+            if ($snapfooter !== '') {
+                $sectiondata->cmcontrols = $snapfooter;
+            }
+        }
+
         // Add snap content to each activity module.
         if ($sectiondata->cmlist->cms) {
             foreach ($sectiondata->cmlist->cms as &$cmsitem) {

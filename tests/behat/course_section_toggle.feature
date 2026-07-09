@@ -124,6 +124,23 @@ Feature: When the moodle theme is set to Snap, teachers can toggle the visibilit
     Then "#section-2 .snap-visibility" "css_element" should not exist
 
   @javascript
+  Scenario: Section footer buttons remain visible after toggling section visibility without page reload.
+    Given I log in as "admin"
+    And I am on the course main page for "C1"
+    And I follow "Section 1"
+    And I wait until the page is ready
+    And "#section-1 .btn-add-activity" "css_element" should be visible
+    And "#snap-drop-file-1" "css_element" should exist
+    When I click on "#section-1 .snap-visibility[data-action='sectionHide']" "css_element"
+    And I wait until "#section-1 .snap-visibility[data-action='sectionShow']" "css_element" exists
+    Then "#section-1 .btn-add-activity" "css_element" should be visible
+    And "#snap-drop-file-1" "css_element" should exist
+    When I click on "#section-1 .snap-visibility[data-action='sectionShow']" "css_element"
+    And I wait until "#section-1 .snap-visibility[data-action='sectionHide']" "css_element" exists
+    Then "#section-1 .btn-add-activity" "css_element" should be visible
+    And "#snap-drop-file-1" "css_element" should exist
+
+  @javascript
   Scenario: When parent Section is Hidden, Subsections can not modify visibility.
     Given I log in as "teacher1"
     And I am on the course main page for "C1"

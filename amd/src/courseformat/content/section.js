@@ -68,8 +68,7 @@ export default class Section extends BaseSection {
         // It means the parent changed, and we need to update the subsection.
         if (parentSectionId === element.id) {
             const isParentVisible = element.visible;
-            const subsection = this.element.closest('ul.sections > .section.main');
-            const visibilityControl = subsection.querySelector('.snap-visibility');
+            const visibilityControl = this._getActionMenu('.snap-visibility');
 
             if (visibilityControl) {
                 if (!isParentVisible) {
