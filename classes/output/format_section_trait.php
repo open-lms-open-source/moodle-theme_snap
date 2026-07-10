@@ -313,7 +313,7 @@ trait format_section_trait {
         // Set editing true, so section badges are rendered.
         $sectiondata->editing = true;
 
-        if ($section->uservisible) {
+        if ($section->uservisible && !$this->page->user_is_editing()) {
             $course = $format->get_course();
             $snapfooter = $this->course_section_add_cm_control_snap($course, $section, 0);
             if ($snapfooter !== '') {
