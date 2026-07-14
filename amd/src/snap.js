@@ -862,31 +862,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
         };
 
         /**
-         * Function to fix the styles when fullscreen is used with Atto Editor.
-         */
-        function waitForFullScreenButton() {
-            var maxIterations = 15;
-            var i = 0;
-            var checker = setInterval(function() {
-                i = i + 1;
-                if (i > maxIterations) {
-                    clearInterval(checker);
-                } else {
-                    if ($('button.atto_fullscreen_button').length != 0 && $('div.editor_atto').length != 0) {
-                        $('button.atto_fullscreen_button').click(function() {
-                            $('div.editor_atto').css('background-color', '#eee');
-                            $('div.editor_atto').css('z-index', '1');
-                        });
-                        $('button.atto_html_button').click(function() {
-                            $('#id_introeditor').css('z-index', '1');
-                        });
-                        clearInterval(checker);
-                    }
-                }
-            }, 2000);
-        }
-
-        /**
          * Sets up event listeners for the "Go to Top" and "Go to Left" buttons.
          */
         function setupGotoButtons() {
@@ -1538,8 +1513,6 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         const newParentElement = moreCoursesButton.parentNode.parentNode;
                         newParentElement.appendChild(moreCoursesButton);
                     }
-
-                    waitForFullScreenButton();
 
                     // Reassess the competency report user table.
                     if ($('body#page-report-competency-index').length > 0) {

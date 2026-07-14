@@ -804,31 +804,6 @@ section#snap-add-new-section #summary-editor_parent #summary-editor_tbl {
     border-collapse: collapse;
 }
 
-/**
- * Styling for atto_htmlplus and atto_fullscreen.
- */
-.snap-form-required .editor_atto_wrap {
-    .CodeMirror.cm-s-default.CodeMirror-wrap,
-    .editor_atto {
-        z-index: 2;
-        &[style*="position: fixed"] .editor_atto_toolbar {
-            background: #f2f2f2;
-        }
-    }
-}
-
-.theme-snap .editor_atto_wrap .CodeMirror.cm-s-default.CodeMirror-wrap {
-    width: 100% !important; // Fix the fullscreen mode for INT-18111
-}
-
-/**
- * Styling for atto_title.
- */
-.theme-snap .atto_menu .dropdown-menu>li>a:hover,
-.theme-snap .atto_menu .dropdown-menu>li>a:focus {
-    background-color: unset;
-}
-
 // Margin to fix the border cut out when PLD tabs are getting focused.
 #page-local-pld-view {
     div#pld_main a.tabLink.yui3-tab-label.yui3-tab-content,
