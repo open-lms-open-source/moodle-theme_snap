@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2026 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2025 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -70,9 +70,11 @@ $string['coursecontacts'] = 'جهات اتصال المقرر الدراسي';
 $string['coursedisplay'] = 'عرض المقرر الدراسي';
 $string['coursefootertoggle'] = 'تذييل المقرر الدراسي';
 $string['coursefootertoggledesc'] = 'يعرض تذييل المقرر الدراسي معلومات مفيدة للمستخدمين حول صفحة المقرر الدراسي بما في ذلك جهات اتصال المقرر الدراسي ووصف المقرر الدراسي والنشاط الحديث في المقرر الدراسي.';
-$string['courseformatnotification'] = 'تنسيق المقرر الدراسي الحالي الذي تستخدمه غير مدعوم بشكل كامل من قبل سمة Snap. وللحصول على أفضل تجربة، يوصي Open LMS باستخدام الموضوعات أو تنسيقات المقرر الدراسي الأسبوعية مع سمة Snap. يمكن تغيير تنسيق المقرر الدراسي في &lt;a href=&quot;{$a}&quot;&gt;إعدادات المقرر الدراسي&lt;/a&gt;.';
-$string['coursefixydefaulttext'] = 'أنت غير مسجل حاليًا في أي مقررات دراسية.&lt;br&gt;سيتم هنا عرض المقررات الدراسية التي أنت مسجل بها.';
+$string['courseformatnotification'] = 'تنسيق المقرر الدراسي الحالي الذي تستخدمه غير مدعوم بشكل كامل من قبل سمة Snap. وللحصول على أفضل تجربة، يوصي Open LMS باستخدام الموضوعات أو تنسيقات المقرر الدراسي الأسبوعية مع سمة Snap. يمكن تغيير تنسيق المقرر الدراسي في <a href="{$a}">إعدادات المقرر الدراسي</a>.';
+$string['coursefixydefaulttext'] = 'أنت غير مسجل حاليًا في أي مقررات دراسية.<br>سيتم هنا عرض المقررات الدراسية التي أنت مسجل بها.';
 $string['coursegrade'] = 'تقدير المقرر الدراسي:';
+$string['coursepartialrender'] = 'تمكين التحميل البطيء لأقسام المقرر الدراسي';
+$string['coursepartialrenderdesc'] = 'في حالة التمكين، يتم تحميل أقسام المقرر الدراسي عند الطلب من قبل المستخدم. ويساعد هذا الإجراء المقررات الدراسية التي تحتوي على كميات كبيرة من المحتوى على التحميل بشكل أسرع.';
 $string['coursenavigation'] = 'تنقل إلى المقرر الدراسي';
 $string['coursesummaryfilesunsuitable'] = 'يرجى تفريغ ملفات تلخيص المقررات الدراسية الخاصة بك قبل محاولة تغيير صورة الغلاف';
 $string['courseactionslabel'] = 'الإجراءات';
@@ -82,9 +84,9 @@ $string['coverdisplay'] = 'عرض الغلاف';
 $string['covercarousel'] = 'مكتبة الأغلفة';
 $string['covercarousellabel'] = 'المكتبة';
 $string['covercarouselon'] = 'استخدام مكتبة الأغلفة';
-$string['covercarouseldescription'] = '&lt;p&gt;تُعَد المكتبة مجموعة من الشعارات الدوارة، أو عرض الشرائح الذي يتم عرضه على الصفحة الرئيسية لموقعك بدلاً من صورة الغلاف.&lt;/p&gt;
-&lt;p&gt;أضِف ما يصل إلى 3 صور، وعنوانًا لكل شريحة، وعنوانًا فرعيًا اختياريًا. وتعمل الصور بحجم 1200 × 600 بكسل بشكل أفضل.&lt;/p&gt;';
-$string['covercarouselsronly'] = 'هذه مكتبة بشرائح ذاتية الدوران. قم بتنشيط أي من الأزرار لتعطيل الدوران. واستخدم الأزرار &quot;التالي&quot; و&quot;السابق&quot; للتنقل أو انتقل إلى شريحة ما سريعًا باستخدام نقاط الشرائح.';
+$string['covercarouseldescription'] = '<p>تُعَد المكتبة مجموعة من الشعارات الدوارة، أو عرض الشرائح الذي يتم عرضه على الصفحة الرئيسية لموقعك بدلاً من صورة الغلاف.</p>
+<p>أضِف ما يصل إلى 3 صور، وعنوانًا لكل شريحة، وعنوانًا فرعيًا اختياريًا. وتعمل الصور بحجم 1200 × 600 بكسل بشكل أفضل.</p>';
+$string['covercarouselsronly'] = 'هذه مكتبة بشرائح ذاتية الدوران. قم بتنشيط أي من الأزرار لتعطيل الدوران. واستخدم الأزرار "التالي" و"السابق" للتنقل أو انتقل إلى شريحة ما سريعًا باستخدام نقاط الشرائح.';
 $string['covercarouselplaybutton'] = 'استئناف الشرائح ذاتية الدوران للمكتبة.';
 $string['covercarouselpausebutton'] = 'إيقاف الشرائح ذاتية الدوران مؤقتًا للمكتبة.';
 $string['coverimage'] = 'صورة الغلاف';
@@ -94,30 +96,30 @@ $string['createsection'] = 'إنشاء قسم';
 $string['current'] = 'حالي';
 $string['customcss'] = 'CSS مخصص (ملغى)';
 $string['customscss'] = 'SCSS مخصص';
-$string['customcssdesc'] = 'دعم Open LMS لا يقدّم المساعدة في المحتوى المتعلق بـ CSS. هذا الحقل ملغى وينبغي استخدامه فقط للأغراض القديمة. يُرجى استخدام حقل &quot;SCSS مخصص&quot; من أجل التخصيصات المستقبلية.';
+$string['customcssdesc'] = 'دعم Open LMS لا يقدّم المساعدة في المحتوى المتعلق بـ CSS. هذا الحقل ملغى وينبغي استخدامه فقط للأغراض القديمة. يُرجى استخدام حقل "SCSS مخصص" من أجل التخصيصات المستقبلية.';
 $string['customscssdesc'] = 'لا يقدّم دعم Open LMS المساعدة في المحتوى المتعلق بـ CSS.';
 $string['customtopbar'] = 'شريط التنقل';
 $string['customisenavbar'] = 'تغيير ألوان شريط التنقل';
-$string['customisenavbutton'] = 'تغيير ألوان زر &quot;المقررات الدراسية الخاصة بي&quot;';
+$string['customisenavbutton'] = 'تغيير ألوان زر "المقررات الدراسية الخاصة بي"';
 $string['customisecustommenu'] = 'تغيير لون نص القائمة المخصص';
 $string['custommenutext'] = 'لون نص القائمة المخصص';
-$string['custommenutitle'] = 'قائمة مخصصة';
 $string['deadlines'] = 'المواعيد النهائية';
 $string['deadlinestoggle'] = 'المواعيد النهائية';
 $string['deadlinestoggledesc'] = 'تعرض للمستخدمين أي مواعيد نهائية للأنشطة القادمة الموجودة في المقررات الدراسية المسجلة.';
 $string['defaultsummary'] = 'تُستخدم تلك المساحة لوصف ما يدور حوله هذا الموضوع - بالنص والصورة والصوت والفيديو.';
 $string['defaultintrosummary'] = 'مرحبًا بك في مقررك الدراسي الجديد {$a}.
-&lt;br&gt;ابدأ بوصف ما يدور حوله مقررك الدراسي باستخدام النص والصورة والصوت والفيديو.';
+<br>ابدأ بوصف ما يدور حوله مقررك الدراسي باستخدام النص والصورة والصوت والفيديو.';
+$string['defaultsectiontitle'] = 'قسم بدون عنوان';
 $string['debugerrors'] = 'تصحيح الأخطاء';
 $string['deleteassetconfirm'] = 'حذف {$a}';
 $string['deletingasset'] = 'حذف {$a}';
-$string['deletingassetname'] = 'حذف {$a-&gt;type} &quot;{$a-&gt;name}&quot;';
+$string['deletingassetname'] = 'حذف {$a->type} "{$a->name}"';
 $string['deletesectionconfirm'] = 'حذف القسم';
-$string['deletingsection'] = 'حذف القسم &quot;{$a}&quot;';
+$string['deletingsection'] = 'حذف القسم "{$a}"';
 $string['draft'] = 'لم يتم نشره للطلاب';
-$string['dropzonelabel'] = 'أفلِت الملفات لإرفاقها أو &lt;span class=&quot;fake-link&quot;&gt;استعرض&lt;/span&gt;';
+$string['dropzonelabel'] = 'أفلِت الملفات لإرفاقها أو <span class="fake-link">استعرض</span>';
 $string['due'] = 'مستحق في {$a}';
-$string['edit'] = 'تحرير &quot;{$a}&quot;';
+$string['edit'] = 'تحرير "{$a}"';
 $string['editcoursecontent'] = 'تحرير الكتل';
 $string['editcoursesettings'] = 'إعدادات المقرر الدراسي';
 $string['editcoursetopic'] = 'تحرير قسم';
@@ -126,8 +128,8 @@ $string['editcustommenu'] = 'تحرير القائمة المخصصة';
 $string['error'] = 'خطأ';
 $string['errorgettingfeed'] = 'حدث خطأ أثناء جلب عناصر الموجز.';
 $string['error:categorycolorinvalidjson'] = 'تنسيق JSON لفئات المقرر الدراسي غير صحيح';
-$string['error:categorycolorinvalidvalue'] = 'إن معرّف السجل أو قيمة اللون للفئة &quot;{$a}&quot; غير صالحة';
-$string['error:categorynotfound'] = 'تعذر العثور على سجل الفئة بمعرّف &quot;{$a}&quot;';
+$string['error:categorycolorinvalidvalue'] = 'إن معرّف السجل أو قيمة اللون للفئة "{$a}" غير صالحة';
+$string['error:categorynotfound'] = 'تعذر العثور على سجل الفئة بمعرّف "{$a}"';
 $string['error:coverimageexceedsmaxbytes'] = 'تتجاوز صورة الغلاف الحد الأقصى المسموح به لحجم الملف على مستوى الموقع ({$a})';
 $string['error:coverimageresolutionlow'] = 'لأفضل جودة، نوصي بصورة أكبر بعرض 1024 بيكسل على الأقل.';
 $string['error:duplicatedcategoryids'] = 'تنسيق JSON غير صحيح، يتم تكرار بعض المعرفات';
@@ -147,9 +149,9 @@ $string['favorite'] = 'المفضلة {$a}';
 $string['favorited'] = 'مضاف إلى المفضلة {$a}';
 $string['featurespots'] = 'مواضع الميزات';
 $string['featurespotsedit'] = 'تحرير مواضع الميزات';
-$string['featurespotshelp'] = '&lt;p&gt;أضِف ما يصل إلى 6 مواضع ميزات إلى الصفحة الأمامية لموقعك لإبراز الفوائد الأساسية للمستخدمين الحاليين والمحتملين.&lt;/p&gt;
-&lt;p&gt;يمكنك إضافة صورة، وعنوان، ووصف محتوى لكل ميزة. &lt;strong&gt;ولكي تتمكن من رؤية الميزة في الصفحة الأولى، يجب عليك إدخال عنوان.&lt;/strong&gt; إن قسمَي وصف الصورة والمحتوى اختياريان.&lt;/p&gt;
-&lt;p&gt;إن مقاس الصورة الموصى به هو مربع لا يزيد حجمه عن 200 × 200 بكسل.&lt;/p&gt;';
+$string['featurespotshelp'] = '<p>أضِف ما يصل إلى 6 مواضع ميزات إلى الصفحة الأمامية لموقعك لإبراز الفوائد الأساسية للمستخدمين الحاليين والمحتملين.</p>
+<p>يمكنك إضافة صورة، وعنوان، ووصف محتوى لكل ميزة. <strong>ولكي تتمكن من رؤية الميزة في الصفحة الأولى، يجب عليك إدخال عنوان.</strong> إن قسمَي وصف الصورة والمحتوى اختياريان.</p>
+<p>إن مقاس الصورة الموصى به هو مربع لا يزيد حجمه عن 200 × 200 بكسل.</p>';
 $string['featurespotsheading'] = 'عنوان مواضع الميزات';
 $string['featureonetitle'] = 'عنوان الميزة 1';
 $string['featuretwotitle'] = 'عنوان الميزة 2';
@@ -163,7 +165,7 @@ $string['featurethreetitlelink'] = 'رابط عنوان الميزة 3';
 $string['featurefourtitlelink'] = 'رابط عنوان الميزة 4';
 $string['featurefivetitlelink'] = 'رابط عنوان الميزة 5';
 $string['featuresixtitlelink'] = 'رابط عنوان الميزة 6';
-$string['featuretitlelinkdesc'] = 'اكتب عنوان URL الذي تريد ربط موضع هذه الميزة به. يمكنك إضافة روابط خارجية أو داخلية داخل موقعك. لإضافة رابط داخلي، يرجى نسخه من عنوان URL الخاص بالموقع بما في ذلك /. على سبيل المثال، للحصول على رابط لمقرر دراسي ما، سيكون &quot;course/view.php?id=160&quot;. ولإضافة رابط خارجي، ابدأ الرابط بـ https://';
+$string['featuretitlelinkdesc'] = 'اكتب عنوان URL الذي تريد ربط موضع هذه الميزة به. يمكنك إضافة روابط خارجية أو داخلية داخل موقعك. لإضافة رابط داخلي، يرجى نسخه من عنوان URL الخاص بالموقع بما في ذلك /. على سبيل المثال، للحصول على رابط لمقرر دراسي ما، سيكون "course/view.php?id=160". ولإضافة رابط خارجي، ابدأ الرابط بـ https://';
 $string['featureonetitlecb'] = 'تفتح الميزة 1 في نافذة جديدة';
 $string['featuretwotitlecb'] = 'تفتح الميزة 2 في نافذة جديدة';
 $string['featurethreetitlecb'] = 'تفتح الميزة 3 في نافذة جديدة';
@@ -185,7 +187,7 @@ $string['featurefiveimage'] = 'صورة الميزة 5';
 $string['featuresiximage'] = 'صورة الميزة 6';
 $string['featuredcategoriesandcourses'] = 'الفئات والمقررات الدراسية المميزة';
 $string['featuredcourses'] = 'المقررات الدراسية المميزة';
-$string['featuredcourseshelp'] = 'قم بتمييز ما يصل إلى 8 مقررات دراسية مميزة إلى الصفحة الأمامية من موقعك. اكتب &quot;معرف المقرر الدراسي&quot; لتمييز مقرر دراسي.';
+$string['featuredcourseshelp'] = 'قم بتمييز ما يصل إلى 8 مقررات دراسية مميزة إلى الصفحة الأمامية من موقعك. اكتب "معرف المقرر الدراسي" لتمييز مقرر دراسي.';
 $string['featuredcoursesheading'] = 'عنوان المقررات الدراسية المميزة';
 $string['featuredcourseone'] = 'المقرر الدراسي المميز 1';
 $string['featuredcoursetwo'] = 'المقرر الدراسي المميز 2';
@@ -222,7 +224,7 @@ $string['feedbacktoggle'] = 'الملاحظات والتقدير';
 $string['feedbacktoggledesc'] = 'يعرض للمتعلمين أحدث الملاحظات الخاصة بهم، وأحدث الواجبات المرسلة التي تحتاج إلى تقدير للمعلمين.';
 $string['footnote'] = 'تذييل الموقع';
 $string['footnotedesc'] = 'يمكنك إضافة معلومات موقعك بتنسيق HTML وتضمين روابط أو صور أو قوائم أحداث.';
-$string['forcepwdwarningpersonalmenu'] = 'يجب عليك &lt;a href=&quot;{$a}&quot;&gt;تغيير كلمة مرورك&lt;/a&gt; قبل استخدام القائمة الشخصية.';
+$string['forcepwdwarningpersonalmenu'] = 'يجب عليك <a href="{$a}">تغيير كلمة مرورك</a> قبل استخدام القائمة الشخصية.';
 $string['forumauthor'] = 'المؤلف';
 $string['forumlastpost'] = 'آخر مشاركة';
 $string['forumpicturegroup'] = 'المجموعة';
@@ -234,12 +236,12 @@ $string['forumpoststoggledesc'] = 'عرض أحدث 10 مشاركات بالمن�
 $string['fullname'] = 'اسم الموقع';
 $string['fullnamedesc'] = 'اسم موقعك.';
 $string['gotoactivity'] = 'الانتقال إلى النشاط {$a}';
-$string['graderadviseuserreport'] = 'لا يعمل &quot;تقرير واضع التقدير&quot; جيدًا على الأجهزة المحمولة. لذا يوصى باستخدام &quot;تقرير المستخدم&quot; بدلاً من ذلك';
+$string['graderadviseuserreport'] = 'لا يعمل "تقرير واضع التقدير" جيدًا على الأجهزة المحمولة. لذا يوصى باستخدام "تقرير المستخدم" بدلاً من ذلك';
 $string['grading'] = 'التقدير';
 $string['help'] = 'مساعدة';
 $string['helpguide'] = 'دليل المساعدة';
 $string['headingfont'] = 'خط العنوان';
-$string['headingfont_desc'] = 'يُستخدم هذا الخط &quot;sans-serif&quot; في العناوين (عناصر العناوين من h1 إلى h6) عبر موقعك، وإذا كنت تستخدم خط ويب مخصصًا، فتذكّر أن تضيفه إلى HTML الإضافي الخاص بـ Moodle. أما إذا أردت تعديل أنماط خطوط عناصر أخرى، فيُرجى استخدام خيار CSS المخصص، وللاطلاع على أمثلة حول كيفية القيام بذلك، يُرجى مراجعة هذه &lt;a href=&quot;https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/&quot; target=&quot;_blank&quot;&gt;الوثائق&lt;/a&gt;.';
+$string['headingfont_desc'] = 'يُستخدم هذا الخط "sans-serif" في العناوين (عناصر العناوين من h1 إلى h6) عبر موقعك، وإذا كنت تستخدم خط ويب مخصصًا، فتذكّر أن تضيفه إلى HTML الإضافي الخاص بـ Moodle. أما إذا أردت تعديل أنماط خطوط عناصر أخرى، فيُرجى استخدام خيار CSS المخصص، وللاطلاع على أمثلة حول كيفية القيام بذلك، يُرجى مراجعة هذه <a href="https://help.openlms.net/en/administrator/manage-a-site/snap-font-family-with-custom-css/" target="_blank">الوثائق</a>.';
 $string['helpwithlogin'] = 'المساعدة في تسجيل الدخول';
 $string['helpwithloginandguest'] = 'المساعدة في تسجيل الدخول / وصول الضيف';
 $string['loginrequiredmessage'] = '* يشير إلى حقل مطلوب';
@@ -249,20 +251,23 @@ $string['image'] = 'صورة';
 $string['images'] = 'الصور';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'عنوان url الخاص بحساب instagram الخاص بك.';
+$string['introduction'] = 'مقدمة';
 $string['jsontext'] = 'نص JSON';
 $string['jsontextdescription'] = 'تقوم منطقة النص بالتحقق من ملف JSON المحدد حتى لا تسمح إلا بالفئات الموجودة بالفعل،
 تُعَد القيم الرقمية فقط مثل سجلات المعرفات (سجلات الفئات) صالحة وتُقبل القيم السداسية العشرية فقط في الألوان.
-إليك مثالاً:&lt;br&gt;
-{&quot;1&quot;:&quot;#FAAFFF&quot;،&lt;br&gt;
-&quot;45&quot;:&quot;#AFF&quot;،&lt;br&gt;
-&quot;65&quot;:&quot;#FFF228&quot;،&lt;br&gt;
-&quot;12&quot;:&quot;#CC0084&quot;،&lt;br&gt;
-&quot;56&quot;:&quot;#CC0087&quot;،&lt;br&gt;
-&quot;89&quot;:&quot;#CCF084&quot;}';
+إليك مثالاً:<br>
+{"1":"#FAAFFF"،<br>
+"45":"#AFF"،<br>
+"65":"#FFF228"،<br>
+"12":"#CC0084"،<br>
+"56":"#CC0087"،<br>
+"89":"#CCF084"}';
 $string['knowledgebase'] = 'فتح قاعدة معارف Open LMS';
 $string['list'] = 'قائمة';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'عنوان url لـ LinkedIn الخاص بمؤسستك.';
+$string['leftnav'] = 'جدول المحتويات';
+$string['leftnavdesc'] = 'حدد مكان عرض جدول البيانات. تقدم القائمة مجال أوسع للمحتوى وتعمل بشكل جيد مع المقررات الدراسية التي تتضمن العديد من المواضيع.';
 $string['loading'] = 'يتم الآن التحميل...';
 $string['loggedinasguest'] = 'أنت مسجل الدخول كضيف';
 $string['loggedoutmsg'] = 'أنت مسجل الخروج حاليًا. إذا كنت تريد متابعة استخدام هذا الموقع، يرجى تسجيل الدخول مرة أخرى.';
@@ -279,14 +284,19 @@ $string['messagestoggledesc'] = 'اعرض للمستخدمين أحدث رسائ
 $string['more'] = 'المزيد';
 $string['morenews'] = 'مزيد من الأخبار';
 $string['moreoptionslabel'] = 'المزيد من الخيارات';
-$string['move'] = 'انقل &quot;{$a}&quot;';
+$string['movingstartedhelp'] = 'انتقل إلى حيثما تريد وضع القسم "{$a}"';
+$string['movingdropsectionhelp'] = 'ضع القسم "{$a->moving}" قبل القسم "{$a->before}"';
+$string['moving'] = 'نقل "{$a}"';
+$string['movingcount'] = 'نقل كائنات {$a}';
+$string['movefailed'] = 'تعذر نقل "{$a}"';
+$string['move'] = 'انقل "{$a}"';
+$string['movehere'] = 'نقل إلى هنا';
+$string['movesection'] = 'نقل قسم';
 $string['navbarbg'] = 'لون الخلفية';
 $string['navbarlink'] = 'لون النص';
 $string['navbarbuttoncolor'] = 'لون الخلفية';
 $string['navbarbuttonlink'] = 'لون النص';
-$string['navbarheader'] = 'رأس تصفح Snap';
 $string['nextsection'] = 'القسم التالي';
-$string['nextsubsection'] = 'قسم فرعي تالي';
 $string['nodeadlines'] = 'ليس لديك مواعيد نهائية قادمة.';
 $string['noforumposts'] = 'ليس لديك مشاركات منتديات ذات صلة.';
 $string['nograded'] = 'ليس لديك ملاحظات حديثة.';
@@ -305,23 +315,22 @@ $string['personalmenufeatures'] = 'ميزات القائمة الشخصية';
 $string['advancedfeedsenable'] = 'قم بتمكين الموجزات المتقدمة';
 $string['advancedfeedsenabledesc'] = 'تعمل الموجزات المتقدمة على تحميل بعض العناصر التي تسمح بأوقات تحميل أسرع وتحديث المحتوى حسب الطلب.';
 $string['advancedfeedsperpage'] = 'عدد مرات عرض عناصر المواجز المتقدمة';
-$string['advancedfeedsperpagedesc'] = 'اختر عدد العناصر المراد عرضها في الموجز. يمكن للمستخدمين تحديد &lt;strong&gt;&quot;عرض المزيد&quot;&lt;/strong&gt; لعرض عناصر إضافية.';
+$string['advancedfeedsperpagedesc'] = 'اختر عدد العناصر المراد عرضها في الموجز. يمكن للمستخدمين تحديد <strong>"عرض المزيد"</strong> لعرض عناصر إضافية.';
 $string['advancedfeedslifetime'] = 'عمر المواجز المتقدمة';
 $string['advancedfeedslifetimedesc'] = 'اختر مقدار الوقت الذي سيتم فيه تخزين المواجز مؤقتًا في المستعرض بعد تسجيل الدخول. لن يؤدي تعيين القيمة إلى 0 إلى تخزين المواجز في المستعرض مؤقتًا.';
 $string['refreshdeadlines'] = 'حَدِّث المواعيد النهائية باستخدام التكليف الدراسي المجدول.';
 $string['refreshdeadlinesdesc'] = 'عند تشغيل المهمة، سيتم تحديث بيانات الموعد النهائي للحصول على أوقات تحميل أسرع للصفحات.';
 $string['mycoursessnapfeedsheading'] = 'الموجزات في Snap';
-$string['mycoursessnapfeedsdesc'] = 'ملاحظة: تصبح &lt;strong&gt;الموجزات المتقدمة&lt;/strong&gt; متوفرة فقط عند تحديد على الأقل أحد الخيارات من &lt;strong&gt;المواعيد النهائية&lt;/strong&gt; أو &lt;strong&gt;الملاحظات والتقدير&lt;/strong&gt; أو &lt;strong&gt;الرسائل&lt;/strong&gt; أو &lt;strong&gt;مشاركات المنتدى&lt;/strong&gt;.';
+$string['mycoursessnapfeedsdesc'] = 'ملاحظة: تصبح <strong>الموجزات المتقدمة</strong> متوفرة فقط عند تحديد على الأقل أحد الخيارات من <strong>المواعيد النهائية</strong> أو <strong>الملاحظات والتقدير</strong> أو <strong>الرسائل</strong> أو <strong>مشاركات المنتدى</strong>.';
 $string['refreshdeadlinestasksettingheading'] = 'حَدِّث المواعيد النهائية باستخدام المهمة الدراسية المجدولة';
 $string['pld'] = 'PLD';
 $string['pluginname'] = 'محاذاة';
 $string['poster'] = 'صورة الغلاف';
 $string['posterdesc'] = 'صورة رأس كبيرة لصفحة موقعك الأمامية. تعمل الصور الأفقية بحجم (1200 × 600 بكسل) أو الأكبر حجمًا بشكل أفضل.';
-$string['poweredbyrunby'] = 'تم إنشاؤه باستخدام &lt;a href=&quot;https://{$a-&gt;المجال الفرعي} .openlms.net/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Open LMS&lt;/a&gt;،
-منتج قائم على &lt;a href=&quot;https://moodle.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Moodle&lt;/a&gt;.&lt;br&gt;
-حقوق الطبع والنشر لسنة {$a-&gt;year} Open LMS، جميع الحقوق محفوظة.';
+$string['poweredbyrunby'] = 'تم إنشاؤه باستخدام <a href="https://{$a->المجال الفرعي} .openlms.net/" target="_blank" rel="noopener">Open LMS</a>،
+منتج قائم على <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
+حقوق الطبع والنشر لسنة {$a->year} Open LMS، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
-$string['previoussubsection'] = 'قسم فرعي سابق';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'معرف المقرر الدراسي الخاص بالمقرر الدراسي الذي يفضله المستخدم';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'معرف المستخدم الخاص بالمقرر الدراسي الذي يفضله المستخدم';
 $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'الطابع الزمني الخاص بالمستخدم عند قيام المستخدم بتفضيل المقرر الدراسي';
@@ -341,6 +350,8 @@ $string['reopened'] = 'تم إعادة الفتح';
 $string['resourcedisplay'] = 'عرض المورد';
 $string['resourcedisplayhelp'] = 'حدد كيفية ظهور المرفقات والروابط في مقررك الدراسي. لا تدعم السمة Snap ملفات الوسائط المتعددة في وصف بطاقات الموارد والأنشطة الصغيرة.';
 $string['resumegraphicsanim'] = 'إيقاف نسق الرسومات المتبادلة GIF.';
+$string['displaydescription'] = 'عرض الوصف';
+$string['displaydescriptionhelp'] = 'حدد لإظهار وصف لأنشطة المورد في صفحة جديدة أولاً. وسيقوم الطلاب بالوصول إلى المحتوى من الوصف.';
 $string['search'] = 'محتويات البحث';
 $string['socialmedia'] = 'الوسائط الاجتماعية';
 $string['submitted'] = 'تم إرساله';
@@ -351,6 +362,7 @@ $string['summarylabel'] = 'ملخص القسم';
 $string['themecolor'] = 'لون الموقع';
 $string['themecolordesc'] = 'تحقق الألوان الزاهية نتائج أفضل وسوف تمنح موقعك مظهرًا عصريًا.';
 $string['title'] = 'العنوان';
+$string['top'] = 'أعلى';
 $string['topbarbgcolor'] = 'لون شريط التنقل';
 $string['topbarlinkcolor'] = 'رابط شريط التنقل ولون الرمز';
 $string['topbarbuttoncolor'] = 'خلفية المقررات الدراسية الخاصة بي';
@@ -371,27 +383,27 @@ $string['viewforumposts'] = 'عرض مشاركات منتدياتي';
 $string['viewmessaging'] = 'عرض رسائلي';
 $string['vieworiginalimage'] = 'عرض الصورة الأصلية';
 $string['visibility'] = 'الرؤية';
-$string['xofyanswered'] = 'تمت الإجابة عن {$a-&gt;completed} من أصل {$a-&gt;participants}';
-$string['xofyattempted'] = 'تمت المحاولة في {$a-&gt;completed} من أصل {$a-&gt;participants}';
-$string['xofycontributed'] = 'تم المساهمة بـ {$a-&gt;completed} من أصل {$a-&gt;participants}';
-$string['xofysubmitted'] = 'تم إرسال {$a-&gt;completed} من أصل {$a-&gt;participants}';
+$string['xofyanswered'] = 'تمت الإجابة عن {$a->completed} من أصل {$a->participants}';
+$string['xofyattempted'] = 'تمت المحاولة في {$a->completed} من أصل {$a->participants}';
+$string['xofycontributed'] = 'تم المساهمة بـ {$a->completed} من أصل {$a->participants}';
+$string['xofysubmitted'] = 'تم إرسال {$a->completed} من أصل {$a->participants}';
 $string['xungraded'] = '{$a} غير مُقدر';
 $string['youtube'] = 'YouTube';
 $string['youtubedesc'] = 'عنوان url الخاص بقناة youtube الخاصة بك.';
-$string['showallsectionsdisabled'] = 'نظرًا للغة التصميم الخاصة بها، لا يتوفر خيار &quot;إظهار كل الأقسام في صفحة واحدة&quot; في Snap.';
+$string['showallsectionsdisabled'] = 'نظرًا للغة التصميم الخاصة بها، لا يتوفر خيار "إظهار كل الأقسام في صفحة واحدة" في Snap.';
 $string['disabled'] = 'مُعطَّل';
-$string['showappearancedisabled'] = 'تمنع لغة تصميم Snap التغييرات التي يتم إجراؤها على إعدادات &quot;المظهر&quot;.';
+$string['showappearancedisabled'] = 'تمنع لغة تصميم Snap التغييرات التي يتم إجراؤها على إعدادات "المظهر".';
 $string['pbb'] = 'العلامة التجارية المستندة إلى ملف التعريف';
-$string['pbb_description'] = 'بتمكين العلامة التجارية &lt;strong&gt;المستندة إلى ملف التعريف&lt;/strong&gt;، ستتمكن من تخصيص تجربة العلامة التجارية لمجموعة محددة من المستخدمين بناءً على حقل ملف تعريف المستخدم الذي تم اختياره.
-&lt;ul&gt;&lt;li&gt;سيتم تغيير &lt;em&gt;قيمة حقل المستخدم&lt;/em&gt; مع تحويل كل الأحرف إلى أحرف صغيرة والفصل بينها بشرطة (-)&lt;/li&gt;
-&lt;li&gt;ستُلحق السلسلة &lt;code&gt;snap-pbb-&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;ستُضاف هذه الفئة إلى &lt;code&gt;وسم النص&lt;/code&gt; Html&lt;/li&gt;&lt;/ul&gt;
-على سبيل المثال، سيتم تغيير قيمة حقل المستخدم &lt;em&gt;Blueberry Extravaganza&lt;/em&gt; لتصبح &lt;code&gt;snap-pbb-blueberry-extravaganza&lt;/code&gt;&lt;br /&gt;&lt;br /&gt;
-تُستخدم هذه الميزة بالتزامن مع CSS المخصصة، وستحتاج إلى إضافة محددات CSS باستخدام فئات جديدة في القسم &lt;a class=&quot;snap-settings-tab-link&quot; href=&quot;#themesnapbranding&quot;&gt;&quot;الأساسيات&quot;&lt;/a&gt;.';
+$string['pbb_description'] = 'بتمكين العلامة التجارية <strong>المستندة إلى ملف التعريف</strong>، ستتمكن من تخصيص تجربة العلامة التجارية لمجموعة محددة من المستخدمين بناءً على حقل ملف تعريف المستخدم الذي تم اختياره.
+<ul><li>سيتم تغيير <em>قيمة حقل المستخدم</em> مع تحويل كل الأحرف إلى أحرف صغيرة والفصل بينها بشرطة (-)</li>
+<li>ستُلحق السلسلة <code>snap-pbb-</code></li>
+<li>ستُضاف هذه الفئة إلى <code>وسم النص</code> Html</li></ul>
+على سبيل المثال، سيتم تغيير قيمة حقل المستخدم <em>Blueberry Extravaganza</em> لتصبح <code>snap-pbb-blueberry-extravaganza</code><br /><br />
+تُستخدم هذه الميزة بالتزامن مع CSS المخصصة، وستحتاج إلى إضافة محددات CSS باستخدام فئات جديدة في القسم <a class="snap-settings-tab-link" href="#themesnapbranding">"الأساسيات"</a>.';
 $string['pbb_enable'] = 'تمكين العلامة التجارية المستندة إلى ملف التعريف';
 $string['pbb_enable_description'] = 'إضافة الفئة فقط إلى وسم النص الأساسي إذا كان نشطًا.';
 $string['pbb_field'] = 'حقل المستخدم المراد استخدامه';
-$string['pbb_field_description'] = 'سيتم تغيير قيمة هذا الحقل واستخدامها كاسم لفئة CSS وإلحاقها بـ &lt;code&gt;snap-pbb-&lt;/code&gt;.';
+$string['pbb_field_description'] = 'سيتم تغيير قيمة هذا الحقل واستخدامها كاسم لفئة CSS وإلحاقها بـ <code>snap-pbb-</code>.';
 $string['cachedef_profile_based_branding'] = 'التخزين المؤقت للعلامة التجارية المستندة إلى ملف التعريف.';
 $string['cachedef_course_card_bg_image'] = 'التخزين المؤقت لصورة خلفية المقرر الدراسي.';
 $string['cachedef_course_card_teacher_avatar'] = 'التخزين المؤقت للأشكال الرمزية للمعلم.';
@@ -406,15 +418,15 @@ $string['quizattemptswarn'] = 'استبعاد محاولات المستخدمي�
 $string['quizfeedback'] = 'ملاحظات';
 $string['validratio'] = 'تتوافق تركيبة الألوان هذه مع قيمة النسبة الدنيا WCAG 2.0 4.5:1';
 $string['invalidratio'] = 'لا تتوافق تركيبة اللون هذه مع
-&lt;a href=&quot;https://www.w3.org/TR/WCAG20-TECHS/G18.html&quot; target=&quot;_blank&quot;&gt;قيمة النسبة الدنيا WCAG 2.0 ‏4.5:1&lt;/a&gt;. القيمة: &quot;{$a}&quot;';
-$string['imageinvalidratio'] = 'قد تواجه هذه الصورة مشاكل تباين بسبب عدم التوافق مع قيمة النسبة الدنيا WCAG 2.0 ‏ 4.5:1. متوسط قيمة البكسل: &quot;{$a}&quot;';
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">قيمة النسبة الدنيا WCAG 2.0 ‏4.5:1</a>. القيمة: "{$a}"';
+$string['imageinvalidratio'] = 'قد تواجه هذه الصورة مشاكل تباين بسبب عدم التوافق مع قيمة النسبة الدنيا WCAG 2.0 ‏ 4.5:1. متوسط قيمة البكسل: "{$a}"';
 $string['catinvalidratio'] = 'لا تتوافق فئات الألوان الآتية مع
-&lt;a href=&quot;https://www.w3.org/TR/WCAG20-TECHS/G18.html&quot; target=&quot;_blank&quot;&gt;قيمة النسبة الدنيا WCAG 2.0 ‏4.5:1&lt;/a&gt;:
-في مقابل لون خلفية الموقع (أبيض): &quot;{$a-&gt;white}&quot;. في مقابل لون خلفية شريط التنقل: &quot;{$a-&gt;custombar}&quot;. في مقابل لون خلفية الزر &quot;مقرراتي الدراسية&quot;: &quot;{$a-&gt;customnav}&quot;';
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">قيمة النسبة الدنيا WCAG 2.0 ‏4.5:1</a>:
+في مقابل لون خلفية الموقع (أبيض): "{$a->white}". في مقابل لون خلفية شريط التنقل: "{$a->custombar}". في مقابل لون خلفية الزر "مقرراتي الدراسية": "{$a->customnav}"';
 $string['spotinvalidratio'] = 'لا يتوافق لون الخلفية مع
-&lt;a href=&quot;https://www.w3.org/TR/WCAG20-TECHS/G18.html&quot; target=&quot;_blank&quot;&gt;قيمة النسبة الدنيا WCAG 2.0 ‏4.5:1&lt;/a&gt;.
-القيمة الحالية مقابل {$a-&gt;name}: {$a-&gt;value}.';
-$string['imageinvalidratiocategory'] = 'قد تواجه هذه الصورة مشكلات تباين مع لون السمة بسبب عدم التوافق مع قيمة النسبة الدنيا WCAG 2.0 ‏ 4.5:1. متوسط قيمة البكسل: &quot;{$a}&quot;';
+<a href="https://www.w3.org/TR/WCAG20-TECHS/G18.html" target="_blank">قيمة النسبة الدنيا WCAG 2.0 ‏4.5:1</a>.
+القيمة الحالية مقابل {$a->name}: {$a->value}.';
+$string['imageinvalidratiocategory'] = 'قد تواجه هذه الصورة مشكلات تباين مع لون السمة بسبب عدم التوافق مع قيمة النسبة الدنيا WCAG 2.0 ‏ 4.5:1. متوسط قيمة البكسل: "{$a}"';
 $string['browseallcategories'] = 'استعراض كل الفئات';
 $string['lazyload_mod_page'] = 'تمكين التحميل البطيء الافتراضي لموارد الصفحات';
 $string['lazyload_mod_page_description'] = 'في حالة التمكين، يقوم الإعداد بتقليل أوقات تحميل صفحات المقرر الدراسي بشكل كبير فيما يخص المقررات الدراسية التي تحتوي على العديد من الصفحات.';
@@ -433,7 +445,7 @@ $string['alternativeloginfirst'] = 'عرض خيارات تسجيل الدخول 
 $string['alternativeloginoptions'] = 'خيارات تسجيل الدخول البديلة';
 $string['refreshdeadlinestask'] = 'قم بتحديث المواعيد النهائية للبيانات المُخَزّنة مؤقتًا. ينبغي تشغيل ذلك قبل تسجيل دخول جميع المستخدمين.';
 $string['resetdeadlinesquerycounttask'] = 'إعادة تعيين عدد الاستعلامات عن المواعيد النهائية';
-$string['refreshdeadlinestaskoff'] = 'لم يتم البحث عن بيانات لتعبئتها. يُرجى تشغيل الإعداد &quot;تحديث المواعيد النهائية باستخدام المهمة المجدولة&quot; في إعدادات الموجزات في Snap للسماح لهذه المهمة بتعبئة بيانات ذاكرة التخزين المؤقت للمواعيد النهائية.';
+$string['refreshdeadlinestaskoff'] = 'لم يتم البحث عن بيانات لتعبئتها. يُرجى تشغيل الإعداد "تحديث المواعيد النهائية باستخدام المهمة المجدولة" في إعدادات الموجزات في Snap للسماح لهذه المهمة بتعبئة بيانات ذاكرة التخزين المؤقت للمواعيد النهائية.';
 $string['activityrestriction'] = 'تقييد النشاط';
 $string['hideandshowactioncb'] = 'إخفاء وإظهار إجراء مربع اختيار النشاط';
 $string['retryfeed'] = 'إن هذا الموجز غير متوفر حاليًا، يُرجى التحقق مرةً أخرى لاحقًا. الموجز: {$a}';
@@ -468,7 +480,6 @@ $string['collapseicon'] = 'طي محتوى';
 $string['expandicon'] = 'توسيع محتوى';
 $string['imageproperties'] = 'خصائص الصورة';
 $string['coverimagedesc'] = 'حدد الصورة لتظهر على الغلاف، مع التأكد من أن تكون بتنسيق ‎.jpeg أو ‎.png أو ‎.gif. يجب ألا تتجاوز حجم الملف الأقصى المسموح به على مستوى الموقع ({$a}). للحصول على أفضل عرض، يُنصح باستخدام نسبة أبعاد 4:3 (1024×768 بكسل). كذلك، يُفضل مراعاة تركيبات الألوان التي تتماشى مع إرشادات WCAG 2.0، خصوصًا في ما يتعلق بالعنوان الأبيض للمقرر الدراسي لتحسين تجربة المستخدم.';
-$string['covercategoryimagedesc'] = 'حدد الصورة التي ستظهر على الغلاف، وتأكد من أنها بتنسيق .jpeg أو .png أو .gif. يجب ألا تتجاوز الحد الأقصى لحجم الملف المسموح به على مستوى الموقع ({$a}). للحصول على أفضل عرض، استهدف نسبة عرض إلى ارتفاع تبلغ 6:1 (1920x320 بكسل). بالإضافة إلى ذلك، ضع في اعتبارك مجموعات الألوان التي تلتزم بإرشادات WCAG 2.0، خاصة فيما يتعلق بالعنوان الأبيض للمقرر الدراسي، لتجربة مستخدم محسّنة.';
 $string['coverimagecropperdesc'] = 'حدد المنطقة المراد عرضها من الصورة باستخدام مربع الاقتصاص.';
 $string['browserepositories'] = 'رفع صورة جديدة';
 $string['saveimage'] = 'حفظ الصورة';
@@ -484,14 +495,7 @@ $string['allyears'] = 'كل السنوات';
 $string['courselink'] = 'الانتقال إلى المقرر الدراسي';
 $string['student'] = 'الطالب';
 $string['showcourseinformation'] = 'إظهار معلومات المقرر الدراسي';
-$string['pageactivitywithnodescription'] = 'إذا كان &quot;وصف الصفحة&quot; فارغًا وكان &quot;محتوى الصفحة&quot; يحتوي على أقل من 200 حرف، فلن يُعرض رمز التوسيع لـ &quot;نشاط الصفحة&quot; على صفحة &quot;المقرر الدراسي&quot;، بحيث سيكون &quot;محتوى الصفحة&quot; وصفًا للصفحة.';
+$string['pageactivitywithnodescription'] = 'إذا كان "وصف الصفحة" فارغًا وكان "محتوى الصفحة" يحتوي على أقل من 200 حرف، فلن يُعرض رمز التوسيع لـ "نشاط الصفحة" على صفحة "المقرر الدراسي"، بحيث سيكون "محتوى الصفحة" وصفًا للصفحة.';
 $string['toggleadmindrawer'] = 'تبديل درج المسؤول';
 $string['toggleblockdrawer'] = 'تبديل درج الكتل';
 $string['togglesnapfeedsdrawer'] = 'تبديل درج الموجزات في Snap';
-$string['addsubsection'] = 'إضافة قسم فرعي';
-$string['tableofcontents'] = 'جدول المحتويات';
-$string['snap_toc_settings'] = 'إعدادات جدول المحتويات';
-$string['hideintoc'] = 'لا تظهر هذا النشاط في جدول المحتويات';
-$string['hideintoc_help'] = 'إذا تم تمكينه، فلن يتم عرض النشاط الحالي في قائمة جدول المحتويات. سيظل النشاط متاحًا عبر الرابط الموجود في صفحة المقرر الدراسي الرئيسية. استخدم هذا لإخفاء الموارد الزخرفية أو العناصر غير الإلزامية.';
-$string['makingaselectionpagechange'] = 'سيؤدي تحديد خيار من هذه القائمة المنسدلة إلى تغيير المحتوى في هذه الصفحة.';
-$string['themesettingstitle'] = 'إعدادات سمة Snap';
