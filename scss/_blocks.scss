@@ -269,6 +269,12 @@ body.path-site .block.block_settings {
 
     .snap-feeds-mobile-menu {
         display: none;
+
+        .snap-feeds-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
     }
 
     // Snap Feeds Mobile Menu

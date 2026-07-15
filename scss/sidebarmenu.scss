@@ -307,7 +307,7 @@ $mobile-sidebar-peek-width: 10px;
         right: $mobile-sidebar-width;
     }
     @media screen and (max-width: 480px) {
-        width: calc(100% - #{$mobile-sidebar-width});
+        right: 0;
     }
 }
 
@@ -453,6 +453,12 @@ body:has(.snap-sidebar-menu.show) #sticky-footer {
 body.snap_drawer_open {
     .snap-sidebar-menu {
         z-index: 1051;
+    }
+
+    @media screen and (max-width: 480px) {
+        .snap-sidebar-menu {
+            display: none;
+        }
     }
 }
 

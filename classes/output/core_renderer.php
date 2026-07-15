@@ -548,11 +548,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'content' => $deadlinesContent,
         ];
 
+        $gradingContent = $this->render_grading('snapfeedsmenu');
         $data['grading'] = [
-            'enable' => $this->feedback_toggle_enabled(),
+            'enable' => !empty($gradingContent),
             'icon' => $OUTPUT->image_url('grading-new', 'theme'),
             'alt' => get_string('grading', 'theme_snap'),
-            'content' => $this->render_grading('snapfeedsmenu'),
+            'content' => $gradingContent,
         ];
 
         $data['messages'] = [
@@ -568,6 +569,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'alt' => get_string('forumposts', 'theme_snap'),
             'content' => $this->render_forumposts('snapfeedsmenu'),
         ];
+
+        $feedorder = ['intelliboard', 'intellicart', 'deadlines', 'grading', 'messages', 'forumposts'];
+        $defaultactiveset = false;
+        foreach ($feedorder as $feedname) {
+            if (!empty($data[$feedname]['enable']) && !$defaultactiveset) {
+                $data[$feedname]['active'] = true;
+                $defaultactiveset = true;
+            } else {
+                $data[$feedname]['active'] = false;
+            }
+        }
+        $data['intellitabactive'] = $data['intelliboard']['active'] || $data['intellicart']['active'];
 
         return $this->render_from_template('theme_snap/snap_feeds_mobile_menu', $data);
     }
