@@ -1,6 +1,17 @@
 # Snap Theme
 Snap is a Moodle theme that makes online learning an enjoyable and intuitive experience for learners and educators. https://moodle.org/plugins/theme_snap
 
+
+## Try in Moodle Playground
+
+Click the badge below to open this theme instantly in
+[Moodle Playground](https://moodle-playground.com) — a full Moodle site
+running in the browser, with no local install. The demo installs Snap as
+the site theme and opens a "Snap Theme Demo" course so you can see the
+card-based course layout, personal menu and overall look on real content.
+
+<a href="https://moodle-playground.com/?blueprint-url=https://raw.githubusercontent.com/open-lms-open-source/moodle-theme_snap/refs/heads/master/blueprint.json" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/ateeducacion/action-moodle-playground-pr-preview/refs/heads/main/assets/playground-preview-button.svg" alt="Preview in Moodle Playground" width="200"></a>
+
 Snap’s user-friendly design removes barriers to online learning, enabling you to create the modern, engaging experience users expect on the web today. Its intuitive layout is optimised for online learning, focusing on the things that matter - your learning activities and content.
 
 ![theme-snap-login](https://moodle.org/pluginfile.php/50/local_plugins/plugin_description/1465/snap-signin.png)
