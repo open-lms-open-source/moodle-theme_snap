@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2025 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2026 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -73,8 +73,6 @@ $string['coursefootertoggledesc'] = 'يعرض تذييل المقرر الدرا
 $string['courseformatnotification'] = 'تنسيق المقرر الدراسي الحالي الذي تستخدمه غير مدعوم بشكل كامل من قبل سمة Snap. وللحصول على أفضل تجربة، يوصي Open LMS باستخدام الموضوعات أو تنسيقات المقرر الدراسي الأسبوعية مع سمة Snap. يمكن تغيير تنسيق المقرر الدراسي في <a href="{$a}">إعدادات المقرر الدراسي</a>.';
 $string['coursefixydefaulttext'] = 'أنت غير مسجل حاليًا في أي مقررات دراسية.<br>سيتم هنا عرض المقررات الدراسية التي أنت مسجل بها.';
 $string['coursegrade'] = 'تقدير المقرر الدراسي:';
-$string['coursepartialrender'] = 'تمكين التحميل البطيء لأقسام المقرر الدراسي';
-$string['coursepartialrenderdesc'] = 'في حالة التمكين، يتم تحميل أقسام المقرر الدراسي عند الطلب من قبل المستخدم. ويساعد هذا الإجراء المقررات الدراسية التي تحتوي على كميات كبيرة من المحتوى على التحميل بشكل أسرع.';
 $string['coursenavigation'] = 'تنقل إلى المقرر الدراسي';
 $string['coursesummaryfilesunsuitable'] = 'يرجى تفريغ ملفات تلخيص المقررات الدراسية الخاصة بك قبل محاولة تغيير صورة الغلاف';
 $string['courseactionslabel'] = 'الإجراءات';
@@ -103,13 +101,13 @@ $string['customisenavbar'] = 'تغيير ألوان شريط التنقل';
 $string['customisenavbutton'] = 'تغيير ألوان زر "المقررات الدراسية الخاصة بي"';
 $string['customisecustommenu'] = 'تغيير لون نص القائمة المخصص';
 $string['custommenutext'] = 'لون نص القائمة المخصص';
+$string['custommenutitle'] = 'قائمة مخصصة';
 $string['deadlines'] = 'المواعيد النهائية';
 $string['deadlinestoggle'] = 'المواعيد النهائية';
 $string['deadlinestoggledesc'] = 'تعرض للمستخدمين أي مواعيد نهائية للأنشطة القادمة الموجودة في المقررات الدراسية المسجلة.';
 $string['defaultsummary'] = 'تُستخدم تلك المساحة لوصف ما يدور حوله هذا الموضوع - بالنص والصورة والصوت والفيديو.';
 $string['defaultintrosummary'] = 'مرحبًا بك في مقررك الدراسي الجديد {$a}.
 <br>ابدأ بوصف ما يدور حوله مقررك الدراسي باستخدام النص والصورة والصوت والفيديو.';
-$string['defaultsectiontitle'] = 'قسم بدون عنوان';
 $string['debugerrors'] = 'تصحيح الأخطاء';
 $string['deleteassetconfirm'] = 'حذف {$a}';
 $string['deletingasset'] = 'حذف {$a}';
@@ -251,7 +249,6 @@ $string['image'] = 'صورة';
 $string['images'] = 'الصور';
 $string['instagram'] = 'Instagram';
 $string['instagramdesc'] = 'عنوان url الخاص بحساب instagram الخاص بك.';
-$string['introduction'] = 'مقدمة';
 $string['jsontext'] = 'نص JSON';
 $string['jsontextdescription'] = 'تقوم منطقة النص بالتحقق من ملف JSON المحدد حتى لا تسمح إلا بالفئات الموجودة بالفعل،
 تُعَد القيم الرقمية فقط مثل سجلات المعرفات (سجلات الفئات) صالحة وتُقبل القيم السداسية العشرية فقط في الألوان.
@@ -266,8 +263,6 @@ $string['knowledgebase'] = 'فتح قاعدة معارف Open LMS';
 $string['list'] = 'قائمة';
 $string['linkedin'] = 'LinkedIn';
 $string['linkedindesc'] = 'عنوان url لـ LinkedIn الخاص بمؤسستك.';
-$string['leftnav'] = 'جدول المحتويات';
-$string['leftnavdesc'] = 'حدد مكان عرض جدول البيانات. تقدم القائمة مجال أوسع للمحتوى وتعمل بشكل جيد مع المقررات الدراسية التي تتضمن العديد من المواضيع.';
 $string['loading'] = 'يتم الآن التحميل...';
 $string['loggedinasguest'] = 'أنت مسجل الدخول كضيف';
 $string['loggedoutmsg'] = 'أنت مسجل الخروج حاليًا. إذا كنت تريد متابعة استخدام هذا الموقع، يرجى تسجيل الدخول مرة أخرى.';
@@ -284,19 +279,14 @@ $string['messagestoggledesc'] = 'اعرض للمستخدمين أحدث رسائ
 $string['more'] = 'المزيد';
 $string['morenews'] = 'مزيد من الأخبار';
 $string['moreoptionslabel'] = 'المزيد من الخيارات';
-$string['movingstartedhelp'] = 'انتقل إلى حيثما تريد وضع القسم "{$a}"';
-$string['movingdropsectionhelp'] = 'ضع القسم "{$a->moving}" قبل القسم "{$a->before}"';
-$string['moving'] = 'نقل "{$a}"';
-$string['movingcount'] = 'نقل كائنات {$a}';
-$string['movefailed'] = 'تعذر نقل "{$a}"';
 $string['move'] = 'انقل "{$a}"';
-$string['movehere'] = 'نقل إلى هنا';
-$string['movesection'] = 'نقل قسم';
 $string['navbarbg'] = 'لون الخلفية';
 $string['navbarlink'] = 'لون النص';
 $string['navbarbuttoncolor'] = 'لون الخلفية';
 $string['navbarbuttonlink'] = 'لون النص';
+$string['navbarheader'] = 'رأس تصفح Snap';
 $string['nextsection'] = 'القسم التالي';
+$string['nextsubsection'] = 'قسم فرعي تالي';
 $string['nodeadlines'] = 'ليس لديك مواعيد نهائية قادمة.';
 $string['noforumposts'] = 'ليس لديك مشاركات منتديات ذات صلة.';
 $string['nograded'] = 'ليس لديك ملاحظات حديثة.';
@@ -331,6 +321,7 @@ $string['poweredbyrunby'] = 'تم إنشاؤه باستخدام <a href="https:/
 منتج قائم على <a href="https://moodle.com/" target="_blank" rel="noopener">Moodle</a>.<br>
 حقوق الطبع والنشر لسنة {$a->year} Open LMS، جميع الحقوق محفوظة.';
 $string['previoussection'] = 'القسم السابق';
+$string['previoussubsection'] = 'قسم فرعي سابق';
 $string['privacy:metadata:theme_snap_course_favorites:courseid'] = 'معرف المقرر الدراسي الخاص بالمقرر الدراسي الذي يفضله المستخدم';
 $string['privacy:metadata:theme_snap_course_favorites:userid'] = 'معرف المستخدم الخاص بالمقرر الدراسي الذي يفضله المستخدم';
 $string['privacy:metadata:theme_snap_course_favorites:timefavorited'] = 'الطابع الزمني الخاص بالمستخدم عند قيام المستخدم بتفضيل المقرر الدراسي';
@@ -350,8 +341,6 @@ $string['reopened'] = 'تم إعادة الفتح';
 $string['resourcedisplay'] = 'عرض المورد';
 $string['resourcedisplayhelp'] = 'حدد كيفية ظهور المرفقات والروابط في مقررك الدراسي. لا تدعم السمة Snap ملفات الوسائط المتعددة في وصف بطاقات الموارد والأنشطة الصغيرة.';
 $string['resumegraphicsanim'] = 'إيقاف نسق الرسومات المتبادلة GIF.';
-$string['displaydescription'] = 'عرض الوصف';
-$string['displaydescriptionhelp'] = 'حدد لإظهار وصف لأنشطة المورد في صفحة جديدة أولاً. وسيقوم الطلاب بالوصول إلى المحتوى من الوصف.';
 $string['search'] = 'محتويات البحث';
 $string['socialmedia'] = 'الوسائط الاجتماعية';
 $string['submitted'] = 'تم إرساله';
@@ -362,7 +351,6 @@ $string['summarylabel'] = 'ملخص القسم';
 $string['themecolor'] = 'لون الموقع';
 $string['themecolordesc'] = 'تحقق الألوان الزاهية نتائج أفضل وسوف تمنح موقعك مظهرًا عصريًا.';
 $string['title'] = 'العنوان';
-$string['top'] = 'أعلى';
 $string['topbarbgcolor'] = 'لون شريط التنقل';
 $string['topbarlinkcolor'] = 'رابط شريط التنقل ولون الرمز';
 $string['topbarbuttoncolor'] = 'خلفية المقررات الدراسية الخاصة بي';
@@ -480,6 +468,7 @@ $string['collapseicon'] = 'طي محتوى';
 $string['expandicon'] = 'توسيع محتوى';
 $string['imageproperties'] = 'خصائص الصورة';
 $string['coverimagedesc'] = 'حدد الصورة لتظهر على الغلاف، مع التأكد من أن تكون بتنسيق ‎.jpeg أو ‎.png أو ‎.gif. يجب ألا تتجاوز حجم الملف الأقصى المسموح به على مستوى الموقع ({$a}). للحصول على أفضل عرض، يُنصح باستخدام نسبة أبعاد 4:3 (1024×768 بكسل). كذلك، يُفضل مراعاة تركيبات الألوان التي تتماشى مع إرشادات WCAG 2.0، خصوصًا في ما يتعلق بالعنوان الأبيض للمقرر الدراسي لتحسين تجربة المستخدم.';
+$string['covercategoryimagedesc'] = 'حدد الصورة التي ستظهر على الغلاف، وتأكد من أنها بتنسيق .jpeg أو .png أو .gif. يجب ألا تتجاوز الحد الأقصى لحجم الملف المسموح به على مستوى الموقع ({$a}). للحصول على أفضل عرض، استهدف نسبة عرض إلى ارتفاع تبلغ 6:1 (1920x320 بكسل). بالإضافة إلى ذلك، ضع في اعتبارك مجموعات الألوان التي تلتزم بإرشادات WCAG 2.0، خاصة فيما يتعلق بالعنوان الأبيض للمقرر الدراسي، لتجربة مستخدم محسّنة.';
 $string['coverimagecropperdesc'] = 'حدد المنطقة المراد عرضها من الصورة باستخدام مربع الاقتصاص.';
 $string['browserepositories'] = 'رفع صورة جديدة';
 $string['saveimage'] = 'حفظ الصورة';
@@ -499,3 +488,10 @@ $string['pageactivitywithnodescription'] = 'إذا كان "وصف الصفحة" 
 $string['toggleadmindrawer'] = 'تبديل درج المسؤول';
 $string['toggleblockdrawer'] = 'تبديل درج الكتل';
 $string['togglesnapfeedsdrawer'] = 'تبديل درج الموجزات في Snap';
+$string['addsubsection'] = 'إضافة قسم فرعي';
+$string['tableofcontents'] = 'جدول المحتويات';
+$string['snap_toc_settings'] = 'إعدادات جدول المحتويات';
+$string['hideintoc'] = 'لا تظهر هذا النشاط في جدول المحتويات';
+$string['hideintoc_help'] = 'إذا تم تمكينه، فلن يتم عرض النشاط الحالي في قائمة جدول المحتويات. سيظل النشاط متاحًا عبر الرابط الموجود في صفحة المقرر الدراسي الرئيسية. استخدم هذا لإخفاء الموارد الزخرفية أو العناصر غير الإلزامية.';
+$string['makingaselectionpagechange'] = 'سيؤدي تحديد خيار من هذه القائمة المنسدلة إلى تغيير المحتوى في هذه الصفحة.';
+$string['themesettingstitle'] = 'إعدادات سمة Snap';
