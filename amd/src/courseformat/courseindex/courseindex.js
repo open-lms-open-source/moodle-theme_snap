@@ -36,10 +36,33 @@ export default class Component extends BaseSectionComponent {
      */
     stateReady(state) {
         super.stateReady(state);
+        this._skipRedundantSubsectionWrappers();
         setTOCVisibleSection();
         this._filterHiddenActivitiesFromDOM();
         // In tiles format, handle anchor-link scrolling from the course index.
         this._initTilesAnchorScroll();
+    }
+
+    /**
+     * Exclude redundant subsection wrappers from course index keyboard navigation.
+     *
+     * This is needed to avoid passing through the subsection wrappers when doing a
+     * keyboard navigation, which is considered to be redundant by the UX team.
+     */
+    _skipRedundantSubsectionWrappers() {
+        const contentTree = this.contentTree;
+        if (!contentTree) {
+            return;
+        }
+        const refreshVisibleItemsCache = contentTree.refreshVisibleItemsCache.bind(contentTree);
+        contentTree.refreshVisibleItemsCache = () => {
+            refreshVisibleItemsCache();
+            // Get the visible items, excluding the section wrapper as per UX guidelines.
+            const visibleItems = contentTree.treeRoot.data('visibleItems')
+                .not('.courseindex-item:has(.courseindex-section)');
+            contentTree.treeRoot.data('visibleItems', visibleItems);
+        };
+        contentTree.refreshVisibleItemsCache();
     }
 
     /**
