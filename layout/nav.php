@@ -36,6 +36,7 @@ $snapmfapending = isloggedin() && !isguestuser()
     && class_exists(\tool_mfa\manager::class)
     && \tool_mfa\manager::is_ready();
 
+if (\theme_snap\local::show_on_login_page('navbarlogin')) {
 ?>
 <header id='mr-nav' class='clearfix moodle-has-zindex'>
     <div id="snap-header">
@@ -104,6 +105,9 @@ $snapmfapending = isloggedin() && !isguestuser()
     }
     ?>
 </header>
+<?php
+}
+?>
 
 <?php
 // Only proceed with sidebar menu for logged-in users. Skip while MFA is

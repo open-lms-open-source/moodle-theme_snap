@@ -31,42 +31,45 @@ global $SESSION;
 $fullscreenclasses = '';
 // Don't create the background login image in the sign up page.
 if (!($PAGE->pagetype === 'login-signup')) {
+    $logintemplate = get_config('theme_snap', 'loginpagetemplate');
+    $isstylish = ($logintemplate == 'stylish' || $logintemplate == 'stylish_inverse');
+    // The Stylish Inverse template reuses the Stylish layout, mirrored to the other side.
+    $stylishclasses = 'page-stylish-login' . ($logintemplate == 'stylish_inverse' ? ' page-stylish-inverse-login' : '');
+    // Extra class so the CSS can prevent blank spaces where a hidden navbar/footer would have been.
+    $pageclasses = '';
+    if (!\theme_snap\local::show_on_login_page('navbarlogin')) {
+        $pageclasses .= ' snap-login-hide-navbar';
+    }
+    if (!\theme_snap\local::show_on_login_page('footerlogin')) {
+        $pageclasses .= ' snap-login-hide-footer';
+    }
     // Check if there is a background image configured for the login.
     if (empty(get_config('theme_snap', 'loginbgimg'))) {
-        if (get_config('theme_snap', 'loginpagetemplate') == "stylish") {
-            // If the login template is Stylish, then add a new div called page-stylish-content
+        if ($isstylish) {
+            // If the login template is Stylish or Stylish Inverse, then add a new div called page-stylish-content
             // and a new class called page-stylish-login.
-            echo '<div id="page">';
-            echo '<div id="page-stylish-content" class="page-stylish-login">';
+            echo '<div id="page" class="'.trim($pageclasses).'">';
+            echo '<div id="page-stylish-content" class="'.$stylishclasses.'">';
         } else {
-            echo '<div id="page">';
+            echo '<div id="page" class="'.trim($pageclasses).'">';
         }
     } else {
-        if (get_config('theme_snap', 'loginpagetemplate') == "stylish") {
-            // If the login template is Stylish and there are images for the background
+        $imgsrc = $OUTPUT->login_bg_slides();
+        $imageinitialurl = '';
+        $imagid = 1;
+        foreach ($imgsrc as $image) {
+            $imageinitialurl = ($imagid == count($imgsrc)) ?
+                $imageinitialurl.'url('.$image.')' :
+                $imageinitialurl.'url('.$image.'),';
+            $imagid ++;
+        }
+        if ($isstylish) {
+            // If the login template is Stylish or Stylish Inverse and there are images for the background
             // add a new class called page-stylish-background and a new class called page-stylish-login.
-            $imgsrc = $OUTPUT->login_bg_slides();
-            $imageinitialurl = '';
-            $imagid = 1;
-            foreach ($imgsrc as $image) {
-                $imageinitialurl = ($imagid == count($imgsrc)) ?
-                    $imageinitialurl.'url('.$image.')' :
-                    $imageinitialurl.'url('.$image.'),';
-                $imagid ++;
-            }
-            echo '<div id="page" class="page-stylish-background" style="background-image: '.$imageinitialurl.';">';
-            echo '<div id="snap-login-carousel" class="carousel slide page-stylish-login">';
+            echo '<div id="page" class="page-stylish-background'.$pageclasses.'" style="background-image: '.$imageinitialurl.';">';
+            echo '<div id="snap-login-carousel" class="carousel slide '.$stylishclasses.'">';
         } else {
-            $imgsrc = $OUTPUT->login_bg_slides();
-            $imageinitialurl = '';
-            $imagid = 1;
-            foreach ($imgsrc as $image) {
-                $imageinitialurl = ($imagid == count($imgsrc)) ?
-                    $imageinitialurl.'url('.$image.')' :
-                    $imageinitialurl.'url('.$image.'),';
-                $imagid ++;
-            }
-            echo '<div id="page" style="background-image: '.$imageinitialurl.';">';
+            echo '<div id="page" class="'.trim($pageclasses).'" style="background-image: '.$imageinitialurl.';">';
             echo '<div id="snap-login-carousel" class="carousel slide">';
         }
     }

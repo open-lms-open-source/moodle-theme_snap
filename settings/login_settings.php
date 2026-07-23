@@ -29,9 +29,11 @@ $snapsettings->add($setting);
 $templates = array (
     'classic_template' => $OUTPUT->image_url('classic_template', 'theme_snap'),
     'stylish_template' => $OUTPUT->image_url('stylish_template', 'theme_snap'),
+    'stylish_inverse_template' => $OUTPUT->image_url('stylish_inverse_template', 'theme_snap'),
 );
 $snaptemplatetitle = get_string('classic_template', 'theme_snap');
 $snapstylishtemplatetitle = get_string('stylish_template', 'theme_snap');
+$snapstylishinversetemplatetitle = get_string('stylish_inverse_template', 'theme_snap');
 $templatedescription =
         '<div id="snap_login_templates" class="row">
             <div id="snap_classic_template_img" class="col=4">
@@ -46,12 +48,22 @@ $templatedescription =
                 </a>
                 <div class="text-center">' . $snapstylishtemplatetitle . '</div>
             </div>
+            <div id="snap_stylish_inverse_template_img" class="col=4">
+                <a target="_blank" href='.$templates['stylish_inverse_template'].'>
+                    <img class="img-responsive" src="'.$templates['stylish_inverse_template'].'" alt="'.$snapstylishinversetemplatetitle.'">
+                </a>
+                <div class="text-center">' . $snapstylishinversetemplatetitle . '</div>
+            </div>
         </div>';
 
 $name = 'theme_snap/loginpagetemplate';
 $title = new \core\lang_string('loginpagetemplate', 'theme_snap');
 $setting = new admin_setting_configselect($name, $title, $templatedescription, 'classic',
-    array('classic' => get_string('classic_template', 'theme_snap'), 'stylish' => get_string('stylish_template', 'theme_snap')));
+    array(
+        'classic' => get_string('classic_template', 'theme_snap'),
+        'stylish' => get_string('stylish_template', 'theme_snap'),
+        'stylish_inverse' => get_string('stylish_inverse_template', 'theme_snap'),
+    ));
 $setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
@@ -61,6 +73,29 @@ $description = get_string('loginbgimgdesc', 'theme_snap');
 $opts = array('accepted_types' => array('.png', '.jpg'), 'maxfiles' => 3);
 $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginbgimg', 0, $opts);
 $setting->set_updatedcallback('theme_snap_resize_bgimage_after_save');
+$snapsettings->add($setting);
+
+// Login page sections settings.
+$name = 'theme_snap/loginpagesectionsheading';
+$title = new \core\lang_string('loginpagesectionsheading', 'theme_snap');
+$description = '';
+$setting = new admin_setting_heading($name, $title, $description);
+$snapsettings->add($setting);
+
+// Display navbar in the login page.
+$name = 'theme_snap/navbarlogin';
+$title = new \core\lang_string('navbarlogin', 'theme_snap');
+$description = new \core\lang_string('navbarlogindesc', 'theme_snap');
+$setting = new admin_setting_configcheckbox($name, $title, $description, 1);
+$setting->set_updatedcallback('theme_reset_all_caches');
+$snapsettings->add($setting);
+
+// Display footer in the login page.
+$name = 'theme_snap/footerlogin';
+$title = new \core\lang_string('footerlogin', 'theme_snap');
+$description = new \core\lang_string('footerlogindesc', 'theme_snap');
+$setting = new admin_setting_configcheckbox($name, $title, $description, 1);
+$setting->set_updatedcallback('theme_reset_all_caches');
 $snapsettings->add($setting);
 
 // Alternative login Settings.
