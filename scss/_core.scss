@@ -233,14 +233,14 @@ table.boxwidthwide {
                 }
             }
             .toggle-sensitive-btn {
-                height: 2em;
-                margin-top: 0.8em;
+                margin-top: 0.9em;
                 border-end-end-radius: 5px;
                 border-start-end-radius: 5px;
                 padding-top: 0;
                 padding-bottom: 0;
                 @media (max-width: 767px) {
                     height: 2.1em;
+                    margin-top: 0.8em;
                 }
             }
         }
