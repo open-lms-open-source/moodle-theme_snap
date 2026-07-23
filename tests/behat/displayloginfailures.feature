@@ -1,4 +1,4 @@
-@theme_snap @core @core_auth 
+@theme @theme_snap @core @core_auth 
 Feature: Test the 'showlogfailures' feature works.
   In order to see my recent login failures when logging in
   As a user

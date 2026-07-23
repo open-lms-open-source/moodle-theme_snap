@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@theme @theme_snap_course_content_download
+@theme @theme_snap @theme_snap_course_content_download
 Feature: Users can see a button or link to download content when using snap.
 
   Background:
