@@ -239,10 +239,6 @@ const handleDrawerButtonClick = (e) => {
     setTimeout(() => {
         const button = e.target.closest(SELECTORS.DRAWER_BUTTON);
         repositionGotoTopLink();
-        // Recompute top/height/max-height now, at the exact moment the drawer's visibility
-        // just changed. This covers opening the admin block on a page/course format
-        // where no resize or scroll has happened yet since load.
-        updateElementPositions(DRAWERS.SELECTORS);
         if (!button) {
             return;
         }
@@ -273,6 +269,11 @@ const handleDrawerButtonClick = (e) => {
             toggleBodyDrawerClass();
             setAriaExpanded(button, false);
         }
+
+        // Recompute top/height/max-height now, at the exact moment the drawer's visibility
+        // just changed. This covers opening the admin block on a page/course format
+        // where no resize or scroll has happened yet since load.
+        updateElementPositions(DRAWERS.SELECTORS);
     }, 50); // Small delay to allow the drawer state to update
 };
 
