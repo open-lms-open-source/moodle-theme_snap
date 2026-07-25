@@ -1330,7 +1330,7 @@ $mr-nav-zindex: 1052;
                 padding-right: 2px;
             }
 
-            a:focus, div[tabindex]:focus {
+            a:focus, div[tabindex]:not(.carousel-item):focus {
                 border-radius: .5rem !important; // !important to override a possible .rounded-0 like in the search btn.
                 outline-style: solid;
                 box-shadow: none;

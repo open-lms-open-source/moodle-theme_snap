@@ -40,6 +40,21 @@ Feature: Testing sidebarmenu in theme_snap
     And "#snap_feeds_side_menu.state-visible" "css_element" should not exist
 
   @javascript
+  Scenario: The user menu should open when clicking its button while a sidebar menu drawer is open
+    Given the following config values are set as admin:
+      | advancedfeedsenable | 1 | theme_snap |
+    And I am logged in as "admin"
+    And I am on site homepage
+    And ".snap-sidebar-menu.show" "css_element" should exist
+    And I wait until "snap-feed" custom element is registered
+    And I click on the block drawer toggle
+    And ".drawer.show" "css_element" should exist
+    When I click on ".usermenu .dropdown-toggle" "css_element"
+    Then ".drawer.show" "css_element" should not exist
+    And "#user-action-menu.show" "css_element" should be visible
+    And I should see "Log out" in the "#user-action-menu" "css_element"
+
+  @javascript
   Scenario: Block drawers open by default
     Given I am logged in as "admin"
     And the following "courses" exist:
