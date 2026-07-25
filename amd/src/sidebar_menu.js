@@ -736,6 +736,11 @@ const setupPopoverClickHandlers = () => {
         const elements = document.querySelectorAll(selector);
 
         elements.forEach(element => {
+            // Handle mousedown events. Needed for alternating between drawers and popovers.
+            element.addEventListener('mousedown', () => {
+                checkAndCloseDrawers();
+            }, true);
+
             // Handle mouse clicks
             element.addEventListener('click', () => {
                 checkAndCloseDrawers();

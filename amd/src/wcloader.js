@@ -23,8 +23,8 @@
  */
 
 
-define([],
-    function() {
+define(['theme_boost/bootstrap/dropdown'],
+    function(Dropdown) {
         return {
             /**
              * Initializes this module.
@@ -41,6 +41,14 @@ define([],
 
                     var requires = Object.keys(compPathsObject);
                     require(requires, function() {});
+
+                    // Add an event listener for the dropdown update.
+                    document.addEventListener('shown.bs.dropdown', function(e) {
+                        var dropdown = Dropdown.getInstance(e.target);
+                        if (dropdown) {
+                            dropdown.update();
+                        }
+                    });
                 }
             }
         };
