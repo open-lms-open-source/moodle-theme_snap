@@ -132,6 +132,27 @@ define(
         };
 
         /**
+         * Whether a section is a delegated section (subsection), e.g. a mod_subsection instance.
+         *
+         * Delegated sections can become hidden/shown by cascade when their parent section's
+         * visibility changes, without their own state ever being updated (the exported state only
+         * reflects a section's own "visible" DB flag, not its parent's). So a cached copy of a
+         * subsection previously fetched by getSection() cannot be trusted to still be accurate.
+         *
+         * @param {string} sectionID The section ID to check.
+         * @returns {boolean} true if the section is a delegated section (subsection).
+         */
+        var isDelegatedSection = function(sectionID) {
+            const reactiveCourseEditor = CourseEditor.getCurrentCourseEditor();
+            const state = reactiveCourseEditor?.state;
+            if (!state || !state.section) {
+                return false;
+            }
+            const section = state.section.get(String(sectionID));
+            return !!section?.component;
+        };
+
+        /**
          * Gets a specific section for the current course.
          * @param {string} sectionID The section ID to be shown.
          * @param {string} modid The module ID to set focus.
@@ -313,6 +334,15 @@ define(
          */
         setTOCVisibleSection: function() {
             setTOCVisibleSection();
+        },
+
+        /**
+         * Exposed function so callers can check if a section is a delegated section (subsection).
+         * @param {string} sectionID
+         * @returns {boolean}
+         */
+        isDelegatedSection: function(sectionID) {
+            return isDelegatedSection(sectionID);
         }
     };
 
