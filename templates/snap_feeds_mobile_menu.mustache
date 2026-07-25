@@ -35,37 +35,37 @@
 
     <div class="snap-feeds-mobile-sections p-5">
         {{#intelliboard.enable}}
-            <div class="feed-section active" id="snap-feeds-section-intelliboard">
+            <div class="feed-section {{#intelliboard.active}}active{{/intelliboard.active}}" id="snap-feeds-section-intelliboard">
                 {{{intelliboard.content}}}
             </div>
         {{/intelliboard.enable}}
 
         {{#intellicart.enable}}
-            <div class="feed-section active" id="snap-feeds-section-intelliboard">
+            <div class="feed-section {{#intellicart.active}}active{{/intellicart.active}}" id="snap-feeds-section-intelliboard">
                 {{{intellicart.content}}}
             </div>
         {{/intellicart.enable}}
 
         {{#deadlines.enable}}
-            <div class="feed-section" id="snap-feeds-section-deadlines">
+            <div class="feed-section {{#deadlines.active}}active{{/deadlines.active}}" id="snap-feeds-section-deadlines">
                 {{{deadlines.content}}}
             </div>
         {{/deadlines.enable}}
 
         {{#grading.enable}}
-            <div class="feed-section" id="snap-feeds-section-grading">
+            <div class="feed-section {{#grading.active}}active{{/grading.active}}" id="snap-feeds-section-grading">
                 {{{grading.content}}}
             </div>
         {{/grading.enable}}
 
         {{#messages.enable}}
-            <div class="feed-section" id="snap-feeds-section-messages">
+            <div class="feed-section {{#messages.active}}active{{/messages.active}}" id="snap-feeds-section-messages">
                 {{{messages.content}}}
             </div>
         {{/messages.enable}}
 
         {{#forumposts.enable}}
-            <div class="feed-section" id="snap-feeds-section-forumposts">
+            <div class="feed-section {{#forumposts.active}}active{{/forumposts.active}}" id="snap-feeds-section-forumposts">
                 {{{forumposts.content}}}
             </div>
         {{/forumposts.enable}}
@@ -73,7 +73,7 @@
 
     <ul class="nav justify-content-around text-center">
         {{#intellienabled}}
-            <li class="nav-item d-flex flex-column active" data-target="intelliboard">
+            <li class="nav-item d-flex flex-column {{#intellitabactive}}active{{/intellitabactive}}" data-target="intelliboard">
                 <a class="nav-link ib" href="#" style="mask: url('{{intelliboard.icon}}')">
                     <img alt="{{intelliboard.alt}}" src="{{intelliboard.icon}}">
                 </a>
@@ -82,7 +82,7 @@
         {{/intellienabled}}
 
         {{#deadlines.enable}}
-            <li class="nav-item d-flex flex-column" data-target="deadlines">
+            <li class="nav-item d-flex flex-column {{#deadlines.active}}active{{/deadlines.active}}" data-target="deadlines">
                 <a class="nav-link" href="#" style="mask: url('{{deadlines.icon}}')">
                     <img alt="{{deadlines.alt}}" src="{{deadlines.icon}}">
                 </a>
@@ -91,7 +91,7 @@
         {{/deadlines.enable}}
 
         {{#grading.enable}}
-            <li class="nav-item d-flex flex-column" data-target="grading">
+            <li class="nav-item d-flex flex-column {{#grading.active}}active{{/grading.active}}" data-target="grading">
                 <a class="nav-link" href="#" style="mask: url('{{grading.icon}}')">
                     <img alt="{{grading.alt}}" src="{{grading.icon}}">
                 </a>
@@ -100,7 +100,7 @@
         {{/grading.enable}}
 
         {{#messages.enable}}
-            <li class="nav-item d-flex flex-column" data-target="messages">
+            <li class="nav-item d-flex flex-column {{#messages.active}}active{{/messages.active}}" data-target="messages">
                 <a class="nav-link" href="#" style="mask: url('{{messages.icon}}')">
                     <img alt="{{messages.alt}}" src="{{messages.icon}}">
                 </a>
@@ -109,7 +109,7 @@
         {{/messages.enable}}
 
         {{#forumposts.enable}}
-            <li class="nav-item d-flex flex-column" data-target="forumposts">
+            <li class="nav-item d-flex flex-column {{#forumposts.active}}active{{/forumposts.active}}" data-target="forumposts">
                 <a class="nav-link" href="#" style="mask: url('{{forumposts.icon}}')">
                     <img alt="{{forumposts.alt}}" src="{{forumposts.icon}}">
                 </a>
