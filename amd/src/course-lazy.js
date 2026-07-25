@@ -204,11 +204,20 @@ define(
             }
 
             var $sectionNode = $('ul.sections > li.section[data-id="' + sectionID + '"]');
+            // Subsections (delegated sections) can become hidden/shown by cascade when their
+            // parent section's visibility changes, without their own state ever updating. A
+            // cached copy therefore cannot be trusted to still reflect the current state, so we
+            // always re-fetch subsections from the server instead of reusing whatever is cached.
+            var isDelegatedSection = sectionAssetManagement.isDelegatedSection(sectionID);
             if (hashSection === '#coursetools' || hashSection === '#snap-add-new-section') {
                 // Make visible the Dashboard or New section Form.
                 switchSectionVisibility(hashSection, null);
-            } else if (sectionID !== '' && !($sectionNode.length > 0)) {
-                // Section does not exist in DOM, render it.
+            } else if (sectionID !== '' && (isDelegatedSection || !($sectionNode.length > 0))) {
+                if (isDelegatedSection && $sectionNode.length > 0) {
+                    // Drop the stale cached copy so we do not end up with duplicate nodes.
+                    $sectionNode.remove();
+                }
+                // Section does not exist in DOM (or is a subsection): render it fresh.
                 sectionAssetManagement.getSection(sectionID, mod, switchSectionVisibility);
                 sectionAssetManagement.updateBreadcrumb(sectionID);
             } else {
