@@ -44,6 +44,62 @@ Feature: When the moodle theme is set to Snap, the custom snap login form should
     Then ".page-stylish-login" "css_element" should exist
 
   @javascript
+  Scenario: The login template must change when the Stylish Inverse template is selected.
+    Given I log in as "admin"
+    And the following config values are set as admin:
+      | linkadmincategories | 0 |
+    And I am on site homepage
+    And I go to "Site administration > Appearance > Themes" in snap administration
+    And I follow "Edit theme settings 'Snap'"
+    And I click on "Login page" "link"
+    And I should see "Stylish Inverse template"
+    And I set the field with xpath "//select[@id='id_s_theme_snap_loginpagetemplate']" to "stylish_inverse"
+    And I click on "Save changes" "button"
+    And I log out
+    And I am on login page
+    Then ".page-stylish-login" "css_element" should exist
+    And ".page-stylish-inverse-login" "css_element" should exist
+
+  @javascript
+  Scenario: The Snap navbar is shown on the login page by default and can be hidden.
+    Given I am on login page
+    And "#mr-nav" "css_element" should exist
+    And I log in as "admin"
+    And the following config values are set as admin:
+      | linkadmincategories | 0 |
+    And I am on site homepage
+    And I go to "Site administration > Appearance > Themes" in snap administration
+    And I follow "Edit theme settings 'Snap'"
+    And I click on "Login page" "link"
+    And I should see "Display navbar"
+    And I set the following fields to these values:
+      | Display navbar | 0 |
+    And I click on "Save changes" "button"
+    And I log out
+    And I am on login page
+    Then "#mr-nav" "css_element" should not exist
+
+  @javascript
+  Scenario: The Snap footer is shown on the login page by default and can be hidden.
+    Given I am on login page
+    And "#snap-site-footer" "css_element" should exist
+    And I log in as "admin"
+    And the following config values are set as admin:
+      | linkadmincategories | 0 |
+    And I am on site homepage
+    And I go to "Site administration > Appearance > Themes" in snap administration
+    And I follow "Edit theme settings 'Snap'"
+    And I click on "Login page" "link"
+    And I should see "Display footer"
+    And I set the following fields to these values:
+      | Display footer | 0 |
+    And I click on "Save changes" "button"
+    And I log out
+    And I am on login page
+    Then "#snap-site-footer" "css_element" should not exist
+    And "#moodle-footer" "css_element" should exist
+
+  @javascript
   Scenario: The login password toggle must be displayed in Snap login page.
     Given the following config values are set as admin:
       | loginpasswordtoggle | 0 |
