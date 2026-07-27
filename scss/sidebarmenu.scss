@@ -5,6 +5,8 @@ $open-drawer-width: 370px;
 $sidebar-tab-bg-color: #eff0f6;
 $sidebar-shadow: -1px 0 2px rgba(0, 0, 0, 0.2);
 $sidebar-z-index: 1050;
+// Below $sidebar-z-index so a drawer's own close transition never ties with the sidebar.
+$drawer-closed-z-index: 10;
 $border-color: #e5e5e5;
 $hover-text-color: #fff;
 $text-color: #fff;
@@ -313,7 +315,12 @@ $mobile-sidebar-peek-width: 10px;
 
 [data-region=right-hand-drawer].drawer {
     margin-right: $sidebar-width;
-    z-index: $sidebar-z-index;
+    z-index: $drawer-closed-z-index;
+
+    &:not(.hidden) {
+        z-index: $sidebar-z-index;
+    }
+
     @media screen and (max-width: 992px) {
         margin-right: $mobile-sidebar-width;
     }
