@@ -153,6 +153,84 @@ define(
         };
 
         /**
+         * block_sharing_cart's own JS (blocks/sharing_cart/amd/src/local/block.js) only injects its
+         * "add to sharing cart" icon once, in a one-time DOM scan done at page load, and afterwards only reacts to
+         * core course-editor reactive state mutations (cm:created/cm:updated/section:created/section:updated).
+         * Snap's lazy section loading above injects a whole new section's markup directly via appendNodeContents,
+         * without ever going through the reactive state layer, so the icon never gets attached to activities/
+         * sections loaded this way until a full page reload re-runs that one-time scan. This re-runs the same
+         * icon injection for whatever section markup was just appended.
+         *
+         * @param {Element} container the newly appended section container
+         */
+        var refreshSharingCartButtons = function(container) {
+            const blockElement = document.querySelector('.block.block_sharing_cart');
+            // The data-can-backup attribute lives on the inner #block_sharing_cart div
+            // (see blocks/sharing_cart/templates/block/content.mustache), not on the outer
+            // Snap block wrapper matched above.
+            const canBackupElement = document.getElementById('block_sharing_cart');
+            if (!blockElement || !canBackupElement || canBackupElement.dataset.canBackup !== '1') {
+                return;
+            }
+
+            // Only proceed if the feature is actually active on this page (an icon is already showing elsewhere).
+            const template = document.querySelector('.course-content .add_to_sharing_cart');
+            if (!template) {
+                return;
+            }
+
+            require(['block_sharing_cart/app/factory'], function(BaseFactory) {
+                const block = BaseFactory.make().block().element(blockElement, false, false, true, true);
+                block.setupCourse();
+
+                container.querySelectorAll('.cm_action_menu[data-cmid]').forEach(function(menu) {
+                    if (menu.querySelector('.add_to_sharing_cart')) {
+                        return;
+                    }
+
+                    const cmid = menu.dataset.cmid;
+                    const button = template.cloneNode(true);
+                    button.classList.remove('disabled');
+                    button.removeAttribute('title');
+                    menu.append(button);
+                    button.addEventListener('click', function() {
+                        block.addCourseModuleBackupToSharingCart(cmid);
+                    });
+                });
+
+                container.querySelectorAll('[data-for="section_title"] .inplaceeditable[data-itemid]').forEach(
+                    function(sectionTitle) {
+                        if (sectionTitle.parentElement.querySelector('.add_to_sharing_cart')) {
+                            return;
+                        }
+
+                        const sectionId = sectionTitle.dataset.itemid;
+                        const button = template.cloneNode(true);
+                        sectionTitle.after(button);
+                        button.addEventListener('click', function(e) {
+                            if (e.currentTarget.classList.contains('disabled')) {
+                                return;
+                            }
+                            block.addSectionBackupToSharingCart(sectionId);
+                        });
+
+                        const section = CourseEditor.getCurrentCourseEditor().state.section.get(sectionId);
+                        const disabled = !section || section.cmlist.length === 0;
+                        button.classList.toggle('disabled', disabled);
+                        if (disabled) {
+                            str.get_string('no_course_modules_in_section_description', 'block_sharing_cart')
+                                .then(function(text) {
+                                    button.title = text;
+                                    return;
+                                })
+                                .catch(notification.exception);
+                        }
+                    }
+                );
+            });
+        };
+
+        /**
          * Gets a specific section for the current course.
          * @param {string} sectionID The section ID to be shown.
          * @param {string} modid The module ID to set focus.
@@ -171,6 +249,8 @@ define(
                     // Notify filters about the new section.
                     Event.notifyFilterContentUpdated($('.course-content .' + self.courseConfig.format));
                     activityCards.init();
+                    // OpenLMS Patch: re-attach sharing cart icons for the section just lazily loaded above.
+                    refreshSharingCartButtons($container.get(0));
 
                     $('.sk-fading-circle').hide();
                 })
