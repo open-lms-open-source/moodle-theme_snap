@@ -360,6 +360,24 @@ table.boxwidthwide {
     }
 
 }
+// Mirror the Stylish template so the login form sits on the right and the image shows on the left.
+#page-login-index .page-stylish-inverse-login {
+    margin-left: auto;
+
+    @media (max-width: 750px) {
+        margin-left: 0;
+    }
+}
+
+#page.snap-login-hide-navbar,
+#page.snap-login-hide-footer {
+    min-height: 100vh;
+}
+
+#page.snap-login-hide-navbar #page-header {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
 // Information notice in the sign up and forgot password pages.
 #page-login-forgot_password,
 #page-login-signup {

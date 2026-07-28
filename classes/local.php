@@ -2807,4 +2807,19 @@ SQL;
 
         return $calculateSectionProgress($section);
     }
+
+    /**
+     * Whether a Snap layout section (e.g. navbar, footer) should be shown on the login page.
+     * Outside of the login page this always returns true, the setting only affects the login page layout.
+     *
+     * @param string $settingname theme_snap config name, e.g. 'navbarlogin' or 'footerlogin'.
+     * @return bool
+     */
+    public static function show_on_login_page($settingname) {
+        global $PAGE;
+        if ($PAGE->pagelayout !== 'login') {
+            return true;
+        }
+        return (string) get_config('theme_snap', $settingname) !== '0';
+    }
 }

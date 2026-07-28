@@ -28,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 <footer id="moodle-footer" role="contentinfo" class="clearfix">
 <?php
+if (\theme_snap\local::show_on_login_page('footerlogin')) {
 /* Snap custom footer.*/
 /* Custom footer edit buttons. */
 $footnote = empty($PAGE->theme->settings->footnote) ? '' : $PAGE->theme->settings->footnote;
@@ -106,6 +107,7 @@ if (!empty($custommenu)) {
     </div>
 </div>
 <?php
+}
 ?>
 <div id="page-footer">
 <br/>
