@@ -488,7 +488,39 @@ class course_renderer extends \core_course_renderer {
                     ]);
         }
 
+        // Activity grouping.
+        $content .= self::grouping_html($mod);
+
         return $content;
+    }
+
+    /**
+     * Get the grouping label html for a specific module, if applicable.
+     *
+     * Shows the name of the grouping assigned to this activity (set via the activity's
+     * "Common module settings" > Grouping field), when the activity has a group mode
+     * other than "No groups" and the current user can manage groups.
+     *
+     * @param cm_info $mod
+     * @return string
+     */
+    protected static function grouping_html(cm_info $mod) {
+        if (empty($mod->groupingid) || $mod->effectivegroupmode == NOGROUPS) {
+            return '';
+        }
+
+        if (!has_capability('moodle/course:managegroups', context_course::instance($mod->course))) {
+            return '';
+        }
+
+        $groupings = groups_get_all_groupings($mod->course);
+        if (!isset($groupings[$mod->groupingid])) {
+            return '';
+        }
+
+        $groupingname = format_string($groupings[$mod->groupingid]->name);
+
+        return \core\output\html_writer::tag('div', $groupingname, ['class' => 'snap-grouping-tag']);
     }
 
 
