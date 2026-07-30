@@ -367,10 +367,19 @@ $mobile-sidebar-peek-width: 10px;
     }
 }
 
+// Footer styles with and without sidebar display.
 footer#moodle-footer {
-    margin-right: $sidebar-width;
-    @media (max-width: 991px) {
-        margin-right: $mobile-sidebar-width;
+    margin-right: 0;
+    transition: margin-right $transition-speed ease;
+}
+
+// The `!important` is needed due to `body:not(.pagelayout-course) #moodle-footer
+// { margin-right: 0 !important }` in _core.scss, for non course pages (i.e. the homepage).
+body:has(.snap-sidebar-menu.show) footer#moodle-footer {
+    margin-right: $sidebar-width !important;
+
+    @media screen and (max-width: 992px) {
+        margin-right: $mobile-sidebar-width !important;
     }
 }
 
