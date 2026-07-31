@@ -348,6 +348,7 @@ table.boxwidthwide {
 #page-login-index .page-stylish-login {
     background: white;
     width: 50%;
+    flex-grow: 1;
 
     @media (max-width: 750px) {
         background: transparent;
@@ -372,6 +373,15 @@ table.boxwidthwide {
 #page.snap-login-hide-navbar,
 #page.snap-login-hide-footer {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .page-stylish-login {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 }
 
 #page.snap-login-hide-navbar #page-header {
@@ -4115,6 +4125,15 @@ body:not(.pagelayout-course) #moodle-footer {
             color: $snap-footer-txt-color !important;
         }
     }
+}
+
+// When the footer is hidden on the login page, the outer footer container itself shouldn't
+// reserve any padding/margin/background — otherwise an empty colored band remains visible.
+#moodle-footer.snap-login-hide-footer-content {
+    margin-top: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: transparent;
 }
 
 #snap-footer-content,

@@ -26,9 +26,13 @@
 defined('MOODLE_INTERNAL') || die();
 ?>
 
-<footer id="moodle-footer" role="contentinfo" class="clearfix">
 <?php
-if (\theme_snap\local::show_on_login_page('footerlogin')) {
+$showfooterlogin = \theme_snap\local::show_on_login_page('footerlogin');
+$moodlefooterclasses = 'clearfix' . ($showfooterlogin ? '' : ' snap-login-hide-footer-content');
+?>
+<footer id="moodle-footer" role="contentinfo" class="<?php echo $moodlefooterclasses; ?>">
+<?php
+if ($showfooterlogin) {
 /* Snap custom footer.*/
 /* Custom footer edit buttons. */
 $footnote = empty($PAGE->theme->settings->footnote) ? '' : $PAGE->theme->settings->footnote;
@@ -78,8 +82,9 @@ echo '</div>';
 <?php
 /* Moodle custom menu. */
 /* We need to render the custom menu in the footer in mobile views. */
+/* Not on the login pages though, those links don't work there (see nav.php, which hides it in the header too). */
 
-if (!empty($custommenu)) {
+if (!empty($custommenu) && $PAGE->pagelayout !== 'login') {
     echo '<div id="snap-custom-menu-footer"><br>';
     echo '<h3 class="mx-4">' . get_string('custommenutitle', 'theme_snap') . '</h3>';
     echo $custommenu;

@@ -36,19 +36,19 @@ $snapstylishtemplatetitle = get_string('stylish_template', 'theme_snap');
 $snapstylishinversetemplatetitle = get_string('stylish_inverse_template', 'theme_snap');
 $templatedescription =
         '<div id="snap_login_templates" class="row">
-            <div id="snap_classic_template_img" class="col=4">
+            <div id="snap_classic_template_img" class="col-4 text-center">
                 <a target="_blank" href='.$templates['classic_template'].'>
                     <img class="img-responsive" src="'.$templates['classic_template'].'" alt="'.$snaptemplatetitle.'">
                 </a>
                 <div class="text-center">' . $snaptemplatetitle . '</div>
             </div>
-            <div id="snap_stylish_template_img" class="col=4">
+            <div id="snap_stylish_template_img" class="col-4 text-center">
                 <a target="_blank" href='.$templates['stylish_template'].'>
                     <img class="img-responsive" src="'.$templates['stylish_template'].'" alt="'.$snapstylishtemplatetitle.'">
                 </a>
                 <div class="text-center">' . $snapstylishtemplatetitle . '</div>
             </div>
-            <div id="snap_stylish_inverse_template_img" class="col=4">
+            <div id="snap_stylish_inverse_template_img" class="col-4 text-center">
                 <a target="_blank" href='.$templates['stylish_inverse_template'].'>
                     <img class="img-responsive" src="'.$templates['stylish_inverse_template'].'" alt="'.$snapstylishinversetemplatetitle.'">
                 </a>
