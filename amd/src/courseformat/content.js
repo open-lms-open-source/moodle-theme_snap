@@ -33,6 +33,24 @@ import Config from 'core/config';
 import Templates from 'core/templates';
 import {debounce} from 'core/utils';
 
+class SnapCmItem extends CmItem {
+    /**
+     * Override configDragDrop to keep activities static when the real Edit Mode is off.
+     *
+     * The front page simulates edit mode so AJAX control menu actions work with the
+     * Edit Mode toggle off, but activities must not be draggable then.
+     *
+     * @param {number} cmid course module id
+     */
+    configDragDrop(cmid) {
+        if (!document.body.classList.contains('editing')) {
+            this.id = cmid;
+            return;
+        }
+        super.configDragDrop(cmid);
+    }
+}
+
 export default class Component extends BaseSectionComponent {
 
     /**
@@ -102,12 +120,12 @@ export default class Component extends BaseSectionComponent {
             }
         );
 
-        // Using Core original class for CmItem.
+        // Using Snap CmItem to disable drag and drop when the real Edit Mode is off.
         this._scanIndex(
             this.selectors.CM,
             this.cms,
             (item) => {
-                return new CmItem(item);
+                return new SnapCmItem(item);
             }
         );
     }
