@@ -1,7 +1,6 @@
 # theme_snap — Architecture Reference
 
-Snap is a heavily customised Boost child-theme built by Open LMS. Unlike `theme_olms_work`, it has **no multitenancy support** — no per-tenant CSS, no tenant config API, no `CONTEXT_TENANT` usage anywhere. It is the EDU theme and the primary theme for single-tenant Work deployments.
-
+Snap is a heavily customised Boost child-theme built by Open LMS.
 ## Plugin identity
 
 | Field | Value |
@@ -138,7 +137,7 @@ Note: Snap does **not** define `course_index_drawer` or `blocks_drawer` as named
 
 ## CSS pipeline (`lib.php`, `config.php`)
 
-Snap uses **three SCSS callbacks plus a post-processor**, which is more complex than olms_work:
+Snap uses **three SCSS callbacks plus a post-processor**:
 
 ### 1. `theme_snap_get_pre_scss($theme)` — `lib.php:321`
 
@@ -258,7 +257,7 @@ The largest file in the theme (~2500 lines, 69 methods). Methods are grouped bel
 | `image_url($imagename, $component)` | `\renderer_base` | Strips icon size suffixes (e.g. `-24`, `-32`) for SVG icon compatibility |
 | `confirm($message, $continue, $cancel, $displayoptions)` | `\core_renderer` | Wraps in Snap modal markup |
 | `course_modchooser()` | `\core_renderer` | Renders Snap's custom activity chooser |
-| `get_logo_url($maxwidth, $maxheight)` | `\renderer_base` | Reads `logo` theme setting file URL (system-level only — no tenant support) |
+| `get_logo_url($maxwidth, $maxheight)` | `\renderer_base` | Reads `logo` theme setting file URL (system-level only) |
 | `navbar(): string` | `theme_boost\output\core_renderer` | Replaces Boost's boostnavbar with Snap's custom nav |
 | `heading_with_help($text, $helpidentifier, $component, $icon, $iconalt)` | `\core_renderer` | Wraps with Snap collapsible help pattern |
 
@@ -519,37 +518,3 @@ Utilities: `media_object.mustache`, `custom_menu_item.mustache`, `footer_alert.m
 `wcloader.js` (web components), `footer_alert.js`, `messages.js`, `ajax_notification.js`
 
 ---
-
-## Multitenancy support
-
-**None.** A grep across all layouts, templates, and SCSS files returns zero matches for "tenant". Snap has no:
-- Per-tenant CSS serving
-- `CONTEXT_TENANT` usage
-- `tenant_get_config()` / `tenant_set_config()` calls
-- Hook registrations with `tool_olms_tenant`
-- `olms_product_work` guards
-
-It is a single-tenant theme. On a Work site with multitenancy active, the site theme must be set to `olms_work` — Snap cannot serve per-tenant branding.
-
----
-
-## Key differences from `theme_olms_work`
-
-| Aspect | `theme_snap` | `theme_olms_work` |
-|---|---|---|
-| Multitenancy | None | Full (CSS, assets, settings, UI) |
-| `haseditswitch` | `false` (own toggle) | `true` (Boost navbar toggle) |
-| CSS post-processor | `csspostprocess` string replacement | None |
-| SCSS callbacks | pre + main + extra + postprocess | pre + main + extra |
-| Renderer methods | ~69 in core_renderer alone | 5 in core_renderer |
-| Format renderers | topics, weeks, singleactivity | None |
-| Custom tables | 2 (`course_favorites`, `toc_hidden`) | None (uses `tool_olms_tenant_config`) |
-| Web services | 10 | None |
-| AMD modules | 47 | 1 |
-| Scheduled tasks | 2 | None |
-| Capabilities | None | 1 (`managetenantappearance`) |
-| Icon system | Custom `icon_system_fontawesome` class | Boost default |
-| Page requirements manager | Custom (`snap_page_requirements_manager`) | Boost default |
-| Settings modules | 13 files, 25+ settings | 1 file, ~12 settings |
-| Layout files | 5 distinct layouts (19 entries) | 1 custom layout (login only) |
-| Template overrides | 73 (15 core/Boost + 58 own) | 1 (login only) |
