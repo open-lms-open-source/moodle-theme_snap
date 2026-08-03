@@ -22,7 +22,8 @@
  @copyright Copyright (c) 2024 Open LMS
  @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
-<div class="modal fade snap-home-course-card" id="coursemodal{{courseid}}" tabindex="-1">
+<div class="modal fade snap-home-course-card" id="coursemodal{{courseid}}" tabindex="-1"
+     aria-labelledby="coursemodaltitle{{courseid}}" aria-label="{{coursename}}">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
@@ -31,7 +32,7 @@
                 <i class="fa fa-times"></i>
             </button>
             <div class="bottom-image-options">
-                <a class="btn btn-primary courselink" role="button" href="{{courselink}}" title="{{#str}} courselink, theme_snap {{/str}}">
+                <a class="btn btn-primary courselink" role="link" href="{{courselink}}" title="{{#str}} courselink, theme_snap {{/str}}">
                     {{#str}} courselink, theme_snap {{/str}}
                 </a>
                 {{#isloggedin}}
@@ -42,9 +43,9 @@
          <div class="hiddeninfo d-block">
             {{{hiddeninfobadge}}}
          </div>
-         <span class="card-title">
+         <h2 class="card-title" id="coursemodaltitle{{courseid}}">
             {{coursename}}
-         </span>
+         </h2>
          {{{coursecategoryname}}}
          <div class="row course-info {{#hassummary}}hassummary{{/hassummary}}">
             {{#hassummary}}

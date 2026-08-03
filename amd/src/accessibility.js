@@ -431,6 +431,68 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     setDrawersTabOrder();
 
                     /**
+                     * Return focus to the trigger element when a course card modal is closed.
+                     * The .more-info button is hidden (display:none) when the card is not hovered, so we
+                     * temporarily add .snap-modal-focus-target to the card to make it visible before focusing.
+                     * Once focused, :focus-within in the CSS keeps the card expanded; the class is removed on blur.
+                     */
+                    function setCourseModalFocusManagement() {
+                        document.querySelectorAll('.snap-home-course-card').forEach(function(modal) {
+                            // Store the element that opened the modal so we can return focus to it later.
+                            modal.addEventListener('show.bs.modal', function(e) {
+                                // BS5 sets relatedTarget to the data-bs-toggle element that triggered the modal.
+                                var trigger = e.relatedTarget || document.activeElement;
+                                modal.setAttribute('data-snap-modal-trigger-id',
+                                    trigger ? (trigger.id || '') : '');
+                                // Triggers without an id need a direct DOM reference as fallback.
+                                if (trigger && !trigger.id) {
+                                    modal._snapModalTrigger = trigger;
+                                }
+                            });
+
+                            modal.addEventListener('hidden.bs.modal', function() {
+                                var trigger = modal._snapModalTrigger ||
+                                    document.getElementById(modal.getAttribute('data-snap-modal-trigger-id'));
+
+                                // Deferred to run after Bootstrap's own focus-to-body handling.
+                                setTimeout(function() {
+                                    if (trigger && document.body.contains(trigger)) {
+                                        var card = trigger.closest('.snap-home-course');
+                                        if (card) {
+                                            // Make the card show its hover/expanded state so the button is visible.
+                                            card.classList.add('snap-modal-focus-target');
+                                            // Force a reflow so the browser applies display:block before focus().
+                                            void trigger.offsetHeight;
+                                            trigger.focus();
+                                            // Remove the class once the user moves away; :focus-within handles
+                                            // visibility while the button remains focused.
+                                            trigger.addEventListener('blur', function onBlur() {
+                                                card.classList.remove('snap-modal-focus-target');
+                                                trigger.removeEventListener('blur', onBlur);
+                                            });
+                                        }
+                                    } else {
+                                        // Trigger is gone from the DOM — try the button for this course, else body.
+                                        var courseId = modal.id.replace('coursemodal', '');
+                                        var fallback = document.querySelector(
+                                            '.more-info[data-bs-target="#coursemodal' + courseId + '"]'
+                                        );
+                                        if (fallback) {
+                                            fallback.focus();
+                                        } else {
+                                            document.body.focus();
+                                        }
+                                    }
+                                }, 0);
+
+                                delete modal._snapModalTrigger;
+                                modal.removeAttribute('data-snap-modal-trigger-id');
+                            });
+                        });
+                    }
+                    setCourseModalFocusManagement();
+
+                    /**
                      * Persist the active admin settings tab across page reloads.
                      */
                     function persistAdminSettingsTabs() {
