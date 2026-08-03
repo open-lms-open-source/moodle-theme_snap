@@ -17,6 +17,10 @@
 import {isSmall} from 'core/pagehelpers';
 import {addCloseButtonToBlockSettings} from './util';
 import {setUserPreferences, getUserPreferences} from 'core_user/repository';
+import * as FocusLock from 'core/local/aria/focuslock';
+import * as PubSub from 'core/pubsub';
+import DrawerEvents from 'core/drawer_events';
+import CustomEvents from 'core/custom_interaction_events';
 
 /**
  * JavaScript for the Snap theme sidebar menu functionality
@@ -36,17 +40,17 @@ const SELECTORS = {
     COURSE_INDEX_DRAWER_BUTTON: '.drawer-toggler.drawer-left-toggle',
     MESSAGES_POPOVER: '[data-region="popover-region-messages"]',
     CLOSE_DRAWER_BUTTON: '[data-action="closedrawer"]',
-    SIDEBAR_MENU_ITEM: '.snap-sidebar-menu-item',
     NAV_UNPINNED: '#mr-nav.headroom--unpinned',
     GOTO_TOP_LINK: '#goto-top-link',
     PAGE_HEADER: 'page-header',
     DRAWER_LEFT: '.drawer-left.drawer',
     SNAP_COURSE_FOOTER: 'snap-course-footer',
     MODAL_BACKDROP: 'body > div > div.modal-backdrop',
-    CLOSE_MESSAGE_DRAWER_BUTTON: '[id^="message-drawer-"] a[data-action="closedrawer"]',
     MESSAGE_APP_CLASS: 'div[id^=\'drawer-\'] > div.message-app',
     MESSAGE_DRAWER_TOGGLE: 'a[id^="message-drawer-toggle"]',
+    MESSAGE_DRAWER_ROOT: '[data-region="right-hand-drawer"]',
     AI_DRAWER: '.ai-drawer',
+    PAGE_WRAPPER: '#page',
 };
 
 const CLASSES = {
@@ -114,6 +118,10 @@ const PREFERENCE_MAP = {
 };
 
 let lastScrollX = 0;
+
+// True while the message drawer's focus trap is released (drawer open, non-modal).
+let drawerTrapReleased = false;
+let drawerBackdropPending = false;
 
 /**
  * Toggle sidebar menu visibility and update its position
@@ -364,21 +372,82 @@ const closeAllDrawers = () => {
 
 /**
  * Handle messages popover click
- * @param {Event} e - The event object
  */
-const handleMessagesPopoverClick = (e) => {
-    const sidebarItem = e.currentTarget.closest(SELECTORS.SIDEBAR_MENU_ITEM);
+const handleMessagesPopoverClick = () => {
     repositionGotoTopLink();
-    if (sidebarItem) {
-        const isCollapsed = e.currentTarget.classList.contains(CLASSES.COLLAPSED);
-        if (isCollapsed) {
-            e.currentTarget.classList.remove(CLASSES.COLLAPSED);
-            setAriaExpanded(e.currentTarget, true);
-        } else {
-            e.currentTarget.classList.add(CLASSES.COLLAPSED);
-            setAriaExpanded(e.currentTarget, false);
-        }
+};
+
+/**
+ * Sync the messages popover's collapsed state with whether the drawer is actually open.
+ * @param {boolean} collapsed
+ */
+const setMessagesPopoverCollapsed = (collapsed) => {
+    const popover = document.querySelector(SELECTORS.MESSAGES_POPOVER);
+    if (!popover) {
+        return;
     }
+    popover.classList.toggle(CLASSES.COLLAPSED, collapsed);
+    setAriaExpanded(popover, !collapsed);
+    toggleBodyDrawerClass();
+};
+
+let messageDrawerSettleTimer = null;
+
+/**
+ * Sync #page's "offcanvas" class with whether any drawer is open, once a burst of
+ * DRAWER_SHOWN/DRAWER_HIDDEN events has settled. Debounced since a single click can fire more
+ * than one of these in a row (e.g. via closeOtherDrawers()).
+ */
+const scheduleMessageDrawerSettle = () => {
+    clearTimeout(messageDrawerSettleTimer);
+    messageDrawerSettleTimer = setTimeout(() => {
+        const anyDrawerOpen = DRAWERS.ACTIVE_SELECTORS.some(selector => document.querySelector(selector));
+        document.getElementById('page')?.classList.toggle('offcanvas', anyDrawerOpen);
+    }, 0);
+};
+
+/**
+ * Whether an interaction is outside the open message drawer and its toggle button — mirrors
+ * Core's own "outside click" condition in message_drawer.js.
+ * @param {EventTarget} target
+ * @return {boolean}
+ */
+const isOutsideMessageDrawerInteraction = (target) => {
+    // data-region="right-hand-drawer" is not unique to the message drawer (mod_forum's grader
+    // "Whole forum grading" panel emits the same attribute), so disambiguate the same way
+    // isMessageDrawerRoot() does: pick the one that actually contains the message app.
+    const drawer = Array.from(document.querySelectorAll(SELECTORS.MESSAGE_DRAWER_ROOT))
+        .find(el => el.querySelector('.message-app'));
+    if (!drawer || drawer.classList.contains('hidden') || drawer.contains(target)) {
+        return false;
+    }
+    const toggleId = drawer.getAttribute('data-origin');
+    if (toggleId && target.closest && target.closest('#' + toggleId)) {
+        return false;
+    }
+    return true;
+};
+
+/**
+ * Stop Core's "click outside the drawer closes it" behaviour before it fires, rather than
+ * reacting after the drawer has already closed. Suppresses the underlying cie:activate event
+ * (core/custom_interaction_events) via native capture-phase listeners, which always run before
+ * Core's own bubble-phase ones regardless of script load order. Covers both click and
+ * Enter/Space keydown, since cie:activate is synthesised from either.
+ */
+const preventMessageDrawerOutsideClose = () => {
+    const suppressActivate = (e) => {
+        if (isOutsideMessageDrawerInteraction(e.target)) {
+            e[`triggeredCustom_${CustomEvents.events.activate}`] = true;
+        }
+    };
+    document.addEventListener('click', suppressActivate, true);
+    document.addEventListener('keydown', (e) => {
+        const isModifierPressed = e.shiftKey || e.metaKey || e.altKey || e.ctrlKey;
+        if (!isModifierPressed && (e.key === 'Enter' || e.key === ' ')) {
+            suppressActivate(e);
+        }
+    }, true);
 };
 
 /**
@@ -485,6 +554,57 @@ const handleCloseDrawerClick = () => {
 };
 
 /**
+ * Release Core's focus trap so the rest of the page stays focusable while the drawer is open.
+ * Deferred one microtask so it runs after Core's synchronous trapFocus() call.
+ */
+const releaseMessageDrawerTrap = () => {
+    if (drawerTrapReleased) {
+        return;
+    }
+    drawerTrapReleased = true;
+    drawerBackdropPending = true;
+    Promise.resolve().then(() => {
+        if (drawerTrapReleased) {
+            FocusLock.untrapFocus();
+        }
+    });
+};
+
+/**
+ * Re-arm the focus trap just before the message drawer closes, so Core's deferred
+ * untrapFocus() call pops the drawer's region instead of an unrelated modal's.
+ */
+const rearmMessageDrawerTrap = () => {
+    if (!drawerTrapReleased) {
+        return;
+    }
+    drawerTrapReleased = false;
+    drawerBackdropPending = false;
+    // Trap on the toggle, not the (now aria-hidden) drawer content, then restore real focus —
+    // trapping on an aria-hidden element triggers browser warnings and breaks focus.
+    const toggle = document.querySelector(SELECTORS.MESSAGE_DRAWER_TOGGLE);
+    if (!toggle) {
+        return;
+    }
+    const previousActiveElement = document.activeElement;
+    FocusLock.trapFocus(toggle);
+    if (previousActiveElement && previousActiveElement !== document.body) {
+        previousActiveElement.focus();
+    }
+};
+
+/**
+ * Whether a core/drawer_events payload is the message drawer, not another drawer sharing the
+ * same show/hide plumbing. May be a raw element or jQuery-wrapped.
+ * @param {Object|Element} root
+ * @return {boolean}
+ */
+const isMessageDrawerRoot = (root) => {
+    const element = root && typeof root.jquery !== 'undefined' ? root[0] : root;
+    return Boolean(element && typeof element.querySelector === 'function' && element.querySelector('.message-app'));
+};
+
+/**
  * Setup all event listeners
  */
 const setupEventListeners = () => {
@@ -528,24 +648,49 @@ const setupEventListeners = () => {
     if (messagesPopover) {
         messagesPopover.addEventListener('click', handleMessagesPopoverClick);
 
-        // We have an event from Core subscribed with PubSub, that always runs after Snap has run,
-        // and it creates the unwanted modal backdrop, see message/amd/src/message_drawer.js.
-        const messageDrawerPopover = document.querySelector(SELECTORS.MESSAGES_POPOVER);
-        const messageDrawerCloseIcon = document.querySelector(SELECTORS.CLOSE_MESSAGE_DRAWER_BUTTON);
+        preventMessageDrawerOutsideClose();
+
+        // Make the message drawer non-modal: release Core's focus trap on show, re-arm on hide.
+        PubSub.subscribe(DrawerEvents.DRAWER_SHOWN, (root) => {
+            if (isMessageDrawerRoot(root)) {
+                releaseMessageDrawerTrap();
+                setMessagesPopoverCollapsed(false);
+                scheduleMessageDrawerSettle();
+            }
+        });
+        PubSub.subscribe(DrawerEvents.DRAWER_HIDDEN, (root) => {
+            if (isMessageDrawerRoot(root)) {
+                rearmMessageDrawerTrap();
+                setMessagesPopoverCollapsed(true);
+                scheduleMessageDrawerSettle();
+            }
+        });
+
+        // Backdrop render is async, so removal stays reactive via MutationObserver, gated to
+        // only the drawer's own backdrop.
         const dismissCoreModalBackdrop = function(mutations) {
             for (const mutation of mutations) {
                 if (mutation.type === 'childList') {
-                    const messagesPopoverCoreModalBackdrop =
-                        document.querySelector(SELECTORS.MODAL_BACKDROP);
-                    if (messagesPopoverCoreModalBackdrop && (document.activeElement === messageDrawerPopover
-                        || document.activeElement === messageDrawerCloseIcon)) {
-                        messagesPopoverCoreModalBackdrop.remove();
+                    if (drawerBackdropPending) {
+                        const messagesPopoverCoreModalBackdrop =
+                            document.querySelector(SELECTORS.MODAL_BACKDROP);
+                        if (messagesPopoverCoreModalBackdrop) {
+                            messagesPopoverCoreModalBackdrop.remove();
+                            // Restore scrolling (including horizontal scroll) on the main page.
+                            const pageWrapper = document.querySelector(SELECTORS.PAGE_WRAPPER);
+                            if (pageWrapper) {
+                                pageWrapper.style.overflow = 'visible';
+                            }
+                            drawerBackdropPending = false;
+                        }
                     }
-                    const messagePopoverIsHidden =
-                        document.querySelector(SELECTORS.MESSAGE_APP_CLASS)
-                            .parentElement.classList.contains('hidden');
-                    const messageDrawerIcon = document.querySelector(SELECTORS.MESSAGE_DRAWER_TOGGLE);
 
+                    const messageAppElement = document.querySelector(SELECTORS.MESSAGE_APP_CLASS);
+                    const messageDrawerRootForHidden = messageAppElement ? messageAppElement.parentElement : null;
+                    const messagePopoverIsHidden = Boolean(
+                        messageDrawerRootForHidden && messageDrawerRootForHidden.classList.contains('hidden')
+                    );
+                    const messageDrawerIcon = document.querySelector(SELECTORS.MESSAGE_DRAWER_TOGGLE);
                     if (messagePopoverIsHidden && messageDrawerIcon === document.activeElement) {
                         messageDrawerIcon.blur();
                     }

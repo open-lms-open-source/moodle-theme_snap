@@ -98,7 +98,28 @@ Feature: Testing sidebarmenu in theme_snap
     Given I log in as "admin"
     And I click on "[id^='message-drawer-toggle-']" "css_element"
     Then "div.message-app" "css_element" should exist
-    Then "div.modal_backdrop" "css_element" should not exist
+    Then "div.modal-backdrop" "css_element" should not exist
+    And the "style" attribute of "#page" "css_element" should not contain "overflow: hidden"
+
+  @javascript
+  Scenario: Users can still reply to a forum discussion while the message drawer is open
+    Given the following "courses" exist:
+      | fullname | shortname | category |
+      | Course 1 | C1        | 0        |
+    And the following "activities" exist:
+      | activity | name            | course | idnumber |
+      | forum    | Test forum name | C1     | forum1   |
+    And the following "mod_forum > discussions" exist:
+      | forum  | course | user  | name         | message                               |
+      | forum1 | C1     | admin | Discussion 1 | Discussion contents 1, first message  |
+    And I am on the "Test forum name" "forum activity" page logged in as admin
+    And I click on "Discussion 1" "link"
+    And I click on "[id^='message-drawer-toggle-']" "css_element"
+    And "div.message-app" "css_element" should exist
+    When I click on "Reply" "link"
+    And I set the field "post" to "Reply typed while the message drawer is open"
+    And I press "Post to forum"
+    Then I should see "Reply typed while the message drawer is open"
 
   @javascript
   Scenario: The page element should be visible when sidebar drawers are opened
