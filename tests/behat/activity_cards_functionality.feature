@@ -148,7 +148,7 @@ Feature: Check functionality in activity cards.
     And I click on "li.activity-wrapper.modtype_url [data-bs-toggle='dropdown']" "css_element"
     And I press enter
     And "li.activity-wrapper.modtype_url .dropdown-menu.show" "css_element" should be visible
-    And "li.activity-wrapper.modtype_url .dropdown-menu.show[data-popper-placement='top-start']" "css_element" should exist
+    And "li.activity-wrapper.modtype_url .dropdown-menu.show[data-popper-placement='top-end']" "css_element" should exist
     And I click on "li.activity-wrapper.modtype_url .dropdown-menu.show a[aria-label='Availability']" "css_element"
     And I should see "Show on course page"
     And I should see "Hide on course page"
