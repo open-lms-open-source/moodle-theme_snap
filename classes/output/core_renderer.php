@@ -1522,7 +1522,7 @@ HTML;
                 $extraClass = 'col-sm-4'; // Fourth, fifth, and sixth cards = 33.3% when there are 6 cards.
             }
 
-            $cards = '';
+            $cards = '<div class="snap-feature-spots-list" role="list">';
             for ($i = 1; $i <= $fscount; $i++) {
                 $feature = $features[$i - 1];
                 // Open a new row every three cards.
@@ -1530,15 +1530,17 @@ HTML;
                     if ($i > 1) {
                         $cards .= '</div>'; // Close the previous row.
                     }
-                    $cards .= '<div class="row py-4 justify-content-center">'; // Open a new row.
+                    $cards .= '<div class="row py-4 justify-content-center" role="presentation">'; // Open a new row.
                 }
                 $currentcolclass = $colclass;
                 if ($i > 3) {
                     $currentcolclass = $extraClass; // Apply the special class for the fourth, fifth, and sixth cards.
                 }
-                $cards .= '<div class="' . $currentcolclass . '" id="snap-feature-' . $i . '">' . $feature . '</div>';
+                $cards .= '<div class="' . $currentcolclass . '" id="snap-feature-' . $i . '" role="listitem">'
+                    . $feature . '</div>';
             }
             $cards .= '</div>'; // Close the last row.
+            $cards .= '</div>';
 
             $fsedit = '';
             if ($this->page->user_is_editing()) {
@@ -1586,12 +1588,14 @@ HTML;
         $fscontenttext =
             '<p class="snap-feature-text">' . format_text($text, FORMAT_MOODLE, ['para' => false]) . '</p>';
 
+        $arialabel = get_string('arialabelfeaturespot', 'theme_snap');
+
         if ($link) {
-            $card = '<div class="snap-feature">
+            $card = '<div class="snap-feature" role="group" aria-label="' .$arialabel. '">
                         <div class="snap-feature-block position-relative">' .$image.$linktitle.$fscontenttext. '</div>
                     </div>';
         } else {
-            $card = '<div class="snap-feature">
+            $card = '<div class="snap-feature" role="group" aria-label="' .$arialabel. '">
                         <div class="snap-feature-block">' .$image.$nolinktitle.$fscontenttext. '</div>
                     </div>';
         }
