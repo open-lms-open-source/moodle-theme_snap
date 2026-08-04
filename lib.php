@@ -341,6 +341,9 @@ function theme_snap_get_pre_scss($theme) {
     $fallbacksans = 'Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
     $settings['font-family-feature'] = $userfontsans . $fallbacksans;
 
+    // Expose $theme->settings->customisenavbar for SCSS modifications.
+    $scss .= '$customisenavbar: ' . (!empty($theme->settings->customisenavbar) ? 'true' : 'false') . ";\n";
+
     if (!empty($theme->settings->customisenavbar)) {
         $settings['nav-bg'] = !empty($theme->settings->navbarbg) ? $theme->settings->navbarbg : '#ffffff';
         $settings['nav-color'] = !empty($theme->settings->navbarlink) ? $theme->settings->navbarlink : $settings['brand-primary'];
