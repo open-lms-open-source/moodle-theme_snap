@@ -4603,6 +4603,11 @@ table th img.iconhelp {
         padding-left: 15.3px;
         border-bottom: unset;
     }
+    // Rules to display the contents of each course list item.
+    > ul.frontpage-course-list-items,
+    > ul.frontpage-course-list-items > li {
+        display: contents;
+    }
 }
 
 .snap-home-course {

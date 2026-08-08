@@ -1223,11 +1223,102 @@ class course_renderer extends \core_course_renderer {
             'class' => $classes,
             'data-courseid' => $course->id,
             'data-type' => self::COURSECAT_TYPE_COURSE,
+            'role' => 'group',
+            'aria-label' => 'Course',
         ));
         $content .= $cardcontent;
         $content .= \core\output\html_writer::end_tag('div');
 
         return $content;
+    }
+
+    /**
+     * Renders the list of courses.
+     *
+     * Uses core rendering, and on the front page (site-index) only, wraps the course boxes in an <li>,
+     * and the whole run of boxes in a <ul role="list">.
+     *
+     * @param \coursecat_helper $chelper various display options
+     * @param array $courses the list of courses to display
+     * @param int|null $totalcount total number of courses (affects display mode if it is AUTO or pagination is used)
+     * @return string
+     */
+    protected function coursecat_courses(\coursecat_helper $chelper, $courses, $totalcount = null) {
+        $content = parent::coursecat_courses($chelper, $courses, $totalcount);
+
+        // This is just for the front page course lists, everything else uses core rendering.
+        if ($this->page->pagetype !== 'site-index' || trim($content) === '') {
+            return $content;
+        }
+
+        return $this->wrap_courseboxes_in_list($content);
+    }
+
+    /**
+     * We need this here because we rely on the Core renderer. Here we wrap each course box in an <li>,
+     * within an <ul role="list">. Only the wrapping is added, so the course box markup itself is preserved.
+     *
+     * @param string $html the rendered ".courses" container produced by the core renderer
+     * @return string
+     */
+    private function wrap_courseboxes_in_list(string $html): string {
+        $doc = new \DOMDocument();
+        $previous = libxml_use_internal_errors(true);
+        $loaded = $doc->loadHTML('<?xml encoding="utf-8"?>' . $html,
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+        libxml_use_internal_errors($previous);
+
+        if (!$loaded) {
+            // This falls back to unmodified core output.
+            return $html;
+        }
+
+        // The core output is a single ".courses" container element.
+        $container = null;
+        foreach ($doc->childNodes as $node) {
+            if ($node instanceof \DOMElement) {
+                $container = $node;
+                break;
+            }
+        }
+        if ($container === null) {
+            return $html;
+        }
+
+        $list = null;
+        foreach (iterator_to_array($container->childNodes) as $child) {
+            // Process each .coursebox element.
+            if ($child instanceof \DOMElement && $this->has_class($child, 'coursebox')) {
+                if ($list === null) {
+                    $list = $doc->createElement('ul');
+                    $list->setAttribute('role', 'list');
+                    $list->setAttribute('class', 'frontpage-course-list-items');
+                    $container->insertBefore($list, $child);
+                }
+                $item = $doc->createElement('li');
+                $item->setAttribute('role', 'listitem');
+                $container->removeChild($child);
+                $item->appendChild($child);
+                $list->appendChild($item);
+            } else {
+                $list = null;
+            }
+        }
+
+        return $doc->saveHTML($container);
+    }
+
+    /**
+     * Whether a DOM element has the given HTML class.
+     *
+     * @param \DOMElement $element
+     * @param string $class
+     * @return bool
+     */
+    private function has_class(\DOMElement $element, string $class): bool {
+        $classes = preg_split('/\s+/', trim($element->getAttribute('class')), -1, PREG_SPLIT_NO_EMPTY);
+        return in_array($class, $classes, true);
     }
 
 }
