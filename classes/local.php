@@ -2693,6 +2693,21 @@ SQL;
         require_once($CFG->libdir . '/completionlib.php');
 
         $completion = new \completion_info($course);
+
+        // Bail out before doing any work when there is nothing to report. get_activities() only
+        // looks at each module's own completion field, never the course setting, so without this the
+        // count below runs in full and get_course_progress_percentage() then discards it by
+        // returning null.
+        if (!$completion->is_enabled() || !$completion->is_tracked_user($user->id)) {
+            return [
+                'userid' => $user->id,
+                'courseid' => $course->id,
+                'courseprogress' => '0/0',
+                'progresspercentage' => 0,
+                'hasprogress' => false,
+            ];
+        }
+
         if (!empty($CFG->openlms_completionprogress_legacy)) {
             $modules = $completion->get_activities();
             $count = count($modules);
@@ -2703,7 +2718,10 @@ SQL;
             $totalcompleted = $completion->count_modules_completed($user->id, array_keys($modules));
         }
         $courseprogress = $totalcompleted.'/'.$count;
-        $progresspercentage = \core_completion\progress::get_course_progress_percentage($course);
+        // Pass $user->id: without it core falls back to $USER, so the fraction above and this
+        // percentage described different people when called for another user, as
+        // ws_course_toc_progressbar does.
+        $progresspercentage = \core_completion\progress::get_course_progress_percentage($course, $user->id);
         $hasprogress = false;
         if ($progresspercentage === 0 || $progresspercentage > 0) {
             $hasprogress = true;
