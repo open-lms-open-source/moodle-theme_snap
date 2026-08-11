@@ -428,7 +428,7 @@ class local {
         $trackcount = 0;
         $compcount = 0;
         if ($completioninfo->is_enabled()) {
-            if (!empty($CFG->completionexcludehidden)) {
+            if (!empty($CFG->openlms_completionprogress_legacy)) {
                 $modules = $completioninfo->get_activities();
                 $trackcount = count($modules);
                 foreach ($modules as $module) {
@@ -2693,7 +2693,7 @@ SQL;
         require_once($CFG->libdir . '/completionlib.php');
 
         $completion = new \completion_info($course);
-        if (!empty($CFG->completionexcludehidden)) {
+        if (!empty($CFG->openlms_completionprogress_legacy)) {
             $modules = $completion->get_activities();
             $count = count($modules);
             $totalcompleted = $completion->count_modules_completed($user->id);
