@@ -14,6 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+// jQuery is required: core/custom_interaction_events fires 'activate' via $(target).trigger(),
+// a synthetic jQuery event with no native DOM equivalent, and core/modal + message_drawer.js
+// both consume it through jQuery. There's no non-jQuery way to intercept it.
+import $ from 'jquery';
 import {isSmall} from 'core/pagehelpers';
 import {addCloseButtonToBlockSettings} from './util';
 import {setUserPreferences, getUserPreferences} from 'core_user/repository';
@@ -429,25 +433,16 @@ const isOutsideMessageDrawerInteraction = (target) => {
 };
 
 /**
- * Stop Core's "click outside the drawer closes it" behaviour before it fires, rather than
- * reacting after the drawer has already closed. Suppresses the underlying cie:activate event
- * (core/custom_interaction_events) via native capture-phase listeners, which always run before
- * Core's own bubble-phase ones regardless of script load order. Covers both click and
- * Enter/Space keydown, since cie:activate is synthesised from either.
+ * Stop message_drawer.js's own document-level 'activate' listener from closing the drawer on
+ * outside clicks. Bound on <html>, the last stop before `document` in the bubble path, so
+ * closer 'activate' consumers (e.g. core/modal's buttons) still run unaffected.
  */
 const preventMessageDrawerOutsideClose = () => {
-    const suppressActivate = (e) => {
+    $(document.documentElement).on(CustomEvents.events.activate, (e) => {
         if (isOutsideMessageDrawerInteraction(e.target)) {
-            e[`triggeredCustom_${CustomEvents.events.activate}`] = true;
+            e.stopPropagation();
         }
-    };
-    document.addEventListener('click', suppressActivate, true);
-    document.addEventListener('keydown', (e) => {
-        const isModifierPressed = e.shiftKey || e.metaKey || e.altKey || e.ctrlKey;
-        if (!isModifierPressed && (e.key === 'Enter' || e.key === ' ')) {
-            suppressActivate(e);
-        }
-    }, true);
+    });
 };
 
 /**
