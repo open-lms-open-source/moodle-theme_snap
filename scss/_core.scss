@@ -2338,6 +2338,14 @@ body.path-course #moodle-page #page-header {
     padding: 0.5em 0;
     text-align: center;
     font-size: $h1-font-size;
+    &.card-title {
+        font-weight: bold;
+        display: block;
+        text-align: start;
+        padding: 1em 2em 1em 1.8em;
+        color: $brand-primary;
+        font-size: 1.2rem;
+    }
 }
 
 /* FRONT PAGE SITE NEWS */
@@ -4625,7 +4633,9 @@ table th img.iconhelp {
 }
 
 .snap-home-course {
-    &:hover {
+    &:hover,
+    &:focus-within,
+    &.snap-modal-focus-target {
         z-index: 1;
         margin-bottom: 3em;
     }
@@ -4650,7 +4660,9 @@ table th img.iconhelp {
         height: 210px;
     }
 
-    &:hover {
+    &:hover,
+    &:focus-within,
+    &.snap-modal-focus-target {
         background: white;
         transform: scale(1.03);
         box-shadow:
@@ -4730,7 +4742,7 @@ table th img.iconhelp {
             font-weight: 900;
         }
     }
-    &:not(:hover) {
+    &:not(:hover):not(:focus-within):not(.snap-modal-focus-target) {
         .card-header {
             display: block;
             .snap-home-course-title {
@@ -4863,13 +4875,6 @@ table th img.iconhelp {
                 margin-left: 1.5em;
                 font-size: medium;
             }
-        }
-        .card-title {
-            font-weight: bold;
-            display: block;
-            text-align: start;
-            padding: 1em 2em 0 2em;
-            color: $brand-primary;
         }
         .coursecategory {
             display: block;
