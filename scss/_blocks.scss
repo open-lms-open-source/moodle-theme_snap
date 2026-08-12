@@ -452,7 +452,6 @@ body.path-site .block.block_settings {
         }
         label {
             color: $brand-primary !important;
-            margin-top: .1rem;
         }
     }
     .form-check-input {
@@ -463,6 +462,25 @@ body.path-site .block.block_settings {
     @include media-breakpoint-down(md) {
         .input-group label {
             display: none;
+        }
+    }
+}
+
+// Styles for the edit mode toggle when $customisenavbar is turned off
+@if not $customisenavbar {
+    $setmode-off-color: #767676;
+
+    .theme-snap .editmode-switch-form .form-check.form-switch .form-check-input[name="setmode"]:not(:checked) {
+        border-color: $setmode-off-color;
+        background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$setmode-off-color}'/></svg>"));
+
+        &:focus {
+            border-color: $setmode-off-color;
+            background-image: none;
+
+            &::before {
+                color: $setmode-off-color;
+            }
         }
     }
 }

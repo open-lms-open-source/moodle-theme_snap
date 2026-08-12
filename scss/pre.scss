@@ -136,6 +136,7 @@ $color-code:                         $activity-icon-content-bg; // Orange.
 // Colour variables for the customisable mr_nav.
 // -------------------------
 
+$customisenavbar:                   false !default;
 $nav-bg:                            rgba(255, 255, 255, .95) !default;
 $nav-color:                         $brand-primary !default;
 $nav-color-hover:                   darken($nav-color, 8%);
