@@ -332,7 +332,7 @@ function theme_snap_get_pre_scss($theme) {
     }
 
     $settings['brand-primary'] = !empty($theme->settings->themecolor) ? $theme->settings->themecolor : '#3bcedb';
-    $userfontsans  = $theme->settings->headingfont;
+    $userfontsans  = $theme->settings->headingfont ?? '';
     if (empty($userfontsans) || in_array($userfontsans, ['Roboto', '"Roboto"'])) {
         $userfontsans = '';
     } else {
