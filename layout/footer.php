@@ -116,8 +116,12 @@ if (!empty($custommenu) && $PAGE->pagelayout !== 'login') {
 ?>
 <div id="page-footer">
 <br/>
-<?php echo $OUTPUT->standard_footer_html(); ?>
-<?php echo $OUTPUT->debug_footer_html(); ?>
+<?php
+if ($showfooterlogin) {
+    echo $OUTPUT->standard_footer_html();
+}
+echo $OUTPUT->debug_footer_html();
+?>
 </div>
 </footer>
 <?php echo $OUTPUT->standard_end_of_body_html(); ?>
