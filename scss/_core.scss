@@ -6184,11 +6184,16 @@ div[id^=snap-create-activity-] .section-modchooser-link {
 // Do not limit the width of the image for Drag and drop onto image quizzes type, for editing, preview and attempt.
 #page-question-type-ddimageortext #id_previewareaheader .ddarea.que.ddimageortext img.dropbackground,
 #page-question-type-ddimageortext #id_previewareaheader .ddarea.que.ddimageortext img.droppreview,
+#page-question-preview .droparea img.dropbackground,
 #page-question-preview .droparea .dropzones img.draghome,
+#page-mod-quiz-attempt .droparea img.dropbackground,
 #page-mod-quiz-attempt .droparea .dropzones img.draghome,
+#page-mod-quiz-review .droparea img.dropbackground,
 #page-mod-quiz-review .droparea .dropzones img.draghome,
+#page-question-bank-previewquestion-preview .droparea img.dropbackground,
 #page-question-bank-previewquestion-preview .droparea .dropzones img.draghome {
     max-width: none;
+    max-height: none;
 }
 
 // Change color contrast for quiz timer in a quiz attempt.
