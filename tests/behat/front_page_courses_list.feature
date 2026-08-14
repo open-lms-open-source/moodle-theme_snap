@@ -138,7 +138,6 @@ Feature: Correct functionality of enrolled courses and available courses in the 
     And I should see "0 students"
     And I press the tab key
     And I press the tab key
-    And I press the tab key
     And the focused element is "Show course information" "button"
     And I press the enter key
     And ".snap-home-course-card" "css_element" should be visible

@@ -4680,37 +4680,30 @@ table th img.iconhelp {
         .snap-home-course-title {
             text-decoration: underline;
         }
+        .snap-home-course-title {
+            margin-left: 2%;
+            text-align: left;
+            overflow: hidden;
+            background: transparent;
+            transition: transform 1s ease;
+            transform: translateX(-2%);
+        }
+        @keyframes snap-info-blink {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .more-info {
+            animation: snap-info-blink 0.5s ease-in-out;
+            opacity: .8;
+            pointer-events: auto;
+            &:hover {
+                opacity: 1;
+            }
+        }
         .card-header {
-            .snap-home-course-title {
-                margin-left: 2%;
-                text-align: left;
-                overflow: hidden;
-                background: transparent;
-                transition: transform 1s ease;
-                transform: translateX(-2%);
-                max-width: 80%;
-            }
-            @keyframes snap-info-blink {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
-            }
-
-            .more-info {
-                width: auto;
-                padding: 0;
-                display: block;
-                font-size: larger;
-                color: $brand-primary;
-                animation: snap-info-blink 0.5s ease-in-out;
-                opacity: .8;
-                &::before {
-                    pointer-events: all;
-                }
-                &:hover {
-                    opacity: 1;
-                }
-            }
+            padding-top: 0;
+            padding-left: 0;
             .additional-options {
                 margin-top: .5em;
             }
@@ -4718,12 +4711,7 @@ table th img.iconhelp {
             .coursestudents {
                 width: 100%;
                 span {
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
-                    overflow: hidden;
-                    text-align: left;
-                    font-size: medium;
+                    opacity: 1;
                 }
                 @media screen and (max-width: 768px) {
                     margin-left: -2%;
@@ -4750,10 +4738,42 @@ table th img.iconhelp {
     &:not(:hover):not(:focus-within):not(.snap-modal-focus-target) {
         .card-header {
             display: block;
-            .snap-home-course-title {
-                flex: unset;
-            }
+            max-height: 0;
+            min-height: 0;
+            padding: 0;
+            overflow: hidden;
         }
+    }
+    .snap-home-course-link {
+        text-decoration: none;
+        color: inherit;
+    }
+    .snap-home-course-title {
+        margin: 0;
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .more-info {
+        position: absolute;
+        right: 4%;
+        bottom: calc(25% + 10px);
+        z-index: 2;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(30, 40, 35, .85);
+        color: #fff;
+        font-size: larger;
+        opacity: 0;
+        pointer-events: none;
     }
     .card-header {
         justify-content: space-between;
@@ -4765,22 +4785,17 @@ table th img.iconhelp {
         margin-left: 0;
         border-bottom-left-radius: .5rem;
         border-bottom-right-radius: .5rem;
-        .snap-home-course-title {
-            width: auto;
-            padding: 0;
-            -webkit-line-clamp: 1;
-            max-height: 1.4em;
-            min-height: unset;
-            max-width: unset;
-        }
-        .more-info {
-            display: none;
-        }
         .additional-options,
         .coursestudents {
             width: 100%;
             span {
-                display: none;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+                text-align: left;
+                font-size: medium;
+                opacity: 0;
             }
         }
     }

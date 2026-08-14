@@ -39,7 +39,6 @@ Feature: Course card modal dialog accessibility
     Given I hover ".snap-home-course" "css_element"
     And I press the tab key
     And I press the tab key
-    And I press the tab key
     And the focused element is "Show course information" "button"
     When I press the enter key
     And ".snap-home-course-card" "css_element" should be visible
