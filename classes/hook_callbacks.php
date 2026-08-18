@@ -35,7 +35,8 @@ class hook_callbacks {
     public static function before_footer_html_generation(\core\hook\output\before_footer_html_generation $hook): void {
         global $CFG, $PAGE;
 
-        if ($PAGE->theme->name !== 'snap') {
+        require_once("{$CFG->dirroot}/theme/snap/lib.php");
+        if (!theme_snap_is_snap_based($PAGE->theme)) {
             return;
         }
 
