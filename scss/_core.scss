@@ -5362,38 +5362,63 @@ section#region-main {
     max-width: 100% !important;
 }
 
-// Readjust restriction block position when adding a new activity.
+@include media-breakpoint-down(xl) {
+    .snap-form-required.col-md-8,
+    .snap-form-advanced.col-md-4 {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+}
+
+.availability-field.fcontainer {
+    max-width: 100%;
+}
+.availability-inner,
+.availability-plugincontrols {
+    max-width: 100%;
+}
+.availability-inner select {
+    max-width: 100%;
+    min-width: 0;
+}
+.availability-field img {
+    min-width: 16px;
+    min-height: 16px;
+}
+.availability-inner .availability-group.mb-3 {
+    display: inline-flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    min-width: 0;
+}
+.availability-inner .availability-item.d-sm-flex.align-items-center {
+    flex-wrap: wrap;
+    max-width: 100%;
+    min-width: 0;
+    .availability-eye.col-form-label {
+        display: contents;
+        position: absolute;
+    }
+    .d-inline-block.col-form-label.availability-delete.p-x-1 {
+        display: contents !important;
+    }
+    .availability_completion.availability-plugincontrols,
+    .availability_date.availability-plugincontrols,
+    .d-inline-block.availability_grade.availability-plugincontrols,
+    .availability_group.availability-plugincontrols,
+    .availability_profile.availability-plugincontrols,
+    .availability_releasecode.availability-plugincontrols {
+        margin-right: 0.5em;
+    }
+    span.label.label-warning {
+        margin-left: 0.5em;
+    }
+}
+.availability-group {
+    display: inline-block;
+}
+
 .snap-form-advanced.col-md-4 {
-    .availability-field img {
-        min-width: 16px;
-        min-height: 16px;
-    }
-    .availability-inner .availability-group.mb-3 {
-        display: inline-grid;
-    }
-    .availability-inner .availability-item.d-sm-flex.align-items-center {
-        .availability-eye.col-form-label {
-            display: contents;
-            position: absolute;
-        }
-        .d-inline-block.col-form-label.availability-delete.p-x-1 {
-            display: contents !important;
-        }
-        .availability_completion.availability-plugincontrols,
-        .availability_date.availability-plugincontrols,
-        .d-inline-block.availability_grade.availability-plugincontrols,
-        .availability_group.availability-plugincontrols,
-        .availability_profile.availability-plugincontrols,
-        .availability_releasecode.availability-plugincontrols {
-            margin-right: 0.5em;
-        }
-        span.label.label-warning {
-            margin-left: 0.5em;
-        }
-    }
-    .availability-group {
-        display: inline-block;
-    }
     .d-flex label {
         display: inline-flex;
         margin-bottom: .5rem;
