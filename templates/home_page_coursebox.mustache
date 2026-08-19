@@ -40,18 +40,16 @@
             {{/isloggedin}}
         </div>
         {{{hiddeninfobadge}}}
-        <a href="{{courselink}}" title="{{coursename}}">
+        <a class="snap-home-course-link" href="{{courselink}}" title="{{coursename}}">
             <div class="{{imageclasses}}" style="{{imagestyle}}"></div>
+            <h3 class="snap-home-course-title">{{coursename}}</h3>
         </a>
+        <button class="btn more-info" data-bs-toggle="modal" data-bs-target="#coursemodal{{courseid}}"
+            title="{{#str}}showcourseinformation, theme_snap{{/str}}"
+            aria-label="{{#str}}showcourseinformation, theme_snap{{/str}}" tabindex="0">
+                <i class="fa-solid fa-circle-info"></i>
+        </button>
         <div class="card-header row">
-            <a class="snap-home-course-title"" href="{{courselink}}" title="{{coursename}}">
-                <span class="">{{coursename}}</span>
-            </a>
-            <button class="btn more-info" data-bs-toggle="modal" data-bs-target="#coursemodal{{courseid}}"
-                title="{{#str}}showcourseinformation, theme_snap{{/str}}"
-                aria-label="{{#str}}showcourseinformation, theme_snap{{/str}}" tabindex="0">
-                    <i class="fa-solid fa-circle-info"></i>
-            </button>
             <div class="additional-options row">
                 <div class="col-12">
                     {{{coursecategoryname}}}
