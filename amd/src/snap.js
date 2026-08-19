@@ -96,6 +96,7 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
         /**
          * Change save and cancel buttons from forms to the bottom on mobile mode.
+         * Only covers width < 992 — see the reordering further down for 992-1200.
          */
         $(window).on('resize', function() {
             mobileFormChecker();
@@ -1193,6 +1194,27 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         if ($('body#page-mod-qbank-mod').length) {
                             $('#fgroup_id_buttonar').detach().insertAfter('.snap-form-advanced');
                         }
+
+                        // Below the `xl` breakpoint the columns above stack, so #fgroup_id_buttonar
+                        // (inside .snap-form-required) renders before .snap-form-advanced instead of
+                        // after it. Companion to mobileFormChecker() above, which covers width < 992.
+                        var stackedQuery = window.matchMedia('(max-width: 1199.98px)');
+                        var isButtonarInPlace = function() {
+                            return $('.snap-form-advanced + #fgroup_id_buttonar').length > 0;
+                        };
+                        var repositionButtonar = function() {
+                            if (stackedQuery.matches && !isButtonarInPlace()) {
+                                $('#fgroup_id_buttonar').detach().insertAfter('.snap-form-advanced');
+                            }
+                        };
+                        // Other code re-wraps #fgroup_id_buttonar into a fieldset shortly after this
+                        // runs, undoing an immediate move. Rather than guess a safe delay, react to
+                        // it directly: re-apply whenever the DOM around it changes, and only while
+                        // stacked — above the breakpoint we leave it wherever it naturally settles.
+                        repositionButtonar();
+                        stackedQuery.addEventListener('change', repositionButtonar);
+                        new MutationObserver(repositionButtonar)
+                            .observe($('.snap-form-advanced')[0].parentNode, {childList: true, subtree: true});
 
                         var description = $('form[id^="mform1"] fieldset:first .fitem_feditor:not(.required)');
 

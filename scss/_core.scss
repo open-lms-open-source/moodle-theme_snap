@@ -5369,26 +5369,45 @@ section#region-main {
     }
 }
 
+// JS moves #fgroup_id_buttonar to follow .snap-form-advanced when these columns
+// stack below the `xl` breakpoint. .snap-form-advanced is a 100%-width float
+// there, so buttonar (a flex container) must clear it or gets squeezed to 0 width.
+.snap-form-advanced + #fgroup_id_buttonar {
+    clear: both;
+}
+
 .availability-field.fcontainer {
     max-width: 100%;
 }
 .availability-inner,
 .availability-plugincontrols {
     max-width: 100%;
+    min-width: 0;
 }
 .availability-inner select {
     max-width: 100%;
+    min-width: 0;
+}
+.snap-form-advanced .availability-inner select {
+    max-width: 100% !important;
     min-width: 0;
 }
 .availability-field img {
     min-width: 16px;
     min-height: 16px;
 }
-.availability-inner .availability-group.mb-3 {
+.availability-plugincontrols label,
+.availability-group label,
+.availability-inner .availability-group,
+.availability-inner .availability-cohort,
+.availability-inner .availability-coursecompleted,
+.availability-inner .availability-language,
+.availability-inner .availability-product {
     display: inline-flex;
     flex-wrap: wrap;
-    max-width: 100%;
+    align-items: center;
     min-width: 0;
+    max-width: 100%;
 }
 .availability-inner .availability-item.d-sm-flex.align-items-center {
     flex-wrap: wrap;
