@@ -2822,4 +2822,23 @@ SQL;
         }
         return (string) get_config('theme_snap', $settingname) !== '0';
     }
+
+    /**
+     * Free the tool_usertours reset-link container from Boost's footer, so Snap can use it.
+     *
+     * This allows us to get future changes from Core's footer template (no template override on Snap)
+     *
+     * Renaming the class here keeps its content hidden, and lets the reset user tour link land
+     * in the visible container in Snap's own #moodle-footer
+     *
+     * @param string $html Rendered HTML
+     * @return string
+     */
+    public static function reset_usertours_container(string $html): string {
+        return str_replace(
+            'tool_usertours-resettourcontainer',
+            'snap-hidden-resettourcontainer',
+            $html
+        );
+    }
 }
