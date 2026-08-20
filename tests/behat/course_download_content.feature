@@ -77,6 +77,7 @@ Feature: Users can see a button or link to download content when using snap.
     # Download content enabled.
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
+    And I click on "Open course index" "button"
     And I follow "Course Dashboard"
     And I should see "Download course content"
     # Only visible in admin menu.
