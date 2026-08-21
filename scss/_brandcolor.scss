@@ -2062,6 +2062,20 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
 :root {
     --brand-primary: #{$brand-primary};
 }
+
+// -------------------------
+    //enrol_programs - Program Catalogue filters
+// -------------------------
+.program-catalogue-filters {
+    --pc-accent: #{$brand-primary};
+    --pc-accent-bg: #{rgba($brand-primary, 0.1)};
+    --pc-accent-bg-subtle: #{rgba($brand-primary, 0.06)};
+
+   .filter-tags-panel input[type="checkbox"]:checked:not(:disabled) {
+    accent-color: $brand-primary !important;
+   }
+}
+
 // -------------------------
 // Tiles course format.
 // -------------------------
