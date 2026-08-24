@@ -7316,6 +7316,12 @@ li.section.main {
   z-index: 1052; // Higher than Snap header.
 }
 
+// Prevent modals from stretching to full viewport height on mobile.
+.modal-dialog-scrollable {
+  max-height: calc(100% - var(--bs-modal-margin) * 2);
+  height: auto;
+}
+
 // Remove "Powered by Moodle" Core icon and message.
 #page-footer {
   &.footer-popover .btn-footer-popover,
