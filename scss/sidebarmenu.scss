@@ -62,20 +62,16 @@ $mobile-sidebar-peek-width: 10px;
     right: 0;
     width: $sidebar-width;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    display: none;
     padding: 30px 0 15px;
-    align-items: center;
-    justify-content: flex-start;
     overflow-y: auto;
     overflow-x: hidden;
-    transform: translateX($sidebar-peek-width);
-    transition: transform $transition-speed ease;
-    
+
     .snap-sidebar-menu.show & {
+        display: flex;
         transform: translateX(0);
     }
-    
+
     // Force white color for all links and icons inside the content area
     a, i, .fa {
         color: #fff !important;
@@ -102,6 +98,16 @@ $mobile-sidebar-peek-width: 10px;
             }
         }
     }
+}
+
+.snap-sidebar-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .snap-sidebar-menu-trigger {

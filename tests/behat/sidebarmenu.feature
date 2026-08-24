@@ -136,3 +136,17 @@ Feature: Testing sidebarmenu in theme_snap
     And I click on "#snap_feeds_side_menu_trigger" "css_element"
     And "#snap_feeds_side_menu.state-visible" "css_element" should exist
     Then "#page" "css_element" should be visible
+
+  @javascript
+  Scenario: Collapsed sidebar menu content is hidden and reappears when reopened
+    Given I am logged in as "admin"
+    And I am on site homepage
+    And ".snap-sidebar-menu.show" "css_element" should exist
+    And I wait until "#snap-sidebar-menu-content" "css_element" is visible
+    When I click on ".snap-sidebar-menu-trigger" "css_element"
+    Then ".snap-sidebar-menu.show" "css_element" should not exist
+    And "#snap-sidebar-menu-content" "css_element" should exist
+    And I wait until "#snap-sidebar-menu-content" "css_element" is not visible
+    When I click on ".snap-sidebar-menu-trigger" "css_element"
+    Then ".snap-sidebar-menu.show" "css_element" should exist
+    And I wait until "#snap-sidebar-menu-content" "css_element" is visible
