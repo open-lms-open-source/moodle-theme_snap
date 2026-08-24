@@ -26,26 +26,29 @@
 <div id="block-myoverview-{{uniqid}}" class="block-myoverview block-cards" data-region="myoverview" role="navigation">
     <hr class="mt-0"/>
 
-    <div role="search" data-region="filter" class="d-flex align-items-center" aria-label="{{#str}} aria:controls, block_myoverview {{/str}}">
-        <div class="row g-0">
-            {{> block_myoverview/nav-grouping-selector }}
+    <div role="region" aria-label="{{#str}} coursefilterregion, theme_snap {{/str}}" data-region="course-filter-region">
+        <div role="search" data-region="filter" class="d-flex align-items-center" aria-label="{{#str}} aria:controls, block_myoverview {{/str}}">
+            <div class="row g-0">
+                {{> block_myoverview/nav-grouping-selector }}
 
-            {{> block_myoverview/nav-year-selector }}
+                {{> block_myoverview/nav-year-selector }}
 
-            {{> block_myoverview/nav-completion-selector }}
+                {{> block_myoverview/nav-completion-selector }}
 
-            {{> block_myoverview/nav-search-widget }}
+                <div class="sr-only">{{#str}} coursefilterinstructions, theme_snap {{/str}}</div>
+                {{> block_myoverview/nav-search-widget }}
 
-            {{> block_myoverview/nav-sort-selector }}
+                {{> block_myoverview/nav-sort-selector }}
 
-            {{#displaydropdown}}
-                {{> block_myoverview/nav-display-selector }}
-            {{/displaydropdown}}
+                {{#displaydropdown}}
+                    {{> block_myoverview/nav-display-selector }}
+                {{/displaydropdown}}
+            </div>
         </div>
-    </div>
 
-    <div class="container-fluid block-myoverview-content">
-        {{> block_myoverview/courses-view }}
+        <div class="container-fluid block-myoverview-content">
+            {{> block_myoverview/courses-view }}
+        </div>
     </div>
 </div>
 {{#js}}
