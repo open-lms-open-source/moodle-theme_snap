@@ -2106,4 +2106,36 @@ JS;
                 }
             ");
     }
+
+    /**
+     * Create an enabled user tour with a single unattached step for the given URL path match.
+     *
+     * @Given /^a user tour named "(?P<name_string>(?:[^"]|\\")*)" exists for URL match "(?P<pathmatch_string>(?:[^"]|\\")*)"$/
+     * @param string $name Tour name, also used for the step title and content.
+     * @param string $pathmatch URL match for the tour, e.g. /course/view.php%
+     */
+    public function a_user_tour_exists_for_url_match($name, $pathmatch) {
+        $tour = \tool_usertours\tour::load_from_record((object) [
+            'id' => null,
+            'name' => $name,
+            'description' => $name,
+            'pathmatch' => $pathmatch,
+            'enabled' => true,
+            'configdata' => '',
+            'displaystepnumbers' => true,
+        ], true);
+        $tour->persist(true);
+
+        $step = \tool_usertours\step::load_from_record((object) [
+            'id' => null,
+            'tourid' => $tour->get_id(),
+            'title' => $name,
+            'content' => $name . ' content',
+            'targettype' => \tool_usertours\target::TARGET_UNATTACHED,
+            'targetvalue' => '',
+            'sortorder' => 0,
+            'configdata' => '',
+        ], true);
+        $step->persist(true);
+    }
 }

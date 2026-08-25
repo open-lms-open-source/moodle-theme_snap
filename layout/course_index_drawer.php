@@ -23,6 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_snap\local;
 use theme_snap\renderables\course_toc_module;
 
 defined('MOODLE_INTERNAL') || die();
@@ -91,7 +92,9 @@ $templatecontext = [
     'courseindex' => $courseindex,
     'courseindexopen' => $courseindexopen,
 ];
-echo $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext);
+echo local::reset_usertours_container(
+    $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext)
+);
 
 
 /**

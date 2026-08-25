@@ -921,7 +921,9 @@ class course_renderer extends \core_course_renderer {
             'output' => $this,
         ];
 
-        $output .= $this->render_from_template('theme_boost/footer', $data);
+        $output .= \theme_snap\local::reset_usertours_container(
+            $this->render_from_template('theme_boost/footer', $data)
+        );
 
         return $output;
     }
