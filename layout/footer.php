@@ -123,6 +123,7 @@ if ($showfooterlogin) {
 echo $OUTPUT->debug_footer_html();
 ?>
 </div>
+<div class="tool_usertours-resettourcontainer"></div>
 </footer>
 <?php echo $OUTPUT->standard_end_of_body_html(); ?>
 <!-- bye! -->
