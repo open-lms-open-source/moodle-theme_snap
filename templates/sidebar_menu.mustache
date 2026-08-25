@@ -63,8 +63,10 @@
 }}
 
 <div id="snap-sidebar-menu" class="snap-sidebar-menu {{#opensidebar}}show{{/opensidebar}} positioning-offscreen">
-    <div class="snap-sidebar-menu-content">
+    <div class="snap-sidebar-menu-content" id="snap-sidebar-menu-content">
+        <ul class="snap-sidebar-menu-list" role="list">
         {{#menuitems}}
+        <li>
             {{#customcontent}}
                 <div class="snap-sidebar-menu-item custom-menu-item {{#classes}}{{classes}}{{/classes}}" {{#dataattributes}}data-{{name}}="{{value}}" {{/dataattributes}}>
                     {{{customcontent}}}
@@ -72,7 +74,7 @@
             {{/customcontent}}
             {{^customcontent}}
                 {{#isbutton}}
-                    <button type="button" class="snap-sidebar-menu-item {{#classes}}{{classes}}{{/classes}}" {{#title}}title="{{title}}"{{/title}} 
+                    <button type="button" class="snap-sidebar-menu-item {{#classes}}{{classes}}{{/classes}}" {{#title}}title="{{title}}"{{/title}}
                         {{#dataattributes}}data-{{name}}="{{value}}" {{/dataattributes}} aria-expanded="false">
                         {{#icon}}<i class="fa {{icon}}" aria-hidden="true"></i>{{/icon}}
                         {{^icon}}{{#iconimg}}<img src="{{iconimg}}" alt="{{#title}}{{title}}{{/title}}{{^title}}Icon{{/title}}" />{{/iconimg}}{{/icon}}
@@ -95,7 +97,9 @@
                     {{/url}}
                 {{/isbutton}}
             {{/customcontent}}
+        </li>
         {{/menuitems}}
+        </ul>
     </div>
     <div id="goto-top-link">
         <a class="btn" role="button" href="javascript:void(0)" aria-label="Go to top">
