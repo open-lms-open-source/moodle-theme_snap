@@ -251,6 +251,32 @@ class local {
     }
 
     /**
+     * Can the current user manage their own tenant?
+     *
+     * Always false on EDU and wherever tool_olms_tenant is missing.
+     *
+     * @return bool
+     */
+    public static function can_manage_own_tenant(): bool {
+        global $CFG;
+
+        if (empty($CFG->olms_product_work) || !isloggedin() || isguestuser()) {
+            return false;
+        }
+
+        if (!class_exists('\tool_olms_tenant\tenants') || !\tool_olms_tenant\tenants::is_active()) {
+            return false;
+        }
+
+        $tenantid = \tool_olms_tenant\tenancy::get_tenant_id();
+        if (!$tenantid) {
+            return false;
+        }
+
+        return has_capability('tool/olms_tenant:view', \context_tenant::instance($tenantid));
+    }
+
+    /**
      * This has been taken directly from the moodle_page class but modified to work independently.
      * It's used by config.php so that hacks can be targetted at just the snap theme.
      * Work out the theme this page should use.

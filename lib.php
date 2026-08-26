@@ -252,10 +252,40 @@ function theme_snap_pluginfile($course, $cm, $context, $filearea, $args, $forced
     }
 }
 
+/**
+ * Is this Snap, or a child theme of Snap (theme_snap_tenants)?
+ *
+ * Use this instead of comparing to 'snap' — child themes reuse Snap's renderers and templates,
+ * so a name check silently switches features off for them.
+ *
+ * @param string|\core\output\theme_config|null $theme Theme name or config; null = current page.
+ * @return bool
+ */
+function theme_snap_is_snap_based($theme = null): bool {
+    global $PAGE;
+
+    if ($theme === null) {
+        $theme = $PAGE->theme;
+    }
+
+    if (is_string($theme)) {
+        if ($theme === 'snap') {
+            // Avoids loading a theme config for the common case.
+            return true;
+        }
+        $theme = \core\output\theme_config::load($theme);
+        if (!$theme) {
+            return false;
+        }
+    }
+
+    return $theme->name === 'snap' || in_array('snap', $theme->parents);
+}
+
 function theme_snap_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
     global $PAGE;
 
-    if ($PAGE->theme->name === 'snap') {
+    if (theme_snap_is_snap_based()) {
         if ($iscurrentuser) {
             $str = get_strings(['preferences']);
             if (isset($tree->nodes['editprofile'])) {
@@ -634,7 +664,7 @@ function theme_snap_user_preferences(): array {
 function theme_snap_coursemodule_standard_elements(moodleform_mod $formwrapper, MoodleQuickForm $mform): void {
     global $CFG;
 
-    if ($CFG->theme !== 'snap') {
+    if (!theme_snap_is_snap_based($CFG->theme)) {
         return;
     }
     // Snap-specific settings header.
@@ -659,7 +689,7 @@ function theme_snap_coursemodule_standard_elements(moodleform_mod $formwrapper, 
 function theme_snap_coursemodule_definition_after_data(moodleform_mod $formwrapper, MoodleQuickForm $mform): void {
     global $CFG, $DB;
 
-    if ($CFG->theme !== 'snap') {
+    if (!theme_snap_is_snap_based($CFG->theme)) {
         return;
     }
 
@@ -692,7 +722,7 @@ function theme_snap_coursemodule_definition_after_data(moodleform_mod $formwrapp
 function theme_snap_coursemodule_edit_post_actions(stdClass $moduleinfo, stdClass $course): stdClass {
     global $CFG, $DB;
 
-    if ($CFG->theme !== 'snap') {
+    if (!theme_snap_is_snap_based($CFG->theme)) {
         return $moduleinfo;
     }
 
