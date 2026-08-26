@@ -281,7 +281,7 @@ EOF;
      * @return void
      */
     public static function page_requires_js() {
-        global $CFG, $PAGE, $COURSE, $USER, $OUTPUT, $SESSION;
+        global $CFG, $PAGE, $COURSE, $USER, $OUTPUT, $SESSION, $DB;
 
         $PAGE->requires->jquery();
         $PAGE->requires->js_amd_inline("require(['theme_boost/loader']);");
@@ -410,9 +410,17 @@ EOF;
             }
         }
 
+        // On a multitenant site tool_olms_tenant replaces $SITE->shortname with a tenant label
+        // (see tenancy::hack_site_global()), which is not any course's shortname. ws_cover_image
+        // resolves the course from this value, so read the real record for the front page.
+        $courseshortname = $COURSE->shortname;
+        if ($COURSE->id == SITEID) {
+            $courseshortname = $DB->get_field('course', 'shortname', ['id' => SITEID]) ?: $COURSE->shortname;
+        }
+
         $coursevars = (object) [
             'id' => $COURSE->id,
-            'shortname' => $COURSE->shortname,
+            'shortname' => $courseshortname,
             'contextid' => $PAGE->context->id,
             'categoryid' => !empty($PAGE->category->id) ? $PAGE->category->id : false,
             'ajaxurl' => '/course/rest.php',

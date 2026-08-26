@@ -69,7 +69,9 @@ class settings_link implements \core\output\renderable {
             $caps = ['gradereport/grader:view', 'moodle/course:manageactivities', 'moodle/site:configview'];
             $canmanageacts = has_any_capability($caps, $PAGE->context);
             $isstudent = !$canmanageacts && !is_role_switched($COURSE->id);
-            if ($isstudent) {
+            // A tenant admin has none of those capabilities (their role sits on the tenant
+            // context) but still needs the drawer: it holds their "Manage tenant" link.
+            if ($isstudent && !local::can_manage_own_tenant()) {
                 return;
             }
         }

@@ -4094,6 +4094,23 @@ body.hascontinuecancel.path-site #page {
 
 }
 
+// Long titles (a file name in the filepicker's Edit dialog) escaped the header box. Boost has the same problem.
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd {
+    h3,
+    h5 {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    // The close button keeps its size; only the title shrinks.
+    .yui3-widget-buttons {
+        flex-shrink: 0;
+    }
+}
+
 .moodle-dialogue-base .filepicker .alert-warning {
     margin: 0 1px 18px;
 }
