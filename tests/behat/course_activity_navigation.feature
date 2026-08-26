@@ -412,3 +412,42 @@ Feature: Activity navigation in Snap theme
       | Description     | assign descr    |
     And I click on "input[type='submit'][value='Save and return to course']" "css_element"
     Then I should see "New Assignment1"
+
+  @javascript
+  Scenario: Activity navigation and jump-to-activity reflect the ToC order after moving a subsection (INT-22204)
+    Given the following "courses" exist:
+      | fullname | shortname | category | format | numsections | initsections |
+      | Course 4 | C4        | 0        | topics | 4           | 1            |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | teacher1 | C4     | editingteacher |
+    And I enable "subsection" "mod" plugin
+    And the following "activities" exist:
+      | activity   | name          | course | idnumber        | section |
+      | assign     | Assign 1.1    | C4     | navassign11     | 1       |
+      | assign     | Assign 2.1    | C4     | navassign21     | 2       |
+      | subsection | Subsection 2A | C4     | navsubsection2a | 2       |
+      | assign     | Assign 2A.1   | C4     | navassign2a1    | 5       |
+      | assign     | Assign 2A.2   | C4     | navassign2a2    | 5       |
+      | assign     | Assign 3.1    | C4     | navassign31     | 3       |
+      | assign     | Assign 4.1    | C4     | navassign41     | 4       |
+    And I log in as "teacher1"
+    And I am on the course main page for "C4"
+    And I switch edit mode in Snap
+    # Move Section 2 (with its Subsection 2A and activities) so it sits after Section 3.
+    And I follow "Section 2"
+    And I wait until the page is ready
+    And I follow "Move \"Section 2\""
+    And I click on "Section 3" "link" in the ".modal-body" "css_element"
+    And I wait until the page is ready
+    # The activity nav for the activities inside the moved subsection must follow the new
+    # Table of Contents order (Section 1, Section 3, Section 2, Section 4), not the order the
+    # content was originally created in.
+    When I am on the "Assign 2A.1" "assign activity" page
+    Then I should see "Assign 2.1" in the "#prev-activity-link" "css_element"
+    And I should see "Assign 2A.2" in the "#next-activity-link" "css_element"
+    And the "Jump to activity" select box should contain "Assign 3.1"
+    And the "Jump to activity" select box should contain "Assign 4.1"
+    When I am on the "Assign 2A.2" "assign activity" page
+    Then I should see "Assign 2A.1" in the "#prev-activity-link" "css_element"
+    And I should see "Assign 4.1" in the "#next-activity-link" "css_element"

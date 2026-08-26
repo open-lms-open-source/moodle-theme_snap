@@ -2502,4 +2502,113 @@ HTML;
         return $this->page->pagetype === 'course-editsection';
     }
 
+    /**
+     * Returns standard navigation between activities in a course.
+     *
+     * Overrides the core implementation so that the "Jump to activity" dropdown and the
+     * previous/next links follow the order shown in Snap's Table of Contents, rather than
+     * the raw course-module order returned by modinfo::get_cms(). The latter reflects the
+     * order in which activities/subsections were originally created and is not updated when
+     * a subsection is later moved/re-ordered, which caused stale navigation order (INT-22204).
+     *
+     * @return string the navigation HTML.
+     */
+    public function activity_navigation() {
+        // First we should check if we want to add navigation.
+        $context = $this->page->context;
+        if (
+            ($this->page->pagelayout !== 'incourse' && $this->page->pagelayout !== 'frametop')
+            || $context->contextlevel != CONTEXT_MODULE
+        ) {
+            return '';
+        }
+
+        // If the activity is in stealth mode, show no links.
+        if ($this->page->cm->is_stealth()) {
+            return '';
+        }
+
+        $course = $this->page->cm->get_course();
+        $courseformat = course_get_format($course);
+
+        // If the theme implements course index and the current course format uses course index and the current
+        // page layout is not 'frametop' (this layout does not support course index), show no links.
+        if (
+            $this->page->theme->usescourseindex && $courseformat->uses_course_index() &&
+                $this->page->pagelayout !== 'frametop'
+        ) {
+            return '';
+        }
+
+        // Get a list of all the activities in the course.
+        $modinfo = get_fast_modinfo($course->id);
+        $modules = $modinfo->get_cms();
+
+        // Put the modules into an array, applying the same visibility filtering as the core
+        // implementation.
+        $mods = [];
+        foreach ($modules as $module) {
+            // Only add activities the user can access, aren't in stealth mode, are of a type that is visible on the course,
+            // and have a url (eg. mod_label does not).
+            if (!$module->uservisible || $module->is_stealth() || empty($module->url) || !$module->is_of_type_that_can_display()) {
+                continue;
+            }
+            $mods[$module->id] = $module;
+        }
+
+        // Re-order the modules to match the actual display order in the course's Table of Contents.
+        // This accounts for subsections that have been moved/re-ordered, whose course-module order
+        // otherwise still reflects the order they were originally created in.
+        $modinfo->sort_cm_array($mods);
+
+        // Now that $mods is in display order, build the activity dropdown list in the same order.
+        $activitylist = [];
+        foreach ($mods as $module) {
+            // No need to add the current module to the list for the activity dropdown menu.
+            if ($module->id == $this->page->cm->id) {
+                continue;
+            }
+            // Module name.
+            $modname = $module->get_formatted_name();
+            // Display the hidden text if necessary.
+            if (!$module->visible) {
+                $modname .= ' ' . get_string('hiddenwithbrackets');
+            }
+            // Module URL.
+            $linkurl = new moodle_url($module->url, ['forceview' => 1]);
+            // Add module URL (as key) and name (as value) to the activity list array.
+            $activitylist[$linkurl->out(false)] = $modname;
+        }
+
+        $nummods = count($mods);
+
+        // If there are only one or fewer mods then do nothing.
+        if ($nummods <= 1) {
+            return '';
+        }
+
+        // Get an array of just the course module ids used to get the cmid value based on their position in the course.
+        $modids = array_keys($mods);
+
+        // Get the position in the array of the course module we are viewing.
+        $position = array_search($this->page->cm->id, $modids);
+
+        $prevmod = null;
+        $nextmod = null;
+
+        // Check if we have a previous mod to show.
+        if ($position > 0) {
+            $prevmod = $mods[$modids[$position - 1]];
+        }
+
+        // Check if we have a next mod to show.
+        if ($position < ($nummods - 1)) {
+            $nextmod = $mods[$modids[$position + 1]];
+        }
+
+        $activitynav = new \core_course\output\activity_navigation($prevmod, $nextmod, $activitylist);
+        $renderer = $this->page->get_renderer('core', 'course');
+        return $renderer->render($activitynav);
+    }
+
 }
