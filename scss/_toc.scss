@@ -669,7 +669,8 @@ label[for="toc-search-input"]{
 // -------------------------
 
 .drawer.drawer-left #course-toc-progress-bar {
-  color: gray;
+  // gray (#808080) was 3.95:1 on white; $body-color is 7.34:1.
+  color: $body-color;
   background-color: #fff;
   width: 90%;
   font-size: 1.1rem;

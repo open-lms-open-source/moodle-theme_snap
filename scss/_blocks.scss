@@ -466,21 +466,20 @@ body.path-site .block.block_settings {
     }
 }
 
-// Styles for the edit mode toggle when $customisenavbar is turned off
-@if not $customisenavbar {
-    $setmode-off-color: #767676;
+// Edit mode toggle, off state. brandcolor only styles :checked, so gating this on
+// $customisenavbar left the off state on Bootstrap's #bfbfbf knob (1.84:1). #767676 is 4.54:1.
+$setmode-off-color: #767676;
 
-    .theme-snap .editmode-switch-form .form-check.form-switch .form-check-input[name="setmode"]:not(:checked) {
+.theme-snap .editmode-switch-form .form-check.form-switch .form-check-input[name="setmode"]:not(:checked) {
+    border-color: $setmode-off-color;
+    background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$setmode-off-color}'/></svg>"));
+
+    &:focus {
         border-color: $setmode-off-color;
-        background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$setmode-off-color}'/></svg>"));
+        background-image: none;
 
-        &:focus {
-            border-color: $setmode-off-color;
-            background-image: none;
-
-            &::before {
-                color: $setmode-off-color;
-            }
+        &::before {
+            color: $setmode-off-color;
         }
     }
 }

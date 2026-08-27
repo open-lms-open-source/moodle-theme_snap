@@ -2685,11 +2685,13 @@ body.path-course #moodle-page #page-header {
 }
 
 /* Calandar */
+// Hardcoded #fff failed AA on the light event backgrounds (salmon 2.50:1, yellow 1.41:1).
+// color-contrast() picks black or white per background using Bootstrap's 4.5:1 threshold.
 span.calendar_event_global,
 li.calendar_event_global:before,
 td.calendar_event_global > a {
     background-color: $brand-success;
-    color: #fff !important;
+    color: color-contrast($brand-success) !important;
 }
 
 span.calendar_event_course,
@@ -2698,7 +2700,7 @@ td.calendar_event_course > a {
 
     //salmon
     background-color: salmon;
-    color: #fff !important;
+    color: color-contrast(salmon) !important;
 }
 
 span.calendar_event_group,
@@ -2707,14 +2709,14 @@ td.calendar_event_group > a {
 
     // yellow
     background-color: #fdd652;
-    color: #fff !important;
+    color: color-contrast(#fdd652) !important;
 }
 
 span.calendar_event_user,
 li.calendar_event_user:before,
 td.calendar_event_user > a {
     background-color: $brand-info;
-    color: #fff !important;
+    color: color-contrast($brand-info) !important;
 }
 
 td.calendar_event_global,
@@ -5543,7 +5545,13 @@ section#region-main {
 }
 
 #id_error_newpassword {
-    color: #d9534f;
+    // #d9534f was 3.96:1 on white; $brand-danger is 8.43:1.
+    color: $brand-danger;
+}
+
+// Core uses lighten($primary, 40%), which leaves $body-color at 4.48:1. 44% clears AA.
+.matchtext {
+    background-color: lighten($primary, 44%);
 }
 
 .activity-navigation {
@@ -6455,7 +6463,8 @@ div[id^=snap-create-activity-] .section-modchooser-link {
         }
     }
     i#ccm-help-button-header-icon {
-        color: #ddd !important;
+        // #ddd was 1.36:1 on white; $icons-color is 4.69:1.
+        color: $icons-color !important;
         background-color: white;
         &:hover {
             background-color: white;
@@ -7430,7 +7439,8 @@ div#snap-course-wrapper #toc-desktop-menu-heading {
     }
     h2, input {
       font-size: 1.1rem;
-      color: gray;
+      // gray (#808080) was 3.95:1 on white; $body-color is 7.34:1.
+      color: $body-color;
     }
     #toc-search:focus-within {
         width: 90%;

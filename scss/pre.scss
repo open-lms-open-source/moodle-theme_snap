@@ -48,11 +48,29 @@ $brand-warning:         #b55600;
 $brand-danger:          #990f3d;
 $brand-info:            #02567e;
 
+// Snap skips boost/scss/preset/default.scss, so Bootstrap's stock palette leaks through:
+// $cyan #0dcaf0 (1.96:1) and $blue #0d6efd (3.95:1 on tinted backgrounds). Match Boost.
+$cyan:                  #008196 !default;
+$blue:                  #0f6cbf !default;
+
 $body-bg:               #fff;
 $body-color:            #565656;
 
+// Bootstrap's default rgba($body-color, .75) is only 3.94:1 on white. Raise the alpha so
+// .dimmed_text / .text-muted stay dimmed but meet AA on every theme background.
+$body-secondary-color:  rgba($body-color, .9);
+
 // Color for the icons to improve accessibility with a darker gray color.
 $icons-color:            #6c757d;
+
+// Core defaults this to gray (#808080), only 3.95:1 on white.
+$comment-meta-color:    $body-color !default;
+
+// Boost's preset darkens control borders to gray-500 for WCAG 1.4.11; Snap skips that preset,
+// so inputs, selects, checkboxes and switches fall back to #dee2e6 at 1.30:1.
+$gray-500:                #8f959e !default;
+$input-border-color:      var(--bs-gray-500) !default;
+$form-check-input-border: var(--bs-border-width) solid var(--bs-gray-500) !default;
 
 $font-family-system:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $font-family-sans-serif:  "Roboto", $font-family-system;

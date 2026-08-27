@@ -46,9 +46,10 @@
 }
 
 
-$darker-grey-btn: #999;
-$dark-grey-btn: #adadad;
-$light-grey-btn: #ccc;
+// Both were under 3:1 as button text/icons on white and on the #e6e6e6 hover background.
+$darker-grey-btn: #595959;
+$dark-grey-btn: #676767;
+$light-grey-btn: #8c8c8c; // #ccc was 1.61:1 as a button border.
 $lighter-grey-btn: #e6e6e6;
 $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this with rgb or the variable won't work.
 
@@ -2027,12 +2028,13 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         Defining brand color for forms.
     */
     &#page-course-management {
+        // #adb5bd was 2.07:1 as a control border; matches the theme-wide gray-500 now.
         .form-check .form-check-input:checked {
             background-color: $brand-primary;
-            border-color: rgba(#adb5bd, 1);
+            border-color: #8f959e;
         }
         .form-check .form-check-input {
-            border-color: rgba(#adb5bd, 1);
+            border-color: #8f959e;
         }
     }
 

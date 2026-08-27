@@ -3302,7 +3302,8 @@ a.dimmed_text:visited,
 .dimmed_category,
 .dimmed_category a,
 .dimmed_category a:visited {
-    color: #999;
+    /* #999 was 2.85:1 on white. Matches the front-end .dimmed_text value (5.66:1, AA). */
+    color: #676767;
 }
 
 .activity.label .dimmed_text {
