@@ -84,17 +84,13 @@ export default class SectionNavigation extends BaseComponent {
     }
 
     /**
-     * Handles navigation updates when editing a subsection, triggered when cmlist mutates.
+     * Handles navigation updates for a subsection, triggered when cmlist mutates.
      *
      *  @param {Object} param0 - Object containing the DOM element.
      *  @param {HTMLElement} param0.element - The element representing the current section/subsection.
      * @private
      */
     _subsectionNavigationUpdate({element}) {
-        if (!this.reactive.isEditing) {
-            return;
-        }
-
         const currentSectionId = this.sectionId;
 
         const parentsectionid = this.reactive.state.section.get(currentSectionId).parentsectionid;
@@ -124,9 +120,6 @@ export default class SectionNavigation extends BaseComponent {
      * @private
      */
     _sectionNavigationUpdate({ element }) {
-        if (!this.reactive.isEditing){
-            return;
-        }
         const currentSectionId = this.sectionId;
 
         const parentsectionid = this.reactive.state.section.get(currentSectionId).component;
