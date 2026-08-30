@@ -332,6 +332,16 @@ $mobile-sidebar-peek-width: 10px;
     }
 }
 
+#page-message-edit:has(.snap-sidebar-menu:not(.show)) {
+    .snap-drawer-headroom {
+        margin-right: 16px;
+    }
+
+    .snap-drawer-no-headroom {
+        margin-right: 0;
+    }
+}
+
 [data-region="popover-region-messages"] {
     .count-container {
         right: 10px;

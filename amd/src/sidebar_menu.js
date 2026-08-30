@@ -115,6 +115,13 @@ const FORCEBLOCK_BODY_IDS = [
     'page-mod-book-edit',
 ];
 
+// Pages where the message drawer must keep the geometry it gets from the stylesheet.
+// On these views the drawer is not a fixed overlay, so writing inline top/height/max-height
+// on it fights the CSS and resizes its content while scrolling.
+const SKIP_MESSAGE_DRAWER_POSITIONING_BODY_IDS = [
+    'page-message-edit',
+];
+
 const PREFERENCE_MAP = {
     [PREFERENCES.BLOCKS_DRAWER]: ACTIVE_SELECTORS.BLOCKS_DRAWER,
     [PREFERENCES.SNAP_FEEDS]: ACTIVE_SELECTORS.SNAP_FEEDS,
@@ -149,6 +156,17 @@ const toggleSidebar = () => {
     if (isClosing) {
         closeAllDrawers();
     }
+};
+
+/**
+ * Whether inline positioning must be skipped for a drawer.
+ *
+ * @param {Element} element The drawer about to be positioned.
+ * @returns {boolean} True when the drawer must keep its stylesheet geometry.
+ */
+const skipsInlinePositioning = (element) => {
+    return SKIP_MESSAGE_DRAWER_POSITIONING_BODY_IDS.includes(document.body.id)
+        && element.matches(SELECTORS.MESSAGE_DRAWER_ROOT);
 };
 
 /**
@@ -190,7 +208,11 @@ const updateElementPositions = (selectors = null) => {
         selectorsArray.forEach(selector => {
             const elements = queryActiveDrawers(selector);
             
-            elements.forEach(element => {    
+            elements.forEach(element => {
+                if (skipsInlinePositioning(element)) {
+                    return;
+                }
+
                 if (isNavUnpinned) {
                     element.style.top = '0px';
                     element.style.height = '100vh';

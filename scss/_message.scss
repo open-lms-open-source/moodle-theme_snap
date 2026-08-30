@@ -143,11 +143,24 @@
 }
 
 #page-message-edit [data-region=right-hand-drawer].drawer {
+    width: auto;
+    position: inherit;
+
+    .closewidget {
+        height: 15px;
+    }
+
     .message-app {
         width: 100% !important;
     }
-    position: inherit;
-    width: 100%;
+
+    a.text-dark.btn-link {
+        visibility: hidden;
+    }
+
+    [data-region=settings] {
+        padding: 3rem !important;
+    }
 }
 
 // Fix for personal menu hidden in IE 11 message page.
