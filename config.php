@@ -186,7 +186,20 @@ $THEME->layouts = array(
 $THEME->javascripts = array();
 $THEME->javascripts_footer = array();
 
+// hidefromselector keeps a theme out of the theme pickers. WORK sites are offered Snap
+// Tenants, every other site is offered Snap, so hide Snap when Snap Tenants is available.
+// Snap stays installed either way — Snap Tenants is its child theme.
+// A theme must stay selectable while behat generates its config, or it loses its test suite
+// and the step definitions in tests/behat are never loaded.
 $THEME->hidefromselector = false;
+if (!defined('BEHAT_UTIL')
+        && !empty($CFG->olms_product_work)
+        && !empty($CFG->tool_olms_tenant_active)
+        && (!is_callable('mr_on') || mr_on('snap_tenants', 'theme'))
+        && (file_exists("$CFG->dirroot/theme/snap_tenants/config.php")
+            || (!empty($CFG->themedir) && file_exists("$CFG->themedir/snap_tenants/config.php")))) {
+    $THEME->hidefromselector = true;
+}
 
 // For use with Flexpage layouts.
 $THEME->blockrtlmanipulations = array(
