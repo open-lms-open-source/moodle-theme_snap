@@ -758,8 +758,10 @@ trait format_section_trait {
             if (!empty($bulkbutton)) {
                 $PAGE->add_header_action($bulkbutton);
             }
-            $o .= html_writer::tag('div',$sectiontools . $bulkbutton , array(
-                'class' => 'd-flex justify-content-between align-items-center'
+            // When there are no $sectiontools, justify to the end.
+            $alignclass = empty($sectiontools) ? 'justify-content-end' : 'justify-content-between';
+            $o .= html_writer::tag('div', $sectiontools . $bulkbutton, array(
+                'class' => 'd-flex ' . $alignclass . ' align-items-center'
             ));
         }
 
