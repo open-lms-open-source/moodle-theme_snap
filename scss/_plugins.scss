@@ -1572,3 +1572,15 @@ body#page-enrol-programs-catalogue-index {
         color: inherit;
     }
 }
+
+// -------------------------
+//  User tours (tool_usertours)
+// -------------------------
+
+// Styles for steps with "Display in middle of page" configuration. The `!important` is necessary here,
+// otherwise these styles get overridden and the user tour step gets lost from the viewport.
+[data-flexitour="container"].orphan {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+}
