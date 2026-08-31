@@ -90,6 +90,24 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     And "button.section-modchooser-link.btn-add-activity[data-sectionid='3']" "css_element" should be visible
 
   @javascript
+  Scenario: Without ever entering edit mode, section footer navigation updates in place after moving a section (INT-22204 follow-up)
+    Given I log in as "admin"
+    And I change window size to "large"
+    And I log out
+    And I log in as "teacher1"
+    And I am on the course main page for "C1"
+    And I follow "Section 1"
+    And I wait until the page is ready
+    And I follow "Move \"Section 1\""
+    And I click on "Section 3" "link" in the ".modal-body" "css_element"
+    And I wait until the page is ready
+    # Check the footer navigation on the CURRENT page, without reloading or navigating away:
+    # this is what exercises the reactive JS update, as opposed to a fresh server-side render.
+    # Scoped to ".state-visible" since other, unrelated sections can also be present in the DOM.
+    Then I should see "Section 3" in the ".section.state-visible .section_footer .previous_section .nav_title" "css_element"
+    And I should see "Section 4" in the ".section.state-visible .section_footer .next_section .nav_title" "css_element"
+
+  @javascript
   Scenario: Teacher loses teacher capability whilst course open and receives the correct error message when trying to
   move section.
     Given debugging is turned off
