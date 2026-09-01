@@ -37,10 +37,13 @@ export default class Component extends BaseSectionComponent {
     stateReady(state) {
         super.stateReady(state);
         this._skipRedundantSubsectionWrappers();
-        setTOCVisibleSection();
+        // Guaranteed fresh navigation here, so the URL (if on section.php) can be trusted.
+        setTOCVisibleSection(true);
         this._filterHiddenActivitiesFromDOM();
         // In tiles format, handle anchor-link scrolling from the course index.
         this._initTilesAnchorScroll();
+        // In tiles format, keep the course index highlight in sync with AJAX tile switches.
+        this._watchTileVisibilityChanges();
     }
 
     /**
@@ -200,5 +203,47 @@ export default class Component extends BaseSectionComponent {
         if (overlay) {
             overlay.style.display = 'none';
         }
+    }
+
+    /**
+     * While not editing, format_tiles/course.js opens tiles entirely via AJAX (no page
+     * reload, see populateAndExpandSection()/expandSection()), toggling the "state-visible"
+     * class on the tile it opens/closes. It has no knowledge of Snap's course index, so
+     * nothing else re-syncs the sidebar highlight after that first page load. Watch that
+     * class and refresh the highlight (DOM-only — the URL is stale here) whenever it changes.
+     */
+    _watchTileVisibilityChanges() {
+        if (!document.body.classList.contains('format-tiles')) {
+            return;
+        }
+        const root = document.getElementById('region-main');
+        if (!root) {
+            return;
+        }
+        let refreshPending = false;
+        const observer = new MutationObserver((mutations) => {
+            // Only react to "state-visible" itself. Any other class change in the region
+            // must be ignored: on a server-rendered single section page format_tiles never
+            // adds that class at all, so a DOM-only refresh there would find nothing and
+            // wipe the highlight stateReady() had correctly resolved from the URL.
+            const touchesVisibility = mutations.some(
+                (mutation) => mutation.target.classList.contains('state-visible')
+                    || (mutation.oldValue ?? '').includes('state-visible')
+            );
+            // Opening a tile toggles the class on both the closing and the opening tile in
+            // the same tick; coalesce those into a single refresh.
+            if (!touchesVisibility || refreshPending) {
+                return;
+            }
+            refreshPending = true;
+            requestAnimationFrame(() => {
+                refreshPending = false;
+                setTOCVisibleSection();
+            });
+        });
+        observer.observe(
+            root,
+            {attributes: true, attributeFilter: ['class'], attributeOldValue: true, subtree: true}
+        );
     }
 }

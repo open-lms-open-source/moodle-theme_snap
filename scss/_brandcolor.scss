@@ -475,8 +475,8 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
     }
 
     .snap-visible-section.courseindex-section > .courseindex-item,
-    &:not(.format-topics,.format-weeks) .courseindex-section[aria-selected='true'] > .courseindex-item,
-    &:not(.format-topics,.format-weeks) .courseindex-section > .courseindex-item[aria-selected='true'] {
+    &:not(.format-topics,.format-weeks,.format-tiles) .courseindex-section[aria-selected='true'] > .courseindex-item,
+    &:not(.format-topics,.format-weeks,.format-tiles) .courseindex-section > .courseindex-item[aria-selected='true'] {
         background-color: $brand-primary;
         a.courseindex-chevron,
         a.courseindex-link,
