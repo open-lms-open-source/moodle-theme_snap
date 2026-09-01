@@ -1595,6 +1595,8 @@ class activity {
      */
     public static function user_activity_events(array $courses, $tstart, $tend, $cachesuffix = '', $limit = 500,
                                                 $skipcmchecks = false) {
+        global $DB, $USER;
+
         $retobj = (object) [
             'timestamp' => null,
             'events' => [],
@@ -1618,12 +1620,48 @@ class activity {
         $tmparr = [];
         foreach ($retobj->events as $event) {
 
-            // Validation added to prevent array offset.
-            $courseid = array_key_exists($event->courseid, $courses) ? $courses[$event->courseid] : 0;
+            // Skip events from courses not in the $courses array.
+            if (!array_key_exists($event->courseid, $courses)) {
+                continue;
+            }
 
-            [$course, $cminfo] = get_course_and_cm_from_instance(
-                    $event->instance, $event->modulename,  $courseid, $event->userid);
-            unset($course);
+            $courseid = $courses[$event->courseid];
+
+            try {
+                [$course, $cminfo] = get_course_and_cm_from_instance(
+                        $event->instance, $event->modulename, $courseid, $event->userid);
+                unset($course);
+            } catch (\moodle_exception $e) {
+                // Check if the module is pending delete, fully deleted, or module type doesn't exist.
+                $moduleid = $DB->get_field('modules', 'id', ['name' => $event->modulename], IGNORE_MISSING);
+                $shoulddeletecache = ($moduleid === false);
+
+                if (!$shoulddeletecache) {
+                    $cm = $DB->get_record('course_modules', [
+                        'instance' => $event->instance,
+                        'module' => $moduleid,
+                        'course' => $event->courseid
+                    ], 'id, deletioninprogress', IGNORE_MISSING);
+                    $shoulddeletecache = empty($cm) || !empty($cm->deletioninprogress);
+                }
+
+                if ($shoulddeletecache) {
+                    // Remove the specific cache item.
+                    $cachekey = self::get_id_indexed_array_cache_key($courses);
+                    $groupkey = self::get_user_group_cache_key($USER, $courses);
+                    if (!empty($groupkey)) {
+                        $cachekey .= '_' . $groupkey;
+                    }
+                    if (!empty($cachesuffix)) {
+                        $cachekey .= '_' . $cachesuffix;
+                    }
+
+                    $muc = \cache::make('theme_snap', 'activity_deadlines');
+                    $muc->delete($cachekey);
+                }
+                // Skip events that reference non-existent or invalid module instances.
+                continue;
+            }
 
             // We are only interested in modules with valid instances.
             if (empty($cminfo)) {
