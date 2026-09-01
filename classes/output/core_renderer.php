@@ -275,9 +275,61 @@ class core_renderer extends \theme_boost\output\core_renderer {
             unset($headercontext['title']);
         }
         if (!empty($headercontext)) {
-            return $this->render_from_template('core/activity_header', $headercontext);
+            $html = $this->render_from_template('core/activity_header', $headercontext);
+            return $this->relocate_button_after_maincontent($html);
         }
         return '';
+    }
+
+    /**
+     * Gets the HTML for the page heading button.
+     *
+     * Override to avoid duplicating elements into the page-header cover image.
+     *
+     * @return string
+     */
+    public function page_heading_button() {
+        if ($this->button_renders_in_region_main()) {
+            return '';
+        }
+        return parent::page_heading_button();
+    }
+
+    /**
+     * Whether $PAGE->button should be rendered inside #region-main rather than in the page mast.
+     *
+     * There are buttons from Core plugins or from third parties, that want to be rendered inside the
+     * cover image. This method returns `true` if the button is rendered in a region-main instead.
+     *
+     * @return bool
+     */
+    protected function button_renders_in_region_main(): bool {
+        $button = (string) $this->page->button;
+        return strpos($this->page->pagetype, 'mod-wiki-') === 0 && trim($button) !== '';
+    }
+
+    /**
+     * Relocates a $PAGE->button at the top of the activity header output.
+     *
+     * @param string $html Rendered core/activity_header output.
+     * @return string
+     */
+    protected function relocate_button_after_maincontent(string $html): string {
+        // Fast return to avoid breaking buttons that ought not to be relocated.
+        if (!$this->button_renders_in_region_main()) {
+            return $html;
+        }
+
+        $button = \core\output\html_writer::div(parent::page_heading_button(), 'snap-relocated-heading-button');
+        $skiptarget = '<span id="maincontent"></span>';
+        $position = strpos($html, $skiptarget);
+        if ($position === false) {
+            // The skip target moved; keep the button inside #region-main rather than losing it.
+            return $button . $html;
+        }
+        $position += strlen($skiptarget);
+
+        return substr($html, 0, $position) . $button . substr($html, $position);
     }
 
     /**
