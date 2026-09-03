@@ -43,7 +43,7 @@ $snapsettings->add($setting);
 $name = 'theme_snap/subtitle';
 $title = new \core\lang_string('sitedescription', 'theme_snap');
 $description = new \core\lang_string('subtitle_desc', 'theme_snap');
-$setting = new admin_setting_configtext($name, $title, $description, '', PARAM_RAW_TRIMMED, 50);
+$setting = new admin_setting_configtext_with_maxlength($name, $title, $description, '', PARAM_RAW_TRIMMED, 50, 130);
 $snapsettings->add($setting);
 
 $name = 'theme_snap/imagesheading';

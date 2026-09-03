@@ -841,6 +841,16 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
         $slides[0]->active = 'active';
+
+        $slidetotal = count($slides);
+        foreach ($slides as $slide) {
+            $slidenumber = $slide->index + 1;
+            $slide->slidelabel = get_string('covercarouselslidelabel', 'theme_snap', (object) [
+                'number' => $slidenumber,
+                'total' => $slidetotal,
+            ]);
+            $slide->dotlabel = get_string('covercarouselslidedot', 'theme_snap', $slidenumber);
+        }
         $carouselsronlytext = get_string('covercarouselsronly', 'theme_snap');
         $carouselplaybutton = get_string('covercarouselplaybutton', 'theme_snap');
         $carouselpausebutton = get_string('covercarouselpausebutton', 'theme_snap');

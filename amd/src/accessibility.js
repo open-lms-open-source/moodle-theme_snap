@@ -223,19 +223,67 @@ define(['jquery', 'core/str', 'core/event', 'core_form/events', 'theme_boost/boo
                     carouselAriaCurrentValue();
 
                     /**
-                     * Creates a pause and resume cycles for Snap's carousel.
+                     * Keeps inactive slides out of the accessibility tree.
+                     * Bootstrap marks the indicators but never the slides themselves.
+                     */
+                    function carouselHideInactiveSlides() {
+                        var carousel = $('#snap-site-carousel');
+                        var items = $('#snap-carousel-container .carousel-item');
+
+                        if (!items.length) {
+                            return;
+                        }
+
+                        var syncSlides = function () {
+                            items.each(function () {
+                                var item = $(this);
+                                if (item.hasClass('active')) {
+                                    item.removeAttr('aria-hidden');
+                                } else {
+                                    item.attr('aria-hidden', 'true');
+                                }
+                            });
+                        };
+
+                        syncSlides();
+                        // slid, not slide: both slides are on screen during the transition.
+                        carousel.on('slid.bs.carousel', syncSlides);
+                    }
+                    carouselHideInactiveSlides();
+
+                    /**
+                     * Pause and resume for Snap's carousel. One button covers both states;
+                     * its icon and label describe the action it will perform next.
                      */
                     function carouselPausePlay() {
-                        $('#snap-site-carousel').carousel({
-                            interval: 6000,
-                            pause: "false"
-                        });
+                        var carousel = $('#snap-site-carousel');
 
-                        $('#play-button').click(function () {
-                            $('#snap-site-carousel').carousel('cycle');
+                        // The markup omits data-bs-ride on purpose: with it set, Bootstrap
+                        // restarts rotation after every prev/next/indicator click, overriding
+                        // a user pause. Starting the cycle here keeps that state authoritative.
+                        carousel.carousel({
+                            interval: 6000,
+                            pause: false
                         });
-                        $('#pause-button').click(function () {
-                            $('#snap-site-carousel').carousel('pause');
+                        carousel.carousel('cycle');
+
+                        $('#carousel-toggle-button').click(function () {
+                            var button = $(this);
+                            var icon = button.find('.icon');
+                            // aria-pressed is the single source of truth for the state.
+                            var paused = button.attr('aria-pressed') === 'true';
+
+                            if (paused) {
+                                carousel.carousel('cycle');
+                                button.attr('aria-pressed', 'false');
+                                button.attr('aria-label', button.attr('data-label-pause'));
+                                icon.removeClass('fa-play').addClass('fa-pause');
+                            } else {
+                                carousel.carousel('pause');
+                                button.attr('aria-pressed', 'true');
+                                button.attr('aria-label', button.attr('data-label-play'));
+                                icon.removeClass('fa-pause').addClass('fa-play');
+                            }
                         });
                     }
                     carouselPausePlay();

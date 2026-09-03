@@ -60,9 +60,8 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     # Check the existence of the carousel in the front page.
     And I am on site homepage
     And I should see "Title for slide one"
-    # Play and pause buttons should not be visible when only one slide exists.
-    Then "#carousel-play-resume-buttons #play-button" "css_element" should not be visible
-    Then "#carousel-play-resume-buttons #pause-button" "css_element" should not be visible
+    # The play/pause toggle should not be visible when only one slide exists.
+    Then "#carousel-play-resume-buttons #carousel-toggle-button" "css_element" should not be visible
     And I go to "Site administration > Appearance > Themes" in snap administration
     And I follow "Edit theme settings 'Snap'"
     And I follow "Cover display"
@@ -73,7 +72,33 @@ Feature: Snap's carousel must have the correct attributes to make it accessible.
     And I click on "Select this file" "button"
     And I click on "Save changes" "button"
     And I am on site homepage
-    And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-bs-slide-to='0']" "css_element" should contain "slide-0"
-    And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-bs-slide-to='1']" "css_element" should contain "slide-1"
-    Then "#carousel-play-resume-buttons #play-button" "css_element" should exist
-    Then "#carousel-play-resume-buttons #pause-button" "css_element" should exist
+    # Dots are a labelled list, numbered from one.
+    And "#snap-site-carousel ul.carousel-indicators" "css_element" should exist
+    And "#snap-site-carousel ul.carousel-indicators li button[data-bs-slide-to='0']" "css_element" should exist
+    And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-bs-slide-to='0']" "css_element" should contain "Go to slide 1"
+    And the "aria-label" attribute of "#snap-site-carousel .carousel-indicators button[data-bs-slide-to='1']" "css_element" should contain "Go to slide 2"
+    # Targeted by slide name, not .active, so it holds whichever is showing.
+    And the "role" attribute of "#snap-carousel-container .carousel-slide_one" "css_element" should contain "group"
+    And the "role" attribute of "#snap-carousel-container .carousel-slide_two" "css_element" should contain "group"
+    And the "aria-label" attribute of "#snap-carousel-container .carousel-slide_one" "css_element" should contain "Slide 1 of 2"
+    And the "aria-label" attribute of "#snap-carousel-container .carousel-slide_two" "css_element" should contain "Slide 2 of 2"
+    Then "#carousel-play-resume-buttons #carousel-toggle-button" "css_element" should exist
+    # Starts unpressed: slides auto-rotate.
+    And the "aria-pressed" attribute of "#carousel-toggle-button" "css_element" should contain "false"
+    And "#carousel-toggle-button .fa-pause" "css_element" should exist
+    # Pausing switches icon, label and pressed state together.
+    And I click on "#carousel-toggle-button" "css_element"
+    And the "aria-pressed" attribute of "#carousel-toggle-button" "css_element" should contain "true"
+    And "#carousel-toggle-button .fa-play" "css_element" should exist
+    # Resuming switches them back.
+    And I click on "#carousel-toggle-button" "css_element"
+    And the "aria-pressed" attribute of "#carousel-toggle-button" "css_element" should contain "false"
+    And "#carousel-toggle-button .fa-pause" "css_element" should exist
+    # Regression: arrows must not silently restart rotation while paused.
+    And I click on "#carousel-toggle-button" "css_element"
+    And I click on "#snap-site-carousel .carousel-control-next" "css_element"
+    And the "aria-pressed" attribute of "#carousel-toggle-button" "css_element" should contain "true"
+    And "#carousel-toggle-button .fa-play" "css_element" should exist
+    # Inactive slides are out of the accessibility tree; the active one is not.
+    And the "aria-hidden" attribute of "#snap-carousel-container .carousel-item:not(.active)" "css_element" should contain "true"
+    And the "aria-hidden" attribute of "#snap-carousel-container .carousel-item.active" "css_element" should not be set
