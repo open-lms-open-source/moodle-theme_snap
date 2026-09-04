@@ -32,6 +32,7 @@ use theme_snap\output\shared;
 // Note, coding standards ignore is required so that we can have more readable indentation under php tags.
 
 $mastimage = ($COURSE->id != SITEID && local::has_cover_image()) ? 'mast-image' : '';
+$carouselheader = !empty($carousel) ? 'snap-carousel-header' : '';
 if ($PAGE->pagetype == 'admin-search') {
     $PAGE->set_secondary_navigation(false);
 }
@@ -48,7 +49,7 @@ if ($PAGE->pagetype == 'admin-search') {
 <?php
 echo $OUTPUT->custom_menu_spacer();
 ?>
-<div id="page-header" class="clearfix <?php echo $mastimage; ?>">
+<div id="page-header" class="clearfix <?php echo $mastimage; ?> <?php echo $carouselheader; ?>">
     <?php if ($PAGE->pagetype !== 'site-index' && $PAGE->navbar->has_items()) { ?>
         <nav class="breadcrumb-nav" aria-label="breadcrumbs"><?php echo $OUTPUT->navbar(); ?></nav>
     <?php }

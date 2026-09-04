@@ -1904,6 +1904,11 @@ body#page-site-index #moodle-page #page-header {
     }
 }
 
+body#page-site-index #moodle-page #page-header.snap-carousel-header {
+    aspect-ratio: auto;
+    background-color: transparent;
+}
+
 body.path-course, body#page-course-index-category {
     #moodle-page #page-header.mast-image {
         aspect-ratio: 6;
@@ -2181,103 +2186,261 @@ body.path-course #moodle-page #page-header {
 #snap-site-carousel {
     padding-bottom: 1.15em;
     background-color: white;
+
     .carousel-slide {
+        position: relative;
         background-position: center center;
         background-size: cover;
-        background-color: white;
+        background-color: #222;
+        min-height: 32rem;
+
+        --scrim-stops:
+            rgba(0, 0, 0, 0.65) 0%,
+            rgba(0, 0, 0, 0.6) 12%,
+            rgba(0, 0, 0, 0.53) 25%,
+            rgba(0, 0, 0, 0.45) 37%,
+            rgba(0, 0, 0, 0.35) 50%,
+            rgba(0, 0, 0, 0.24) 60%,
+            rgba(0, 0, 0, 0.14) 68%,
+            rgba(0, 0, 0, 0.06) 74%,
+            rgba(0, 0, 0, 0) 78%;
+
+        @include media-breakpoint-down(lg) {
+            min-height: 26rem;
+            --scrim-stops:
+                rgba(0, 0, 0, 0.65) 0%,
+                rgba(0, 0, 0, 0.6) 13%,
+                rgba(0, 0, 0, 0.53) 28%,
+                rgba(0, 0, 0, 0.45) 41%,
+                rgba(0, 0, 0, 0.35) 56%,
+                rgba(0, 0, 0, 0.24) 66%,
+                rgba(0, 0, 0, 0.14) 74%,
+                rgba(0, 0, 0, 0.06) 80%,
+                rgba(0, 0, 0, 0) 84%;
+        }
+        @include media-breakpoint-down(md) {
+            min-height: 20rem;
+            --scrim-stops:
+                rgba(0, 0, 0, 0.65) 0%,
+                rgba(0, 0, 0, 0.6) 15%,
+                rgba(0, 0, 0, 0.53) 32%,
+                rgba(0, 0, 0, 0.45) 47%,
+                rgba(0, 0, 0, 0.35) 64%,
+                rgba(0, 0, 0, 0.24) 74%,
+                rgba(0, 0, 0, 0.14) 82%,
+                rgba(0, 0, 0, 0.06) 88%,
+                rgba(0, 0, 0, 0) 92%;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to right, var(--scrim-stops));
+            pointer-events: none;
+        }
     }
 
     .carousel-caption {
-        // Reset bootstrap styles.
-        display: inline-block;
-        word-break: break-word;
-        color: #666;
-        position: unset;
-        text-align: justify;
-        // Add snap cover styles.
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 1em 2%;
-        margin: 10em 6% 1em;
-        @include media-breakpoint-up(md) {
-            width: 50%;
-            margin: 20vh 4%;
-        }
-        @include media-breakpoint-down(md) {
-            margin-bottom: 5em;
-        }
-    }
-
-    .carousel-indicators {
-        margin: 0 auto;
-        bottom: -10px;
-        z-index: auto;
+        display: block;
         position: absolute;
-        bottom: 2em;
-        button {
-            background-color: $brand-primary;
-            width: 35px;
-            height: 5px;
-            margin-right: 0.5em;
-            border: none;
-            opacity: 65%;
-            border: 1px solid $brand-primary;
-        }
-        .active {
-            opacity: 100%;
-            border: none;
-        }
-    }
-
-    .carousel-controls {
-        a[class^="carousel-control"] {
-            width: 6%;
-            bottom: inherit;
-            top: 25vh;
-            padding: 1em 2%;
-            margin-top: 2em;
-        }
-    }
-
-    #carousel-play-resume-buttons,
-    .anim-play-resume-buttons {
-        margin-left: 100px;
-        position: absolute;
-        bottom: 3em;
         z-index: 1;
-        #play-button,
-        #pause-button,
-        .anim-play-button,
-        .anim-pause-button {
-            border-color: $brand-primary;
-            background-color: white;
-            color: $brand-primary;
-            &:active,
-            &:focus,
-            &:hover {
-                background-color: $brand-primary;
-                color: white;
+
+        top: 50%;
+        left: 4%;
+        right: auto;
+        bottom: auto;
+        transform: translateY(-50%);
+        width: 46%;
+        max-width: 46%;
+        word-break: break-word;
+        color: white;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        text-align: start;
+        padding: 0;
+
+        max-height: 80%;
+        overflow: hidden;
+
+        h1 {
+            color: inherit;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        p {
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            line-clamp: 5;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @include media-breakpoint-down(lg) {
+            width: 52%;
+            max-width: 52%;
+            h1 {
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
             }
-            span.icon {
-                margin: 0 auto;
+            p {
+                -webkit-line-clamp: 4;
+                line-clamp: 4;
+            }
+        }
+
+        @include media-breakpoint-down(md) {
+            width: 60%;
+            max-width: 60%;
+            h1 {
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+            }
+            p {
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
             }
         }
     }
 
-    .carouselhidecontrols {
-        display: none;
+    .carousel-controls-capsule {
+        position: absolute;
+        z-index: 2;
+        right: 4%;
+        bottom: 2.5em;
+        display: flex;
+        align-items: center;
+        gap: .3em;
+        background-color: rgba(0, 0, 0, 0.85);
+        border-radius: 999px;
+        padding: .35em .8em;
+
+        &.carouselhidecontrols {
+            display: none;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next,
+        #carousel-toggle-button {
+            position: static;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            width: 1.6rem;
+            height: 1.6rem;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+            color: white;
+            opacity: 1;
+            font-size: .9rem;
+            line-height: 1;
+
+            i,
+            span.icon {
+                width: auto;
+                height: auto;
+                margin: 0;
+                font-size: inherit;
+                line-height: 1;
+            }
+
+            &:hover,
+            &:active {
+                color: white;
+                opacity: .7;
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: none;
+            }
+
+            &:focus-visible {
+                outline: 2px solid white;
+                outline-offset: 1px;
+            }
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 2rem;
+            height: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-image: none;
+        }
+
+        .carousel-indicators {
+            position: static;
+            align-items: center;
+            margin: 0;
+            gap: .4em;
+            list-style: none;
+            padding: 0;
+
+            li {
+                display: flex;
+                align-items: center;
+            }
+
+            button {
+                flex: 0 0 auto;
+                box-sizing: border-box;
+                width: 7px;
+                height: 7px;
+                margin: 0;
+                border-radius: 999px;
+                border: none;
+                background-color: rgba(255, 255, 255, 0.45);
+                opacity: 1;
+                @include transition(width .3s ease, background-color .3s ease);
+            }
+
+            .active {
+                width: 22px;
+                background-color: white;
+            }
+        }
     }
 
-    .carousel-control-prev,
-    .carousel-control-next {
-        opacity: 1;
+    #carousel-play-resume-buttons {
+        display: flex;
+        align-items: center;
+        gap: .3em;
+        order: 1;
+
+        .carousel-controls-divider {
+            display: block;
+            flex: 0 0 auto;
+            width: 1px;
+            height: 1.6rem;
+            margin: 0 .1rem;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+}
+
+[dir="rtl"] #snap-site-carousel {
+    .carousel-slide::before {
+        background: linear-gradient(to left, var(--scrim-stops));
     }
 
-    .carousel-control-prev-icon {
-        background-image: none;
-    }
-
+    .carousel-control-prev-icon,
     .carousel-control-next-icon {
-        background-image: none;
+        transform: scaleX(-1);
     }
 }
 
