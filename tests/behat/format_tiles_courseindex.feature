@@ -81,3 +81,20 @@ Feature: Clicking a label from the course index in tiles format handles the over
     # register with Moodle's pending_js so "wait until the page is ready" is not enough.
     And I wait "1" seconds
     Then "#format_tiles_overlay" "css_element" should not be visible
+
+  Scenario: Teacher (Editing mode off and on) - Opening a tile highlights only that tile in the course index
+    Given I log in as "teacher1"
+    And I am on the course main page for "C1"
+    When I click on "nav#courseindex .courseindex-section[data-number='0'] a.courseindex-link[data-for='section_title']" "css_element"
+    Then "nav#courseindex .courseindex-section[data-number='0'].snap-visible-section" "css_element" should exist
+    And "nav#courseindex .courseindex-section[data-number='1'].snap-visible-section" "css_element" should not exist
+    When I click on "nav#courseindex .courseindex-section[data-number='1'] a.courseindex-link[data-for='section_title']" "css_element"
+    Then "nav#courseindex .courseindex-section[data-number='1'].snap-visible-section" "css_element" should exist
+    And "nav#courseindex .courseindex-section[data-number='0'].snap-visible-section" "css_element" should not exist
+    And I turn editing mode on
+    When I click on "nav#courseindex .courseindex-section[data-number='0'] a.courseindex-link[data-for='section_title']" "css_element"
+    Then "nav#courseindex .courseindex-section[data-number='0'].snap-visible-section" "css_element" should exist
+    And "nav#courseindex .courseindex-section[data-number='1'].snap-visible-section" "css_element" should not exist
+    When I click on "nav#courseindex .courseindex-section[data-number='1'] a.courseindex-link[data-for='section_title']" "css_element"
+    Then "nav#courseindex .courseindex-section[data-number='1'].snap-visible-section" "css_element" should exist
+    And "nav#courseindex .courseindex-section[data-number='0'].snap-visible-section" "css_element" should not exist

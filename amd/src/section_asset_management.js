@@ -113,13 +113,52 @@ define(
 
         /**
          * Mark the section shown to user with a class in the TOC.
+         *
+         * format_tiles never renders the "state-visible" class server-side (see
+         * multi_section_page.mustache / single_section.mustache / section_zero.mustache) — it is
+         * only ever added client-side by format_tiles/course.js as it opens/closes tiles via AJAX,
+         * a module that is not loaded while editing. So on a genuine fresh navigation to
+         * /course/section.php?id=X (editing on, or a full reload landing back there — e.g. toggling
+         * editing off redirects to the same URL, see course/section.php), that DOM class does not
+         * exist yet and the URL itself is the only reliable source. Once the page has settled,
+         * further AJAX tile switches leave the URL unchanged, so from then on only the DOM class
+         * (kept accurate by format_tiles/course.js on every click) can be trusted.
+         *
+         * @param {boolean} [trustUrl] Pass true only from a call that is guaranteed to run on a
+         * fresh navigation (i.e. the course index's initial stateReady()); omit/false otherwise.
          */
-        var setTOCVisibleSection = function() {
-            var sectionIdSel = '.section.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible';
-            if (!sectionIdSel) {
-                return;
+        var setTOCVisibleSection = function(trustUrl) {
+            var currentSectionId = null;
+            if (trustUrl && window.location.pathname.endsWith('/course/section.php')) {
+                currentSectionId = new URLSearchParams(window.location.search).get('id');
             }
-            var currentSectionId = $(sectionIdSel).attr('data-id');
+            if (!currentSectionId) {
+                var sectionIdSel = '.section.main.state-visible, #coursetools.state-visible, #snap-add-new-section.state-visible';
+                var shownSection = $(sectionIdSel);
+                // Formats rendered through Snap's own section_header() carry the section id in
+                // data-id, but format_tiles renders its own markup and names it data-sectionid
+                // (see multi_section_page.mustache / single_section.mustache / section_zero.mustache).
+                // Both hold $section->id, which is what the course index keys its data-id on.
+                currentSectionId = shownSection.attr('data-id') || shownSection.attr('data-sectionid');
+            }
+            if (!currentSectionId) {
+                // Switching tiles drops state-visible from the outgoing tile synchronously but only
+                // adds it to the incoming one once its content arrives from the server, so nothing
+                // is open mid-switch. format_tiles keeps its own record of that in the body class,
+                // which it clears only when a tile is really closed: while it is still set, treat
+                // the gap as transient and leave the current highlight alone instead of flashing
+                // General on every tile switch.
+                if (document.body.classList.contains('format-tiles-tile-open')) {
+                    return;
+                }
+                // Section zero never gets the state-visible class: format_tiles renders it outside
+                // the tile grid (above_tiles.mustache) and only slides it up/down, and its
+                // tile-closing loops skip it on purpose (see course.js populateAndExpandSection).
+                // So once nothing else is open — which is exactly what closing a tile or picking
+                // General in the course index leaves behind — the shown section is section zero.
+                var sectionZero = $('#section-0:visible');
+                currentSectionId = sectionZero.attr('data-id') || sectionZero.attr('data-sectionid');
+            }
 
             // Remove snap-visible-section class and reset aria-current to false for all sections.
             $('#courseindex .courseindex-section').removeClass('snap-visible-section');
@@ -411,9 +450,10 @@ define(
 
         /**
          * Exposed function so Section in TOC is highlighted.
+         * @param {boolean} [trustUrl] see the internal setTOCVisibleSection() above.
          */
-        setTOCVisibleSection: function() {
-            setTOCVisibleSection();
+        setTOCVisibleSection: function(trustUrl) {
+            setTOCVisibleSection(trustUrl);
         },
 
         /**
