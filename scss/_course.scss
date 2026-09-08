@@ -681,12 +681,13 @@ body.snap-resource-card.format-topics {
   margin-top: 0.5rem;
 }
 
+// Both icons sat under AA on white (#3B8BB6 3.78:1, #97C15C 2.08:1). Darkened, same hue.
 .btn-add-subsection .snap-icon {
-    color: #3B8BB6;
+    color: #33789d;
 }
 
 .btn-add-activity .snap-icon {
-  color: #97C15C;
+  color: #5c7d2f;
 }
 
 .btn-add-subsection,
