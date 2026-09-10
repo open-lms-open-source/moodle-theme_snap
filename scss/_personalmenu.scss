@@ -92,6 +92,20 @@
     }
 }
 
+button.snap-sidebar-menu-more {
+    width: 100%;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: stretch;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 .snap-sidebar-menu-feed-loading {
     &:after {
         @include ajaxing(inline-block, relative, 20px, 6px);

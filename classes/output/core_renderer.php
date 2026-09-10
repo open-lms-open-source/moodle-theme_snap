@@ -242,6 +242,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             'aria-label' => get_string('toggleadmindrawer', 'theme_snap'),
             'data-original-title' => get_string('toggleadmindrawer', 'theme_snap'),
             'aria-expanded' => 'false',
+            'aria-controls' => 'inst' . $settingslink->instanceid,
         ];
 
         return \core\output\html_writer::link($url, $gearicon, $attributes);
@@ -2412,16 +2413,17 @@ HTML;
         }
 
         $icon = file_get_contents($CFG->dirroot . '/theme/snap/pix/snapfeeds.svg');
-        $url = '#snap_feeds_side_menu';
         $attributes = [
             'id' => 'snap_feeds_side_menu_trigger',
+            'type' => 'button',
             'class' => 'js-snap-feeds-side-menu-trigger',
             'title' => get_string('togglesnapfeedsdrawer', 'theme_snap'),
             'aria-label' => get_string('togglesnapfeedsdrawer', 'theme_snap'),
             'aria-expanded' => "false",
+            'aria-controls' => 'snap_feeds_side_menu',
         ];
 
-        return \core\output\html_writer::link($url, $icon, $attributes);
+        return \core\output\html_writer::tag('button', $icon, $attributes);
     }
 
     /**

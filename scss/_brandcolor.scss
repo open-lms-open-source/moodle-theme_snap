@@ -307,6 +307,16 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         }
     }
 
+    button.snap-sidebar-menu-more {
+        color: $brand-primary;
+        &:hover {
+            color: darken($brand-primary, 8%);
+        }
+        &:focus-visible {
+            outline: 3px solid $brand-primary;
+        }
+    }
+
     // Pills
     // -------------------------
 

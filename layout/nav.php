@@ -180,6 +180,8 @@ if (isloggedin() && !isguestuser() && !$snapmfapending) {
             'title' => get_string('toggleblockdrawer', 'theme_snap'),
             'iconimg' => $OUTPUT->image_url('blocksdrawers', 'theme'),
             'isbutton' => true,
+            'ariaexpanded' => 'false',
+            'ariacontrols' => 'theme_snap-drawers-blocks',
             'dataattributes' => [
                 ['name' => 'toggler', 'value' => 'drawers'],
                 ['name' => 'action', 'value' => 'toggle'],

@@ -150,3 +150,19 @@ Feature: Testing sidebarmenu in theme_snap
     When I click on ".snap-sidebar-menu-trigger" "css_element"
     Then ".snap-sidebar-menu.show" "css_element" should exist
     And I wait until "#snap-sidebar-menu-content" "css_element" is visible
+
+  @javascript
+  Scenario: The Snap feeds trigger must be a real button and still open its drawer
+    Given I am logged in as "admin"
+    And I am on site homepage
+    And ".snap-sidebar-menu.show" "css_element" should exist
+    # Screen readers must announce it as a button, so the element has to be one.
+    Then "button#snap_feeds_side_menu_trigger" "css_element" should exist
+    # Guards against it going back to a link, which is what this replaced.
+    And "a#snap_feeds_side_menu_trigger" "css_element" should not exist
+    # The drawer used to be opened by reading the trigger's href, so a button has to
+    # keep working through the aria-controls target instead.
+    When I click on "#snap_feeds_side_menu_trigger" "css_element"
+    Then "#snap_feeds_side_menu.state-visible" "css_element" should exist
+    When I click on "#snap_feeds_side_menu_trigger" "css_element"
+    Then "#snap_feeds_side_menu.state-visible" "css_element" should not exist
