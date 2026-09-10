@@ -66,6 +66,7 @@ $string['changefullname'] = 'Change site name';
 $string['chapters'] = 'Chapters';
 $string['choosereadme'] = 'Snap\'s user-friendly and responsive design removes barriers to online learning, enabling you to create the modern, engaging experience users expect on the web today. Its intuitive layout is optimized for online learning, focusing on the things that matter - your learning activities and content.';
 $string['close'] = 'Close';
+$string['collapsed'] = 'Collapsed';
 $string['conditional'] = 'Conditional';
 $string['contents'] = 'Contents';
 $string['contributed'] = 'Contributed';
@@ -143,6 +144,7 @@ $string['error:failedtohighlightsection'] = 'Failed to highlight section';
 $string['error:failedtoduplicateasset'] = 'Failed to duplicate';
 $string['error:failedtodeleteasset'] = 'Failed to delete asset';
 $string['error:failedtotoc'] = 'Failed to get TOC.';
+$string['expanded'] = 'Expanded';
 $string['extension'] = 'Extension {$a}';
 $string['extra_section_menu'] = 'Extra section menu';
 $string['facebook'] = 'Facebook';
@@ -527,6 +529,10 @@ $string['courselink'] = 'Go to course';
 $string['student'] = 'Student';
 $string['showcourseinformation'] = 'Show course information';
 $string['pageactivitywithnodescription'] = 'If the Page Description is empty and the Page Content contains fewer than 200 characters, the expand icon will not be displayed for the Page Activity on the Course page, as the Page Content will serve as the Page Description.';
+$string['tableofcontentsbehaviour'] = 'Table of Contents (TOC) Behaviour';
+$string['tableofcontentsbehaviour_desc'] = 'Determines whether the Table of Contents (TOC) is Collapsed or Expanded by default when a user accesses a course for the first time.
+
+Note: This configuration applies globally to all courses using the Snap theme for both teachers and students. It defines the initial entry state and will not override manual changes made by the user during their active session.';
 $string['toggleadmindrawer'] = 'Toggle admin drawer';
 $string['toggleblockdrawer'] = 'Toggle block drawer';
 $string['togglesnapfeedsdrawer'] = 'Toggle Snap feeds drawer';

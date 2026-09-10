@@ -38,6 +38,7 @@ Feature: Hide activities from Table of Contents in theme_snap
     Given I log in as "admin"
     And I am on "Test Course" course homepage
     And "courseindex-content" "region" should be visible
+    When I click on ".courseindex-section[data-number='1'] .courseindex-chevron" "css_element"
     And I should see "Visible Page" in the "courseindex-content" "region"
     And I should see "Hidden Page" in the "courseindex-content" "region"
     And I am on activity "page" "Hidden Page" page

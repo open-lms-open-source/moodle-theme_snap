@@ -397,6 +397,14 @@
             background-position: center 4em; // Padding for description text.
             height: 300px;
         }
+        #admin-tableofcontentsbehaviour .form-description {
+            background-image: url("[[pix:theme|tableofcontentsbehaviour]]");
+            background-size: 300px auto;
+            background-repeat: no-repeat;
+            background-position: center 7em; // Padding for description text.
+            height: auto;
+            min-height: 400px;
+        }
     }
 }
 

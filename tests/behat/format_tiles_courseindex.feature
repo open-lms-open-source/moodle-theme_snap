@@ -54,7 +54,9 @@ Feature: Clicking a label from the course index in tiles format handles the over
     And I click on "a.tile-link[data-section='1']" "css_element"
     And I wait until the page is ready
     Then "#format_tiles_overlay" "css_element" should be visible
-    When I click on "nav#courseindex a.courseindex-link[data-anchor='true']" "css_element"
+    When I click on "#courseindex .courseindex-section[data-number='1'] .courseindex-chevron" "css_element"
+    And I wait until "#courseindexcollapse1" "css_element" is visible
+    When I click on "#courseindexcollapse1 a.courseindex-link[data-anchor='true'][title='Test label']" "css_element"
     And I wait until the page is ready
     Then "#format_tiles_overlay" "css_element" should be visible
 
@@ -65,7 +67,7 @@ Feature: Clicking a label from the course index in tiles format handles the over
     And I click on "a.tile-link[data-section='1']" "css_element"
     And I wait until the page is ready
     Then "#format_tiles_overlay" "css_element" should be visible
-    When I click on "nav#courseindex a.courseindex-link[data-anchor='true']" "css_element"
+    When I click on "#courseindex .courseindex-section[data-number='1'] .courseindex-chevron" "css_element"
     And I wait until the page is ready
     Then "#format_tiles_overlay" "css_element" should be visible
 
@@ -76,7 +78,9 @@ Feature: Clicking a label from the course index in tiles format handles the over
     And I click on "a.tile-link[data-section='1']" "css_element"
     And I wait until the page is ready
     Then "#format_tiles_overlay" "css_element" should be visible
-    When I click on "nav#courseindex .courseindex-section[data-number='0'] a.courseindex-link[data-anchor='true']" "css_element"
+    When I click on "#courseindex .courseindex-section[data-number='0'] .courseindex-chevron" "css_element"
+    And I wait until "#courseindexcollapse0" "css_element" is visible
+    When I click on "#courseindex .courseindex-section[data-number='0'] a.courseindex-link[data-anchor='true'][title='Section zero label']" "css_element"
     # Wait for format_tiles' fadeOut(300ms) animation to complete — it does not
     # register with Moodle's pending_js so "wait until the page is ready" is not enough.
     And I wait "1" seconds

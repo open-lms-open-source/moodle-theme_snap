@@ -33,7 +33,7 @@ class hook_callbacks {
      * @throws \core\exception\coding_exception
      */
     public static function before_footer_html_generation(\core\hook\output\before_footer_html_generation $hook): void {
-        global $CFG, $PAGE;
+        global $CFG, $PAGE, $SESSION;
 
         require_once("{$CFG->dirroot}/theme/snap/lib.php");
         if (!theme_snap_is_snap_based($PAGE->theme)) {
@@ -44,9 +44,20 @@ class hook_callbacks {
         // (theme_snap/courseformat/courseindex/cm), which reads cfg.snapModPurposes after boot.
         // The Activities block gets the same data passed straight into its JS init via the
         // blocks_drawer template, so it does not depend on this injection's timing.
+        // Also read setting for the Table of Contents in the course.
+        $coursetocinitialload = false;
+        if ($PAGE->course->id) {
+            $courseid = $PAGE->course->id;
+            $coursetocinitialload = empty($SESSION->themesnaptocinitialised[$courseid]);
+            if ($coursetocinitialload) {
+                $SESSION->themesnaptocinitialised[$courseid] = true;
+            }
+        }
         $PAGE->requires->js_amd_inline("
             require(['core/config'], function(cfg) {
                 cfg.snapModPurposes = " . json_encode(\theme_snap\local::get_mod_purposes()) . ";
+                cfg.courseTOCCollapsed = " . json_encode(get_config('theme_snap', 'tableofcontentsbehaviour')) . ";
+                cfg.courseTOCInitialLoad = " . json_encode($coursetocinitialload) . ";
             });
         ");
 

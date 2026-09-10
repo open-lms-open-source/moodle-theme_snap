@@ -38,6 +38,26 @@ $default = $checked;
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default, $checked, $unchecked);
 $snapsettings->add($setting);
 
+//TOC collapse setting
+$name = 'theme_snap/tableofcontentsbehaviour';
+$title = new \core\lang_string('tableofcontentsbehaviour', 'theme_snap');
+$description = new \core\lang_string('tableofcontentsbehaviour_desc', 'theme_snap');
+
+$name = 'theme_snap/tableofcontentsbehaviour';
+$title = new \core\lang_string('tableofcontentsbehaviour', 'theme_snap');
+$description = new \core\lang_string('tableofcontentsbehaviour_desc', 'theme_snap');
+
+$snapsettings->add(new admin_setting_configselect(
+    $name,
+    $title,
+    $description,
+    'collapsed',
+    [
+        'collapsed' => get_string('collapsed', 'theme_snap'),
+        'expanded' => get_string('expanded', 'theme_snap'),
+    ]
+));
+
 // Lazy loading for pages.
 $name = 'theme_snap/lazyload_mod_page';
 $title = get_string('lazyload_mod_page', 'theme_snap');
