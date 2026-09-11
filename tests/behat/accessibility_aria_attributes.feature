@@ -126,3 +126,46 @@ Feature: Elements for Snap should have the proper aria attributes.
     #And the page should meet "cat.aria, wcag412" accessibility standards
     # Snap activity controls have duplicated Ids. To be reviewed on INT-20292.
     #And the page should meet "cat.parsing, wcag411" accessibility standards
+
+  @javascript
+  Scenario: Sidebar drawer triggers must expose the content they control and their expanded state
+    Given I am logged in as "admin"
+    And I am on site homepage
+    And ".snap-sidebar-menu.show" "css_element" should exist
+    # Every trigger must point at the id of the element it actually controls.
+    And the "aria-controls" attribute of ".snap-sidebar-menu-trigger" "css_element" should contain "snap-sidebar-menu-content"
+    And the "aria-controls" attribute of ".blocks-drawer-button" "css_element" should contain "theme_snap-drawers-blocks"
+    And the "aria-controls" attribute of "#snap_feeds_side_menu_trigger" "css_element" should contain "snap_feeds_side_menu"
+    # The gear points at the block instance id, which is generated, so only assert it is there.
+    And the "aria-controls" attribute of "#admin-menu-trigger" "css_element" should be set
+    # The sidebar is open on load and the drawers are closed, so the initial values must say so.
+    And the "aria-expanded" attribute of ".snap-sidebar-menu-trigger" "css_element" should contain "true"
+    And the "aria-expanded" attribute of "#snap_feeds_side_menu_trigger" "css_element" should contain "false"
+    And the "aria-expanded" attribute of ".blocks-drawer-button" "css_element" should contain "false"
+    # Opening a drawer must update its trigger live, not only after a reload.
+    When I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And "#snap_feeds_side_menu.state-visible" "css_element" should exist
+    Then the "aria-expanded" attribute of "#snap_feeds_side_menu_trigger" "css_element" should contain "true"
+    # And closing it must take the value back.
+    When I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And "#snap_feeds_side_menu.state-visible" "css_element" should not exist
+    Then the "aria-expanded" attribute of "#snap_feeds_side_menu_trigger" "css_element" should contain "false"
+    # Collapsing the sidebar itself must update its own trigger too.
+    When I click on ".snap-sidebar-menu-trigger" "css_element"
+    And ".snap-sidebar-menu.show" "css_element" should not exist
+    Then the "aria-expanded" attribute of ".snap-sidebar-menu-trigger" "css_element" should contain "false"
+
+  @javascript
+  Scenario: A drawer that closes another one must reset the other trigger's expanded state
+    Given I am logged in as "admin"
+    And I am on site homepage
+    And ".snap-sidebar-menu.show" "css_element" should exist
+    When I click on "#snap_feeds_side_menu_trigger" "css_element"
+    And "#snap_feeds_side_menu.state-visible" "css_element" should exist
+    Then the "aria-expanded" attribute of "#snap_feeds_side_menu_trigger" "css_element" should contain "true"
+    # Opening the blocks drawer closes the feeds one, so its trigger must follow.
+    When I click on the block drawer toggle
+    And ".drawer.show" "css_element" should exist
+    And "#snap_feeds_side_menu.state-visible" "css_element" should not exist
+    Then the "aria-expanded" attribute of ".blocks-drawer-button" "css_element" should contain "true"
+    And the "aria-expanded" attribute of "#snap_feeds_side_menu_trigger" "css_element" should contain "false"

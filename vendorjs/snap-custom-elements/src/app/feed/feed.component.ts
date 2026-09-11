@@ -56,16 +56,16 @@ import {MoodleRes} from "../moodle.res";
           {{ 'viewmore' | moodleString | async }}
         </a>
       </div>
-      <a *ngIf="viewMoreEnabled && nextPage >= 0" href="javascript: void(0);" class="snap-sidebar-menu-more"
+      <button *ngIf="viewMoreEnabled && nextPage >= 0" type="button" class="snap-sidebar-menu-more"
          (click)="getFeed($event)" title="{{ viewMoreMessage }} {{ title.toLowerCase() }}">
           <small>{{viewMoreMessage}}</small>
           <i class="snap-feeds-more-icon fa fa-caret-down"></i>
-      </a>
-      <a *ngIf="nextPage === -1 && showReload" href="javascript: void(0);" class="snap-sidebar-menu-more"
+      </button>
+      <button *ngIf="nextPage === -1 && showReload" type="button" class="snap-sidebar-menu-more"
          (click)="purgeDataAndResetFeed()" title="{{ reloadMessage }} {{ title.toLowerCase() }}">
           <small>{{reloadMessage}}</small>
           <i class="snap-feeds-refresh-icon fa fa-refresh"></i>
-      </a>
+      </button>
       <span *ngIf="fetchingData" class="snap-sidebar-menu-more snap-sidebar-menu-feed-loading">
         <a class="small text-muted">{{loadingFeed}} </a>
       </span>

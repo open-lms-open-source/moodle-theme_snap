@@ -683,7 +683,8 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
 
             // Snap feeds drawer: Onclick for toggle of state-visible of Snap feeds side menu.
             $(document).on("click", "#snap_feeds_side_menu_trigger", function(e) {
-                var href = this.getAttribute('href');
+                var controls = this.getAttribute('aria-controls');
+                var href = controls ? '#' + controls : this.getAttribute('href');
                 if (this.getAttribute('id') === 'snap_feeds_side_menu_trigger') {
                     $(this).toggleClass('active');
                     $('#page').toggleClass('offcanvas');

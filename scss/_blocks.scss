@@ -405,6 +405,11 @@ body.path-site .block.block_settings {
 #snap_feeds_side_menu_trigger {
     text-align: center;
     width: 2.35em;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
 
     .hover-visible {
         opacity: 0;

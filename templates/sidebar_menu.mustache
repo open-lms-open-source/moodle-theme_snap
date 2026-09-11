@@ -33,6 +33,8 @@
                 "icon": "fa-cog",
                 "isbutton": true,
                 "classes": "drawer-toggle-button",
+                "ariaexpanded": "false",
+                "ariacontrols": "drawer-id-1",
                 "dataattributes": [
                     {"name": "toggler", "value": "drawers"},
                     {"name": "action", "value": "toggle"},
@@ -75,7 +77,9 @@
             {{^customcontent}}
                 {{#isbutton}}
                     <button type="button" class="snap-sidebar-menu-item {{#classes}}{{classes}}{{/classes}}" {{#title}}title="{{title}}"{{/title}}
-                        {{#dataattributes}}data-{{name}}="{{value}}" {{/dataattributes}} aria-expanded="false">
+                        {{#ariaexpanded}}aria-expanded="{{ariaexpanded}}"{{/ariaexpanded}}
+                        {{#ariacontrols}}aria-controls="{{ariacontrols}}"{{/ariacontrols}}
+                        {{#dataattributes}}data-{{name}}="{{value}}" {{/dataattributes}}>
                         {{#icon}}<i class="fa {{icon}}" aria-hidden="true"></i>{{/icon}}
                         {{^icon}}{{#iconimg}}<img src="{{iconimg}}" alt="{{#title}}{{title}}{{/title}}{{^title}}Icon{{/title}}" />{{/iconimg}}{{/icon}}
                     </button>
@@ -108,7 +112,9 @@
     </div>
     
     <!-- Sidebar Menu Trigger Button (part of the sidebar) -->
-    <button type="button" class="snap-sidebar-menu-trigger" aria-label="{{#str}}menu{{/str}}">
+    <button type="button" class="snap-sidebar-menu-trigger" aria-label="{{#str}}menu{{/str}}"
+        aria-expanded="{{#opensidebar}}true{{/opensidebar}}{{^opensidebar}}false{{/opensidebar}}"
+        aria-controls="snap-sidebar-menu-content">
         <i class="fa {{#opensidebar}}fa-angle-left rotate-180{{/opensidebar}}{{^opensidebar}}fa-angle-left{{/opensidebar}}" aria-hidden="true"></i>
     </button>
 </div>
