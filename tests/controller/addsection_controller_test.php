@@ -86,22 +86,22 @@ class addsection_controller_test extends advanced_testcase {
         // Confirm that the exception was thrown.
         $this->assertTrue($thrown, 'Redirect() was expected to throw an exception in PHPUnit');
 
-        // Retrieve only normal sections (component IS NULL).
+        // Retrieve only normal sections (component IS NULL), sorted by section number. Without an
+        // explicit sort the database is free to return the rows in any order, so end() could pick
+        // one of the initial sections instead of the new one.
         $sections = $DB->get_records('course_sections', [
             'course' => $course->id,
             'component' => null
-        ]);
+        ], 'section ASC');
 
+        // Adding the section displaces the delegated one, so the new section is the last normal one.
         $lastsection = end($sections);
 
+        $this->assertEquals(2, $lastsection->section);
         $this->assertEquals('Additional section', $lastsection->name);
         $this->assertEquals('Summary', $lastsection->summary);
 
-        // Verify that multiple extra sections were not created
-        $normalsections = array_filter($sections, function($s) {
-            return empty($s->component);
-        });
-
-        $this->assertCount(3, $normalsections, 'There should be only 3 normal sections (2 initial + 1 new)');
+        // Verify that multiple extra sections were not created.
+        $this->assertCount(3, $sections, 'There should be only 3 normal sections (2 initial + 1 new)');
     }
 }
