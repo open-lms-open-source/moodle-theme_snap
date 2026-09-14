@@ -229,3 +229,12 @@ $THEME->requiredblocks = $requiredblocks;
 $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
 $THEME->haseditswitch = false;
 $THEME->iconsystem = '\\theme_snap\\output\\icon_system_fontawesome';
+if (!CLI_SCRIPT && $PAGE->has_set_url()) {
+    $currentpath = local::current_url_path();
+    if ($currentpath === '/question/banks.php') {
+        $courseid = optional_param('courseid', null, PARAM_INT);
+        if ($courseid && $PAGE->pagelayout === 'base') {
+            $PAGE->set_pagelayout('incourse');
+        }
+    }
+}
