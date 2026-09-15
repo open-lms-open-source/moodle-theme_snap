@@ -1,6 +1,15 @@
 # theme_snap — Architecture Reference
 
-Snap is a heavily customised Boost child-theme built by Open LMS.
+## Overview
+
+Snap is Open LMS's flagship learner-facing theme — a Boost child theme that replaces most of Moodle's default interface rather than restyling it. On a Snap site the learner gets a personal menu carrying deadline, grading, message and forum feeds, courses presented as cards with cover images, and inside a course a table of contents down the side rather than Moodle's stacked section list. Administrators get a large branding surface on top of that: brand and per-category colours, profile-field-driven branding, fonts, login backgrounds and carousels, feature spots and featured categories.
+
+Most of that is produced at render time rather than by templates alone. Snap registers 19 layout entries against 5 layout files, overrides a large part of core's renderer, runs three SCSS callbacks plus a post-processor to build its CSS, and ships 47 AMD modules and 11 web service functions to drive the interface. It owns two tables of its own, `theme_snap_course_favorites` and `theme_snap_toc_hidden`, and carries the TOC-hidden data through course backup and restore — unusual for a theme, and the reason `backup/moodle2/` exists here at all.
+
+What Snap deliberately does not do is multitenancy. Per-tenant branding lives in child themes that sit on top of Snap — `theme_snap_tenants` — and swap in tenant-specific values at render time. Snap itself reads site-level configuration only.
+
+If the theme were uninstalled the site falls back to Boost: the table of contents, cover images, personal feeds, course cards and every Snap setting disappear, the two tables are left orphaned, and anything relying on Snap's web services or AMD modules stops working.
+
 ## Plugin identity
 
 | Field | Value |
@@ -55,7 +64,7 @@ theme/snap/
 ├── db/
 │   ├── hooks.php                           # 1 hook callback
 │   ├── install.xml                         # 2 custom tables
-│   ├── services.php                        # 10 web service definitions
+│   ├── services.php                        # 11 web service definitions
 │   └── upgrade.php                         # 15 upgrade steps
 │
 ├── lang/                                   # 17 language packs
@@ -348,6 +357,7 @@ All extend `\core\webservice\external_api`. Registered in `db/services.php`:
 | `ws_coursetools_block_actions` | Course tools block actions |
 | `ws_course_toc_progressbar` | TOC progress bar data |
 | `ws_course_section_progress` | Section progress data |
+| `ws_get_hidden_toc_activities` | Course-module IDs currently hidden from the Snap TOC |
 
 ### Controllers (`classes/controller/`)
 
