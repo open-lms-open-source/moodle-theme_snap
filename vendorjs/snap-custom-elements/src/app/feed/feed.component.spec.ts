@@ -1,8 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FeedComponent } from './feed.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {provideHttpClient} from "@angular/common/http";
+import {provideAnimations} from "@angular/platform-browser/animations";
 import {MoodleStringPipe, StringService} from "openlms-angular-lib";
 import {MockStringService} from "../string.service.spec";
 
@@ -10,11 +11,14 @@ describe('FeedComponent', () => {
   let component: FeedComponent;
   let fixture: ComponentFixture<FeedComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FeedComponent ],
-      imports: [HttpClientTestingModule, BrowserAnimationsModule, MoodleStringPipe],
+      imports: [MoodleStringPipe],
       providers: [
+        provideAnimations(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
         {
           provide: StringService,
           useClass: MockStringService

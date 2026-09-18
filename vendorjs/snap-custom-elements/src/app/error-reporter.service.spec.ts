@@ -14,7 +14,7 @@ describe('ErrorReporterService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ErrorReporterService = TestBed.get(ErrorReporterService);
+    const service: ErrorReporterService = TestBed.inject(ErrorReporterService);
     expect(service).toBeTruthy();
   });
 });

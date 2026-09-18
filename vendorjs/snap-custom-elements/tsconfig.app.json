@@ -6,13 +6,12 @@
   },
   "files": [
     "src/zone-flags.ts",
-    "src/main.ts",
+    "src/main.ts"
   ],
   "include": [
     "src/**/*.d.ts"
   ],
   "exclude": [
-    "src/test.ts",
     "src/**/*.spec.ts"
   ]
 }

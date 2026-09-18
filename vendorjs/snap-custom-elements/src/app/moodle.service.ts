@@ -4,7 +4,7 @@ import {Observable, of} from 'rxjs';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 import {MoodleRes} from "./moodle.res";
 import {ErrorReporterService} from "./error-reporter.service";
 
@@ -45,7 +45,7 @@ export class MoodleService {
       return of(errorRes);
     }
 
-    let body = [{
+    const body = [{
       index: 0,
       methodname: methodName,
       args: args
@@ -75,7 +75,7 @@ export class MoodleService {
       return of(errorRes);
     }
 
-    let body = [];
+    const body = [];
 
     for (let i = 0; i < args.length; i++) {
       body.push({
@@ -117,7 +117,7 @@ export class MoodleService {
   public extractData(response: any) : any {
     if (!response.length) {
       // Single response with error arrived.
-      let singleMoodleRes: MoodleRes = response;
+      const singleMoodleRes: MoodleRes = response;
       if (singleMoodleRes.error) {
         this.errorReporterService.relayError(singleMoodleRes);
         return null;
@@ -126,7 +126,7 @@ export class MoodleService {
       return singleMoodleRes.data;
     }
 
-    let multiMoodleRes: MoodleRes[] = response;
+    const multiMoodleRes: MoodleRes[] = response;
 
     if (multiMoodleRes[0].error) {
       this.errorReporterService.relayError(multiMoodleRes[0]);

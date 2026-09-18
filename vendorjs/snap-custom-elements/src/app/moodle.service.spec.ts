@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MoodleService } from './moodle.service';
-import {of} from "rxjs";
 import {ErrorReporterService} from "./error-reporter.service";
 import {MockErrorReporterService} from "./error-reporter.service.spec";
 import {HttpClient} from "@angular/common/http";
@@ -27,7 +26,7 @@ describe('MoodleService', () => {
   }));
 
   it('should be created', () => {
-    const service: MoodleService = TestBed.get(MoodleService);
+    const service: MoodleService = TestBed.inject(MoodleService);
     expect(service).toBeTruthy();
   });
 });
