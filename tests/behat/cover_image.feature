@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Tests for cover image uploading.
+# Tests for cover image uploading, and its consistent rendering.
 #
 # @package    theme_snap
 # @copyright  Copyright (c) 2016 Open LMS.
@@ -312,3 +312,49 @@ Feature: When the moodle theme is set to Snap, cover image can be set for site a
     And I am on the course main page for "C1"
     Then I should see "Change cover image"
     And "#page-mast #snap-coverimagecontrol" "css_element" should exist
+
+  Scenario: The wiki search form is rendered in the main region and not over the cover image
+    Given the following "courses" exist:
+      | fullname | shortname | category | format |
+      | Course 1 | C1        | 0        | topics |
+    And the following "users" exist:
+      | username | firstname | lastname | email                |
+      | student1 | Student   | 1        | student1@example.com |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | C1     | student |
+    And the following "activities" exist:
+      | activity | course | name      | idnumber | wikimode      | firstpagetitle |
+      | wiki     | C1     | Test wiki | wiki1    | collaborative | First page     |
+    And the following wiki pages exist:
+      | wiki  | title      | content            |
+      | wiki1 | First page | First page content |
+    When I am on the "Test wiki" "wiki activity" page logged in as student1
+    Then "#page-header input[aria-label='Search wikis']" "css_element" should not exist
+    And "#region-main input[aria-label='Search wikis']" "css_element" should exist
+    # The form is the first thing in #region-main, directly after the skip link target.
+    And "#region-main > span#maincontent + .snap-relocated-heading-button" "css_element" should exist
+    And "#region-main > .snap-relocated-heading-button input[aria-label='Search wikis']" "css_element" should exist
+
+  Scenario: The wiki search form stays out of the page header on the wiki search results page
+    Given the following "courses" exist:
+      | fullname | shortname | category | format |
+      | Course 1 | C1        | 0        | topics |
+    And the following "users" exist:
+      | username | firstname | lastname | email                |
+      | student1 | Student   | 1        | student1@example.com |
+    And the following "course enrolments" exist:
+      | user     | course | role    |
+      | student1 | C1     | student |
+    And the following "activities" exist:
+      | activity | course | name      | idnumber | wikimode      | firstpagetitle |
+      | wiki     | C1     | Test wiki | wiki1    | collaborative | First page     |
+    And the following wiki pages exist:
+      | wiki  | title      | content            |
+      | wiki1 | First page | First page content |
+    And I am on the "Test wiki" "wiki activity" page logged in as student1
+    When I set the field "searchstring" to "content"
+    And I press "Search wikis"
+    Then I should see "First page content"
+    And "#page-header input[aria-label='Search wikis']" "css_element" should not exist
+    And "#region-main input[aria-label='Search wikis']" "css_element" should exist
