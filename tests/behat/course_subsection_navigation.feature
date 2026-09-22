@@ -43,6 +43,7 @@ Feature: Subsection footer navigation in Snap shows next and previous between si
   Scenario: First subsection has next only; second has previous only
     Given I log in as "teacher1"
     And I am on the course main page for "C1"
+    And I click on ".courseindex-section[data-number='1'] .courseindex-chevron" "css_element"
     And I click on "//a[contains(@href,'/course/section.php')][contains(normalize-space(.),'Subsection 1')]" "xpath_element"
     And I wait until the page is ready
     Then "nav.section_footer a.next_section:not(.disabled)" "css_element" should exist
