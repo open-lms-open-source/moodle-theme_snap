@@ -25,6 +25,7 @@
 
 import BaseCmComponent from 'core_courseformat/local/courseindex/cm';
 import Config from 'core/config';
+import Url from 'core/url';
 
 export default class Component extends BaseCmComponent {
 
@@ -90,6 +91,8 @@ export default class Component extends BaseCmComponent {
             return;
         }
 
+        this._resolveIconSource(container);
+
         const iconClass = [...container.classList].find(
             cls => cls.endsWith('icon') && cls !== 'icon' && cls !== 'activityiconcontainer'
         );
@@ -102,5 +105,22 @@ export default class Component extends BaseCmComponent {
         }
 
         container.classList.add('snap-icon-resolved');
+    }
+
+    /**
+     * Sets the src of the monologo image for the cm template. The URL we build is using core/url.
+     *
+     * @param {Element} container the cm's .activityiconcontainer
+     */
+    _resolveIconSource(container) {
+        const icon = container.querySelector('img.activityicon[data-module]');
+        if (!icon) {
+            return;
+        }
+
+        const src = Url.imageUrl('monologo', `mod_${icon.dataset.module}`);
+        if (icon.getAttribute('src') !== src) {
+            icon.setAttribute('src', src);
+        }
     }
 }

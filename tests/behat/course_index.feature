@@ -162,3 +162,12 @@ Feature: Testing course index drawer in theme_snap
     Then "#section-5.state-visible" "css_element" should be visible
     And "#section-2.state-visible" "css_element" should not be visible
     And "[data-activityname='SubAssign 3'] #searchpin" "css_element" should be visible
+
+  @javascript
+  Scenario: Every activity icon in the course index loads its own module icon
+    Given the following config values are set as admin:
+      | allowthemechangeonurl | 1 |
+    And I log in as "admin"
+    And I am on the course main page for "C1"
+    And "#theme_boost-drawers-courseindex" "css_element" should be visible
+    Then the activity icons in the course index should be loaded

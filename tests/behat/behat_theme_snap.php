@@ -2108,6 +2108,43 @@ JS;
     }
 
     /**
+     * Checks that the activity icons in the course index resolved to a real image.
+     *
+     * @Then /^the activity icons in the course index should be loaded$/
+     * @throws ExpectationException If the course index has no icons, or any of them failed to load.
+     */
+    public function the_activity_icons_in_the_course_index_should_be_loaded() {
+        $script = '(() => {
+            const icons = [...document.querySelectorAll("#course-index li[data-for=cm] img.activityicon")];
+            return {
+                total: icons.length,
+                settled: icons.length > 0 && icons.every(img => img.getAttribute("src") && img.complete),
+                broken: icons.filter(img => img.complete && img.naturalWidth === 0)
+                    .map(img => (img.dataset.module || "?") + " -> " + (img.getAttribute("src") || "no src"))
+            };
+        })()';
+
+        // Wait for the icons to appear on the TOC.
+        $result = $this->spin(
+            function($context) use ($script) {
+                $info = $context->getSession()->evaluateScript($script);
+                return empty($info['settled']) ? false : $info;
+            },
+            false,
+            self::get_extended_timeout(),
+            new ExpectationException('The course index activity icons never finished loading', $this->getSession())
+        );
+
+        if (!empty($result['broken'])) {
+            throw new ExpectationException(
+                count($result['broken']) . ' of ' . $result['total']
+                    . ' course index activity icons failed to load: ' . implode(', ', $result['broken']),
+                $this->getSession()
+            );
+        }
+    }
+
+    /**
      * Create an enabled user tour with a single unattached step for the given URL path match.
      *
      * @Given /^a user tour named "(?P<name_string>(?:[^"]|\\")*)" exists for URL match "(?P<pathmatch_string>(?:[^"]|\\")*)"$/
