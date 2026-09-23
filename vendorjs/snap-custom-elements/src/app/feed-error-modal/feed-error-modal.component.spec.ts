@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FeedErrorModalComponent } from './feed-error-modal.component';
 import {MoodleStringPipe, StringService} from "openlms-angular-lib";
@@ -10,7 +10,7 @@ describe('FeedErrorModalComponent', () => {
   let component: FeedErrorModalComponent;
   let fixture: ComponentFixture<FeedErrorModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FeedErrorModalComponent ],
       imports: [MoodleStringPipe],
@@ -39,7 +39,7 @@ describe('FeedErrorModalComponent', () => {
   });
 
   it('should update the message error', () => {
-    let message = 'Error message';
+    const message = 'Error message';
     component.displayError(message);
     expect(component.error.message).toBe(message);
   });

@@ -4,7 +4,7 @@ import {finalize, Observable, of, shareReplay} from 'rxjs';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {MoodleRes} from "./moodle.res";
 import {CachedMoodleRes} from "./cached-moodle-res";
 import {MoodleResKey} from "./moodle-res-key";
@@ -65,7 +65,7 @@ export class FeedService {
       return of(cachedRes);
     }
 
-    let body = [{
+    const body = [{
       index: 0,
       methodname: 'theme_snap_feed',
       args: {
@@ -93,11 +93,11 @@ export class FeedService {
   public extractData(response: any) : MoodleRes[] {
     if (!response.length) {
       // Single response with error arrived.
-      let singleMoodleRes: MoodleRes = response;
+      const singleMoodleRes: MoodleRes = response;
       return [singleMoodleRes];
     }
 
-    let multiMoodleRes: MoodleRes[] = response;
+    const multiMoodleRes: MoodleRes[] = response;
     return multiMoodleRes;
   }
 
@@ -152,7 +152,7 @@ export class FeedService {
     }
 
     const itemKey = this.createLocalCacheKey(moodleResKey);
-    let cachedFeedRes: CachedMoodleRes = {
+    const cachedFeedRes: CachedMoodleRes = {
       timeCreated : Date.now() / 1000, // JS way to get the current date timestamp in seconds.
       key : moodleResKey,
       result : res,

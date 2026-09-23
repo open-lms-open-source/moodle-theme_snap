@@ -5,11 +5,10 @@ import {FeedItem} from "../feed-item";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 import {MoodleService} from "../moodle.service";
 import {ErrorReporterService} from "../error-reporter.service";
-import {FeedErrorModalComponent} from "../feed-error-modal/feed-error-modal.component"
-import {MoodleRes} from "../moodle.res";
 
 @Component({
   selector: 'snap-feed',
+  standalone: false,
   template: `
       <h2>{{ title }}</h2>
       <div id="{{ elemId }}" [@growIn]="feedItemTotal">
@@ -43,7 +42,7 @@ import {MoodleRes} from "../moodle.res";
                   </span>
               </div>
           </div>
-          <p class="small" *ngIf="feedItemTotal == 0">{{emptyMessage}}</p>
+          <p class="small" *ngIf="feedItemTotal === 0">{{emptyMessage}}</p>
       </div>
       <div class="alert alert-danger alert-block fade in" role="alert" *ngIf="feedError === true && !retryFeed">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">×</button>
@@ -143,7 +142,7 @@ export class FeedComponent implements OnInit {
 
     this.feedItems = [];
     if (this.initialValue) {
-      let initialItems = JSON.parse(this.decodeHtmlSpecialChars(this.initialValue));
+      const initialItems = JSON.parse(this.decodeHtmlSpecialChars(this.initialValue));
       if (initialItems.length > 0) {
         this.nextPage = 0;
         this.feedItemCache = [];
@@ -209,7 +208,7 @@ export class FeedComponent implements OnInit {
           } else {
             this.fetchingData = false;
           }
-          let singleMoodleRes: any = feedResponse[0];
+          const singleMoodleRes: any = feedResponse[0];
           this.errorMsg = singleMoodleRes;
           return;
         }
@@ -243,8 +242,8 @@ export class FeedComponent implements OnInit {
     const nextStartIdx: number = pageSize * (this.nextPage - 1);
     const lastIdx: number = totalItems;
     if (nextStartIdx <= lastIdx) {
-      let start: number = nextStartIdx,
-          end: number = nextStartIdx + pageSize;
+      const start: number = nextStartIdx;
+      let end: number = nextStartIdx + pageSize;
       end = end > lastIdx ? lastIdx : end;
       const newFeedItems: FeedItem[] = this.feedItemCache.slice(start, end);
       this.processNextPage(newFeedItems);
@@ -313,7 +312,7 @@ export class FeedComponent implements OnInit {
       '&#8221;': '”'
     };
 
-    return str.replace(/\&[\w\d\#]{2,5}\;/g, function (m) {
+    return str.replace(/&[\w\d#]{2,5};/g, function (m) {
       return map[m];
     });
   }

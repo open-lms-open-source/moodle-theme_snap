@@ -3,6 +3,7 @@ import {ErrorReporterService} from "../error-reporter.service";
 
 @Component({
   selector: 'feed-error-modal',
+  standalone: false,
   template: `
     <button id="snapOpenErrorModalButton" [hidden]="true" data-bs-toggle="modal" data-target="#snapErrorModal"></button>
     <!-- Modal -->
@@ -55,7 +56,7 @@ export class FeedErrorModalComponent implements OnInit {
   }
 
   displayError(error: any) {
-    let data = {message: null, backtrace: null};
+    const data = {message: null, backtrace: null};
     let errorObject = null;
     if (typeof error == 'object') {
       errorObject = error;

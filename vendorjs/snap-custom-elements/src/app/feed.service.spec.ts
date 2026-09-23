@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
 import { FeedService } from './feed.service';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {HttpTestingController, provideHttpClientTesting} from "@angular/common/http/testing";
+import {provideHttpClient} from "@angular/common/http";
 import {MoodleRes} from "./moodle.res";
 import {MoodleResKey} from "./moodle-res-key";
 import {FeedServiceArgs} from "./feed-service-args";
@@ -62,8 +63,9 @@ describe('FeedService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         {
           provide: ErrorReporterService,
           useClass: MockErrorReporterService
@@ -196,7 +198,7 @@ describe('FeedService', () => {
     moodleResKey.args = feedServiceArgs;
 
     const itemKey = feedService.createLocalCacheKey(moodleResKey);
-    let cachedFeedRes: CachedMoodleRes = {
+    const cachedFeedRes: CachedMoodleRes = {
       timeCreated : (Date.now() / 1000) - 11, // 11 seconds ago.
       key : moodleResKey,
       result : testData,

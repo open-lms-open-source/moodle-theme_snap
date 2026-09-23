@@ -1,17 +1,16 @@
 // Karma configuration file, see link for more information
-// https://karma-runner.github.io/1.0/config/configuration-file.html
+// https://karma-runner.github.io/latest/config/configuration-file.html
 
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ['jasmine'],
     plugins: [
       require('karma-jasmine'),
       require('karma-junit-reporter'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('karma-coverage')
     ],
     client: {
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
@@ -19,10 +18,14 @@ module.exports = function (config) {
         random: false,
       },
     },
-    coverageIstanbulReporter: {
+    coverageReporter: {
       dir: require('path').join(__dirname, './coverage/snap-custom-elements'),
-      reports: ['html', 'lcovonly', 'text-summary'],
-      fixWebpackSourcePaths: true
+      subdir: '.',
+      reporters: [
+        {type: 'html'},
+        {type: 'lcovonly'},
+        {type: 'text-summary'}
+      ],
     },
     reporters: ['progress', 'kjhtml', 'junit'],
     port: 9876,
