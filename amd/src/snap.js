@@ -1200,22 +1200,26 @@ define(['jquery', 'core/log', 'core/aria', 'theme_snap/headroom', 'theme_snap/ut
                         // (inside .snap-form-required) renders before .snap-form-advanced instead of
                         // after it. Companion to mobileFormChecker() above, which covers width < 992.
                         var stackedQuery = window.matchMedia('(max-width: 1199.98px)');
+                        var buttonarAnchor = $('.snap-form-advanced').length ? '.snap-form-advanced' : '.snap-form-required';
                         var isButtonarInPlace = function() {
-                            return $('.snap-form-advanced + #fgroup_id_buttonar').length > 0;
+                            return $(buttonarAnchor + ' + #fgroup_id_buttonar').length > 0;
                         };
                         var repositionButtonar = function() {
                             if (stackedQuery.matches && !isButtonarInPlace()) {
-                                $('#fgroup_id_buttonar').detach().insertAfter('.snap-form-advanced');
+                                $('#fgroup_id_buttonar').detach().insertAfter(buttonarAnchor);
                             }
                         };
                         // Other code re-wraps #fgroup_id_buttonar into a fieldset shortly after this
                         // runs, undoing an immediate move. Rather than guess a safe delay, react to
                         // it directly: re-apply whenever the DOM around it changes, and only while
                         // stacked — above the breakpoint we leave it wherever it naturally settles.
-                        repositionButtonar();
-                        stackedQuery.addEventListener('change', repositionButtonar);
-                        new MutationObserver(repositionButtonar)
-                            .observe($('.snap-form-advanced')[0].parentNode, {childList: true, subtree: true});
+                        var buttonarAnchorElement = $(buttonarAnchor)[0];
+                        if (buttonarAnchorElement) {
+                            repositionButtonar();
+                            stackedQuery.addEventListener('change', repositionButtonar);
+                            new MutationObserver(repositionButtonar)
+                                .observe(buttonarAnchorElement.parentNode, {childList: true, subtree: true});
+                        }
 
                         var description = $('form[id^="mform1"] fieldset:first .fitem_feditor:not(.required)');
 
