@@ -322,13 +322,12 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $button = \core\output\html_writer::div(parent::page_heading_button(), 'snap-relocated-heading-button');
-        $skiptarget = '<span id="maincontent"></span>';
-        $position = strpos($html, $skiptarget);
-        if ($position === false) {
+        // Match the skip target regardless of its attributes (e.g. core adds tabindex="-1").
+        if (!preg_match('~<span\b[^>]*\bid="maincontent"[^>]*>\s*</span>~', $html, $matches, PREG_OFFSET_CAPTURE)) {
             // The skip target moved; keep the button inside #region-main rather than losing it.
             return $button . $html;
         }
-        $position += strlen($skiptarget);
+        $position = $matches[0][1] + strlen($matches[0][0]);
 
         return substr($html, 0, $position) . $button . substr($html, $position);
     }
