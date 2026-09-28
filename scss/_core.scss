@@ -5580,7 +5580,8 @@ section#region-main {
 // JS moves #fgroup_id_buttonar to follow .snap-form-advanced when these columns
 // stack below the `xl` breakpoint. .snap-form-advanced is a 100%-width float
 // there, so buttonar (a flex container) must clear it or gets squeezed to 0 width.
-.snap-form-advanced + #fgroup_id_buttonar {
+.snap-form-advanced + #fgroup_id_buttonar,
+.snap-form-required + #fgroup_id_buttonar {
     clear: both;
 }
 
