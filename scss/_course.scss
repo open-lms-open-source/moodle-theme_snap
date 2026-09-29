@@ -2188,6 +2188,14 @@ body.snap-resource-card {
     }
 }
 
+// Single section tiles should also be visible on Snap.
+.course-content > ul#single_section_tiles > li.section {
+    visibility: visible;
+    height: auto;
+    width: auto;
+    overflow: visible;
+}
+
 #page-course-view-tiles:not(.editing),
 #page-course-view-section-tiles:not(.editing) {
     #format-tiles-multi-section-page {
