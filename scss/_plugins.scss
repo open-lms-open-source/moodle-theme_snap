@@ -475,6 +475,14 @@
     #id_autocontainer_userid_autocompletetext .yui-ac-shadow {
         display: none;
     }
+
+    #blockConduitFailedFilesUploadModal .page-item.active .page-link {
+        &:focus,
+        &:focus-visible {
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba($brand-primary, 0.5);
+        }
+    }
 }
 
 .path-blocks-conduit {
