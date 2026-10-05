@@ -7430,11 +7430,7 @@ body#page-mod-assign-grading.path-mod-assign .gradingtable thead tr {
 }
 
 div#snap-course-wrapper #toc-desktop-menu-heading {
-    margin-bottom: 1em;
-    border-bottom: 1px solid #dee2e6;
     text-transform: capitalize;
-    margin-top: 0.5rem;
-    margin-left: 1rem;
     #toc-search {
       font-size: 1rem;
     }
@@ -7507,19 +7503,25 @@ li.section.main {
   width: 70%;
 }
 
-[id*="courseindex"].drawer-left .drawerheadercontent,
-[id*="courseindex"].drawer-left .drawerheader .drawertoggle {
-  position: static;
-}
-
 [id*="courseindex"].drawer-left .drawerheader {
-  position: absolute;
-  top: 0.65em;
-  right: 0;
-  display: flex;
+  height: auto;
+  background-color: #fff;
   align-items: center;
-  gap: 1rem;
-  padding-right: .5rem;
+  gap: 0.75rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+
+  .drawertoggle {
+    flex-shrink: 0;
+  }
+
+  .drawerheadercontent {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
 }
 
 .modal {
