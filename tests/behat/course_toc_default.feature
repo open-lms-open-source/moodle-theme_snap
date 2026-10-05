@@ -69,3 +69,17 @@ Feature: Course TOC default behaviour
     And I log in as "student1"
     And I am on "Test Course" course homepage
     Then the "aria-expanded" attribute of ".courseindex-section[data-number='1'] .courseindex-chevron" "css_element" should contain "false"
+
+  Scenario: Expand all works immediately after collapsed default
+    Given I log in as "admin"
+    And I set the following administration settings values:
+      | tableofcontentsbehaviour | Collapsed |
+    And I log out
+    And I log in as "student1"
+    And I am on "Test Course" course homepage
+    Then the "aria-expanded" attribute of ".courseindex-section[data-number='1'] .courseindex-chevron" "css_element" should contain "false"
+    And the "aria-expanded" attribute of ".courseindex-section[data-number='2'] .courseindex-chevron" "css_element" should contain "false"
+    When I click on "Course index options" "button"
+    When I click on "Expand all" "link"
+    Then the "aria-expanded" attribute of ".courseindex-section[data-number='1'] .courseindex-chevron" "css_element" should contain "true"
+    And the "aria-expanded" attribute of ".courseindex-section[data-number='2'] .courseindex-chevron" "css_element" should contain "true"

@@ -124,6 +124,8 @@ Feature: Testing course index drawer in theme_snap
   Scenario: The course index remains sticky when turning edit mode on and off.
     Given I log in as "admin"
     And I am on the course main page for "C1"
+    And I click on "Course index options" "button"
+    And I click on "Expand all" "link"
     And I switch editing mode on
     And I should see "Contents"
     And I should see "SubAssign 1"

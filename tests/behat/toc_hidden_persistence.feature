@@ -54,6 +54,8 @@ Feature: TOC hidden flag is preserved on activity duplication
     And I wait until the page is ready
     And I go to section 1 of course "TC1"
     And "courseindex-content" "region" should be visible
+    And I click on "Course index options" "button"
+    And I click on "Expand all" "link"
     And I should not see "Hidden Page" in the "courseindex-content" "region"
     And I should see "Visible Page" in the "courseindex-content" "region"
     # Duplicate the hidden activity.

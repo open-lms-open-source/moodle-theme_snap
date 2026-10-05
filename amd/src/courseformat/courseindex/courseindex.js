@@ -38,13 +38,8 @@ export default class Component extends BaseSectionComponent {
         super.stateReady(state);
         const config = require('core/config');
         if (config.courseTOCInitialLoad) {
-            const collapsed = config.courseTOCCollapsed === 'collapsed';
-            state.section.forEach(section => {
-                this._expandSectionNode(
-                    section,
-                    !collapsed
-                );
-            });
+              const collapsed = config.courseTOCCollapsed === 'collapsed';
+              this.reactive.dispatch('allSectionsIndexCollapsed', collapsed);
         }
         this._skipRedundantSubsectionWrappers();
         // Guaranteed fresh navigation here, so the URL (if on section.php) can be trusted.
