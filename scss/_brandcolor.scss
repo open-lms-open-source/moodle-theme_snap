@@ -2068,6 +2068,64 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             accent-color: $brand-primary !important;
         }
     }
+
+    .iledt-date-badge {
+        border-color: $brand-primary;
+    }
+
+    // Only the month abbreviation is branded; the day number keeps the body colour.
+    .iledt-date-badge-month {
+        color: $brand-primary;
+    }
+
+    .iledt-clear-filters,
+    .iledt-clear-filters:hover,
+    .iledt-clear-filters:focus {
+        color: $brand-primary;
+    }
+
+    // Expanded session detail. The track card is the interactive one, so it is the only
+    // card that takes the brand border.
+    .iledt-detail-card-track {
+        border-color: $brand-primary;
+    }
+
+    .iledt-detail-icon {
+        background-color: rgba($brand-primary, 0.1);
+        color: $brand-primary;
+    }
+
+    .iledt-detail-avatar {
+        background-color: $brand-primary;
+    }
+
+    .iledt-detail-trackname,
+    .iledt-detail-url,
+    .iledt-detail-strong {
+        color: $brand-primary;
+    }
+
+    .iledt-detail-view,
+    .iledt-detail-view:hover,
+    .iledt-detail-view:focus {
+        color: $brand-primary;
+    }
+
+    // The row a learner has opened is outlined in the brand colour.
+    .iledt-my-sessions tbody tr.iledt-row-expanded {
+        border-color: $brand-primary;
+    }
+
+    // One property drives the expanded track's left bar, heading rule and timeline markers.
+    .iledt-my-tracks,
+    .iledt-detail-row {
+        --iledt-accent: #{$brand-primary};
+    }
+
+    .iledt-session-number {
+        background-color: rgba($brand-primary, 0.1);
+        color: $brand-primary;
+    }
 }
 
 /*
