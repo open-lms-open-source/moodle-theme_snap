@@ -875,11 +875,11 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
         .simplesearchform {
             a[data-action="opensearch"] .icon,
             a[data-action="opensearch"] i.icon {
-                color: $brand-primary;
+                color: $nav-color;
             }
 
             a.btn-open .icon.fa-search {
-                color: $brand-primary;
+                color: $nav-color;
                 &:hover {
                     --fa-animation-duration: 0.5s;
                     --fa-animation-iteration-count: 1;
@@ -949,7 +949,26 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             }
         }
 
-        
+        // Tenant selector icon (tool_olms_tenant). Kept here so it gets the per-category colour too.
+        a[data-form-url*="tenant_switch.php"] .icon {
+            color: $nav-color;
+        }
+
+        // Accessibility button (local_accessibility), same colour pair as the notifications count.
+        #nav-local-accessibility-popover-container #local-accessibility-buttoncontainer .btn.btn-primary {
+            color: opacify($nav-bg, 1);
+            background-color: $nav-color;
+            border-color: $nav-color;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &.active {
+                color: opacify($nav-bg, 1);
+                background-color: darken($nav-color, 10%);
+                border-color: darken($nav-color, 10%);
+            }
+        }
 
         #nav-intellicart-popover-container {
             // Intellicart shopping icon.
