@@ -54,6 +54,10 @@ $lighter-grey-btn: #e6e6e6;
 $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this with rgb or the variable won't work.
 
 .theme-snap {
+    // Navbar colour, exposed for child themes and plugins. Declared on the wrapper itself so
+    // each per-category compile (.category-<id>) redefines it for that category's pages.
+    --snap-nav-color: #{$nav-color};
+
     .text-bg-primary,
     .badge.bg-primary {
         background-color: $brand-primary !important;
@@ -947,11 +951,6 @@ $custom-menu-text-color: rgb(255, 255, 255) !default; // Need to define this wit
             .icon.fa-bell {
                 color: $nav-color;
             }
-        }
-
-        // Tenant selector icon (tool_olms_tenant). Kept here so it gets the per-category colour too.
-        a[data-form-url*="tenant_switch.php"] .icon {
-            color: $nav-color;
         }
 
         // Accessibility button (local_accessibility), same colour pair as the notifications count.
