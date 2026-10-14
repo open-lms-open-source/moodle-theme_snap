@@ -28,6 +28,13 @@
     * courseindexopen - true if the nav drawer should be open on page load
     * regionmainsettingsmenu - HTML for the region main settings menu
     * hasregionmainsettingsmenu - There is a region main settings menu on this page.
+    * courseindex - (Snap-only) HTML for the course index drawer content, or empty/absent
+      to omit the drawer entirely.
+    * iscourseindex - (Snap-only) true when courseindex is being rendered, used to select
+      the course-index-specific drawer classes/state.
+    * searchmodule - (Snap-only) HTML for the TOC search box, rendered into
+      .drawerheadercontent alongside the expand/collapse dropdown (see course_index_drawer.php
+      and INT-22340). Empty/absent renders nothing - safe for callers that don't set it.
 
     Example context (json):
     {
@@ -61,6 +68,7 @@
         {{< theme_boost/drawer }}
             {{$id}}theme_boost-drawers-courseindex{{/id}}
             {{$drawerheadercontent}}
+                {{{searchmodule}}}
                 {{> theme_boost/courseindexdrawercontrols}}
             {{/drawerheadercontent}}
             {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}

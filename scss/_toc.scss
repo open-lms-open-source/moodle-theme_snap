@@ -321,7 +321,7 @@ label[for="toc-search-input"]{
   height: 1.5em;
   width: 1.5em;
   margin-right: -4em;
-  margin-bottom: -0.3em;
+  margin-bottom: -0.5em;
 }
 
 #toc-search-input.state-active,
@@ -351,7 +351,7 @@ label[for="toc-search-input"]{
 #courseindexdrawercontrols {
   padding: 0;
   margin: 0;
-  width: 29px;
+  flex-shrink: 0;
 }
 
 .drawer.drawer-left .btn {
@@ -390,15 +390,12 @@ label[for="toc-search-input"]{
 
 .drawer.drawer-left {
   #toc-desktop-menu-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 2em 0.5rem 0.5rem;
-    width: 100%;
+    display: contents;
 
     h2 {
       margin: 0;
-      flex: 1 1 auto;
+      flex: 0 1 auto;
+      min-width: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -410,13 +407,25 @@ label[for="toc-search-input"]{
         visibility: hidden;
       }
 
-      #toc-search::before {
-        visibility: hidden;
+      #toc-search {
+        flex: 1 1 auto;
+        margin-right: 0;
+
+        &::before {
+          visibility: hidden;
+        }
+
+        #toc-search-input.state-active,
+        #toc-search-input:focus {
+          width: 100%;
+        }
       }
     }
 
     #toc-search {
       flex: 0 0 auto;
+      margin-left: auto;
+      margin-right: -3.25rem;
       position: relative;
       top: auto;
       right: auto;
@@ -426,6 +435,12 @@ label[for="toc-search-input"]{
       #toc-search-input:focus {
         margin-left: 0;
         max-width: 100%;
+      }
+    }
+
+    body.safari &, body.gecko & {
+      #toc-search {
+        margin-right: 0;
       }
     }
   }
@@ -543,13 +558,8 @@ label[for="toc-search-input"]{
 }
 .path-course-view #theme_boost-drawers-courseindex .drawercontent {
   height: 100vh;
-  padding-top: 5em;
   nav.courseindex {
     overflow: scroll;
-  }
-
-  &:has(#toc-desktop-menu-heading) {
-    padding-top: unset;
   }
 }
 // Allow sticky TOC on small resolutions
@@ -712,13 +722,6 @@ label[for="toc-search-input"]{
 
 @media screen and (max-width: 480px) {
   .drawerheader{
-    top: auto !important;
-
-    #courseindexdrawercontrolsmenubutton {
-      margin-top: -1rem;
-      margin-left: -2rem !important;
-    }
-
     button.btn.drawertoggle  {
       position: fixed !important;
       top: 1.3rem;
@@ -727,10 +730,6 @@ label[for="toc-search-input"]{
         font-size: 20px !important;
       }
     }
-  }
-
-  #toc-desktop-menu-heading {
-    width: 85%;
   }
 
   .snap-drawer-mobile-header {
