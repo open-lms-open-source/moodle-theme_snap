@@ -150,9 +150,14 @@ Feature: Check functionality in activity cards.
     And "li.activity-wrapper.modtype_url .dropdown-menu.show" "css_element" should be visible
     And "li.activity-wrapper.modtype_url .dropdown-menu.show[data-popper-placement='top-end']" "css_element" should exist
     And I click on "li.activity-wrapper.modtype_url .dropdown-menu.show a[aria-label='Availability']" "css_element"
+    And "li.activity-wrapper.modtype_url .dropdown-subpanel-content.show" "css_element" should be visible
+    And "li.activity-wrapper.modtype_url .dropdown-subpanel > a[aria-expanded='true']" "css_element" should exist
     And I should see "Show on course page"
     And I should see "Hide on course page"
     And I should see "Make available but don't show on course page"
+    # The subpanel stays open until it is toggled again, so the options can be reached with the pointer.
+    And I click on "li.activity-wrapper.modtype_url .dropdown-menu.show a[aria-label='Availability']" "css_element"
+    And "li.activity-wrapper.modtype_url .dropdown-subpanel-content.show" "css_element" should not exist
 
   @javascript
   Scenario: Activity cards does not have the Move Right/Left option available on Snap.

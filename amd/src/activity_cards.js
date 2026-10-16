@@ -24,6 +24,9 @@ define([], function() {
 
     var initialized = false;
 
+    // Core renders the subpanel menu item as a direct dropdown item child, see core/local/action_menu/subpanel.
+    const SUBPANEL_MENU_ITEM = '.dropdown-subpanel > .dropdown-item';
+
     /**
      * Determines if an item is a Snap resource card.
      * @param {HTMLElement} item
@@ -77,11 +80,18 @@ define([], function() {
         const setMenuState = function(menu, open) {
             menu.classList.toggle('show', open);
             menu.setAttribute('aria-hidden', String(!open));
-            menu.dataset.open = open ? 'true' : 'false';
             const parent = menu.closest('.dropdown-subpanel');
             if (parent) {
                 parent.classList.toggle('content-displayed', open);
+                const menuItem = parent.querySelector(SUBPANEL_MENU_ITEM);
+                if (menuItem) {
+                    menuItem.setAttribute('aria-expanded', open ? 'true' : 'false');
+                }
             }
+        };
+
+        const isMenuOpen = function(menu) {
+            return menu.classList.contains('show');
         };
 
         const closeMenu = function(menu) {
@@ -101,30 +111,41 @@ define([], function() {
         };
 
         const closeAllMenus = function() {
-            document.querySelectorAll('.dropdown-subpanel-content[data-open="true"]').forEach(closeMenu);
+            document.querySelectorAll('.dropdown-subpanel-content.show').forEach(closeMenu);
         };
 
-        // Disable the hover
-        courseContent.addEventListener('mouseover', function(e) {
-            const trigger = e.target.closest('.dropdown-subpanel > .dropdown-item');
-            if (!trigger) {
-                return;
+        /**
+         * Returns the resource card subpanel menu item the event was raised on, if any.
+         *
+         * @param {Event} e
+         * @returns {HTMLElement|null} The subpanel menu item, or null when the event is not on a resource card.
+         */
+        const resourceCardMenuItem = function(e) {
+            const menuItem = e.target.closest(SUBPANEL_MENU_ITEM);
+            if (!menuItem) {
+                return null;
             }
-            const wrapper = trigger.closest('li.activity-wrapper');
-            if (wrapper && isSnapResourceCard(wrapper)) {
-                e.stopImmediatePropagation();
+            const wrapper = menuItem.closest('li.activity-wrapper');
+            if (!wrapper || !isSnapResourceCard(wrapper)) {
+                return null;
             }
-        }, true);
+            return menuItem;
+        };
+
+        // Cards open their subpanels on click, so core's hover and focus previews are suppressed. Leaving mouseout
+        // and focusin active would close the subpanel again as soon as the cursor travels towards it.
+        ['mouseover', 'mouseout', 'focusin'].forEach(function(eventName) {
+            courseContent.addEventListener(eventName, function(e) {
+                if (resourceCardMenuItem(e)) {
+                    e.stopImmediatePropagation();
+                }
+            }, true);
+        });
 
         // Handle click toggle
         courseContent.addEventListener('click', function(e) {
-            const toggle = e.target.closest('[data-bs-toggle="dropdown-subpanel"]');
+            const toggle = resourceCardMenuItem(e);
             if (!toggle) {
-                return;
-            }
-
-            const wrapper = toggle.closest('li.activity-wrapper');
-            if (!wrapper || !isSnapResourceCard(wrapper)) {
                 return;
             }
 
@@ -138,8 +159,8 @@ define([], function() {
             e.stopPropagation();
             e.stopImmediatePropagation();
 
-            const isOpen = menu.dataset.open === 'true';
-            closeAllMenusInWrapper(wrapper, menu);
+            const isOpen = isMenuOpen(menu);
+            closeAllMenusInWrapper(toggle.closest('li.activity-wrapper'), menu);
             if (isOpen) {
                 closeMenu(menu);
             } else {
@@ -152,7 +173,7 @@ define([], function() {
             if (e.target.closest('.dropdown-subpanel')) {
                 return;
             }
-            const openMenus = document.querySelectorAll('.dropdown-subpanel-content[data-open="true"]');
+            const openMenus = document.querySelectorAll('.dropdown-subpanel-content.show');
             if (openMenus.length === 0) {
                 return;
             }
