@@ -7505,6 +7505,7 @@ li.section.main {
 
 [id*="courseindex"].drawer-left .drawerheader {
   height: auto;
+  flex-shrink: 0;
   background-color: #fff;
   align-items: center;
   gap: 0.75rem;

@@ -572,6 +572,22 @@ body.snap-resource-card.format-topics {
     }
 }
 
+// Core activity chooser.
+.modchooser.modal-dialog {
+    .modchoosernav {
+        // Replaces the .me-md-5 utility; the container grid gap already separates nav and content.
+        margin-right: 0 !important;
+    }
+
+    // Columns follow the space actually available (max 4), not the viewport,
+    // so options never overflow horizontally with Snap's larger root font.
+    // The minimum lives in a custom property because csstree rejects min()/max() inside minmax().
+    .modchoosercontent .optionscontainer {
+        --snap-chooser-option-min-width: min(100%, max(11rem, calc((100% - 1.5rem) / 4)));
+        grid-template-columns: repeat(auto-fill, minmax(var(--snap-chooser-option-min-width), 1fr));
+    }
+}
+
 // Styles for accessible tabs.
 
 #snap-modchooser-modal,
