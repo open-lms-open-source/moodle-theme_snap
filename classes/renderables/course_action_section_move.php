@@ -36,7 +36,8 @@ class course_action_section_move extends course_action_section_base {
 
         $coursecontext = context_course::instance($course->id);
 
-        if ($onsectionpage && has_capability('moodle/course:movesections', $coursecontext)) {
+        if ($onsectionpage && !$section->is_delegated()
+                && has_capability('moodle/course:movesections', $coursecontext)) {
             $url = course_get_url($course, $section);
             $url->param('sesskey', sesskey());
             $url->param('movesection', $section->section);
