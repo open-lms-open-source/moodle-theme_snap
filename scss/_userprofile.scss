@@ -65,7 +65,7 @@
     }
 
     // Hide button text on small screens.
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         .header-button-title {
             display: none;
         }
