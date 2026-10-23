@@ -74,7 +74,7 @@ $tocfooter = $OUTPUT->render_from_template('theme_snap/course_toc_footer', $foot
 $progressbar = $OUTPUT->render_from_template('theme_snap/course_toc_progress_bar',
     \theme_snap\local::get_course_completion_data($COURSE, $USER));
 
-$courseindex = $searchmodule . $progressbar . core_course_drawer() . $tocfooter;
+$courseindex = $progressbar . core_course_drawer() . $tocfooter;
 
 if (!$courseindex) {
     $courseindexopen = false;
@@ -91,6 +91,7 @@ $templatecontext = [
     'iscourseindex' => true,
     'courseindex' => $courseindex,
     'courseindexopen' => $courseindexopen,
+    'searchmodule' => $searchmodule,
 ];
 echo local::reset_usertours_container(
     $OUTPUT->render_from_template('theme_boost/drawers', $templatecontext)

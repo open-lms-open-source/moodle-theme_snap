@@ -26,6 +26,13 @@ Feature: When the Moodle theme is set to Snap, the user profile picture should n
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | user1    | User      | 1        | user1@example.com    |
+    And the following "courses" exist:
+      | fullname  | shortname | category |
+      | Course 1  | C1        | 0        |
+
+  And the following "course enrolments" exist:
+      | user  | course | role    |
+      | user1 | C1     | student |
 
   @javascript
   Scenario: User picture in the user profile page should not be a link
@@ -34,3 +41,12 @@ Feature: When the Moodle theme is set to Snap, the user profile picture should n
     And I follow "Profile"
     And "#page-user-profile div.page-header-image > a" "css_element" should not exist
     And "Dashboard" "link" should exist in the "#page-user-profile #page-header > nav.breadcrumb-nav" "css_element"
+
+  @javascript
+  Scenario: Message button should display its text on an enrolled user's profile
+    Given I am on the "Course 1" "enrolled users" page logged in as "admin"
+    And I follow "User 1"
+    Then "#message-user-button" "css_element" should exist
+    And "#message-user-button .header-button-title" "css_element" should exist
+    And "#message-user-button .header-button-title" "css_element" should be visible
+    And I should see "Message" in the "#message-user-button .header-button-title" "css_element"

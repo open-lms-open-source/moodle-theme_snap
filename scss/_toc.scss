@@ -190,8 +190,6 @@ div[data-flexitour="step-background"] {
 // Course search.
 // -------------------------
 #toc-search {
-    top: 1.25em;
-    right: 0;
     max-width: 100%;
 
     &:before {
@@ -200,19 +198,11 @@ div[data-flexitour="step-background"] {
         display: inline-block;
         height: 1.5em;
         width: 1.5em;
-
-        // Magin numbers for positioning
-        margin-right: -2.5em;
-        margin-bottom: -0.3em;
     }
 }
 
 #toc-search-input {
     border-radius: 50%;
-    margin-left: 1.15em;
-    width: 3em;
-    height: 3em;
-    padding: 0 1.5em;
     background-color: transparent;
     border: 1px solid transparent;
     @include alakazam();
@@ -221,7 +211,6 @@ div[data-flexitour="step-background"] {
     &:focus {
         border-radius: 0;
         box-shadow: none;
-        width: 320px;
         background-color: white;
     }
 }
@@ -314,25 +303,6 @@ label[for="toc-search-input"]{
     }
 }
 
-#toc-search:before {
-  content: '';
-  background: transparent url("[[pix:theme|search]]") no-repeat 50% 50%;
-  display: inline-block;
-  height: 1.5em;
-  width: 1.5em;
-  margin-right: -4em;
-  margin-bottom: -0.3em;
-}
-
-#toc-search-input.state-active,
-#toc-search-input:focus {
-  border-radius: 0;
-  box-shadow: none;
-  width: 320px;
-  background-color: white;
-  margin-left: -3em;
-}
-
 .drawerheader {
   display: flex;
   align-items: center;
@@ -346,12 +316,6 @@ label[for="toc-search-input"]{
 .drawerheadercontent {
   order: -1;
   margin-left: 0.5rem;
-}
-
-#courseindexdrawercontrols {
-  padding: 0;
-  margin: 0;
-  width: 29px;
 }
 
 .drawer.drawer-left .btn {
@@ -388,44 +352,94 @@ label[for="toc-search-input"]{
     }
 }
 
+// Search, menu and close buttons share the same slot width so they are evenly spaced.
+$toc-header-control-size: 40px;
+
 .drawer.drawer-left {
-  #toc-desktop-menu-heading {
+  #courseindexdrawercontrols {
+    flex-shrink: 0;
+    padding: 0;
+    margin: 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 2em 0.5rem 0.5rem;
-    width: 100%;
+    justify-content: center;
+    width: $toc-header-control-size;
+
+    #courseindexdrawercontrolsmenubutton {
+      margin: 0 !important;
+    }
+  }
+
+  // On small screens the close button is fixed to the top corner instead.
+  @media (min-width: 481px) {
+    .drawerheader .btn.drawertoggle {
+      margin: 0 calc((#{$toc-header-control-size} - 25px) / 2);
+    }
+  }
+
+  #toc-desktop-menu-heading {
+    display: contents;
 
     h2 {
       margin: 0;
-      flex: 1 1 auto;
+      flex: 0 1 auto;
+      min-width: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    &:has(#toc-search-input.state-active),
-    &:has(#toc-search-input:focus) {
-      h2 {
-        visibility: hidden;
+    #toc-search {
+      flex: 0 0 auto;
+      width: $toc-header-control-size;
+      height: $toc-header-control-size;
+      margin: 0 0 0 auto;
+      position: relative;
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
       }
 
-      #toc-search::before {
-        visibility: hidden;
+      // Out of the flow so the input never widens the drawer, which sizes to its content.
+      // The side padding fills the circle so the placeholder stays hidden while collapsed.
+      #toc-search-input {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: $toc-header-control-size;
+        height: 100%;
+        margin: 0;
+        padding: 0 calc(#{$toc-header-control-size} / 2);
+      }
+
+      #toc-search-results {
+        top: 100%;
       }
     }
 
-    #toc-search {
-      flex: 0 0 auto;
-      position: relative;
-      top: auto;
-      right: auto;
-      max-width: 100%;
+    // The form takes the free space at once, so only the input animates and the buttons stay put.
+    &:has(#toc-search-input.state-active),
+    &:has(#toc-search-input:focus) {
+      h2 {
+        display: none;
+      }
 
-      #toc-search-input.state-active,
-      #toc-search-input:focus {
-        margin-left: 0;
-        max-width: 100%;
+      #toc-search {
+        flex: 1 1 0;
+        min-width: 0;
+        width: auto;
+
+        &::before {
+          visibility: hidden;
+        }
+
+        #toc-search-input {
+          width: 100%;
+          padding: 0 1em;
+        }
       }
     }
   }
@@ -529,8 +543,23 @@ label[for="toc-search-input"]{
   max-height: 100vh;
   min-height: 100vh;
   min-width: 100%;
-  overflow-y: auto;
+  overflow: hidden;
   z-index: 1021;
+  // The header is in the flow, so the content takes the remaining height instead of a full 100vh.
+  display: flex;
+  flex-direction: column;
+
+  // Keep core's behaviour of hiding the drawer until it is initialised on small screens.
+  &.not-initialized {
+    @include media-breakpoint-down(lg) {
+      display: none;
+    }
+  }
+  // Header and footer stay put; only the section list scrolls.
+  &:not(.not-initialized) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 .path-course-view #page-wrapper {
   position: absolute;
@@ -542,14 +571,15 @@ label[for="toc-search-input"]{
   }
 }
 .path-course-view #theme_boost-drawers-courseindex .drawercontent {
-  height: 100vh;
-  padding-top: 5em;
+  height: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
   nav.courseindex {
-    overflow: scroll;
-  }
-
-  &:has(#toc-desktop-menu-heading) {
-    padding-top: unset;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }
 // Allow sticky TOC on small resolutions
@@ -712,13 +742,6 @@ label[for="toc-search-input"]{
 
 @media screen and (max-width: 480px) {
   .drawerheader{
-    top: auto !important;
-
-    #courseindexdrawercontrolsmenubutton {
-      margin-top: -1rem;
-      margin-left: -2rem !important;
-    }
-
     button.btn.drawertoggle  {
       position: fixed !important;
       top: 1.3rem;
@@ -729,8 +752,9 @@ label[for="toc-search-input"]{
     }
   }
 
-  #toc-desktop-menu-heading {
-    width: 85%;
+  // Pin the close button to the right of the mobile header so it does not cover its title.
+  #theme_boost-drawers-courseindex .drawerheader button.btn.drawertoggle {
+    right: 1rem;
   }
 
   .snap-drawer-mobile-header {
@@ -739,6 +763,7 @@ label[for="toc-search-input"]{
     color: white;
     h2 {
       color: white;
+      padding-right: 2.5rem;
     }
   }
 }
