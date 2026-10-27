@@ -108,7 +108,8 @@ body[id^="page-mod-"][id$="-mod"] {
 }
 
 #page-course-management {
-    .form-check .form-check-input {
+    // Listing checkboxes only; the header Edit mode switch keeps Bootstrap's switch offset.
+    .form-check .form-check-input:not([name="setmode"]) {
         margin-left: 0;
     }
 }
