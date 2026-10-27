@@ -199,3 +199,17 @@ Feature: When the moodle theme is set to Snap, teachers can move course sections
     Then I should see "Test assignment1" in the ".section.state-visible" "css_element"
     And I should not see "Test assignment2" in the ".section.state-visible" "css_element"
     And I should not see "Test assignment3" in the ".section.state-visible" "css_element"
+
+  @javascript
+  Scenario: Move control is not available in subsections.
+    Given I enable "subsection" "mod" plugin
+    And the following "activities" exist:
+      | activity   | name         | course | idnumber    | section |
+      | subsection | Subsection 1 | C1     | Subsection1 | 1       |
+    And I log in as "teacher1"
+    And I am on the "C1 > Section 1" "course > section" page
+    And I wait until the page is ready
+    And "Move \"Section 1\"" "link" should exist
+    When I am on the "C1 > Subsection 1" "course > section" page
+    And I wait until the page is ready
+    Then "Move \"Subsection 1\"" "link" should not exist
