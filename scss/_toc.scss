@@ -561,10 +561,10 @@ $toc-header-control-size: 40px;
     flex-direction: column;
   }
 }
-.path-course-view #page-wrapper {
+.pagelayout-course #page-wrapper {
   position: absolute;
 }
-.path-course-view #page.show-drawer-left #page-wrapper {
+.pagelayout-course #page.show-drawer-left #page-wrapper {
   width: 27%;
   @media (min-width: 480px) {
     min-width: 20em;
